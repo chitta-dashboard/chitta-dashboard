@@ -5,7 +5,7 @@ import { S } from "./footer.styled";
 const Footer: FC = () => {
   return (
     <S.FooterContainer>
-      <Typography variant="h5"> App Footer</Typography>
+      <Typography> App Footer</Typography>
     </S.FooterContainer>
   );
 };

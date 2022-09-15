@@ -1,13 +1,5 @@
-import React from 'react';
-import { Typography } from '@mui/material';
-import { S } from './dashboard.styled';
-
-const Dashboard = () => {
+export default function Dashboard () {
     return (
-      <S.DashBoaderContainer>
-        <Typography variant="h6">App dashboard</Typography>
-      </S.DashBoaderContainer>
+      <h1>Dashboard</h1>
     );
 };
-
-export default Dashboard;
