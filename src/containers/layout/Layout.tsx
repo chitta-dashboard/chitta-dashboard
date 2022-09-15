@@ -1,22 +1,19 @@
 import React, { FC } from "react";
 import Header from "./header";
-import { BrowserRouter as Router } from "react-router-dom";
 import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
-import { Box } from "@mui/material";
+import { S } from "./Layout.styled";
 
 const Layout: FC = () => {
   return (
-    <Box>
-      <Router>
+    <S.Layout>
         <Header />
         <Content>
           <AppRouters />
         </Content>
         <Footer />
-      </Router>
-    </Box>
+    </S.Layout>
   );
 };
 
