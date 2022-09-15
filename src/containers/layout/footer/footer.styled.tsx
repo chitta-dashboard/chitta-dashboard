@@ -1,11 +1,10 @@
-import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import { Theme, styled } from "@mui/material";
 
 export namespace S {
-  export const FooterContainer = styled(Box)(({ theme }: any) => ({
-    display:"flex",
-    alignItems:"center",
-    justifyContent:"center",
-    boxSizing: "border-box",
+  export const FooterContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
+    padding: ".5rem",
+    backgroundColor: "white",
+    textAlignc: "center",
   }));
 }
