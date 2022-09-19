@@ -5,7 +5,7 @@ export namespace S {
     ({ theme, isGreen }: { theme?: Theme; isGreen: boolean | undefined }) => ({
       fontWeight: "500",
       fontSize: "1.3rem",
-      padding: '.6rem',
+      padding: ".6rem",
       borderRadius: "50%",
       color: isGreen ? "white" : theme?.palette.primary.main,
       backgroundColor: isGreen ? theme?.palette.primary.main : "white",
