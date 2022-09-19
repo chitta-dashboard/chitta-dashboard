@@ -1,20 +1,21 @@
-import { Theme } from "@mui/material";
+import { autocompleteClasses, Theme } from "@mui/material";
 import { Box, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 export namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
+    maxWidth: "100vw",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     backgroundColor: "#ffffff",
-    padding: "1rem 1.5rem",
-    gap: "2.5rem",
+    padding: ".5rem 1.2rem",
+    gap: "2rem",
   }));
 
   export const LogoBox = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "inline-flex",
     alignItems: "center",
-    gap: '1.5rem'
+    gap: "1rem",
   }));
 
   export const Logo = styled("img")(({ theme }: { theme: Theme }) => ({
@@ -31,20 +32,87 @@ export namespace S {
     whiteSpace: "nowrap",
   }));
 
-  export const NavBar = styled("nav")(({ theme }: { theme: Theme }) => ({
-    display: "flex",
+  export const NavBar = styled("nav", {
+    shouldForwardProp: (prop) => prop !== "isOpen",
+  })<{ isOpen: boolean }>(({ theme, isOpen }) => ({
+    display: "grid",
+    gridTemplateColumns: "repeat(8, auto)",
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    gap: "1.5rem",
+    gap: ".5rem 1rem",
+    flexWrap: "wrap",
+    backgroundColor: "white",
+
+    [theme.breakpoints.down("lg")]: {
+      gridTemplateColumns: "repeat(4, auto)",
+    },
+
+    [theme.breakpoints.down("md")]: {
+      position: "absolute",
+      gridTemplateColumns: "18.75rem",
+      width: "unset",
+      top: "0",
+      right: "0",
+      boxShadow: "0 5px 20px rgba(0, 0, 0, .3)",
+      borderTopLeftRadius: "40px",
+      borderBottomLeftRadius: "40px",
+      height: "100%",
+      gap: "0",
+      alignContent: "start",
+      overflow: "hidden",
+      zIndex: "10",
+      transition: "transform .3s ease-out",
+      transform: isOpen ? "translateX(0)" : "translateX(calc(18.75rem + 20px))",
+    },
   }));
 
-  // const ModifiedNavItem: LinkProps extends {isActive: boolean} = ()
-  export const NavItem = styled(Link)(({ theme, isActive }: { theme: Theme; isActive: boolean }) => ({
-    color: isActive ? theme.palette.text.primary : theme.palette.text.secondary,
-    textDecoration: "none",
-    whiteSpace: "nowrap",
+  export const NavLink = styled(Link, {
+    shouldForwardProp: (prop) => prop !== "isActive",
+  })<{ isActive: boolean }>(({ theme, isActive }) => ({
     position: "relative",
+    textDecoration: "none",
+
+    [theme.breakpoints.down("md")]: {
+      padding: "1rem 1rem 1rem 2rem",
+
+      "&::after": {
+        content: "''",
+        width: "100%",
+        height: "100%",
+        position: "absolute",
+        top: "0",
+        left: "0",
+        transform: isActive ? "scaleX(1)" : "scaleX(0)",
+        transformOrigin: "right",
+        transition: "transform .3s ease-out",
+        backgroundColor: theme.palette.custom.backgroundLight,
+      },
+
+      "&:hover::after": {
+        transform: "scaleX(1)",
+      },
+
+      "&:hover > p": isActive
+        ? {}
+        : {
+            color: theme.palette.text.primary,
+            "&::after": {
+              transform: "scaleX(.6)",
+            },
+          },
+    },
+  }));
+
+  export const NavLinkText = styled(Typography, {
+    shouldForwardProp: (prop) => prop !== "isActive",
+  })<{ isActive: boolean }>(({ theme, isActive }) => ({
+    color: isActive ? theme.palette.text.primary : theme.palette.text.secondaryLight,
+    whiteSpace: "nowrap",
+    width: "max-content",
+    position: "relative",
+    fontSize: ".9rem",
+    zIndex: "1",
 
     "&::after": {
       content: "''",
@@ -57,22 +125,35 @@ export namespace S {
       left: "0",
       transform: isActive ? "scaleX(.6)" : "scaleX(0)",
       transformOrigin: "left",
-      transition: "transform .2s ease-out",
+      transition: "transform .3s ease-out",
     },
-
-    "&:hover": isActive
-      ? {}
-      : {
-          color: theme.palette.text.primary,
-          "&::after": {
-            transform: "scaleX(.6)",
-          },
-        },
   }));
 
   export const ActionsBox = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     alignItems: "center",
     gap: "1.5rem",
+    color: theme.palette.text.secondaryLight,
+    fontSize: "1.6rem",
+
+    i: {
+      cursor: "pointer",
+    },
+  }));
+
+  export const NavBarMenu = styled(Box)(({ theme }: { theme: Theme }) => ({
+    display: "flex",
+    justifyContent: "space-between",
+    backgroundColor: theme.palette.custom.backgroundDark,
+    padding: "1.5rem 1.5rem 1.2rem 2rem",
+    color: theme.palette.text.primaryDark,
+    marginBottom: "2rem",
+    fontWeight: "600",
+    fontSize: "1.2rem",
+
+    i: {
+      fontSize: "1.6rem",
+      cursor: "pointer",
+    },
   }));
 }
