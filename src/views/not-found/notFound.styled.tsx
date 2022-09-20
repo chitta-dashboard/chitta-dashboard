@@ -1,12 +1,13 @@
-import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
-export namespace S {
-  export const NotFountBox = styled(Box)(({ theme }: any) => ({
+namespace S {
+  export const NotFountBox = styled(Box)(({ theme }) => ({
     display: "grid",
     placeContent: "center",
   }));
-  export const NotFountText = styled(Typography)(({ theme }: any) => ({
+  export const NotFountText = styled(Typography)(({ theme }) => ({
     textAlign: "center",
   }));
 }
+
+export default S;
