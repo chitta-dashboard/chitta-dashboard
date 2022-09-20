@@ -30,6 +30,7 @@ i {
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
+  cursor: pointer;
   /* Enable Ligatures ================ */
   -webkit-font-feature-settings: "liga";
   -moz-font-feature-settings: "liga=1";
