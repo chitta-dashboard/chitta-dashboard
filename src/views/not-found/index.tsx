@@ -1,5 +1,6 @@
-import React, { FC } from "react";
-import { S } from "./notFound.styled";
+import { FC } from "react";
+
+import S from "./notFound.styled";
 
 const NotFound: FC = () => (
   <S.NotFountBox>

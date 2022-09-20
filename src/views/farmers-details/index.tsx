@@ -1,3 +1,3 @@
-export default function FarmersDetails () {
-    return <h1>Farmers Details</h1>
+export default function FarmersDetails() {
+  return <h1>Farmers Details</h1>;
 }
