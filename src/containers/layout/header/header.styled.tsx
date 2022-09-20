@@ -1,7 +1,6 @@
-import { autocompleteClasses, Theme } from "@mui/material";
-import { Box, styled, Typography } from "@mui/material";
+import { Theme, Box, styled, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-export namespace S {
+namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
     maxWidth: "100vw",
     display: "flex",
@@ -92,16 +91,16 @@ export namespace S {
       "&:hover::after": {
         transform: "scaleX(1)",
       },
-
-      "&:hover > p": isActive
-        ? {}
-        : {
-            color: theme.palette.text.primary,
-            "&::after": {
-              transform: "scaleX(.6)",
-            },
-          },
     },
+
+    "&:hover .MuiTypography-root": isActive
+      ? {}
+      : {
+          color: theme.palette.text.primary,
+          "&::after": {
+            transform: "scaleX(.6)",
+          },
+        },
   }));
 
   export const NavLinkText = styled(Typography, {
@@ -157,3 +156,5 @@ export namespace S {
     },
   }));
 }
+
+export default S;
