@@ -32,7 +32,7 @@ export const LightTheme: Theme = createTheme({
     fontFamily: "'Poppins', 'sans-serif'",
   },
   shape: {
-    borderRadius: "20px",
+    containerRadius: "20px",
   },
   components: {
     MuiButton: {
@@ -43,7 +43,7 @@ export const LightTheme: Theme = createTheme({
           textTransform: "capitalize",
           padding: ".4rem 1.2rem",
           borderRadius: "10px",
-          whiteSpace: 'nowrap',
+          whiteSpace: "nowrap",
 
           "&:hover": {
             backgroundColor: "#57ab5b",

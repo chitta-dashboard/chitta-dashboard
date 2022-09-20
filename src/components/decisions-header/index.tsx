@@ -1,7 +1,7 @@
-import React from "react";
-import { S } from "./decisionsHeader.styled";
-import IconWrapper from "../../utils/iconWrapper";
 import arrowLeftGreen from "../../assets/images/arrowLeftGreen.svg";
+import IconWrapper from "../../utils/iconWrapper";
+
+import S from "./decisionsHeader.styled";
 
 const DecisionsHeader = () => {
   return (
