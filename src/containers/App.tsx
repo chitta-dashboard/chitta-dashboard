@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
+import { Routes, Route } from "react-router-dom";
+
 import Layout from "./layout/Layout";
 import Provider from "./provider";
-import { Routes, Route } from "react-router-dom";
 import Login from "../views/login";
 // @ts-ignore
 // eslint-disable-next-line

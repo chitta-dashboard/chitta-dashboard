@@ -32,7 +32,7 @@ export const LightTheme: Theme = createTheme({
     fontFamily: "'Poppins', 'sans-serif'",
   },
   shape: {
-    borderRadius: "4px",
+    containerRadius: "20px",
   },
   components: {
     MuiButton: {
