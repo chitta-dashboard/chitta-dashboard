@@ -13,6 +13,12 @@ export namespace S {
     paddingLeft: "1rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   }));
 
   export const SearchBar = styled("input")(({ theme }: any) => ({

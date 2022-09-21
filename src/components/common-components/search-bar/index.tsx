@@ -8,7 +8,7 @@ type Props = {};
 const SearchBar = (props: Props) => {
   return (
     <>
-      <S.SearchBarPaper sx={{ display: { sm: "none", md: "flex" } }}>
+      <S.SearchBarPaper>
         <IconGreen>search</IconGreen>
         <S.SearchBar placeholder="  Search..." />
       </S.SearchBarPaper>
