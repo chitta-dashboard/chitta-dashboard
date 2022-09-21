@@ -1,8 +1,8 @@
 import { FC } from "react";
 
-import farmer from "../../assets/images/farmer.svg";
-import EllipseTop from "../../assets/images/EllipseTop.svg";
-import EllipseBottom from "../../assets/images/EllipseBottom.svg";
+import EllipseTop from "../../../assets/images/EllipseTop.svg";
+import EllipseBottom from "../../../assets/images/EllipseBottom.svg";
+import farmer from "../../../assets/images/farmer.svg"
 import  S  from "./background.style";
 
 const LoginBackground: FC = () => {

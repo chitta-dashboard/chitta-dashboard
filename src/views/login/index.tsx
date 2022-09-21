@@ -1,12 +1,14 @@
-import {Grid } from "@mui/material";
-import LoginBackground from "../../components/login-background";
-import LoginForm from "../../components/login-form";
+import { Grid } from "@mui/material";
+
+import LoginBackground from "../../components/login/login-background";
+import LoginForm from "../../components/login/login-form";
+
 
 const Login = () => {
   return (
     <>
       <Grid container>
-        <LoginBackground/>
+        <LoginBackground />
         <LoginForm />
       </Grid>
     </>
