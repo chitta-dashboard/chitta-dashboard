@@ -11,9 +11,9 @@ export namespace S {
   }));
 
   export const LogoImage = styled("img")(({ theme }) => ({
-    height: "6.5rem",
-    width: "6.8rem",
-    margin: "0.5rem 0 0 0.6rem",
+    height: "4.5rem",
+    width: "5.5rem",
+    margin: "-0.2rem 0 0 0.6rem",
     borderRadius: "50%",
   }));
 
@@ -28,7 +28,7 @@ export namespace S {
     fontSize: "1.1rem",
     fontWeight: "600",
     textAlign: "center",
-    paddingTop: "0.7rem",
+    paddingTop: "1rem",
     color: LightTheme.palette.primary.light,
   }));
 

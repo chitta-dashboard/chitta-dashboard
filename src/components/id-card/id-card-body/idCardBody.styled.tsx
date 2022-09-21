@@ -4,15 +4,15 @@ import { LightTheme } from "../../../utils/theme";
 export namespace S {
   export const IdCardWrapper = styled(Box)(({ theme }) => ({
     // height: "19.5rem",
-    maxWidth: "35rem",
+    maxWidth: "34.5rem",
     backgroundColor: "#fff",
     borderRadius: "1.25rem",
     padding: "0.3rem 0.6rem 0 0.6rem",
   }));
 
   export const IdImage = styled("img")(({ theme }) => ({
-    width: "8.5rem",
-    height: "10rem",
+    width: "8.3rem",
+    height: "9.5rem",
   }));
 
   export const IdCardBodyWrapper = styled(Box)(({ theme }) => ({
@@ -20,8 +20,8 @@ export namespace S {
     justifyContent: "center",
     alignItems: "flex-start",
     width: "100%",
-    marginTop: "1.2rem",
-    gap: "2rem",
+    marginTop: "1.3rem",
+    gap: "1.5rem",
     padding: "0 .2rem",
   }));
 
@@ -32,7 +32,7 @@ export namespace S {
   }));
 
   export const IdDetails = styled(Typography)(({ theme }) => ({
-    fontSize: "0.8rem",
+    fontSize: "0.75rem",
     fontWeight: "500",
     marginBottom: "0.1rem",
     marginTop: "0.5rem",
@@ -50,7 +50,7 @@ export namespace S {
     color: LightTheme.palette.text.secondaryLight,
   }));
 
-  export const BarCode = styled(Box)(({ theme }) => ({
+  export const QrCode = styled(Box)(({ theme }) => ({
     marginTop: "1rem",
   }));
 

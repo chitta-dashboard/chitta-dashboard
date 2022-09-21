@@ -26,7 +26,7 @@ const IdCardBody = (props: Props) => {
                 <S.IdDetails>தகுதி:</S.IdDetails>{" "}
               </Box>
               <Box>
-                <S.IdDetails>Arockiya</S.IdDetails>
+                <S.IdDetails>Arockiyaraj</S.IdDetails>
                 <S.IdDetails>8940065783</S.IdDetails>
                 <S.IdDetails>10/02/1969</S.IdDetails>
                 <S.IdDetails>BBA, MBA</S.IdDetails>
@@ -34,7 +34,7 @@ const IdCardBody = (props: Props) => {
             </S.IdDetailsWrapper>
             <S.Signature src={Signature} alt="Signature" />
           </S.MiddleBox>
-          <S.BarCode>
+          <S.QrCode>
             <QRCodeSVG
               value={JSON.stringify({
                 id: "1",
@@ -42,9 +42,9 @@ const IdCardBody = (props: Props) => {
                 phoneNumber: "8940065783",
               })}
               level={"L"}
-              size={110}
+              size={105}
             />
-          </S.BarCode>
+          </S.QrCode>
         </S.IdCardBodyWrapper>
       </S.IdCardWrapper>
     </>

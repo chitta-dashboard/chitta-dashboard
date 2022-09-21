@@ -1,7 +1,6 @@
 import React from "react";
-import { Box } from "@mui/material";
 
-import IdLogo from "../../../assets/images/Logo.png";
+import IdLogo from "../../../assets/images/logo.svg";
 
 import S from "./idCardHeader.styled";
 

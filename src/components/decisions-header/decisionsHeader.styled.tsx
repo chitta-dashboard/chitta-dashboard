@@ -1,7 +1,8 @@
-import { styled, Typography, Button as MuiButton } from "@mui/material";
 import { Theme } from "@mui/material";
 
-export namespace S {
+import { styled, Typography, Button as MuiButton } from "@mui/material";
+
+namespace S {
   export const Header = styled("div")(({ theme }: { theme: Theme }) => ({
     display: "flex",
     alignItems: "center",
@@ -19,3 +20,5 @@ export namespace S {
     width: "7em",
   }));
 }
+
+export default S;

@@ -2,7 +2,7 @@ declare module "@mui/material" {
   interface TypeText {
     primaryLight: string;
     primaryDark: string;
-    secondaryExtraLight: string
+    secondaryExtraLight: string;
     secondaryLight: string;
     secondaryDark: string;
   }
@@ -24,6 +24,12 @@ declare module "@mui/material" {
       backgroundDark: string;
       backdrop: string;
     };
+  }
+}
+
+declare module "@mui/system" {
+  interface Shape {
+    containerRadius: string;
   }
 }
 
