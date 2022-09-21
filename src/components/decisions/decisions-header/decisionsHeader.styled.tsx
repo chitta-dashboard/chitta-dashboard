@@ -1,5 +1,4 @@
 import { Theme } from "@mui/material";
-
 import { styled, Typography, Button as MuiButton } from "@mui/material";
 
 namespace S {
