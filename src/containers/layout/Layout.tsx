@@ -16,7 +16,8 @@ const Layout: FC = () => {
           "div, span, table, tbody, thead, ul, ol": {
             "&::-webkit-scrollbar": {
               width: "5px",
-              backgroundColor: "#F5F5F5",
+              // backgroundColor: "#F5F5F5",
+              backgroundColor: "transparent",
               borderRadius: "10px",
             },
 
@@ -24,6 +25,16 @@ const Layout: FC = () => {
               borderRadius: "10px",
               backgroundColor: theme.palette.primary.light,
               height: "20px",
+            },
+
+            "&::-webkit-scrollbar-track-piece:start": {
+              backgroundColor: "transparent",
+              marginTop: "20px",
+            },
+
+            "&::-webkit-scrollbar-track-piece:end": {
+              backgroundColor: "transparent",
+              marginBottom: "20px",
             },
           },
         })}
