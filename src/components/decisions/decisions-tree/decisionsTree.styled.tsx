@@ -1,36 +1,17 @@
 import { Box, Button, IconButton, styled, Typography } from "@mui/material";
 
-// const growUpAnimation = keyframes/`
-//   0% {
-//     transform: scaleY(1);
-//   }
-//   100% {
-//     transform: scaleY(0);
-//   }
-// `;
-
 namespace S {
-  export const DecisionsTreeBox = styled(Box)(({ theme }) => ({
+  export const DecisionsTreeBox = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "leafCount",
+  })<{ leafCount: number }>(({ theme, leafCount }) => ({
     minWidth: "790px",
     position: "relative",
-    height: "630px",
+    height: `calc(230px + ${100 * leafCount}px)`,
     margin: "auto 0 15px 0",
 
     [theme.breakpoints.down("md")]: {
       transform: "scale(.8)",
     },
-
-    // "&::before": {
-    //   content: "''",
-    //   position: "absolute",
-    //   height: "100%",
-    //   width: "100%",
-    //   top: "0",
-    //   zIndex: "1",
-    //   backgroundColor: "white",
-    //   transformOrigin: "top",
-    //   animation: `${growUpAnimation} 1.5s ease-out forwards`,
-    // },
   }));
 
   const LeafStyles = styled(Box)(({ theme }) => ({
@@ -167,49 +148,14 @@ namespace S {
       transform: "matrix(-1, 0, 0, 1, 0, 0)",
       backgroundColor: "#2B9C03",
     },
-
-    // BUD STYLING
-    // position: "absolute",
-    // left: "370px",
-    // top: "28px",
-    // height: "100px",
-    // width: "50px",
-    // borderRadius: "50%",
-    // backgroundColor: "#2B9C03",
-
-    // "&::before, &::after": {
-    //   content: "''",
-    //   position: "absolute",
-    //   top: "0",
-    //   right: "0",
-    //   width: "100%",
-    //   height: "100%",
-    //   borderRadius: "50%",
-    //   backgroundColor: "#2B9C03",
-    // },
-
-    // "&::before": {
-    //   transform: "rotate(60deg)",
-    // },
-
-    // "&::after": {
-    //   transform: "rotate(-60deg)",
-    // },
-
-    // span: {
-    //   display: "block",
-    //   width: "12px",
-    //   height: "100px",
-    //   backgroundColor: "#2B9C03",
-    //   borderRadius: "0 0 0 80px",
-    //   margin: "75px auto 0 auto",
-    // },
   }));
 
-  export const Shadow = styled(Box)(({ theme }) => ({
+  export const Shadow = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "leafCount",
+  })<{ leafCount: number }>(({ theme, leafCount }) => ({
     position: "absolute",
     left: "260px",
-    top: "608px",
+    top: `calc(210px + ${100 * leafCount}px)`,
     width: "276px",
     height: "15px",
     backgroundColor: "#e6e6e6",
@@ -270,6 +216,16 @@ namespace S {
     position: "absolute",
     top: "-28px",
     [placement]: "-10px",
+  }));
+
+  export const NodataMessage = styled(Typography)(({ theme }) => ({
+    position: "absolute",
+    top: "45%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontSize: "1.2rem",
+    color: theme.palette.text.secondaryLight,
+    fontWeight: "500",
   }));
 }
 
