@@ -1,12 +1,8 @@
-import { styled, Stack } from "@mui/material";
+import { styled, Stack, Grid } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "1rem",
-    marginRight: "1rem",
-    marginBottom: "1rem",
-    marginTop: "2rem",
-    width: "30rem",
+    padding: "1rem",
 
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
@@ -21,13 +17,18 @@ namespace S {
     },
   }));
 
-  export const DateField = styled(Stack)(({ theme }) => ({
-    "& .MuiOutlinedInput-root": {
-      color: theme.palette.text.secondaryLight,
-      height: "2rem",
-      width: "14.5rem",
-    },
+  InputContainer.defaultProps = {
+    width: "100%",
+  };
+  export const Title = styled("div")(({ theme }) => ({
+    display: "contents",
   }));
+  export const ChildContainer = styled(Grid)(({ theme }) => ({
+    width: "100%",
+  }));
+  ChildContainer.defaultProps = {
+    md: 6,
+  };
 }
 
 export default S;

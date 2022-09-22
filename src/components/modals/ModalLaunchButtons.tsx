@@ -28,6 +28,7 @@ const ModalLaunchButtons = () => {
   };
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
+    
   };
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);

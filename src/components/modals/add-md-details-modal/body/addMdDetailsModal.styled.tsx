@@ -19,6 +19,9 @@ namespace S {
       },
     },
   }));
+    export const Title = styled("div")(({ theme }) => ({
+      display: "contents",
+    }));
 }
 
 export default S;
