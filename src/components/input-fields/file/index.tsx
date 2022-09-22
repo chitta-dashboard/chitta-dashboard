@@ -9,8 +9,10 @@ const FileInput = (props: Props) => {
         variant="outlined"
         label={props.label}
         type="file"
-        InputProps={{ style: { fontSize: ".8rem" } }}
-        InputLabelProps={{ style: { fontSize: ".8rem" } }}
+        InputProps={{ style: { fontSize: ".9rem" } }}
+        InputLabelProps={{ style: { fontSize: ".9rem" } }}
+        {...props.register}
+        helperText={props.helperText}
       />
     </>
   );
