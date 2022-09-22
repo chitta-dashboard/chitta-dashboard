@@ -14,7 +14,7 @@ import NotFound from "../views/not-found";
 const AppRouters: FC = () => {
   return (
     <Routes>
-      <Route path={`/`} element={<Navigate to={"/dashboard"} />} />
+      <Route path={`/`} element={<Navigate to={"/login"} />} />
       <Route path={`/dashboard`} element={<Dashboard />} />
       <Route path={`/ceo-details`} element={<CEODetails />} />
       <Route path={`/md-details`} element={<MDDetails />} />

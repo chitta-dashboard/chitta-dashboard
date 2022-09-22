@@ -2,15 +2,34 @@ import { styled, TableBody } from "@mui/material";
 
 namespace S {
   export const Content = styled(TableBody)(({ theme }) => ({
-    "& td": {
-      color: theme.palette.text.secondary,
-      fontSize: "1.1rem",
-      fontWeight: 500,
-      padding: "1rem 0",
-      borderBottom: "0.1rem solid grey",
+    [theme.breakpoints.down("md")]: {
+      "& tr": {
+        borderBottom: "0.2rem solid #F3F3F3",
+      },
+      "& td:nth-last-of-type(2)": {
+        paddingBottom: "1.25rem",
+      },
     },
-    "& td:first-of-type": {
-      textAlign: "center",
+    [theme.breakpoints.up("md")]: {
+      "& tr": {
+        borderBottom: "0.2rem solid #F3F3F3",
+      },
+      // "& td": {
+      //   width: "25%",
+      //   padding: "1rem 0",
+      // },
+      // "& td:first-of-type": {
+      //   padding: "1rem 0",
+      //   width: "7%",
+      //   textAlign: "center",
+      // },
+      // "& td:nth-of-type(5)": {
+      //   width: "32%",
+      // },
+      // "& td:last-of-type": {
+      //   width: "20%",
+      //   padding: "0 1rem",
+      // },
     },
   }));
 }

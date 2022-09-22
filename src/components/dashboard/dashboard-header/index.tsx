@@ -2,9 +2,10 @@ import React from "react";
 
 import profilePic from "../../../assets/images/profile.png";
 
+import SearchBar from "../../common-components/search-bar";
+
 import { Box } from "@mui/material";
 import { S } from "./dashboardHeader.styled";
-import SearchBar from "../../common-components/search-bar";
 import IconWrapper from "../../../utils/iconWrapper";
 
 type Props = {};

@@ -13,7 +13,7 @@ const DashboardSummaryCard = (props: Props) => {
 
   return (
     <>
-      <S.SummaryCardWrapper sm={10} md={5} lg={5} xl={5}>
+      <S.SummaryCardWrapper item sm={10} md={5} lg={5} xl={5}>
         <CardHeader>
           Summary
           <i>three-dots</i>
