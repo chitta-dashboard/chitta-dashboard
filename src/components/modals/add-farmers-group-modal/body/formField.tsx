@@ -1,20 +1,21 @@
 import { Stack } from "@mui/system";
 
-import DescriptionField from "../../../custom-modal/input-fields/description";
-import TextInput from "../../../custom-modal/input-fields/text";
+import DescriptionField from "../../../input-fields/description";
+import TextInput from "../../../input-fields/text";
+import Props from "../../type/modalProps";
 
 import S from "./addFarmersGroupModal.styled";
 
-const FormField = () => {
+const FormField = (props: Props) => {
   return (
     <>
       <S.InputContainer spacing={2}>
-        <TextInput label="கல்வி" />
-        <DescriptionField label="கல்வி" />
+        <TextInput label="குழு பெயர்" openModal={props.openModal} />
+        <DescriptionField label="விளக்கம்" openModal={props.openModal} />
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="கல்வி" />
-          <TextInput label="கல்வி" />
-          <TextInput label="கல்வி" />
+          <TextInput label="தலைவர்" openModal={props.openModal} />
+          <TextInput label="பொருளாளர்" openModal={props.openModal} />
+          <TextInput label="செயலாளர்" openModal={props.openModal} />
         </Stack>
       </S.InputContainer>
     </>

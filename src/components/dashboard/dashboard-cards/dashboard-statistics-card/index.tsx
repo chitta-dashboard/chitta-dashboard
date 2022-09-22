@@ -9,7 +9,7 @@ type Props = {};
 const DashboardStatCard = (props: Props) => {
   return (
     <>
-      <S.StatCardWrapper sm={10} md={2.5} lg={2.5} xl={2.5}>
+      <S.StatCardWrapper item sm={10} md={2.5} lg={2.5} xl={2.5}>
         <CardHeader>
           <Box>Statistics</Box>
           <Box>
@@ -17,15 +17,15 @@ const DashboardStatCard = (props: Props) => {
           </Box>
         </CardHeader>
         <S.StatBodyContainer container>
-          <S.StatBody sm={4} md={12} lg={12} xl={12}>
+          <S.StatBody item sm={4} md={12} lg={12} xl={12}>
             <S.StatBodyFont>Group Counts</S.StatBodyFont>
             <S.StatBodyNumberFont>169</S.StatBodyNumberFont>
           </S.StatBody>
-          <S.StatBody sm={4} md={12} lg={12} xl={12}>
+          <S.StatBody item sm={4} md={12} lg={12} xl={12}>
             <S.StatBodyFont>Farmer Counts</S.StatBodyFont>
             <S.StatBodyNumberFont>326</S.StatBodyNumberFont>
           </S.StatBody>
-          <S.StatBody sm={4} md={12} lg={12} xl={12}>
+          <S.StatBody item sm={4} md={12} lg={12} xl={12}>
             <S.StatBodyFont>Cultivation</S.StatBodyFont>
             <S.StatBodyNumberFont>
               77 <S.Span> Quintal </S.Span>{" "}
