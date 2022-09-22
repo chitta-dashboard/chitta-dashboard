@@ -5,11 +5,11 @@ namespace S {
     "& .MuiBackdrop-root": {
       backgroundColor: theme.palette.custom.backdrop,
     },
-    "& .MuiPaper-root":{
-        borderRadius:"1.25rem",
-        width:"max-content",
-        boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    }
+    "& .MuiPaper-root": {
+      borderRadius: "2.25rem",
+      width: "max-content",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    },
   }));
 }
 export default S;

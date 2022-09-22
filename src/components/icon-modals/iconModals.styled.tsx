@@ -10,11 +10,30 @@ namespace S {
     color: theme.palette.primary.main,
   }));
   export const SearchField = styled(TextField)(({ theme }) => ({
+    borderRadius: "1.25rem",
     "& .MuiInputBase-input": {
       color: theme.palette.primary.light,
     },
     "& .MuiOutlinedInput-notchedOutline": {
       border: "2px solid",
+      borderRadius:"2.25rem"
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "0.2.25rem",
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "2.25rem",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "2.25rem",
+      },
     },
   }));
   export const SearchIcon = styled("i")(({ theme }) => ({
