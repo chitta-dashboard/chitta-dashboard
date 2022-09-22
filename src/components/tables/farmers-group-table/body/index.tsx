@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { TableRow } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
+import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
 export interface farmersGroupsType {
   id: number;
   குழுபெயர்: string;
@@ -90,28 +91,35 @@ const farmersGroups: farmersGroupsType[] = [
 ];
 
 const Body = () => {
+  const [farmerGroupsIcon, setFarmersGroupIcon] = useState(false);
+  const farmersGroupsIconModalHandler = () => {
+    setFarmersGroupIcon(!farmerGroupsIcon);
+  };
   return (
-    <BodyWrapper>
-      {farmersGroups.map((farmersGroup) => (
-        <TableRow key={farmersGroup.id}>
-          <S.WebTableCell>{farmersGroup.id}</S.WebTableCell>
-          <S.TabCell>
-            <div># {farmersGroup.id}</div>
-            <div>
-              <CS.Icon>three-dots</CS.Icon>
-            </div>
-          </S.TabCell>
-          <S.Cell title="குழு பெயர்">{farmersGroup.குழுபெயர்}</S.Cell>
-          <S.Cell title="குழு விவரங்கள்">{farmersGroup.குழுவிவரங்கள்}</S.Cell>
-          <S.WebTableCell>
-            <S.IconBox>
-              <CS.Icon>delete</CS.Icon>
-              <CS.Icon>edit</CS.Icon>
-            </S.IconBox>
-          </S.WebTableCell>
-        </TableRow>
-      ))}
-    </BodyWrapper>
+    <>
+      <BodyWrapper>
+        {farmersGroups.map((farmersGroup) => (
+          <TableRow key={farmersGroup.id}>
+            <S.WebTableCell>{farmersGroup.id}</S.WebTableCell>
+            <S.TabCell>
+              <div># {farmersGroup.id}</div>
+              <div>
+                <CS.Icon onClick={farmersGroupsIconModalHandler}>three-dots</CS.Icon>
+              </div>
+            </S.TabCell>
+            <S.Cell title="குழு பெயர்">{farmersGroup.குழுபெயர்}</S.Cell>
+            <S.Cell title="குழு விவரங்கள்">{farmersGroup.குழுவிவரங்கள்}</S.Cell>
+            <S.WebTableCell>
+              <S.IconBox>
+                <CS.Icon>delete</CS.Icon>
+                <CS.Icon>edit</CS.Icon>
+              </S.IconBox>
+            </S.WebTableCell>
+          </TableRow>
+        ))}
+      </BodyWrapper>
+      <FarmersGroupModal open={farmerGroupsIcon} handleClose={farmersGroupsIconModalHandler} />
+    </>
   );
 };
 
