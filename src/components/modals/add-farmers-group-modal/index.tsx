@@ -1,8 +1,8 @@
 import { DialogTitle, Box } from "@mui/material";
 
-import Submit from "../../custom-modal/buttons/submit-button";
+import Submit from "../../buttons/submit-button";
 import CustomModal from "../../custom-modal";
-import TitleCloseButton from "../../custom-modal/buttons/title-close-button";
+import TitleCloseButton from "../../buttons/title-close-button";
 import Props from "../type/modalProps";
 import FormField from "./body/formField";
 
@@ -14,7 +14,7 @@ const AddFarmersGroupModal = (props: Props) => {
           <Box>Add Farmer's Group</Box>
           <TitleCloseButton label={""} openModal={props.openModal} handleClose={props.handleClose} />
         </DialogTitle>
-        <FormField />
+        <FormField openModal={props.openModal} />
         <Submit label={""} openModal={props.openModal} handleClose={props.handleClose} />
       </CustomModal>
     </>

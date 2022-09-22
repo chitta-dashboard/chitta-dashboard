@@ -1,15 +1,17 @@
-import { FC, useState } from "react";
+import { FC, useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
 
 import Logo from "../../../assets/images/logo.svg";
 
 import S from "./header.styled";
+import authContext from "../../../utils/context/auth";
 
 const Header: FC = () => {
   const { pathname }: { pathname: string } = useLocation();
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const [navOpen, setNavOpen] = useState(false);
+  const { setIsAuthenticated } = useContext(authContext);
 
   return (
     <S.Header>
@@ -52,7 +54,14 @@ const Header: FC = () => {
       </S.NavBar>
       <S.ActionsBox>
         <i>account</i>
-        <i>logout</i>
+        <i
+          onClick={() => {
+            setIsAuthenticated(false);
+            window.localStorage.removeItem("isAuthenticated");
+          }}
+        >
+          logout
+        </i>
         {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
       </S.ActionsBox>
     </S.Header>
