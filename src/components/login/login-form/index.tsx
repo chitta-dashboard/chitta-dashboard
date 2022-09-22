@@ -20,8 +20,8 @@ interface UserAuth {
 }
 const userAuth: UserAuth = { mobileNo: "0123456789", loginPassword: "nerkathir" };
 const LoginSchema = yup.object().shape({
-  mobileNo: yup.string().required("Mobile number is required"),
-  loginPassword: yup.string().required("Password is required"),
+  mobileNo: yup.string().required("Mobile number is required !"),
+  loginPassword: yup.string().required("Password is required !"),
 });
 
 const LoginForm: FC = () => {
@@ -45,13 +45,13 @@ const LoginForm: FC = () => {
       if (userData.mobileNo !== userAuth.mobileNo) {
         setError("mobileNo", {
           type: "custom",
-          message: "Mobile number not registered.",
+          message: "Mobile number not registered !",
         });
       }
       if (userData.loginPassword !== userAuth.loginPassword) {
         setError("loginPassword", {
           type: "custom",
-          message: "Password mismatch.",
+          message: "Password mismatch !",
         });
       }
       return;
@@ -71,7 +71,7 @@ const LoginForm: FC = () => {
             <S.LogoImage src={logo} alt="Nerkathir" />
           </S.ImageBox>
           <br />
-          <form onSubmit={handleSubmit(onLoginSubmit)} autoComplete="off">
+          <form onSubmit={handleSubmit(onLoginSubmit)}>
             <S.InputBox>
               <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
               <S.LoginInput
@@ -113,7 +113,7 @@ const LoginForm: FC = () => {
             <br />
 
             <S.ButtonBox>
-              <S.LoginButton size="large" type="submit" variant="contained">
+              <S.LoginButton size="large" type="submit">
                 Login
               </S.LoginButton>
             </S.ButtonBox>

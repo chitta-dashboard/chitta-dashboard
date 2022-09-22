@@ -70,11 +70,36 @@ namespace S {
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "0.625rem",
     textAlign: "center",
-    whiteSpace: "nowrap",
+    "& label.Mui-focused-root": {
+      color: "#ff1111",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "0.625rem",
+      },
+      "&:hover fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "0.625rem",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: theme.palette.primary.main,
+        border: "0.125rem solid",
+        borderRadius: "0.625rem",
+      },
+    },
+    
 
-    "& .MuiOutlinedInput-notchedOutline": {
-      border: "2px solid",
-      borderRadius: "0.625rem",
+    "& .MuiInputBase-input": {
+      color: theme.palette.text.secondaryDark,
+    },
+    input: {
+      ":-webkit-autofill": {
+        WebkitBoxShadow: "0 0 0 1000px white inset",
+        WebkitTextFillColor: theme.palette.text.secondaryDark,
+      },
     },
   }));
   export const ButtonBox = styled(Stack)(({ theme }) => ({
