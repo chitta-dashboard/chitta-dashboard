@@ -28,8 +28,6 @@ namespace S {
       width: "14.5rem",
     },
   }));
-
-  DateField.defaultProps = {};
 }
 
 export default S;
