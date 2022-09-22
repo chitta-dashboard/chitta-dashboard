@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, FormControl } from "@mui/material";
 
 import Props from "../../modals/type/modalProps";
 
@@ -8,9 +8,11 @@ const SubmitButton = (props: Props) => {
   return (
     <>
       <S.ButtonContainer>
-        <Button autoFocus onClick={props.handleClose} variant="contained">
-          Submit
-        </Button>
+        <FormControl>
+          <Button autoFocus variant="contained" type="submit">
+            Submit
+          </Button>
+        </FormControl>
       </S.ButtonContainer>
     </>
   );
