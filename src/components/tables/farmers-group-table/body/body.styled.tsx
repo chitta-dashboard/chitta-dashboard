@@ -21,16 +21,14 @@ namespace S {
     fontSize: "1.1rem",
     fontWeight: 500,
 
-    width: "25%",
     padding: "1rem 0",
 
     "&:first-of-type": {
-      width: "7%",
       textAlign: "center",
+      width: "7%",
     },
     "&:last-of-type": {
-      width: "20%",
-      padding: "1rem 0",
+      width: "12%",
     },
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -42,23 +40,16 @@ namespace S {
     fontSize: "1.1rem",
     fontWeight: 500,
     borderBottom: "1rem solid red",
-    width: "25%",
     padding: "1rem 0",
-    [theme.breakpoints.up("md")]: {
-      "&:nth-of-type(5)": {
-        width: "32%",
-      },
-    },
 
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
       fontSize: "1rem",
-      width: "100%",
       padding: "0.8rem",
+      width: "45%",
       position: "relative",
       left: "50%",
-
       //Create Table head for Tab view
       "&::before": {
         content: `"${title}"`,
@@ -66,7 +57,7 @@ namespace S {
         fontSize: "1rem",
         fontWeight: 600,
         position: "absolute",
-        left: "-45%",
+        left: "-100%",
       },
     },
   }));

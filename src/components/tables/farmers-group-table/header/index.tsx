@@ -8,11 +8,10 @@ const Header = () => {
     <TableHead>
       <TableRow>
         <S.WebTableCell>#</S.WebTableCell>
-        <S.WebTableCell>பெயர்</S.WebTableCell>
-        <S.WebTableCell>கைபேசி எண்</S.WebTableCell>
-        <S.WebTableCell>தகுதி</S.WebTableCell>
+        <S.WebTableCell>குழுபெயர்</S.WebTableCell>
+        <S.WebTableCell>குழு விவரங்கள்</S.WebTableCell>
         <S.WebTableCell></S.WebTableCell>
-        <S.TabTableCell colSpan={5}>MD Details</S.TabTableCell>
+        <S.TabTableCell colSpan={4}>Farmers Group</S.TabTableCell>
       </TableRow>
     </TableHead>
   );

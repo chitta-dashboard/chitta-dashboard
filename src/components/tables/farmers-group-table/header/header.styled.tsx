@@ -6,16 +6,13 @@ namespace S {
     fontSize: "1.1rem",
     fontWeight: 600,
     padding: "1.5rem 0",
-    width: "25%",
     "&:first-of-type": {
       textAlign: "center",
       width: "7%",
     },
-    "&:nth-of-type(4)": {
-      width: "32%",
-    },
+
     "&:nth-last-of-type(2)": {
-      width: "20%",
+      width: "12%",
     },
 
     [theme.breakpoints.down("md")]: {

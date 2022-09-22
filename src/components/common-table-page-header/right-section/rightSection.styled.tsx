@@ -7,11 +7,9 @@ namespace S {
     gap: "1rem",
     alignItems: "center",
     justifyContent: "end",
-
-    // [theme.breakpoints.down("md")]: {},
   }));
   export const CustomButton = styled(Button)(({ theme }) => ({
-    width: "15%",
+    minWidth: "7rem",
   }));
 }
 export default S;
