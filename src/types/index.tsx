@@ -2,7 +2,7 @@ declare module "@mui/material" {
   interface TypeText {
     primaryLight: string;
     primaryDark: string;
-    secondaryExtraLight: string
+    secondaryExtraLight: string;
     secondaryLight: string;
     secondaryDark: string;
   }

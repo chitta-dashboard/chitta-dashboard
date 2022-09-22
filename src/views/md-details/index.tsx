@@ -1,16 +1,16 @@
 import React from "react";
-import PageHeader from "../../components/table-page-header";
+import TablePageHeader from "../../components/common-table-page-header";
 import MdDetailsTable from "../../components/tables/md-details-table";
 
 import S from "./mdDetails.styled";
 
-const MdDetails = () => {
+const FarmersGroup = () => {
   return (
     <S.MdDetailsContainer>
-      <PageHeader />
+      <TablePageHeader />
       <MdDetailsTable />
     </S.MdDetailsContainer>
   );
 };
 
-export default MdDetails;
+export default FarmersGroup;

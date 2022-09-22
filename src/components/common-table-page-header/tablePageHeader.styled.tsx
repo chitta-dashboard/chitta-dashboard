@@ -5,7 +5,11 @@ namespace S {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingTop: "1rem",
+
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      gap: "1rem",
+    },
   }));
 }
 export default S;
