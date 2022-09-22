@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { Grid } from "@mui/material";
-import LoginBackground from "../../components/login-background";
-import LoginForm from "../../components/login-form";
-import authContext from "../../utils/context/auth";
 import { Navigate } from "react-router-dom";
+import LoginBackground from "../../components/login/login-background";
+import LoginForm from "../../components/login/login-form";
+import authContext from "../../utils/context/auth";
 
 const Login = () => {
   const { isAuthenticated } = useContext(authContext);

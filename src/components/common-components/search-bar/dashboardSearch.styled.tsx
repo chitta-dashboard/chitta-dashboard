@@ -1,4 +1,3 @@
-
 import styled from "@emotion/styled";
 import { Paper } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
@@ -14,6 +13,12 @@ export namespace S {
     paddingLeft: "1rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
   }));
 
   export const SearchBar = styled("input")(({ theme }: any) => ({

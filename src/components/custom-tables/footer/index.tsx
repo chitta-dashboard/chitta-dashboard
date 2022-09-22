@@ -9,7 +9,7 @@ const FooterWrapper = () => {
       <TableRow>
         <TableCell colSpan={5}>
           <S.PageStack>
-            <p>Showing 1 - 6 out of 9843</p>
+            <S.PageNoDetails>Showing 1 - 6 out of 9843</S.PageNoDetails>
             <Pagination count={99} variant="outlined" shape="rounded" size="medium" />
           </S.PageStack>
         </TableCell>

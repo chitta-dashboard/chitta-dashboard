@@ -1,17 +1,20 @@
 import React from "react";
-import { TableCell } from "@mui/material";
+import { TableHead, TableRow } from "@mui/material";
 
-import HeaderWrapper from "../../../custom-tables/header";
+import S from "./header.styled";
 
 const Header = () => {
   return (
-    <HeaderWrapper>
-      <TableCell>#</TableCell>
-      <TableCell>பெயர்</TableCell>
-      <TableCell>கைபேசி எண்</TableCell>
-      <TableCell>தகுதி</TableCell>
-      <TableCell></TableCell>
-    </HeaderWrapper>
+    <TableHead>
+      <TableRow>
+        <S.WebTableCell>#</S.WebTableCell>
+        <S.WebTableCell>பெயர்</S.WebTableCell>
+        <S.WebTableCell>கைபேசி எண்</S.WebTableCell>
+        <S.WebTableCell>தகுதி</S.WebTableCell>
+        <S.WebTableCell></S.WebTableCell>
+        <S.TabTableCell colSpan={5}>MD Details</S.TabTableCell>
+      </TableRow>
+    </TableHead>
   );
 };
 
