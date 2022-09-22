@@ -1,4 +1,3 @@
-
 import React from "react";
 
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";

@@ -9,7 +9,7 @@ type Props = {};
 const DashboardNotificationCard = (props: Props) => {
   return (
     <>
-      <S.NotificationCardWrapper sm={10} md={3.5} lg={3.5} xl={3.5}>
+      <S.NotificationCardWrapper item sm={10} md={3.5} lg={3.5} xl={3.5}>
         <S.NotificationHeader>
           Notification
           <Box>
