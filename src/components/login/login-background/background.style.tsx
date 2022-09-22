@@ -1,19 +1,16 @@
 import { Box, Typography, styled } from "@mui/material";
-import { LightTheme } from "../../utils/theme";
 
-
- namespace S {
+namespace S {
   export const ImageContainer = styled(Box)(({ theme }) => ({
     width: "55%",
     height: "100vh",
     position: "relative",
-    [theme.breakpoints.down('md')]: {
-        display:'none',
-    }
-
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   }));
 
-  export const TopImageBox = styled(Box)(({ theme }: any) => ({
+  export const TopImageBox = styled(Box)(({ theme }) => ({
     overflow: "hidden",
     position: "absolute",
     width: "100%",
@@ -21,23 +18,23 @@ import { LightTheme } from "../../utils/theme";
     top: "0rem",
     left: "0rem",
   }));
-  export const FarmerImageBox = styled(Box)(({ theme }: any) => ({
+  export const FarmerImageBox = styled(Box)(({ theme }) => ({
     overflow: "hidden",
     position: "absolute",
     width: "70%",
-    height:"44vh",
+    height: "44vh",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
   }));
-  export const BottomImageBox = styled(Box)(({ theme }: any) => ({
+  export const BottomImageBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     width: "100%",
-    height:"25vh",
+    height: "25vh",
     bottom: "0%",
     right: "-60%",
   }));
-  export const TopImage = styled('img')(({ theme }: any) => ({
+  export const TopImage = styled("img")(({ theme }) => ({
     position: "absolute",
     top: "0rem",
     left: "0rem",
@@ -45,39 +42,38 @@ import { LightTheme } from "../../utils/theme";
     width: "50%",
     objectFit: "cover",
   }));
-  export const FarmerImage = styled('img')(({ theme }: any) => ({
+  export const FarmerImage = styled("img")(({ theme }) => ({
     position: "absolute",
     height: "100%",
     width: "100%",
     objectFit: "contain",
   }));
-  export const BottomImage = styled('img')(({ theme }: any) => ({
+  export const BottomImage = styled("img")(({ theme }) => ({
     position: "absolute",
     height: "100%",
     width: "100%",
     objectFit: "fill",
   }));
 
-  export const HeadingText = styled(Typography)(({ theme }: any) => ({
-    color: `${LightTheme.palette.primary.light}`,
+  export const HeadingText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.primary.light,
     fontWeight: "600",
     fontSize: "2.625rem",
     lineHeight: "3.938rem",
     textAlign: "center",
-    marginTop:"10vh",
-
+    marginTop: "10vh",
   }));
-  export const RegTextBox = styled(Box)(({ theme }: any) => ({
-    position:"absolute",
+  export const RegTextBox = styled(Box)(({ theme }) => ({
+    position: "absolute",
     bottom: "4%",
     left: "6%",
   }));
-  export const RegText = styled(Typography)(({ theme }: any) => ({
-    color: `${LightTheme.palette.text.secondary}`,
+  export const RegText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondary,
     fontWeight: "400",
     fontSize: "1rem",
     lineHeight: "1.688rem",
   }));
 }
 
-export default S
+export default S;
