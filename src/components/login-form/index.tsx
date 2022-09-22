@@ -1,8 +1,6 @@
-import React, { FC, useState } from "react";
-import { FormHelperText } from "@mui/material";
+import React, { FC, useContext, useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,6 +8,7 @@ import * as yup from "yup";
 
 import logo from "../../assets/images/logo.png";
 import S from "./loginForm.styled";
+import authContext from "../../utils/context/auth";
 
 interface LoginFormInputs {
   mobileNo: string;
@@ -33,8 +32,7 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const navigate = useNavigate();
-  const [password, setpassword] = useState("");
+  const { setIsAuthenticated } = useContext(authContext);
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -47,8 +45,8 @@ const LoginForm: FC = () => {
   });
 
   const onSubmit = (userData: LoginFormInputs) => {
-    console.log(userData);
-    navigate("/dashboard");
+    setIsAuthenticated(true);
+    window.localStorage.setItem("isAuthenticated", "true");
     reset();
   };
 
@@ -66,6 +64,7 @@ const LoginForm: FC = () => {
             <S.InputBox>
               <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
               <S.LoginInput
+                type="number"
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">

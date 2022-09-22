@@ -1,14 +1,17 @@
 import { FC } from "react";
 import { GlobalStyles } from "@mui/material";
-
+import { useContext } from "react";
 import Header from "./header";
 import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
-
 import S from "./Layout.styled";
+import authContext from "../../utils/context/auth";
+import { Navigate } from "react-router-dom";
 
 const Layout: FC = () => {
+  const { isAuthenticated } = useContext(authContext);
+
   return (
     <S.Layout>
       <GlobalStyles
@@ -39,11 +42,17 @@ const Layout: FC = () => {
           },
         })}
       />
-      <Header />
-      <Content>
-        <AppRouters />
-      </Content>
-      <Footer />
+      {isAuthenticated ? (
+        <>
+          <Header />
+          <Content>
+            <AppRouters />
+          </Content>
+          <Footer />
+        </>
+      ) : (
+        <Navigate to="./login" />
+      )}
     </S.Layout>
   );
 };
