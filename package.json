@@ -19,6 +19,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-froala-wysiwyg": "^4.0.14",
+    "react-app-rewired": "^2.2.1",
     "react-hook-form": "^7.35.0",
     "react-image-crop": "^8.6.12",
     "react-router-dom": "^6.3.0",
@@ -30,10 +31,10 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "CI=false react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": [
