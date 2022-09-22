@@ -7,13 +7,11 @@ import Footer from "./footer";
 
 const FarmersDetailsTable = () => {
   return (
-    <>
-      <TableWrapper>
-        <Header />
-        <Body />
-        <Footer />
-      </TableWrapper>
-    </>
+    <TableWrapper>
+      <Header />
+      <Body />
+      <Footer />
+    </TableWrapper>
   );
 };
 

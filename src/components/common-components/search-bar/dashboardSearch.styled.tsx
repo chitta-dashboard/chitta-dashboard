@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
 import { Paper } from "@mui/material";
+import { LightTheme } from "../../../utils/theme";
 
-//FontColor
-const bodyFontColor = "#777777";
-
-namespace S {
+export namespace S {
   export const SearchBarPaper = styled(Paper)(({ theme }: any) => ({
     borderRadius: "1.2rem",
     width: "29rem",
-    height: "2.3rem",
+    height: "2.5rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -24,7 +22,7 @@ namespace S {
     border: "#fff",
     borderRadius: "1.2rem",
     paddingLeft: "0.5rem",
-    color: bodyFontColor,
+    color: LightTheme.palette.primary.light,
   }));
 }
 

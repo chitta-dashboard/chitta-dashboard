@@ -5,8 +5,8 @@ namespace S {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
-    [theme.breakpoints.down("md")]: {
+    width: "100%",
+    [theme.breakpoints.down("lg")]: {
       flexDirection: "column",
       gap: "1rem",
     },

@@ -1,10 +1,9 @@
 import React from "react";
 import TablePageHeader from "../../components/common-table-page-header";
 import MdDetailsTable from "../../components/tables/md-details-table";
-
 import S from "./mdDetails.styled";
 
-const FarmersGroup = () => {
+const MdDetails = () => {
   return (
     <S.MdDetailsContainer>
       <TablePageHeader />
@@ -13,4 +12,4 @@ const FarmersGroup = () => {
   );
 };
 
-export default FarmersGroup;
+export default MdDetails;

@@ -27,4 +27,10 @@ declare module "@mui/material" {
   }
 }
 
+declare module "@mui/system" {
+  interface Shape {
+    containerRadius: string;
+  }
+}
+
 export {};

@@ -1,10 +1,10 @@
 import React from "react";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
-import FarmersDetailsTable from "../../components/tables/farmers-details";
+import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 
 import S from "./farmersDetails.styled";
 
-const FarmersGroup = () => {
+const FarmersDetails = () => {
   return (
     <S.FarmersDetailsContainer>
       <FarmersDetailsTablePageHeader />
@@ -13,4 +13,4 @@ const FarmersGroup = () => {
   );
 };
 
-export default FarmersGroup;
+export default FarmersDetails;

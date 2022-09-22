@@ -4,7 +4,7 @@ import FarmersGroupTable from "../../components/tables/farmers-group-table";
 
 import S from "./farmersGroup.styled";
 
-const MdDetails = () => {
+const FarmersGroup = () => {
   return (
     <S.FarmersGroupContainer>
       <TablePageHeader />
@@ -13,4 +13,4 @@ const MdDetails = () => {
   );
 };
 
-export default MdDetails;
+export default FarmersGroup;

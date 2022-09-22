@@ -1,7 +1,5 @@
-import { Box, Typography } from "@mui/material";
-import { Theme, styled } from "@mui/material";
-
-export namespace S {
+import { Box, styled, Typography } from "@mui/material";
+namespace S {
   export const Footer = styled(Box)(({ theme }) => ({
     padding: ".5rem 1rem",
     backgroundColor: "white",
@@ -11,32 +9,30 @@ export namespace S {
     gap: "1rem",
   }));
 
-  export const InfoBar = styled(Box)(({theme}) => ({
+  export const InfoBar = styled(Box)(({ theme }) => ({
     display: "flex",
     gap: "1rem",
-  }))
+  }));
 
-  export const InfoText = styled(Typography)(({theme}) => ({
+  export const InfoText = styled(Typography)(({ theme }) => ({
     fontSize: ".8rem",
     textTransform: "uppercase",
     cursor: "pointer",
+    whiteSpace: "nowrap",
 
     "&:hover": {
-      color: theme.palette.text.secondaryLight
-    }
-  }))
+      color: theme.palette.text.secondaryExtraLight,
+    },
+  }));
 
-  export const ArticleBar = styled(Box)(({theme}) => ({
+  export const ArticleBar = styled(Box)(({ theme }) => ({
     display: "flex",
     gap: "1.5rem",
-  }))
+  }));
 
-  export const ArticleText = styled(Typography)(({theme}) => ({
-    fontSize: ".8rem",
-    cursor: "pointer",
-
-    "&:hover": {
-      color: theme.palette.text.secondaryLight
-    }
-  }))
+  export const ArticleText = styled(InfoText)(({ theme }) => ({
+    textTransform: "unset",
+  }));
 }
+
+export default S;

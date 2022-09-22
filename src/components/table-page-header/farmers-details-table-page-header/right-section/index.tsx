@@ -1,5 +1,4 @@
 import React from "react";
-import { Stack } from "@mui/material";
 
 import S from "./rightSection.styled";
 import SelectDropDown from "../../../common-components/select-dropdown";
@@ -7,9 +6,9 @@ import SelectDropDown from "../../../common-components/select-dropdown";
 const RightSection = () => {
   return (
     <S.RightSectionContainer>
-      <Stack>
+      <S.DropdownStack>
         <SelectDropDown />
-      </Stack>
+      </S.DropdownStack>
       <S.ButtonStack>
         <S.CustomButton>Share Holder</S.CustomButton>
         <S.CustomButton>Export Farmers</S.CustomButton>

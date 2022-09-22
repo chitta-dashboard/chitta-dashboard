@@ -9,6 +9,7 @@ namespace S {
     margin: "2rem 0",
     border: 0,
     borderCollapse: "collapse",
+
     [theme.breakpoints.down("md")]: {
       margin: "1rem 0",
       height: "calc(100% - 7rem)",
@@ -21,7 +22,7 @@ namespace S {
     borderCollapse: "collapse",
 
     [theme.breakpoints.down("md")]: {
-      height: "calc(100% - 10.5rem)",
+      height: "calc(100% - 11rem)",
     },
 
     "& thead,& tbody,& tr,& tfoot,& th,& td,& div": {

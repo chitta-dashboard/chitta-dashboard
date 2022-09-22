@@ -1,16 +1,21 @@
-import { Stack, styled } from "@mui/material";
-
+import { styled, Stack } from "@mui/material";
 namespace S {
   export const LeftSectionContainer = styled(Stack)(({ theme }) => ({
-    width: "100%",
+    width: "75%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     gap: "1rem",
-    // justifyContent: "space-between",
+    [theme.breakpoints.down("lg")]: {
+      width: "100%",
+      justifyContent: "space-between",
+    },
 
     "& .MuiPaper-root": {
-      minWidth: "12rem",
+      width: "75%",
+      [theme.breakpoints.down("lg")]: {
+        width: "50%",
+      },
       [theme.breakpoints.down("md")]: {
         width: "100%",
       },
