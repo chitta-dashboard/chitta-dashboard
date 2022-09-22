@@ -1,8 +1,8 @@
 import { Box, DialogTitle } from "@mui/material";
 
-import BackAndSubmit from "../../../custom-modal/buttons/back-and-submit-buttons";
+import BackAndSubmit from "../../../buttons/back-and-submit-buttons";
 import CustomModal from "../../../custom-modal";
-import TitleCloseButton from "../../../custom-modal/buttons/title-close-button";
+import TitleCloseButton from "../../../buttons/title-close-button";
 import Props from "../../type/modalProps";
 import FormField from "./body/formField";
 import PageNumber2 from "./body/pageNumber";
@@ -15,7 +15,7 @@ const AddFarmersDetailsModalPage2 = (props: Props) => {
           <Box>Add Farmer's Details</Box>
           <TitleCloseButton label={""} openModal={props.openModal} handleClose={props.handleClose} />
         </DialogTitle>
-        <FormField />
+        <FormField openModal={props.openModal} />
         <PageNumber2 />
         <BackAndSubmit label={""} openModal={props.openModal} handleClose={props.handleClose} />
       </CustomModal>

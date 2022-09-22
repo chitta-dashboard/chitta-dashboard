@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import AddFarmersGroupModal from "../../modals/add-farmers-group-modal";
 import S from "./decisionsHeader.styled";
+import groupData from "../decisions.json";
 
 interface CustomProps {
   viewTree(): void;
@@ -19,8 +20,10 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
           back
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
-        {treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
-        <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
+        <S.ButtonBox>
+          {groupData.length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
+          <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
+        </S.ButtonBox>
       </S.Header>
       <AddFarmersGroupModal label="" openModal={modalOpen} handleClose={() => setModalOpen(false)} />
     </>

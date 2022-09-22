@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Props } from "../header";
+import { wrapChildrenProps } from "../../../types/wrap-child-props";
 
 import S from "./bodyWrapper.styled";
 
-const BodyWrapper = ({ children }: Props) => {
+const BodyWrapper = ({ children }: wrapChildrenProps) => {
   return <S.Content>{children}</S.Content>;
 };
 
