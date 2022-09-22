@@ -13,7 +13,7 @@ const Layout: FC = () => {
     <S.Layout>
       <GlobalStyles
         styles={(theme) => ({
-          "div, span, table, tbody, thead, ul, ol": {
+          "body, div, nav, span, table, tbody, thead, ul, ol": {
             "&::-webkit-scrollbar": {
               width: "5px",
               // backgroundColor: "#F5F5F5",

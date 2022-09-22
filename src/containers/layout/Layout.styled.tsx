@@ -10,20 +10,6 @@ namespace S {
     width: "100%",
     position: "fixed",
     overflow: "hidden",
-
-    // "div, table, ul, ol": {
-    //   "&::-webkit-scrollbar": {
-    //     width: "5px",
-    //     backgroundColor: "#F5F5F5",
-    //     borderRadius: "10px",
-    //   },
-
-    //   "&::-webkit-scrollbar-thumb": {
-    //     borderRadius: "10px",
-    //     backgroundColor: theme.palette.primary.light,
-    //     height: "20px",
-    //   },
-    // },
   }));
 }
 
