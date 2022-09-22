@@ -6,7 +6,7 @@ namespace S {
     gridTemplateRows: "auto 1fr",
     height: "100%",
     gap: "1.2rem",
-    minHeight: "785px",
+    // minHeight: "785px",
   }));
 }
 export default S;

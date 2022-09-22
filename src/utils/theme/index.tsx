@@ -37,7 +37,7 @@ export const LightTheme: Theme = createTheme({
   components: {
     MuiButton: {
       styleOverrides: {
-        root: {
+        textPrimary: {
           backgroundColor: "#1A9035",
           color: "white",
           textTransform: "capitalize",

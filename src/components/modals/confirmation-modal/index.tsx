@@ -1,6 +1,6 @@
 import { DialogTitle, Box } from "@mui/material";
 
-import YesOrNo from "../../custom-modal/buttons/yes-or-no-buttons";
+import YesOrNo from "../../buttons/yes-or-no-buttons";
 import CustomModal from "../../custom-modal";
 import Props from "../type/modalProps";
 import ConfirmationBody from "./body";
