@@ -11,18 +11,27 @@ namespace S {
   }));
 
   export const TopImageBox = styled(Box)(({ theme }) => ({
-    overflow: "hidden",
+    width: "38rem",
+    height: "38rem",
     position: "absolute",
-    width: "100%",
-    height: "17vh",
-    top: "0rem",
-    left: "0rem",
+    top: "0",
+    left: "0",
   }));
+  export const TopImage = styled(Box)(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    borderRadius: "50%",
+    position: "absolute",
+    top: "-75%",
+    left: "-40%",
+    backgroundColor: "rgba(48, 111, 84, 0.08)",
+  }));
+
   export const FarmerImageBox = styled(Box)(({ theme }) => ({
     overflow: "hidden",
     position: "absolute",
     width: "70%",
-    height: "44vh",
+    height: "44%",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
@@ -30,18 +39,11 @@ namespace S {
   export const BottomImageBox = styled(Box)(({ theme }) => ({
     position: "absolute",
     width: "100%",
-    height: "25vh",
+    height: "25%",
     bottom: "0%",
     right: "-60%",
   }));
-  export const TopImage = styled("img")(({ theme }) => ({
-    position: "absolute",
-    top: "0rem",
-    left: "0rem",
-    height: "100%",
-    width: "50%",
-    objectFit: "cover",
-  }));
+
   export const FarmerImage = styled("img")(({ theme }) => ({
     position: "absolute",
     height: "100%",
@@ -69,7 +71,7 @@ namespace S {
     left: "6%",
   }));
   export const RegText = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondaryLight,
     fontWeight: "400",
     fontSize: "1rem",
     lineHeight: "1.688rem",
