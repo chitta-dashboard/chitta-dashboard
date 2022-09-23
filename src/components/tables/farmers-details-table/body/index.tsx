@@ -2,7 +2,9 @@ import React, { useState,useRef } from "react";
 import { Avatar, Checkbox, Stack } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-
+import {fileValidation} from '../../../../utils/const/const';
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmers-details";
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 
@@ -25,7 +27,33 @@ const Body = (props: Props) => {
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const navigate = useNavigate();
   
+  const [image, setImage] = useState("");
+  const [userId,setUserId] = useState<number>(-1);
   const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
+
+  const hiddenFileInput:any = useRef<HTMLInputElement>();
+  const {farmersList,editTableIcon} = useFarmerDetailsContext();
+
+
+
+  const getURL = (id:number)=>{
+    let result = farmersList.filter(item=>{
+      return item.id === id ? item.profile : null
+    })
+    let data = result.length > 0 ? result[0]['profile'] : undefined
+    return data;
+  }
+
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>|any)=>{
+    let isValid = e.target && fileValidation(e.target.files[0].name);
+    (e.target.files && isValid) && setImage(window.URL.createObjectURL(e.target.files[0]))
+  }
+   
+  const handleIconClick = (id:number)=>{
+     hiddenFileInput && hiddenFileInput.current.click()
+     setUserId(id);
+  }
+
   const farmersDetailsIconModalHandler = () => {
     setFarmersDetailsIcon(!farmersDetailsIcon);
   };
@@ -44,6 +72,10 @@ const Body = (props: Props) => {
     navigate(`/farmers-details/${id}`);
   }
   
+ const handleCroppedImage = (image:string) => {
+  editTableIcon({id:userId,profile:image,name:'image'})
+ };
+
   return (
     <>
       <BodyWrapper>
@@ -78,9 +110,10 @@ const Body = (props: Props) => {
             <S.Cell title="பெயர்">
               <S.NameStack>
                 <S.AvatarBox>
-                  <S.AvatarImg alt="User-img" src={userPic} />
-                  <S.EditBox onClick={() => {}}>
+                  <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
+                  <S.EditBox onClick={()=>handleIconClick(user.id)}>
                     <S.EditIcon>edit</S.EditIcon>
+                    <S.HiddenInput type='file' ref={hiddenFileInput} onChange={handleInputChange}/>
                   </S.EditBox>
                 </S.AvatarBox>
               </S.NameStack>
@@ -99,6 +132,9 @@ const Body = (props: Props) => {
         ))}
       </BodyWrapper>
       <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} generateIdCard={() =>generateIdCard()} generateFarmerDetailForm={()=>generateFarmerDetailForm()} />
+      {image && (
+        <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+      )}
     </>
   );
 };
