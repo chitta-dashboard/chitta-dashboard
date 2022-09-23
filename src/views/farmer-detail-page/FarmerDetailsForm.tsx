@@ -38,12 +38,6 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined>((props: Props,r
         <S.HeaderDateText>நாள்: 22/08/22</S.HeaderDateText>
       </S.HeaderDateBox>
       <S.UserInfoContainer>
-        {/* {FARMERS_DETAILS_DATA.map((data) => (
-            <S.UserInfoRow key={data.id}>
-              <S.UserInfoData1>{data.label}</S.UserInfoData1>
-              <S.UserInfoData2>{data.content}</S.UserInfoData2>
-            </S.UserInfoRow>
-          ))} */}
         {Object.entries(REAL_DATA[0]).map((data, i) => {
           return (
             <S.UserInfoRow key={data[0]}>
