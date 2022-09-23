@@ -5,7 +5,7 @@ import { Theme, useMediaQuery } from "@mui/material";
 import Logo from "../../../assets/images/logo.svg";
 
 import S from "./header.styled";
-import authContext from "../../../utils/context/auth";
+import authContext from "../../../utils/context/authContext";
 
 const Header: FC = () => {
   const { pathname }: { pathname: string } = useLocation();

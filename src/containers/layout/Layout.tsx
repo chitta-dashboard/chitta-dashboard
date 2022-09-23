@@ -6,7 +6,7 @@ import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
 import S from "./Layout.styled";
-import authContext from "../../utils/context/auth";
+import authContext from "../../utils/context/authContext";
 import { Navigate } from "react-router-dom";
 
 const Layout: FC = () => {
