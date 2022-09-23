@@ -74,8 +74,8 @@ namespace S {
 
     export const PreviewTitleContainer = styled(Box)(({theme})=>({
       width:'60%',
-      backgroundColor:"#C1E1D6",
-      fontSize:'1.3rem'
+      fontSize:'1.3rem',
+      textAlign:'center'
     }));
 
     export const PreviewImageContainer = styled(Box)(({theme})=>({
