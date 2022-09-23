@@ -1,7 +1,10 @@
-import { styled, Stack, TableCell, Typography, Box } from "@mui/material";
+import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
+  export const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    cursor: 'pointer',
+  }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
     width: "6%",
     padding: "1rem 0",
