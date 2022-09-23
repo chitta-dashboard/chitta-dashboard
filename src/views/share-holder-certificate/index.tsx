@@ -1,14 +1,14 @@
 import React, { forwardRef } from "react";
-import { S } from "./certificate.styled";
+
+import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
-import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
-import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
-
+import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
+import { S } from "./certificate.styled";
 interface Props {}
 
-const ShareHolderCertificate = forwardRef<any>((props: Props, ref) => (
+const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) => (
   <div className="print-container" ref={ref}>
     {[1, 2].map((item) => {
       return (
