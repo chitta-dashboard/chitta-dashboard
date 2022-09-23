@@ -11,7 +11,7 @@ const RadioButton = (props: Props) => {
   return (
     <>
       <FormControl>
-        <Stack direction={"column"} spacing={2}>
+        <Stack direction={"column"} spacing={1}>
           <S.StyledLabel id="demo-radio-buttons-group-label">{props.label}</S.StyledLabel>
           <RadioGroup defaultValue="">
             <Stack direction={"row"} spacing={2}>

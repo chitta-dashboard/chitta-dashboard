@@ -8,7 +8,7 @@ const NextButton = (props: Props) => {
   return (
     <>
       <S.ButtonContainer>
-        <Button autoFocus onClick={props.handleClose} variant="contained">
+        <Button autoFocus type="submit" onClick={props.submit}>
           Next
         </Button>
       </S.ButtonContainer>

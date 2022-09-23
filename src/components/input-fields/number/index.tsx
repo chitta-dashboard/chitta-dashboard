@@ -5,7 +5,7 @@ import S from "./number.styled";
 const NumberInput = (props: Props) => {
   return (
     <>
-      <S.InputNumber label={props.label} />
+      <S.InputNumber label={props.label} {...props.register} helperText={props.helperText} />
     </>
   );
 };
