@@ -64,6 +64,17 @@ export namespace S {
       display: "none",
     },
   }));
+
+  export const SearchBarContainer = styled(Box)(({ theme }: any) => ({
+    width: "80%",
+    marginLeft: "8rem",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
+    },
+  }));
 }
 
 export default S;

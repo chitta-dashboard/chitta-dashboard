@@ -3,11 +3,11 @@ import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const IdCardWrapper = styled(Box)(({ theme }) => ({
-    // height: "19.5rem",
     maxWidth: "34.5rem",
     backgroundColor: "#fff",
     borderRadius: "1.25rem",
     padding: "0.3rem 0.6rem 0 0.6rem",
+    margin: "2rem auto",
   }));
 
   export const IdImage = styled("img")(({ theme }) => ({

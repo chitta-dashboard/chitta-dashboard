@@ -7,7 +7,7 @@ const CommonIconModal = (props: CommonModalProps) => {
 
   return (
     <>
-      <S.CustomModalContainer open={props.open} onClose={props.handleClose}>
+      <S.CustomModalContainer open={props.open} onClose={props.handleClose} >
         {props.children}
       </S.CustomModalContainer>
     </>

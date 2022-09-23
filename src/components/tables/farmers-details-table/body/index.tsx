@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { TableRow, Avatar, Checkbox, Stack } from "@mui/material";
+import { useReactToPrint } from "react-to-print";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
-import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
 import DeleteModal from "../../../modals/delete-modal";
 
-import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
+import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
+import IdCardBody from "../../../id-card/id-card-body";
+import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
+import S from "./body.styled";
 
 export interface FarmersDetailsType {
   id: number;
@@ -130,6 +133,9 @@ const Body = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
 
+  const idCardRef = useRef<HTMLDivElement>();
+  const farmerDetailFormRef = useRef<HTMLDivElement>();
+  
   const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
 
   //farmers Details Delete Modal
@@ -149,9 +155,26 @@ const Body = () => {
   const farmersDetailsIconModalHandler = () => {
     setFarmersDetailsIcon(!farmersDetailsIcon);
   };
+
+  const generateIdCard = useReactToPrint({
+  documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
+     content: () => idCardRef.current as HTMLDivElement,
+  });
+  
+ const generateFarmerDetailForm = useReactToPrint({
+     documentTitle: `Nerkathir_User_Form_${+new Date()}`,
+     content: () => farmerDetailFormRef.current as HTMLDivElement,
+ });
+
   return (
     <>
       <BodyWrapper>
+        <tr style={{ display: "none" }}>
+         <td>
+       <IdCardBody ref={idCardRef} />
+       <FarmerDetailsForm ref={farmerDetailFormRef  } />
+         </td>
+     </tr>
         {farmersDetails.map((user) => (
           <TableRow key={user.id}>
             <S.RowCheckCell>
@@ -172,8 +195,12 @@ const Body = () => {
             </S.TabCell>
             <S.Cell title="பெயர்">
               <S.NameStack>
-                <Avatar alt="User-img" src={userPic} />
-                {user.name}
+                <S.AvatarBox>
+                  <S.AvatarImg alt="User-img" src={userPic} />
+                  <S.EditBox onClick={() => {}}>
+                    <S.EditIcon>edit</S.EditIcon>
+                  </S.EditBox>
+                </S.AvatarBox>
               </S.NameStack>
             </S.Cell>
             <S.Cell title="கைபேசி எண்">{user.mobileNo}</S.Cell>
@@ -181,15 +208,15 @@ const Body = () => {
             <S.WebTableCell>
               <S.IconBox>
                 <CS.Icon onClick={() => farmersDetailsDeleteModal(user.id)}>delete</CS.Icon>
-                <CS.Icon>id-card</CS.Icon>
+                <CS.Icon onClick={()=>generateIdCard()} >id-card</CS.Icon>
                 <CS.Icon>edit</CS.Icon>
-                <CS.Icon>download</CS.Icon>
+                <CS.Icon onClick={()=>generateFarmerDetailForm()} >download</CS.Icon>
               </S.IconBox>
             </S.WebTableCell>
           </TableRow>
         ))}
       </BodyWrapper>
-      <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} />
+      <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} generateIdCard={() =>generateIdCard()} generateFarmerDetailForm={()=>generateFarmerDetailForm()} />
       <DeleteModal openModal={deleteModal} handleClose={farmersDetailsDeleteModal} deleteFarmersDetails={deleteFarmersDetails} deleteId={deleteId} />
     </>
   );
