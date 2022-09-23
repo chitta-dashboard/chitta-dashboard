@@ -1,7 +1,11 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 
 type mdDetail = {
+  id: number;
+  image: string;
   name: string;
+  mobileNo: number;
+  degree: string;
 };
 
 type Props = {
@@ -10,16 +14,146 @@ type Props = {
 
 interface mdDetailsContextType {
   mdList: mdDetail[];
+  addMdDetail?: (data: any) => void;
+  filterMdDetail?: (name: string) => void;
 }
 
 const initialState: mdDetailsContextType = {
-  mdList: [],
+  mdList: [
+    {
+      id: 1,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 2,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 3,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 4,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 5,
+      image: "image",
+      name: "Arokiya Arokiya Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 6,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 7,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 8,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 9,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 10,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 11,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 12,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 13,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 14,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+    {
+      id: 15,
+      image: "image",
+      name: "Arokiya",
+      mobileNo: 8610010875,
+      degree: "Higher Secondary",
+    },
+  ],
 };
+
+const searchWord = (text: string, word: string) =>
+  text
+    ? text
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
+    : false;
 
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_MD_DETAIL":
-      return { ...state, mdList: action.payload };
+      return { ...state, mdList: [...state.mdList, action.payload] };
+
+    case "FILTER_MD_DETAIL":
+      return {
+        ...state,
+        mdList: initialState.mdList.filter((md) => {
+          return searchWord(md.name, action.payload);
+        }),
+      };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -35,9 +169,14 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: "ADD_MD_DETAIL", payload: data });
   };
 
+  const filterMdDetail = (name: string) => {
+    dispatch({ type: "FILTER_MD_DETAIL", payload: name });
+  };
+
   let data = {
     ...state,
     addMdDetail,
+    filterMdDetail,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

@@ -1,19 +1,29 @@
-import React from "react";
+import React, { forwardRef, MutableRefObject, useContext, useRef } from "react";
+import { mdDetailsContext, useMdDetailsContext } from "../../../utils/context/md-details";
 
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 
-type Props = {};
+type Props = {
+  onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
+};
 
-const SearchBar = (props: Props) => {
+const SearchBar = forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { filterMdDetail } = useMdDetailsContext();
+
   return (
     <>
       <S.SearchBarPaper>
-        <IconGreen>search</IconGreen>
-        <S.SearchBar placeholder="  Search..." />
+        <IconGreen onClick={props.onClick}>search</IconGreen>
+        <S.SearchBar
+          ref={ref}
+          placeholder="  Search..."
+          onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+            filterMdDetail && filterMdDetail((ref as MutableRefObject<HTMLInputElement | undefined>)?.current?.value as string);
+          }}
+        />
       </S.SearchBarPaper>
     </>
   );
-};
-
+});
 export default SearchBar;

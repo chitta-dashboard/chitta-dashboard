@@ -117,7 +117,7 @@ namespace S {
       content: "''",
       backgroundColor: theme.palette.warning.main,
       width: "100%",
-      height: "3px",
+      height: "4px",
       position: "absolute",
       borderRadius: "50px",
       bottom: "0",

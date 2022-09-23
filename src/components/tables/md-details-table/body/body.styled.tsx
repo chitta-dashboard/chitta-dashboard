@@ -124,6 +124,18 @@ namespace S {
     color: LightTheme.palette.text.primary,
     opacity: "1",
   }));
+
+  export const EmptyMsg = styled("p")(({ theme }) => ({
+    color: LightTheme.palette.text.secondaryLight,
+    fontSize: "1.2rem",
+    textAlign: "center",
+    fontWeight: "500",
+    padding: "2rem 0",
+    position: "absolute",
+    top: "50%",
+    left: "48%",
+    translate: "transform(-50%, -50%)",
+  }));
 }
 
 export default S;
