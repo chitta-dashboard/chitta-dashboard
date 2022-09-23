@@ -12,123 +12,15 @@ import IdCardBody from "../../../id-card/id-card-body";
 import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
 import S from "./body.styled";
 
-export interface FarmersDetailsType {
-  id: number;
-  image: string;
-  name: string;
-  mobileNo: number;
-  farmersGroup: string;
+interface Props{
+  users:any
+  setUsers: any
+  handleChange: any
+  
 }
 
-const farmersDetails: FarmersDetailsType[] = [
-  {
-    id: 1,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 2,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 3,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 4,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 5,
-    image: "image",
-    name: "Arokiya Arokiya Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 6,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 7,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 8,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 9,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 10,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 11,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 12,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 13,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 14,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 15,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-];
-
-const Body = () => {
+const Body = (props: Props) => {
+  
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const navigate = useNavigate();
@@ -161,10 +53,14 @@ const Body = () => {
        <FarmerDetailsForm ref={farmerDetailFormRef  } />
          </td>
      </tr>
-        {farmersDetails.map((user) => (
+        {props.users.map((user:any) => (
           <S.CustomTableRow key={user.id} onClick={(e)=>NavigateToFarmerDetailForm(user.id,e)}>
             <S.RowCheckCell onClick={(e)=>{e.stopPropagation()}}>
-              <Checkbox/>
+              <Checkbox
+                name={user.id}
+                onChange={props.handleChange}
+                checked={user?.isChecked || false} 
+              />
             </S.RowCheckCell>
             <S.WebTableCell>{user.id}</S.WebTableCell>
             {/* for tablet view */}
