@@ -1,6 +1,9 @@
-import { styled, Stack, TableCell, Typography } from "@mui/material";
+import { styled, Stack, TableCell, Typography, TableRow } from "@mui/material";
 
 namespace S {
+  export const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    cursor: 'pointer',
+  }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
     width: "6%",
     padding: "1rem 0",

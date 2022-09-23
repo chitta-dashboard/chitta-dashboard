@@ -1,6 +1,7 @@
 import React, { useState,useRef } from "react";
-import { TableRow, Avatar, Checkbox, Stack } from "@mui/material";
+import { Avatar, Checkbox, Stack } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
+import { useNavigate } from "react-router-dom";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
@@ -130,6 +131,7 @@ const farmersDetails: FarmersDetailsType[] = [
 const Body = () => {
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
+  const navigate = useNavigate();
   
   const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
   const farmersDetailsIconModalHandler = () => {
@@ -146,6 +148,10 @@ const Body = () => {
      content: () => farmerDetailFormRef.current as HTMLDivElement,
  });
 
+  const NavigateToFarmerDetailForm = (id: number, e: any) => {
+    navigate(`/farmers-details/${id}`);
+  }
+  
   return (
     <>
       <BodyWrapper>
@@ -156,9 +162,9 @@ const Body = () => {
          </td>
      </tr>
         {farmersDetails.map((user) => (
-          <TableRow key={user.id}>
-            <S.RowCheckCell>
-              <Checkbox />
+          <S.CustomTableRow key={user.id} onClick={(e)=>NavigateToFarmerDetailForm(user.id,e)}>
+            <S.RowCheckCell onClick={(e)=>{e.stopPropagation()}}>
+              <Checkbox/>
             </S.RowCheckCell>
             <S.WebTableCell>{user.id}</S.WebTableCell>
             {/* for tablet view */}
@@ -189,7 +195,7 @@ const Body = () => {
                 <CS.Icon onClick={()=>generateFarmerDetailForm()} >download</CS.Icon>
               </S.IconBox>
             </S.WebTableCell>
-          </TableRow>
+          </S.CustomTableRow>
         ))}
       </BodyWrapper>
       <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} generateIdCard={() =>generateIdCard()} generateFarmerDetailForm={()=>generateFarmerDetailForm()} />

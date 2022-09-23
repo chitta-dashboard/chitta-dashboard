@@ -21,7 +21,7 @@ export namespace S {
     gap: "1.5625rem",
   }));
   export const Button = styled(MuiButton)(({ theme }: { theme: Theme }) => ({
-    width: "7.5rem",
+    width: "6.8rem",
   }));
   export const FarmersDetailsContent = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
