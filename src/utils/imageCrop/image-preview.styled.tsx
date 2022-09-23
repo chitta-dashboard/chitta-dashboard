@@ -15,7 +15,7 @@ namespace S {
     }))
     export const ImagePopUp = styled(Box)(({theme})=>({
         margin: "2%",
-        padding: "2% 1%",
+        padding: "2% 3%",
         boxShadow: "1px 1px 10px #bababa",
         display: "flex",
         alignItems: "center",
@@ -24,7 +24,7 @@ namespace S {
         height: "70vh",
         backgroundColor: "white",
         position: "relative",
-        borderRadius:'0.75rem'
+        borderRadius:'0.75rem',
     }))
     export const CloseIconContainer = styled(Box)(({theme})=>({
       position: "absolute",

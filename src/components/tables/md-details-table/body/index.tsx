@@ -8,6 +8,7 @@ import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import { useMdDetailsContext } from "../../../../utils/context/md-details";
 
 export interface Users {
   id: number;
@@ -129,12 +130,21 @@ type croppedImageType = {image:string,id:number}
 
 const Body = () => {
   const [image, setImage] = useState("");
-  const [croppedImage, setCroppedImage] = useState<croppedImageType| undefined>({} as croppedImageType);
   const [MdDetailsIcon, setMdDetailsIcon] = useState(false);
   const [userId,setUserId] = useState<number>(-1);
   const [isHovering, setIsHovering] = useState<number>(0);
 
   const hiddenFileInput:any = useRef<HTMLInputElement>();
+
+  const {mdList,editTableIcon} = useMdDetailsContext();
+
+  const getURL = (id:number)=>{
+    let result = mdList.filter(item=>{
+      return item.id === id ? item.profile : null
+    })
+    let data = result.length > 0 ? result[0]['profile'] : undefined
+    return data;
+  }
 
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>|any)=>{
    let isValid = e.target && fileValidation(e.target.files[0].name);
@@ -161,11 +171,7 @@ const Body = () => {
   }
 
   const handleCroppedImage = (image:string) => {
-    let data:croppedImageType = {
-      image:image,
-      id:userId
-    }
-    setCroppedImage(data);
+    editTableIcon({id:userId,profile:image,name:'image'})
   };
 
   return (
@@ -183,7 +189,7 @@ const Body = () => {
             <S.Cell title="பெயர்">
               <S.NameStack>
                 <S.AvatarBox>
-                  <S.AvatarImg alt="User-img" src={croppedImage?.id === user.id ? croppedImage?.image : userPic} />
+                  <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
                   <S.EditBox onClick={()=>handleIconClick(user.id)}>
                     <S.EditIcon>edit</S.EditIcon>
                     <S.HiddenInput type='file' ref={hiddenFileInput} onChange={handleInputChange}/>
