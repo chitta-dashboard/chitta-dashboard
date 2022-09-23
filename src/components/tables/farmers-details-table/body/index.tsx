@@ -175,8 +175,12 @@ const Body = () => {
             </S.TabCell>
             <S.Cell title="பெயர்">
               <S.NameStack>
-                <Avatar alt="User-img" src={userPic} />
-                {user.name}
+                <S.AvatarBox>
+                  <S.AvatarImg alt="User-img" src={userPic} />
+                  <S.EditBox onClick={() => {}}>
+                    <S.EditIcon>edit</S.EditIcon>
+                  </S.EditBox>
+                </S.AvatarBox>
               </S.NameStack>
             </S.Cell>
             <S.Cell title="கைபேசி எண்">{user.mobileNo}</S.Cell>
