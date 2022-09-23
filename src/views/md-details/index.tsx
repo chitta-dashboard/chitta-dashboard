@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/add-md-details-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
-import { MdDetailsContextProvider, useMdDetailsContext } from "../../utils/context/md-details";
+import { MdDetailsContextProvider } from "../../utils/context/md-details";
 
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const [addMdDetails, setAddMdDetails] = useState(false);
-  useMdDetailsContext;
 
   const addMdDetailsModalHandler = () => {
     setAddMdDetails(!addMdDetails);
