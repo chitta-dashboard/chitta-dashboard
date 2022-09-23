@@ -3,10 +3,11 @@ import { TableRow, Avatar, Checkbox, Stack } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
+import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
+import DeleteModal from "../../../modals/delete-modal";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
-import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
 
 export interface FarmersDetailsType {
   id: number;
@@ -16,7 +17,7 @@ export interface FarmersDetailsType {
   farmersGroup: string;
 }
 
-const farmersDetails: FarmersDetailsType[] = [
+const farmersDetailsList: FarmersDetailsType[] = [
   {
     id: 1,
     image: "image",
@@ -125,7 +126,26 @@ const farmersDetails: FarmersDetailsType[] = [
 ];
 
 const Body = () => {
+  const [farmersDetails, setFarmersDetails] = useState(farmersDetailsList);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+
   const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
+
+  //farmers Details Delete Modal
+  const farmersDetailsDeleteModal = (id: number) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  //Farmers Details users Delete Handler
+  const deleteFarmersDetails = (id: number) => {
+    const filterFarmersDetails = farmersDetails.filter((user) => user.id !== id);
+    setFarmersDetails(filterFarmersDetails);
+    setDeleteModal(!deleteModal);
+  };
+
+  //Tab Icon Open & Close Handler
   const farmersDetailsIconModalHandler = () => {
     setFarmersDetailsIcon(!farmersDetailsIcon);
   };
@@ -160,7 +180,7 @@ const Body = () => {
             <S.Cell title="விவசாயிகள் சங்கம்">{user.farmersGroup}</S.Cell>
             <S.WebTableCell>
               <S.IconBox>
-                <CS.Icon>delete</CS.Icon>
+                <CS.Icon onClick={() => farmersDetailsDeleteModal(user.id)}>delete</CS.Icon>
                 <CS.Icon>id-card</CS.Icon>
                 <CS.Icon>edit</CS.Icon>
                 <CS.Icon>download</CS.Icon>
@@ -170,6 +190,7 @@ const Body = () => {
         ))}
       </BodyWrapper>
       <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} />
+      <DeleteModal openModal={deleteModal} handleClose={farmersDetailsDeleteModal} deleteFarmersDetails={deleteFarmersDetails} deleteId={deleteId} />
     </>
   );
 };

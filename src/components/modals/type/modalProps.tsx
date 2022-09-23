@@ -1,8 +1,10 @@
 import React from "react";
 
-interface Props {
+interface Props<> {
   openModal: boolean;
-  handleClose?: () => void;
+  handleClose?: any;
+  deleteMdDetails?: any;
+  deleteId?: number;
   label?: string;
   profile?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   register?: any;

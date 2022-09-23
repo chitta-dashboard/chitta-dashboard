@@ -6,13 +6,14 @@ import BodyWrapper from "../../../custom-tables/body";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
+import DeleteModal from "../../../modals/delete-modal";
 export interface farmersGroupsType {
   id: number;
   குழுபெயர்: string;
   குழுவிவரங்கள்: string;
 }
 
-const farmersGroups: farmersGroupsType[] = [
+const farmersGroupsList: farmersGroupsType[] = [
   {
     id: 1,
     குழுபெயர்: "விவசாயிகள் சங்கம்விவசாயிகள் சங்கம்",
@@ -91,10 +92,30 @@ const farmersGroups: farmersGroupsType[] = [
 ];
 
 const Body = () => {
+  const [farmersGroups, setFarmersGroup] = useState(farmersGroupsList);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+
   const [farmerGroupsIcon, setFarmersGroupIcon] = useState(false);
+
+  //farmersGroups Delete Handler
+  const deleteFarmersGroup = (id: number) => {
+    const filterFarmersGroups = farmersGroups.filter((user) => user.id !== id);
+    setFarmersGroup(filterFarmersGroups);
+    setDeleteModal(!deleteModal);
+  };
+
+  //farmersGroups Delete Modal
+  const farmersGroupDeleteModal = (id: number) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  //Tab Icon Open & Close Handler
   const farmersGroupsIconModalHandler = () => {
     setFarmersGroupIcon(!farmerGroupsIcon);
   };
+
   return (
     <>
       <BodyWrapper>
@@ -111,7 +132,7 @@ const Body = () => {
             <S.Cell title="குழு விவரங்கள்">{farmersGroup.குழுவிவரங்கள்}</S.Cell>
             <S.WebTableCell>
               <S.IconBox>
-                <CS.Icon>delete</CS.Icon>
+                <CS.Icon onClick={() => farmersGroupDeleteModal(farmersGroup.id)}>delete</CS.Icon>
                 <CS.Icon>edit</CS.Icon>
               </S.IconBox>
             </S.WebTableCell>
@@ -119,6 +140,7 @@ const Body = () => {
         ))}
       </BodyWrapper>
       <FarmersGroupModal open={farmerGroupsIcon} handleClose={farmersGroupsIconModalHandler} />
+      <DeleteModal openModal={deleteModal} handleClose={farmersGroupDeleteModal} deleteFarmersGroup={deleteFarmersGroup} deleteId={deleteId} />
     </>
   );
 };

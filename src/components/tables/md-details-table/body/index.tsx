@@ -3,12 +3,13 @@ import { TableRow, Avatar } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
+import MdDetailModal from "../../../icon-modals/md-detail-modal";
+import DeleteModal from "../../../modals/delete-modal";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
-import MdDetailModal from "../../../icon-modals/md-detail-modal";
 
-export interface Users {
+export interface UsersList {
   id: number;
   image: string;
   name: string;
@@ -16,7 +17,7 @@ export interface Users {
   degree: string;
 }
 
-const users: Users[] = [
+const userslist: UsersList[] = [
   {
     id: 1,
     image: "image",
@@ -124,11 +125,32 @@ const users: Users[] = [
   },
 ];
 
-const Body = () => {
-  const [MdDetailsIcon, setMdDetailsIcon] = useState(false);
+// const AddNewMdDetails = (value) => {
+//   users.push(value);
+// };
 
+const Body = () => {
+  const [users, setUsers] = useState(userslist);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
+  const [mdDetailsIcon, setMdDetailsIcon] = useState(false);
+
+  //MdDetails users Delete Handler
+  const deleteMdDetails = (id: number) => {
+    const filterUsers = users.filter((user) => user.id !== id);
+    setDeleteModal(!deleteModal);
+    setUsers(filterUsers);
+  };
+
+  //Md details Delete Modal
+  const mdDetailsDeleteModal = (id: number) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  //Tab Icon Open & Close Handler
   const mdDetailsIconModalHandler = () => {
-    setMdDetailsIcon(!MdDetailsIcon);
+    setMdDetailsIcon(!mdDetailsIcon);
   };
 
   return (
@@ -153,7 +175,7 @@ const Body = () => {
             <S.Cell title="தகுதி">{user.degree}</S.Cell>
             <S.WebTableCell>
               <S.IconBox>
-                <CS.Icon>delete</CS.Icon>
+                <CS.Icon onClick={() => mdDetailsDeleteModal(user.id)}>delete</CS.Icon>
                 <CS.Icon>id-card</CS.Icon>
                 <CS.Icon>edit</CS.Icon>
               </S.IconBox>
@@ -161,7 +183,8 @@ const Body = () => {
           </TableRow>
         ))}
       </BodyWrapper>
-      <MdDetailModal open={MdDetailsIcon} handleClose={mdDetailsIconModalHandler} />
+      <MdDetailModal open={mdDetailsIcon} handleClose={mdDetailsIconModalHandler} />
+      <DeleteModal openModal={deleteModal} handleClose={mdDetailsDeleteModal} deleteMdDetails={deleteMdDetails} deleteId={deleteId} />
     </>
   );
 };

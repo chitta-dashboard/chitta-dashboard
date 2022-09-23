@@ -28,7 +28,6 @@ const ModalLaunchButtons = () => {
   };
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
-    
   };
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
@@ -57,7 +56,7 @@ const ModalLaunchButtons = () => {
       <Button variant="outlined" onClick={addDecisions}>
         add decicions
       </Button>
-      <DeleteModal label={""} openModal={openDelete} handleClose={deleteHandleClickOpen} />
+      <DeleteModal openModal={openDelete} handleClose={deleteHandleClickOpen} />
       <ConfirmationModal label={""} openModal={openConfirmation} handleClose={submitHandleClickOpen} />
       <AddMdDetailsModal label={""} openModal={openAddMd} handleClose={addMDOpen} />
       <AddFarmersGroupModal label={""} openModal={openAddFarmerGroup} handleClose={addFarmerGroup} />

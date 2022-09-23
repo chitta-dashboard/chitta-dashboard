@@ -13,7 +13,7 @@ const ConfirmationModal = (props: Props) => {
           <Box>Confirmation</Box>
         </DialogTitle>
         <ConfirmationBody label={""} openModal={props.openModal} handleClose={props.handleClose} />
-        <YesOrNo label={""} openModal={props.openModal} handleClose={props.handleClose} />
+        <YesOrNo openModal={props.openModal} handleClose={props.handleClose} />
       </CustomModal>
     </>
   );

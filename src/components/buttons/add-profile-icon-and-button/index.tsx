@@ -1,5 +1,5 @@
-import { Badge } from "@mui/material";
-import { useState,useEffect } from "react";
+import { Badge, FormHelperText } from "@mui/material";
+import { useState } from "react";
 
 import UploadButton from "./body/uploadButton";
 import Props from "../../modals/type/modalProps";
@@ -8,24 +8,24 @@ import S from "./body/addProfile.styled";
 
 const AddProfile = (props: Props) => {
   const [image, setImage] = useState("");
-  const [croppedImage, setCroppedImage] = useState<string | undefined>('');
+  const [croppedImage, setCroppedImage] = useState<string | undefined>("");
 
-  const fileValidation = (file:string)=>{
+  const fileValidation = (file: string) => {
     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
 
     if (!allowedExtensions.exec(file)) {
-    alert('Invalid file type');
-    return false;
+      alert("Invalid file type");
+      return false;
     }
-    return true
-  } 
+    return true;
+  };
 
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     let isValid = event.target.files && fileValidation(event.target.files[0].name);
-    (event.target.files && isValid) && setImage(window.URL.createObjectURL(event.target.files[0]))
+    event.target.files && isValid && setImage(window.URL.createObjectURL(event.target.files[0]));
   };
 
-  const handleCroppedImage = (image:string) => {
+  const handleCroppedImage = (image: string) => {
     setCroppedImage(image);
   };
 
@@ -35,14 +35,13 @@ const AddProfile = (props: Props) => {
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          badgeContent={<UploadButton openModal={props.openModal} profile={handleImage} />}
+          badgeContent={<UploadButton openModal={props.openModal} profile={handleImage} {...props.register} />}
         >
           <S.ProfilePicture alt="profile" src={croppedImage} />
         </Badge>
       </S.ProfileContainer>
-        {image && (
-        <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-      )}
+      <FormHelperText>{props.error.profile?.message}</FormHelperText>
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };
