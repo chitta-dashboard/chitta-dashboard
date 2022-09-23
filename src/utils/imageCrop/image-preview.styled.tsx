@@ -15,7 +15,7 @@ namespace S {
     }))
     export const ImagePopUp = styled(Box)(({theme})=>({
         margin: "2%",
-        padding: "2% 1%",
+        padding: "2% 3%",
         boxShadow: "1px 1px 10px #bababa",
         display: "flex",
         alignItems: "center",
@@ -24,7 +24,7 @@ namespace S {
         height: "70vh",
         backgroundColor: "white",
         position: "relative",
-        borderRadius:'0.75rem'
+        borderRadius:'0.75rem',
     }))
     export const CloseIconContainer = styled(Box)(({theme})=>({
       position: "absolute",
@@ -74,8 +74,8 @@ namespace S {
 
     export const PreviewTitleContainer = styled(Box)(({theme})=>({
       width:'60%',
-      backgroundColor:"#C1E1D6",
-      fontSize:'1.3rem'
+      fontSize:'1.3rem',
+      textAlign:'center'
     }));
 
     export const PreviewImageContainer = styled(Box)(({theme})=>({

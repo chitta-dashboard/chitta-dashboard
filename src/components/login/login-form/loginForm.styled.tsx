@@ -90,7 +90,6 @@ namespace S {
         borderRadius: "0.625rem",
       },
     },
-    
 
     "& .MuiInputBase-input": {
       color: theme.palette.text.secondaryDark,
@@ -120,10 +119,11 @@ namespace S {
     marginTop: "0.9rem",
     marginBottom: "3rem",
     "& span ": {
-      color: `${theme.palette.primary.light}`,
+      color: theme.palette.primary.light,
+      zIndex: "2",
       cursor: "pointer",
+      position: "absolute",
     },
-    // input:-internal-autofill-selected
   }));
 
   export const PasswordText = styled(Typography)(({ theme }) => ({
@@ -134,6 +134,7 @@ namespace S {
     lineHeight: "1.125rem",
     marginTop: "0.9rem",
     marginBottom: "3rem",
+    cursor: "pointer",
   }));
 }
 
