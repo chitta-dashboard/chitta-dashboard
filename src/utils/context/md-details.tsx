@@ -6,6 +6,7 @@ type mdDetail = {
   name: string;
   mobileNo: number;
   degree: string;
+  profile:string;
 };
 
 type Props = {
@@ -14,8 +15,9 @@ type Props = {
 
 interface mdDetailsContextType {
   mdList: mdDetail[];
-  addMdDetail?: (data: any) => void;
   filterMdDetail?: (name: string) => void;
+  addMdDetail:(data: mdDetail)=>void,
+  editTableIcon:(data: mdDetail)=>void
 }
 
 const initialState: mdDetailsContextType = {
@@ -126,6 +128,8 @@ const initialState: mdDetailsContextType = {
       degree: "Higher Secondary",
     },
   ],
+  addMdDetail:()=>{},
+  editTableIcon:()=>{}
 };
 
 const searchWord = (text: string, word: string) =>
@@ -145,7 +149,6 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_MD_DETAIL":
       return { ...state, mdList: [...state.mdList, action.payload] };
-
     case "FILTER_MD_DETAIL":
       return {
         ...state,
@@ -153,7 +156,9 @@ const reducer = (state: mdDetailsContextType, action: any) => {
           return searchWord(md.name, action.payload);
         }),
       };
-
+    case "EDIT_TABLE_ICON":
+      let data = state.mdList.filter(item=>item.id !== action.payload.id);
+      return {...state,mdList:[...data,action.payload]}
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -172,11 +177,15 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const filterMdDetail = (name: string) => {
     dispatch({ type: "FILTER_MD_DETAIL", payload: name });
   };
+  const editTableIcon = (data:mdDetail)=>{
+    dispatch({type:"EDIT_TABLE_ICON",payload:data})
+  }
 
   let data = {
     ...state,
     addMdDetail,
     filterMdDetail,
+    editTableIcon
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

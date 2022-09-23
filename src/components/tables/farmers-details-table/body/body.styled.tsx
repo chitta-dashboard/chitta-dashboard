@@ -1,7 +1,10 @@
-import { styled, Stack, TableCell, Typography, Box } from "@mui/material";
+import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
+  export const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    cursor: 'pointer',
+  }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
     width: "6%",
     padding: "1rem 0",
@@ -122,6 +125,7 @@ namespace S {
   export const AvatarImg = styled("img")(({ theme }) => ({
     width: "100%",
     height: "100%",
+    borderRadius:'50%'
   }));
 
   export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -154,6 +158,9 @@ namespace S {
   export const EditIcon = styled("i")(({ theme }) => ({
     color: LightTheme.palette.text.primary,
     opacity: "1",
+  }));
+  export const HiddenInput = styled('input')(({ theme }) => ({
+    display:'none'
   }));
 }
 
