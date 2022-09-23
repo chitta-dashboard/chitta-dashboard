@@ -1,10 +1,10 @@
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
+import { Box, Theme, styled } from "@mui/material";
 
-export namespace S {
-  export const ContentBox = styled(Box)(({ theme }: any) => ({
-    marginTop: "5rem",
-    minHeight: "28rem",
-    boxSizing:"border-box"
+namespace S {
+  export const ContentBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+    overflowY: "auto",
+    padding: "1.2rem 2.2rem",
   }));
 }
+
+export default S;

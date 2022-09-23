@@ -1,11 +1,21 @@
 import styled from "@emotion/styled";
-import { Box } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 
-export namespace S {
+namespace S {
   export const DashBoaderContainer = styled(Box)(({ theme }: any) => ({
+    width: "100%",
+    height: "100%",
+    padding: "2rem",
+    backgroundColor: "#DEEFE9",
+  }));
+
+  export const DashBoaderBodyWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
-    alignItems: "center",
     justifyContent: "center",
-    boxSizing: "border-box",
+    gap: "2rem",
+    width: "100%",
+    marginTop: "4rem",
   }));
 }
+
+export default S;

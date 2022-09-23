@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { S } from "./content.styled";
+
+import S from "./content.styled";
 
 interface Props {
   children: React.ReactNode;

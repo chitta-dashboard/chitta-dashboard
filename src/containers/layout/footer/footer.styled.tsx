@@ -1,11 +1,38 @@
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
+namespace S {
+  export const Footer = styled(Box)(({ theme }) => ({
+    padding: ".5rem 1rem",
+    backgroundColor: "white",
+    color: theme.palette.text.secondaryLight,
+    display: "flex",
+    justifyContent: "space-between",
+    gap: "1rem",
+  }));
 
-export namespace S {
-  export const FooterContainer = styled(Box)(({ theme }: any) => ({
-    display:"flex",
-    alignItems:"center",
-    justifyContent:"center",
-    boxSizing: "border-box",
+  export const InfoBar = styled(Box)(({ theme }) => ({
+    display: "flex",
+    gap: "1rem",
+  }));
+
+  export const InfoText = styled(Typography)(({ theme }) => ({
+    fontSize: ".8rem",
+    textTransform: "uppercase",
+    cursor: "pointer",
+    whiteSpace: "nowrap",
+
+    "&:hover": {
+      color: theme.palette.text.secondaryExtraLight,
+    },
+  }));
+
+  export const ArticleBar = styled(Box)(({ theme }) => ({
+    display: "flex",
+    gap: "1.5rem",
+  }));
+
+  export const ArticleText = styled(InfoText)(({ theme }) => ({
+    textTransform: "unset",
   }));
 }
+
+export default S;

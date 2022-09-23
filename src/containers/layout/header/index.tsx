@@ -1,12 +1,70 @@
-import React, { FC } from 'react';
-import { Typography } from '@mui/material';
-import { S } from "./header.styled";
+import { FC, useContext, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { Theme, useMediaQuery } from "@mui/material";
+
+import Logo from "../../../assets/images/logo.svg";
+
+import S from "./header.styled";
+import authContext from "../../../utils/context/auth";
 
 const Header: FC = () => {
+  const { pathname }: { pathname: string } = useLocation();
+  const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+  const [navOpen, setNavOpen] = useState(false);
+  const { setIsAuthenticated } = useContext(authContext);
+
   return (
-    <S.HeaderContainer>
-      <Typography variant="h5"> App HEADER</Typography>
-    </S.HeaderContainer>
+    <S.Header>
+      <S.LogoBox>
+        <S.Logo src={Logo} alt="Nerkathir Logo" />
+        <S.LogoText>
+          நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+        </S.LogoText>
+      </S.LogoBox>
+      <S.NavBar isOpen={navOpen}>
+        {isMd ? (
+          <S.NavBarMenu>
+            Menu <i onClick={() => setNavOpen(false)}>close</i>
+          </S.NavBarMenu>
+        ) : null}
+        <S.NavLink to="./dashboard" isActive={pathname === "/dashboard"}>
+          <S.NavLinkText isActive={pathname === "/dashboard"}>Dashboard</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./ceo-details" isActive={pathname === "/ceo-details"}>
+          <S.NavLinkText isActive={pathname === "/ceo-details"}>CEO Details</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./md-details" isActive={pathname === "/md-details"}>
+          <S.NavLinkText isActive={pathname === "/md-details"}>MD Details</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./farmers-group" isActive={pathname === "/farmers-group"}>
+          <S.NavLinkText isActive={pathname === "/farmers-group"}>Farmers Group</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./farmers-details" isActive={pathname === "/farmers-details"}>
+          <S.NavLinkText isActive={pathname === "/farmers-details"}>Farmers Details</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./cultivation" isActive={pathname === "/cultivation"}>
+          <S.NavLinkText isActive={pathname === "/cultivation"}>Cultivation</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./register" isActive={pathname === "/register"}>
+          <S.NavLinkText isActive={pathname === "/register"}>Register</S.NavLinkText>
+        </S.NavLink>
+        <S.NavLink to="./decisions" isActive={pathname === "/decisions"}>
+          <S.NavLinkText isActive={pathname === "/decisions"}>Decisions</S.NavLinkText>
+        </S.NavLink>
+      </S.NavBar>
+      <S.ActionsBox>
+        <i>account</i>
+        <i
+          onClick={() => {
+            setIsAuthenticated(false);
+            window.localStorage.removeItem("isAuthenticated");
+          }}
+        >
+          logout
+        </i>
+        {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
+      </S.ActionsBox>
+    </S.Header>
   );
 };
 
