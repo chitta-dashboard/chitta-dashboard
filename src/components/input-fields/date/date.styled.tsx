@@ -4,15 +4,17 @@ namespace S {
   export const ChooseDate = styled(TextField)(({ theme }) => ({
     "& .MuiOutlinedInput-root": {
       color: theme.palette.text.secondaryLight,
-      height: "2rem",
+      height: "2.65rem",
     },
+
     width: "100%",
   }));
+
   ChooseDate.defaultProps = {
     size: "small",
     type: "date",
-    InputProps: { style: { fontSize: ".8rem" } },
-    InputLabelProps: { style: { fontSize: ".8rem" }, shrink: true },
+    InputProps: { style: { fontSize: ".9rem" } },
+    InputLabelProps: { style: { fontSize: ".9rem" }, shrink: true },
   };
 }
 
