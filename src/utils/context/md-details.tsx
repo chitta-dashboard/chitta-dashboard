@@ -5,7 +5,7 @@ type mdDetail = {
 };
 
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactNode | React.ReactNode[];
 };
 
 interface mdDetailsContextType {
@@ -28,7 +28,7 @@ const reducer = (state: mdDetailsContextType, action: any) => {
 
 export const mdDetailsContext = createContext<mdDetailsContextType>(initialState);
 
-const mdDetailsContextProvider: FC<Props> = (props) => {
+const MdDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addMdDetail = (data: mdDetail) => {
@@ -45,4 +45,4 @@ const mdDetailsContextProvider: FC<Props> = (props) => {
 
 const useMdDetailsContext = () => useContext(mdDetailsContext);
 
-export { mdDetailsContextProvider, useMdDetailsContext };
+export { MdDetailsContextProvider, useMdDetailsContext };
