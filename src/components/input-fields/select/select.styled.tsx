@@ -3,13 +3,21 @@ import { styled, TextField } from "@mui/material";
 namespace S {
   export const SelectField = styled(TextField)(({ theme }) => ({
     "& .MuiSelect-outlined": {
-      height: ".4rem",
+      height: "1.5rem",
       width: "7.2rem",
-      padding: "0.425rem",
-      fontSize: ".8rem",
+      padding: "0.6rem",
+      fontSize: ".9rem",
     },
     "& .MuiInputLabel-root": {
-      fontSize: ".8rem",
+      fontSize: ".9em",
+    },
+    "& .MuiSvgIcon-root": {
+      color: theme.palette.primary.light,
+      height: "1.5rem",
+      width: "1.5rem",
+    },
+    "& .MuiSelect-select": {
+      width: "100%",
     },
     width: "100%",
   }));

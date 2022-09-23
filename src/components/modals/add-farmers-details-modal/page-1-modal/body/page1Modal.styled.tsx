@@ -18,6 +18,10 @@ namespace S {
       },
     },
   }));
+   export const Title = styled("div")(({ theme }) => ({
+     display: "contents",
+   }));
+
 
   export const PageNumber = styled(Avatar)(({ theme }) => ({
     width: "2rem",
