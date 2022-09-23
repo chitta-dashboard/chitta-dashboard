@@ -1,4 +1,4 @@
-import React from "react";
+import React,{forwardRef} from "react";
 import { Box } from "@mui/material";
 import { QRCodeSVG } from "qrcode.react";
 
@@ -10,10 +10,10 @@ import S from "./idCardBody.styled";
 
 type Props = {};
 
-const IdCardBody = (props: Props) => {
+const IdCardBody = forwardRef<HTMLDivElement | undefined>((props: Props,ref) => {
   return (
     <>
-      <S.IdCardWrapper>
+      <S.IdCardWrapper ref={ref}>
         <IDCardHeader />
         <S.IdCardBodyWrapper>
           <S.IdImage src={IdPhoto} alt="id-photo" />
@@ -49,6 +49,6 @@ const IdCardBody = (props: Props) => {
       </S.IdCardWrapper>
     </>
   );
-};
+})
 
 export default IdCardBody;
