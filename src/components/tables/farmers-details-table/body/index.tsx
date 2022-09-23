@@ -186,7 +186,7 @@ const Body = () => {
               <S.TabCheckboxStack>
                 <Checkbox />
                 <S.TabIdStack>
-                  # <S.IdBox>{user.id}</S.IdBox>
+                  <S.IdBox>{user.id}</S.IdBox>
                 </S.TabIdStack>
               </S.TabCheckboxStack>
               <Stack>
