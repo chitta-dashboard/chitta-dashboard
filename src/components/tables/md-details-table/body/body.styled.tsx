@@ -1,4 +1,5 @@
-import { styled, Stack, TableCell } from "@mui/material";
+import { Stack, styled, Box, TableCell } from "@mui/material";
+import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
   export const TabCell = styled(TableCell)(({ theme }) => ({
@@ -85,6 +86,43 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+  }));
+
+  export const AvatarImg = styled("img")(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+  }));
+
+  export const AvatarBox = styled(Box)(({ theme }) => ({
+    borderRadius: "50%",
+    height: "2.5rem",
+    width: "2.5rem",
+    position: "relative",
+    cursor: "pointer",
+
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  }));
+
+  export const EditBox = styled(Box)(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: LightTheme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  export const EditIcon = styled("i")(({ theme }) => ({
+    color: LightTheme.palette.text.primary,
+    opacity: "1",
   }));
 }
 
