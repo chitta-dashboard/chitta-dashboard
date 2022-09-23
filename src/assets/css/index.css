@@ -43,3 +43,20 @@ i {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* For Rich text box  */
+.fr-box{
+  width: 100%;
+  height: 100% !important;
+  outline: none;
+}
+
+.fr-wrapper{
+  max-height: 165px !important;
+  height: 100% !important;
+  overflow-y: auto;
+}
+
+.fr-element{
+  min-height: 10.8rem !important;
+}
