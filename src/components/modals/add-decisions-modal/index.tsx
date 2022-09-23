@@ -11,7 +11,7 @@ import SubmitButton from "../../buttons/submit-button";
 
 import S from "./body/addDecisionsModal.styled";
 
-interface IFormInputs {
+export interface IFormInputs {
   decisionHeading: string;
   dob: string;
   qualification: string;
@@ -26,7 +26,11 @@ const schema = yup
   })
   .required();
 
-const AddDecisionsModal = (props: Props) => {
+interface Temp {
+  cb?: (data: { [input: string]: string }) => void;
+}
+
+const AddDecisionsModal = (props: Props & Temp) => {
   const {
     register,
     handleSubmit,
@@ -36,7 +40,9 @@ const AddDecisionsModal = (props: Props) => {
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: IFormInputs) => {
+  const onSubmit: any = (data: { [input: string]: string }) => {
+    if (props.cb) props.cb(data);
+    console.log("decision submitted");
     reset();
   };
 
