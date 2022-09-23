@@ -72,7 +72,11 @@ const Body = () => {
           ))}
         </BodyWrapper>
       ) : (
-        <S.EmptyMsg>No Data</S.EmptyMsg>
+        <S.EmptyMsg>
+          <tr>
+            <td> No Data</td>
+          </tr>
+        </S.EmptyMsg>
       )}
 
       <MdDetailModal open={MdDetailsIcon} handleClose={mdDetailsIconModalHandler} />
