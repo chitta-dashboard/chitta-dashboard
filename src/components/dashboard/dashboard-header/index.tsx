@@ -1,12 +1,12 @@
 import React from "react";
 
 import profilePic from "../../../assets/images/profile.png";
+import { Box } from "@mui/material";
 
 import SearchBar from "../../common-components/search-bar";
-
-import { Box } from "@mui/material";
 import { S } from "./dashboardHeader.styled";
 import IconWrapper from "../../../utils/iconWrapper";
+import CommonIconModal from "../../common-icon-modal";
 
 type Props = {};
 
@@ -24,7 +24,9 @@ const DashboardHeader = (props: Props) => {
           </Box>
         </S.ProfileBox>
         <S.HeaderIconsBox>
-          <SearchBar />
+          <S.SearchBarContainer>
+            <SearchBar />
+          </S.SearchBarContainer>
           <IconWrapper>filter</IconWrapper>
           <IconWrapper>settings</IconWrapper>
           <S.SearchIconContainer>
