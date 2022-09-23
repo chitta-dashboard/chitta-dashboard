@@ -39,7 +39,7 @@ namespace S {
   }));
 
   export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondaryLight,
     fontSize: "1.1rem",
     fontWeight: 500,
     borderBottom: "1rem solid red",

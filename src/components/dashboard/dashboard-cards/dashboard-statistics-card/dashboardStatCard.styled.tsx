@@ -6,13 +6,16 @@ export namespace S {
   export const StatCardWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
     gap: "1rem",
     padding: "1.5rem 1.5rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "1.25rem",
+    [theme.breakpoints.up("xl")]: {
+      minHeight: "25rem",
+      padding: "2.5rem",
+    },
   }));
 
   export const StatBodyContainer = styled(Grid)(({ theme }: any) => ({
@@ -30,13 +33,13 @@ export namespace S {
   export const StatBodyFont = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.9rem",
     fontWeight: "400",
-    color: LightTheme.palette.text.secondary,
+    color: LightTheme.palette.text.secondaryLight,
   }));
 
   export const StatBodyNumberFont = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.4rem",
     fontWeight: "500",
-    color: LightTheme.palette.text.secondary,
+    color: LightTheme.palette.text.secondaryLight,
     marginTop: "0.3rem",
   }));
 

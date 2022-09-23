@@ -212,7 +212,7 @@ namespace S {
   export const DecisionsTimestamp = styled(DecisionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
     placement: "left" | "right";
   }>(({ theme, placement }) => ({
-    color: theme.palette.text.secondaryExtraLight,
+    color: theme.palette.text.secondaryCustomShades.shade2,
     position: "absolute",
     top: "-28px",
     [placement]: "-10px",
