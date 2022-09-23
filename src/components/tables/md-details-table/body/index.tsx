@@ -18,117 +18,11 @@ export interface Users {
   degree: string;
 }
 
-const users: Users[] = [
-  {
-    id: 1,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 2,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 3,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 4,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 5,
-    image: "image",
-    name: "Arokiya Arokiya Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 6,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 7,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 8,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 9,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 10,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 11,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 12,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 13,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 14,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-  {
-    id: 15,
-    image: "image",
-    name: "Arokiya",
-    mobileNo: 8610010875,
-    degree: "Higher Secondary",
-  },
-];
-
 type croppedImageType = {image:string,id:number} 
 
 const Body = () => {
+  const {mdList,editTableIcon} = useMdDetailsContext();
+
   const [image, setImage] = useState("");
   const [MdDetailsIcon, setMdDetailsIcon] = useState(false);
   const [userId,setUserId] = useState<number>(-1);
@@ -136,7 +30,6 @@ const Body = () => {
 
   const hiddenFileInput:any = useRef<HTMLInputElement>();
 
-  const {mdList,editTableIcon} = useMdDetailsContext();
 
   const getURL = (id:number)=>{
     let result = mdList.filter(item=>{
@@ -176,9 +69,10 @@ const Body = () => {
 
   return (
     <>
-      <BodyWrapper>
-        {users.map((user) => (
-          <TableRow key={user.id}>
+      {mdList.length > 0 ? (
+        <BodyWrapper>
+          {mdList.map((user) => (
+            <TableRow key={user.id}>
             <S.WebTableCell>{user.id}</S.WebTableCell>
             <S.TabCell>
               <div># {user.id}</div>
@@ -208,8 +102,15 @@ const Body = () => {
               </S.IconBox>
             </S.WebTableCell>
           </TableRow>
-        ))}
-      </BodyWrapper>
+          ))}
+        </BodyWrapper>
+      ) : (
+        <S.EmptyMsg>
+          <tr>
+            <td> No Data</td>
+          </tr>
+        </S.EmptyMsg>
+      )}
       <MdDetailModal open={MdDetailsIcon} handleClose={mdDetailsIconModalHandler} />
       {image && (
         <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />

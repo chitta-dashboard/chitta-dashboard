@@ -1,9 +1,9 @@
-import data from "../decisions.json";
-import { GroupData } from "../decisions-list";
+import { useContext } from "react";
+import { decisionsContext } from "../../../utils/context/decisionsContext";
 import S from "./decisionsTree.styled";
 
 const DecisionsTree = () => {
-  const groupData = data as Array<GroupData>;
+  const { groupData } = useContext(decisionsContext);
   const leafCount = groupData.length <= 4 ? groupData.length : 4;
 
   return (

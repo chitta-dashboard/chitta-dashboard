@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
-import authContext from "../../../utils/context/auth";
+import authContext from "../../../utils/context/authContext";
 interface LoginFormInputs {
   mobileNo: string;
   loginPassword: string;
