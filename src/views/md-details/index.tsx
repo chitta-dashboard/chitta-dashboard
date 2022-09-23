@@ -3,22 +3,26 @@ import React, { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/add-md-details-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
+import { MdDetailsContextProvider, useMdDetailsContext } from "../../utils/context/md-details";
 
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const [addMdDetails, setAddMdDetails] = useState(false);
+  useMdDetailsContext;
 
   const addMdDetailsModalHandler = () => {
     setAddMdDetails(!addMdDetails);
   };
 
   return (
-    <S.MdDetailsContainer>
-      <TablePageHeader addMdDetailsModalHandler={addMdDetailsModalHandler} />
-      <MdDetailsTable />
-      <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} />
-    </S.MdDetailsContainer>
+    <MdDetailsContextProvider>
+      <S.MdDetailsContainer>
+        <TablePageHeader addMdDetailsModalHandler={addMdDetailsModalHandler} />
+        <MdDetailsTable />
+        <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} />
+      </S.MdDetailsContainer>
+    </MdDetailsContextProvider>
   );
 };
 

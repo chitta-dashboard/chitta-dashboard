@@ -131,6 +131,16 @@ const Body = () => {
     setMdDetailsIcon(!MdDetailsIcon);
   };
 
+  const [isHovering, setIsHovering] = useState<number>(0);
+
+  const handleMouseOver = (id: number) => {
+    setIsHovering(id);
+  };
+
+  const handleMouseOut = (id: number) => {
+    setIsHovering(id);
+  };
+
   return (
     <>
       <BodyWrapper>
@@ -145,7 +155,12 @@ const Body = () => {
             </S.TabCell>
             <S.Cell title="பெயர்">
               <S.NameStack>
-                <Avatar alt="User-img" src={userPic} />
+                <S.AvatarBox>
+                  <S.AvatarImg alt="User-img" src={userPic} />
+                  <S.EditBox onClick={() => {}}>
+                    <S.EditIcon>edit</S.EditIcon>
+                  </S.EditBox>
+                </S.AvatarBox>
                 {user.name}
               </S.NameStack>
             </S.Cell>
