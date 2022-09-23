@@ -1,11 +1,12 @@
-import React from "react";
-import { TableRow, Avatar, Checkbox, Stack, Box } from "@mui/material";
+import React, { useState } from "react";
+import { TableRow, Avatar, Checkbox, Stack } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
+import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
 
 export interface FarmersDetailsType {
   id: number;
@@ -124,50 +125,56 @@ const farmersDetails: FarmersDetailsType[] = [
 ];
 
 const Body = () => {
+  const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
+  const farmersDetailsIconModalHandler = () => {
+    setFarmersDetailsIcon(!farmersDetailsIcon);
+  };
   return (
-    <BodyWrapper>
-      {farmersDetails.map((user) => (
-        <TableRow key={user.id}>
-          <S.RowCheckCell>
-            <Checkbox />
-          </S.RowCheckCell>
-          <S.WebTableCell>{user.id}</S.WebTableCell>
-          {/* for tablet view */}
-          <S.TabCell>
-            <S.TabCheckboxStack>
+    <>
+      <BodyWrapper>
+        {farmersDetails.map((user) => (
+          <TableRow key={user.id}>
+            <S.RowCheckCell>
               <Checkbox />
-              <S.TabIdStack>
-                # <S.IdBox>{user.id}</S.IdBox>
-              </S.TabIdStack>
-            </S.TabCheckboxStack>
-            <Stack>
-              <CS.Icon>three-dots</CS.Icon>
-            </Stack>
-          </S.TabCell>
-          <S.Cell title="பெயர்">
-            <S.NameStack>
-              <S.AvatarBox>
-                <S.AvatarImg alt="User-img" src={userPic} />
-                <S.EditBox onClick={() => {}}>
-                  <S.EditIcon>edit</S.EditIcon>
-                </S.EditBox>
-              </S.AvatarBox>
-              {user.name}
-            </S.NameStack>
-          </S.Cell>
-          <S.Cell title="கைபேசி எண்">{user.mobileNo}</S.Cell>
-          <S.Cell title="விவசாயிகள் சங்கம்">{user.farmersGroup}</S.Cell>
-          <S.WebTableCell>
-            <S.IconBox>
-              <CS.Icon>delete</CS.Icon>
-              <CS.Icon>id-card</CS.Icon>
-              <CS.Icon>edit</CS.Icon>
-              <CS.Icon>download</CS.Icon>
-            </S.IconBox>
-          </S.WebTableCell>
-        </TableRow>
-      ))}
-    </BodyWrapper>
+            </S.RowCheckCell>
+            <S.WebTableCell>{user.id}</S.WebTableCell>
+            {/* for tablet view */}
+            <S.TabCell>
+              <S.TabCheckboxStack>
+                <Checkbox />
+                <S.TabIdStack>
+                  # <S.IdBox>{user.id}</S.IdBox>
+                </S.TabIdStack>
+              </S.TabCheckboxStack>
+              <Stack>
+                <CS.Icon onClick={farmersDetailsIconModalHandler}>three-dots</CS.Icon>
+              </Stack>
+            </S.TabCell>
+            <S.Cell title="பெயர்">
+              <S.NameStack>
+                <S.AvatarBox>
+                  <S.AvatarImg alt="User-img" src={userPic} />
+                  <S.EditBox onClick={() => {}}>
+                    <S.EditIcon>edit</S.EditIcon>
+                  </S.EditBox>
+                </S.AvatarBox>
+              </S.NameStack>
+            </S.Cell>
+            <S.Cell title="கைபேசி எண்">{user.mobileNo}</S.Cell>
+            <S.Cell title="விவசாயிகள் சங்கம்">{user.farmersGroup}</S.Cell>
+            <S.WebTableCell>
+              <S.IconBox>
+                <CS.Icon>delete</CS.Icon>
+                <CS.Icon>id-card</CS.Icon>
+                <CS.Icon>edit</CS.Icon>
+                <CS.Icon>download</CS.Icon>
+              </S.IconBox>
+            </S.WebTableCell>
+          </TableRow>
+        ))}
+      </BodyWrapper>
+      <FarmersDetailsModal open={farmersDetailsIcon} handleClose={farmersDetailsIconModalHandler} />
+    </>
   );
 };
 
