@@ -3,7 +3,7 @@ import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 
 import S from "../iconModals.styled";
 
-const FarmerDetailModal = (props: CommonModalProps) => {
+const FarmersDetailsModal = (props: CommonModalProps) => {
   return (
     <>
       <CommonIconModal open={props.open} handleClose={props.handleClose}>
@@ -31,4 +31,4 @@ const FarmerDetailModal = (props: CommonModalProps) => {
   );
 };
 
-export default FarmerDetailModal;
+export default FarmersDetailsModal;
