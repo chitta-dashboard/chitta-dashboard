@@ -10,6 +10,7 @@ namespace S {
   }));
   export const CustomButton = styled(Button)(({ theme }) => ({
     minWidth: "7rem",
+    backgroundColor: theme.palette.primary.light,
   }));
 }
 export default S;

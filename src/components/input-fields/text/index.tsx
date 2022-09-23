@@ -5,7 +5,7 @@ import S from "./text.styled";
 const TextInput = (props: Props) => {
   return (
     <>
-      <S.InputText label={props.label} />
+      <S.InputText label={props.label} {...props.register} helperText={props.helperText} />
     </>
   );
 };

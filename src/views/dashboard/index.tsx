@@ -10,15 +10,15 @@ import S from "./dashboard.styled";
 
 const Dashboard = () => {
   return (
-    // <S.DashBoaderContainer>
-    //   <DashboardHeader />
-    //   <S.DashBoaderBodyWrapper container>
-    //     <DashboardStatCard />
-    //     <DashboardSummaryCard />
-    //     <DashboardNotificationCard />
-    //   </S.DashBoaderBodyWrapper>
-    // </S.DashBoaderContainer>
-    <IdCardBody />
+    <S.DashBoaderContainer>
+      <DashboardHeader />
+      <S.DashBoaderBodyWrapper container>
+        <DashboardStatCard />
+        <DashboardSummaryCard />
+        <DashboardNotificationCard />
+      </S.DashBoaderBodyWrapper>
+    </S.DashBoaderContainer>
+    // <IdCardBody />
   );
 };
 
