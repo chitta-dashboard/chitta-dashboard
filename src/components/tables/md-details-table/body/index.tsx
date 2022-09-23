@@ -1,5 +1,5 @@
-import React from "react";
-import { TableRow, Avatar } from "@mui/material";
+import React, { MouseEvent, useState } from "react";
+import { TableCell, TableRow, Avatar } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
@@ -124,6 +124,16 @@ const users: Users[] = [
 ];
 
 const Body = () => {
+  const [isHovering, setIsHovering] = useState<number>(0);
+
+  const handleMouseOver = (id: number) => {
+    setIsHovering(id);
+  };
+
+  const handleMouseOut = (id: number) => {
+    setIsHovering(id);
+  };
+
   return (
     <BodyWrapper>
       {users.map((user) => (
@@ -137,7 +147,12 @@ const Body = () => {
           </S.TabCell>
           <S.Cell title="பெயர்">
             <S.NameStack>
-              <Avatar alt="User-img" src={userPic} />
+              <S.AvatarBox>
+                <S.AvatarImg alt="User-img" src={userPic} />
+                <S.EditBox onClick={() => {}}>
+                  <S.EditIcon>edit</S.EditIcon>
+                </S.EditBox>
+              </S.AvatarBox>
               {user.name}
             </S.NameStack>
           </S.Cell>

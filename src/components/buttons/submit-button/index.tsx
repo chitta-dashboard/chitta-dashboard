@@ -9,9 +9,7 @@ const SubmitButton = (props: Props) => {
     <>
       <S.ButtonContainer>
         <FormControl>
-          <Button autoFocus variant="contained" type="submit">
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </FormControl>
       </S.ButtonContainer>
     </>

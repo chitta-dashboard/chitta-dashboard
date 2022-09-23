@@ -1,5 +1,5 @@
 import React from "react";
-import { TableRow, Avatar, Checkbox, Stack } from "@mui/material";
+import { TableRow, Avatar, Checkbox, Stack, Box } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
@@ -146,7 +146,12 @@ const Body = () => {
           </S.TabCell>
           <S.Cell title="பெயர்">
             <S.NameStack>
-              <Avatar alt="User-img" src={userPic} />
+              <S.AvatarBox>
+                <S.AvatarImg alt="User-img" src={userPic} />
+                <S.EditBox onClick={() => {}}>
+                  <S.EditIcon>edit</S.EditIcon>
+                </S.EditBox>
+              </S.AvatarBox>
               {user.name}
             </S.NameStack>
           </S.Cell>
