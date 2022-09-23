@@ -91,7 +91,7 @@ namespace S {
   export const AvatarImg = styled("img")(({ theme }) => ({
     width: "100%",
     height: "100%",
-    borderRadius:'50%'
+    borderRadius: "50%",
   }));
 
   export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -139,9 +139,10 @@ namespace S {
       left: "47%",
       translate: "transform(-50%, -50%)",
     },
-  
-  export const HiddenInput = styled('input')(({ theme }) => ({
-    display:'none'
+  }));
+
+  export const HiddenInput = styled("input")(({ theme }) => ({
+    display: "none",
   }));
 }
 
