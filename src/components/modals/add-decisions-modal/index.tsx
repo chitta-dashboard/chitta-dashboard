@@ -1,3 +1,4 @@
+import { FC } from "react";
 import { DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,15 +9,14 @@ import TitleCloseButton from "../../buttons/title-close-button";
 import Props from "../type/modalProps";
 import FormField from "./body/formField";
 import SubmitButton from "../../buttons/submit-button";
+import { IDecisionsFormInput } from "../type/formInputs";
 
 import S from "./body/addDecisionsModal.styled";
 
-export interface IFormInputs {
-  decisionHeading: string;
-  dob: string;
-  qualification: string;
-  decision: string;
+interface formProps extends Props {
+  cb?: (data: IDecisionsFormInput) => void;
 }
+
 const schema = yup
   .object({
     decisionHeading: yup.string().required("required"),
@@ -26,24 +26,20 @@ const schema = yup
   })
   .required();
 
-interface Temp {
-  cb?: (data: { [input: string]: string }) => void;
-}
-
-const AddDecisionsModal = (props: Props & Temp) => {
+const AddDecisionsModal: FC<formProps> = (props) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
     reset,
-  } = useForm<IFormInputs>({
+  } = useForm<IDecisionsFormInput>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: { [input: string]: string }) => {
-    if (props.cb) props.cb(data);
-    console.log("decision submitted");
+  const onSubmit: any = (data: IDecisionsFormInput) => {
+    props.cb && props.cb(data);
     reset();
+    if (props.handleClose) props.handleClose();
   };
 
   return (
@@ -52,6 +48,7 @@ const AddDecisionsModal = (props: Props & Temp) => {
         openModal={props.openModal}
         handleClose={() => {
           clearErrors();
+          reset();
           if (props.handleClose) props.handleClose();
         }}
         addDecision={props.openModal}
@@ -62,6 +59,7 @@ const AddDecisionsModal = (props: Props & Temp) => {
             openModal={props.openModal}
             handleClose={() => {
               clearErrors();
+              reset();
               if (props.handleClose) props.handleClose();
             }}
           />
@@ -74,6 +72,7 @@ const AddDecisionsModal = (props: Props & Temp) => {
               clearErrors();
               if (props.handleClose) props.handleClose();
             }}
+            submit={onSubmit}
           />
         </form>
       </CustomModal>

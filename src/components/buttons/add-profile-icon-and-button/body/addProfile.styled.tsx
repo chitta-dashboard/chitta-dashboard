@@ -4,10 +4,10 @@ namespace S {
   export const ProfilePicture = styled(Avatar)(({ theme }) => ({
     width: "5rem",
     height: "5rem",
-    '.MuiSvgIcon-root':{
-      width:'2rem',
-      height:'2rem'
-    }
+    ".MuiSvgIcon-root": {
+      width: "2rem",
+      height: "2rem",
+    },
   }));
 
   export const UploadButton = styled(Box)(({ theme }) => ({

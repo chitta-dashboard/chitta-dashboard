@@ -16,6 +16,7 @@ namespace S {
     },
     InputLabelProps: {
       style: { fontSize: ".9rem" },
+      shrink: true,
     },
     variant: "outlined",
     size: "small",

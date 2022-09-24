@@ -1,5 +1,6 @@
 import { DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -31,6 +32,7 @@ const schema = yup
   .required();
 
 const AddMdDetailsModal = (props: Props) => {
+  const [formData, setFormData] = useState("");
   const {
     register,
     handleSubmit,
@@ -42,41 +44,49 @@ const AddMdDetailsModal = (props: Props) => {
   });
   const onSubmit: any = (data: IFormInputs) => {
     reset();
+    console.log(data);
+    setFormData(data.signature);
   };
   return (
     <>
       <CustomModal
-        label={""}
         openModal={props.openModal}
         handleClose={() => {
           clearErrors();
+          reset();
           if (props.handleClose) props.handleClose();
         }}
       >
         <DialogTitle>
           <S.Title>Add MD Details</S.Title>
           <TitleCloseButton
-            label={""}
             openModal={props.openModal}
             handleClose={() => {
               clearErrors();
+              reset();
               if (props.handleClose) props.handleClose();
             }}
           />
         </DialogTitle>
-        <AddProfile openModal={props.openModal} />
         <form onSubmit={handleSubmit(onSubmit)}>
+          <AddProfile openModal={props.openModal} register={register} error={errors} />
           <FormField openModal={props.openModal} register={register} error={errors} />
-          <Chips
-            label={"signature"}
-            openModal={props.openModal}
-            handleClose={() => {
-              clearErrors();
-              if (props.handleClose) props.handleClose();
-            }}
-          />
+
+          {formData ? (
+            <S.ChipContainer>
+              <Chips
+                label={formData}
+                openModal={props.openModal}
+                handleClose={() => {
+                  clearErrors();
+                  if (props.handleClose) props.handleClose();
+                }}
+              />
+            </S.ChipContainer>
+          ) : (
+            <></>
+          )}
           <Submit
-            label={""}
             openModal={props.openModal}
             handleClose={() => {
               clearErrors();
