@@ -10,6 +10,9 @@ type mdDetail = {
   dob?: string;
   signature?: string;
 };
+type mdDetailDelete = {
+  id: number;
+};
 
 type Props = {
   children: React.ReactNode | React.ReactNode[];
@@ -127,10 +130,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const addMdDetail = (data: mdDetail) => {
     dispatch({ type: "ADD_MD_DETAIL", payload: data });
   };
-  const deleteMdDetail = (data: mdDetail) => {
+  const deleteMdDetail = (data: mdDetailDelete) => {
     dispatch({ type: "DELETE_MD_DETAIL", payload: data });
   };
-
   const filterMdDetail = (name: string) => {
     dispatch({ type: "FILTER_MD_DETAIL", payload: name });
   };

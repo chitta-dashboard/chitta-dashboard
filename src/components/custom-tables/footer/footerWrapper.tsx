@@ -5,7 +5,6 @@ namespace S {
     position: "sticky",
     bottom: "0%",
     backgroundColor: "white",
-    lineHeight: 1,
     "& .MuiButtonBase-root": {
       fontSize: "0.8rem",
       backgroundColor: "#CED6E0", //Custom Color
@@ -22,7 +21,7 @@ namespace S {
     color: theme.palette.text.secondary,
   }));
   export const PageStack = styled(Stack)(({ theme }) => ({
-    padding: "1.5rem",
+    padding: "0 0.8rem",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

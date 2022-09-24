@@ -1,12 +1,15 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 
 export type farmerGroupDetail = {
-  id?: number;
+  id: number;
   groupName: string;
   description: string;
   leader: string;
   treasurer: string;
   secretary: string;
+};
+export type farmerGroupDetailDelete = {
+  id: number;
 };
 
 type Props = {
@@ -76,6 +79,9 @@ const reducer = (state: farmerGroupDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_FARMER_GROUP_DETAIL":
       return { ...state, farmerGroupList: [...state.farmerGroupList, action.payload] };
+    case "DELETE_MD_DETAIL":
+      console.log("id", action.payload);
+      return { ...state, mdList: state.farmerGroupList.filter((list) => list.id !== action.payload) };
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -90,10 +96,14 @@ const FarmerGroupDetailsContextProvider: FC<Props> = (props) => {
   const addFarmerGroupDetail = (data: farmerGroupDetail) => {
     dispatch({ type: "ADD_FARMER_GROUP_DETAIL", payload: data });
   };
+  const deleteFarmerGroupDetail = (data: farmerGroupDetailDelete) => {
+    dispatch({ type: "DELETE_MD_DETAIL", payload: data });
+  };
 
   let data = {
     ...state,
     addFarmerGroupDetail,
+    deleteFarmerGroupDetail,
   };
 
   return <farmerGroupDetailsContext.Provider value={data}>{props.children}</farmerGroupDetailsContext.Provider>;
