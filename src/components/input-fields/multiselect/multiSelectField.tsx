@@ -37,7 +37,9 @@ const MultiSelect = (props: Props) => {
   return (
     <>
       <S.StyledFormControl>
-        <InputLabel id="demo-multiple-chip-label">{props.label}</InputLabel>
+        <InputLabel shrink id="demo-multiple-chip-label">
+          {props.label}
+        </InputLabel>
         <Select
           label="demo-multiple-chip-label"
           id="demo-multiple-chip"

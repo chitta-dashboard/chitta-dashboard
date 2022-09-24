@@ -12,6 +12,7 @@ export const CardHeader = styled(Box)(({ theme }: any) => ({
   fontSize: "1.1rem",
   marginBottom: "0.3rem",
   position: "relative",
+  padding: "0.2rem 0 0 0",
 }));
 
 export const CardIconContainer = styled(Box)(({ theme }: any) => ({
@@ -34,4 +35,8 @@ export const NotifyIcons = styled("i")(({ theme }: any) => ({
   fontSize: "1.1rem",
   color: LightTheme.palette.text.secondaryDark,
   cursor: "pointer",
+  marginRight: "0.4rem",
+  [theme.breakpoints.up("xl")]: {
+    marginRight: "1rem",
+  },
 }));

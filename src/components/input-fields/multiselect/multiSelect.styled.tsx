@@ -7,6 +7,7 @@ namespace S {
     maxHeight: "3rem",
     overflowY: "auto",
   }));
+
   ChipContainer.defaultProps = {
     gap: 0.5,
   };
@@ -17,25 +18,31 @@ namespace S {
     height: "1.5rem",
     backgroundColor: theme.palette.custom.backgroundLight,
     color: theme.palette.text.secondary,
+
     "& 	.MuiChip-deleteIconSmall": {
       color: theme.palette.primary.dark,
     },
+
     "& .MuiSvgIcon-root": {
-      color: theme.palette.primary.light,
+      color: theme.palette.primary.dark,
       height: ".9rem !important",
       width: ".9rem !important",
     },
   }));
+
   export const StyledFormControl = styled(FormControl)(({ theme }) => ({
     width: "100% !important",
+
     "& .MuiOutlinedInput-root": {
       fontSize: ".9rem",
     },
+
     "& .MuiInputLabel-root": {
       fontSize: ".9rem",
       backgroundColor: "#ffffff",
       paddingRight: ".5rem",
     },
+
     "& .MuiSvgIcon-root": {
       color: theme.palette.primary.light,
       height: "1.5rem ",

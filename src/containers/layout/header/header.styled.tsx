@@ -20,6 +20,7 @@ namespace S {
   export const Logo = styled("img")(({ theme }: { theme: Theme }) => ({
     height: "5rem",
     width: "5rem",
+    cursor: "pointer",
   }));
 
   export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
