@@ -13,6 +13,9 @@ namespace S {
     width: "100%",
     height: "100%",
   }));
+  Description.defaultProps = {
+    InputLabelProps: { shrink: true },
+  };
 }
 
 export default S;

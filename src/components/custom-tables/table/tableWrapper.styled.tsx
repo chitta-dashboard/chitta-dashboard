@@ -20,6 +20,7 @@ namespace S {
     height: "calc(100% - 11.5rem)",
     border: 0,
     borderCollapse: "collapse",
+    position: "relative",
 
     [theme.breakpoints.down("md")]: {
       height: "calc(100% - 11rem)",
