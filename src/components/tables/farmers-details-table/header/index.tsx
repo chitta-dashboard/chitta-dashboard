@@ -3,12 +3,23 @@ import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 
 import S from "./header.styled";
 
-const Header = () => {
+interface Props{
+  users:any
+  setUsers: any
+  handleChange: any
+}
+
+const Header = (props:Props) => {
   return (
     <TableHead>
       <TableRow>
         <S.ColCheckCell>
-          <Checkbox />
+          <Checkbox
+            name="allSelect"
+            onChange={props.handleChange}
+                checked={!props.users.some((user:any) => user?.isChecked !== true)}
+            
+          />
         </S.ColCheckCell>
         <S.WebTableCell>#</S.WebTableCell>
         <S.WebTableCell>பெயர்</S.WebTableCell>

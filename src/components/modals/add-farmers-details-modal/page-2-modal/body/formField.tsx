@@ -8,7 +8,7 @@ import Props from "../../../type/modalProps";
 
 import S from "./page2Modal.styled";
 
-const FormField = (props: Props) => {
+const FormFieldPage2 = (props: Props) => {
   return (
     <>
       <S.InputContainer spacing={2}>
@@ -98,4 +98,4 @@ const FormField = (props: Props) => {
   );
 };
 
-export default FormField;
+export default FormFieldPage2;

@@ -1,0 +1,35 @@
+export interface IDecisionsFormInput {
+  decisionHeading: string;
+  dob: string;
+  qualification: string;
+  decision: string;
+  name: string;
+  fatherName: string;
+  sex: string;
+  spouseName: string;
+  group: string;
+  phoneNumber: string;
+  addhaarNo: string;
+  voterIdNo: string;
+  acre: string;
+  education: string;
+  village: string;
+  postalNo: string;
+  address: string;
+  taluk: string;
+  district: string;
+  surveyNo: string;
+  landType: string;
+  farmerType: string;
+  waterType: string;
+  seedType: string;
+  animals: string;
+  groupMember: string;
+  groupName: string;
+  explanation: string;
+  chairman: string;
+  treasurer: string;
+  secretary: string;
+  signature: string;
+  image: string;
+}

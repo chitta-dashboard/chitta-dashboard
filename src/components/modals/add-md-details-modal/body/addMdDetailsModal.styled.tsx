@@ -1,27 +1,31 @@
-import { styled, Stack } from "@mui/material";
+import { styled, Stack, Box } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    marginLeft: "2rem",
+    marginRight: "2rem",
     marginBottom: "1rem",
     width: "30rem",
+  }));
 
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
+  export const Title = styled("div")(({ theme }) => ({
+    display: "contents",
+  }));
+
+  export const ButtonContainer = styled(Box)(({ theme }) => ({
+    marginTop: "1rem",
+    marginBottom: "1rem",
+
+    "& .MuiButton-root": {
+      paddingLeft: "3rem",
+      paddingRight: "3rem",
+      marginBottom: "1rem",
+      backgroundColor: theme.palette.primary.light,
     },
   }));
-    export const Title = styled("div")(({ theme }) => ({
-      display: "contents",
-    }));
+  export const ChipContainer = styled(Stack)(({ theme }) => ({
+    marginLeft: "1rem",
+  }));
 }
 
 export default S;

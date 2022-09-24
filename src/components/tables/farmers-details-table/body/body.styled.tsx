@@ -1,6 +1,10 @@
-import { styled, Stack, TableCell, Typography } from "@mui/material";
+import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
+import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
+  export const CustomTableRow = styled(TableRow)(({ theme }) => ({
+    cursor: 'pointer',
+  }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
     width: "6%",
     padding: "1rem 0",
@@ -116,6 +120,47 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
+  }));
+
+  export const AvatarImg = styled("img")(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    borderRadius:'50%'
+  }));
+
+  export const AvatarBox = styled(Box)(({ theme }) => ({
+    borderRadius: "50%",
+    height: "2.5rem",
+    width: "2.5rem",
+    position: "relative",
+    cursor: "pointer",
+
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  }));
+
+  export const EditBox = styled(Box)(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: LightTheme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  export const EditIcon = styled("i")(({ theme }) => ({
+    color: LightTheme.palette.text.primary,
+    opacity: "1",
+  }));
+  export const HiddenInput = styled('input')(({ theme }) => ({
+    display:'none'
   }));
 }
 

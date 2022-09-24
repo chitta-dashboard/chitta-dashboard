@@ -18,6 +18,10 @@ export const LightTheme: Theme = createTheme({
       secondaryLight: "#777777",
       secondaryExtraLight: "#A4A4A4",
       secondaryDark: "#1E1E1E",
+      secondaryCustomShades: {
+        shade1: "#66717B",
+        shade2: "#999999",
+      },
     },
     warning: {
       main: "#FDCA17",

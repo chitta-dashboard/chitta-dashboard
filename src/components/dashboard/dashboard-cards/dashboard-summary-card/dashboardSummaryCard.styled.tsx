@@ -13,6 +13,9 @@ export namespace S {
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "1.25rem",
+    [theme.breakpoints.up("xl")]: {
+      padding: "2.5rem",
+    },
   }));
 
   export const SummaryHeader = styled(Box)(({ theme }: any) => ({
