@@ -123,10 +123,36 @@ const Body = (props: Props) => {
             <S.Cell title="விவசாயிகள் சங்கம்">{user.farmersGroup}</S.Cell>
             <S.WebTableCell>
               <S.IconBox>
-                <CS.Icon>delete</CS.Icon>
-                <CS.Icon onClick={() => generateIdCard()}>id-card</CS.Icon>
-                <CS.Icon>edit</CS.Icon>
-                <CS.Icon onClick={() => generateFarmerDetailForm()}>download</CS.Icon>
+                <CS.Icon
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  delete
+                </CS.Icon>
+                <CS.Icon
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    generateIdCard();
+                  }}
+                >
+                  id-card
+                </CS.Icon>
+                <CS.Icon
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  edit
+                </CS.Icon>
+                <CS.Icon
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    generateFarmerDetailForm();
+                  }}
+                >
+                  download
+                </CS.Icon>
               </S.IconBox>
             </S.WebTableCell>
           </S.CustomTableRow>
