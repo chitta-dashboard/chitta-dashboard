@@ -13,8 +13,8 @@ const FormField = (props: Props) => {
         <TextInput
           label="குழு பெயர்"
           openModal={props.openModal}
-          register={{ ...props.register("GroupName") }}
-          helperText={props.error.GroupName?.message}
+          register={{ ...props.register("groupName") }}
+          helperText={props.error.groupName?.message}
         />
         <DescriptionField
           label="விளக்கம்"
@@ -26,20 +26,20 @@ const FormField = (props: Props) => {
           <TextInput
             label="தலைவர்"
             openModal={props.openModal}
-            register={{ ...props.register("Chairman") }}
-            helperText={props.error.Chairman?.message}
+            register={{ ...props.register("chairman") }}
+            helperText={props.error.chairman?.message}
           />
           <TextInput
             label="பொருளாளர்"
             openModal={props.openModal}
-            register={{ ...props.register("Treasurer") }}
-            helperText={props.error.Treasurer?.message}
+            register={{ ...props.register("treasurer") }}
+            helperText={props.error.treasurer?.message}
           />
           <TextInput
             label="செயலாளர்"
             openModal={props.openModal}
-            register={{ ...props.register("Secretary") }}
-            helperText={props.error.Secretary?.message}
+            register={{ ...props.register("secretary") }}
+            helperText={props.error.secretary?.message}
           />
         </Stack>
       </S.InputContainer>

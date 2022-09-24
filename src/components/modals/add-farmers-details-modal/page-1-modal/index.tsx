@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DialogTitle} from "@mui/material";
+import { DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -13,7 +13,7 @@ import AddFarmersDetailsModalPage2 from "../page-2-modal";
 import CustomModal from "../../../custom-modal";
 import TitleCloseButton from "../../../buttons/title-close-button";
 
-import S from './body/page1Modal.styled'
+import S from "./body/page1Modal.styled";
 
 interface IFormInputs {
   name: string;
@@ -48,7 +48,7 @@ const AddFarmersDetailsModalPage1 = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-    clearErrors
+    clearErrors,
   } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
   });

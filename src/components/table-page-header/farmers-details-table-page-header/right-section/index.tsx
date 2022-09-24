@@ -9,6 +9,7 @@ const RightSection = () => {
   const [addfarmersDetails, setAddFarmersDetails] = useState(false);
 
   const addFarmersDetailsModal = () => {
+    console.log("first");
     setAddFarmersDetails(!addfarmersDetails);
   };
 

@@ -14,7 +14,7 @@ import Chips from "../../input-fields/chips";
 import S from "./body/addMdDetailsModal.styled";
 
 interface IFormInputs {
-  profile: string;
+  // profile: string;
   name: string;
   phoneNumber: string;
   qualification: string;
@@ -23,7 +23,7 @@ interface IFormInputs {
 }
 const schema = yup
   .object({
-    profile: yup.mixed().required("required"),
+    // profile: yup.mixed().required("required"),
     name: yup.string().required("required"),
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
@@ -44,7 +44,6 @@ const AddMdDetailsModal = (props: Props) => {
   });
   const onSubmit: any = (data: IFormInputs) => {
     reset();
-    console.log(data);
   };
   return (
     <>

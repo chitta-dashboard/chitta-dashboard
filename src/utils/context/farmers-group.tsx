@@ -1,7 +1,12 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 
-type farmerGroupDetail = {
-  name: string;
+export type farmerGroupDetail = {
+  id?: number;
+  groupName: string;
+  description: string;
+  leader: string;
+  treasurer: string;
+  secretary: string;
 };
 
 type Props = {
@@ -10,16 +15,67 @@ type Props = {
 
 interface farmerGroupDetailsContextType {
   farmerGroupList: farmerGroupDetail[];
+  addFarmerGroupDetail: (data: farmerGroupDetail) => void;
 }
 
 const initialState: farmerGroupDetailsContextType = {
-  farmerGroupList: [],
+  farmerGroupList: [
+    {
+      id: 1,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+    {
+      id: 2,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+    {
+      id: 3,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+    {
+      id: 4,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+    {
+      id: 5,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+    {
+      id: 6,
+      groupName: "விவசாயிகள் சங்கம்",
+      description: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      leader: "",
+      treasurer: "",
+      secretary: "",
+    },
+  ],
+  addFarmerGroupDetail: () => {},
 };
 
 const reducer = (state: farmerGroupDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_FARMER_GROUP_DETAIL":
-      return { ...state, farmerGroupList: action.payload };
+      return { ...state, farmerGroupList: [...state.farmerGroupList, action.payload] };
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }

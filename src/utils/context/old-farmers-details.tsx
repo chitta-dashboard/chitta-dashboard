@@ -5,8 +5,8 @@ type farmerDetail = {
   id: number;
   profile: string;
   name: string;
-  mobileNo?: number;
-  groupName?: string;
+  mobileNo: number;
+  groupName: string;
   fatherName?: string;
   husbandName?: string;
   farmerGroup?: string;
@@ -38,7 +38,6 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
-  editTableIcon: (data: farmerDetail) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -86,19 +85,12 @@ const initialState: farmerDetailsContextType = {
       groupName: "விவசாயிகள் சங்கம்",
     },
   ],
-  editTableIcon: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_FARMER_DETAIL":
-      return { ...state, farmersList: [...state.farmersList, action.payload] };
-    case "DELETE_FARMER_DETAIL":
-      console.log("id", action.payload);
-      return { ...state, mdList: state.farmersList.filter((list) => list.id !== action.payload) };
-    case "EDIT_TABLE_ICON":
-      let data = state.farmersList.filter((item) => item.id !== action.payload.id);
-      return { ...state, farmersList: [...data, action.payload] };
+      return { ...state, farmersList: action.payload };
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -114,19 +106,9 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: "ADD_FARMER_DETAIL", payload: data });
   };
 
-  const deleteFarmerDetail = (data: farmerDetail) => {
-    dispatch({ type: "DELETE_FARMER_DETAIL", payload: data });
-  };
-
-  const editTableIcon = (data: farmerDetail) => {
-    dispatch({ type: "EDIT_TABLE_ICON", payload: data });
-  };
-
   let data = {
     ...state,
     addFarmerDetail,
-    deleteFarmerDetail,
-    editTableIcon,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

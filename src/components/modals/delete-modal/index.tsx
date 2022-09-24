@@ -8,13 +8,14 @@ import DeleteBody from "./body";
 interface deleteProps {
   openModal: boolean;
   handleClose: any;
-  deleteMdDetails?: (id: number) => void;
+  deleteId?: number;
+  // deleteMdDetails?: (id: number) => void;
   deleteFarmersGroup?: (id: number) => void;
   deleteFarmersDetails?: (id: number) => void;
-  deleteId?: number;
 }
 
 const DeleteModal: FC<deleteProps> = (props) => {
+  console.log("delete props", props);
   return (
     <>
       <CustomModal label={""} openModal={props.openModal} handleClose={props.handleClose}>
@@ -25,7 +26,7 @@ const DeleteModal: FC<deleteProps> = (props) => {
         <YesOrNo
           openModal={props.openModal}
           handleClose={props.handleClose}
-          deleteMdDetails={props.deleteMdDetails}
+          // deleteMdDetails={props.deleteMdDetails}
           deleteFarmersGroup={props.deleteFarmersGroup}
           deleteFarmersDetails={props.deleteFarmersDetails}
           deleteId={props.deleteId}
