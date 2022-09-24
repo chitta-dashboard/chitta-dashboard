@@ -99,7 +99,9 @@ const Body = (props: Props) => {
                   <S.IdBox>{user.id}</S.IdBox>
                 </S.TabIdStack>
               </S.TabCheckboxStack>
-              <Stack>
+              <Stack onClick={(e) => {
+                e.stopPropagation();
+              }}>
                 <CS.Icon onClick={farmersDetailsIconModalHandler}>three-dots</CS.Icon>
               </Stack>
             </S.TabCell>
