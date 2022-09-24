@@ -3,30 +3,21 @@ import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    padding: "1rem",
-
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-    },
+    padding: "2rem",
   }));
 
   InputContainer.defaultProps = {
     width: "100%",
   };
+
   export const Title = styled("div")(({ theme }) => ({
     display: "contents",
   }));
+
   export const ChildContainer = styled(Grid)(({ theme }) => ({
     width: "100%",
   }));
+
   ChildContainer.defaultProps = {
     md: 6,
   };
@@ -50,6 +41,13 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       margin: "0",
     },
+  }));
+
+  export const RadioContainer = styled(Stack)(({ theme }) => ({
+    marginBottom: "1rem",
+    display: "flex",
+    justifyContent: "flex-start",
+    width: "100%",
   }));
 }
 

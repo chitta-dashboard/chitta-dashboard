@@ -5,7 +5,7 @@ import S from "./backButton.Styled";
 const BackButton = (props: Props) => {
   return (
     <>
-      <S.BackButton autoFocus onClick={props.handleClose}>
+      <S.BackButton  onClick={props.handleClose}>
         Back
       </S.BackButton>
     </>

@@ -1,9 +1,8 @@
 import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
-import React from "react";
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
-  export const CustomTableRow = styled(TableRow)<{children: JSX.Element | JSX.Element[]}>(({ theme }) => ({
+  export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(({ theme }) => ({
     cursor: "pointer",
   }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
