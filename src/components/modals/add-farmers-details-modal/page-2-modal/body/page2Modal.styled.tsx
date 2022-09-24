@@ -2,22 +2,10 @@ import { styled, Stack, Avatar } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    marginLeft: "2rem",
+    marginRight: "2rem",
     marginTop: "1rem",
     width: "30rem",
-
-    "& .MuiOutlinedInput-root": {
-      "& fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
-      },
-    },
   }));
 
   export const Title = styled("div")(({ theme }) => ({

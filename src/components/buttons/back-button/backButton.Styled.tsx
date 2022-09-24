@@ -9,7 +9,6 @@ namespace S {
   }));
 
   BackButton.defaultProps = {
-    variant: "contained",
     size: "small",
   };
 }

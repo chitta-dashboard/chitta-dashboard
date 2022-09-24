@@ -13,6 +13,8 @@ interface Props {
   multiSelectKey?: string;
   dropDownIcon?: () => void;
   addDecision?: boolean;
+  signature?: string;
+  image?: string;
 }
 
 export default Props;
