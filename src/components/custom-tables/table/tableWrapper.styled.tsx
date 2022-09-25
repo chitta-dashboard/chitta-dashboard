@@ -22,6 +22,7 @@ namespace S {
     gridTemplateRows: "auto 1fr auto",
     border: 0,
     borderCollapse: "collapse",
+    position: "relative",
 
     [theme.breakpoints.down("md")]: {
       height: "100%",

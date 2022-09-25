@@ -21,7 +21,7 @@ export namespace S {
     gap: "1.5625rem",
   }));
   export const Button = styled(MuiButton)(({ theme }: { theme: Theme }) => ({
-    width: "7.5rem",
+    width: "6.8rem",
   }));
   export const FarmersDetailsContent = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
@@ -118,7 +118,7 @@ export namespace S {
   export const UserInfoRow = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     alignItems: "flex-start",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
     width: "100%",
     height: "fit-content",
     padding: "1px 0",
@@ -138,10 +138,16 @@ export namespace S {
       fontSize: "0.75rem",
       marginLeft: "0.125rem",
     },
+     [theme.breakpoints.down("md")]: {
+        paddingLeft: "5%",
+      },
   }));
   export const UserInfoData2 = styled(Box)(({ theme }: { theme: Theme }) => ({
     width: "40%",
     fontSize: "17px",
     paddingLeft: "10%",
+    [theme.breakpoints.down("md")]: {
+        paddingLeft: "1%",
+      },
   }));
 }

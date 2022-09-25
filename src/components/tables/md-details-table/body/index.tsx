@@ -27,6 +27,7 @@ const Body = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<number>(-1);
   const [isHovering, setIsHovering] = useState<number>(0);
+  const [MdDetailsIcon, setMdDetailsIcon] = useState(false);
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 

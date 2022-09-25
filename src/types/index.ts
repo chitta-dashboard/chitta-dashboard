@@ -5,6 +5,10 @@ declare module "@mui/material" {
     secondaryExtraLight: string;
     secondaryLight: string;
     secondaryDark: string;
+    secondaryCustomShades: {
+      shade1: string;
+      shade2: string;
+    };
   }
 
   // createTheme uses ThemeOptions as argument type which uses PaletteOptions as type for palette property

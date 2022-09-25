@@ -9,6 +9,14 @@ export namespace S {
     justifyContent: "space-between",
     width: "100%",
     padding: "0 2.3rem",
+    [theme.breakpoints.up("xl")]: {
+      marginTop: "3rem",
+      width: "97%",
+      marginLeft: "2rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
   }));
 
   export const ProfileBox = styled(Box)(({ theme }: any) => ({
@@ -19,7 +27,7 @@ export namespace S {
   }));
 
   export const ProfileHeading = styled(Typography)(({ theme }: any) => ({
-    color: "#000",
+    color: LightTheme.palette.text.secondaryDark,
     letterSpacing: "0.05rem",
     fontSize: "1.2rem",
     fontWeight: "600",
@@ -66,13 +74,19 @@ export namespace S {
   }));
 
   export const SearchBarContainer = styled(Box)(({ theme }: any) => ({
-    width: "80%",
-    marginLeft: "8rem",
+    // width: "100%",
+    // marginLeft: "8rem",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
     [theme.breakpoints.up("md")]: {
       display: "flex",
+    },
+    [theme.breakpoints.down("lg")]: {
+      width: "100%",
+    },
+    [theme.breakpoints.up("xl")]: {
+      marginLeft: "22rem",
     },
   }));
 }
