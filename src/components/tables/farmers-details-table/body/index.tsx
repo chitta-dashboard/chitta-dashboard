@@ -13,6 +13,7 @@ import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
 import IdCardBody from "../../../id-card/id-card-body";
 import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
 import S from "./body.styled";
+import DeleteModal from "../../../modals/delete-modal";
 
 interface Props {
   users: any;
@@ -28,6 +29,8 @@ const Body = (props: Props) => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<number>(-1);
   const [farmersDetailsIcon, setFarmersDetailsIcon] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmersList, editTableIcon } = useFarmerDetailsContext();
@@ -50,6 +53,20 @@ const Body = (props: Props) => {
     setUserId(id);
   };
 
+  //farmers Details Delete Modal
+  const farmersDetailsDeleteModal = (id: number) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  //Farmers Details users Delete Handler
+  // const deleteFarmersDetails = (id: number) => {
+  //   const filterFarmersDetails = farmersList.filter((user) => user.id !== id);
+  //   setFarmersDetails(filterFarmersDetails);
+  //   setDeleteModal(!deleteModal);
+  // };
+
+  //Tab Icon Open & Close Handler
   const farmersDetailsIconModalHandler = () => {
     setFarmersDetailsIcon(!farmersDetailsIcon);
   };
@@ -91,7 +108,7 @@ const Body = (props: Props) => {
               <Checkbox name={user.id} onChange={props.handleChange} checked={user?.isChecked || false} />
             </S.RowCheckCell>
             <S.WebTableCell>{user.id}</S.WebTableCell>
-            {/* for tablet view */}
+            {/* for tablet view*/}
             <S.TabCell>
               <S.TabCheckboxStack>
                 <Checkbox />
@@ -99,9 +116,11 @@ const Body = (props: Props) => {
                   <S.IdBox>{user.id}</S.IdBox>
                 </S.TabIdStack>
               </S.TabCheckboxStack>
-              <Stack onClick={(e) => {
-                e.stopPropagation();
-              }}>
+              <Stack
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
                 <CS.Icon onClick={farmersDetailsIconModalHandler}>three-dots</CS.Icon>
               </Stack>
             </S.TabCell>
@@ -165,6 +184,12 @@ const Body = (props: Props) => {
         handleClose={farmersDetailsIconModalHandler}
         generateIdCard={() => generateIdCard()}
         generateFarmerDetailForm={() => generateFarmerDetailForm()}
+      />
+      <DeleteModal
+        openModal={deleteModal}
+        handleClose={farmersDetailsDeleteModal}
+        // deleteFarmersDetails={deleteFarmersDetails}
+        deleteId={deleteId}
       />
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>

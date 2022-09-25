@@ -2,8 +2,8 @@ import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/materi
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
-  export const CustomTableRow = styled(TableRow)(({ theme }) => ({
-    cursor: 'pointer',
+  export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(({ theme }) => ({
+    cursor: "pointer",
   }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
     width: "6%",
@@ -125,7 +125,7 @@ namespace S {
   export const AvatarImg = styled("img")(({ theme }) => ({
     width: "100%",
     height: "100%",
-    borderRadius:'50%'
+    borderRadius: "50%",
   }));
 
   export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -159,8 +159,8 @@ namespace S {
     color: LightTheme.palette.text.primary,
     opacity: "1",
   }));
-  export const HiddenInput = styled('input')(({ theme }) => ({
-    display:'none'
+  export const HiddenInput = styled("input")(({ theme }) => ({
+    display: "none",
   }));
 }
 
