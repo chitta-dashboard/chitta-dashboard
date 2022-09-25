@@ -4,17 +4,17 @@ import { Navigate } from "react-router-dom";
 import LoginBackground from "../../components/login/login-background";
 import LoginForm from "../../components/login/login-form";
 import authContext from "../../utils/context/auth";
-
+import S from "./login.styled";
 const Login = () => {
   const { isAuthenticated } = useContext(authContext);
 
   return (
     <>
       {!isAuthenticated ? (
-        <Grid container>
+        <S.ContainerGrid container>
           <LoginBackground />
           <LoginForm />
-        </Grid>
+        </S.ContainerGrid>
       ) : (
         <Navigate to="/dashboard" />
       )}
