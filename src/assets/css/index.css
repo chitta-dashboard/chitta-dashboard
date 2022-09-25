@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=My+Soul&display=swap");
+
 body {
   margin: 0;
   font-family: "Poppins", BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -45,18 +47,18 @@ i {
 }
 
 /* For Rich text box  */
-.fr-box{
+.fr-box {
   width: 100%;
   height: 100% !important;
   outline: none;
 }
 
-.fr-wrapper{
+.fr-wrapper {
   max-height: 165px !important;
   height: 100% !important;
   overflow-y: auto;
 }
 
-.fr-element{
+.fr-element {
   min-height: 10.8rem !important;
 }
