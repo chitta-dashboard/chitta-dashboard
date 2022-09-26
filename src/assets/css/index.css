@@ -60,3 +60,11 @@ i {
 .fr-element{
   min-height: 10.8rem !important;
 }
+
+/* Rich text - Tiptap */
+.ProseMirror {
+  outline: none;
+  background: #fff;
+  height: 100%;
+  width: 100%;
+}

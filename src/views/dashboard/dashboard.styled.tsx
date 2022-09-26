@@ -7,14 +7,14 @@ namespace S {
     height: "92%",
     margin: "0 auto",
     backgroundColor: "#DEEFE9",
-    [theme.breakpoints.up("xl")]: {
-      width: "calc(100% - 15rem)",
-    },
+    // [theme.breakpoints.up("xl")]: {
+    //   width: "calc(100% - 15rem)",
+    // },
   }));
 
   export const DashBoaderBodyWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     gap: "2rem",
     width: "100%",
     marginTop: "4rem",

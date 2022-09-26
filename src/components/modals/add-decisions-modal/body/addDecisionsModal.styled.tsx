@@ -1,4 +1,4 @@
-import { styled, Stack, Grid, Typography } from "@mui/material";
+import { styled, Stack, Grid, Typography, Box } from "@mui/material";
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
@@ -42,14 +42,10 @@ namespace S {
     padding: "0 0.2rem",
   }));
 
-  export const RichTextBoxWrapper = styled(Typography)(({ theme }) => ({
-    border: "1px solid green",
-    borderRadius: "10px",
+  export const RichTextBoxWrapper = styled(Box)(({ theme }) => ({
     position: "relative",
-    marginRight: "0.5rem",
-    [theme.breakpoints.down("md")]: {
-      margin: "0",
-    },
+    height: "100%",
+    justifyContent: "initial",
   }));
 }
 

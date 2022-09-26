@@ -13,6 +13,7 @@ import TextInput from "../../../input-fields/text";
 import Props from "../../type/modalProps";
 
 import S from "./addDecisionsModal.styled";
+import Editor from "../../../rich-text/Editor";
 
 const FormField = (props: Props) => {
   return (
@@ -47,7 +48,7 @@ const FormField = (props: Props) => {
           <S.ChildContainer item>
             <S.RichTextBoxWrapper>
               <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>
-              <FroalaEditor tag="textarea" />
+              <Editor />
             </S.RichTextBoxWrapper>
           </S.ChildContainer>
         </Grid>
