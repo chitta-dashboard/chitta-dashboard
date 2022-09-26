@@ -21,7 +21,8 @@ export namespace S {
   }));
 
   export const Options = styled(Box)(({ theme }: any) => ({
-    fontSize: "0.75rem",
+    fontSize: "0.73rem",
+    marginBottom: "0.2rem",
     color: LightTheme.palette.text.secondary,
     cursor: "pointer",
   }));
