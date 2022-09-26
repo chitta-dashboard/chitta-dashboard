@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import TableWrapper from "../../custom-tables/table";
 import Header from "./header";
@@ -56,81 +56,18 @@ const farmersDetails: FarmersDetailsType[] = [
     mobileNo: 8610010875,
     farmersGroup: "விவசாயிகள் சங்கம்",
   },
-  {
-    id: 7,
-    image: "image",
-    name: "Arokiya6",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 8,
-    image: "image",
-    name: "Arokiya7",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 9,
-    image: "image",
-    name: "Arokiya8",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 10,
-    image: "image",
-    name: "Arokiya9",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 11,
-    image: "image",
-    name: "Arokiya10",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 12,
-    image: "image",
-    name: "Arokiya11",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 13,
-    image: "image",
-    name: "Arokiya12",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 14,
-    image: "image",
-    name: "Arokiya13",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
-  {
-    id: 15,
-    image: "image",
-    name: "Arokiya14",
-    mobileNo: 8610010875,
-    farmersGroup: "விவசாயிகள் சங்கம்",
-  },
 ];
 
 const FarmersDetailsTable = () => {
-const [users, setUsers] = useState<FarmersDetailsType[]>([]);
+  const [users, setUsers] = useState<FarmersDetailsType[]>([]);
 
   useEffect(() => {
     setUsers(farmersDetails);
   }, []);
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     const { name, checked } = e.target;
-    if (name === 'allSelect') {
+    if (name === "allSelect") {
       let tempUser = users.map((user) => {
         return { ...user, isChecked: checked };
       });
@@ -139,12 +76,12 @@ const [users, setUsers] = useState<FarmersDetailsType[]>([]);
       let tempUser = users.map((user) => (user.id === parseInt(name) ? { ...user, isChecked: checked } : user));
       setUsers(tempUser);
     }
-  }
+  };
 
   return (
     <TableWrapper>
-      <Header users={users} setUsers={setUsers} handleChange={(e:any)=>handleChange(e)} />
-      <Body users={users} setUsers={setUsers} handleChange={(e:any)=>handleChange(e)} />
+      <Header users={users} setUsers={setUsers} handleChange={(e: any) => handleChange(e)} />
+      <Body users={users} setUsers={setUsers} handleChange={(e: any) => handleChange(e)} />
       <Footer />
     </TableWrapper>
   );
