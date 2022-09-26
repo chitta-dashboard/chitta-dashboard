@@ -23,6 +23,9 @@ export namespace S {
     borderRadius: "1.2rem",
     paddingLeft: "0.5rem",
     color: LightTheme.palette.primary.light,
+    "::placeholder": {
+      color: LightTheme.palette.primary.light,
+    },
   }));
 }
 

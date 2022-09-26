@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import profilePic from "../../../assets/images/profile.png";
 import { Box } from "@mui/material";
@@ -6,13 +6,18 @@ import { Box } from "@mui/material";
 import SearchBar from "../../common-components/search-bar";
 import { S } from "./dashboardHeader.styled";
 import IconWrapper from "../../../utils/iconWrapper";
-import CommonIconModal from "../../common-icon-modal";
+import SearchModal from "../../icon-modals/searchModal.tsx";
 
 type Props = {};
 
 const DashboardHeader = (props: Props) => {
+  const [openSearch, setOpenSearch] = useState(false);
+  const openSearchHandle = () => {
+    setOpenSearch(!openSearch);
+  };
   return (
     <>
+      <SearchModal open={openSearch} handleClose={openSearchHandle} />
       <S.DashboardHeaderWrapper>
         <S.ProfileBox>
           <S.ImgContainer>
@@ -25,12 +30,12 @@ const DashboardHeader = (props: Props) => {
         </S.ProfileBox>
         <S.HeaderIconsBox>
           <S.SearchBarContainer>
-            <SearchBar />
+          <SearchBar />
           </S.SearchBarContainer>
           <IconWrapper>filter</IconWrapper>
           <IconWrapper>settings</IconWrapper>
           <S.SearchIconContainer>
-            <IconWrapper>search</IconWrapper>
+            <IconWrapper onClick={openSearchHandle}>search</IconWrapper>
           </S.SearchIconContainer>
         </S.HeaderIconsBox>
       </S.DashboardHeaderWrapper>

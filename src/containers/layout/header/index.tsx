@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
 
 import Logo from "../../../assets/images/logo.svg";
@@ -12,11 +12,11 @@ const Header: FC = () => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const [navOpen, setNavOpen] = useState(false);
   const { setIsAuthenticated } = useContext(authContext);
-
+  const navigate = useNavigate();
   return (
     <S.Header>
       <S.LogoBox>
-        <S.Logo src={Logo} alt="Nerkathir Logo" />
+        <S.Logo src={Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
         <S.LogoText>
           நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
         </S.LogoText>
