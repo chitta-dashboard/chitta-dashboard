@@ -212,7 +212,8 @@ namespace S {
   export const DecisionsTimestamp = styled(DecisionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
     placement: "left" | "right";
   }>(({ theme, placement }) => ({
-    color: theme.palette.text.secondaryCustomShades.shade2,
+    color: theme.palette.text.secondary,
+    opacity: theme.palette.shadeOpacity,
     position: "absolute",
     top: "-28px",
     [placement]: "-10px",
