@@ -109,7 +109,7 @@ namespace S {
 
   export const ContentTitle = styled(Typography)(({ theme }) => ({
     fontSize: ".9rem",
-    color: theme.palette.text.primaryLight,
+    color: theme.palette.text.primary,
     fontWeight: "600",
     whiteSpace: "nowrap",
   }));
@@ -122,7 +122,8 @@ namespace S {
   }));
 
   export const ContentBodyText = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondaryExtraLight,
+    color: theme.palette.text.secondaryLight,
+    opacity: theme.palette.shadeOpacity,
     fontSize: ".8rem",
     [theme.breakpoints.down("md")]: {
       // maxWidth: "200px",
@@ -133,7 +134,8 @@ namespace S {
   }));
 
   export const ContentTimeStamp = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondaryCustomShades.shade2,
+    color: theme.palette.text.secondary,
+    opacity: theme.palette.shadeOpacity,
     position: "absolute",
     fontSize: ".8rem",
     top: "-28px",

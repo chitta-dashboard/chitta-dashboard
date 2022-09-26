@@ -21,7 +21,7 @@ namespace S {
     whiteSpace: "nowrap",
 
     "&:hover": {
-      color: theme.palette.text.secondaryExtraLight,
+      opacity: theme.palette.shadeOpacity,
     },
   }));
 
