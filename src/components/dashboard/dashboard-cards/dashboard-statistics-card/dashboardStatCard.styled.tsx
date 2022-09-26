@@ -38,7 +38,7 @@ export namespace S {
   export const StatBodyNumberFont = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.4rem",
     fontWeight: "500",
-    color: LightTheme.palette.text.secondaryLight,
+    color: LightTheme.palette.text.secondary,
     marginTop: "0.3rem",
   }));
 

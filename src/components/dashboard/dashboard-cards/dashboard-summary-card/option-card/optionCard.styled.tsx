@@ -25,6 +25,15 @@ export namespace S {
     marginBottom: "0.2rem",
     color: LightTheme.palette.text.secondary,
     cursor: "pointer",
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyItems: "center",
+    alignItems: "center",
+
+    "&:hover": {
+      backgroundColor: LightTheme.palette.custom.backgroundLight,
+    },
   }));
 }
 
