@@ -5,7 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
-import authContext from "../../../utils/context/authContext";
+import authContext from "../../../utils/context/authContext"
+
 interface LoginFormInputs {
   mobileNo: string;
   loginPassword: string;
@@ -66,8 +67,8 @@ const LoginForm: FC = () => {
           <S.ImageBox>
             <S.LogoImage src={logo} alt="Nerkathir" />
           </S.ImageBox>
-          <br />
-          <form onSubmit={handleSubmit(onLoginSubmit)}>
+
+          <form id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
             <S.InputBox>
               <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
               <S.LoginInput
@@ -107,17 +108,17 @@ const LoginForm: FC = () => {
               />
               <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
             </S.InputBox>
-            <br />
-
+          </form>
+          <S.ButtonContainer>
             <S.ButtonBox>
-              <S.LoginButton size="large" type="submit">
+              <S.LoginButton form="loginForm" size="large" type="submit">
                 Login
               </S.LoginButton>
             </S.ButtonBox>
             <S.LoginText variant="subtitle1">
-              Don't have an account? <span>Signup</span>
+              Don't have an account?<span>Signup</span>
             </S.LoginText>
-          </form>
+          </S.ButtonContainer>
         </S.FormContainer>
       </S.LoginContainer>
     </S.LoginMainContainer>
