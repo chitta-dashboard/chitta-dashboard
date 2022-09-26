@@ -2,8 +2,12 @@ import { styled, Button, Stack } from "@mui/material";
 
 namespace S {
   export const NoButton = styled(Button)(({ theme }) => ({
-    fontSize: ".7rem",
-    color: theme.palette.primary.main,
+    fontSize: "1rem",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
+    color: theme.palette.primary.light,
+    borderColor: theme.palette.primary.light,
+    borderRadius: ".6rem",
   }));
 
   NoButton.defaultProps = {
@@ -12,19 +16,20 @@ namespace S {
   };
 
   export const YesButton = styled(Button)(({ theme }) => ({
-    fontSize: ".7rem",
-    backgroundColor: theme.palette.primary.main,
+    fontSize: "1rem",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
+    backgroundColor: theme.palette.primary.light,
   }));
 
   YesButton.defaultProps = {
-    variant: "contained",
     size: "small",
   };
 
   export const ButtonContainer = styled(Stack)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
-    paddingBottom: "2rem",
+    paddingBottom: "3rem",
   }));
 
   ButtonContainer.defaultProps = {

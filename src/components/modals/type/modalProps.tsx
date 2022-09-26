@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props {
   openModal: boolean;
-  handleClose?: () => void;
+  handleClose?: any;
   label?: string;
   profile?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   register?: any;
@@ -13,6 +13,9 @@ interface Props {
   multiSelectKey?: string;
   dropDownIcon?: () => void;
   addDecision?: boolean;
+  signature?: string;
+  image?: string;
+  deleteId?: number;
 }
 
 export default Props;

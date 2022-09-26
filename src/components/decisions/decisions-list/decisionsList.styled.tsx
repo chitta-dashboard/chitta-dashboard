@@ -133,7 +133,7 @@ namespace S {
   }));
 
   export const ContentTimeStamp = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondaryExtraLight,
+    color: theme.palette.text.secondaryCustomShades.shade2,
     position: "absolute",
     fontSize: ".8rem",
     top: "-28px",

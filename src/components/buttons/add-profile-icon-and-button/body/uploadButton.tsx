@@ -1,8 +1,10 @@
+import { FC } from "react";
+
 import Props from "../../../modals/type/modalProps";
 
 import S from "./addProfile.styled";
 
-const UploadButton = (props: Props) => {
+const UploadButton: FC<Props> = (props) => {
   const getImage = props.profile;
 
   return (

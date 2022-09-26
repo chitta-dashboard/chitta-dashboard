@@ -17,12 +17,17 @@ namespace S {
   }));
 
   export const TableBox = styled(Table)(({ theme }) => ({
-    height: "calc(100% - 11.5rem)",
+    height: "100%",
+    display: "grid",
+    gridTemplateRows: "auto 1fr auto",
     border: 0,
     borderCollapse: "collapse",
+    position: "relative",
 
     [theme.breakpoints.down("md")]: {
-      height: "calc(100% - 11rem)",
+      height: "100%",
+      display: "grid",
+      gridTemplateRows: "auto 1fr auto",
     },
 
     "& thead,& tbody,& tr,& tfoot,& th,& td,& div": {
@@ -31,13 +36,13 @@ namespace S {
     },
 
     "& thead ,& tbody,& tfoot ,& tr": {
-      display: "table",
       width: "100%",
+      display: "table",
       tableLayout: "fixed",
     },
     "& thead": {
-      tableLayout: "fixed",
       display: "block",
+      tableLayout: "fixed",
       backgroundColor: theme.palette.custom.backgroundDark,
       [theme.breakpoints.up("md")]: {
         padding: "0 1%",
@@ -45,8 +50,8 @@ namespace S {
     },
     "& tbody": {
       height: "100%",
-      tableLayout: "fixed",
       display: "block",
+      tableLayout: "fixed",
       overflowY: "auto",
       overflowX: "hidden",
       [theme.breakpoints.up("md")]: {

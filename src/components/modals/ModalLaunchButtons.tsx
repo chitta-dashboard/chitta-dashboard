@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import DeleteModal from "./delete-modal";
 import ConfirmationModal from "./confirmation-modal";
 import AddFarmersGroupModal from "./add-farmers-group-modal";
-import AddFarmersDetailsModalPage1 from "./add-farmers-details-modal/page-1-modal";
+import AddFarmersDetailsModalPage1 from "./add-farmers-details-modal";
 import AddMdDetailsModal from "./add-md-details-modal";
 import AddDecisionsModal from "./add-decisions-modal";
 
