@@ -1,7 +1,9 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import MenuBar from "./richtext";
-import { Box } from "@mui/material";
+
+import MenuBar from "./menuBar";
+
+import S from "./richText.styled";
 
 type Props = {};
 
@@ -9,25 +11,15 @@ const Editor = (props: Props) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: "Type Here",
+    autofocus: true,
+    // enableInputRules: true,
   });
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-        height: "100%",
-        border: "2px solid green",
-        background: "#fff",
-        justifyContent:"flex-start !important",
-        borderRadius: "20px",
-        padding: "1rem",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <S.TextBox>
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-    </Box>
+    </S.TextBox>
   );
 };
 
