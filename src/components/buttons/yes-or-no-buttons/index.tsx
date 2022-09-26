@@ -2,19 +2,15 @@ import Props from "../../modals/type/modalProps";
 
 import S from "./YesOrNoButtons.Styled";
 
-const YesOrNo = (props: Props) => {
+const YesOrNoButtons = (props: Props) => {
   return (
     <>
       <S.ButtonContainer>
-        <S.NoButton autoFocus onClick={props.handleClose}>
-          No
-        </S.NoButton>
-        <S.YesButton autoFocus onClick={props.handleClose}>
-          Yes
-        </S.YesButton>
+        <S.NoButton onClick={props.handleClose}>No</S.NoButton>
+        <S.YesButton onClick={props.handleClose}>Yes</S.YesButton>
       </S.ButtonContainer>
     </>
   );
 };
 
-export default YesOrNo;
+export default YesOrNoButtons;

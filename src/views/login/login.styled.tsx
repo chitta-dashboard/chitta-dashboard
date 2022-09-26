@@ -1,1 +1,10 @@
-export default null
+import { styled, Grid } from "@mui/material";
+
+namespace S {
+  export const ContainerGrid = styled(Grid)(({ theme }) => ({
+    height: "100vh",
+    position: "fixed",
+    width: "100vW",
+  }));
+}
+export default S;
