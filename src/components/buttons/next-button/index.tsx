@@ -1,14 +1,17 @@
 import { Button } from "@mui/material";
-
-import Props from "../../modals/type/modalProps";
+import { FC } from "react";
 
 import S from "./Next.Styled";
 
-const NextButton = (props: Props) => {
+interface CustomProps {
+  submit: () => void;
+}
+
+const NextButton: FC<CustomProps> = ({ submit }) => {
   return (
     <>
       <S.ButtonContainer>
-        <Button  type="submit" onSubmit={props.submit}>
+        <Button type="submit" onSubmit={submit}>
           Next
         </Button>
       </S.ButtonContainer>

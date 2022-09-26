@@ -1,11 +1,15 @@
-import Props from "../../modals/type/modalProps";
 import MultiSelect from "./multiSelectField";
+import { FieldValues, UseFormRegister, Path } from "react-hook-form";
 
-const MultipleSelectChip = (props: Props) => {
+interface CustomProps<FormInputType extends FieldValues> {
+  multiSelectLabel: string;
+  label: string;
+}
+function MultipleSelectChip<FormInputTypes>({ multiSelectLabel }: CustomProps<FormInputTypes & FieldValues>) {
   return (
     <>
-      <MultiSelect openModal={props.openModal} label={props.multiSelectLabel} />
+      <MultiSelect label={multiSelectLabel} />
     </>
   );
-};
+}
 export default MultipleSelectChip;

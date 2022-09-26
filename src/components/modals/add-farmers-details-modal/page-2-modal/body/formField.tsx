@@ -1,98 +1,46 @@
 import { Stack } from "@mui/system";
+import { FC } from "react";
 
 import DescriptionField from "../../../../input-fields/description";
 import NumberInput from "../../../../input-fields/number";
 import SelectField from "../../../../input-fields/select";
 import TextInput from "../../../../input-fields/text";
-import Props from "../../../type/modalProps";
+import { IAddFarmersDetailsFormInput } from "../../../type/formInputs";
+import { UseFormRegister } from "react-hook-form";
+
 
 import S from "./page2Modal.styled";
 
-const FormFieldPage2 = (props: Props) => {
+interface CustomProps extends IAddFarmersDetailsFormInput {
+  register: UseFormRegister<IAddFarmersDetailsFormInput>;
+  errors: object;
+}
+
+const FormFieldPage2: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
       <S.InputContainer spacing={2}>
         <Stack direction={"row"} spacing={2}>
-          <TextInput
-            label="கல்வி"
-            openModal={props.openModal}
-            register={{ ...props.register("education") }}
-            helperText={props.error.education?.message}
-          />
-          <TextInput
-            label="கிராமம்"
-            openModal={props.openModal}
-            register={{ ...props.register("village") }}
-            helperText={props.error.village?.message}
-          />
-          <TextInput
-            label="அஞ்சல் குறியீடு"
-            openModal={props.openModal}
-            register={{ ...props.register("postalNo") }}
-            helperText={props.error.postalNo?.message}
-          />
+          <TextInput label="கல்வி" register={{ ...register("education") }} helperText={errors.education?.message} />
+          <TextInput label="கிராமம்" register={{ ...register("village") }} helperText={errors.village?.message} />
+          <TextInput label="அஞ்சல் குறியீடு" register={{ ...register("postalNo") }} helperText={errors.postalNo?.message} />
         </Stack>
-        <DescriptionField
-          label="முகவரி"
-          openModal={props.openModal}
-          register={{ ...props.register("address") }}
-          helperText={props.error.address?.message}
-        />
+        <DescriptionField label="முகவரி" register={{ ...register("address") }} helperText={errors.address?.message} />
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="தாலுக்கா" openModal={props.openModal} register={{ ...props.register("taluk") }} helperText={props.error.taluk?.message} />
-          <TextInput
-            label="மாவட்டம்"
-            openModal={props.openModal}
-            register={{ ...props.register("district") }}
-            helperText={props.error.district?.message}
-          />
+          <TextInput label="தாலுக்கா" register={{ ...register("taluk") }} helperText={errors.taluk?.message} />
+          <TextInput label="மாவட்டம்" register={{ ...register("district") }} helperText={errors.district?.message} />
         </Stack>
-        <NumberInput
-          label="கணக்கெடுப்பு எண்"
-          openModal={props.openModal}
-          register={{ ...props.register("surveyNo") }}
-          helperText={props.error.surveyNo?.message}
-        />
+        <NumberInput label="கணக்கெடுப்பு எண்" register={{ ...register("surveyNo") }} helperText={errors.surveyNo?.message} />
         <Stack direction={"row"} spacing={2}>
-          <SelectField
-            label="நில வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("landType") }}
-            helperText={props.error.landType?.message}
-          />
-          <SelectField
-            label="நீர் வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("waterType") }}
-            helperText={props.error.waterType?.message}
-          />
-          <SelectField
-            label="விவசாயி வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("farmerType") }}
-            helperText={props.error.farmerType?.message}
-          />
+          <SelectField label="நில வகை" register={{ ...register("landType") }} helperText={errors.landType?.message} />
+          <SelectField label="நீர் வகை" register={{ ...register("waterType") }} helperText={errors.waterType?.message} />
+          <SelectField label="விவசாயி வகை" register={{ ...register("farmerType") }} helperText={errors.farmerType?.message} />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <TextInput
-            label="விதைவகை"
-            openModal={props.openModal}
-            register={{ ...props.register("seedType") }}
-            helperText={props.error.seedType?.message}
-          />
-          <TextInput
-            label="விலங்குகள்"
-            openModal={props.openModal}
-            register={{ ...props.register("animals") }}
-            helperText={props.error.animals?.message}
-          />
+          <TextInput label="விதைவகை" register={{ ...register("seedType") }} helperText={errors.seedType?.message} />
+          <TextInput label="விலங்குகள்" register={{ ...register("animals") }} helperText={errors.animals?.message} />
         </Stack>
-        <SelectField
-          label="குழு உறுப்பினர்"
-          openModal={props.openModal}
-          register={{ ...props.register("groupMember") }}
-          helperText={props.error.groupMember?.message}
-        />
+        <SelectField label="குழு உறுப்பினர்" register={{ ...register("groupMember") }} helperText={errors.groupMember?.message} />
       </S.InputContainer>
     </>
   );
