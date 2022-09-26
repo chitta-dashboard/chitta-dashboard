@@ -7,21 +7,12 @@ export const LightTheme: Theme = createTheme({
       main: "#306F54",
       light: "#1A9035",
     },
-    secondary: {
-      main: "rgba(69, 181, 73, 0.1)",
-    },
     text: {
       primary: "#1A9035",
-      primaryLight: "#57AB90",
       primaryDark: "#306F54",
       secondary: "#686868",
       secondaryLight: "#777777",
-      secondaryExtraLight: "#A4A4A4",
       secondaryDark: "#1E1E1E",
-      secondaryCustomShades: {
-        shade1: "#66717B",
-        shade2: "#999999",
-      },
     },
     warning: {
       main: "#FDCA17",
@@ -31,6 +22,7 @@ export const LightTheme: Theme = createTheme({
       backgroundDark: "#C1E1D6",
       backdrop: "rgba(222, 239, 233, .5)",
     },
+    shadeOpacity: ".8",
   },
   typography: {
     fontFamily: "'Poppins', 'sans-serif'",
