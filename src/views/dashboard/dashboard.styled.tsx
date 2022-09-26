@@ -14,7 +14,7 @@ namespace S {
 
   export const DashBoaderBodyWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-between",
     gap: "2rem",
     width: "100%",
     marginTop: "4rem",
