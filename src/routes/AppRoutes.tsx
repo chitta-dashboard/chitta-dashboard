@@ -10,6 +10,7 @@ import Cultivation from "../views/cultivation";
 import Register from "../views/register";
 import Decisions from "../views/decisions";
 import NotFound from "../views/not-found";
+import FarmerDetailPage from "../views/farmer-detail-page";
 
 const AppRouters: FC = () => {
   return (
@@ -20,6 +21,7 @@ const AppRouters: FC = () => {
       <Route path={`/md-details`} element={<MDDetails />} />
       <Route path={`/farmers-group`} element={<FarmersGroup />} />
       <Route path={`/farmers-details`} element={<FarmersDetails />} />
+      <Route path={`/farmers-details/:id`} element={<FarmerDetailPage />} />
       <Route path={`/cultivation`} element={<Cultivation />} />
       <Route path={`/register`} element={<Register />} />
       <Route path={`/decisions`} element={<Decisions />} />

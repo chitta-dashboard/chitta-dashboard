@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@mui/material";
-import authContext from "../../utils/context/auth";
+import authContext from "../../utils/context/authContext";
 import { LightTheme } from "../../utils/theme";
 
 type Props = {

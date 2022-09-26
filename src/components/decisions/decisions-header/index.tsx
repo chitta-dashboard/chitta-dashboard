@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
-import AddFarmersGroupModal from "../../modals/add-farmers-group-modal";
+import AddDecisionsModal from "../../modals/add-decisions-modal";
 import S from "./decisionsHeader.styled";
-import groupData from "../decisions.json";
+import { decisionsContext } from "../../../utils/context/decisionsContext";
 
 interface CustomProps {
   viewTree(): void;
@@ -12,6 +12,19 @@ interface CustomProps {
 
 const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { groupData, setGroupData } = useContext(decisionsContext);
+
+  // const addGroupData = (data: { [input: string]: string }) => {
+  //   setGroupData([
+  //     ...groupData,
+  //     {
+  //       groupTitle: data && data.decisionHeading,
+  //       groupDescription: data.decision,
+  //       timestamp: data.dob,
+  //       groupName: "No Data",
+  //     },
+  //   ]);
+  // };
 
   return (
     <>
@@ -25,7 +38,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      <AddFarmersGroupModal label="" openModal={modalOpen} handleClose={() => setModalOpen(false)} />
+      <AddDecisionsModal label="" openModal={modalOpen} handleClose={() => setModalOpen(false)} />
     </>
   );
 };

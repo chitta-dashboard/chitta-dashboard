@@ -9,7 +9,9 @@ const SubmitButton = (props: Props) => {
     <>
       <S.ButtonContainer>
         <FormControl>
-          <Button type="submit">Submit</Button>
+          <Button   type="submit" onSubmit={props.submit}>
+            Submit
+          </Button>
         </FormControl>
       </S.ButtonContainer>
     </>

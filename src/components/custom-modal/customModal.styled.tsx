@@ -12,7 +12,7 @@ namespace S {
         borderRadius: ".75rem",
         margin: "2rem",
         width: addDecision ? "100% !important" : "",
-        maxWidth: addDecision ? "100%" : "",
+        maxWidth: addDecision ? "1400px" : "",
       },
 
       "& .MuiDialogTitle-root": {
@@ -20,21 +20,42 @@ namespace S {
         padding: theme.spacing(1),
         paddingLeft: "1rem",
         backgroundColor: theme.palette.custom.backgroundDark,
+        color: theme.palette.text.primaryDark,
         width: "100%",
-      },
-      "& .MuiFormHelperText-root": {
-        color: "#FF0000",
-        marginTop: 0,
       },
 
       "& .MuiDialogContent-root": {
         padding: theme.spacing(2),
       },
 
+      "& .MuiInputLabel-root": {
+        color: theme.palette.primary.light,
+      },
+
+      "& .MuiOutlinedInput-root": {
+        color: theme.palette.text.secondaryDark,
+        "& fieldset": {
+          border: ".15rem solid",
+          borderColor: theme.palette.primary.light,
+        },
+        "&:hover fieldset": {
+          borderColor: theme.palette.primary.main,
+        },
+        "&.Mui-focused fieldset": {
+          borderColor: theme.palette.primary.main,
+        },
+      },
+      "& .MuiFormHelperText-root": {
+        color: "#FF0000",
+        marginTop: 0,
+        marginLeft: 0,
+      },
+
       "& .MuiIconButton-root": {
         position: "absolute",
         right: "1rem",
         top: "1rem",
+        padding: ".7rem",
         color: theme.palette.primary.main,
         borderRadius: "50%",
         backgroundColor: "#ffffff",
@@ -46,9 +67,11 @@ namespace S {
         width: ".75rem",
         height: "1rem",
       },
+
       "& .MuiBox-root": {
         display: "flex",
         justifyContent: "center",
+        alignItems: "center", 
       },
     }),
   );

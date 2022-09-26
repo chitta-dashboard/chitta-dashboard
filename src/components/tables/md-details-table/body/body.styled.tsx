@@ -39,7 +39,7 @@ namespace S {
   }));
 
   export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.secondaryLight,
     fontSize: "1.1rem",
     fontWeight: 500,
     borderBottom: "1rem solid red",
@@ -91,7 +91,7 @@ namespace S {
   export const AvatarImg = styled("img")(({ theme }) => ({
     width: "100%",
     height: "100%",
-    borderRadius:'50%'
+    borderRadius: "50%",
   }));
 
   export const AvatarBox = styled(Box)(({ theme }) => ({
@@ -125,9 +125,24 @@ namespace S {
     color: LightTheme.palette.text.primary,
     opacity: "1",
   }));
-  
-  export const HiddenInput = styled('input')(({ theme }) => ({
-    display:'none'
+
+  export const EmptyMsg = styled("tbody")(({ theme }) => ({
+    position: "relative",
+    "> tr > td": {
+      color: LightTheme.palette.text.secondaryLight,
+      fontSize: "1.2rem",
+      textAlign: "center",
+      fontWeight: "500",
+      padding: "2rem 0",
+      position: "absolute",
+      top: "50%",
+      left: "47%",
+      translate: "transform(-50%, -50%)",
+    },
+  }));
+
+  export const HiddenInput = styled("input")(({ theme }) => ({
+    display: "none",
   }));
 }
 

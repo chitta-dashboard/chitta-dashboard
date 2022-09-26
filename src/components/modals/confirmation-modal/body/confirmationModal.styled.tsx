@@ -1,15 +1,27 @@
-import { styled, Typography } from "@mui/material";
+import { styled, Typography, Box, DialogContent } from "@mui/material";
 
 namespace S {
+   export const Container = styled(Box)(({ theme }) => ({
+     width: "25rem",
+     height: "18rem",
+   }));
+
+   export const ContainerItems = styled(DialogContent)(({ theme }) => ({
+     display: "flex",
+     justifyContent: "center",
+     alignItems: "center",
+   }));
   export const SuccessImg = styled(`img`)(({ theme }) => ({
     marginTop: "1.5rem",
-    width: "5rem",
-    heigth: "5rem",
+    width: "7rem",
+    heigth: "7rem",
   }));
 
   export const DialogueText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,
     textAlign: "center",
+    width: "20rem",
+    fontSize: "1.4rem",
   }));
 
   DialogueText.defaultProps = {

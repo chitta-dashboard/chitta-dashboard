@@ -1,11 +1,10 @@
-import { Box, Grid, Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import "froala-editor/js/plugins.pkgd.min.js";
 import FroalaEditor from "react-froala-wysiwyg";
 
 import DateInput from "../../../input-fields/date";
-import DescriptionField from "../../../input-fields/description";
 import MultipleSelectChip from "../../../input-fields/multiselect";
 import RadioButton from "../../../input-fields/radio";
 import SelectField from "../../../input-fields/select";
@@ -18,7 +17,9 @@ const FormField = (props: Props) => {
   return (
     <>
       <S.InputContainer>
-        <RadioButton label="அனைத்து குழுக்களையும் தேர்ந்தெடுக்கவா?" openModal={props.openModal} />
+        <S.RadioContainer>
+          <RadioButton label="அனைத்து குழுக்களையும் தேர்ந்தெடுக்கவா?" openModal={props.openModal} />
+        </S.RadioContainer>
         <Grid container spacing={2}>
           <S.ChildContainer item>
             <Stack spacing={2}>

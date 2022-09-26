@@ -65,7 +65,7 @@ const SummaryChart = () => {
               textAnchor: "middle",
               fontSize: "0.7rem",
               fontWeight: "500",
-              fill: "#1E1E1E",
+              color: "#1E1E1E",
             }}
             dy={20}
             value={"Harvest Report (Example)"}
