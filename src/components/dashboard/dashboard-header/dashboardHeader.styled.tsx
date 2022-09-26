@@ -8,7 +8,7 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    padding: "0 2.3rem",
+    // padding: "0 2.3rem",
     [theme.breakpoints.up("xl")]: {
       marginTop: "3rem",
       width: "97%",
@@ -29,7 +29,7 @@ export namespace S {
   export const ProfileHeading = styled(Typography)(({ theme }: any) => ({
     color: LightTheme.palette.text.secondaryDark,
     letterSpacing: "0.05rem",
-    fontSize: "1.2rem",
+    fontSize: "1.3rem",
     fontWeight: "600",
   }));
 

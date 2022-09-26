@@ -13,6 +13,9 @@ export namespace S {
     [theme.breakpoints.up("xl")]: {
       padding: "1.2rem",
     },
+    [theme.breakpoints.down("md")]: {
+      marginBottom: "2rem",
+    },
   }));
 
   export const NotificationHeader = styled(Box)(({ theme }: any) => ({
@@ -21,7 +24,7 @@ export namespace S {
     padding: "1.5rem 1.5rem 1.5rem",
     width: "100%",
     color: LightTheme.palette.primary.light,
-    fontWeight: "500",
+    fontWeight: "600",
     fontSize: "1.1rem",
     height: "3.5rem",
   }));
@@ -37,43 +40,34 @@ export namespace S {
     [theme.breakpoints.down("md")]: {
       fontSize: "0.85rem",
     },
-    // [theme.breakpoints.up("xl")]: {
-    //   fontSize: "1rem",
-    // },
   }));
 
   export const NotificationContent = styled(Box)(({ theme }: any) => ({
+    width: "100%",
     display: "flex",
-    justifyContent: "space-around",
-    marginBottom: "0.5rem",
-    // [theme.breakpoints.up("md")]: {
-    //   gap: "1rem",
-    // },
-    [theme.breakpoints.down("md")]: {
-      justifyContent: "flex-start",
-      gap: "2rem",
-      padding: "0 1.5rem",
-    },
-    // [theme.breakpoints.up("xl")]: {
+    justifyContent: "space-between",
+    marginBottom: "0.6rem",
+    // [theme.breakpoints.down("md")]: {
     //   justifyContent: "flex-start",
-    //   paddingLeft: "1rem",
+    //   gap: "2rem",
+    //   padding: "0 1.5rem",
     // },
+  }));
+
+  export const NotifyLeft = styled(Box)(({ theme }: any) => ({
+    display: "flex",
+    gap: "0.5rem",
+    marginLeft: "0.6rem",
+    maxWidth: "70%",
   }));
 
   export const NotificationDateBox = styled(Box)(({ theme }: any) => ({
     display: "flex",
-    gap: "0.7rem",
-    marginBottom: "0.6rem",
-    // [theme.breakpoints.down("md")]: {
-    //   gap: "0.7rem",
-    // },
-    // [theme.breakpoints.up("md")]: {
-    //   gap: "0.5rem",
-    // },
-    // [theme.breakpoints.up("xl")]: {
-    //   marginLeft: "3rem",
-    //   gap: "0.3rem",
-    // },
+    gap: "0.5rem",
+    [theme.breakpoints.down("md")]: {
+      marginRight: "2rem",
+      marginLeft: "0.5rem",
+    },
   }));
 
   export const NotifyRead = styled(NotificationContent)(({ theme }: any) => ({
