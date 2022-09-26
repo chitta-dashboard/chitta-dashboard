@@ -8,7 +8,7 @@ export const CardHeader = styled(Box)(({ theme }: any) => ({
   justifyContent: "space-between",
   width: "100%",
   color: LightTheme.palette.primary.light,
-  fontWeight: "500",
+  fontWeight: "600",
   fontSize: "1.1rem",
   marginBottom: "0.3rem",
   position: "relative",
