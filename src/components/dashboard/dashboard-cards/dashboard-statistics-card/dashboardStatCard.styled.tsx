@@ -6,7 +6,6 @@ export namespace S {
   export const StatCardWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
     flexDirection: "column",
-    // justifyContent: "center",
     gap: "1rem",
     padding: "1.5rem 1.5rem",
     backgroundColor: "#fff",
