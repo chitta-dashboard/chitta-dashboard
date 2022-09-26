@@ -18,7 +18,8 @@ namespace S {
   }));
   export const PageNoDetails = styled(Typography)(({ theme }) => ({
     fontSize: "1rem",
-    color: theme.palette.text.secondaryCustomShades.shade1,
+    color: theme.palette.text.secondary,
+    opacity: theme.palette.shadeOpacity,
   }));
   export const PageStack = styled(Stack)(({ theme }) => ({
     padding: "0 0.8rem",
