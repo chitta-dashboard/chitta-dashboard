@@ -4,7 +4,6 @@ namespace S {
   export const MdDetailsContainer = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
-    padding: "2rem",
   }));
 }
 

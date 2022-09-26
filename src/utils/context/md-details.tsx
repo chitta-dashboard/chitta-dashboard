@@ -1,12 +1,17 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
+import profileImg from "../../assets/images/profile.png";
 
 type mdDetail = {
   id: number;
-  image: string;
   name: string;
   mobileNo: number;
   degree: string;
   profile?: string;
+  dob?: string;
+  signature?: string;
+};
+type mdDetailDelete = {
+  id: number;
 };
 
 type Props = {
@@ -24,108 +29,57 @@ const initialState: mdDetailsContextType = {
   mdList: [
     {
       id: 1,
-      image: "image",
+      profile: profileImg,
       name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
     {
       id: 2,
-      image: "image",
+      profile: profileImg,
       name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
     {
       id: 3,
-      image: "image",
+      profile: profileImg,
       name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
     {
       id: 4,
-      image: "image",
+      profile: profileImg,
       name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
     {
       id: 5,
-      image: "image",
-      name: "Arokiya Arokiya Arokiya",
+      profile: profileImg,
+      name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
     {
       id: 6,
-      image: "image",
+      profile: profileImg,
       name: "Arokiya",
       mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 7,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 8,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 9,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 10,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 11,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 12,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 13,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 14,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
-    },
-    {
-      id: 15,
-      image: "image",
-      name: "Arokiya",
-      mobileNo: 8610010875,
-      degree: "Higher Secondary",
+      degree: "BSc, Computer Science",
+      dob: "01-01-2020",
+      signature: "",
     },
   ],
   addMdDetail: () => {},
@@ -149,6 +103,9 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case "ADD_MD_DETAIL":
       return { ...state, mdList: [...state.mdList, action.payload] };
+    case "DELETE_MD_DETAIL":
+      console.log("id", action.payload);
+      return { ...state, mdList: state.mdList.filter((list) => list.id !== action.payload) };
     case "FILTER_MD_DETAIL":
       return {
         ...state,
@@ -173,7 +130,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const addMdDetail = (data: mdDetail) => {
     dispatch({ type: "ADD_MD_DETAIL", payload: data });
   };
-
+  const deleteMdDetail = (data: mdDetailDelete) => {
+    dispatch({ type: "DELETE_MD_DETAIL", payload: data });
+  };
   const filterMdDetail = (name: string) => {
     dispatch({ type: "FILTER_MD_DETAIL", payload: name });
   };
@@ -184,6 +143,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   let data = {
     ...state,
     addMdDetail,
+    deleteMdDetail,
     filterMdDetail,
     editTableIcon,
   };

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import SelectDropDown from "../../../common-components/select-dropdown";
-import AddFarmersDetailsModalPage1 from "../../../modals/add-farmers-details-modal";
+import AddFarmersDetailsModal from "../../../modals/add-farmers-details-modal";
 
 import S from "./rightSection.styled";
 
@@ -9,6 +9,7 @@ const RightSection = () => {
   const [addfarmersDetails, setAddFarmersDetails] = useState(false);
 
   const addFarmersDetailsModal = () => {
+    console.log("first");
     setAddFarmersDetails(!addfarmersDetails);
   };
 
@@ -22,7 +23,7 @@ const RightSection = () => {
         <S.CustomButton>Export Farmers</S.CustomButton>
         <S.CustomButton onClick={addFarmersDetailsModal}>Add</S.CustomButton>
       </S.ButtonStack>
-      <AddFarmersDetailsModalPage1 openModal={addfarmersDetails} handleClose={addFarmersDetailsModal} />
+      <AddFarmersDetailsModal openModal={addfarmersDetails} handleClose={addFarmersDetailsModal} />
     </S.RightSectionContainer>
   );
 };
