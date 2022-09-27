@@ -8,15 +8,6 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    // padding: "0 2.3rem",
-    [theme.breakpoints.up("xl")]: {
-      marginTop: "3rem",
-      width: "97%",
-      marginLeft: "2rem",
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "100%",
-    },
   }));
 
   export const ProfileBox = styled(Box)(({ theme }: any) => ({
@@ -74,8 +65,6 @@ export namespace S {
   }));
 
   export const SearchBarContainer = styled(Box)(({ theme }: any) => ({
-    // width: "100%",
-    // marginLeft: "8rem",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
