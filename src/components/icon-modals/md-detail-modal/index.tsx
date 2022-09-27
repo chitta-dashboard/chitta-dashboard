@@ -7,7 +7,6 @@ import DeleteModal from "../../modals/delete-modal";
 import S from "../iconModals.styled";
 
 const MdDetailModal = (props: CommonModalProps) => {
-  console.log("props", props);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const deleteModalHandler = (id: number) => {
@@ -40,7 +39,7 @@ const MdDetailModal = (props: CommonModalProps) => {
           </S.IconBox>
         </S.IconStack>
       </CommonIconModal>
-      <DeleteModal openModal={deleteModal} handleClose={deleteModalHandler} deleteId={props.deleteId} />
+      <DeleteModal openModal={deleteModal} handleClose={() => {setDeleteModal(false)}} handleDelete={() => {}} />
     </>
   );
 };

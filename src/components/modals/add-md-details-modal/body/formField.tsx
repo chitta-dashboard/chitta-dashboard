@@ -4,39 +4,35 @@ import TextInput from "../../../input-fields/text";
 import NumberInput from "../../../input-fields/number";
 import FileInput from "../../../input-fields/file";
 import DateInput from "../../../input-fields/date";
-import Props from "../../type/modalProps";
-
 import S from "./addMdDetailsModal.styled";
+import { FC } from "react";
+import { IAddMDDetailsFormInput } from "../../type/formInputs";
+import { UseFormRegister } from "react-hook-form";
 
-const FormField = (props: Props) => {
+interface CustomProps {
+  register: UseFormRegister<IAddMDDetailsFormInput>;
+  errors: any;
+}
+
+const FormField: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
       <S.InputContainer spacing={2}>
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="பெயர்" openModal={props.openModal} register={{ ...props.register("name") }} helperText={props.error.name?.message} />
-          <NumberInput
+          <TextInput<IAddMDDetailsFormInput> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
+          <NumberInput<IAddMDDetailsFormInput>
             label="கைபேசி எண்"
-            openModal={props.openModal}
-            register={{ ...props.register("phoneNumber") }}
-            helperText={props.error.phoneNumber?.message}
+            register={register}
+            inputName="phoneNumber"
+            helperText={errors.phoneNumber?.message}
           />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <DateInput label="பிறந்த தேதி" openModal={props.openModal} register={{ ...props.register("dob") }} helperText={props.error.dob?.message} />
-          <TextInput
-            label="தகுதி"
-            openModal={props.openModal}
-            register={{ ...props.register("qualification") }}
-            helperText={props.error.qualification?.message}
-          />
+          <DateInput<IAddMDDetailsFormInput> label="பிறந்த தேதி" register={register} inputName="dob" helperText={errors.dob?.message} />
+          <TextInput<IAddMDDetailsFormInput> label="தகுதி" register={register} inputName="qualification" helperText={errors.qualification?.message} />
         </Stack>
         <Stack>
-          <FileInput
-            label="கையெழுத்து"
-            openModal={props.openModal}
-            register={{ ...props.register("signature") }}
-            helperText={props.error.signature?.message}
-          />
+          <FileInput<IAddMDDetailsFormInput> label="கையெழுத்து" register={register} inputName="signature" helperText={errors.signature?.message} />
         </Stack>
       </S.InputContainer>
     </>

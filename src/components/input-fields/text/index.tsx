@@ -1,13 +1,24 @@
-import Props from "../../modals/type/modalProps";
-
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 import S from "./text.styled";
 
-const TextInput = (props: Props) => {
+interface CustomProps<FormInputType extends FieldValues> {
+  label: string;
+  register: UseFormRegister<FormInputType>;
+  inputName: string;
+  helperText?: string;
+}
+
+function TextInput<FormInputTypes>({ label, register, inputName, helperText }: CustomProps<FormInputTypes & FieldValues>) {
   return (
     <>
-      <S.InputText label={props.label} {...props.register} helperText={props.helperText} />
+      <S.InputText
+        label={label}
+        {...register(inputName as Path<FormInputTypes & FieldValues>)}
+        helperText={helperText}
+        inputProps={{ noValidate: true }}
+      />
     </>
   );
-};
+}
 
 export default TextInput;
