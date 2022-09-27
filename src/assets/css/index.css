@@ -21,7 +21,7 @@ code {
 
 @font-face {
   font-family: "nerkathir-icon";
-  src: url("../icons/nerkathir-icon.ttf") format("truetype");
+  src: url("../icons/nerkathir-icon.woff") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
