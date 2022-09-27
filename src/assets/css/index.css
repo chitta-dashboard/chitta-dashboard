@@ -83,7 +83,6 @@ h6 {
   user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
-
 /* Rich text - Tiptap */
 .ProseMirror {
   outline: none;
