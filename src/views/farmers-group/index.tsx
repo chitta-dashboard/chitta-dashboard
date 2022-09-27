@@ -18,7 +18,7 @@ const FarmersGroup = () => {
       <S.FarmersGroupContainer>
         <TablePageHeader addFarmersGroupModalHandler={addFarmersGroupModalHandler} />
         <FarmersGroupTable />
-        <AddFarmersGroupModal openModal={addFarmersGroup} handleClose={addFarmersGroupModalHandler} />
+        <AddFarmersGroupModal openModal={addFarmersGroup} handleClose={addFarmersGroupModalHandler} cb={() => {}} />
       </S.FarmersGroupContainer>
     </FarmerGroupDetailsContextProvider>
   );

@@ -128,7 +128,7 @@ const Body = () => {
         </S.EmptyMsg>
       )}
       <MdDetailModal open={iconModal} handleClose={iconModalHandler} deleteId={deleteId} />
-      <DeleteModal openModal={deleteModal} handleClose={deleteModalHandler} deleteId={deleteId} />
+      <DeleteModal openModal={deleteModal} handleClose={() => {setDeleteModal(false)}} handleDelete={() => {}}/>
       {image && (
         <tbody>
           <tr>
