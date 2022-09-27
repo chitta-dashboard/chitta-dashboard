@@ -36,10 +36,13 @@ const AddFarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb }) =
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit: any = (data: IAddFarmersGroupFormInput) => {
     cb(data);
+    reset();
     handleClose();
   };
+  
   return (
     <>
       <CustomModal
