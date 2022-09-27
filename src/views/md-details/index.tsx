@@ -9,7 +9,6 @@ import S from "./mdDetails.styled";
 const MdDetails = () => {
   const [addMdDetails, setAddMdDetails] = useState(false);
 
-
   const addMdDetailsModalHandler = () => {
     setAddMdDetails(!addMdDetails);
   };

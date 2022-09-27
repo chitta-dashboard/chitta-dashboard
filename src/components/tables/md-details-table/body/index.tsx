@@ -13,10 +13,12 @@ import DeleteModal from "../../../modals/delete-modal";
 
 export interface Users {
   id: number;
-  image: string;
   name: string;
   mobileNo: number;
   degree: string;
+  profile?: string;
+  dob?: string;
+  signature?: string;
 }
 
 type croppedImageType = { image: string; id: number };
@@ -74,7 +76,11 @@ const Body = () => {
   };
 
   const handleCroppedImage = (image: string) => {
-    editTableIcon({ id: userId, profile: image, name: "image" });
+    let result = mdList.filter((item: Users) => {
+      return item.id === userId;
+    });
+    result[0]["profile"] = image;
+    editTableIcon({ ...result[0] });
   };
 
   return (
@@ -123,7 +129,15 @@ const Body = () => {
       )}
       <MdDetailModal open={iconModal} handleClose={iconModalHandler} deleteId={deleteId} />
       <DeleteModal openModal={deleteModal} handleClose={deleteModalHandler} deleteId={deleteId} />
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
+      {image && (
+        <tbody>
+          <tr>
+            <td>
+              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+            </td>
+          </tr>
+        </tbody>
+      )}
     </>
   );
 };
