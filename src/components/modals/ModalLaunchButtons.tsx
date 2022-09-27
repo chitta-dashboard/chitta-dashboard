@@ -4,9 +4,13 @@ import { Button } from "@mui/material";
 import DeleteModal from "./delete-modal";
 import ConfirmationModal from "./confirmation-modal";
 import AddFarmersGroupModal from "./add-farmers-group-modal";
-import AddFarmersDetailsModalPage1 from "./add-farmers-details-modal";
+import AddFarmersDetailsModal from "./add-farmers-details-modal";
 import AddMdDetailsModal from "./add-md-details-modal";
 import AddDecisionsModal from "./add-decisions-modal";
+import { MdDetailsContextProvider } from "../../utils/context/md-details";
+import { IAddDecisionsFormInput, IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
+import { FarmerDetailsContextProvider } from "../../utils/context/farmers-details";
+import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmers-group";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -28,7 +32,6 @@ const ModalLaunchButtons = () => {
   };
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
-    
   };
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
@@ -57,12 +60,54 @@ const ModalLaunchButtons = () => {
       <Button variant="outlined" onClick={addDecisions}>
         add decicions
       </Button>
-      <DeleteModal label={""} openModal={openDelete} handleClose={deleteHandleClickOpen} />
-      <ConfirmationModal label={""} openModal={openConfirmation} handleClose={submitHandleClickOpen} />
-      <AddMdDetailsModal label={""} openModal={openAddMd} handleClose={addMDOpen} />
-      <AddFarmersGroupModal label={""} openModal={openAddFarmerGroup} handleClose={addFarmerGroup} />
-      <AddFarmersDetailsModalPage1 label={""} openModal={openAddFarmerDetails} handleClose={addFarmerDetails} />
-      <AddDecisionsModal label={""} openModal={openAddDecisions} handleClose={addDecisions} />
+      <DeleteModal
+        openModal={openDelete}
+        handleClose={deleteHandleClickOpen}
+        handleDelete={() => {
+          // console.log("deleted");
+        }}
+      />
+      <ConfirmationModal
+        openModal={openConfirmation}
+        handleClose={submitHandleClickOpen}
+        yesAction={() => {
+          // console.log("confirmed");
+        }}
+      />
+      <MdDetailsContextProvider>
+        <AddMdDetailsModal
+          openModal={openAddMd}
+          handleClose={addMDOpen}
+          cb={(data: IAddMDDetailsFormInput): void => {
+            // console.log("in mdDetails cb", data);
+          }}
+          editMode
+          id={"3"}
+        />
+      </MdDetailsContextProvider>
+      <FarmerDetailsContextProvider>
+        <AddFarmersDetailsModal
+          openModal={openAddFarmerDetails}
+          handleClose={addFarmerDetails}
+          cb={(data: IAddFarmersDetailsFormInput): void => {
+            // console.log("in farmersDetails cb", data);
+          }}
+          editMode
+          id={"3"}
+        />
+      </FarmerDetailsContextProvider>
+      <FarmerGroupDetailsContextProvider>
+        <AddFarmersGroupModal
+          openModal={openAddFarmerGroup}
+          cb={(data: IAddFarmersGroupFormInput): void => {
+            // console.log("in farmersGroup cb", data);
+          }}
+          handleClose={addFarmerGroup}
+          editMode
+          id={"3"} 
+        />
+      </FarmerGroupDetailsContextProvider>
+      <AddDecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
     </Fragment>
   );
 };

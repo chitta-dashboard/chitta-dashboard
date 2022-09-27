@@ -6,7 +6,6 @@ namespace S {
   }));
   export const Icon = styled("i")(({ theme }) => ({
     fontSize: "1.5rem",
-    // color:theme.palette.primary.main
     color: theme.palette.primary.main,
   }));
   export const SearchField = styled(TextField)(({ theme }) => ({
@@ -16,7 +15,7 @@ namespace S {
     },
     "& .MuiOutlinedInput-notchedOutline": {
       border: "2px solid",
-      borderRadius:"2.25rem"
+      borderRadius: "2.25rem",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {

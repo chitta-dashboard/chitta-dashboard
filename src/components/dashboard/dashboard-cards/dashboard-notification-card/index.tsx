@@ -20,7 +20,7 @@ const DashboardNotificationCard = (props: Props) => {
           <S.NotificationContent>
             <S.NotifyLeft>
               <NotifyIcons>notification</NotifyIcons>
-              New MD Arocikya raj has been registered. New MD Arocikya raj has been registered.
+              New MD “Arokiyaraj” has been registered.
             </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
@@ -65,18 +65,6 @@ const DashboardNotificationCard = (props: Props) => {
           </S.NotifyRead>
 
           {/* 5 */}
-          <S.NotifyRead>
-            <S.NotifyLeft>
-              <NotifyIcons>notification</NotifyIcons>
-              New MD Arocikya raj has been registered.
-            </S.NotifyLeft>
-            <S.NotificationDateBox>
-              <NotifyIcons>calendar</NotifyIcons>
-              30 Aug 2022
-            </S.NotificationDateBox>
-          </S.NotifyRead>
-
-          {/* 6 */}
           <S.NotifyRead>
             <S.NotifyLeft>
               <NotifyIcons>notification</NotifyIcons>

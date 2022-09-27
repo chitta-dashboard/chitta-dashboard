@@ -1,97 +1,84 @@
 import { Stack } from "@mui/system";
+import { FC } from "react";
 
 import DescriptionField from "../../../../input-fields/description";
 import NumberInput from "../../../../input-fields/number";
 import SelectField from "../../../../input-fields/select";
 import TextInput from "../../../../input-fields/text";
-import Props from "../../../type/modalProps";
+import { IAddFarmersDetailsPage2Input } from "../../../type/formInputs";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 import S from "./page2Modal.styled";
 
-const FormFieldPage2 = (props: Props) => {
+interface CustomProps {
+  register: UseFormRegister<IAddFarmersDetailsPage2Input>;
+  errors: any;
+  trigger: UseFormTrigger<IAddFarmersDetailsPage2Input>;
+  setValue: UseFormSetValue<IAddFarmersDetailsPage2Input>;
+}
+
+const FormFieldPage2: FC<CustomProps> = ({ register, errors, trigger, setValue }) => {
   return (
     <>
       <S.InputContainer spacing={2}>
         <Stack direction={"row"} spacing={2}>
-          <TextInput
-            label="கல்வி"
-            openModal={props.openModal}
-            register={{ ...props.register("education") }}
-            helperText={props.error.education?.message}
-          />
-          <TextInput
-            label="கிராமம்"
-            openModal={props.openModal}
-            register={{ ...props.register("village") }}
-            helperText={props.error.village?.message}
-          />
-          <TextInput
+          <TextInput<IAddFarmersDetailsPage2Input> label="கல்வி" register={register} inputName="education" helperText={errors.education?.message} />
+          <TextInput<IAddFarmersDetailsPage2Input> label="கிராமம்" register={register} inputName="village" helperText={errors.village?.message} />
+          <TextInput<IAddFarmersDetailsPage2Input>
             label="அஞ்சல் குறியீடு"
-            openModal={props.openModal}
-            register={{ ...props.register("postalNo") }}
-            helperText={props.error.postalNo?.message}
+            register={register}
+            inputName="postalNo"
+            helperText={errors.postalNo?.message}
           />
         </Stack>
-        <DescriptionField
-          label="முகவரி"
-          openModal={props.openModal}
-          register={{ ...props.register("address") }}
-          helperText={props.error.address?.message}
-        />
+        <DescriptionField<IAddFarmersDetailsPage2Input> label="முகவரி" register={register} inputName="address" helperText={errors.address?.message} />
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="தாலுக்கா" openModal={props.openModal} register={{ ...props.register("taluk") }} helperText={props.error.taluk?.message} />
-          <TextInput
-            label="மாவட்டம்"
-            openModal={props.openModal}
-            register={{ ...props.register("district") }}
-            helperText={props.error.district?.message}
-          />
+          <TextInput<IAddFarmersDetailsPage2Input> label="தாலுக்கா" register={register} inputName="taluk" helperText={errors.taluk?.message} />
+          <TextInput<IAddFarmersDetailsPage2Input> label="மாவட்டம்" register={register} inputName="district" helperText={errors.district?.message} />
         </Stack>
-        <NumberInput
+        <NumberInput<IAddFarmersDetailsPage2Input>
           label="கணக்கெடுப்பு எண்"
-          openModal={props.openModal}
-          register={{ ...props.register("surveyNo") }}
-          helperText={props.error.surveyNo?.message}
+          register={register}
+          inputName="surveyNo"
+          helperText={errors.surveyNo?.message}
         />
         <Stack direction={"row"} spacing={2}>
-          <SelectField
+          <SelectField<IAddFarmersDetailsPage2Input>
             label="நில வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("landType") }}
-            helperText={props.error.landType?.message}
+            register={register}
+            inputName="landType"
+            helperText={errors.landType?.message}
+            trigger={trigger}
+            setValue={setValue}
           />
-          <SelectField
+          <SelectField<IAddFarmersDetailsPage2Input>
             label="நீர் வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("waterType") }}
-            helperText={props.error.waterType?.message}
+            register={register}
+            inputName="waterType"
+            helperText={errors.waterType?.message}
+            trigger={trigger}
+            setValue={setValue}
           />
-          <SelectField
+          <SelectField<IAddFarmersDetailsPage2Input>
             label="விவசாயி வகை"
-            openModal={props.openModal}
-            register={{ ...props.register("farmerType") }}
-            helperText={props.error.farmerType?.message}
+            register={register}
+            inputName="farmerType"
+            helperText={errors.farmerType?.message}
+            trigger={trigger}
+            setValue={setValue}
           />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <TextInput
-            label="விதைவகை"
-            openModal={props.openModal}
-            register={{ ...props.register("seedType") }}
-            helperText={props.error.seedType?.message}
-          />
-          <TextInput
-            label="விலங்குகள்"
-            openModal={props.openModal}
-            register={{ ...props.register("animals") }}
-            helperText={props.error.animals?.message}
-          />
+          <TextInput<IAddFarmersDetailsPage2Input> label="விதைவகை" register={register} inputName="seedType" helperText={errors.seedType?.message} />
+          <TextInput<IAddFarmersDetailsPage2Input> label="விலங்குகள்" register={register} inputName="animals" helperText={errors.animals?.message} />
         </Stack>
-        <SelectField
+        <SelectField<IAddFarmersDetailsPage2Input>
           label="குழு உறுப்பினர்"
-          openModal={props.openModal}
-          register={{ ...props.register("groupMember") }}
-          helperText={props.error.groupMember?.message}
+          register={register}
+          inputName="groupMember"
+          helperText={errors.groupMember?.message}
+          trigger={trigger}
+          setValue={setValue}
         />
       </S.InputContainer>
     </>

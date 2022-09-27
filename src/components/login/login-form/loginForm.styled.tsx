@@ -5,6 +5,12 @@ namespace S {
   export const Icon = styled("i")(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontSize: "1.2rem",
+    cursor: "text",
+  }));
+  export const EyeIcon = styled("i")(({ theme }) => ({
+    color: `${theme.palette.primary.main}`,
+    fontSize: "1.2rem",
+    cursor: "pointer",
   }));
   export const LogoImage = styled("img")(({ theme }) => ({
     width: "100%",
@@ -18,6 +24,7 @@ namespace S {
     boxSizing: "border-box",
     display: "flex",
     alignItems: "center",
+    justifyContent: "center",
     [theme.breakpoints.down("md")]: {
       width: "100%",
       minWidth: "31.25rem",
@@ -26,19 +33,25 @@ namespace S {
 
   export const LoginContainer = styled(Box)(({ theme }) => ({
     width: "65%",
-    margin: "5% auto",
     backgroundColor: "#FFFFFF;",
     boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.5)",
-    borderRadius: "15px",
+    borderRadius: "0.938rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   }));
-  export const FormContainer = styled(Box)(({ theme }) => ({
+  export const FormContainer = styled(Stack)(({ theme }) => ({
     width: "85%",
-    height: "100%",
-    margin: "5% auto",
+    padding: "4rem 0rem",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: "2rem",
   }));
   export const ImageBox = styled(Box)(({ theme }) => ({
     width: "35%",
-    margin: "0% auto",
+  }));
+  export const LoginForm = styled("form")(({ theme }) => ({
+    width: "100%",
   }));
   export const LoginFormLabel = styled(FormLabel)(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
@@ -49,15 +62,14 @@ namespace S {
 
   export const InputBox = styled(FormControl)(({ theme }) => ({
     width: "100%",
-    marginBottom: "1.3rem",
+    paddingBottom: "1.3rem",
     "& .MuiFormHelperText-root": {
       color: `${theme.palette.error.main}`,
       textAlign: "left",
-      padding: "0%",
-      margin: "0.4rem 0%",
+      padding: "0.4rem 0rem",
+      margin: "0%",
       fontSize: "0.75rem",
       lineHeight: "1.125rem",
-      cursor: "pointer",
     },
     "& .MuiFormControl-root": {
       boxShadow: "none",
@@ -101,9 +113,17 @@ namespace S {
       },
     },
   }));
+  export const ButtonContainer = styled(Box)(({ theme }) => ({
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+  }));
+
   export const ButtonBox = styled(Stack)(({ theme }) => ({
     width: "52%",
-    margin: "5% auto 1% auto",
+    textAlign: "center",
   }));
   export const LoginButton = styled(Button)(({ theme }) => ({
     background: `${theme.palette.primary.light}`,
@@ -116,24 +136,22 @@ namespace S {
     padding: "0%",
     fontSize: "0.75rem",
     lineHeight: "1.125rem",
-    marginTop: "0.9rem",
-    marginBottom: "3rem",
-    "& span ": {
+    paddingTop: "0.7rem",
+    width: "max-content",
+    zIndex: "1",
+
+    "& span": {
       color: theme.palette.primary.light,
-      zIndex: "2",
       cursor: "pointer",
-      position: "absolute",
     },
   }));
 
   export const PasswordText = styled(Typography)(({ theme }) => ({
     color: `${theme.palette.primary.light}`,
     textAlign: "right",
-    padding: "0%",
     fontSize: "0.75rem",
     lineHeight: "1.125rem",
-    marginTop: "0.9rem",
-    marginBottom: "3rem",
+    paddingTop: "0.9rem",
     cursor: "pointer",
   }));
 }

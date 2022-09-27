@@ -22,6 +22,7 @@ export namespace S {
     border: "#fff",
     borderRadius: "1.2rem",
     paddingLeft: "0.5rem",
+    fontSize: "0.9rem",
     "::placeholder": {
       color: LightTheme.palette.primary.light,
     },

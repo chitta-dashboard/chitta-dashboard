@@ -1,18 +1,20 @@
-import React, { FC, Ref, useRef } from "react";
+import { Ref, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { useNavigate,useParams } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 import IconWrapper from "../../utils/iconWrapper";
 import ShareHolderCertificate from "../share-holder-certificate";
 import FarmerDetailsForm from "./FarmerDetailsForm";
 
 import { S } from "./farmerDetailPage.styled";
+import TamilShareHolderCertificate from "../tamil-share-certificate";
 
-const FarmerDetailPage: FC = () => {
+const FarmerDetailPage = () => {
   const pdfForm = useRef<HTMLDivElement>();
   const pdfcertificate = useRef<HTMLDivElement>();
+  const pdftamilcertificate = useRef<HTMLDivElement>();
   const navigate = useNavigate();
-  const { id} = useParams();
+  // const { id } = useParams();
 
   const generateFarmerDetailsPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
@@ -24,11 +26,15 @@ const FarmerDetailPage: FC = () => {
     content: () => pdfcertificate.current as HTMLDivElement,
   });
 
+  const generateTamilCertificatePDF = useReactToPrint({
+    documentTitle: `Nerkathir_${+new Date()}`,
+    content: () => pdftamilcertificate.current as HTMLDivElement,
+  });
+
   return (
     <S.FarmersDetailsMainContainer>
       <S.FarmersDetailsButtonContainer>
-        <IconWrapper onClick={() => navigate(-1)}
-        >back</IconWrapper>
+        <IconWrapper onClick={() => navigate(-1)}>back</IconWrapper>
         <S.ButtonAlignmentBox>
           <S.Button>Delete</S.Button>
           <S.Button
@@ -46,12 +52,20 @@ const FarmerDetailPage: FC = () => {
           >
             Certificate
           </S.Button>
+          <S.Button
+            onClick={() => {
+              generateTamilCertificatePDF();
+            }}
+          >
+            Tamil Certificate
+          </S.Button>
         </S.ButtonAlignmentBox>
       </S.FarmersDetailsButtonContainer>
 
-      <div style={{ display: "none" }}>
+      <S.InvisibleBox>
         <ShareHolderCertificate ref={pdfcertificate as Ref<HTMLDivElement> | undefined} />
-      </div>
+        <TamilShareHolderCertificate ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
+      </S.InvisibleBox>
 
       <FarmerDetailsForm ref={pdfForm} />
     </S.FarmersDetailsMainContainer>

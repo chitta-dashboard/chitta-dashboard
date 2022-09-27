@@ -4,10 +4,6 @@ import Layout from "./layout/Layout";
 import Provider from "./provider";
 import Login from "../views/login";
 
-import "froala-editor/js/froala_editor.pkgd.min.js";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-
 const App: FC = () => {
   return (
     <>
@@ -16,8 +12,8 @@ const App: FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Layout />} />
         </Routes>
+        {/* <ModalLaunchButtons/> */}
       </Provider>
-
     </>
   );
 };
