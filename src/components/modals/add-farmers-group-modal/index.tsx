@@ -38,7 +38,6 @@ const AddFarmersGroupModal: FC<formProps> = (props) => {
     resolver: yupResolver(schema),
   });
   const onSubmit: any = (data: IDecisionsFormInput) => {
-    console.log(data);
     props.cb && props.cb(data);
     reset();
     if (props.handleClose) props.handleClose();

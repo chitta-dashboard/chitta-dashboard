@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import { Grid } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import LoginBackground from "../../components/login/login-background";
 import LoginForm from "../../components/login/login-form";
+import S from "./login.styled";
 import authContext from "../../utils/context/authContext";
 
 const Login = () => {
@@ -11,10 +11,10 @@ const Login = () => {
   return (
     <>
       {!isAuthenticated ? (
-        <Grid container>
+        <S.ContainerGrid container>
           <LoginBackground />
           <LoginForm />
-        </Grid>
+        </S.ContainerGrid>
       ) : (
         <Navigate to="/dashboard" />
       )}

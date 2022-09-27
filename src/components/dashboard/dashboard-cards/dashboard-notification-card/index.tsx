@@ -9,7 +9,7 @@ type Props = {};
 const DashboardNotificationCard = (props: Props) => {
   return (
     <>
-      <S.NotificationCardWrapper item sm={10.5} md={3.5} lg={3.5} xl={3.5}>
+      <S.NotificationCardWrapper item sm={12} md={3.5} lg={3.5} xl={3.5}>
         <S.NotificationHeader>
           Notification
           <Box>
@@ -18,8 +18,10 @@ const DashboardNotificationCard = (props: Props) => {
         </S.NotificationHeader>
         <S.NotificationBody>
           <S.NotificationContent>
-            <NotifyIcons>notification</NotifyIcons>
-            New MD Arocikya raj has been registered.
+            <S.NotifyLeft>
+              <NotifyIcons>notification</NotifyIcons>
+              New MD “Arokiyaraj” has been registered.
+            </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
               30 Aug 2022
@@ -28,8 +30,10 @@ const DashboardNotificationCard = (props: Props) => {
 
           {/* 2 */}
           <S.NotificationContent>
-            <NotifyIcons>notification</NotifyIcons>
-            New MD Arocikya raj has been registered.
+            <S.NotifyLeft>
+              <NotifyIcons>notification</NotifyIcons>
+              New MD Arocikya raj has been registered.
+            </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
               30 Aug 2022
@@ -38,8 +42,10 @@ const DashboardNotificationCard = (props: Props) => {
 
           {/* 3 */}
           <S.NotificationContent>
-            <NotifyIcons>notification</NotifyIcons>
-            New MD Arocikya raj has been registered.
+            <S.NotifyLeft>
+              <NotifyIcons>notification</NotifyIcons>
+              New MD Arocikya raj has been registered.
+            </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
               30 Aug 2022
@@ -48,8 +54,10 @@ const DashboardNotificationCard = (props: Props) => {
 
           {/* 4 */}
           <S.NotifyRead>
-            <NotifyIcons>notification</NotifyIcons>
-            New MD Arocikya raj has been registered.
+            <S.NotifyLeft>
+              <NotifyIcons>notification</NotifyIcons>
+              New MD Arocikya raj has been registered.
+            </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
               30 Aug 2022
@@ -58,8 +66,10 @@ const DashboardNotificationCard = (props: Props) => {
 
           {/* 5 */}
           <S.NotifyRead>
-            <NotifyIcons>notification</NotifyIcons>
-            New MD Arocikya raj has been registered.
+            <S.NotifyLeft>
+              <NotifyIcons>notification</NotifyIcons>
+              New MD Arocikya raj has been registered.
+            </S.NotifyLeft>
             <S.NotificationDateBox>
               <NotifyIcons>calendar</NotifyIcons>
               30 Aug 2022

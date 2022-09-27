@@ -191,7 +191,15 @@ const Body = (props: Props) => {
         // deleteFarmersDetails={deleteFarmersDetails}
         deleteId={deleteId}
       />
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
+      {image && (
+        <tbody>
+          <tr>
+            <td>
+              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+            </td>
+          </tr>
+        </tbody>
+      )}
     </>
   );
 };

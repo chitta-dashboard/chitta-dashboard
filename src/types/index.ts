@@ -1,14 +1,8 @@
 declare module "@mui/material" {
   interface TypeText {
-    primaryLight: string;
     primaryDark: string;
-    secondaryExtraLight: string;
     secondaryLight: string;
     secondaryDark: string;
-    secondaryCustomShades: {
-      shade1: string;
-      shade2: string;
-    };
   }
 
   // createTheme uses ThemeOptions as argument type which uses PaletteOptions as type for palette property
@@ -18,6 +12,7 @@ declare module "@mui/material" {
       backgroundDark: string;
       backdrop: string;
     };
+    shadeOpacity: string;
   }
 
   // The 'Theme' type Theme type which uses Palette as type for palette property
@@ -28,6 +23,7 @@ declare module "@mui/material" {
       backgroundDark: string;
       backdrop: string;
     };
+    shadeOpacity: string;
   }
 }
 

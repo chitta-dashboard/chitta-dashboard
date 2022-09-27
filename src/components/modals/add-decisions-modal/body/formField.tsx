@@ -1,8 +1,4 @@
 import { Grid, Stack } from "@mui/material";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-import "froala-editor/js/plugins.pkgd.min.js";
-import FroalaEditor from "react-froala-wysiwyg";
 
 import DateInput from "../../../input-fields/date";
 import MultipleSelectChip from "../../../input-fields/multiselect";
@@ -12,6 +8,7 @@ import TextInput from "../../../input-fields/text";
 import Props from "../../type/modalProps";
 
 import S from "./addDecisionsModal.styled";
+import Editor from "../../../rich-text/Editor";
 
 const FormField = (props: Props) => {
   return (
@@ -48,7 +45,7 @@ const FormField = (props: Props) => {
           <S.ChildContainer item>
             <S.RichTextBoxWrapper>
               <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>
-              <FroalaEditor tag="textarea" />
+              <Editor />
             </S.RichTextBoxWrapper>
           </S.ChildContainer>
         </Grid>

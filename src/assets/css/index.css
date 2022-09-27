@@ -21,7 +21,7 @@ code {
 
 @font-face {
   font-family: "nerkathir-icon";
-  src: url("../icons/nerkathir-icon.ttf") format("truetype");
+  src: url("../icons/nerkathir-icon.woff") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -61,4 +61,58 @@ i {
 
 .fr-element {
   min-height: 10.8rem !important;
+}
+
+img {
+  pointer-events: none;
+}
+
+i,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
+/* Rich text - Tiptap */
+.ProseMirror {
+  outline: none;
+  background: #fff;
+  height: 100%;
+  min-width: inherit;
+  max-height: 7.5rem;
+  min-height: 7.5rem;
+  overflow-y: auto;
+  display: flex !important;
+  justify-content: flex-start;
+}
+
+.ProseMirror > .code {
+  background-color: rgba(#616161, 0.1);
+  color: #616161;
+}
+
+.ProseMirror > .pre {
+  background: #0d0d0d;
+  color: #fff;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.ProseMirror > .pre > .code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
 }
