@@ -4,14 +4,15 @@ import { FC } from "react";
 import S from "./Next.Styled";
 
 interface CustomProps {
-  submit: () => void;
+  handleNext: () => void;
+  formId?: string;
 }
 
-const NextButton: FC<CustomProps> = ({ submit }) => {
+const NextButton: FC<CustomProps> = ({ handleNext, formId }) => {
   return (
     <>
       <S.ButtonContainer>
-        <Button type="submit" onSubmit={submit}>
+        <Button type="submit" onSubmit={handleNext} form={formId as string}>
           Next
         </Button>
       </S.ButtonContainer>

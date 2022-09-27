@@ -1,19 +1,25 @@
 import { DialogTitle, Box } from "@mui/material";
 
 import CustomModal from "../../custom-modal";
-import Props from "../type/modalProps";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import DeleteBody from "./body";
+import { FC } from "react";
 
-const DeleteModal = (props: Props) => {
+interface CustomProps {
+  openModal: boolean;
+  handleClose: () => void;
+  handleDelete: () => void;
+}
+
+const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete }) => {
   return (
     <>
-      <CustomModal label={""} openModal={props.openModal} handleClose={props.handleClose}>
+      <CustomModal openModal={openModal} handleClose={handleClose}>
         <DialogTitle>
           <Box>Warning</Box>
         </DialogTitle>
-        <DeleteBody label={""} openModal={props.openModal} handleClose={props.handleClose} />
-        <YesOrNoButtons label={""} openModal={props.openModal} handleClose={props.handleClose} />
+        <DeleteBody />
+        <YesOrNoButtons yesAction={handleDelete} handleClose={handleClose} />
       </CustomModal>
     </>
   );

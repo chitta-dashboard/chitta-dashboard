@@ -3,15 +3,15 @@ import { Stack } from "@mui/system";
 import DateInput from "../../../../input-fields/date";
 import NumberInput from "../../../../input-fields/number";
 import TextInput from "../../../../input-fields/text";
-import { IAddFarmersDetailsFormInput } from "../../../type/formInputs";
+import { IAddFarmersDetailsPage1Input } from "../../../type/formInputs";
 import { UseFormRegister } from "react-hook-form";
 
 import S from "./page1Modal.styled";
 import { FC } from "react";
 
-interface CustomProps extends IAddFarmersDetailsFormInput {
-  register: UseFormRegister<IAddFarmersDetailsFormInput>;
-  errors: object;
+interface CustomProps {
+  register: UseFormRegister<IAddFarmersDetailsPage1Input>;
+  errors: any;
 }
 
 const FormField: FC<CustomProps> = ({ register, errors }) => {
@@ -19,24 +19,49 @@ const FormField: FC<CustomProps> = ({ register, errors }) => {
     <>
       <S.InputContainer spacing={2}>
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="பெயர்" register={{ ...register("name") }} helperText={errors.name?.message} />
-          <TextInput label="தந்தையின் பெயர்" register={{ ...register("fatherName") }} helperText={errors.fatherName?.message} />
+          <TextInput<IAddFarmersDetailsPage1Input> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
+          <TextInput<IAddFarmersDetailsPage1Input>
+            label="தந்தையின் பெயர்"
+            register={register}
+            inputName="fatherName"
+            helperText={errors.fatherName?.message}
+          />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="பாலினம்" register={{ ...register("sex") }} helperText={errors.sex?.message} />
-          <TextInput label="கணவன்/மணைவி பெயர்" register={{ ...register("spouseName") }} helperText={errors.spouseName?.message} />
+          <TextInput<IAddFarmersDetailsPage1Input> label="பாலினம்" register={register} inputName="sex" helperText={errors.sex?.message} />
+          <TextInput<IAddFarmersDetailsPage1Input>
+            label="கணவன்/மணைவி பெயர்"
+            register={register}
+            inputName="spouseName"
+            helperText={errors.spouseName?.message}
+          />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <DateInput label="பிறந்த தேதி" register={{ ...register("dob") }} helperText={errors.dob?.message} />
-          <TextInput label="குழு" register={{ ...register("group") }} helperText={errors.group?.message} />
+          <DateInput label="பிறந்த தேதி" register={register} inputName="dob" helperText={errors.dob?.message} />
+          <TextInput<IAddFarmersDetailsPage1Input> label="குழு" register={register} inputName="group" helperText={errors.group?.message} />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <NumberInput label="கைபேசி எண்" register={{ ...register("phoneNumber") }} helperText={errors.phoneNumber?.message} />
-          <NumberInput label="ஆதார் எண்" register={{ ...register("addhaarNo") }} helperText={errors.addhaarNo?.message} />
+          <NumberInput<IAddFarmersDetailsPage1Input>
+            label="கைபேசி எண்"
+            register={register}
+            inputName="phoneNumber"
+            helperText={errors.phoneNumber?.message}
+          />
+          <NumberInput<IAddFarmersDetailsPage1Input>
+            label="ஆதார் எண்"
+            register={register}
+            inputName="addhaarNo"
+            helperText={errors.addhaarNo?.message}
+          />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <NumberInput label="வாக்காளர் அடையாள எண்" register={{ ...register("voterIdNo") }} helperText={errors.voterIdNo?.message} />
-          <NumberInput label="ஏக்கர்" register={{ ...register("acre") }} helperText={errors.acre?.message} />
+          <NumberInput<IAddFarmersDetailsPage1Input>
+            label="வாக்காளர் அடையாள எண்"
+            register={register}
+            inputName="voterIdNo"
+            helperText={errors.voterIdNo?.message}
+          />
+          <NumberInput<IAddFarmersDetailsPage1Input> label="ஏக்கர்" register={register} inputName="acre" helperText={errors.acre?.message} />
         </Stack>
       </S.InputContainer>
     </>
