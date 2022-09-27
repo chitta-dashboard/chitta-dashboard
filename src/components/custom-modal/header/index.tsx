@@ -12,7 +12,7 @@ interface CustomProps {
 const ModalHeader: FC<CustomProps> = ({ children, handleClose }) => {
   return (
     <S.ModalHeader>
-      <h1>{children}</h1>
+      {children}
       <TitleCloseButton handleClose={handleClose} />
     </S.ModalHeader>
   );

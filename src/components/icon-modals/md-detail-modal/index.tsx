@@ -7,7 +7,6 @@ import DeleteModal from "../../modals/delete-modal";
 import S from "../iconModals.styled";
 
 const MdDetailModal = (props: CommonModalProps) => {
-  console.log("props", props);
   const [deleteModal, setDeleteModal] = useState(false);
 
   const deleteModalHandler = (id: number) => {

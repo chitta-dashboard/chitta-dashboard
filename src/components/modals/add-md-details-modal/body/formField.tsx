@@ -9,9 +9,9 @@ import { FC } from "react";
 import { IAddMDDetailsFormInput } from "../../type/formInputs";
 import { UseFormRegister } from "react-hook-form";
 
-interface CustomProps extends IAddMDDetailsFormInput {
+interface CustomProps {
   register: UseFormRegister<IAddMDDetailsFormInput>;
-  errors: object;
+  errors: any;
 }
 
 const FormField: FC<CustomProps> = ({ register, errors }) => {
@@ -19,15 +19,20 @@ const FormField: FC<CustomProps> = ({ register, errors }) => {
     <>
       <S.InputContainer spacing={2}>
         <Stack direction={"row"} spacing={2}>
-          <TextInput label="பெயர்" register={{ ...register("name") }} helperText={errors.name?.message} />
-          <NumberInput label="கைபேசி எண்" register={{ ...register("phoneNumber") }} helperText={errors.phoneNumber?.message} />
+          <TextInput<IAddMDDetailsFormInput> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
+          <NumberInput<IAddMDDetailsFormInput>
+            label="கைபேசி எண்"
+            register={register}
+            inputName="phoneNumber"
+            helperText={errors.phoneNumber?.message}
+          />
         </Stack>
         <Stack direction={"row"} spacing={2}>
-          <DateInput label="பிறந்த தேதி" register={{ ...register("dob") }} helperText={errors.dob?.message} />
-          <TextInput label="தகுதி" register={{ ...register("qualification") }} helperText={errors.qualification?.message} />
+          <DateInput<IAddMDDetailsFormInput> label="பிறந்த தேதி" register={register} inputName="dob" helperText={errors.dob?.message} />
+          <TextInput<IAddMDDetailsFormInput> label="தகுதி" register={register} inputName="qualification" helperText={errors.qualification?.message} />
         </Stack>
         <Stack>
-          <FileInput label="கையெழுத்து" register={{ ...register("signature") }} helperText={errors.signature?.message} />
+          <FileInput<IAddMDDetailsFormInput> label="கையெழுத்து" register={register} inputName="signature" helperText={errors.signature?.message} />
         </Stack>
       </S.InputContainer>
     </>

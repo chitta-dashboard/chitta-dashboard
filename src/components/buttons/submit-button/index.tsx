@@ -4,18 +4,17 @@ import { FC } from "react";
 import S from "./SubmitButton.Styled";
 
 interface CustomProps {
-  handleSubmit?: () => void;
+  formId?: string;
+  handleSubmit: () => void;
 }
 
-const SubmitButton: FC<CustomProps> = ({ submit }) => {
+const SubmitButton: FC<CustomProps> = ({ handleSubmit, formId }) => {
   return (
     <>
       <S.ButtonContainer>
-        <FormControl>
-          <Button type="submit" onSubmit={submit}>
-            Submit
-          </Button>
-        </FormControl>
+        <Button type="submit" onSubmit={handleSubmit} form={formId as string}>
+          Submit
+        </Button>
       </S.ButtonContainer>
     </>
   );

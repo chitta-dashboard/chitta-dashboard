@@ -1,6 +1,4 @@
 export interface IDecisionsFormInput {
-  
-  
   signature: string;
   image: string;
   file: any;
@@ -8,12 +6,16 @@ export interface IDecisionsFormInput {
 }
 
 export interface IAddDecisionsFormInput {
+  selectAll: boolean;
   decisionHeading: string;
   dob: string;
   qualification: string;
+  presenter: string[];
+  participator: string[];
   decision: string;
 }
-export interface IAddFarmersDetailsFormInput {
+
+export interface IAddFarmersDetailsPage1Input {
   name: string;
   fatherName: string;
   sex: string;
@@ -24,6 +26,9 @@ export interface IAddFarmersDetailsFormInput {
   addhaarNo: string;
   voterIdNo: string;
   acre: string;
+}
+
+export interface IAddFarmersDetailsPage2Input {
   education: string;
   village: string;
   postalNo: string;
@@ -38,6 +43,9 @@ export interface IAddFarmersDetailsFormInput {
   animals: string;
   groupMember: string;
 }
+
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+
 export interface IAddFarmersGroupFormInput {
   groupName: string;
   explanation: string;
@@ -53,4 +61,3 @@ export interface IAddMDDetailsFormInput {
   dob: string;
   signature: string;
 }
-
