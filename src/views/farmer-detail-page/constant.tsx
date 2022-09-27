@@ -1,129 +1,87 @@
-export const FARMERS_DETAILS_DATA = [
+export const FarmerDetailsList = [
   {
-    id: 1,
-    label: "பெயர்",
-    content: "Anthoniraj",
-  },
-
-  {
-    id: 2,
-    label: "பாலினம்",
-    content: "ஆண்",
-  },
-
-  {
-    id: 3,
-    label: "தந்தையின் பெயர்",
-    content: "Santano",
-  },
-
-  {
-    id: 4,
-    label: "தந்தையின் பெயர்",
-    content: "Kaveri K",
-  },
-
-  {
-    id: 5,
-    label: "பிறந்த தேதி",
-    content: "18/4/1974",
-  },
-
-  {
-    id: 6,
-    label: "குழு",
-    content: "Anthoniraj",
-  },
-
-  {
-    id: 7,
-    label: "கைபேசி எண்",
-    content: "8057468936",
-  },
-
-  {
-    id: 8,
-    label: "ஆதார் எண்",
-    content: "Anthoniraj",
+    id: "1",
+    key: "பெயர்",
+    name: "name",
   },
   {
-    id: 9,
-    label: "வாக்காளர் அடையாள எண்",
-    content: "Anthoniraj",
+    id: "2",
+    key: "தந்தை பெயர் ",
+    name: "fatherName",
   },
   {
-    id: 10,
-    label: "ஏக்கர்",
-    content: "Anthoniraj",
+    id: "3",
+    key: "கணவர் / மனைவி பெயர் ",
+    name: "husbandName",
   },
   {
-    id: 11,
-    label: "கல்வி",
-    content: "Anthoniraj",
+    id: "4",
+    key: "பிறந்த தேதி ",
+    name: "DOB",
   },
   {
-    id: 12,
-    label: "கிராமம்",
-    content: "Anthoniraj",
+    id: "5",
+    key: "கைபேசி எண் ",
+    name: "phoneNumber",
   },
   {
-    id: 13,
-    label: "அஞ்சல் குறியீடு",
-    content: "Anthoniraj",
+    id: "6",
+    key: "ஆதார் எண் ",
+    name: "aadharNumber",
   },
   {
-    id: 14,
-    label: "முகவரி",
-    content: "7/224,Kalyani House, 28 JR Street 7/224,Kalyani House, 28 JR Street",
+    id: "7",
+    key: "வாக்காளர் அட்டை எண்  ",
+    name: "voterIdNumber",
   },
   {
-    id: 15,
-    label: "தாலுக்கா",
-    content: "Anthoniraj",
+    id: "8",
+    key: "சர்வே எண் ",
+    name: "surveyNo",
   },
   {
-    id: 16,
-    label: "மாவட்டம்",
-    content: "Anthoniraj",
+    id: "9",
+    key: "ஏக்கர் ",
+    name: "acre",
   },
   {
-    id: 17,
-    label: "கணக்கெடுப்பு எண்",
-    content: "Anthoniraj",
+    id: "10",
+    key: "பாலினம் ",
+    name: "gender",
   },
   {
-    id: 18,
-    label: "நில வகை",
-    content: "Anthoniraj",
+    id: "11",
+    key: "கல்வி ",
+    name: "education",
   },
   {
-    id: 19,
-    label: "நீர் வகை",
-    content: "Anthoniraj",
+    id: "12",
+    key: "முகவரி ",
+    name: "address",
   },
   {
-    id: 20,
-    label: "புல வகை",
-    content: "Anthoniraj",
+    id: "13",
+    key: "ஊர் ",
+    name: "village",
   },
   {
-    id: 21,
-    label: "விதை வகை",
-    content: "Anthoniraj",
+    id: "14",
+    key: "வட்டம் ",
+    name: "circle",
   },
   {
-    id: 19,
-    label: "விலங்குகள்",
-    content: "Anthoniraj",
+    id: "15",
+    key: "மாவட்டம் ",
+    name: "district",
   },
   {
-    id: 19,
-    label: "பெயரகுழு உறுப்பினர்",
-    content: "Anthoniraj",
+    id: "16",
+    key: "பின் கோடு ",
+    name: "pincode",
   },
 ];
 
-export const REAL_DATA = [
+export const FARMER_DATA = [
   {
     gender: "male",
     landType: "DRYLAND",
