@@ -30,8 +30,8 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined>((props: Props, 
         </S.UserImgContainer>
       </S.FarmersDetailsHeader>
       <S.HeaderTextBox>
-        ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
-        தாலுக்கா&மாவட்டம், 606213
+        ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவலப்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
+        அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
       </S.HeaderTextBox>
       <S.HeaderDateBox>
         <S.HeaderDateText>உறுப்பினர் எண் : NER-FPC-2</S.HeaderDateText>

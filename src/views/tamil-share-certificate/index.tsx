@@ -38,7 +38,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
           <S.CertificateHeader>பங்குப்பத்திரம்</S.CertificateHeader>
           <S.DateContainer>
             <S.ShareCountInnerContainer>
-              <S.DateText>உறுப்பினர் எண்:</S.DateText>
+              <S.DateText>உறுப்பினர் எண் :</S.DateText>
               <S.DateBox></S.DateBox>
             </S.ShareCountInnerContainer>
             <S.ShareCountInnerContainer>
@@ -51,22 +51,22 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
               <S.CertificateText>இந்தப்பங்குப் பத்திரமானது</S.CertificateText>
               <S.BlankSpace1>ஆரோக்கியராஜ்.அ</S.BlankSpace1>
               <S.CertificateText>த/க</S.CertificateText>
-              <S.BlankSpace2>அந்தோணி அன்னை தெரசா தெரு,</S.BlankSpace2>
+              <S.BlankSpace2> அந்தோணி, &nbsp;&nbsp;அன்னை தெரசா தெரு,</S.BlankSpace2>
             </S.CertificateTextLine>
             <S.CertificateTextLine>
               <S.BlankSpace3>விரியூர் அஞ்சல், சங்கராபுரம் வட்டம், கள்ளக்குறிச்சி மாவட்டம் – 606402</S.BlankSpace3>
-              <S.CertificateText>என்பவருக்க</S.CertificateText>
+              <S.CertificateText>என்பவருக்கு</S.CertificateText>
             </S.CertificateTextLine>
             <S.CertificateTextLine>
               <S.CertificateText2>
                 நெற்கதிர் &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp;&nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp; உட்பட்டு
-                வழங்கப்படுகிறது
+                வழங்கப்படுகிறது.
               </S.CertificateText2>
             </S.CertificateTextLine>
           </S.CertificateContent>
           <S.ShareCountContainer>
             <S.ShareCountInnerContainer>
-              <S.CertificateText>பங்குகளின் எண்ணிக்னக</S.CertificateText>
+              <S.CertificateText>பங்குகளின் எண்ணிக்கை</S.CertificateText>
               <S.ShareCount>1</S.ShareCount>
             </S.ShareCountInnerContainer>
             <S.ShareCountInnerContainer>
@@ -75,8 +75,8 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
             </S.ShareCountInnerContainer>
           </S.ShareCountContainer>
           <S.SignatureLine>
-            <S.CertificateText>நிறுவன முத்தினர </S.CertificateText>
-            <S.CertificateText>நிர்வாக அதிகார் </S.CertificateText>
+            <S.CertificateText>நிறுவன முத்திரை </S.CertificateText>
+            <S.CertificateText>நிர்வாக அதிகாரி </S.CertificateText>
             <S.CertificateText>இயக்குநர் -1 </S.CertificateText>
             <S.CertificateText>இயக்குநர்-2</S.CertificateText>
           </S.SignatureLine>

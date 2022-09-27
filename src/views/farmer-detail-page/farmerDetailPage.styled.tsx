@@ -106,6 +106,7 @@ export namespace S {
     width: "100%",
     height: "Calc(100% - 16.5625rem)",
     overflowY: "auto",
+    marginTop: "0.625rem",
     "&::-webkit-scrollbar": {
       width: "0.4375rem",
       background: "#F5F5F5",

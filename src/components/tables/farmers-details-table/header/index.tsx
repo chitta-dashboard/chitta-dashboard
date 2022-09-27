@@ -5,7 +5,6 @@ import S from "./header.styled";
 
 interface Props {
   users: any;
-  setUsers: any;
   handleChange: any;
 }
 
