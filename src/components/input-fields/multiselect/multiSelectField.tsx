@@ -54,6 +54,7 @@ function MultiSelect<FormInputTypes>({ label, register, inputName, setValue, tri
           label="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
+          maxRows={4}
           value={personName}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" {...register(inputName as Path<FormInputTypes & FieldValues>)} />}

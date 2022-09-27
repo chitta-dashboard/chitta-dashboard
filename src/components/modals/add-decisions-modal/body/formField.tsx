@@ -34,17 +34,24 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
           <S.ChildContainer item>
             <Stack spacing={2}>
               <TextInput<IAddDecisionsFormInput> register={register} inputName="decisionHeading" label="தீர்மானம் தலைப்பு" />
+
               <FormHelperText>{errors.decisionHeading?.message}</FormHelperText>
-              <DateInput<IAddDecisionsFormInput> register={register} inputName="dob" label="பிறந்த தேதி" />
-              <FormHelperText>{errors.dob?.message}</FormHelperText>
-              <SelectField<IAddDecisionsFormInput>
-                register={register}
-                inputName="qualification"
-                label="தகுதி"
-                setValue={setValue}
-                trigger={trigger}
-              />
-              <FormHelperText>{errors.qualification?.message}</FormHelperText>
+              <Stack spacing={2} direction={"row"}>
+                <S.DateContainer width={"100%"}>
+                  <DateInput<IAddDecisionsFormInput> register={register} inputName="dob" label="பிறந்த தேதி" />
+                  <FormHelperText>{errors.dob?.message}</FormHelperText>
+                </S.DateContainer>
+                <S.QualificationContainer width={"100%"}>
+                  <SelectField<IAddDecisionsFormInput>
+                    register={register}
+                    inputName="qualification"
+                    label="தகுதி"
+                    setValue={setValue}
+                    trigger={trigger}
+                  />
+                  <FormHelperText>{errors.qualification?.message}</FormHelperText>
+                </S.QualificationContainer>
+              </Stack>
               <MultipleSelectChip<IAddDecisionsFormInput>
                 register={register}
                 inputName="presenter"
