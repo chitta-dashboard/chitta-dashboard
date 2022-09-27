@@ -1,16 +1,19 @@
-import Props from "../modals/type/modalProps";
+import { FC } from "react";
 
 import S from "./customModal.styled";
 
-interface CustomModalInterface extends Props {
+interface CustomProps {
   children: React.ReactNode | string;
+  handleClose: () => void;
+  openModal: boolean;
+  openAddDecisionModal?: boolean;
 }
 
-const CustomModal = (props: CustomModalInterface) => {
+const CustomModal: FC<CustomProps> = ({ children, handleClose, openModal, openAddDecisionModal }) => {
   return (
     <>
-      <S.ModalContainer  open={props.openModal} onClose={props.handleClose} addDecision={props.addDecision}>
-        {props.children}
+      <S.ModalContainer open={openModal} onClose={handleClose} openAddDecisionModal={openAddDecisionModal}>
+        {children}
       </S.ModalContainer>
     </>
   );

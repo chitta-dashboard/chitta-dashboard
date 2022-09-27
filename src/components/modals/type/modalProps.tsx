@@ -16,6 +16,7 @@ interface Props {
   signature?: string;
   image?: string;
   deleteId?: number;
+  onChange?: () => void;
 }
 
 export default Props;

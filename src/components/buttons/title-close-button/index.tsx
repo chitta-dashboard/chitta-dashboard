@@ -1,13 +1,13 @@
 import { IconButton } from "@mui/material";
+import { FC } from "react";
 
-import Props from "../../modals/type/modalProps";
 
 import S from "./titleCloseButton.styled";
 
-const TitleCloseButton = (props: Props) => {
+const TitleCloseButton: FC<{ handleClose: () => void }> = ({ handleClose }) => {
   return (
     <>
-      <IconButton onClick={props.handleClose}>
+      <IconButton onClick={handleClose}>
         <S.Wrapper>close</S.Wrapper>
       </IconButton>
     </>
