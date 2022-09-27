@@ -1,11 +1,10 @@
 import { Stack } from "@mui/material";
 
-import Props from "../../type/modalProps";
 import DeleteIcon from "./deleteIcon";
 
 import S from "./deleteModal.styled";
 
-const DeleteBody = (props: Props) => {
+const DeleteBody = () => {
   return (
     <>
       <S.Container>

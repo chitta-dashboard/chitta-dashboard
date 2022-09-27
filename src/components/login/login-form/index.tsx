@@ -6,6 +6,7 @@ import * as yup from "yup";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
 import authContext from "../../../utils/context/authContext";
+
 interface LoginFormInputs {
   mobileNo: string;
   loginPassword: string;
@@ -66,8 +67,8 @@ const LoginForm: FC = () => {
           <S.ImageBox>
             <S.LogoImage src={logo} alt="Nerkathir" />
           </S.ImageBox>
-          <br />
-          <form onSubmit={handleSubmit(onLoginSubmit)}>
+
+          <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
             <S.InputBox>
               <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
               <S.LoginInput
@@ -97,7 +98,7 @@ const LoginForm: FC = () => {
 
                   endAdornment: (
                     <InputAdornment sx={{ cursor: "pointer" }} onClick={handleClickShowHidePassword} position="end">
-                      {showPassword === false ? <S.Icon>show</S.Icon> : <S.Icon>hide</S.Icon>}
+                      {showPassword === false ? <S.EyeIcon>show</S.EyeIcon> : <S.EyeIcon>hide</S.EyeIcon>}
                     </InputAdornment>
                   ),
                 }}
@@ -107,17 +108,17 @@ const LoginForm: FC = () => {
               />
               <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
             </S.InputBox>
-            <br />
-
+          </S.LoginForm>
+          <S.ButtonContainer>
             <S.ButtonBox>
-              <S.LoginButton size="large" type="submit">
+              <S.LoginButton form="loginForm" size="large" type="submit">
                 Login
               </S.LoginButton>
             </S.ButtonBox>
             <S.LoginText variant="subtitle1">
-              Don't have an account? <span>Signup</span>
+              Don't have an account?<span>Signup</span>
             </S.LoginText>
-          </form>
+          </S.ButtonContainer>
         </S.FormContainer>
       </S.LoginContainer>
     </S.LoginMainContainer>

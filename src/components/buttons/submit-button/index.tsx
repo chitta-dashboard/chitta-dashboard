@@ -1,18 +1,20 @@
 import { Button, FormControl } from "@mui/material";
-
-import Props from "../../modals/type/modalProps";
+import { FC } from "react";
 
 import S from "./SubmitButton.Styled";
 
-const SubmitButton = (props: Props) => {
+interface CustomProps {
+  formId?: string;
+  handleSubmit: () => void;
+}
+
+const SubmitButton: FC<CustomProps> = ({ handleSubmit, formId }) => {
   return (
     <>
       <S.ButtonContainer>
-        <FormControl>
-          <Button   type="submit" onSubmit={props.submit}>
-            Submit
-          </Button>
-        </FormControl>
+        <Button type="submit" onSubmit={handleSubmit} form={formId as string}>
+          Submit
+        </Button>
       </S.ButtonContainer>
     </>
   );

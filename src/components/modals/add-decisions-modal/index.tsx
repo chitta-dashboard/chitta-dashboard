@@ -1,80 +1,86 @@
 import { FC } from "react";
-import { DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import CustomModal from "../../custom-modal";
-import TitleCloseButton from "../../buttons/title-close-button";
-import Props from "../type/modalProps";
 import FormField from "./body/formField";
 import SubmitButton from "../../buttons/submit-button";
-import { IDecisionsFormInput } from "../type/formInputs";
+import { IAddDecisionsFormInput } from "../type/formInputs";
+import ModalHeader from "../../custom-modal/header";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
 
-import S from "./body/addDecisionsModal.styled";
-
-interface formProps extends Props {
-  cb?: (data: IDecisionsFormInput) => void;
+interface CustomProps {
+  cb: (data: IAddDecisionsFormInput) => void;
+  openModal: boolean;
+  handleClose: () => void;
 }
 
 const schema = yup
   .object({
     decisionHeading: yup.string().required("required"),
     dob: yup.string().required("required"),
+    selectAll: yup.string().nullable().required("required"),
     qualification: yup.string().required("required"),
-    decision: yup.string().required("required"),
+    presenter: yup
+      .array()
+      .nullable()
+      .test("test", "required", (value: any) => value && value.length > 0),
+    participator: yup
+      .array()
+      .nullable()
+      .test("test", "required", (value: any) => value && value.length > 0),
   })
   .required();
 
-const AddDecisionsModal: FC<formProps> = (props) => {
+const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     clearErrors,
     reset,
-  } = useForm<IDecisionsFormInput>({
+    trigger,
+  } = useForm<IAddDecisionsFormInput>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: IDecisionsFormInput) => {
-    props.cb && props.cb(data);
+
+  const onSubmit: any = (data: IAddDecisionsFormInput) => {
+    cb(data);
     reset();
-    if (props.handleClose) props.handleClose();
+    handleClose();
   };
 
   return (
     <>
       <CustomModal
-        openModal={props.openModal}
+        openModal={openModal}
         handleClose={() => {
           clearErrors();
           reset();
-          if (props.handleClose) props.handleClose();
+          handleClose();
         }}
-        addDecision={props.openModal}
+        openAddDecisionModal={true}
       >
-        <DialogTitle>
-          <S.Title>Add Decisions</S.Title>
-          <TitleCloseButton
-            openModal={props.openModal}
-            handleClose={() => {
-              clearErrors();
-              reset();
-              if (props.handleClose) props.handleClose();
-            }}
-          />
-        </DialogTitle>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormField openModal={props.openModal} register={register} error={errors} />
-          <SubmitButton
-            openModal={props.openModal}
-            handleClose={() => {
-              clearErrors();
-              if (props.handleClose) props.handleClose();
-            }}
-            submit={onSubmit}
-          />
-        </form>
+        <ModalHeader
+          handleClose={() => {
+            clearErrors();
+            reset();
+            handleClose();
+          }}
+        >
+          Add Decisions
+        </ModalHeader>
+
+        <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+        </ModalBody>
+
+        <ModalFooter>
+          <SubmitButton formId="addDecisions" handleSubmit={() => {}} />
+        </ModalFooter>
       </CustomModal>
     </>
   );

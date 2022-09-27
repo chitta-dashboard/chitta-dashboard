@@ -2,8 +2,6 @@ import { styled, Stack, Avatar } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "2rem",
-    marginRight: "2rem",
     width: "30rem",
   }));
 

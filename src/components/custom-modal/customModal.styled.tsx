@@ -1,7 +1,7 @@
 import { styled, Dialog } from "@mui/material";
 namespace S {
-  export const ModalContainer = styled(Dialog, { shouldForwardProp: (prop) => prop !== "addDecision" })<{ addDecision?: boolean }>(
-    ({ theme, addDecision = false }) => ({
+  export const ModalContainer = styled(Dialog, { shouldForwardProp: (prop) => prop !== "openAddDecisionModal" })<{ openAddDecisionModal?: boolean }>(
+    ({ theme, openAddDecisionModal = false }) => ({
       "& .MuiBackdrop-root": {
         backgroundColor: theme.palette.custom.backdrop,
         width: "100%",
@@ -11,8 +11,8 @@ namespace S {
       "& .MuiPaper-root": {
         borderRadius: ".75rem",
         margin: "2rem",
-        width: addDecision ? "100% !important" : "",
-        maxWidth: addDecision ? "1400px" : "",
+        width: openAddDecisionModal ? "100% !important" : "",
+        maxWidth: openAddDecisionModal ? "1400px" : "",
       },
 
       "& .MuiDialogTitle-root": {
@@ -71,7 +71,7 @@ namespace S {
       "& .MuiBox-root": {
         display: "flex",
         justifyContent: "center",
-        alignItems: "center", 
+        alignItems: "center",
       },
     }),
   );

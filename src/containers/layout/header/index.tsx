@@ -9,6 +9,9 @@ import authContext from "../../../utils/context/authContext";
 
 const Header: FC = () => {
   const { pathname }: { pathname: string } = useLocation();
+  const strs = window.location.pathname.split("/");
+  const id = strs.at(-1);
+
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const [navOpen, setNavOpen] = useState(false);
   const { setIsAuthenticated } = useContext(authContext);
@@ -40,7 +43,7 @@ const Header: FC = () => {
           <S.NavLinkText isActive={pathname === "/farmers-group"}>Farmers Group</S.NavLinkText>
         </S.NavLink>
         <S.NavLink to="./farmers-details" isActive={pathname === "/farmers-details"}>
-          <S.NavLinkText isActive={pathname === "/farmers-details"}>Farmers Details</S.NavLinkText>
+          <S.NavLinkText isActive={[`/farmers-details/${id}`, "/farmers-details"].includes(pathname)}>Farmers Details</S.NavLinkText>
         </S.NavLink>
         <S.NavLink to="./cultivation" isActive={pathname === "/cultivation"}>
           <S.NavLinkText isActive={pathname === "/cultivation"}>Cultivation</S.NavLinkText>

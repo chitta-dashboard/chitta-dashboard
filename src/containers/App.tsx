@@ -12,6 +12,7 @@ const App: FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Layout />} />
         </Routes>
+        {/* <ModalLaunchButtons/> */}
       </Provider>
     </>
   );

@@ -104,7 +104,6 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case "ADD_MD_DETAIL":
       return { ...state, mdList: [...state.mdList, action.payload] };
     case "DELETE_MD_DETAIL":
-      console.log("id", action.payload);
       return { ...state, mdList: state.mdList.filter((list) => list.id !== action.payload) };
     case "FILTER_MD_DETAIL":
       return {
