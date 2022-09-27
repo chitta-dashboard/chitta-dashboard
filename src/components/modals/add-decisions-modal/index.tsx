@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useForm, UseFormRegister } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -8,6 +8,8 @@ import FormField from "./body/formField";
 import SubmitButton from "../../buttons/submit-button";
 import { IAddDecisionsFormInput } from "../type/formInputs";
 import ModalHeader from "../../custom-modal/header";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
 
 interface CustomProps {
   cb: (data: IAddDecisionsFormInput) => void;
@@ -19,8 +21,16 @@ const schema = yup
   .object({
     decisionHeading: yup.string().required("required"),
     dob: yup.string().required("required"),
+    selectAll: yup.string().nullable().required("required"),
     qualification: yup.string().required("required"),
-    decision: yup.string().required("required"),
+    presenter: yup
+      .array()
+      .nullable()
+      .test("test", "required", (value: any) => value && value.length > 0),
+    participator: yup
+      .array()
+      .nullable()
+      .test("test", "required", (value: any) => value && value.length > 0),
   })
   .required();
 
@@ -29,14 +39,16 @@ const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
     clearErrors,
     reset,
+    trigger,
   } = useForm<IAddDecisionsFormInput>({
     resolver: yupResolver(schema),
   });
+
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    console.log(data);
-    cb && cb(data);
+    cb(data);
     reset();
     handleClose();
   };
@@ -62,10 +74,13 @@ const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
           Add Decisions
         </ModalHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} />
-          <SubmitButton handleSubmit={() => {}} />
-        </form>
+        <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+        </ModalBody>
+
+        <ModalFooter>
+          <SubmitButton formId="addDecisions" handleSubmit={() => {}} />
+        </ModalFooter>
       </CustomModal>
     </>
   );

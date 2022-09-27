@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import React, { FC, useState } from "react";
+import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -7,16 +7,19 @@ import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import Submit from "../../buttons/submit-button";
-import Chips from "../../input-fields/chips";
 
-import S from "./body/addMdDetailsModal.styled";
 import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
+import { useMdDetailsContext } from "../../../utils/context/md-details";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
 
-interface CustomProps extends IAddMDDetailsFormInput {
-
-  openModal?: boolean;
-  handleClose?: () => void;
+interface CustomProps {
+  openModal: boolean;
+  handleClose: () => void;
+  cb: (data: IAddMDDetailsFormInput) => void;
+  editMode?: boolean;
+  id?: string;
 }
 const schema = yup
   .object({
@@ -24,32 +27,52 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().test("required", "photo is required", (value) => {
-      console.log(value);
+    signature: yup.mixed().test("required", "photo is required", (value: FileList) => {
       return value.length > 0;
     }),
   })
   .required();
 
-const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-  const [formData, setFormData] = useState<string | null>(null);
+const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  let { mdList } = useMdDetailsContext();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     clearErrors,
-  } = useForm<CustomProps>({
+  } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: CustomProps) => {
-    reset();
-    console.log("data", data);
-    // setFormData(data.signature);
-  };
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) setFormData(URL.createObjectURL(e.target.files[0]));
+  useEffect(() => {
+    if (editMode) {
+      let userData = mdList.find((md) => String(md.id) === id);
+      reset({
+        name: userData?.name as string,
+        phoneNumber: userData?.mobileNo as unknown as string,
+        qualification: userData?.degree as string,
+        dob: userData?.dob as string,
+        signature: userData?.signature as string,
+      });
+    }
+
+    return () =>
+      reset({
+        name: "",
+        phoneNumber: "",
+        qualification: "",
+        dob: "",
+        signature: "",
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editMode, id]);
+
+  const onSubmit: any = (data: IAddMDDetailsFormInput) => {
+    cb(data);
+    handleClose();
+    reset();
   };
 
   return (
@@ -59,44 +82,33 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose }) => {
         handleClose={() => {
           clearErrors();
           reset();
-          if (handleClose) handleClose();
+          handleClose();
         }}
       >
         <ModalHeader
           handleClose={() => {
             clearErrors();
             reset();
-            if (handleClose) handleClose();
+            handleClose();
           }}
         >
           Add MD Details
         </ModalHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
           <AddProfile />
-          <FormField />
+          <FormField register={register} errors={errors} />
+        </ModalBody>
 
-          {formData ? (
-            <S.ChipContainer>
-              <Chips
-                label={formData}
-                handleClose={() => {
-                  clearErrors();
-                  if (handleClose) handleClose();
-                }}
-              />
-            </S.ChipContainer>
-          ) : (
-            <></>
-          )}
+        <ModalFooter>
           <Submit
-            openModal={openModal}
-            handleClose={() => {
+            formId="mdDetails"
+            handleSubmit={() => {
               clearErrors();
-              if (handleClose) handleClose();
+              handleClose();
             }}
           />
-        </form>
+        </ModalFooter>
       </CustomModal>
     </>
   );
