@@ -2,7 +2,6 @@ import { styled, Stack, Avatar } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    width: "30rem",
   }));
 
   export const Title = styled("div")(({ theme }) => ({

@@ -38,7 +38,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      <AddDecisionsModal label="" openModal={modalOpen} handleClose={() => setModalOpen(false)} />
+      <AddDecisionsModal openModal={modalOpen} handleClose={() => setModalOpen(false)} cb={() => {}} />
     </>
   );
 };

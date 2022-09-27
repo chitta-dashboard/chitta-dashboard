@@ -186,9 +186,9 @@ const Body = (props: Props) => {
       />
       <DeleteModal
         openModal={deleteModal}
-        handleClose={farmersDetailsDeleteModal}
+        handleClose={() => {setDeleteModal(false)}}
+        handleDelete={() => {}}
         // deleteFarmersDetails={deleteFarmersDetails}
-        deleteId={deleteId}
       />
       {image && (
         <tbody>

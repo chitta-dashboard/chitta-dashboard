@@ -23,7 +23,7 @@ const RightSection = () => {
         <S.CustomButton>Export Farmers</S.CustomButton>
         <S.CustomButton onClick={addFarmersDetailsModal}>Add</S.CustomButton>
       </S.ButtonStack>
-      <AddFarmersDetailsModal openModal={addfarmersDetails} handleClose={addFarmersDetailsModal} />
+      <AddFarmersDetailsModal openModal={addfarmersDetails} handleClose={addFarmersDetailsModal} cb={() => {}}/>
     </S.RightSectionContainer>
   );
 };
