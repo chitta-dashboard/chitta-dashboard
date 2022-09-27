@@ -94,7 +94,6 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case "ADD_FARMER_DETAIL":
       return { ...state, farmersList: [...state.farmersList, action.payload] };
     case "DELETE_FARMER_DETAIL":
-      console.log("id", action.payload);
       return { ...state, mdList: state.farmersList.filter((list) => list.id !== action.payload) };
     case "EDIT_TABLE_ICON":
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
