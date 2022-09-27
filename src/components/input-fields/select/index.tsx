@@ -1,20 +1,26 @@
 import { MenuItem } from "@mui/material";
 import { useState } from "react";
-
-import Props from "../../modals/type/modalProps";
+import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 import S from "./select.styled";
 
-const SelectField = (props: Props) => {
+interface CustomProps<FormInputType extends FieldValues> {
+  label: string;
+  register: UseFormRegister<FormInputType>;
+  helperText: String;
+  inputName: string;
+}
+
+function SelectField<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
   const [value, setValue] = useState("");
   return (
     <>
       <S.SelectField
-        label={props.label}
+        label={label}
         select
-        {...props.register}
+        {...register(inputName as Path<FormInputTypes & FieldValues>)}
         value={value}
-        helperText={props.helperText}
+        helperText={helperText}
         onChange={(e) => setValue(e.target.value)}
       >
         <MenuItem value="" defaultValue={""}></MenuItem>
@@ -24,6 +30,6 @@ const SelectField = (props: Props) => {
       </S.SelectField>
     </>
   );
-};
+}
 
 export default SelectField;

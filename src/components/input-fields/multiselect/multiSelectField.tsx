@@ -1,7 +1,9 @@
-import React from "react";
+import React, { FC } from "react";
 import { Select, SelectChangeEvent, OutlinedInput, InputLabel, MenuItem } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { FieldValues, UseFormRegister, Path } from "react-hook-form";
+
 
 import Props from "../../modals/type/modalProps";
 import MenuProps from "./menuProps";
@@ -10,7 +12,13 @@ import names from "./menuItems";
 
 import S from "./multiSelect.styled";
 
-const MultiSelect = (props: Props) => {
+interface CustomProps <FormInputType extends FieldValues> {
+  label?: string;
+  register:UseFormRegister<FormInputType>;
+  inputName: string;
+}
+function MultiSelect<FormInputTypes>({ label,register,inputName }: CustomProps<FormInputTypes & FieldValues>) {
+
   const theme = useTheme();
   const [nameList, setNameList] = React.useState<string[]>(names);
   const [personName, setPersonName] = React.useState<string[]>([]);
@@ -38,13 +46,14 @@ const MultiSelect = (props: Props) => {
     <>
       <S.StyledFormControl>
         <InputLabel shrink id="demo-multiple-chip-label">
-          {props.label}
+          {label}
         </InputLabel>
         <Select
           label="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
           value={personName}
+          {...register(inputName as Path<FormInputTypes & FieldValues>)}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (

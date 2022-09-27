@@ -8,13 +8,14 @@ const App: FC = () => {
   return (
     <>
       <Provider>
-        <Routes>
+        {/* <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<Layout />} />
-        </Routes>
+        </Routes> */}
+      <ModalLaunchButtons/>
       </Provider>
     </>
   );
 };
-
+  
 export default App;

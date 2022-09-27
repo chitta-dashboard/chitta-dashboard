@@ -1,20 +1,19 @@
 import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { DialogTitle } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import Submit from "../../buttons/submit-button";
 import CustomModal from "../../custom-modal";
-import TitleCloseButton from "../../buttons/title-close-button";
-import Props from "../type/modalProps";
 import FormField from "./body/formField";
-import { IDecisionsFormInput } from "../type/formInputs";
+import { IAddFarmersGroupFormInput } from "../type/formInputs";
 
-import S from "./body/addFarmersGroupModal.styled";
+import ModalHeader from "../../custom-modal/header";
 
-interface formProps extends Props {
-  cb?: (data: IDecisionsFormInput) => void;
+interface CustomProps {
+  cb: (data: IAddFarmersGroupFormInput) => void;
+  openModal: boolean;
+  handleClose: () => void;
 }
 
 const schema = yup
@@ -27,47 +26,46 @@ const schema = yup
   })
   .required();
 
-const AddFarmersGroupModal: FC<formProps> = (props) => {
+const AddFarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     clearErrors,
     reset,
-  } = useForm<IDecisionsFormInput>({
+  } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: IDecisionsFormInput) => {
-    props.cb && props.cb(data);
+
+  const onSubmit: any = (data: IAddFarmersGroupFormInput) => {
+    cb(data);
     reset();
-    if (props.handleClose) props.handleClose();
+    handleClose();
   };
+  
   return (
     <>
       <CustomModal
-        label={""}
-        openModal={props.openModal}
+        openModal={openModal}
         handleClose={() => {
           clearErrors();
           reset();
-          if (props.handleClose) props.handleClose();
+          handleClose();
         }}
       >
-        <DialogTitle>
-          <S.Title>Add Farmer's Group</S.Title>
-          <TitleCloseButton
-            label={""}
-            openModal={props.openModal}
-            handleClose={() => {
-              clearErrors();
-              reset();
-              if (props.handleClose) props.handleClose();
-            }}
-          />
-        </DialogTitle>
+        <ModalHeader
+          handleClose={() => {
+            clearErrors();
+            reset();
+            handleClose();
+          }}
+        >
+          Add Farmer's Group
+        </ModalHeader>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormField openModal={props.openModal} register={register} error={errors} />
-          <Submit label={""} openModal={props.openModal} />
+          <FormField register={register} errors={errors} />
+          <Submit />
         </form>
       </CustomModal>
     </>

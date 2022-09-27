@@ -1,25 +1,22 @@
-import { DialogTitle } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import React, { FC, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import AddProfile from "../../buttons/add-profile-icon-and-button";
-import Props from "../type/modalProps";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import Submit from "../../buttons/submit-button";
-import TitleCloseButton from "../../buttons/title-close-button";
 import Chips from "../../input-fields/chips";
 
 import S from "./body/addMdDetailsModal.styled";
+import ModalHeader from "../../custom-modal/header";
+import { IAddMDDetailsFormInput } from "../type/formInputs";
 
-interface IFormInputs {
-  name: string;
-  phoneNumber: string;
-  qualification: string;
-  dob: string;
-  signature: string;
+interface CustomProps extends IAddMDDetailsFormInput {
+
+  openModal?: boolean;
+  handleClose?: () => void;
 }
 const schema = yup
   .object({
@@ -27,59 +24,65 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().test("required", "You need to provide a file", (file: any) => file.length !== 0),
+    signature: yup.mixed().test("required", "photo is required", (value) => {
+      console.log(value);
+      return value.length > 0;
+    }),
   })
   .required();
 
-const AddMdDetailsModal = (props: Props) => {
-  const [formData, setFormData] = useState("");
+const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+  const [formData, setFormData] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
     clearErrors,
-  } = useForm<IFormInputs>({
+  } = useForm<CustomProps>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: any = (data: IFormInputs) => {
+  const onSubmit: any = (data: CustomProps) => {
     reset();
-    console.log(data);
-    setFormData(data.signature);
+    console.log("data", data);
+    // setFormData(data.signature);
   };
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setFormData(URL.createObjectURL(e.target.files[0]));
+  };
+
   return (
     <>
       <CustomModal
-        openModal={props.openModal}
+        openModal={openModal}
         handleClose={() => {
           clearErrors();
           reset();
-          if (props.handleClose) props.handleClose();
+          if (handleClose) handleClose();
         }}
       >
-        <DialogTitle>
-          <S.Title>Add MD Details</S.Title>
-          <TitleCloseButton
-            openModal={props.openModal}
-            handleClose={() => {
-              clearErrors();
-              reset();
-              if (props.handleClose) props.handleClose();
-            }}
-          />
-        </DialogTitle>
+        <ModalHeader
+          handleClose={() => {
+            clearErrors();
+            reset();
+            if (handleClose) handleClose();
+          }}
+        >
+          Add MD Details
+        </ModalHeader>
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <AddProfile openModal={props.openModal} register={register} error={errors} />
-          <FormField openModal={props.openModal} register={register} error={errors} />
+          <AddProfile />
+          <FormField />
 
           {formData ? (
             <S.ChipContainer>
               <Chips
                 label={formData}
-                openModal={props.openModal}
                 handleClose={() => {
                   clearErrors();
-                  if (props.handleClose) props.handleClose();
+                  if (handleClose) handleClose();
                 }}
               />
             </S.ChipContainer>
@@ -87,10 +90,10 @@ const AddMdDetailsModal = (props: Props) => {
             <></>
           )}
           <Submit
-            openModal={props.openModal}
+            openModal={openModal}
             handleClose={() => {
               clearErrors();
-              if (props.handleClose) props.handleClose();
+              if (handleClose) handleClose();
             }}
           />
         </form>

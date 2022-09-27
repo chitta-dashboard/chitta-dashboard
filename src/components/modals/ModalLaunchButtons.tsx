@@ -7,6 +7,9 @@ import AddFarmersGroupModal from "./add-farmers-group-modal";
 import AddFarmersDetailsModalPage1 from "./add-farmers-details-modal";
 import AddMdDetailsModal from "./add-md-details-modal";
 import AddDecisionsModal from "./add-decisions-modal";
+import { IAddFarmersGroupFormInput } from "./type/formInputs";
+
+interface CustomProps {}
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -28,7 +31,6 @@ const ModalLaunchButtons = () => {
   };
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
-    
   };
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
@@ -57,12 +59,12 @@ const ModalLaunchButtons = () => {
       <Button variant="outlined" onClick={addDecisions}>
         add decicions
       </Button>
-      <DeleteModal label={""} openModal={openDelete} handleClose={deleteHandleClickOpen} />
-      <ConfirmationModal label={""} openModal={openConfirmation} handleClose={submitHandleClickOpen} />
-      <AddMdDetailsModal label={""} openModal={openAddMd} handleClose={addMDOpen} />
-      <AddFarmersGroupModal label={""} openModal={openAddFarmerGroup} handleClose={addFarmerGroup} />
-      <AddFarmersDetailsModalPage1 label={""} openModal={openAddFarmerDetails} handleClose={addFarmerDetails} />
-      <AddDecisionsModal label={""} openModal={openAddDecisions} handleClose={addDecisions} />
+      <DeleteModal openModal={openDelete} handleClose={deleteHandleClickOpen} />
+      <ConfirmationModal openModal={openConfirmation} handleClose={submitHandleClickOpen} />
+      <AddMdDetailsModal openModal={openAddMd} handleClose={addMDOpen} />
+      <AddFarmersGroupModal openModal={openAddFarmerGroup} cb={(data: IAddFarmersGroupFormInput): void => {console.log(data)}} handleClose={addFarmerGroup} />
+      <AddFarmersDetailsModalPage1 openModal={openAddFarmerDetails} handleClose={addFarmerDetails} />
+      <AddDecisionsModal openModal={openAddDecisions} handleClose={addDecisions} />
     </Fragment>
   );
 };

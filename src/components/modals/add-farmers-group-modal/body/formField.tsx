@@ -1,46 +1,28 @@
 import { Stack } from "@mui/system";
+import { FC } from "react";
 
 import DescriptionField from "../../../input-fields/description";
 import TextInput from "../../../input-fields/text";
-import Props from "../../type/modalProps";
+import { IAddFarmersGroupFormInput } from "../../type/formInputs";
+import { UseFormRegister } from "react-hook-form";
 
 import S from "./addFarmersGroupModal.styled";
 
-const FormField = (props: Props) => {
+interface CustomProps {
+  register: UseFormRegister<IAddFarmersGroupFormInput>;
+  errors: any;
+}
+
+const FormField: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
       <S.InputContainer spacing={2}>
-        <TextInput
-          label="குழு பெயர்"
-          openModal={props.openModal}
-          register={{ ...props.register("groupName") }}
-          helperText={props.error.groupName?.message}
-        />
-        <DescriptionField
-          label="விளக்கம்"
-          openModal={props.openModal}
-          register={{ ...props.register("explanation") }}
-          helperText={props.error.explanation?.message}
-        />
+        <TextInput<IAddFarmersGroupFormInput> label="குழு பெயர்" register={register} inputName="groupName" helperText={errors.groupName?.message} />
+        <DescriptionField label="விளக்கம்" register={register} inputName="explanation" helperText={errors.explanation?.message} />
         <Stack direction={"row"} spacing={2}>
-          <TextInput
-            label="தலைவர்"
-            openModal={props.openModal}
-            register={{ ...props.register("chairman") }}
-            helperText={props.error.chairman?.message}
-          />
-          <TextInput
-            label="பொருளாளர்"
-            openModal={props.openModal}
-            register={{ ...props.register("treasurer") }}
-            helperText={props.error.treasurer?.message}
-          />
-          <TextInput
-            label="செயலாளர்"
-            openModal={props.openModal}
-            register={{ ...props.register("secretary") }}
-            helperText={props.error.secretary?.message}
-          />
+          <TextInput<IAddFarmersGroupFormInput> label="தலைவர்" register={register} inputName="chairman" helperText={errors.chairman?.message} />
+          <TextInput<IAddFarmersGroupFormInput> label="பொருளாளர்" register={register} inputName="treasurer" helperText={errors.treasurer?.message} />
+          <TextInput<IAddFarmersGroupFormInput> label="செயலாளர்" register={register} inputName="secretary" helperText={errors.secretary?.message} />
         </Stack>
       </S.InputContainer>
     </>
