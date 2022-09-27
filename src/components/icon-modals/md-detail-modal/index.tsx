@@ -39,7 +39,7 @@ const MdDetailModal = (props: CommonModalProps) => {
           </S.IconBox>
         </S.IconStack>
       </CommonIconModal>
-      <DeleteModal openModal={deleteModal} handleClose={deleteModalHandler} deleteId={props.deleteId} />
+      <DeleteModal openModal={deleteModal} handleClose={() => {setDeleteModal(false)}} handleDelete={() => {}} />
     </>
   );
 };

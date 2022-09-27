@@ -3,7 +3,6 @@ import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({
-    padding: "2rem",
   }));
 
   InputContainer.defaultProps = {
@@ -45,6 +44,13 @@ namespace S {
     justifyContent: "flex-start",
     width: "100%",
   }));
+  export const DateContainer = styled(Stack)(({ theme }) => ({
+  }));
+  export const QualificationContainer = styled(Stack)(({ theme }) => ({
+  }));
+  QualificationContainer.defaultProps = {
+    width: "100%",
+  };
 }
 
 export default S;
