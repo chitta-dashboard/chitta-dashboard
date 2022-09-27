@@ -5,6 +5,12 @@ namespace S {
   export const Icon = styled("i")(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontSize: "1.2rem",
+    cursor: "text",
+  }));
+  export const EyeIcon = styled("i")(({ theme }) => ({
+    color: `${theme.palette.primary.main}`,
+    fontSize: "1.2rem",
+    cursor: "pointer",
   }));
   export const LogoImage = styled("img")(({ theme }) => ({
     width: "100%",
@@ -43,6 +49,9 @@ namespace S {
   }));
   export const ImageBox = styled(Box)(({ theme }) => ({
     width: "35%",
+  }));
+  export const LoginForm = styled("form")(({ theme }) => ({
+    width: "100%",
   }));
   export const LoginFormLabel = styled(FormLabel)(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
@@ -136,7 +145,7 @@ namespace S {
       cursor: "pointer",
     },
   }));
-  
+
   export const PasswordText = styled(Typography)(({ theme }) => ({
     color: `${theme.palette.primary.light}`,
     textAlign: "right",
