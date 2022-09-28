@@ -3,21 +3,22 @@ import { Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 
 import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import Submit from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
+import { IAddMDDetailsFormInput } from "../type/formInputs";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { useMdDetailsContext } from "../../../utils/context/md-details";
-import { IAddMDDetailsFormInput } from "../type/formInputs";
 
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
-  cb: (data: IAddMDDetailsFormInput) => void;
+  cb: (data: IAddMDDetailsFormInput & { id: string }) => void;
   editMode?: boolean;
   id?: string;
 }
@@ -27,13 +28,11 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().test("required", "photo is required", (value: FileList) => {
-      return value.length > 0;
-    }),
+    signature: yup.mixed().required("required"),
   })
   .required();
 
-const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { mdList } = useMdDetailsContext();
 
   const {
@@ -42,6 +41,8 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     formState: { errors },
     reset,
     clearErrors,
+    setValue,
+    trigger,
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
   });
@@ -51,10 +52,10 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
       let userData = mdList.find((md) => String(md.id) === id);
       reset({
         name: userData?.name as string,
-        phoneNumber: userData?.mobileNo as unknown as string,
-        qualification: userData?.degree as string,
+        phoneNumber: userData?.phoneNumber as unknown as string,
+        qualification: userData?.qualification as string,
         dob: userData?.dob as string,
-        signature: userData?.signature as string,
+        signature: "", // temporary, until sbucket integration
       });
     }
 
@@ -64,13 +65,14 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         phoneNumber: "",
         qualification: "",
         dob: "",
-        signature: "",
+        signature: "", // temporary, until sbucket integration
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, id]);
+  }, [editMode]);
+  // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddMDDetailsFormInput) => {
-    cb(data);
+  const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
+    cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
     handleClose();
     reset();
   };
@@ -95,23 +97,17 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
           Add MD Details
         </ModalHeader>
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={2}>
+          <Stack spacing={4}>
             <AddProfile />
-            <FormField register={register} errors={errors} />
+            <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Submit
-            formId="mdDetails"
-            handleSubmit={() => {
-              clearErrors();
-              handleClose();
-            }}
-          />
+          <Submit formId="mdDetails" handleSubmit={() => {}} />
         </ModalFooter>
       </CustomModal>
     </>
   );
 };
 
-export default AddMdDetailsModal;
+export default MdDetailsModal;

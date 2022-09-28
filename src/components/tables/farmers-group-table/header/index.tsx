@@ -1,4 +1,3 @@
-import React from "react";
 import { TableHead, TableRow } from "@mui/material";
 
 import S from "./header.styled";
@@ -7,11 +6,10 @@ const Header = () => {
   return (
     <TableHead>
       <TableRow>
-        <S.WebTableCell>#</S.WebTableCell>
         <S.WebTableCell>குழுபெயர்</S.WebTableCell>
         <S.WebTableCell>குழு விவரங்கள்</S.WebTableCell>
         <S.WebTableCell></S.WebTableCell>
-        <S.TabTableCell colSpan={4}>Farmers Group</S.TabTableCell>
+        <S.TabTableCell>Farmers Group</S.TabTableCell>
       </TableRow>
     </TableHead>
   );

@@ -5,7 +5,7 @@ namespace S {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: "1rem",
+    padding: "1.875rem",
   }));
 }
 

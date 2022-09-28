@@ -31,10 +31,12 @@ const schema = yup
       .array()
       .nullable()
       .test("test", "required", (value: any) => value && value.length > 0),
+    description: yup.string().required("required"),
+    descriptionRichText: yup.string().required("required"),
   })
   .required();
 
-const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
+const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   const {
     register,
     handleSubmit,
@@ -48,7 +50,7 @@ const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    cb(data);
+    cb({ ...data, dob: new Date(data.dob).toDateString().split(" ").slice(1).join(",").replace(",", " ") });
     reset();
     handleClose();
   };
@@ -85,4 +87,4 @@ const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     </>
   );
 };
-export default AddDecisionsModal;
+export default DecisionsModal;

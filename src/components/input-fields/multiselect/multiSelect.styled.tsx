@@ -1,4 +1,4 @@
-import { Box, Chip, FormControl, styled } from "@mui/material";
+import { Box, Chip, FormControl, MenuItem, styled } from "@mui/material";
 
 namespace S {
   export const ChipContainer = styled(Box)(({ theme }) => ({
@@ -49,11 +49,24 @@ namespace S {
       height: "1.5rem ",
       width: "1.5rem ",
     },
+    "& .MuiBox-root": {
+      display: "flex",
+      justifyContent: "start",
+      alignItems: "center",
+    },
+
+    // "& .MuiPaper-elevation": {
+    //   backgroundColor: "red !important",
+    // },
+ 
   }));
 
   StyledFormControl.defaultProps = {
     sx: { m: 1, width: 300 },
   };
+  export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  
+  }));
 }
 
 export default S;

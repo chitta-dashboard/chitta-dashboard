@@ -20,7 +20,7 @@ interface CustomProps {
 const FormFieldPage2: FC<CustomProps> = ({ register, errors, trigger, setValue }) => {
   return (
     <>
-      <S.InputContainer spacing={2.4}>
+      <S.InputContainer spacing={3}>
         <Stack direction={"row"} spacing={2}>
           <TextInput<IAddFarmersDetailsPage2Input> label="கல்வி" register={register} inputName="education" helperText={errors.education?.message} />
           <TextInput<IAddFarmersDetailsPage2Input> label="கிராமம்" register={register} inputName="village" helperText={errors.village?.message} />

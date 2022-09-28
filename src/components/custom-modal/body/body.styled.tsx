@@ -6,7 +6,7 @@ namespace S {
     justtifyContent: "center",
     alignItems: "center",
     overflowY: "auto",
-    padding: "2rem",
+    padding: "2rem 1.875rem 0 1.875rem",
   }));
 }
 export default S;

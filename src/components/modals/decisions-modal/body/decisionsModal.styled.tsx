@@ -1,5 +1,4 @@
-import { styled, Stack, Grid, Typography, Box } from "@mui/material";
-import { LightTheme } from "../../../../utils/theme";
+import { styled, Stack, Grid } from "@mui/material";
 
 namespace S {
   export const InputContainer = styled(Stack)(({ theme }) => ({}));
@@ -29,7 +28,7 @@ namespace S {
 
   export const DateContainer = styled(Stack)(({ theme }) => ({}));
   export const QualificationContainer = styled(Stack)(({ theme }) => ({}));
-  
+
   QualificationContainer.defaultProps = {
     width: "100%",
   };

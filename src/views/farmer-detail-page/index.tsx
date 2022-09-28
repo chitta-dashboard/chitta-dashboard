@@ -1,6 +1,6 @@
 import { Ref, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import IconWrapper from "../../utils/iconWrapper";
 import ShareHolderCertificate from "../share-holder-certificate";
@@ -14,18 +14,21 @@ const FarmerDetailPage = () => {
   const pdfcertificate = useRef<HTMLDivElement>();
   const pdftamilcertificate = useRef<HTMLDivElement>();
   const navigate = useNavigate();
-  // const { id } = useParams();
+  const { id } = useParams();
 
+  // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
     content: () => pdfForm.current as HTMLDivElement,
   });
 
+  // to generate share holder certificate
   const generateCertificatePDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
     content: () => pdfcertificate.current as HTMLDivElement,
   });
 
+  // to generate share holder certificate in tamil
   const generateTamilCertificatePDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
     content: () => pdftamilcertificate.current as HTMLDivElement,
