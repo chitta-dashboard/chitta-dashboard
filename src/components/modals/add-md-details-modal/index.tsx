@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import {Stack} from '@mui/material'
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -7,12 +8,11 @@ import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import Submit from "../../buttons/submit-button";
-
 import ModalHeader from "../../custom-modal/header";
-import { IAddMDDetailsFormInput } from "../type/formInputs";
-import { useMdDetailsContext } from "../../../utils/context/md-details";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import { useMdDetailsContext } from "../../../utils/context/md-details";
+import { IAddMDDetailsFormInput } from "../type/formInputs";
 
 interface CustomProps {
   openModal: boolean;
@@ -96,8 +96,11 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         </ModalHeader>
 
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
+          <Stack spacing={2}>
+
           <AddProfile />
           <FormField register={register} errors={errors} />
+          </Stack>
         </ModalBody>
 
         <ModalFooter>
