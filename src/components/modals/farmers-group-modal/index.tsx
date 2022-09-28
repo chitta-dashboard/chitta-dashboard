@@ -31,7 +31,7 @@ const schema = yup
   })
   .required();
 
-const AddFarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id }) => {
+const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id }) => {
   const { farmerGroupList } = useFarmerGroupDetailsContext();
 
   const {
@@ -105,4 +105,4 @@ const AddFarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, edi
     </>
   );
 };
-export default AddFarmersGroupModal;
+export default FarmersGroupModal;

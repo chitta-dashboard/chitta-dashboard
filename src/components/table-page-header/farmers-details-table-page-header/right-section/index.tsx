@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import SelectDropDown from "../../../common-components/select-dropdown";
-import AddFarmersDetailsModal from "../../../modals/add-farmers-details-modal";
+import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 
 import S from "./rightSection.styled";
 
