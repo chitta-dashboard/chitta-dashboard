@@ -21,10 +21,7 @@ namespace S {
     backgroundColor: theme.palette.primary.light,
   }));
 
-  export const ProfileContainer = styled(Box)(({ theme }) => ({
-    marginTop: "1rem",
-    marginBottom: "1rem",
-  }));
+  export const ProfileContainer = styled(Box)(({ theme }) => ({}));
 }
 
 export default S;

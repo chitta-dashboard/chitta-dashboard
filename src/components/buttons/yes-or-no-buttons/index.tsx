@@ -1,4 +1,5 @@
 import { FC } from "react";
+
 import S from "./YesOrNoButtons.Styled";
 
 interface CustomProps {

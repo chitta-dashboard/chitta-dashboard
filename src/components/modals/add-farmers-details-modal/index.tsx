@@ -1,25 +1,25 @@
 import { FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Stack } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import CustomModal from "../../custom-modal";
+import ModalHeader from "../../custom-modal/header";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
 import AddProfile from "../../buttons/add-profile-icon-and-button";
-import Next from "../../buttons/next-button";
 import FormField from "./page-1-modal/body/formField";
 import FormFieldPage2 from "./page-2-modal/body/formField";
 import PageNumber1 from "./page-1-modal/body/pageNumber";
-import CustomModal from "../../custom-modal";
-
 import PageNumber2 from "./page-2-modal/body/pageNumber";
+import Next from "../../buttons/next-button";
 import BackButton from "../../buttons/back-button";
 import SubmitButton from "../../buttons/submit-button";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
+import { useFarmerDetailsContext } from "../../../utils/context/farmers-details";
 
 import S from "./page-1-modal/body/page1Modal.styled";
-import ModalHeader from "../../custom-modal/header";
-import { useFarmerDetailsContext } from "../../../utils/context/farmers-details";
-import ModalBody from "../../custom-modal/body";
-import ModalFooter from "../../custom-modal/footer";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput) => void;
@@ -163,6 +163,7 @@ const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, e
     form1Reset();
     form2Reset();
     handleClose();
+    setNext(false);
   };
 
   return (
@@ -191,14 +192,13 @@ const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, e
           Add Farmer's Details
         </ModalHeader>
 
-        <AddProfile />
         {next ? (
           <>
             <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
               <FormFieldPage2 register={form2Register} errors={form2Errors} trigger={form2Trigger} setValue={form2SetValue} />
-              <PageNumber2 />
             </ModalBody>
             <ModalFooter>
+              <PageNumber2 />
               <S.ButtonContainer>
                 <BackButton
                   handleClose={() => {
@@ -213,10 +213,13 @@ const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, e
         ) : (
           <>
             <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
-              <FormField register={form1Register} errors={form1Errors} />
-              <PageNumber1 />
+              <Stack spacing={2}>
+                <AddProfile />
+                <FormField register={form1Register} errors={form1Errors} />
+              </Stack>
             </ModalBody>
             <ModalFooter>
+              <PageNumber1 />
               <Next formId={"farmersDetailsForm1"} handleNext={form1Submit} />
             </ModalFooter>
           </>

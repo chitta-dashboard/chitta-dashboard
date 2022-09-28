@@ -1,4 +1,5 @@
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+
 import S from "./text.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
