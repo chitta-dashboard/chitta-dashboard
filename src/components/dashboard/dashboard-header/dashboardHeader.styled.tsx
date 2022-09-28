@@ -50,8 +50,14 @@ export namespace S {
   }));
 
   export const ImgContainer = styled(Box)(({ theme }: any) => ({
-    height: "5rem",
-    width: "5rem",
+    height: "4.5rem",
+    width: "4.5rem",
+    borderRadius: "50%",
+  }));
+
+  export const DshboardImg = styled("img")(({ theme }: any) => ({
+    height: "100%",
+    width: "100%",
     borderRadius: "50%",
   }));
 

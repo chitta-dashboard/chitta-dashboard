@@ -1,16 +1,17 @@
-import "../../assets/css/index.css";
-import S from "./richText.styled";
+import { FC } from "react";
+import "../../../assets/css/index.css";
+import S from "../richText.styled";
 
-const MenuBar = ({ editor }) => {
+const MenuBar: FC<any> = ({ editor }) => {
   if (!editor) {
     return null;
   }
 
   return (
     <>
-      <S.ToolbarBox>
+      <S.ToolbarBox className="menu-bar">
         <S.ToolbarBtn onClick={() => editor.chain().focus().toggleBold().run()} className={editor.isActive("bold") ? "is-active" : ""}>
-          B
+          bold
         </S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().toggleItalic().run()} className={editor.isActive("italic") ? "is-active" : ""}>
           italic
@@ -18,8 +19,8 @@ const MenuBar = ({ editor }) => {
         <S.ToolbarBtn onClick={() => editor.chain().focus().toggleStrike().run()} className={editor.isActive("strike") ? "is-active" : ""}>
           strike
         </S.ToolbarBtn>
-        <S.ToolbarBtn onClick={() => editor.chain().focus().toggleCode().run()} className={editor.isActive("code") ? "is-active" : ""}>
-          code
+        <S.ToolbarBtn onClick={() => editor.chain().focus().toggleUnderline().run()} className={editor.isActive("underline") ? "is-active" : ""}>
+          underline
         </S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().unsetAllMarks().run()}>clear marks</S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().clearNodes().run()}>clear nodes</S.ToolbarBtn>
@@ -71,8 +72,6 @@ const MenuBar = ({ editor }) => {
         <S.ToolbarBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} className={editor.isActive("blockquote") ? "is-active" : ""}>
           blockquote
         </S.ToolbarBtn>
-        <S.ToolbarBtn onClick={() => editor.chain().focus().setHorizontalRule().run()}>horizontal rule</S.ToolbarBtn>
-        <S.ToolbarBtn onClick={() => editor.chain().focus().setHardBreak().run()}>hard break</S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().undo().run()}>undo</S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().redo().run()}>redo</S.ToolbarBtn>
       </S.ToolbarBox>
