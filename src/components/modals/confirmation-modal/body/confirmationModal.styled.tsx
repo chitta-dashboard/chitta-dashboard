@@ -1,16 +1,16 @@
 import { styled, Typography, Box, DialogContent } from "@mui/material";
 
 namespace S {
-   export const Container = styled(Box)(({ theme }) => ({
-     width: "25rem",
-     height: "18rem",
-   }));
+  export const Container = styled(Box)(({ theme }) => ({
+    width: "25rem",
+    height: "18rem",
+  }));
 
-   export const ContainerItems = styled(DialogContent)(({ theme }) => ({
-     display: "flex",
-     justifyContent: "center",
-     alignItems: "center",
-   }));
+  export const ContainerItems = styled(DialogContent)(({ theme }) => ({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  }));
   export const SuccessImg = styled(`img`)(({ theme }) => ({
     marginTop: "1.5rem",
     width: "7rem",

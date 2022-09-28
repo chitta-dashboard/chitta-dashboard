@@ -1,13 +1,13 @@
+import { FC } from "react";
 import { Stack } from "@mui/system";
+import { UseFormRegister } from "react-hook-form";
 
 import DateInput from "../../../../input-fields/date";
 import NumberInput from "../../../../input-fields/number";
 import TextInput from "../../../../input-fields/text";
 import { IAddFarmersDetailsPage1Input } from "../../../type/formInputs";
-import { UseFormRegister } from "react-hook-form";
 
 import S from "./page1Modal.styled";
-import { FC } from "react";
 
 interface CustomProps {
   register: UseFormRegister<IAddFarmersDetailsPage1Input>;
@@ -17,7 +17,7 @@ interface CustomProps {
 const FormField: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
-      <S.InputContainer spacing={2}>
+      <S.InputContainer spacing={3}>
         <Stack direction={"row"} spacing={2}>
           <TextInput<IAddFarmersDetailsPage1Input> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
           <TextInput<IAddFarmersDetailsPage1Input>

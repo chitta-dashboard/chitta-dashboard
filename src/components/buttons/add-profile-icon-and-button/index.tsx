@@ -36,8 +36,6 @@ const AddProfile: FC<CustomProps> = ({ ImageHandler }) => {
         </Badge>
       </S.ProfileContainer>
 
-      {/* crop image preview */}
-
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );

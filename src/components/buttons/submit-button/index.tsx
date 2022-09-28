@@ -1,5 +1,5 @@
-import { Button, FormControl } from "@mui/material";
 import { FC } from "react";
+import { Button } from "@mui/material";
 
 import S from "./SubmitButton.Styled";
 

@@ -1,12 +1,12 @@
 import React from "react";
-import { Select, SelectChangeEvent, OutlinedInput, InputLabel, MenuItem } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useTheme } from "@mui/material/styles";
+import { Select, SelectChangeEvent, OutlinedInput, InputLabel, MenuItem } from "@mui/material";
 import { FieldValues, UseFormRegister, Path, UseFormSetValue, PathValue, UseFormTrigger } from "react-hook-form";
 
+import names from "./menuItems";
 import MenuProps from "./menuProps";
 import { getStyles } from "./getStyles";
-import names from "./menuItems";
 
 import S from "./multiSelect.styled";
 

@@ -8,7 +8,6 @@ namespace S {
     "& .MuiButton-root": {
       paddingLeft: "3rem",
       paddingRight: "3rem",
-      marginBottom: "1rem",
       backgroundColor: theme.palette.primary.light,
     },
   }));
