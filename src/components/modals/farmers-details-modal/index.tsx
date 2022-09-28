@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -17,12 +18,12 @@ import Next from "../../buttons/next-button";
 import BackButton from "../../buttons/back-button";
 import SubmitButton from "../../buttons/submit-button";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { useFarmerDetailsContext } from "../../../utils/context/farmers-details";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 
 import S from "./page-1-modal/body/page1Modal.styled";
 
 interface CustomProps {
-  cb: (data: IAddFarmersDetailsFormInput) => void;
+  cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => void;
   openModal: boolean;
   handleClose: () => void;
   editMode?: boolean;
@@ -93,29 +94,29 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
       form1Reset({
         name: farmerData?.name as string,
         fatherName: farmerData?.fatherName as string,
-        sex: farmerData?.gender as string,
-        spouseName: farmerData?.husbandName as string,
-        dob: farmerData?.DOB as string,
-        group: farmerData?.groupName as string,
-        phoneNumber: farmerData?.mobileNo as unknown as string,
-        addhaarNo: farmerData?.aadharNumber as unknown as string,
-        voterIdNo: farmerData?.voterIdNumber as unknown as string,
+        sex: farmerData?.sex as string,
+        spouseName: farmerData?.spouseName as string,
+        dob: farmerData?.dob as string,
+        group: farmerData?.group as string,
+        phoneNumber: farmerData?.phoneNumber as unknown as string,
+        addhaarNo: farmerData?.spouseName as unknown as string,
+        voterIdNo: farmerData?.voterIdNo as unknown as string,
         acre: farmerData?.acre as unknown as string,
       });
 
       form2Reset({
         education: farmerData?.education as string,
         village: farmerData?.village as string,
-        postalNo: farmerData?.pincode as unknown as string,
+        postalNo: farmerData?.postalNo as unknown as string,
         address: farmerData?.address as string,
-        taluk: farmerData?.circle as string,
+        taluk: farmerData?.taluk as string,
         district: farmerData?.district as string,
         surveyNo: farmerData?.surveyNo as unknown as string,
         landType: farmerData?.landType as string,
-        waterType: farmerData?.irrigationType as string,
+        waterType: farmerData?.waterType as string,
         farmerType: farmerData?.farmerType as string,
-        seedType: farmerData?.cropType as string,
-        animals: farmerData?.cattle as string,
+        seedType: farmerData?.seedType as string,
+        animals: farmerData?.animals as string,
         groupMember: farmerData?.membershipId as unknown as string,
       });
     }
@@ -159,7 +160,8 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
   };
 
   const form2Submit: any = (data: IAddFarmersDetailsPage2Input) => {
-    cb(Object.assign(data, form1Data) as IAddFarmersDetailsFormInput);
+    let params = { ...data, ...form1Data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" };
+    cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
     form1Reset();
     form2Reset();
     handleClose();

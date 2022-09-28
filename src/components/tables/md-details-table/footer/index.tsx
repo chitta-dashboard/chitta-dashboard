@@ -1,5 +1,4 @@
-import React from "react";
-import { useMdDetailsContext } from "../../../../utils/context/md-details";
+import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
 
 import FooterWrapper from "../../../custom-tables/footer";
 

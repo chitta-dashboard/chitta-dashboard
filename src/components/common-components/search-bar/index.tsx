@@ -1,5 +1,5 @@
 import React, { forwardRef, MutableRefObject, useContext, useRef } from "react";
-import { mdDetailsContext, useMdDetailsContext } from "../../../utils/context/md-details";
+import { mdDetailsContext, useMdDetailsContext } from "../../../utils/context/mdDetails";
 
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";

@@ -6,10 +6,10 @@ namespace S {
     fontSize: "1.1rem",
     fontWeight: 600,
     padding: "1.5rem 0",
-    "&:first-of-type": {
-      textAlign: "center",
-      width: "7%",
-    },
+    // "&:first-of-type": {
+    //   textAlign: "center",
+    //   width: "7%",
+    // },
 
     "&:nth-last-of-type(2)": {
       width: "12%",
