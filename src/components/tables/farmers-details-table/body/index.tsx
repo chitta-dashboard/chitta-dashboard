@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Avatar, Checkbox, Stack } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { fileValidation } from "../../../../utils/const/const";
+import { fileValidation } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmers-details";
 import BodyWrapper from "../../../custom-tables/body";
@@ -186,7 +186,9 @@ const Body = (props: Props) => {
       />
       <DeleteModal
         openModal={deleteModal}
-        handleClose={() => {setDeleteModal(false)}}
+        handleClose={() => {
+          setDeleteModal(false);
+        }}
         handleDelete={() => {}}
         // deleteFarmersDetails={deleteFarmersDetails}
       />

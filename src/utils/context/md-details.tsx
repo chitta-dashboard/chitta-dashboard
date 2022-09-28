@@ -1,5 +1,6 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
+import { searchWord } from "../constants";
 
 type mdDetail = {
   id: number;
@@ -85,19 +86,6 @@ const initialState: mdDetailsContextType = {
   addMdDetail: () => {},
   editTableIcon: () => {},
 };
-
-const searchWord = (text: string, word: string) =>
-  text
-    ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
-    : false;
 
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
