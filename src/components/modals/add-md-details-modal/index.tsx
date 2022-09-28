@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import {Stack} from '@mui/material'
+import { Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -94,15 +94,12 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         >
           Add MD Details
         </ModalHeader>
-
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2}>
-
-          <AddProfile />
-          <FormField register={register} errors={errors} />
+            <AddProfile />
+            <FormField register={register} errors={errors} />
           </Stack>
         </ModalBody>
-
         <ModalFooter>
           <Submit
             formId="mdDetails"
