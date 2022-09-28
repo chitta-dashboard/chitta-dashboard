@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
-import AddFarmersGroupModal from "../../components/modals/add-farmers-group-modal";
+import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
 import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmers-group";
 

@@ -49,6 +49,13 @@ namespace S {
       height: "1.5rem ",
       width: "1.5rem ",
     },
+
+    // "& .MuiPopover-paper": {
+    //   display: "none",
+    // },
+    // "& .MuiPaper-elevation": {
+    //   backgroundColor: "red !important",
+    // },
   }));
 
   StyledFormControl.defaultProps = {

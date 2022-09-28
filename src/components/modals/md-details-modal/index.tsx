@@ -27,13 +27,13 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().test("required", "photo is required", (value: FileList) => {
-      return value.length > 0;
+    signature: yup.mixed().test("required", "photo is required", (value: any) => {
+      return value && value.length > 0;
     }),
   })
   .required();
 
-const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { mdList } = useMdDetailsContext();
 
   const {
@@ -42,6 +42,7 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     formState: { errors },
     reset,
     clearErrors,
+    setValue
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
   });
@@ -54,7 +55,7 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         phoneNumber: userData?.mobileNo as unknown as string,
         qualification: userData?.degree as string,
         dob: userData?.dob as string,
-        signature: userData?.signature as string,
+        signature: null, // temporary, until sbucket integration
       });
     }
 
@@ -64,7 +65,7 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         phoneNumber: "",
         qualification: "",
         dob: "",
-        signature: "",
+        signature: null,
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
@@ -95,9 +96,9 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
           Add MD Details
         </ModalHeader>
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={2}>
+          <Stack spacing={4}>
             <AddProfile />
-            <FormField register={register} errors={errors} />
+            <FormField register={register} errors={errors} setValue={setValue}/>
           </Stack>
         </ModalBody>
         <ModalFooter>
@@ -114,4 +115,4 @@ const AddMdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
   );
 };
 
-export default AddMdDetailsModal;
+export default MdDetailsModal;

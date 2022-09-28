@@ -9,7 +9,7 @@ import TextInput from "../../../input-fields/text";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 
-import S from "./addDecisionsModal.styled";
+import S from "./decisionsModal.styled";
 
 interface CustomProps {
   register: UseFormRegister<IAddDecisionsFormInput>;
@@ -30,7 +30,6 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
           <S.ChildContainer item>
             <Stack spacing={2}>
               <TextInput<IAddDecisionsFormInput> register={register} inputName="decisionHeading" label="தீர்மானம் தலைப்பு" />
-
               <FormHelperText>{errors.decisionHeading?.message}</FormHelperText>
               <Stack spacing={2} direction={"row"}>
                 <S.DateContainer width={"100%"}>
@@ -67,7 +66,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
             </Stack>
           </S.ChildContainer>
           <S.ChildContainer item>
-              <Editor cb={(data: string): void => {}} />
+            <Editor cb={(data: string): void => {}} />
           </S.ChildContainer>
         </Grid>
       </S.InputContainer>
