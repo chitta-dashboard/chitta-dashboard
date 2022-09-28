@@ -1,13 +1,14 @@
+import { FC } from "react";
 import { Stack } from "@mui/system";
+import { UseFormRegister } from "react-hook-form";
 
 import TextInput from "../../../input-fields/text";
 import NumberInput from "../../../input-fields/number";
 import FileInput from "../../../input-fields/file";
 import DateInput from "../../../input-fields/date";
-import S from "./addMdDetailsModal.styled";
-import { FC } from "react";
 import { IAddMDDetailsFormInput } from "../../type/formInputs";
-import { UseFormRegister } from "react-hook-form";
+
+import S from "./addMdDetailsModal.styled";
 
 interface CustomProps {
   register: UseFormRegister<IAddMDDetailsFormInput>;
@@ -17,7 +18,7 @@ interface CustomProps {
 const FormField: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
-      <S.InputContainer spacing={2}>
+      <S.InputContainer spacing={3}>
         <Stack direction={"row"} spacing={2}>
           <TextInput<IAddMDDetailsFormInput> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
           <NumberInput<IAddMDDetailsFormInput>

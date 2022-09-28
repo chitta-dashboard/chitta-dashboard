@@ -1,5 +1,6 @@
-import MultiSelect from "./multiSelectField";
 import { FieldValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+
+import MultiSelect from "./multiSelectField";
 
 interface CustomProps<FormInputType extends FieldValues> {
   multiSelectLabel: string;

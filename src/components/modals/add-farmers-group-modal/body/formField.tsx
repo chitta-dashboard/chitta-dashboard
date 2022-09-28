@@ -1,10 +1,10 @@
-import { Stack } from "@mui/system";
 import { FC } from "react";
+import { Stack } from "@mui/system";
+import { UseFormRegister } from "react-hook-form";
 
 import DescriptionField from "../../../input-fields/description";
 import TextInput from "../../../input-fields/text";
 import { IAddFarmersGroupFormInput } from "../../type/formInputs";
-import { UseFormRegister } from "react-hook-form";
 
 import S from "./addFarmersGroupModal.styled";
 
@@ -16,7 +16,7 @@ interface CustomProps {
 const FormField: FC<CustomProps> = ({ register, errors }) => {
   return (
     <>
-      <S.InputContainer spacing={2}>
+      <S.InputContainer spacing={3}>
         <TextInput<IAddFarmersGroupFormInput> label="குழு பெயர்" register={register} inputName="groupName" helperText={errors.groupName?.message} />
         <DescriptionField label="விளக்கம்" register={register} inputName="explanation" helperText={errors.explanation?.message} />
         <Stack direction={"row"} spacing={2}>

@@ -8,10 +8,12 @@ interface CustomProps {
   children: React.ReactNode;
 }
 
-const ModalBody: FC<CustomProps> = ({ children,id,onSubmit }) => {
+const ModalBody: FC<CustomProps> = ({ children, id, onSubmit }) => {
   return (
     <S.Container>
-      <form id={id} onSubmit={onSubmit}>{children}</form>
+      <form id={id} onSubmit={onSubmit}>
+        {children}
+      </form>
     </S.Container>
   );
 };

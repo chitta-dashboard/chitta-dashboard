@@ -1,12 +1,12 @@
-import { Stack } from "@mui/system";
 import { FC } from "react";
+import { Stack } from "@mui/system";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 import DescriptionField from "../../../../input-fields/description";
 import NumberInput from "../../../../input-fields/number";
 import SelectField from "../../../../input-fields/select";
 import TextInput from "../../../../input-fields/text";
 import { IAddFarmersDetailsPage2Input } from "../../../type/formInputs";
-import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 import S from "./page2Modal.styled";
 
@@ -20,7 +20,7 @@ interface CustomProps {
 const FormFieldPage2: FC<CustomProps> = ({ register, errors, trigger, setValue }) => {
   return (
     <>
-      <S.InputContainer spacing={2}>
+      <S.InputContainer spacing={2.4}>
         <Stack direction={"row"} spacing={2}>
           <TextInput<IAddFarmersDetailsPage2Input> label="கல்வி" register={register} inputName="education" helperText={errors.education?.message} />
           <TextInput<IAddFarmersDetailsPage2Input> label="கிராமம்" register={register} inputName="village" helperText={errors.village?.message} />
