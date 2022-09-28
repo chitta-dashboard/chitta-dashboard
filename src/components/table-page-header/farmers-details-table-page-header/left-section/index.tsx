@@ -1,5 +1,3 @@
-import React from "react";
-
 import IconWrapper from "../../../../utils/iconWrapper";
 import SearchBar from "../../../common-components/search-bar";
 

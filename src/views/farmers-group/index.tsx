@@ -1,25 +1,34 @@
-import React, { useState } from "react";
+import { useState } from "react";
+
 import TablePageHeader from "../../components/common-table-page-header";
-import AddFarmersGroupModal from "../../components/modals/add-farmers-group-modal";
+import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
+import { IAddFarmersGroupFormInput } from "../../components/modals/type/formInputs";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmers-group";
+import { FarmerGroupDetailsContextProvider, useFarmerGroupDetailsContext } from "../../utils/context/farmersGroup";
 
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
-  const [addFarmersGroup, setAddFarmersGroup] = useState(false);
+  const [addModal, setAddModal] = useState(false);
+  const { addFarmerGroupDetail } = useFarmerGroupDetailsContext();
 
-  const addFarmersGroupModalHandler = () => {
-    setAddFarmersGroup(!addFarmersGroup);
+  //Add Modal Handler
+  const addModalHandler = () => {
+    setAddModal(!addModal);
+  };
+
+  // Add Farmergroup Handler
+  const addDataHandler = (data: IAddFarmersGroupFormInput & { id: string }) => {
+    addFarmerGroupDetail(data);
   };
 
   return (
     <FarmerGroupDetailsContextProvider>
       <S.FarmersGroupContainer>
-        <TablePageHeader addFarmersGroupModalHandler={addFarmersGroupModalHandler} />
+        <TablePageHeader addModalHandler={addModalHandler} />
         <FarmersGroupTable />
-        <AddFarmersGroupModal openModal={addFarmersGroup} handleClose={addFarmersGroupModalHandler} />
       </S.FarmersGroupContainer>
+      <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </FarmerGroupDetailsContextProvider>
   );
 };

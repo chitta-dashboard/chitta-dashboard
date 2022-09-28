@@ -1,11 +1,13 @@
 import { FC } from "react";
 
-import Props from "../../../modals/type/modalProps";
-
 import S from "./addProfile.styled";
 
-const UploadButton: FC<Props> = (props) => {
-  const getImage = props.profile;
+interface CustomProps {
+  ImageHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const UploadButton: FC<CustomProps> = ({ ImageHandler }) => {
+  const getImage = ImageHandler;
 
   return (
     <>

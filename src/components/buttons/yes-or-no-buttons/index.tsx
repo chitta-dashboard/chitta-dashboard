@@ -1,13 +1,18 @@
-import Props from "../../modals/type/modalProps";
+import { FC } from "react";
 
 import S from "./YesOrNoButtons.Styled";
 
-const YesOrNoButtons = (props: Props) => {
+type YesOrNoButtonsProps = {
+  yesAction: () => void;
+  handleClose: () => void;
+};
+
+const YesOrNoButtons: FC<YesOrNoButtonsProps> = (props) => {
   return (
     <>
       <S.ButtonContainer>
         <S.NoButton onClick={props.handleClose}>No</S.NoButton>
-        <S.YesButton onClick={props.handleClose}>Yes</S.YesButton>
+        <S.YesButton onClick={props.yesAction}>Yes</S.YesButton>
       </S.ButtonContainer>
     </>
   );
