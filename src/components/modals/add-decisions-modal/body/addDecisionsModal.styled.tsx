@@ -21,23 +21,6 @@ namespace S {
     md: 6,
   };
 
-  export const RichTextLabel = styled(Typography)(({ theme }) => ({
-    fontSize: "0.8rem",
-    color: LightTheme.palette.primary.light,
-    position: "absolute",
-    top: "-3.5%",
-    left: "2%",
-    zIndex: "1",
-    background: "#ffff",
-    padding: "0 0.2rem",
-  }));
-
-  export const RichTextBoxWrapper = styled(Box)(({ theme }) => ({
-    position: "relative",
-    height: "100%",
-    justifyContent: "initial",
-  }));
-
   export const RadioContainer = styled(Stack)(({ theme }) => ({
     marginBottom: "1rem",
     display: "flex",
@@ -45,6 +28,7 @@ namespace S {
     width: "100%",
   }));
   export const DateContainer = styled(Stack)(({ theme }) => ({
+    
   }));
   export const QualificationContainer = styled(Stack)(({ theme }) => ({
   }));

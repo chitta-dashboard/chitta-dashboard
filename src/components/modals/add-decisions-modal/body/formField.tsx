@@ -1,7 +1,4 @@
 import { FormHelperText, Grid, Stack } from "@mui/material";
-import "froala-editor/css/froala_style.min.css";
-import "froala-editor/css/froala_editor.pkgd.min.css";
-import "froala-editor/js/plugins.pkgd.min.js";
 
 import DateInput from "../../../input-fields/date";
 import MultipleSelectChip from "../../../input-fields/multiselect";
@@ -11,7 +8,7 @@ import TextInput from "../../../input-fields/text";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 
 import S from "./addDecisionsModal.styled";
-import Editor from "../../../rich-text/Editor";
+import Editor from "../../../rich-text/rich-text-editor/index";
 import { FC } from "react";
 import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
@@ -71,10 +68,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
             </Stack>
           </S.ChildContainer>
           <S.ChildContainer item>
-            <S.RichTextBoxWrapper>
-              <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>
-              <Editor />
-            </S.RichTextBoxWrapper>
+              <Editor cb={(data: string): void => {}} />
           </S.ChildContainer>
         </Grid>
       </S.InputContainer>
