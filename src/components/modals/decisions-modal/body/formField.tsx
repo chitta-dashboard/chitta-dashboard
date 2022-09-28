@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { FormHelperText, Grid, Stack } from "@mui/material";
-import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+
 import DateInput from "../../../input-fields/date";
 import MultipleSelectChip from "../../../input-fields/multiselect";
 import RadioButton from "../../../input-fields/radio";
@@ -10,6 +10,7 @@ import Editor from "../../../rich-text/rich-text-editor/index";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 
 import S from "./decisionsModal.styled";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 interface CustomProps {
   register: UseFormRegister<IAddDecisionsFormInput>;

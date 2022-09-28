@@ -1,5 +1,3 @@
-import React from "react";
-
 import { wrapChildrenProps } from "../../../types/wrap-child-props";
 
 import S from "./tableWrapper.styled";

@@ -6,7 +6,7 @@ namespace S {
     cursor: "pointer",
   }));
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
-    width: "6%",
+    width: "7%",
     padding: "1rem 0",
     textAlign: "center",
     "& .MuiSvgIcon-root": {
@@ -18,11 +18,11 @@ namespace S {
   }));
 
   export const TabCheckboxStack = styled(Stack)(({ theme }) => ({
-    display: "flex",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     minWidth: "15%",
+    color: "red",
     "& .MuiSvgIcon-root": {
       color: theme.palette.text.primary,
     },
@@ -39,25 +39,24 @@ namespace S {
       fontSize: "1rem",
       padding: "0 2rem",
       paddingTop: "1rem",
+      "& .MuiSvgIcon-root": {
+        color: theme.palette.text.primary,
+      },
     },
   }));
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
-    textAlign: "center",
     color: theme.palette.text.secondary,
     fontSize: "1.1rem",
     fontWeight: 500,
     width: "18%",
     padding: "1rem 0",
-
-    "&:nth-of-type(2)": {
-      width: "6%",
-      textAlign: "center",
-    },
+    // "&:nth-of-type(2)": {
+    //   textAlign: "center",
+    // },
     "&:last-of-type": {
       width: "20%",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -69,9 +68,12 @@ namespace S {
     fontWeight: 500,
     borderBottom: "1rem solid red",
     width: "18%",
-    padding: "1rem 0",
+    padding: "0.8rem 0",
     [theme.breakpoints.up("md")]: {
-      "&:nth-of-type(6)": {
+      "&:nth-of-type(5)": {
+        display: "none",
+      },
+      "&:nth-of-type(7)": {
         width: "28%",
       },
     },
@@ -81,29 +83,30 @@ namespace S {
       alignItems: "center",
       fontSize: "1rem",
       width: "100%",
-      padding: "1rem 0",
+      padding: "0.8rem 0",
       position: "relative",
       left: "50%",
-
-      //Create Table head for Tab view
+      //Table head for Tab view
       "&::before": {
         content: `"${title}"`,
         color: theme.palette.text.primary,
         fontSize: "1rem",
         fontWeight: 600,
         position: "absolute",
-        left: "-43%",
+        left: "-45%",
       },
     },
   }));
 
   export const TabIdStack = styled(Stack)(({ theme }) => ({
-    diplay: "flex",
     flexDirection: "row",
     gap: "1rem",
   }));
   export const IdBox = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
+  }));
+  export const TitleBox = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primary,
   }));
 
   export const NameStack = styled(Stack)(({ theme }) => ({

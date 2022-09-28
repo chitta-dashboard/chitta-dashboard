@@ -9,7 +9,7 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "space-between",
+      justifyContent: "end",
       fontSize: "1rem",
       padding: "0 2rem",
       paddingTop: "1rem",
@@ -21,14 +21,8 @@ namespace S {
     color: theme.palette.text.secondary,
     fontSize: "1.1rem",
     fontWeight: 500,
-
     width: "25%",
     padding: "1rem 0",
-
-    "&:first-of-type": {
-      width: "7%",
-      textAlign: "center",
-    },
     "&:last-of-type": {
       width: "20%",
       padding: "1rem 0",
@@ -46,7 +40,7 @@ namespace S {
     width: "25%",
     padding: "1rem 0",
     [theme.breakpoints.up("md")]: {
-      "&:nth-of-type(5)": {
+      "&:nth-of-type(4)": {
         width: "32%",
       },
     },

@@ -1,22 +1,20 @@
-import React, { FC } from "react";
+import { FC } from "react";
 
 import IconWrapper from "../../../utils/iconWrapper";
 
 import S from "./rightSection.styled";
-interface TableProps {
-  addMdDetailsModalHandler?: () => void;
-  addFarmersGroupModalHandler?: () => void;
+interface RightSectionProps {
+  addModalHandler?: () => void;
 }
 
-const RightSection: FC<TableProps> = ({ addMdDetailsModalHandler, addFarmersGroupModalHandler }) => {
+const RightSection: FC<RightSectionProps> = (props) => {
   return (
     <S.RightSectionContainer>
       <IconWrapper>filter</IconWrapper>
       <IconWrapper>sort</IconWrapper>
       <S.CustomButton
         onClick={() => {
-          if (addMdDetailsModalHandler) addMdDetailsModalHandler();
-          if (addFarmersGroupModalHandler) addFarmersGroupModalHandler();
+          if (props.addModalHandler) props.addModalHandler();
         }}
       >
         Add

@@ -1,4 +1,3 @@
-import React from "react";
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 
 import S from "./header.styled";
@@ -15,10 +14,10 @@ const Header = (props: Props) => {
         <S.ColCheckCell>
           <Checkbox name="allSelect" onChange={props.handleChange} checked={!props.users.some((user: any) => user?.isChecked !== true)} />
         </S.ColCheckCell>
-        <S.WebTableCell>#</S.WebTableCell>
+        <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
         <S.WebTableCell>பெயர்</S.WebTableCell>
         <S.WebTableCell>கைபேசி எண்</S.WebTableCell>
-        <S.WebTableCell>தகுதி</S.WebTableCell>
+        <S.WebTableCell>குழு பெயர்</S.WebTableCell>
         <S.WebTableCell></S.WebTableCell>
         <S.TabTableCell>
           <Stack>
