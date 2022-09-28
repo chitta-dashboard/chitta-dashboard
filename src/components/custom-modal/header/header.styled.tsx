@@ -6,9 +6,8 @@ namespace S {
     alignItems: "center",
     "& .MuiIconButton-root": {
       position: "absolute",
-      right: "1rem",
+      right: "1.875rem",
       padding: ".7rem",
-      marginRight: "1rem",
       color: theme.palette.primary.main,
       borderRadius: "50%",
       backgroundColor: "#ffffff",
@@ -16,6 +15,7 @@ namespace S {
       height: "1rem",
       alignItems: "center",
     },
+    padding: "1.125rem 1.875rem",
     backgroundColor: theme.palette.custom.backgroundDark,
   }));
 
@@ -23,7 +23,6 @@ namespace S {
     display: alignment ? "flex" : "contents",
     justifyContent: alignment ? "center" : "",
     marginRight: alignment ? "1.5rem" : "",
-    paddingLeft: "2rem",
     color: theme.palette.text.primaryDark,
     width: "100%",
     alignItems: "center",

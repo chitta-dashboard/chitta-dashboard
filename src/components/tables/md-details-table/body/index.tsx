@@ -1,55 +1,55 @@
-import React, { useState, useRef, useEffect } from "react";
-import { TableRow, Avatar } from "@mui/material";
-import { fileValidation } from "../../../../utils/const/const";
+import React, { useState, useRef } from "react";
+import { Stack, TableRow } from "@mui/material";
 import BodyWrapper from "../../../custom-tables/body";
-import userPic from "../../../../assets/images/user.png";
-
-import S from "./body.styled";
-import CS from "../../../common-styles/commonStyles.styled";
-import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { useMdDetailsContext } from "../../../../utils/context/md-details";
+import userPic from "../../../../assets/images/user.png";
+import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import DeleteModal from "../../../modals/delete-modal";
+import AddMdDetailsModal from "../../../modals/md-details-modal";
+import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
+import { fileValidation } from "../../../../utils/constants";
 
-export interface Users {
-  id: number;
-  name: string;
-  mobileNo: number;
-  degree: string;
-  profile?: string;
-  dob?: string;
-  signature?: string;
-}
-
-type croppedImageType = { image: string; id: number };
+import CS from "../../../common-styles/commonStyles.styled";
+import S from "./body.styled";
 
 const Body = () => {
-  const { mdList, editTableIcon } = useMdDetailsContext();
+  const { mdList, editTableIcon, editMdDetail, deleteMdDetail } = useMdDetailsContext();
 
-  const [image, setImage] = useState("");
-  const [userId, setUserId] = useState<number>(-1);
-  const [isHovering, setIsHovering] = useState<number>(0);
-  const [MdDetailsIcon, setMdDetailsIcon] = useState(false);
+  const [image, setImage] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [deleteId, setDeleteId] = useState(0);
-  const [iconModal, setIconModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<string>("");
+  const [iconModal, setIconModal] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editId, setEditId] = useState<string>("");
 
-  //Md details Delete Modal
-  const deleteModalHandler = (id: number) => {
+  // Delete ModalHandler
+  const deleteModalHandler = (id: string) => {
     setDeleteModal(!deleteModal);
     setDeleteId(id);
   };
-
-  //Tab Icon Open & Close Handler
-  const iconModalHandler = (id: number) => {
+  // Tab IconModal Open & Close Handler
+  const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
+    setEditId(id);
+  };
+  //Edit MdDetail Handler
+  const editMdDetailHandler = (id: string) => {
+    setEditMode(!editMode);
+    setEditId(id);
+  };
+  //Update MdDetail Handler
+  const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
+    setIconModal(false);
+    editMdDetail(data);
   };
 
-  const getURL = (id: number) => {
+  const getURL = (id: string) => {
     let result = mdList.filter((item) => {
       return item.id === id ? item.profile : null;
     });
@@ -62,21 +62,13 @@ const Body = () => {
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
   };
 
-  const handleIconClick = (id: number) => {
+  const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
     setUserId(id);
   };
 
-  const handleMouseOver = (id: number) => {
-    setIsHovering(id);
-  };
-
-  const handleMouseOut = (id: number) => {
-    setIsHovering(id);
-  };
-
   const handleCroppedImage = (image: string) => {
-    let result = mdList.filter((item: Users) => {
+    let result = mdList.filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -89,12 +81,10 @@ const Body = () => {
         <BodyWrapper>
           {mdList.map((user) => (
             <TableRow key={user.id}>
-              <S.WebTableCell>{user.id}</S.WebTableCell>
               <S.TabCell>
-                <div># {user.id}</div>
-                <div>
+                <Stack>
                   <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
-                </div>
+                </Stack>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>
@@ -108,13 +98,13 @@ const Body = () => {
                   {user.name}
                 </S.NameStack>
               </S.Cell>
-              <S.Cell title="கைபேசி எண்">{user.mobileNo}</S.Cell>
-              <S.Cell title="தகுதி">{user.degree}</S.Cell>
+              <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
+              <S.Cell title="தகுதி">{user.qualification}</S.Cell>
               <S.WebTableCell>
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
-                  <CS.Icon>edit</CS.Icon>
+                  <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -127,8 +117,25 @@ const Body = () => {
           </tr>
         </S.EmptyMsg>
       )}
-      <MdDetailModal open={iconModal} handleClose={iconModalHandler} deleteId={deleteId} />
-      <DeleteModal openModal={deleteModal} handleClose={() => {setDeleteModal(false)}} handleDelete={() => {}}/>
+      <MdDetailModal
+        open={iconModal}
+        handleClose={() => setIconModal(false)}
+        handleDelete={() => {
+          setDeleteModal(true);
+        }}
+        handleEdit={() => {
+          setEditMode(true);
+        }}
+      />
+      <DeleteModal
+        openModal={deleteModal}
+        handleClose={() => setDeleteModal(false)}
+        handleDelete={() => {
+          deleteMdDetail(deleteId);
+          setDeleteModal(false);
+          setIconModal(false);
+        }}
+      />
       {image && (
         <tbody>
           <tr>
@@ -138,6 +145,7 @@ const Body = () => {
           </tr>
         </tbody>
       )}
+      <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={editId} />
     </>
   );
 };

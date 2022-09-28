@@ -1,13 +1,10 @@
 interface CommonModalProps {
   open: boolean;
-  handleClose: any;
+  handleClose: () => void;
   children?: React.ReactNode;
   generateIdCard?: () => void;
+  handleDelete?: () => void;
+  handleEdit?: () => void;
   generateFarmerDetailForm?: () => void;
-  // closeIconModal?: any;
-  // deleteMdDetails?: (id: number) => void;
-  // deleteFarmersGroup?: (id: number) => void;
-  // deleteFarmersDetails?: (id: number) => void;
-  deleteId?: number;
 }
 export default CommonModalProps;

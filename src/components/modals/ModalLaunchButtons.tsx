@@ -3,14 +3,14 @@ import { Button } from "@mui/material";
 
 import DeleteModal from "./delete-modal";
 import ConfirmationModal from "./confirmation-modal";
-import AddFarmersGroupModal from "./add-farmers-group-modal";
-import AddFarmersDetailsModal from "./add-farmers-details-modal";
-import AddMdDetailsModal from "./add-md-details-modal";
-import AddDecisionsModal from "./add-decisions-modal";
-import { MdDetailsContextProvider } from "../../utils/context/md-details";
+import FarmersGroupModal from "./farmers-group-modal";
+import FarmersDetailsModal from "./farmers-details-modal";
+import MdDetailsModal from "./md-details-modal";
+import DecisionsModal from "./decisions-modal";
+import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddDecisionsFormInput, IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
-import { FarmerDetailsContextProvider } from "../../utils/context/farmers-details";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmers-group";
+import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
+import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -75,7 +75,7 @@ const ModalLaunchButtons = () => {
         }}
       />
       <MdDetailsContextProvider>
-        <AddMdDetailsModal
+        <MdDetailsModal
           openModal={openAddMd}
           handleClose={addMDOpen}
           cb={(data: IAddMDDetailsFormInput): void => {
@@ -86,7 +86,7 @@ const ModalLaunchButtons = () => {
         />
       </MdDetailsContextProvider>
       <FarmerDetailsContextProvider>
-        <AddFarmersDetailsModal
+        <FarmersDetailsModal
           openModal={openAddFarmerDetails}
           handleClose={addFarmerDetails}
           cb={(data: IAddFarmersDetailsFormInput): void => {
@@ -97,7 +97,7 @@ const ModalLaunchButtons = () => {
         />
       </FarmerDetailsContextProvider>
       <FarmerGroupDetailsContextProvider>
-        <AddFarmersGroupModal
+        <FarmersGroupModal
           openModal={openAddFarmerGroup}
           cb={(data: IAddFarmersGroupFormInput): void => {
             // console.log("in farmersGroup cb", data);
@@ -107,7 +107,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmerGroupDetailsContextProvider>
-      <AddDecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
+      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
     </Fragment>
   );
 };

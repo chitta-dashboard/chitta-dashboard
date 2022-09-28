@@ -34,7 +34,7 @@ const schema = yup
   })
   .required();
 
-const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
+const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   const {
     register,
     handleSubmit,
@@ -85,4 +85,4 @@ const AddDecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     </>
   );
 };
-export default AddDecisionsModal;
+export default DecisionsModal;

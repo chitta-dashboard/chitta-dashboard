@@ -1,5 +1,5 @@
-import React, { Ref, useRef } from "react";
-import { useMdDetailsContext } from "../../../utils/context/md-details";
+import { Ref, useRef } from "react";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 
 import SearchBar from "../../common-components/search-bar";
 
