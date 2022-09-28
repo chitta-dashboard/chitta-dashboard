@@ -9,7 +9,6 @@ import S from "./mdDetails.styled";
 const MdDetails = () => {
   const [addMdDetails, setAddMdDetails] = useState(false);
 
-
   const addMdDetailsModalHandler = () => {
     setAddMdDetails(!addMdDetails);
   };
@@ -19,7 +18,7 @@ const MdDetails = () => {
       <S.MdDetailsContainer>
         <TablePageHeader addMdDetailsModalHandler={addMdDetailsModalHandler} />
         <MdDetailsTable />
-        <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} />
+        <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} cb={() => {}} />
       </S.MdDetailsContainer>
     </MdDetailsContextProvider>
   );

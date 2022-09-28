@@ -1,13 +1,15 @@
-import Props from "../../modals/type/modalProps";
+import { FC } from "react";
 
 import S from "./backButton.Styled";
 
-const BackButton = (props: Props) => {
+interface CustomProps {
+  handleClose: () => void;
+}
+
+const BackButton: FC<CustomProps> = ({ handleClose }) => {
   return (
     <>
-      <S.BackButton  onClick={props.handleClose}>
-        Back
-      </S.BackButton>
+      <S.BackButton onClick={handleClose}>Back</S.BackButton>
     </>
   );
 };

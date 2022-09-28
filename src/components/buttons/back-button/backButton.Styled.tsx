@@ -3,8 +3,8 @@ import { styled, Button } from "@mui/material";
 namespace S {
   export const BackButton = styled(Button)(({ theme }) => ({
     backgroundColor: theme.palette.primary.light,
-    paddingLeft: "3rem",
-    paddingRight: "3rem",
+    paddingLeft: "3.5rem",
+    paddingRight: "3.5rem",
     height: "2.35rem",
   }));
 

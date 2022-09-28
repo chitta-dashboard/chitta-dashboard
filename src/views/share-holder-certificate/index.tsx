@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
@@ -10,7 +10,7 @@ interface Props {}
 
 const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) => (
   <div className="print-container" ref={ref}>
-    {[1, 2].map((item) => {
+    {[1].map((item) => {
       return (
         <S.ShareHolderCertificateContainer className="page-break" key={item}>
           <S.CertificateTopBorderImg src={ShareHolderCertificateTopBorder} alt="ShareHolderCertificateTopBorder" />
@@ -79,10 +79,8 @@ const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) =>
               <S.BlankSpace1></S.BlankSpace1>
             </S.CertificateTextLine>
             <S.CertificateTextLine>
-              <S.CertificateText>
-                day of
-                <S.BlankSpace1></S.BlankSpace1>
-              </S.CertificateText>
+              <S.CertificateText>day of</S.CertificateText>
+              <S.BlankSpace4></S.BlankSpace4>
             </S.CertificateTextLine>
             <br />
 

@@ -30,44 +30,47 @@ export namespace S {
   }));
 
   export const NotificationBody = styled(Box)(({ theme }: any) => ({
-    fontSize: "0.8rem",
+    fontSize: "0.85rem",
     margin: "-0.4rem 0 0.5rem 0",
-    padding: "0 0.6rem 2rem 0.6rem",
+    padding: "0 0.4rem 1rem 0.4rem",
     fontWeight: "500",
     width: "100%",
-    maxHeight: "245px",
-    overflowY: "hidden",
+    maxHeight: "19.8rem",
+    overflowY: "auto",
     [theme.breakpoints.down("md")]: {
       fontSize: "0.85rem",
+      padding: "0 3rem 1rem 2rem",
     },
   }));
 
   export const NotificationContent = styled(Box)(({ theme }: any) => ({
     width: "100%",
-    display: "flex",
-    justifyContent: "space-between",
-    marginBottom: "0.6rem",
-    // [theme.breakpoints.down("md")]: {
-    //   justifyContent: "flex-start",
-    //   gap: "2rem",
-    //   padding: "0 1.5rem",
-    // },
+    // display: "flex",
+    // justifyContent: "space-between",
+    // marginBottom: "0.6rem",
+    padding: "0.5rem",
+    display: "grid",
+    gap: "1rem",
+    gridTemplateColumns: "2fr auto",
+    color: LightTheme.palette.text.secondaryDark,
   }));
 
   export const NotifyLeft = styled(Box)(({ theme }: any) => ({
     display: "flex",
-    gap: "0.5rem",
-    marginLeft: "0.6rem",
-    maxWidth: "70%",
+    gap: "0.2rem",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "70%",
+      // marginLeft: "1rem",
+    },
   }));
 
   export const NotificationDateBox = styled(Box)(({ theme }: any) => ({
     display: "flex",
-    gap: "0.5rem",
-    [theme.breakpoints.down("md")]: {
-      marginRight: "2rem",
-      marginLeft: "0.5rem",
-    },
+    gap: "0.2rem",
+    // [theme.breakpoints.down("md")]: {
+    //   marginRight: "2rem",
+    //   marginLeft: "0.5rem",
+    // },
   }));
 
   export const NotifyRead = styled(NotificationContent)(({ theme }: any) => ({

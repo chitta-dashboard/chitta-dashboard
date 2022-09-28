@@ -17,7 +17,6 @@ import DeleteModal from "../../../modals/delete-modal";
 
 interface Props {
   users: any;
-  setUsers: any;
   handleChange: any;
 }
 
@@ -105,13 +104,13 @@ const Body = (props: Props) => {
                 e.stopPropagation();
               }}
             >
-              <Checkbox name={user.id} onChange={props.handleChange} checked={user?.isChecked || false} />
+              <Checkbox name={user.id.toString()} onChange={props.handleChange} checked={user?.isChecked || false} />
             </S.RowCheckCell>
             <S.WebTableCell>{user.id}</S.WebTableCell>
             {/* for tablet view*/}
             <S.TabCell>
               <S.TabCheckboxStack>
-                <Checkbox />
+                <Checkbox name={user.id.toString()} onChange={props.handleChange} checked={user?.isChecked || false} />
                 <S.TabIdStack>
                   <S.IdBox>{user.id}</S.IdBox>
                 </S.TabIdStack>
@@ -187,11 +186,19 @@ const Body = (props: Props) => {
       />
       <DeleteModal
         openModal={deleteModal}
-        handleClose={farmersDetailsDeleteModal}
+        handleClose={() => {setDeleteModal(false)}}
+        handleDelete={() => {}}
         // deleteFarmersDetails={deleteFarmersDetails}
-        deleteId={deleteId}
       />
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
+      {image && (
+        <tbody>
+          <tr>
+            <td>
+              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+            </td>
+          </tr>
+        </tbody>
+      )}
     </>
   );
 };

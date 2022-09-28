@@ -1,11 +1,7 @@
 import { styled, Stack, Avatar } from "@mui/material";
 
 namespace S {
-  export const InputContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "2rem",
-    marginRight: "2rem",
-    width: "30rem",
-  }));
+  export const InputContainer = styled(Stack)(({ theme }) => ({}));
 
   export const Title = styled("div")(({ theme }) => ({
     display: "contents",
@@ -20,9 +16,8 @@ namespace S {
   export const ButtonContainer = styled(Stack)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
-    paddingBottom: "1rem",
-    paddingLeft: "1rem",
-    marginTop: ".5rem",
+    marginTop: "1rem",
+    marginBottom: "1rem",
   }));
 
   ButtonContainer.defaultProps = {
