@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Stack } from "@mui/system";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 import TextInput from "../../../input-fields/text";
 import NumberInput from "../../../input-fields/number";
@@ -13,10 +13,11 @@ import S from "./mdDetailsModal.styled";
 interface CustomProps {
   register: UseFormRegister<IAddMDDetailsFormInput>;
   errors: any;
-  setValue: UseFormSetValue<IAddMDDetailsFormInput>
+  setValue: UseFormSetValue<IAddMDDetailsFormInput>;
+  trigger: UseFormTrigger<IAddMDDetailsFormInput>;
 }
 
-const FormField: FC<CustomProps> = ({ register, errors, setValue }) => {
+const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => {
   return (
     <>
       <S.InputContainer spacing={3}>
@@ -34,7 +35,14 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue }) => {
           <TextInput<IAddMDDetailsFormInput> label="தகுதி" register={register} inputName="qualification" helperText={errors.qualification?.message} />
         </Stack>
         <Stack>
-          <FileInput<IAddMDDetailsFormInput> label="கையெழுத்து" register={register} inputName="signature" helperText={errors.signature?.message} setValue={setValue}/>
+          <FileInput<IAddMDDetailsFormInput>
+            label="கையெழுத்து"
+            register={register}
+            inputName="signature"
+            helperText={errors.signature?.message}
+            setValue={setValue}
+            trigger={trigger}
+          />
         </Stack>
       </S.InputContainer>
     </>

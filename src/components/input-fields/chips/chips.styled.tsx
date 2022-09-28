@@ -13,8 +13,7 @@ namespace S {
   }));
 
   export const ChipContainer = styled(Stack)(({ theme }) => ({
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    padding: "1rem 0",
   }));
 }
 

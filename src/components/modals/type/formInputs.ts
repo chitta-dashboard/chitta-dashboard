@@ -12,7 +12,8 @@ export interface IAddDecisionsFormInput {
   qualification: string;
   presenter: string[];
   participator: string[];
-  decision: string;
+  description: string;
+  descriptionRichText: string;
 }
 
 export interface IAddFarmersDetailsPage1Input {
@@ -44,7 +45,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
