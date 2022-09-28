@@ -44,7 +44,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -59,5 +59,5 @@ export interface IAddMDDetailsFormInput {
   phoneNumber: string;
   qualification: string;
   dob: string;
-  signature: FileList | null;
+  signature: string;
 }

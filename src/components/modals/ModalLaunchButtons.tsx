@@ -7,10 +7,10 @@ import FarmersGroupModal from "./farmers-group-modal";
 import FarmersDetailsModal from "./farmers-details-modal";
 import MdDetailsModal from "./md-details-modal";
 import DecisionsModal from "./decisions-modal";
-import { MdDetailsContextProvider } from "../../utils/context/md-details";
+import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddDecisionsFormInput, IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
-import { FarmerDetailsContextProvider } from "../../utils/context/farmers-details";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmers-group";
+import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
+import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
