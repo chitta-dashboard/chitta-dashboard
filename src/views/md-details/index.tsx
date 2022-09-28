@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
-import AddMdDetailsModal from "../../components/modals/add-md-details-modal";
+import AddMdDetailsModal from "../../components/modals/md-details-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import { MdDetailsContextProvider } from "../../utils/context/md-details";
 

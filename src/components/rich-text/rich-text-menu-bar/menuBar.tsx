@@ -1,8 +1,13 @@
+import { Editor } from "@tiptap/react";
 import { FC } from "react";
 import "../../../assets/css/index.css";
 import S from "../richText.styled";
 
-const MenuBar: FC<any> = ({ editor }) => {
+type TextEditor = {
+  editor : Editor | null
+}
+
+const MenuBar: FC<TextEditor> = ({ editor }) => {
   if (!editor) {
     return null;
   }

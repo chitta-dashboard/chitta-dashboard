@@ -60,7 +60,7 @@ const form2Schema = yup.object({
   groupMember: yup.string().required("required"),
 });
 
-const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
   const { farmersList } = useFarmerDetailsContext();
@@ -198,29 +198,33 @@ const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, e
               <FormFieldPage2 register={form2Register} errors={form2Errors} trigger={form2Trigger} setValue={form2SetValue} />
             </ModalBody>
             <ModalFooter>
-              <PageNumber2 />
-              <S.ButtonContainer>
-                <BackButton
-                  handleClose={() => {
-                    form2ClearErrors();
-                    setNext(!next);
-                  }}
-                />
-                <SubmitButton formId={"farmersDetailsForm2"} handleSubmit={() => {}} />
-              </S.ButtonContainer>
+              <Stack spacing={2}>
+                <PageNumber2 />
+                <S.ButtonContainer>
+                  <BackButton
+                    handleClose={() => {
+                      form2ClearErrors();
+                      setNext(!next);
+                    }}
+                  />
+                  <SubmitButton formId={"farmersDetailsForm2"} handleSubmit={() => {}} />
+                </S.ButtonContainer>
+              </Stack>
             </ModalFooter>
           </>
         ) : (
           <>
             <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
-              <Stack spacing={2}>
+              <Stack spacing={4}>
                 <AddProfile />
                 <FormField register={form1Register} errors={form1Errors} />
               </Stack>
             </ModalBody>
             <ModalFooter>
-              <PageNumber1 />
-              <Next formId={"farmersDetailsForm1"} handleNext={form1Submit} />
+              <Stack spacing={2}>
+                <PageNumber1 />
+                <Next formId={"farmersDetailsForm1"} handleNext={form1Submit} />
+              </Stack>
             </ModalFooter>
           </>
         )}
@@ -229,4 +233,4 @@ const AddFarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, e
   );
 };
 
-export default AddFarmersDetailsModal;
+export default FarmersDetailsModal;

@@ -1,6 +1,6 @@
 import { FC, useContext, useEffect, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
-import AddDecisionsModal from "../../modals/add-decisions-modal";
+import AddDecisionsModal from "../../modals/decisions-modal";
 import S from "./decisionsHeader.styled";
 import { decisionsContext } from "../../../utils/context/decisionsContext";
 

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableRow, Avatar } from "@mui/material";
-import { fileValidation } from "../../../../utils/const/const";
+import { fileValidation } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 
@@ -128,7 +128,13 @@ const Body = () => {
         </S.EmptyMsg>
       )}
       <MdDetailModal open={iconModal} handleClose={iconModalHandler} deleteId={deleteId} />
-      <DeleteModal openModal={deleteModal} handleClose={() => {setDeleteModal(false)}} handleDelete={() => {}}/>
+      <DeleteModal
+        openModal={deleteModal}
+        handleClose={() => {
+          setDeleteModal(false);
+        }}
+        handleDelete={() => {}}
+      />
       {image && (
         <tbody>
           <tr>

@@ -59,5 +59,5 @@ export interface IAddMDDetailsFormInput {
   phoneNumber: string;
   qualification: string;
   dob: string;
-  signature: string;
+  signature: FileList | null;
 }

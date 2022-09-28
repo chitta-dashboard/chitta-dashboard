@@ -1,4 +1,4 @@
-import { FieldValues, Path, UseFormRegister } from "react-hook-form";
+import { FieldValues, Path, PathValue, UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 import S from "./file.styled";
 
@@ -7,9 +7,10 @@ interface CustomProps<FormInputType extends FieldValues> {
   register: UseFormRegister<FormInputType>;
   inputName: string;
   helperText: string;
+  setValue: UseFormSetValue<FormInputType>;
 }
 
-function FileInput<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
+function FileInput<FormInputTypes>({ label, register, helperText, inputName, setValue }: CustomProps<FormInputTypes & FieldValues>) {
   return (
     <>
       <S.ChooseFile
