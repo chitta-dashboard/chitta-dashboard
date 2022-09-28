@@ -12,7 +12,8 @@ export interface IAddDecisionsFormInput {
   qualification: string;
   presenter: string[];
   participator: string[];
-  decision: string;
+  description: string;
+  descriptionRichText: string;
 }
 
 export interface IAddFarmersDetailsPage1Input {

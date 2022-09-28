@@ -6,7 +6,7 @@ import DescriptionField from "../../../input-fields/description";
 import TextInput from "../../../input-fields/text";
 import { IAddFarmersGroupFormInput } from "../../type/formInputs";
 
-import S from "./addFarmersGroupModal.styled";
+import S from "./farmersGroupModal.styled";
 
 interface CustomProps {
   register: UseFormRegister<IAddFarmersGroupFormInput>;

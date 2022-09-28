@@ -33,7 +33,7 @@ function SelectField<FormInputTypes>({ label, register, inputName, helperText, t
         }}
         helperText={helperText}
       >
-        <MenuItem value="" defaultValue={""}></MenuItem>
+        <MenuItem value="" defaultValue={""} style={{ display: "none" }}></MenuItem>
         <MenuItem value="option1">option1</MenuItem>
         <MenuItem value="option2">option2</MenuItem>
         <MenuItem value="option3">option3</MenuItem>
