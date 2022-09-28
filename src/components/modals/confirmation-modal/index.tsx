@@ -1,19 +1,35 @@
-import { DialogTitle, Box } from "@mui/material";
+import { FC } from "react";
 
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import CustomModal from "../../custom-modal";
-import Props from "../type/modalProps";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import ConfirmationBody from "./body";
 
-const ConfirmationModal = (props: Props) => {
+interface CustomProps {
+  openModal: boolean;
+  handleClose: () => void;
+  yesAction: () => void;
+}
+const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction }) => {
   return (
     <>
-      <CustomModal openModal={props.openModal} handleClose={props.handleClose}>
-        <DialogTitle>
-          <Box>Confirmation</Box>
-        </DialogTitle>
-        <ConfirmationBody openModal={props.openModal} handleClose={props.handleClose} />
-        <YesOrNoButtons openModal={props.openModal} handleClose={props.handleClose} />
+      <CustomModal openModal={openModal} handleClose={handleClose}>
+        <ModalHeader
+          handleClose={() => {
+            handleClose();
+          }}
+          alignment="center"
+        >
+          Confirmation
+        </ModalHeader>
+        <ModalBody id={""} onSubmit={() => {}}>
+          <ConfirmationBody />
+        </ModalBody>
+        <ModalFooter>
+          <YesOrNoButtons yesAction={yesAction} handleClose={handleClose} />
+        </ModalFooter>
       </CustomModal>
     </>
   );

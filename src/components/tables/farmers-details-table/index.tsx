@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import TableWrapper from "../../custom-tables/table";
 import Header from "./header";
@@ -80,8 +80,8 @@ const FarmersDetailsTable = () => {
 
   return (
     <TableWrapper>
-      <Header users={users} setUsers={setUsers} handleChange={(e: any) => handleChange(e)} />
-      <Body users={users} setUsers={setUsers} handleChange={(e: any) => handleChange(e)} />
+      <Header users={users} handleChange={(e: any) => handleChange(e)} />
+      <Body users={users} handleChange={(e: any) => handleChange(e)} />
       <Footer />
     </TableWrapper>
   );

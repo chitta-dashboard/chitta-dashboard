@@ -1,19 +1,36 @@
-import { DialogTitle, Box } from "@mui/material";
+import { FC } from "react";
 
 import CustomModal from "../../custom-modal";
-import Props from "../type/modalProps";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import DeleteBody from "./body";
+import ModalHeader from "../../custom-modal/header";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
 
-const DeleteModal = (props: Props) => {
+interface CustomProps {
+  openModal: boolean;
+  handleClose: () => void;
+  handleDelete: () => void;
+}
+
+const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete }) => {
   return (
     <>
-      <CustomModal label={""} openModal={props.openModal} handleClose={props.handleClose}>
-        <DialogTitle>
-          <Box>Warning</Box>
-        </DialogTitle>
-        <DeleteBody label={""} openModal={props.openModal} handleClose={props.handleClose} />
-        <YesOrNoButtons label={""} openModal={props.openModal} handleClose={props.handleClose} />
+      <CustomModal openModal={openModal} handleClose={handleClose}>
+        <ModalHeader
+          handleClose={() => {
+            handleClose();
+          }}
+          alignment="warning"
+        >
+          Warning
+        </ModalHeader>
+        <ModalBody id="" onSubmit={() => {}}>
+          <DeleteBody />
+        </ModalBody>
+        <ModalFooter>
+          <YesOrNoButtons yesAction={handleDelete} handleClose={handleClose} />
+        </ModalFooter>
       </CustomModal>
     </>
   );

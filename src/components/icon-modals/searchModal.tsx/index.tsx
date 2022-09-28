@@ -10,18 +10,17 @@ const SearchModal = (props: CommonModalProps) => {
         placeholder="search..."
         type="text"
         InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <S.SearchIcon>search</S.SearchIcon>
-              </InputAdornment>
-            ),
-            endAdornment: (
-                <InputAdornment onClick={props.handleClose} position="start">
-                  <S.closeIcon>close</S.closeIcon>
-                </InputAdornment>
-              ),
+          startAdornment: (
+            <InputAdornment position="start">
+              <S.SearchIcon>search</S.SearchIcon>
+            </InputAdornment>
+          ),
+          endAdornment: (
+            <InputAdornment onClick={props.handleClose} position="start">
+              <S.closeIcon>close</S.closeIcon>
+            </InputAdornment>
+          ),
         }}
-        
       />
     </CommonIconModal>
   );

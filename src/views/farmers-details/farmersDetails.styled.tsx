@@ -8,11 +8,11 @@ namespace S {
     "& .MuiTableContainer-root": {
       [theme.breakpoints.down("lg")]: {
         margin: "1.5rem 0",
-        height: "calc(100% - 7rem)",
+        height: "calc(100% - 8rem)",
       },
       [theme.breakpoints.down("md")]: {
         margin: "1rem 0",
-        height: "calc(100% - 10rem)",
+        height: "calc(100% - 10.5rem)",
       },
     },
   }));

@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
-import authContext from "../../../utils/context/authContext"
+import authContext from "../../../utils/context/authContext";
 
 interface LoginFormInputs {
   mobileNo: string;
@@ -68,7 +68,7 @@ const LoginForm: FC = () => {
             <S.LogoImage src={logo} alt="Nerkathir" />
           </S.ImageBox>
 
-          <form id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
+          <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
             <S.InputBox>
               <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
               <S.LoginInput
@@ -98,7 +98,7 @@ const LoginForm: FC = () => {
 
                   endAdornment: (
                     <InputAdornment sx={{ cursor: "pointer" }} onClick={handleClickShowHidePassword} position="end">
-                      {showPassword === false ? <S.Icon>show</S.Icon> : <S.Icon>hide</S.Icon>}
+                      {showPassword === false ? <S.EyeIcon>show</S.EyeIcon> : <S.EyeIcon>hide</S.EyeIcon>}
                     </InputAdornment>
                   ),
                 }}
@@ -108,7 +108,7 @@ const LoginForm: FC = () => {
               />
               <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
             </S.InputBox>
-          </form>
+          </S.LoginForm>
           <S.ButtonContainer>
             <S.ButtonBox>
               <S.LoginButton form="loginForm" size="large" type="submit">

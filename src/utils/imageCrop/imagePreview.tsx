@@ -57,13 +57,13 @@ export default function ImagePreview({ image, setImage, handleCroppedImage }: Im
   const handleOnComplete = async (pixelData: PixelDataType) => {
     if (imageRef && pixelData.width && pixelData.height) {
       let result: FinalImageType | any = await createCanvas(imageRef, pixelData);
-      handleCroppedImage(result?.croppedImageUrl);
       setFinalImage(result);
     }
   };
 
   const handleOnUpload = () => {
     setImage("");
+    finalImage?.croppedImageUrl && handleCroppedImage(finalImage?.croppedImageUrl);
   };
 
   const handleImageLoaded = (image: HTMLElement) => {
