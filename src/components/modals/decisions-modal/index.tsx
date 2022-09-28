@@ -31,6 +31,8 @@ const schema = yup
       .array()
       .nullable()
       .test("test", "required", (value: any) => value && value.length > 0),
+    description: yup.string().required("required"),
+    descriptionRichText: yup.string().required("required"),
   })
   .required();
 
@@ -48,7 +50,7 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    cb(data);
+    cb({ ...data, dob: new Date(data.dob).toDateString().split(" ").slice(1).join(",").replace(",", " ") });
     reset();
     handleClose();
   };

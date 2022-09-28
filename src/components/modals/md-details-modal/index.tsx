@@ -28,9 +28,7 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().test("required", "photo is required", (value: any) => {
-      return value && value.length > 0;
-    }),
+    signature: yup.mixed().required("required"),
   })
   .required();
 
@@ -44,6 +42,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     reset,
     clearErrors,
     setValue,
+    trigger,
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
   });
@@ -66,7 +65,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         phoneNumber: "",
         qualification: "",
         dob: "",
-        signature: "",
+        signature: "", // temporary, until sbucket integration
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
@@ -100,17 +99,11 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={4}>
             <AddProfile />
-            <FormField register={register} errors={errors} setValue={setValue} />
+            <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Submit
-            formId="mdDetails"
-            handleSubmit={() => {
-              clearErrors();
-              handleClose();
-            }}
-          />
+          <Submit formId="mdDetails" handleSubmit={() => {}} />
         </ModalFooter>
       </CustomModal>
     </>
