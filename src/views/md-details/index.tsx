@@ -18,7 +18,7 @@ const MdDetails = () => {
       <S.MdDetailsContainer>
         <TablePageHeader addMdDetailsModalHandler={addMdDetailsModalHandler} />
         <MdDetailsTable />
-        <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} />
+        <AddMdDetailsModal openModal={addMdDetails} handleClose={addMdDetailsModalHandler} cb={() => {}} />
       </S.MdDetailsContainer>
     </MdDetailsContextProvider>
   );

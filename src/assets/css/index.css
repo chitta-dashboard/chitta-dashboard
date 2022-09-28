@@ -21,7 +21,7 @@ code {
 
 @font-face {
   font-family: "nerkathir-icon";
-  src: url("../icons/nerkathir-icon.ttf") format("truetype");
+  src: url("../icons/nerkathir-icon.woff") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -46,27 +46,6 @@ i {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* For Rich text box  */
-.fr-box {
-  width: 100%;
-  height: 100% !important;
-  outline: none;
-}
-
-.fr-wrapper {
-  max-height: 165px !important;
-  height: 100% !important;
-  overflow-y: auto;
-}
-
-.fr-element {
-  min-height: 10.8rem !important;
-}
-
-img {
-  pointer-events: none;
-}
-
 i,
 p,
 h1,
@@ -82,38 +61,61 @@ h6 {
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
-
 }
-                                    
 /* Rich text - Tiptap */
+.menu-bar .is-active{
+  background-color: #1A9035;
+  color: #fff;
+}
+
 .ProseMirror {
-  outline: none;
-  background: #fff;
-  height: 100%;
-  min-width: inherit;
-  max-height: 7.5rem;
-  min-height: 7.5rem;
+  min-height: 10rem;
+  max-height: 10rem;
   overflow-y: auto;
-  display: flex !important;
-  justify-content: flex-start;
+  outline: none;
+  padding: 0.5rem;
 }
 
-.ProseMirror > .code {
-  background-color: rgba(#616161, 0.1);
-  color: #616161;
-}
+  .ProseMirror ul,
+  .ProseMirror ol {
+    padding: 0 1.5rem;
+  }
 
-.ProseMirror > .pre {
-  background: #0D0D0D;
-  color: #FFF;
-  font-family: 'JetBrainsMono', monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-}
+  .ProseMirror h1,
+  .ProseMirror h2,
+  .ProseMirror h3,
+  .ProseMirror h4,
+  .ProseMirror h5,
+  .ProseMirror h6 {
+    line-height: 1.1;
+  }
 
-.ProseMirror > .pre > .code {
-  color: inherit;
-  padding: 0;
-  background: none;
-  font-size: 0.8rem;
-}
+  .ProseMirror code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  .ProseMirror pre {
+    background: #0D0D0D;
+    color: #FFF;
+    padding: 0.75rem 1rem;
+  }
+
+  .ProseMirror code {
+    color: inherit;
+    padding: 0;
+    background: #a3a3a3;
+    font-size: 0.8rem;
+  }
+
+  .ProseMirror blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid #595959;
+  }
+
+   .ProseMirror hr {
+    border: none;
+    border-top: 2px solid #595959;
+    margin: 2rem 0;
+  } 
+  /* =========================== */

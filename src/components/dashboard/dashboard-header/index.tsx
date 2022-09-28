@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 
+import SearchBar from "../../common-components/search-bar";
+import SearchModal from "../../icon-modals/searchModal.tsx";
+
 import profilePic from "../../../assets/images/profile.png";
 import { Box } from "@mui/material";
-
-import SearchBar from "../../common-components/search-bar";
 import { S } from "./dashboardHeader.styled";
-import IconWrapper from "../../../utils/iconWrapper";
-import SearchModal from "../../icon-modals/searchModal.tsx";
+import IconWrapper from "../../../utils/iconWrapper"; 
+
 
 type Props = {};
 
@@ -21,7 +22,7 @@ const DashboardHeader = (props: Props) => {
       <S.DashboardHeaderWrapper>
         <S.ProfileBox>
           <S.ImgContainer>
-            <img src={profilePic} alt="user-profile" />
+            <S.DshboardImg src={profilePic} alt="user-profile" />
           </S.ImgContainer>
           <Box>
             <S.ProfileHeading>Hi, Arockia!</S.ProfileHeading>

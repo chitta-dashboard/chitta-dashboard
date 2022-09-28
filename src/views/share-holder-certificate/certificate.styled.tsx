@@ -88,7 +88,7 @@ export namespace S {
   }));
   export const HeadingContainerHeading = styled(Typography)(({ theme }: { theme: Theme }) => ({
     fontSize: "2.125rem",
-    color: "#1A9035",
+    color: theme.palette.primary.light,
     fontFamily: "Poppins",
     fontWeight: "600",
     textAlign: "center",
@@ -135,7 +135,7 @@ export namespace S {
   export const BlankSpace1 = styled(Typography)(({ theme }: { theme: Theme }) => ({
     boxSizing: "border-box",
     fontFamily: "Poppins",
-    fontSize: "18px",
+    fontSize: "1.125rem",
     textAlign: "center",
     color: "#12441E",
     borderBottom: "1px solid #404040",
@@ -148,5 +148,9 @@ export namespace S {
   }));
   export const BlankSpace3 = styled(BlankSpace1)(({ theme }: { theme: Theme }) => ({
     minWidth: "100%",
+  }));
+  export const BlankSpace4 = styled(BlankSpace1)(({ theme }: { theme: Theme }) => ({
+    marginRight: "auto",
+    marginLeft: "0.5rem",
   }));
 }
