@@ -9,7 +9,7 @@ namespace S {
   }));
 
   ChipContainer.defaultProps = {
-    gap: 0.5,
+    gap: 2,
   };
 
   export const StyledChip = styled(Chip)(({ theme }) => ({
@@ -35,6 +35,7 @@ namespace S {
 
     "& .MuiOutlinedInput-root": {
       fontSize: ".9rem",
+      height: "5rem ",
     },
 
     "& .MuiInputLabel-root": {

@@ -2,8 +2,7 @@ import { styled, Stack, Grid, Typography, Box } from "@mui/material";
 import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
-  export const InputContainer = styled(Stack)(({ theme }) => ({
-  }));
+  export const InputContainer = styled(Stack)(({ theme }) => ({}));
 
   InputContainer.defaultProps = {
     width: "100%",
@@ -44,10 +43,8 @@ namespace S {
     justifyContent: "flex-start",
     width: "100%",
   }));
-  export const DateContainer = styled(Stack)(({ theme }) => ({
-  }));
-  export const QualificationContainer = styled(Stack)(({ theme }) => ({
-  }));
+  export const DateContainer = styled(Stack)(({ theme }) => ({}));
+  export const QualificationContainer = styled(Stack)(({ theme }) => ({}));
   QualificationContainer.defaultProps = {
     width: "100%",
   };

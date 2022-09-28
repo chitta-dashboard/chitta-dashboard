@@ -1,4 +1,6 @@
+import { FC } from "react";
 import { FormHelperText, Grid, Stack } from "@mui/material";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import "froala-editor/css/froala_style.min.css";
 import "froala-editor/css/froala_editor.pkgd.min.css";
 import "froala-editor/js/plugins.pkgd.min.js";
@@ -8,12 +10,10 @@ import MultipleSelectChip from "../../../input-fields/multiselect";
 import RadioButton from "../../../input-fields/radio";
 import SelectField from "../../../input-fields/select";
 import TextInput from "../../../input-fields/text";
+import Editor from "../../../rich-text/Editor";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 
 import S from "./addDecisionsModal.styled";
-import Editor from "../../../rich-text/Editor";
-import { FC } from "react";
-import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 interface CustomProps {
   register: UseFormRegister<IAddDecisionsFormInput>;

@@ -3,6 +3,9 @@ import { styled, TextField } from "@mui/material";
 namespace S {
   export const ChooseDate = styled(TextField)(({ theme }) => ({
     "& .MuiOutlinedInput-root": {
+      "& .MuiOutlinedInput-input": {
+        color: theme.palette.text.secondaryDark,
+      },
       color: theme.palette.text.secondaryLight,
       height: "2.65rem",
     },

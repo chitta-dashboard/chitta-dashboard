@@ -6,10 +6,10 @@ import * as yup from "yup";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
 import SubmitButton from "../../buttons/submit-button";
-import { IAddDecisionsFormInput } from "../type/formInputs";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import { IAddDecisionsFormInput } from "../type/formInputs";
 
 interface CustomProps {
   cb: (data: IAddDecisionsFormInput) => void;
