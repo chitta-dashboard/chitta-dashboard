@@ -1,7 +1,7 @@
-import { Stack, FormHelperText } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
+import { Stack } from "@mui/material";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 
 import S from "./radio.styled";

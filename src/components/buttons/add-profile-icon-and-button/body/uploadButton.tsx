@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-
 import S from "./addProfile.styled";
 
 interface CustomProps {

@@ -3,16 +3,15 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-import SubmitButton from "../../buttons/submit-button";
 import CustomModal from "../../custom-modal";
-import FormField from "./body/formField";
-import { IAddFarmersGroupFormInput } from "../type/formInputs";
-
 import ModalHeader from "../../custom-modal/header";
-import { useFarmerDetailsContext } from "../../../utils/context/farmers-details";
-import { useFarmerGroupDetailsContext } from "../../../utils/context/farmers-group";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import FormField from "./body/formField";
+import SubmitButton from "../../buttons/submit-button";
+import { IAddFarmersGroupFormInput } from "../type/formInputs";
+import { useFarmerGroupDetailsContext } from "../../../utils/context/farmers-group";
+// import { useFarmerDetailsContext } from "../../../utils/context/farmers-details";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput) => void;
@@ -74,7 +73,7 @@ const AddFarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, edi
     handleClose();
     reset();
   };
-  
+
   return (
     <>
       <CustomModal

@@ -7,14 +7,15 @@ import S from "./header.styled";
 interface CustomProps {
   children: string;
   handleClose: () => void;
+  alignment?: string;
 }
 
-const ModalHeader: FC<CustomProps> = ({ children, handleClose }) => {
+const ModalHeader: FC<CustomProps> = ({ children, handleClose, alignment }) => {
   return (
-    <S.ModalHeader>
-      {children}
-      <TitleCloseButton handleClose={handleClose} />
-    </S.ModalHeader>
+    <S.Container>
+      <S.Title alignment={alignment}>{children}</S.Title>
+      {alignment ? <></> : <TitleCloseButton handleClose={handleClose} />}
+    </S.Container>
   );
 };
 

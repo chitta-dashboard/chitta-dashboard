@@ -104,7 +104,7 @@ const ModalLaunchButtons = () => {
           }}
           handleClose={addFarmerGroup}
           editMode
-          id={"3"} 
+          id={"3"}
         />
       </FarmerGroupDetailsContextProvider>
       <AddDecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
