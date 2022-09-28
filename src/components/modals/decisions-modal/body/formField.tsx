@@ -67,7 +67,14 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
             </Stack>
           </S.ChildContainer>
           <S.ChildContainer item>
-            <Editor cb={(data: string): void => {}} />
+            <Editor
+              cb={(plainText: string, richText: string): void => {
+                setValue("description", plainText);
+                setValue("descriptionRichText", richText);
+                trigger("description");
+              }}
+            />
+            <FormHelperText>{errors.description?.message}</FormHelperText>
           </S.ChildContainer>
         </Grid>
       </S.InputContainer>
