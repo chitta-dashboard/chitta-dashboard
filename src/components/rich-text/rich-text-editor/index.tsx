@@ -7,8 +7,9 @@ import MenuBar from "../rich-text-menu-bar/menuBar";
 
 import S from "../richText.styled";
 
+
 type EditorProps = {
-  cb: (data: string) => void;
+  cb: (plainText: string, richText: string) => void;
 };
 
 const Editor: FC<EditorProps> = ({ cb }) => {
@@ -17,10 +18,10 @@ const Editor: FC<EditorProps> = ({ cb }) => {
     content: "",
     autofocus: true,
     onUpdate: ({ editor }) => {
-      const html = editor.getHTML();
-      cb(String(html));
+      cb(editor.getText(), String(editor.getHTML()));
     },
   });
+  
   return (
     <S.RichTextBoxWrapper>
       <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>

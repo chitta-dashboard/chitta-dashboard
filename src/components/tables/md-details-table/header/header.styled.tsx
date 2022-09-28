@@ -5,19 +5,14 @@ namespace S {
     color: theme.palette.text.primaryDark,
     fontSize: "1.1rem",
     fontWeight: 600,
-    padding: "1.5rem 0",
+    padding: "1.25rem 0",
     width: "25%",
-    "&:first-of-type": {
-      textAlign: "center",
-      width: "7%",
-    },
-    "&:nth-of-type(4)": {
+    "&:nth-of-type(3)": {
       width: "32%",
     },
     "&:nth-last-of-type(2)": {
       width: "20%",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },

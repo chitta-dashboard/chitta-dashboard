@@ -2,24 +2,17 @@ import { FC } from "react";
 
 import S from "./YesOrNoButtons.Styled";
 
-interface CustomProps {
-  handleClose: () => void;
+type YesOrNoButtonsProps = {
   yesAction: () => void;
-}
+  handleClose: () => void;
+};
 
-const YesOrNoButtons: FC<CustomProps> = ({ handleClose, yesAction }) => {
+const YesOrNoButtons: FC<YesOrNoButtonsProps> = (props) => {
   return (
     <>
       <S.ButtonContainer>
-        <S.NoButton onClick={handleClose}>No</S.NoButton>
-        <S.YesButton
-          onClick={() => {
-            yesAction();
-            handleClose();
-          }}
-        >
-          Yes
-        </S.YesButton>
+        <S.NoButton onClick={props.handleClose}>No</S.NoButton>
+        <S.YesButton onClick={props.yesAction}>Yes</S.YesButton>
       </S.ButtonContainer>
     </>
   );
