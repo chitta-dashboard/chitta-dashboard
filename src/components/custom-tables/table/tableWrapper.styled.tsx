@@ -45,7 +45,7 @@ namespace S {
       tableLayout: "fixed",
       backgroundColor: theme.palette.custom.backgroundDark,
       [theme.breakpoints.up("md")]: {
-        padding: "0 1%",
+        padding: "0 1.5rem",
       },
     },
     "& tbody": {
@@ -55,7 +55,7 @@ namespace S {
       overflowY: "auto",
       overflowX: "hidden",
       [theme.breakpoints.up("md")]: {
-        padding: "0 1%",
+        padding: "0 1.5rem",
       },
       " tr:hover": {
         backgroundColor: theme.palette.custom.backgroundLight,

@@ -1,6 +1,6 @@
 import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
-import { useTheme } from "@mui/material/styles";
+import { useTheme } from "@mui/material";
 import { Select, SelectChangeEvent, OutlinedInput, InputLabel, MenuItem } from "@mui/material";
 import { FieldValues, UseFormRegister, Path, UseFormSetValue, PathValue, UseFormTrigger } from "react-hook-form";
 
@@ -17,6 +17,7 @@ interface CustomProps<FormInputType extends FieldValues> {
   setValue: UseFormSetValue<FormInputType>;
   trigger: UseFormTrigger<FormInputType>;
 }
+
 function MultiSelect<FormInputTypes>({ label, register, inputName, setValue, trigger }: CustomProps<FormInputTypes & FieldValues>) {
   const theme = useTheme();
   const [nameList, setNameList] = React.useState<string[]>(names);
@@ -74,9 +75,9 @@ function MultiSelect<FormInputTypes>({ label, register, inputName, setValue, tri
           MenuProps={MenuProps}
         >
           {nameList.map((name) => (
-            <MenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+            <S.StyledMenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
               {name}
-            </MenuItem>
+            </S.StyledMenuItem>
           ))}
         </Select>
       </S.StyledFormControl>

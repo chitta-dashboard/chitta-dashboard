@@ -8,7 +8,7 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "space-between",
+      justifyContent: "end",
       fontSize: "1rem",
       padding: "0 2rem",
       paddingTop: "1rem",
@@ -20,13 +20,7 @@ namespace S {
     color: theme.palette.text.secondary,
     fontSize: "1.1rem",
     fontWeight: 500,
-
     padding: "1rem 0",
-
-    "&:first-of-type": {
-      textAlign: "center",
-      width: "7%",
-    },
     "&:last-of-type": {
       width: "12%",
     },
