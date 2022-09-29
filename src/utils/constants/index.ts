@@ -1,8 +1,7 @@
 export const fileValidation = (file: string) => {
-  var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+  var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
   if (!allowedExtensions.exec(file)) {
-    alert("Invalid file type");
     return false;
   }
   return true;

@@ -1,9 +1,9 @@
 import { Theme, useMediaQuery } from "@mui/material";
-import { FC, useContext } from "react";
+import { FC } from "react";
 import leftConnect from "../../../assets/images/leftDash.svg";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import S from "./decisionsList.styled";
-import { decisionsContext } from "../../../utils/context/decisionsContext";
+import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 
 export interface GroupData {
   groupName: string;
@@ -14,9 +14,9 @@ export interface GroupData {
 
 const DecisionsList: FC = () => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  const { groupData } = useContext(decisionsContext);
-  const leftData = groupData.filter((_, ind) => Number.isInteger(((ind + 1) / 2) % 2));
-  const rightData = isMd ? groupData : groupData.filter((_, ind) => !Number.isInteger(((ind + 1) / 2) % 2));
+  const { groupData } = useDecisionsProviderContext();
+  const leftData = groupData.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
+  const rightData = isMd ? groupData : groupData.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
 
   return (
     <S.MasterContainer>

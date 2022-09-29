@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import data from "../../components/decisions/decisions.json";
 import { Dispatch, SetStateAction } from "react";
 
@@ -28,4 +28,6 @@ const DecisionsProvider: React.FC<PropType> = ({ children }) => {
   return <decisionsContext.Provider value={{ groupData, setGroupData }}>{children}</decisionsContext.Provider>;
 };
 
-export { decisionsContext, DecisionsProvider };
+const useDecisionsProviderContext = () => useContext(decisionsContext);
+
+export { DecisionsProvider, useDecisionsProviderContext };
