@@ -2,6 +2,7 @@ import { FC, useContext, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
 
+import { ROUTES } from "../../../utils/constants";
 import Logo from "../../../assets/images/logo.svg";
 
 import S from "./header.styled";
@@ -30,30 +31,11 @@ const Header: FC = () => {
             Menu <i onClick={() => setNavOpen(false)}>close</i>
           </S.NavBarMenu>
         ) : null}
-        <S.NavLink to="./dashboard" isActive={pathname === "/dashboard"}>
-          <S.NavLinkText isActive={pathname === "/dashboard"}>Dashboard</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./ceo-details" isActive={pathname === "/ceo-details"}>
-          <S.NavLinkText isActive={pathname === "/ceo-details"}>CEO Details</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./md-details" isActive={pathname === "/md-details"}>
-          <S.NavLinkText isActive={pathname === "/md-details"}>MD Details</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./farmers-group" isActive={pathname === "/farmers-group"}>
-          <S.NavLinkText isActive={pathname === "/farmers-group"}>Farmers Group</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./farmers-details" isActive={pathname === "/farmers-details"}>
-          <S.NavLinkText isActive={[`/farmers-details/${id}`, "/farmers-details"].includes(pathname)}>Farmers Details</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./cultivation" isActive={pathname === "/cultivation"}>
-          <S.NavLinkText isActive={pathname === "/cultivation"}>Cultivation</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./register" isActive={pathname === "/register"}>
-          <S.NavLinkText isActive={pathname === "/register"}>Register</S.NavLinkText>
-        </S.NavLink>
-        <S.NavLink to="./decisions" isActive={pathname === "/decisions"}>
-          <S.NavLinkText isActive={pathname === "/decisions"}>Decisions</S.NavLinkText>
-        </S.NavLink>
+        {ROUTES.map((route) => (
+          <S.NavLink to={`./${route.route}`} isActive={pathname === `/${route.route}`} key={route.route}>
+            <S.NavLinkText isActive={pathname === `/${route.route}`}>{route.name}</S.NavLinkText>
+          </S.NavLink>
+        ))}
       </S.NavBar>
       <S.ActionsBox>
         <i>account</i>
