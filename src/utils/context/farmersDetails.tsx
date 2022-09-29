@@ -6,6 +6,8 @@ const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
+const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type farmerDetail = {
   membershipId?: string;
@@ -34,6 +36,7 @@ export type farmerDetail = {
   seedType: string;
   animals: string;
   groupMember: string;
+  isChecked?: boolean;
 };
 
 type Props = {
@@ -46,6 +49,8 @@ interface farmerDetailsContextType {
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
+  checkboxSelectAll: (data: boolean) => void;
+  checkboxSelect: (data: { id: string | number; checked: boolean }) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -223,6 +228,8 @@ const initialState: farmerDetailsContextType = {
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
   editTableIcon: () => {},
+  checkboxSelectAll: () => {},
+  checkboxSelect: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -246,6 +253,17 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
       return { ...state, farmersList: [...data, action.payload] };
+    case CHECKBOX_SELECT_ALL:
+      return {
+        ...state,
+        farmersList: state.farmersList.map((user) => {
+          return { ...user, isChecked: action.payload };
+        }),
+      };
+    case CHECKBOX_SELECT:
+      let selectData = state.farmersList.map((user) => (user.id === action.payload.id ? { ...user, isChecked: action.payload.checked } : user));
+
+      return { ...state, farmersList: [...selectData] };
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -269,10 +287,18 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
+  const checkboxSelectAll = (data: boolean) => {
+    dispatch({ type: CHECKBOX_SELECT_ALL, payload: data });
+  };
+  const checkboxSelect = (data: { id: string | number; checked: boolean }) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: data });
+  };
 
   let data = {
     ...state,
     editTableIcon,
+    checkboxSelectAll,
+    checkboxSelect,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

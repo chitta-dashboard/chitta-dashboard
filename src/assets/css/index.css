@@ -63,59 +63,59 @@ h6 {
                                     supported by Chrome, Edge, Opera and Firefox */
 }
 /* Rich text - Tiptap */
-.menu-bar .is-active{
-  background-color: #1A9035;
+.menu-bar .is-active {
+  background-color: #1a9035;
   color: #fff;
 }
 
 .ProseMirror {
-  min-height: 10rem;
+  /* min-height: 10rem; */
   max-height: 10rem;
   overflow-y: auto;
   outline: none;
   padding: 0.5rem;
 }
 
-  .ProseMirror ul,
-  .ProseMirror ol {
-    padding: 0 1.5rem;
-  }
+.ProseMirror ul,
+.ProseMirror ol {
+  padding: 0 1.5rem;
+}
 
-  .ProseMirror h1,
-  .ProseMirror h2,
-  .ProseMirror h3,
-  .ProseMirror h4,
-  .ProseMirror h5,
-  .ProseMirror h6 {
-    line-height: 1.1;
-  }
+.ProseMirror h1,
+.ProseMirror h2,
+.ProseMirror h3,
+.ProseMirror h4,
+.ProseMirror h5,
+.ProseMirror h6 {
+  line-height: 1.1;
+}
 
-  .ProseMirror code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
+.ProseMirror code {
+  background-color: rgba(#616161, 0.1);
+  color: #616161;
+}
 
-  .ProseMirror pre {
-    background: #0D0D0D;
-    color: #FFF;
-    padding: 0.75rem 1rem;
-  }
+.ProseMirror pre {
+  background: #0d0d0d;
+  color: #fff;
+  padding: 0.75rem 1rem;
+}
 
-  .ProseMirror code {
-    color: inherit;
-    padding: 0;
-    background: #a3a3a3;
-    font-size: 0.8rem;
-  }
+.ProseMirror code {
+  color: inherit;
+  padding: 0;
+  background: #a3a3a3;
+  font-size: 0.8rem;
+}
 
-  .ProseMirror blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid #595959;
-  }
+.ProseMirror blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid #595959;
+}
 
-   .ProseMirror hr {
-    border: none;
-    border-top: 2px solid #595959;
-    margin: 2rem 0;
-  } 
-  /* =========================== */
+.ProseMirror hr {
+  border: none;
+  border-top: 2px solid #595959;
+  margin: 2rem 0;
+}
+/* =========================== */

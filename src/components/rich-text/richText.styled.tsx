@@ -6,11 +6,12 @@ namespace S {
     display: "flex",
     flexWrap: "wrap",
     gap: "0.5rem",
-    borderBottom: "1px solid",
+    borderBottom: "2px solid",
     borderColor: LightTheme.palette.text.primary,
     paddingBottom: ".5rem",
     padding: "0.5rem",
     width: "100%",
+    height: "7.8rem",
   }));
 
   export const ToolbarBtn = styled("button")(({ theme }) => ({
@@ -29,7 +30,7 @@ namespace S {
     width: "100%",
     height: "100%",
     border: "2px solid",
-    borderColor: LightTheme.palette.text.primary, 
+    borderColor: LightTheme.palette.text.primary,
     background: "#fff",
     borderRadius: "0.5rem",
     display: "flex",

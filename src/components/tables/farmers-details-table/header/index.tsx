@@ -1,18 +1,21 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 
 import S from "./header.styled";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
-interface Props {
-  users: any;
-  handleChange: any;
-}
+const Header = () => {
+  const { farmersList, checkboxSelectAll } = useFarmerDetailsContext();
 
-const Header = (props: Props) => {
   return (
     <TableHead>
       <TableRow>
         <S.ColCheckCell>
-          <Checkbox name="allSelect" onChange={props.handleChange} checked={!props.users.some((user: any) => user?.isChecked !== true)} />
+          <Checkbox
+            onChange={(e) => {
+              checkboxSelectAll(e.target.checked);
+            }}
+            checked={!farmersList.some((user: farmerDetail) => user?.isChecked !== true)}
+          />
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
         <S.WebTableCell>பெயர்</S.WebTableCell>

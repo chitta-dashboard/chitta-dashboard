@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import { fileValidation } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 import DeleteModal from "../../../modals/delete-modal";
@@ -17,12 +17,7 @@ import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
-interface Props {
-  users: any;
-  handleChange: any;
-}
-
-const Body = (props: Props) => {
+const Body = () => {
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const navigate = useNavigate();
@@ -32,7 +27,7 @@ const Body = (props: Props) => {
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const { farmersList, editTableIcon, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+  const { farmersList, editTableIcon, editFarmerDetail, deleteFarmerDetail, checkboxSelect } = useFarmerDetailsContext();
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
@@ -90,7 +85,7 @@ const Body = (props: Props) => {
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
-  const NavigateToFarmerDetailForm = (id: string, e: any) => {
+  const NavigateToFarmerDetailForm = (id: string) => {
     navigate(`/farmers-details/${id}`);
   };
 
@@ -101,6 +96,7 @@ const Body = (props: Props) => {
     result[0]["profile"] = image;
     editTableIcon({ ...result[0] });
   };
+
   return (
     <>
       <BodyWrapper>
@@ -110,14 +106,20 @@ const Body = (props: Props) => {
             <FarmerDetailsForm ref={farmerDetailFormRef} />
           </td>
         </tr>
-        {farmersList.map((user: any) => (
-          <S.CustomTableRow key={user.id} onClick={(e) => NavigateToFarmerDetailForm(user.id, e)}>
+        {farmersList.map((user: farmerDetail) => (
+          <S.CustomTableRow key={user.id} onClick={(e) => NavigateToFarmerDetailForm(user.id)}>
             <S.RowCheckCell
               onClick={(e) => {
                 e.stopPropagation();
               }}
             >
-              <Checkbox name={user.id.toString()} onChange={props.handleChange} checked={user?.isChecked || false} />
+              <Checkbox
+                onChange={(e) => {
+                  let data = { id: user.id, checked: e.target.checked };
+                  checkboxSelect(data);
+                }}
+                checked={user?.isChecked || false}
+              />
             </S.RowCheckCell>
             <S.WebTableCell>{user.membershipId}</S.WebTableCell>
             {/* for tablet view*/}

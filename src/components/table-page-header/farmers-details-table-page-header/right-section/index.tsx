@@ -1,18 +1,23 @@
 import { FC } from "react";
 import SelectDropDown from "../../../common-components/select-dropdown";
 
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
 }
+
 const RightSection: FC<RightSectionProps> = (props) => {
+  const { farmersList } = useFarmerDetailsContext();
+  let shareButtonDisable = farmersList.some((user: farmerDetail) => user?.isChecked);
+
   return (
     <S.RightSectionContainer>
       <S.DropdownStack>
         <SelectDropDown />
       </S.DropdownStack>
       <S.ButtonStack>
-        <S.CustomButton>Share Holder</S.CustomButton>
+        <S.CustomButton disabled={!shareButtonDisable}>Share Holder</S.CustomButton>
         <S.CustomButton>Export Farmers</S.CustomButton>
         <S.CustomButton
           onClick={() => {
