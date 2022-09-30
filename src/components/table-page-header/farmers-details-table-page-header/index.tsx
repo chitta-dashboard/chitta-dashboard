@@ -6,13 +6,14 @@ import S from "./farmersDetailsTablePageHeader.styled";
 
 interface TablePageHeaderProps {
   addModalHandler?: () => void;
+  searchHandler?: (searchText: string) => void;
 }
 
-const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = (props) => {
+const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({ addModalHandler, searchHandler }) => {
   return (
     <S.PageHeaderContainer>
-      <LeftSection />
-      <RightSection addModalHandler={props.addModalHandler} />
+      <LeftSection searchHandler={searchHandler} />
+      <RightSection addModalHandler={addModalHandler} />
     </S.PageHeaderContainer>
   );
 };

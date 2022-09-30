@@ -1,12 +1,11 @@
-import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import LoginBackground from "../../components/login/login-background";
 import LoginForm from "../../components/login/login-form";
+import { useAuthContext } from "../../utils/context/authContext";
 import S from "./login.styled";
-import authContext from "../../utils/context/authContext";
 
 const Login = () => {
-  const { isAuthenticated } = useContext(authContext);
+  const { isAuthenticated } = useAuthContext();
 
   return (
     <>
