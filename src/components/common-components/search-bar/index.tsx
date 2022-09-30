@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 
@@ -7,6 +7,14 @@ interface CustomProps {
 }
 
 const SearchBar: FC<CustomProps> = ({ searchHandler }) => {
+  useEffect(
+    () => () => {
+      searchHandler && searchHandler("");
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   return (
     <>
       <S.SearchBarPaper>
