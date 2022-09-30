@@ -13,18 +13,15 @@ interface CustomProps {
 
 const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { groupData, setGroupData } = useDecisionsProviderContext();
+  const { decisions, addDecision } = useDecisionsProviderContext();
 
   const addGroupData = (data: IAddDecisionsFormInput) => {
-    setGroupData([
-      {
-        groupTitle: "Certified true copy of the resolution passed",
-        groupDescription: data.description,
-        timestamp: data.dob,
-        groupName: data.decisionHeading,
-      },
-      ...groupData,
-    ]);
+    addDecision({
+      groupTitle: "Certified true copy of the resolution passed",
+      groupDescription: data.description,
+      timestamp: data.dob,
+      groupName: data.decisionHeading,
+    });
   };
 
   return (
@@ -35,7 +32,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
-          {groupData.length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
+          {decisions.length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>

@@ -8,6 +8,7 @@ const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const FILTER_MD_DETAIL = "FILTER_MD_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 
 export type mdDetail = {
   id: string;
@@ -26,6 +27,7 @@ type Props = {
 export interface mdDetailsContextType {
   mdList: mdDetail[];
   searchFilter: string;
+  setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
@@ -91,6 +93,7 @@ const initialState: mdDetailsContextType = {
     },
   ],
   searchFilter: "",
+  setSearchFilter: () => {},
   addMdDetail: () => {},
   editMdDetail: () => {},
   deleteMdDetail: () => {},
@@ -102,6 +105,7 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_MD_DETAIL:
       return { ...state, mdList: [...state.mdList, action.payload] };
+
     case EDIT_MD_DETAIL:
       const updatedMdDetail = action.payload;
       const editMdDetails = state.mdList.map((list) => {
@@ -114,8 +118,10 @@ const reducer = (state: mdDetailsContextType, action: any) => {
         ...state,
         mdList: editMdDetails,
       };
+
     case DELETE_MD_DETAIL:
       return { ...state, mdList: state.mdList.filter((list) => list.id !== action.payload) };
+
     case FILTER_MD_DETAIL:
       return {
         ...state,
@@ -123,9 +129,14 @@ const reducer = (state: mdDetailsContextType, action: any) => {
           return searchWord(md.name as string, action.payload);
         }),
       };
+
     case EDIT_TABLE_ICON:
       let data = state.mdList.filter((item) => item.id !== action.payload.id);
       return { ...state, mdList: [...data, action.payload] };
+
+    case SET_SEARCH_FILTER:
+      return { ...state, searchFilter: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -137,13 +148,13 @@ export const mdDetailsContext = createContext<mdDetailsContextType>(initialState
 const MdDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  state.addMdDetail = (data: mdDetail) => {
+  const addMdDetail = (data: mdDetail) => {
     dispatch({ type: ADD_MD_DETAIL, payload: data });
   };
-  state.editMdDetail = (data: mdDetail) => {
+  const editMdDetail = (data: mdDetail) => {
     dispatch({ type: EDIT_MD_DETAIL, payload: data });
   };
-  state.deleteMdDetail = (id: string) => {
+  const deleteMdDetail = (id: string) => {
     dispatch({ type: DELETE_MD_DETAIL, payload: id });
   };
   const filterMdDetail = (name: string) => {
@@ -152,11 +163,18 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const editTableIcon = (data: mdDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
+  const setSearchFilter = (searchText: string) => {
+    dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
+  };
 
   let data = {
     ...state,
+    addMdDetail,
+    editMdDetail,
+    deleteMdDetail,
     filterMdDetail,
     editTableIcon,
+    setSearchFilter,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;
