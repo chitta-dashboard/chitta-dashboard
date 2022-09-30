@@ -11,7 +11,7 @@ const Header = () => {
       <TableRow>
         <S.ColCheckCell>
           <Checkbox
-            onChange={(e) => {
+            onChange={() => {
               checkboxSelectAll();
             }}
             checked={selectedFarmers.length === farmersList.length}
@@ -24,7 +24,12 @@ const Header = () => {
         <S.WebTableCell></S.WebTableCell>
         <S.TabTableCell>
           <Stack>
-            <Checkbox />
+            <Checkbox
+              onChange={() => {
+                checkboxSelectAll();
+              }}
+              checked={selectedFarmers.length === farmersList.length}
+            />
           </Stack>
           <Stack>Farmers Details</Stack>
         </S.TabTableCell>

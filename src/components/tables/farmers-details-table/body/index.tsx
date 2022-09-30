@@ -122,13 +122,18 @@ const Body = () => {
             </S.RowCheckCell>
             <S.WebTableCell>{user.membershipId}</S.WebTableCell>
             {/* for tablet view*/}
-            <S.TabCell>
-              <Checkbox />
-              <Stack
-                onClick={(e) => {
-                  e.stopPropagation();
+            <S.TabCell
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Checkbox
+                onChange={(e) => {
+                  checkboxSelect(user.id);
                 }}
-              >
+                checked={selectedFarmers.includes(user.id)}
+              />
+              <Stack>
                 <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
               </Stack>
             </S.TabCell>
