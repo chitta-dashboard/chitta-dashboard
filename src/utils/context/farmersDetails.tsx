@@ -39,18 +39,21 @@ export type farmerDetail = {
   isChecked?: boolean;
 };
 
+export type selectedFarmer = number | string;
+
 type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
+  selectedFarmers: selectedFarmer[];
   addFarmerDetail: (data: farmerDetail) => void;
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
-  checkboxSelectAll: (data: boolean) => void;
-  checkboxSelect: (data: { id: string | number; checked: boolean }) => void;
+  checkboxSelectAll: () => void;
+  checkboxSelect: (id: string | number) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -224,6 +227,7 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   ],
+  selectedFarmers: [],
   addFarmerDetail: () => {},
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
@@ -254,16 +258,32 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
       return { ...state, farmersList: [...data, action.payload] };
     case CHECKBOX_SELECT_ALL:
-      return {
-        ...state,
-        farmersList: state.farmersList.map((user) => {
-          return { ...user, isChecked: action.payload };
-        }),
-      };
-    case CHECKBOX_SELECT:
-      let selectData = state.farmersList.map((user) => (user.id === action.payload.id ? { ...user, isChecked: action.payload.checked } : user));
+      if (state.selectedFarmers.length === state.farmersList.length) {
+        return {
+          ...state,
+          selectedFarmers: [],
+        };
+      } else {
+        return {
+          ...state,
+          selectedFarmers: [...state.farmersList.map((user) => user.id)],
+        };
+      }
 
-      return { ...state, farmersList: [...selectData] };
+    case CHECKBOX_SELECT:
+      let farmerId = action.payload;
+      if (state.selectedFarmers.includes(farmerId)) {
+        return {
+          ...state,
+          selectedFarmers: state.selectedFarmers.filter((id) => id !== farmerId),
+        };
+      } else {
+        return {
+          ...state,
+          selectedFarmers: [...state.selectedFarmers, farmerId],
+        };
+      }
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -287,11 +307,11 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
-  const checkboxSelectAll = (data: boolean) => {
-    dispatch({ type: CHECKBOX_SELECT_ALL, payload: data });
+  const checkboxSelectAll = () => {
+    dispatch({ type: CHECKBOX_SELECT_ALL });
   };
-  const checkboxSelect = (data: { id: string | number; checked: boolean }) => {
-    dispatch({ type: CHECKBOX_SELECT, payload: data });
+  const checkboxSelect = (id: string | number) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
   let data = {

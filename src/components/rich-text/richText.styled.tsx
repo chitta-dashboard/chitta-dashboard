@@ -11,7 +11,6 @@ namespace S {
     paddingBottom: ".5rem",
     padding: "0.5rem",
     width: "100%",
-    height: "7.8rem",
   }));
 
   export const ToolbarBtn = styled("button")(({ theme }) => ({

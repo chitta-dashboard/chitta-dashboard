@@ -27,7 +27,7 @@ const Body = () => {
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const { farmersList, editTableIcon, editFarmerDetail, deleteFarmerDetail, checkboxSelect } = useFarmerDetailsContext();
+  const { farmersList, editTableIcon, editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
@@ -115,10 +115,9 @@ const Body = () => {
             >
               <Checkbox
                 onChange={(e) => {
-                  let data = { id: user.id, checked: e.target.checked };
-                  checkboxSelect(data);
+                  checkboxSelect(user.id);
                 }}
-                checked={user?.isChecked || false}
+                checked={selectedFarmers.includes(user.id)}
               />
             </S.RowCheckCell>
             <S.WebTableCell>{user.membershipId}</S.WebTableCell>

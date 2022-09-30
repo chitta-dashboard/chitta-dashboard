@@ -68,6 +68,12 @@ h6 {
   color: #fff;
 }
 
+.menu-bar i {
+  font-size: 22px !important;
+}
+.menu-bar .is-active i {
+  color: white;
+}
 .ProseMirror {
   /* min-height: 10rem; */
   max-height: 10rem;

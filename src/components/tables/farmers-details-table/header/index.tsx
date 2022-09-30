@@ -4,7 +4,7 @@ import S from "./header.styled";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 const Header = () => {
-  const { farmersList, checkboxSelectAll } = useFarmerDetailsContext();
+  const { farmersList, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
 
   return (
     <TableHead>
@@ -12,9 +12,9 @@ const Header = () => {
         <S.ColCheckCell>
           <Checkbox
             onChange={(e) => {
-              checkboxSelectAll(e.target.checked);
+              checkboxSelectAll();
             }}
-            checked={!farmersList.some((user: farmerDetail) => user?.isChecked !== true)}
+            checked={selectedFarmers.length === farmersList.length}
           />
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>

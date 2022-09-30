@@ -8,8 +8,8 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
-  const { farmersList } = useFarmerDetailsContext();
-  let shareButtonDisable = farmersList.some((user: farmerDetail) => user?.isChecked);
+  const { selectedFarmers } = useFarmerDetailsContext();
+  let shareButtonDisable = selectedFarmers.length > 0;
 
   return (
     <S.RightSectionContainer>
