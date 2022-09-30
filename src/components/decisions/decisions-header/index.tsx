@@ -1,8 +1,9 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import AddDecisionsModal from "../../modals/decisions-modal";
 import S from "./decisionsHeader.styled";
-import { decisionsContext } from "../../../utils/context/decisionsContext";
+import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import { IAddDecisionsFormInput } from "../../modals/type/formInputs";
 
 interface CustomProps {
   viewTree(): void;
@@ -12,19 +13,19 @@ interface CustomProps {
 
 const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { groupData, setGroupData } = useContext(decisionsContext);
+  const { groupData, setGroupData } = useDecisionsProviderContext();
 
-  // const addGroupData = (data: { [input: string]: string }) => {
-  //   setGroupData([
-  //     ...groupData,
-  //     {
-  //       groupTitle: data && data.decisionHeading,
-  //       groupDescription: data.decision,
-  //       timestamp: data.dob,
-  //       groupName: "No Data",
-  //     },
-  //   ]);
-  // };
+  const addGroupData = (data: IAddDecisionsFormInput) => {
+    setGroupData([
+      {
+        groupTitle: "Certified true copy of the resolution passed",
+        groupDescription: data.description,
+        timestamp: data.dob,
+        groupName: data.decisionHeading,
+      },
+      ...groupData,
+    ]);
+  };
 
   return (
     <>
@@ -38,7 +39,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      <AddDecisionsModal openModal={modalOpen} handleClose={() => setModalOpen(false)} cb={() => {}} />
+      <AddDecisionsModal openModal={modalOpen} handleClose={() => setModalOpen(false)} cb={addGroupData} />
     </>
   );
 };

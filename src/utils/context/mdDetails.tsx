@@ -25,6 +25,7 @@ type Props = {
 
 export interface mdDetailsContextType {
   mdList: mdDetail[];
+  searchFilter: string;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
@@ -89,6 +90,7 @@ const initialState: mdDetailsContextType = {
       signature: "",
     },
   ],
+  searchFilter: "",
   addMdDetail: () => {},
   editMdDetail: () => {},
   deleteMdDetail: () => {},

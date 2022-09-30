@@ -7,7 +7,7 @@ import "react-image-crop/dist/ReactCrop.css";
 type ImagePreviewType = {
   image: string;
   setImage: React.Dispatch<React.SetStateAction<string>>;
-  handleCroppedImage: (image: string) => void;
+  handleCroppedImage: (croppedImg: string) => void;
 };
 
 type FinalImageType = {

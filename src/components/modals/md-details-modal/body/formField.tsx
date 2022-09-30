@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Stack } from "@mui/system";
-import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { UseFormClearErrors, UseFormRegister, UseFormSetError, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 import TextInput from "../../../input-fields/text";
 import NumberInput from "../../../input-fields/number";
@@ -15,9 +15,11 @@ interface CustomProps {
   errors: any;
   setValue: UseFormSetValue<IAddMDDetailsFormInput>;
   trigger: UseFormTrigger<IAddMDDetailsFormInput>;
+  setError: UseFormSetError<IAddMDDetailsFormInput>;
+  clearErrors: UseFormClearErrors<IAddMDDetailsFormInput>;
 }
 
-const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => {
+const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, setError, clearErrors }) => {
   return (
     <>
       <S.InputContainer spacing={3}>
@@ -42,6 +44,8 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
             helperText={errors.signature?.message}
             setValue={setValue}
             trigger={trigger}
+            setError={setError}
+            clearErrors={clearErrors}
           />
         </Stack>
       </S.InputContainer>

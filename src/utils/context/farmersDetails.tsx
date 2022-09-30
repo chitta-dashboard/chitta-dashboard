@@ -42,6 +42,7 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
+  searchFilter: string;
   addFarmerDetail: (data: farmerDetail) => void;
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
@@ -219,6 +220,7 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   ],
+  searchFilter: "",
   addFarmerDetail: () => {},
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
