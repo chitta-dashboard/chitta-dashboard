@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import { fileValidation, searchWord } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 import DeleteModal from "../../../modals/delete-modal";
@@ -17,12 +17,7 @@ import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
-interface Props {
-  users: any;
-  handleChange: any;
-}
-
-const Body = (props: Props) => {
+const Body = () => {
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const navigate = useNavigate();
@@ -32,7 +27,15 @@ const Body = (props: Props) => {
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const { farmersList: listData, editTableIcon, editFarmerDetail, deleteFarmerDetail, searchFilter } = useFarmerDetailsContext();
+  const {
+    farmersList: listData,
+    editTableIcon,
+    editFarmerDetail,
+    deleteFarmerDetail,
+    searchFilter,
+    checkboxSelect,
+    selectedFarmers,
+  } = useFarmerDetailsContext();
   const [farmersList, setFarmersList] = useState(listData);
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
@@ -95,7 +98,7 @@ const Body = (props: Props) => {
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
-  const NavigateToFarmerDetailForm = (id: string, e: any) => {
+  const NavigateToFarmerDetailForm = (id: string) => {
     navigate(`/farmers-details/${id}`);
   };
 
@@ -106,6 +109,7 @@ const Body = (props: Props) => {
     result[0]["profile"] = image;
     editTableIcon({ ...result[0] });
   };
+
   return (
     <>
       {farmersList.length > 0 ? (
@@ -116,24 +120,34 @@ const Body = (props: Props) => {
               <FarmerDetailsForm ref={farmerDetailFormRef} />
             </td>
           </tr>
-          {farmersList.map((user: any) => (
-            <S.CustomTableRow key={user.id} onClick={(e) => NavigateToFarmerDetailForm(user.id, e)}>
+          {farmersList.map((user: farmerDetail) => (
+            <S.CustomTableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
               <S.RowCheckCell
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
               >
-                <Checkbox name={user.id.toString()} onChange={props.handleChange} checked={user?.isChecked || false} />
+                <Checkbox
+                  onChange={(e) => {
+                    checkboxSelect(user.id);
+                  }}
+                  checked={selectedFarmers.includes(user.id)}
+                />
               </S.RowCheckCell>
               <S.WebTableCell>{user.membershipId}</S.WebTableCell>
               {/* for tablet view*/}
-              <S.TabCell>
-                <Checkbox />
-                <Stack
-                  onClick={(e) => {
-                    e.stopPropagation();
+              <S.TabCell
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <Checkbox
+                  onChange={(e) => {
+                    checkboxSelect(user.id);
                   }}
-                >
+                  checked={selectedFarmers.includes(user.id)}
+                />
+                <Stack>
                   <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
                 </Stack>
               </S.TabCell>
@@ -175,7 +189,6 @@ const Body = (props: Props) => {
           </tr>
         </S.EmptyMsg>
       )}
-
       <FarmersDetailsModal
         open={iconModal}
         handleClose={() => setIconModal(false)}
