@@ -1,7 +1,7 @@
 export interface IAddDecisionsFormInput {
   selectAll: boolean;
   decisionHeading: string;
-  dob: string;
+  creationTime: string;
   groupName: string;
   presenter: string[];
   participator: string[];

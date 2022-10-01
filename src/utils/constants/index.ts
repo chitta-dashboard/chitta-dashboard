@@ -36,6 +36,14 @@ export const sortObj = <ObjStructure>(arr: Array<ObjStructure>, sortOrder: "asce
   return arrClone;
 };
 
+export const createTimeStamp = (dateTimeInString: string) => {
+  const dateObj = new Date(dateTimeInString).toString().split(" ");
+  const date = dateObj.slice(1, 4).join(",").replace(",", " ");
+  let [hr, min] = dateObj[4].split(":").map((k) => +k);
+  let time = ((hr + 11) % 12) + 1 + ":" + min + " " + (hr < 12 ? "AM" : "PM");
+  return date + ", " + time;
+};
+
 export const ROUTES = [
   {
     route: "dashboard",
