@@ -39,7 +39,7 @@ const Body = () => {
   }, [farmerGroupListSearch, sortFilter]);
 
   useEffect(() => {
-    setFarmerGroupPaginate(farmerGroupListSort.slice((page - 1)  rowsPerPage, (page - 1)  rowsPerPage + rowsPerPage));
+    setFarmerGroupPaginate(farmerGroupListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
   }, [farmerGroupListSort, page, rowsPerPage]);
 
   useEffect(() => {
