@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react";
 import { TableRow } from "@mui/material";
-
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
-import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { farmerGroupDetail, useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { searchWord } from "../../../../utils/constants";
-
+import { searchWord, sortObj } from "../../../../utils/constants";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
@@ -21,30 +18,33 @@ const Body = () => {
     page,
     rowsPerPage,
     searchFilter,
+    sortFilter,
   } = useFarmerGroupDetailsContext();
-  const { farmersList } = useFarmerDetailsContext();
-
-  // console.log("farmersList", farmersList);
-  const groupList = farmersList.map((lists) => lists.group);
-  // console.log("groupList", groupList);
-  // const test = groupList.some((e) => e === "விவசாயிகள் சங்கம்-2");
-  // console.log("testcheck", test);
-
-  const [farmerGroupList, setFarmerGroupList] = useState(listData);
-
-  useEffect(() => {
-    setFarmerGroupList(listData.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [listData, page, rowsPerPage]);
-
-  useEffect(() => {
-    setFarmerGroupList(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
-  }, [searchFilter, listData]);
-
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [farmerGroupList, setFarmerGroupList] = useState(listData);
+  const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
+  const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
+  const [farmerGroupPaginate, setFarmerGroupPaginate] = useState(listData);
+
+  useEffect(() => {
+    setFarmerGroupListSearch(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
+  }, [searchFilter, listData]);
+
+  useEffect(() => {
+    setFarmerGroupListSort(sortObj<farmerGroupDetail>(farmerGroupListSearch, sortFilter, "groupName"));
+  }, [farmerGroupListSearch, sortFilter]);
+
+  useEffect(() => {
+    setFarmerGroupPaginate(farmerGroupListSort.slice((page - 1)  rowsPerPage, (page - 1)  rowsPerPage + rowsPerPage));
+  }, [farmerGroupListSort, page, rowsPerPage]);
+
+  useEffect(() => {
+    setFarmerGroupList(farmerGroupPaginate);
+  }, [farmerGroupPaginate]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {
@@ -93,7 +93,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Farmers Group Data</td>
+            <td> No Data</td>
           </tr>
         </S.EmptyMsg>
       )}

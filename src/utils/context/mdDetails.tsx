@@ -10,6 +10,7 @@ const FILTER_MD_DETAIL = "FILTER_MD_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
 const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
+const SET_SORT_FILTER = "SET_SORT_FILTER";
 
 export type mdDetail = {
   id: string;
@@ -30,6 +31,8 @@ export interface mdDetailsContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
+  sortFilter: "ascending" | "descending";
+  setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
@@ -189,6 +192,8 @@ const initialState: mdDetailsContextType = {
   page: 1,
   rowsPerPage: 10,
   searchFilter: "",
+  sortFilter: "ascending",
+  setSortFilter: () => {},
   setSearchFilter: () => {},
   addMdDetail: () => {},
   editMdDetail: () => {},
@@ -236,6 +241,9 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
+    case SET_SORT_FILTER:
+      return { ...state, sortFilter: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -268,6 +276,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const setPage = (page: number) => {
     dispatch({ type: SET_PAGE, payload: page });
   };
+  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+    dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
+  };
 
   let data = {
     ...state,
@@ -278,6 +289,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     editTableIcon,
     setPage,
     setSearchFilter,
+    setSortFilter,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

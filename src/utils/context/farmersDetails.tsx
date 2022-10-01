@@ -8,6 +8,7 @@ const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
 const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
+const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
@@ -52,6 +53,8 @@ interface farmerDetailsContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
+  sortFilter: "ascending" | "descending";
+  setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
   addFarmerDetail: (data: farmerDetail) => void;
@@ -237,6 +240,8 @@ const initialState: farmerDetailsContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
+  sortFilter: "ascending",
+  setSortFilter: () => {},
   setSearchFilter: () => {},
   selectedFarmers: [],
   addFarmerDetail: () => {},
@@ -300,6 +305,9 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
         };
       }
 
+    case SET_SORT_FILTER:
+      return { ...state, sortFilter: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -329,6 +337,9 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
+  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+    dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
+  };
   const checkboxSelectAll = () => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
   };
@@ -344,6 +355,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     editTableIcon,
     setPage,
     setSearchFilter,
+    setSortFilter,
     checkboxSelectAll,
     checkboxSelect,
   };
