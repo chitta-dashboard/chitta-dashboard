@@ -1,15 +1,8 @@
-export interface IDecisionsFormInput {
-  signature: string;
-  image: string;
-  file: any;
-  files: any;
-}
-
 export interface IAddDecisionsFormInput {
   selectAll: boolean;
   decisionHeading: string;
   dob: string;
-  qualification: string;
+  groupName: string;
   presenter: string[];
   participator: string[];
   description: string;
