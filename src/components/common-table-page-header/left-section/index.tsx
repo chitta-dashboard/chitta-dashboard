@@ -1,22 +1,17 @@
-import { Ref, useRef } from "react";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { FC } from "react";
 
 import SearchBar from "../../common-components/search-bar";
 
 import S from "./leftSection.styled";
 
-const LeftSection = () => {
-  const { filterMdDetail } = useMdDetailsContext();
-  const searchInputRef = useRef<HTMLInputElement>();
+interface CustomProps {
+  searchHandler?: (searchString: string) => void;
+}
 
+const LeftSection: FC<CustomProps> = ({ searchHandler }) => {
   return (
     <S.LeftSectionContainer>
-      <SearchBar
-        ref={searchInputRef as Ref<HTMLInputElement> | undefined}
-        onClick={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-          filterMdDetail && filterMdDetail(searchInputRef?.current?.value as string);
-        }}
-      />
+      <SearchBar searchHandler={searchHandler} />
     </S.LeftSectionContainer>
   );
 };

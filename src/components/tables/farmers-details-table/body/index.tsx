@@ -1,8 +1,8 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Checkbox, Stack } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { fileValidation } from "../../../../utils/constants";
+import { fileValidation, searchWord } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import BodyWrapper from "../../../custom-tables/body";
@@ -43,6 +43,10 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+
+  useEffect(() => {
+    setFarmersList(listData.filter((farmer) => searchWord(farmer.name, searchFilter)));
+  }, [listData, searchFilter]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {

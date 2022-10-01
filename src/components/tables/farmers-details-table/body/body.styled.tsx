@@ -1,5 +1,4 @@
 import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
-import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
   export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(({ theme }) => ({
@@ -149,7 +148,7 @@ namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: LightTheme.palette.custom.backgroundLight,
+    background: theme.palette.custom.backgroundLight,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -159,7 +158,7 @@ namespace S {
   }));
 
   export const EditIcon = styled("i")(({ theme }) => ({
-    color: LightTheme.palette.text.primary,
+    color: theme.palette.text.primary,
     opacity: "1",
   }));
   export const HiddenInput = styled("input")(({ theme }) => ({

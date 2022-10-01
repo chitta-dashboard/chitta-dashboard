@@ -1,12 +1,17 @@
+import { FC } from "react";
 import IconWrapper from "../../../../utils/iconWrapper";
 import SearchBar from "../../../common-components/search-bar";
 
 import S from "./leftSection.styled";
 
-const LeftSection = () => {
+interface CustomProps {
+  searchHandler?: (searchText: string) => void;
+}
+
+const LeftSection: FC<CustomProps> = ({ searchHandler }) => {
   return (
     <S.LeftSectionContainer>
-      <SearchBar />
+      <SearchBar searchHandler={searchHandler} />
       <IconWrapper>sort</IconWrapper>
     </S.LeftSectionContainer>
   );

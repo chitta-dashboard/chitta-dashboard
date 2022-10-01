@@ -1,10 +1,9 @@
-import { useContext } from "react";
-import { decisionsContext } from "../../../utils/context/decisionsContext";
+import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import S from "./decisionsTree.styled";
 
 const DecisionsTree = () => {
-  const { groupData } = useContext(decisionsContext);
-  const leafCount = groupData.length <= 4 ? groupData.length : 4;
+  const { decisions } = useDecisionsProviderContext();
+  const leafCount = decisions.length <= 4 ? decisions.length : 4;
 
   return (
     <>
@@ -14,9 +13,9 @@ const DecisionsTree = () => {
         </S.Bud>
         {leafCount >= 1 && (
           <S.L1>
-            <S.DecisionsTimestamp placement="left">{groupData[0].timestamp}</S.DecisionsTimestamp>
-            <S.DecisionTitle>{groupData[0].groupName}</S.DecisionTitle>
-            <S.DecisionDescription>{groupData[0].groupTitle}</S.DecisionDescription>
+            <S.DecisionsTimestamp placement="left">{decisions[0].timestamp}</S.DecisionsTimestamp>
+            <S.DecisionTitle>{decisions[0].groupName}</S.DecisionTitle>
+            <S.DecisionDescription>{decisions[0].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
               <S.ViewBtn>View</S.ViewBtn>
               <S.DownloadBtn>
@@ -27,9 +26,9 @@ const DecisionsTree = () => {
         )}
         {leafCount >= 3 && (
           <S.L2>
-            <S.DecisionsTimestamp placement="left">{groupData[1].timestamp}</S.DecisionsTimestamp>
-            <S.DecisionTitle>{groupData[1].groupName}</S.DecisionTitle>
-            <S.DecisionDescription>{groupData[1].groupTitle}</S.DecisionDescription>
+            <S.DecisionsTimestamp placement="left">{decisions[2].timestamp}</S.DecisionsTimestamp>
+            <S.DecisionTitle>{decisions[2].groupName}</S.DecisionTitle>
+            <S.DecisionDescription>{decisions[2].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
               <S.ViewBtn>View</S.ViewBtn>
               <S.DownloadBtn>
@@ -40,9 +39,9 @@ const DecisionsTree = () => {
         )}
         {leafCount >= 2 && (
           <S.R1>
-            <S.DecisionsTimestamp placement="right">{groupData[2].timestamp}</S.DecisionsTimestamp>
-            <S.DecisionTitle>{groupData[2].groupName}</S.DecisionTitle>
-            <S.DecisionDescription>{groupData[2].groupTitle}</S.DecisionDescription>
+            <S.DecisionsTimestamp placement="right">{decisions[1].timestamp}</S.DecisionsTimestamp>
+            <S.DecisionTitle>{decisions[1].groupName}</S.DecisionTitle>
+            <S.DecisionDescription>{decisions[1].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
               <S.ViewBtn>View</S.ViewBtn>
               <S.DownloadBtn>
@@ -53,9 +52,9 @@ const DecisionsTree = () => {
         )}
         {leafCount >= 4 && (
           <S.R2>
-            <S.DecisionsTimestamp placement="right">{groupData[3].timestamp}</S.DecisionsTimestamp>
-            <S.DecisionTitle>{groupData[3].groupName}</S.DecisionTitle>
-            <S.DecisionDescription>{groupData[3].groupTitle}</S.DecisionDescription>
+            <S.DecisionsTimestamp placement="right">{decisions[3].timestamp}</S.DecisionsTimestamp>
+            <S.DecisionTitle>{decisions[3].groupName}</S.DecisionTitle>
+            <S.DecisionDescription>{decisions[3].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
               <S.ViewBtn>View</S.ViewBtn>
               <S.DownloadBtn>
