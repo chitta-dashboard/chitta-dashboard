@@ -6,10 +6,12 @@ import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-c
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import { S } from "./tamil-certificate.styled";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
 interface Props {}
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) => (
+  // const {selectedFarmers} = useFarmerDetailsContext();
   <div className="print-container" ref={ref}>
     {[1].map((item) => {
       return (

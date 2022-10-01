@@ -8,7 +8,7 @@ namespace S {
     justifyContent: "space-between",
     backgroundColor: "#ffffff",
     padding: ".5rem 1.2rem",
-    gap: "2rem",
+    gap: "1rem",
   }));
 
   export const LogoBox = styled(Box)(({ theme }: { theme: Theme }) => ({

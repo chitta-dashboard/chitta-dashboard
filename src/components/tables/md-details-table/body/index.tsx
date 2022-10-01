@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Stack, TableRow } from "@mui/material";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
@@ -8,13 +8,18 @@ import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
 import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
-import { fileValidation } from "../../../../utils/constants";
+import { fileValidation, searchWord } from "../../../../utils/constants";
 
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList, editTableIcon, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  let { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter } = useMdDetailsContext();
+  const [mdList, setMdList] = useState(listData);
+
+  useEffect(() => {
+    setMdList(listData.filter((md) => searchWord(md.name, searchFilter)));
+  }, [searchFilter, listData]);
 
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");

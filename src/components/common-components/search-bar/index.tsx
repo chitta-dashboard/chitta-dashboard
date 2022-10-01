@@ -1,29 +1,32 @@
-import React, { forwardRef, MutableRefObject, useContext, useRef } from "react";
-import { mdDetailsContext, useMdDetailsContext } from "../../../utils/context/mdDetails";
-
+import { FC, useEffect } from "react";
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 
-type Props = {
-  onClick?: (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
-};
+interface CustomProps {
+  searchHandler?: (searchText: string) => void;
+}
 
-const SearchBar = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { filterMdDetail } = useMdDetailsContext();
+const SearchBar: FC<CustomProps> = ({ searchHandler }) => {
+  useEffect(
+    () => () => {
+      searchHandler && searchHandler("");
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <>
       <S.SearchBarPaper>
-        <IconGreen onClick={props.onClick}>search</IconGreen>
+        <IconGreen>search</IconGreen>
         <S.SearchBar
-          ref={ref}
           placeholder="  Search..."
           onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-            filterMdDetail && filterMdDetail((ref as MutableRefObject<HTMLInputElement | undefined>)?.current?.value as string);
+            searchHandler && searchHandler((e.target as HTMLInputElement).value);
           }}
         />
       </S.SearchBarPaper>
     </>
   );
-});
+};
 export default SearchBar;

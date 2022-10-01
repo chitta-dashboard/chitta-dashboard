@@ -19,6 +19,7 @@ import BackButton from "../../buttons/back-button";
 import SubmitButton from "../../buttons/submit-button";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { fileValidation } from "../../../utils/constants";
 
 import S from "./page-1-modal/body/page1Modal.styled";
 
@@ -42,6 +43,16 @@ const form1Schema = yup
     addhaarNo: yup.string().required("required"),
     voterIdNo: yup.string().required("required"),
     acre: yup.string().required("required"),
+    profile: yup
+      .mixed()
+      .test("profileTest1", "required", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return file?.size > 0;
+      })
+      .test("profileTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return fileValidation(file ? file?.name : "");
+      }),
   })
   .required();
 
@@ -72,6 +83,8 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
     formState: { errors: form1Errors },
     clearErrors: form1ClearErrors,
     reset: form1Reset,
+    trigger: form1Trigger,
+    setValue: form1SetValue,
   } = useForm<IAddFarmersDetailsPage1Input>({
     resolver: yupResolver(form1Schema),
   });
@@ -102,6 +115,7 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
         addhaarNo: farmerData?.spouseName as unknown as string,
         voterIdNo: farmerData?.voterIdNo as unknown as string,
         acre: farmerData?.acre as unknown as string,
+        profile: "", //temporary, until sbucket integration
       });
 
       form2Reset({
@@ -133,6 +147,7 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
         addhaarNo: "",
         voterIdNo: "",
         acre: "",
+        profile: "",
       });
 
       form2Reset({
@@ -218,7 +233,7 @@ const FarmersDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, edit
           <>
             <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
               <Stack spacing={4}>
-                <AddProfile />
+                <AddProfile<IAddFarmersDetailsPage1Input> inputName="profile" setValue={form1SetValue} trigger={form1Trigger} errors={form1Errors} />
                 <FormField register={form1Register} errors={form1Errors} />
               </Stack>
             </ModalBody>
