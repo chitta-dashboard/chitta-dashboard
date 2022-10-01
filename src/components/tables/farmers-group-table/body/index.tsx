@@ -7,13 +7,32 @@ import DeleteModal from "../../../modals/delete-modal";
 import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { searchWord } from "../../../../utils/constants";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
 const Body = () => {
-  const { farmerGroupList: listData, editFarmerGroupDetail, deleteFarmerGroupDetail, searchFilter } = useFarmerGroupDetailsContext();
+  const {
+    farmerGroupList: listData,
+    editFarmerGroupDetail,
+    deleteFarmerGroupDetail,
+    page,
+    rowsPerPage,
+    searchFilter,
+  } = useFarmerGroupDetailsContext();
+  const { farmersList } = useFarmerDetailsContext();
+
+  // console.log("farmersList", farmersList);
+  const groupList = farmersList.map((lists) => lists.group);
+  // console.log("groupList", groupList);
+  // const test = groupList.some((e) => e === "விவசாயிகள் சங்கம்-2");
+  // console.log("testcheck", test);
+
+  useEffect(() => {
+    setFarmerGroupList(listData.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
+  }, [listData, page, rowsPerPage]);
   const [farmerGroupList, setFarmerGroupList] = useState(listData);
 
   useEffect(() => {
@@ -25,7 +44,6 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
-  // const [memberId, setMemberId] = useState<string>("");
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {

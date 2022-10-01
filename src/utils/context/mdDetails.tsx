@@ -8,6 +8,7 @@ const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const FILTER_MD_DETAIL = "FILTER_MD_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 
 export type mdDetail = {
@@ -26,6 +27,8 @@ type Props = {
 
 export interface mdDetailsContextType {
   mdList: mdDetail[];
+  page: number;
+  rowsPerPage: number;
   searchFilter: string;
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
@@ -33,6 +36,7 @@ export interface mdDetailsContextType {
   deleteMdDetail: (id: string) => void;
   filterMdDetail: (name: string) => void;
   editTableIcon: (data: any) => void;
+  setPage: (page: number) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -40,7 +44,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "1",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya1",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
@@ -49,7 +53,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "2",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya2",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
@@ -58,7 +62,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "3",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya3",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
@@ -67,7 +71,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "4",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya4",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
@@ -76,7 +80,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "5",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya5",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
@@ -85,13 +89,105 @@ const initialState: mdDetailsContextType = {
     {
       id: "6",
       profile: profileImg,
-      name: "Arokiya",
+      name: "Arokiya6",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "7",
+      profile: profileImg,
+      name: "Arokiya7",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "8",
+      profile: profileImg,
+      name: "Arokiya8",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "9",
+      profile: profileImg,
+      name: "Arokiya9",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "10",
+      profile: profileImg,
+      name: "Arokiya10",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "11",
+      profile: profileImg,
+      name: "Arokiya11",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "12",
+      profile: profileImg,
+      name: "Arokiya12",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "13",
+      profile: profileImg,
+      name: "Arokiya13",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "14",
+      profile: profileImg,
+      name: "Arokiya14",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "15",
+      profile: profileImg,
+      name: "Arokiya15",
+      phoneNumber: "8610010875",
+      qualification: "BSc, Computer Science",
+      dob: "2022-01-01",
+      signature: "",
+    },
+    {
+      id: "16",
+      profile: profileImg,
+      name: "Arokiya16",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
       dob: "2022-01-01",
       signature: "",
     },
   ],
+  page: 1,
+  rowsPerPage: 10,
   searchFilter: "",
   setSearchFilter: () => {},
   addMdDetail: () => {},
@@ -99,6 +195,7 @@ const initialState: mdDetailsContextType = {
   deleteMdDetail: () => {},
   editTableIcon: () => {},
   filterMdDetail: () => {},
+  setPage: () => {},
 };
 
 const reducer = (state: mdDetailsContextType, action: any) => {
@@ -133,6 +230,8 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.mdList.filter((item) => item.id !== action.payload.id);
       return { ...state, mdList: [...data, action.payload] };
+    case SET_PAGE:
+      return { ...state, page: action.payload };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -166,6 +265,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
+  const setPage = (page: number) => {
+    dispatch({ type: SET_PAGE, payload: page });
+  };
 
   let data = {
     ...state,
@@ -174,6 +276,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     deleteMdDetail,
     filterMdDetail,
     editTableIcon,
+    setPage,
     setSearchFilter,
   };
 
