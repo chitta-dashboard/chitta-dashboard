@@ -1,4 +1,4 @@
-import {MouseEventHandler} from "react";
+import { MouseEventHandler } from "react";
 import { IconType } from "../../../types/icon-types";
 import S from "./icons-wrapper-styled";
 
@@ -10,10 +10,7 @@ interface Props {
 }
 
 const IconsWrapper: React.FC<Props> = ({ iconName, isGreen, onClick, isDummy }) => {
-  return (
-    <S.Wrapper className={`nerkarthir-icon-${iconName}`} isGreen={isGreen} onClick={onClick} isDummy={isDummy}/>
-  );
+  return <S.Wrapper className={`nerkathir-icon-${iconName}`} isGreen={isGreen} onClick={onClick} isDummy={isDummy} />;
 };
 
 export default IconsWrapper;
-
