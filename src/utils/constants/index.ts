@@ -20,6 +20,22 @@ export const searchWord = (text: string, word: string) =>
         ) >= 0
     : false;
 
+export const sortObj = <ObjStructure>(arr: Array<ObjStructure>, sortOrder: "ascending" | "descending", sortKey: keyof ObjStructure) => {
+  const arrClone = [...arr];
+  if (sortOrder === "ascending") {
+    arrClone.sort((a, b) => {
+      if (a[sortKey] > b[sortKey]) return 1;
+      else return -1;
+    });
+  } else {
+    arrClone.sort((a, b) => {
+      if (a[sortKey] < b[sortKey]) return 1;
+      else return -1;
+    });
+  }
+  return arrClone;
+};
+
 export const ROUTES = [
   {
     route: "dashboard",
