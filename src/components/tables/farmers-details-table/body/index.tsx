@@ -139,7 +139,7 @@ const Body = () => {
               <S.TabCell
                 onClick={(e) => {
                   e.stopPropagation();
-                        handleIconClick(user.id);
+                  handleIconClick(user.id);
                 }}
               >
                 <Checkbox
@@ -186,7 +186,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td> No Data</td>
+            <td>No Farmers Details Data</td>
           </tr>
         </S.EmptyMsg>
       )}
