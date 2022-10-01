@@ -116,7 +116,7 @@ const ModalLaunchButtons = () => {
         />
       </FarmerGroupDetailsContextProvider>
       <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
-      <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} />
+      {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );
 };

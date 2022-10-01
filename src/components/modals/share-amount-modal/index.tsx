@@ -10,9 +10,10 @@ import ShareDetailFooter from "./Footer/ShareDetailFooter";
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
+  generateTamilCertificate: () => void;
 }
 
-const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose, generateTamilCertificate }) => {
   return (
     <>
       <CustomModal openModal={openModal} handleClose={handleClose}>
@@ -28,7 +29,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
           <ShareDetailBody />
         </ModalBody>
         <ModalFooter>
-          <ShareDetailFooter handleClose={handleClose} />
+          <ShareDetailFooter handleClose={handleClose} generateTamilCertificate={generateTamilCertificate} />
         </ModalFooter>
       </CustomModal>
     </>
