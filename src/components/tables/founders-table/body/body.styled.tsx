@@ -1,60 +1,37 @@
-import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
+import { Stack, styled, Box, TableCell } from "@mui/material";
 
 namespace S {
-  export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(() => ({
-    cursor: "pointer",
-  }));
-
-  export const RowCheckCell = styled(TableCell)(({ theme }) => ({
-    width: "7%",
-    padding: "1rem 0",
-    textAlign: "center",
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  }));
-
-  export const TabCheckboxStack = styled(Stack)(() => ({
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    minWidth: "15%",
-  }));
-
   export const TabCell = styled(TableCell)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "space-between",
-      margin: "0 2rem",
+      justifyContent: "end",
     },
   }));
 
-  export const WebTableCell = styled(TableCell)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    fontSize: "1.1rem",
-    fontWeight: 500,
-    width: "18%",
+  export const NameStack = styled(Stack)(() => ({
+    flexDirection: "row",
+    gap: "1rem",
+    alignItems: "center",
+  }));
 
-    "&:last-of-type": {
-      width: "20%",
-    },
+  export const WebTableCell = styled(TableCell)(({ theme }) => ({
+    textAlign: "center",
+    width: "25%",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   }));
 
   export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    width: "18%",
+    width: "25%",
     [theme.breakpoints.up("md")]: {
-      "&:nth-of-type(5)": {
-        display: "none",
-      },
-      "&:nth-of-type(7)": {
-        width: "28%",
+      "&:nth-of-type(4)": {
+        width: "32%",
       },
     },
 
@@ -65,7 +42,7 @@ namespace S {
       position: "relative",
       left: "50%",
 
-      //Table head for Tab view
+      //Create Table Title for Tablet view
       "&::before": {
         content: `"${title}"`,
         position: "absolute",
@@ -74,22 +51,12 @@ namespace S {
     },
   }));
 
-  export const TabIdStack = styled(Stack)(() => ({
-    flexDirection: "row",
-    gap: "1rem",
-  }));
-
-  export const NameStack = styled(Stack)(() => ({
-    flexDirection: "row",
-    gap: "1rem",
-    alignItems: "center",
-  }));
-
   export const IconBox = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
+
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -132,9 +99,6 @@ namespace S {
     color: theme.palette.text.primary,
     opacity: "1",
   }));
-  export const HiddenInput = styled("input")(() => ({
-    display: "none",
-  }));
 
   export const EmptyMsg = styled("tbody")(({ theme }) => ({
     position: "relative",
@@ -146,6 +110,10 @@ namespace S {
       padding: "3rem 0",
       translate: "transform(-50%, -50%)",
     },
+  }));
+
+  export const HiddenInput = styled("input")(() => ({
+    display: "none",
   }));
 }
 
