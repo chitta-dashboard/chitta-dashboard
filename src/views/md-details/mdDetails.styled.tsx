@@ -4,6 +4,13 @@ namespace S {
   export const MdDetailsContainer = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "2rem",
+
+    [theme.breakpoints.down("md")]: {
+      gap: "1rem",
+    },
   }));
 }
 

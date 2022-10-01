@@ -1,15 +1,8 @@
-export interface IDecisionsFormInput {
-  signature: string;
-  image: string;
-  file: any;
-  files: any;
-}
-
 export interface IAddDecisionsFormInput {
   selectAll: boolean;
   decisionHeading: string;
   dob: string;
-  qualification: string;
+  groupName: string;
   presenter: string[];
   participator: string[];
   description: string;
@@ -27,6 +20,7 @@ export interface IAddFarmersDetailsPage1Input {
   addhaarNo: string;
   voterIdNo: string;
   acre: string;
+  profile: string;
 }
 
 export interface IAddFarmersDetailsPage2Input {
@@ -61,4 +55,5 @@ export interface IAddMDDetailsFormInput {
   qualification: string;
   dob: string;
   signature: string;
+  profile: string;
 }

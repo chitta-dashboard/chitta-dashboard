@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
-import { Stack, TableRow } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import { TableRow } from "@mui/material";
+
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
@@ -8,13 +9,33 @@ import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
 import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
-import { fileValidation } from "../../../../utils/constants";
-
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
+import { mdDetail } from "../../../../utils/context/mdDetails";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList, editTableIcon, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter, page, rowsPerPage } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState(listData);
+  const [mdListSort, setMdListSort] = useState(listData);
+  const [mdListPaginate, setMdListPaginate] = useState(listData);
+  const [mdList, setMdList] = useState(listData);
+
+  useEffect(() => {
+    setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
+  }, [listData, searchFilter]);
+
+  useEffect(() => {
+    setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
+  }, [mdListSearch, sortFilter]);
+
+  useEffect(() => {
+    setMdListPaginate(mdListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
+  }, [mdListSort, page, rowsPerPage]);
+
+  useEffect(() => {
+    setMdList(mdListPaginate);
+  }, [mdListPaginate]);
 
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
@@ -82,9 +103,7 @@ const Body = () => {
           {mdList.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <Stack>
-                  <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
-                </Stack>
+                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>
@@ -113,7 +132,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td> No Data</td>
+            <td>No Md Details Data</td>
           </tr>
         </S.EmptyMsg>
       )}
