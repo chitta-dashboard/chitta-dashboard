@@ -115,7 +115,7 @@ const LoginForm: FC = () => {
               </S.LoginButton>
             </S.ButtonBox>
             <S.LoginText variant="subtitle1">
-              Don't have an account?<span>Signup</span>
+              Don't have an account?&nbsp;<span>Signup</span>
             </S.LoginText>
           </S.ButtonContainer>
         </S.FormContainer>

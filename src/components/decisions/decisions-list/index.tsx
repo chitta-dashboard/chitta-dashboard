@@ -2,15 +2,8 @@ import { FC } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import leftConnect from "../../../assets/images/leftDash.svg";
 import rightConnect from "../../../assets/images/rightDash.svg";
-import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import S from "./decisionsList.styled";
-
-export interface GroupData {
-  groupName: string;
-  groupTitle: string;
-  groupDescription: string;
-  timestamp: string;
-}
 
 const DecisionsList: FC = () => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
@@ -22,7 +15,7 @@ const DecisionsList: FC = () => {
     <S.MasterContainer>
       {!isMd && (
         <S.LeftContainer>
-          {leftData.map((data: GroupData) => (
+          {leftData.map((data: IDecision) => (
             <S.LContent key={data.groupName}>
               <S.ContentHeader>
                 <S.ContentTitle>{data.groupName}</S.ContentTitle>
@@ -32,7 +25,7 @@ const DecisionsList: FC = () => {
                 </S.ContentDownloadBtn>
               </S.ContentHeader>
               <S.ContentSubtitle>{data.groupTitle}</S.ContentSubtitle>
-              <S.ContentBodyText>{data.groupDescription}</S.ContentBodyText>
+              <S.ContentBodyText dangerouslySetInnerHTML={{ __html: data?.groupDescriptionRichText || data.groupDescription }} />
               <S.ContentTimeStamp>{data.timestamp}</S.ContentTimeStamp>
               <img src={leftConnect} alt="svg-vector" draggable={false} />
             </S.LContent>
@@ -41,7 +34,7 @@ const DecisionsList: FC = () => {
       )}
       <S.Divider />
       <S.RightContainer>
-        {rightData.map((data: GroupData) => (
+        {rightData.map((data: IDecision) => (
           <S.RContent key={data.groupName}>
             <S.ContentHeader>
               <S.ContentTitle>{data.groupName}</S.ContentTitle>
@@ -51,7 +44,7 @@ const DecisionsList: FC = () => {
               </S.ContentDownloadBtn>
             </S.ContentHeader>
             <S.ContentSubtitle>{data.groupTitle}</S.ContentSubtitle>
-            <S.ContentBodyText>{data.groupDescription}</S.ContentBodyText>
+            <S.ContentBodyText dangerouslySetInnerHTML={{ __html: data?.groupDescriptionRichText || data.groupDescription }} />
             <S.ContentTimeStamp>{data.timestamp}</S.ContentTimeStamp>
             <img src={rightConnect} alt="svg-vector" draggable={false} />
           </S.RContent>

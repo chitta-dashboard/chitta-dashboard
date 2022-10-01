@@ -17,10 +17,11 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
 
   const addGroupData = (data: IAddDecisionsFormInput) => {
     addDecision({
-      groupTitle: "Certified true copy of the resolution passed",
+      groupName: data.groupName,
+      groupTitle: data.decisionHeading,
       groupDescription: data.description,
+      groupDescriptionRichText: data.descriptionRichText,
       timestamp: data.dob,
-      groupName: data.decisionHeading,
     });
   };
 
