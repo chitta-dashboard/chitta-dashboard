@@ -125,6 +125,14 @@ namespace S {
     color: theme.palette.text.secondaryLight,
     opacity: theme.palette.shadeOpacity,
     fontSize: ".8rem",
+
+    maxHeight: "210px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: "11",
+    WebkitBoxOrient: "vertical",
+
     [theme.breakpoints.down("md")]: {
       // maxWidth: "200px",
       // overflow: "hidden",

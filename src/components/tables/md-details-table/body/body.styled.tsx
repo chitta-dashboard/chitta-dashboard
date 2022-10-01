@@ -1,5 +1,4 @@
 import { Stack, styled, Box, TableCell } from "@mui/material";
-import { LightTheme } from "../../../../utils/theme";
 
 namespace S {
   export const TabCell = styled(TableCell)(({ theme }) => ({
@@ -106,7 +105,7 @@ namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: LightTheme.palette.custom.backgroundLight,
+    background: theme.palette.custom.backgroundLight,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -116,14 +115,14 @@ namespace S {
   }));
 
   export const EditIcon = styled("i")(({ theme }) => ({
-    color: LightTheme.palette.text.primary,
+    color: theme.palette.text.primary,
     opacity: "1",
   }));
 
   export const EmptyMsg = styled("tbody")(({ theme }) => ({
     position: "relative",
     "> tr > td": {
-      color: LightTheme.palette.text.secondaryLight,
+      color: theme.palette.text.secondaryLight,
       fontSize: "1.2rem",
       textAlign: "center",
       fontWeight: "500",
