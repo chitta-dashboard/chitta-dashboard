@@ -38,14 +38,8 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
                   <FormHelperText>{errors.dob?.message}</FormHelperText>
                 </S.DateContainer>
                 <S.QualificationContainer width={"100%"}>
-                  <SelectField<IAddDecisionsFormInput>
-                    register={register}
-                    inputName="qualification"
-                    label="தகுதி"
-                    setValue={setValue}
-                    trigger={trigger}
-                  />
-                  <FormHelperText>{errors.qualification?.message}</FormHelperText>
+                  <SelectField<IAddDecisionsFormInput> register={register} inputName="groupName" label="குழு" setValue={setValue} trigger={trigger} />
+                  <FormHelperText>{errors.groupName?.message}</FormHelperText>
                 </S.QualificationContainer>
               </Stack>
               <MultipleSelectChip<IAddDecisionsFormInput>
