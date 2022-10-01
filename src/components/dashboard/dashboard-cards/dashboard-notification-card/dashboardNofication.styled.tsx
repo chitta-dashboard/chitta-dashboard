@@ -25,7 +25,7 @@ export namespace S {
     width: "100%",
     color: LightTheme.palette.primary.light,
     fontWeight: "600",
-    fontSize: "1.1rem",
+    fontSize: "1.2rem",
     height: "3.5rem",
   }));
 
