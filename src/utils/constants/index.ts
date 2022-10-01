@@ -10,14 +10,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: string, word: string) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const sortObj = <ObjStructure>(arr: Array<ObjStructure>, sortOrder: "ascending" | "descending", sortKey: keyof ObjStructure) => {
@@ -34,6 +34,14 @@ export const sortObj = <ObjStructure>(arr: Array<ObjStructure>, sortOrder: "asce
     });
   }
   return arrClone;
+};
+
+export const createTimeStamp = (dateTimeInString: string) => {
+  const dateObj = new Date(dateTimeInString).toString().split(" ");
+  const date = dateObj.slice(1, 4).join(",").replace(",", " ");
+  let [hr, min] = dateObj[4].split(":").map((k) => +k);
+  let time = ((hr + 11) % 12) + 1 + ":" + min + " " + (hr < 12 ? "AM" : "PM");
+  return date + ", " + time;
 };
 
 export const ROUTES = [
