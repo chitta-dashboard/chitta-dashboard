@@ -6,6 +6,7 @@ const EDIT_FARMER_GROUP_DETAIL = "EDIT_FARMER_GROUP_DETAIL";
 const DELETE_FARMER_GROUP_DETAIL = "DELETE_FARMER_GROUP_DETAIL";
 const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
+const SET_SORT_FILTER = "SET_SORT_FILTER";
 
 export type farmerGroupDetail = {
   id: string;
@@ -25,6 +26,8 @@ interface farmerGroupDetailsContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
+  sortFilter: "ascending" | "descending";
+  setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
   addFarmerGroupDetail: (data: farmerGroupDetail) => void;
   editFarmerGroupDetail: (data: farmerGroupDetail) => void;
@@ -63,6 +66,8 @@ const initialState: farmerGroupDetailsContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
+  sortFilter: "ascending",
+  setSortFilter: () => {},
   setSearchFilter: () => {},
   addFarmerGroupDetail: () => {},
   editFarmerGroupDetail: () => {},
@@ -96,6 +101,9 @@ const reducer = (state: farmerGroupDetailsContextType, action: any) => {
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
+    case SET_SORT_FILTER:
+      return { ...state, sortFilter: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -122,6 +130,9 @@ const FarmerGroupDetailsContextProvider: FC<Props> = (props) => {
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
+  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+    dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
+  };
 
   let data = {
     ...state,
@@ -129,6 +140,7 @@ const FarmerGroupDetailsContextProvider: FC<Props> = (props) => {
     editFarmerGroupDetail,
     deleteFarmerGroupDetail,
     setSearchFilter,
+    setSortFilter,
     setPage,
   };
 
