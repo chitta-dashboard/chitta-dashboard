@@ -165,6 +165,21 @@ namespace S {
   export const HiddenInput = styled("input")(({ theme }) => ({
     display: "none",
   }));
+
+  export const EmptyMsg = styled("tbody")(({ theme }) => ({
+    position: "relative",
+    "> tr > td": {
+      color: theme.palette.text.secondaryLight,
+      fontSize: "1.2rem",
+      textAlign: "center",
+      fontWeight: "500",
+      padding: "2rem 0",
+      position: "absolute",
+      top: "50%",
+      left: "47%",
+      translate: "transform(-50%, -50%)",
+    },
+  }));
 }
 
 export default S;

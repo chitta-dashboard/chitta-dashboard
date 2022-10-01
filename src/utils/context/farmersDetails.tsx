@@ -6,6 +6,7 @@ const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
@@ -47,6 +48,8 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
+  searchFilter: string;
+  setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
   addFarmerDetail: (data: farmerDetail) => void;
   editFarmerDetail: (data: farmerDetail) => void;
@@ -227,6 +230,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   ],
+  searchFilter: "",
+  setSearchFilter: () => {},
   selectedFarmers: [],
   addFarmerDetail: () => {},
   editFarmerDetail: () => {},
@@ -257,6 +262,8 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
       return { ...state, farmersList: [...data, action.payload] };
+    case SET_SEARCH_FILTER:
+      return { ...state, searchFilter: action.payload };
     case CHECKBOX_SELECT_ALL:
       if (state.selectedFarmers.length === state.farmersList.length) {
         return {
@@ -295,17 +302,20 @@ export const farmerDetailsContext = createContext<farmerDetailsContextType>(init
 const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  state.addFarmerDetail = (data: farmerDetail) => {
+  const addFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: ADD_FARMER_DETAIL, payload: data });
   };
-  state.editFarmerDetail = (data: farmerDetail) => {
+  const editFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: EDIT_FARMER_DETAIL, payload: data });
   };
-  state.deleteFarmerDetail = (id: string) => {
+  const deleteFarmerDetail = (id: string) => {
     dispatch({ type: DELETE_FARMER_DETAIL, payload: id });
   };
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
+  };
+  const setSearchFilter = (searchText: string) => {
+    dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
   const checkboxSelectAll = () => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
@@ -316,7 +326,11 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
 
   let data = {
     ...state,
+    addFarmerDetail,
+    editFarmerDetail,
+    deleteFarmerDetail,
     editTableIcon,
+    setSearchFilter,
     checkboxSelectAll,
     checkboxSelect,
   };
