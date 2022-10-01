@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Stack, TableRow } from "@mui/material";
+import { TableRow } from "@mui/material";
+
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
@@ -14,12 +15,16 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  let { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter } = useMdDetailsContext();
+  let { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, page, rowsPerPage } = useMdDetailsContext();
   const [mdList, setMdList] = useState(listData);
 
   useEffect(() => {
     setMdList(listData.filter((md) => searchWord(md.name, searchFilter)));
   }, [searchFilter, listData]);
+
+  useEffect(() => {
+    setMdList(listData.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
+  }, [listData, page, rowsPerPage]);
 
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
@@ -87,9 +92,7 @@ const Body = () => {
           {mdList.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <Stack>
-                  <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
-                </Stack>
+                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>

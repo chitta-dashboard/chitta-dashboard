@@ -6,6 +6,7 @@ const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
@@ -48,6 +49,8 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
+  page: number;
+  rowsPerPage: number;
   searchFilter: string;
   setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
@@ -55,6 +58,7 @@ interface farmerDetailsContextType {
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
+  setPage: (page: number) => void;
   checkboxSelectAll: () => void;
   checkboxSelect: (id: string | number) => void;
 }
@@ -67,7 +71,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-1",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -95,7 +99,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-3",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -123,7 +127,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-3",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -151,7 +155,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-1",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -179,7 +183,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-1",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -207,7 +211,7 @@ const initialState: farmerDetailsContextType = {
       profile: profileImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்",
+      group: "விவசாயிகள் சங்கம்-3",
       fatherName: "",
       sex: "",
       spouseName: "",
@@ -230,6 +234,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   ],
+  page: 1,
+  rowsPerPage: 6,
   searchFilter: "",
   setSearchFilter: () => {},
   selectedFarmers: [],
@@ -237,6 +243,7 @@ const initialState: farmerDetailsContextType = {
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
   editTableIcon: () => {},
+  setPage: () => {},
   checkboxSelectAll: () => {},
   checkboxSelect: () => {},
 };
@@ -262,6 +269,8 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
       return { ...state, farmersList: [...data, action.payload] };
+    case SET_PAGE:
+      return { ...state, page: action.payload };
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
     case CHECKBOX_SELECT_ALL:
@@ -314,6 +323,9 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
+  const setPage = (page: number) => {
+    dispatch({ type: SET_PAGE, payload: page });
+  };
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
@@ -330,6 +342,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     editFarmerDetail,
     deleteFarmerDetail,
     editTableIcon,
+    setPage,
     setSearchFilter,
     checkboxSelectAll,
     checkboxSelect,
