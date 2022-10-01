@@ -5,13 +5,11 @@ import Footer from "./footer";
 
 const MdDetailsTable = () => {
   return (
-    <>
-      <TableWrapper>
-        <Header />
-        <Body />
-        <Footer />
-      </TableWrapper>
-    </>
+    <TableWrapper>
+      <Header />
+      <Body />
+      <Footer />
+    </TableWrapper>
   );
 };
 

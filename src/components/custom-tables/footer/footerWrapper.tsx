@@ -21,8 +21,8 @@ namespace S {
     color: theme.palette.text.secondary,
     opacity: theme.palette.shadeOpacity,
   }));
-  export const PageStack = styled(Stack)(({ theme }) => ({
-    padding: "0 0.8rem",
+  export const PageStack = styled(Stack)(() => ({
+    // padding: "0 1.25rem",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, FC } from "react";
 import { Popover } from "@mui/material";
-import { FC } from "react";
-
 import IconWrapper from "../../../utils/iconWrapper";
-
 import S from "./rightSection.styled";
+
 interface RightSectionProps {
   addModalHandler?: () => void;
+  sortHandler?: (sortOrder: "ascending" | "descending") => void;
+  sortFilter?: "ascending" | "descending";
 }
 
-const RightSection: FC<RightSectionProps> = (props) => {
+const RightSection: FC<RightSectionProps> = ({ addModalHandler, sortFilter, sortHandler }) => {
   const [popoverOpen, setPopoverOpen] = useState<HTMLButtonElement | null>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -24,9 +24,9 @@ const RightSection: FC<RightSectionProps> = (props) => {
 
   return (
     <S.RightSectionContainer>
-      <S.CustomSpan aria-describedby={open ? "simple-popover" : undefined} onClick={handleClick}>
-        <IconWrapper>filter</IconWrapper>
-      </S.CustomSpan>
+      <IconWrapper aria-describedby={open ? "simple-popover" : undefined} onClick={handleClick}>
+        filter
+      </IconWrapper>
       <Popover
         id={open ? "simple-popover" : undefined}
         open={open}
@@ -46,10 +46,18 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.PopoverText onClick={handleClose}>Without Member</S.PopoverText>
       </Popover>
 
-      <IconWrapper>sort</IconWrapper>
+      <IconWrapper
+        isGreen={sortFilter === "descending"}
+        onClick={() => {
+          sortHandler && sortHandler(sortFilter === "ascending" ? "descending" : "ascending");
+        }}
+        tooltip={sortFilter}
+      >
+        sort
+      </IconWrapper>
       <S.CustomButton
         onClick={() => {
-          if (props.addModalHandler) props.addModalHandler();
+          addModalHandler && addModalHandler();
         }}
       >
         Add

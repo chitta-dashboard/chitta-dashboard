@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Checkbox, Stack } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { fileValidation, searchWord } from "../../../../utils/constants";
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import BodyWrapper from "../../../custom-tables/body";
@@ -35,9 +35,15 @@ const Body = () => {
     searchFilter,
     checkboxSelect,
     selectedFarmers,
+    sortFilter,
+    rowsPerPage,
+    page,
   } = useFarmerDetailsContext();
-  const [farmersList, setFarmersList] = useState(listData);
 
+  const [farmersListSearch, setFarmersListSearch] = useState(listData);
+  const [farmersListSort, setFarmersListSort] = useState(listData);
+  const [farmersListPaginate, setFarmersListPaginate] = useState(listData);
+  const [farmersList, setFarmersList] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -45,8 +51,20 @@ const Body = () => {
   const [editId, setEditId] = useState<string>("");
 
   useEffect(() => {
-    setFarmersList(listData.filter((farmer) => searchWord(farmer.name, searchFilter)));
-  }, [listData, searchFilter]);
+    setFarmersListSearch(listData.filter((farmer) => searchWord(farmer.name, searchFilter)));
+  }, [searchFilter, listData]);
+
+  useEffect(() => {
+    setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
+  }, [farmersListSearch, sortFilter]);
+
+  useEffect(() => {
+    setFarmersListPaginate(farmersListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
+  }, [farmersListSort, page, rowsPerPage]);
+
+  useEffect(() => {
+    setFarmersList(farmersListPaginate);
+  }, [farmersListPaginate]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {
@@ -139,6 +157,7 @@ const Body = () => {
               <S.TabCell
                 onClick={(e) => {
                   e.stopPropagation();
+                  handleIconClick(user.id);
                 }}
               >
                 <Checkbox
@@ -185,7 +204,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td> No Data</td>
+            <td>No Farmers Details Data</td>
           </tr>
         </S.EmptyMsg>
       )}
