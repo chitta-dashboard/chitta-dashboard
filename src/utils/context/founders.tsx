@@ -98,42 +98,6 @@ const initialState: mdDetailsContextType = {
       dob: "2022-01-01",
       signature: "",
     },
-    {
-      id: "7",
-      profile: profileImg,
-      name: "Pari",
-      phoneNumber: "8610010875",
-      qualification: "Higher Secondary",
-      dob: "2022-01-01",
-      signature: "",
-    },
-    {
-      id: "8",
-      profile: profileImg,
-      name: "Arjunan",
-      phoneNumber: "9095781278",
-      qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
-      signature: "",
-    },
-    {
-      id: "9",
-      profile: profileImg,
-      name: "Karnan",
-      phoneNumber: "8889955673",
-      qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
-      signature: "",
-    },
-    {
-      id: "10",
-      profile: profileImg,
-      name: "Arul",
-      phoneNumber: "8610010875",
-      qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
-      signature: "",
-    },
   ],
   page: 1,
   rowsPerPage: 6,
@@ -196,9 +160,9 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   }
 };
 
-export const mdDetailsContext = createContext<mdDetailsContextType>(initialState);
+export const foundersContext = createContext<mdDetailsContextType>(initialState);
 
-const MdDetailsContextProvider: FC<Props> = (props) => {
+const FoundersContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const addMdDetail = (data: mdDetail) => {
@@ -238,9 +202,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     setSortFilter,
   };
 
-  return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;
+  return <foundersContext.Provider value={data}>{props.children}</foundersContext.Provider>;
 };
 
-const useMdDetailsContext = () => useContext(mdDetailsContext);
+const useFounderContext = () => useContext(foundersContext);
 
-export { MdDetailsContextProvider, useMdDetailsContext };
+export { FoundersContextProvider, useFounderContext };
