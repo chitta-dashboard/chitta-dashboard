@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TableRow } from "@mui/material";
 
 import BodyWrapper from "../../../custom-tables/body";
@@ -7,12 +7,18 @@ import DeleteModal from "../../../modals/delete-modal";
 import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
+import { searchWord } from "../../../../utils/constants";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
 const Body = () => {
-  const { farmerGroupList, editFarmerGroupDetail, deleteFarmerGroupDetail } = useFarmerGroupDetailsContext();
+  const { farmerGroupList: listData, editFarmerGroupDetail, deleteFarmerGroupDetail, searchFilter } = useFarmerGroupDetailsContext();
+  const [farmerGroupList, setFarmerGroupList] = useState(listData);
+
+  useEffect(() => {
+    setFarmerGroupList(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
+  }, [searchFilter, listData]);
 
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
@@ -45,25 +51,34 @@ const Body = () => {
 
   return (
     <>
-      <BodyWrapper>
-        {farmerGroupList.map((farmersGroup) => {
-          return (
-            <TableRow key={farmersGroup.id}>
-              <S.TabCell>
-                <CS.Icon onClick={() => iconModalHandler(farmersGroup.id as string)}>three-dots</CS.Icon>
-              </S.TabCell>
-              <S.Cell title="குழுபெயர்">{farmersGroup.groupName}</S.Cell>
-              <S.Cell title="குழு விவரங்கள்">{farmersGroup.explanation}</S.Cell>
-              <S.WebTableCell>
-                <S.IconBox>
-                  <CS.Icon onClick={() => deleteModalHandler(farmersGroup.id as string)}>delete</CS.Icon>
-                  <CS.Icon onClick={() => editFarmerGroupHandler(farmersGroup.id as string)}>edit</CS.Icon>
-                </S.IconBox>
-              </S.WebTableCell>
-            </TableRow>
-          );
-        })}
-      </BodyWrapper>
+      {farmerGroupList.length > 0 ? (
+        <BodyWrapper>
+          {farmerGroupList.map((farmersGroup) => {
+            return (
+              <TableRow key={farmersGroup.id}>
+                <S.TabCell>
+                  <CS.Icon onClick={() => iconModalHandler(farmersGroup.id as string)}>three-dots</CS.Icon>
+                </S.TabCell>
+                <S.Cell title="குழுபெயர்">{farmersGroup.groupName}</S.Cell>
+                <S.Cell title="குழு விவரங்கள்">{farmersGroup.explanation}</S.Cell>
+                <S.WebTableCell>
+                  <S.IconBox>
+                    <CS.Icon onClick={() => deleteModalHandler(farmersGroup.id as string)}>delete</CS.Icon>
+                    <CS.Icon onClick={() => editFarmerGroupHandler(farmersGroup.id as string)}>edit</CS.Icon>
+                  </S.IconBox>
+                </S.WebTableCell>
+              </TableRow>
+            );
+          })}
+        </BodyWrapper>
+      ) : (
+        <S.EmptyMsg>
+          <tr>
+            <td> No Data</td>
+          </tr>
+        </S.EmptyMsg>
+      )}
+
       <FarmersGroupModal
         open={iconModal}
         handleClose={() => setIconModal(false)}

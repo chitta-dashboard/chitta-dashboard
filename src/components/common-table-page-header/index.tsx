@@ -6,13 +6,14 @@ import RightSection from "./right-section";
 import S from "./tablePageHeader.styled";
 interface TablePageHeaderProps {
   addModalHandler?: () => void;
+  searchHandler?: (searchText: string) => void;
 }
 
-const TablePageHeader: FC<TablePageHeaderProps> = (props) => {
+const TablePageHeader: FC<TablePageHeaderProps> = ({ searchHandler, addModalHandler }) => {
   return (
     <S.PageHeaderContainer>
-      <LeftSection />
-      <RightSection addModalHandler={props.addModalHandler} />
+      <LeftSection searchHandler={searchHandler} />
+      <RightSection addModalHandler={addModalHandler} />
     </S.PageHeaderContainer>
   );
 };

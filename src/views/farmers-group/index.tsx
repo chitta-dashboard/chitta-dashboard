@@ -4,13 +4,13 @@ import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../components/modals/type/formInputs";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
-import { FarmerGroupDetailsContextProvider, useFarmerGroupDetailsContext } from "../../utils/context/farmersGroup";
+import { useFarmerGroupDetailsContext } from "../../utils/context/farmersGroup";
 
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addFarmerGroupDetail } = useFarmerGroupDetailsContext();
+  const { addFarmerGroupDetail, setSearchFilter } = useFarmerGroupDetailsContext();
 
   //Add Modal Handler
   const addModalHandler = () => {
@@ -23,13 +23,13 @@ const FarmersGroup = () => {
   };
 
   return (
-    <FarmerGroupDetailsContextProvider>
+    <>
       <S.FarmersGroupContainer>
-        <TablePageHeader addModalHandler={addModalHandler} />
+        <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
         <FarmersGroupTable />
       </S.FarmersGroupContainer>
       <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
-    </FarmerGroupDetailsContextProvider>
+    </>
   );
 };
 

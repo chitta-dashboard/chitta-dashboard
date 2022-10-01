@@ -27,6 +27,7 @@ export interface IAddFarmersDetailsPage1Input {
   addhaarNo: string;
   voterIdNo: string;
   acre: string;
+  profile: string;
 }
 
 export interface IAddFarmersDetailsPage2Input {
@@ -61,4 +62,5 @@ export interface IAddMDDetailsFormInput {
   qualification: string;
   dob: string;
   signature: string;
+  profile: string;
 }

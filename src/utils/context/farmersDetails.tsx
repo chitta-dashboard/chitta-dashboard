@@ -6,6 +6,9 @@ const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
+const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
+const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
+const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type farmerDetail = {
   membershipId?: string;
@@ -34,7 +37,10 @@ export type farmerDetail = {
   seedType: string;
   animals: string;
   groupMember: string;
+  isChecked?: boolean;
 };
+
+export type selectedFarmer = number | string;
 
 type Props = {
   children: React.ReactNode | React.ReactNode[];
@@ -42,10 +48,15 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersList: farmerDetail[];
+  searchFilter: string;
+  setSearchFilter: (searchText: string) => void;
+  selectedFarmers: selectedFarmer[];
   addFarmerDetail: (data: farmerDetail) => void;
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
+  checkboxSelectAll: () => void;
+  checkboxSelect: (id: string | number) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -219,10 +230,15 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   ],
+  searchFilter: "",
+  setSearchFilter: () => {},
+  selectedFarmers: [],
   addFarmerDetail: () => {},
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
   editTableIcon: () => {},
+  checkboxSelectAll: () => {},
+  checkboxSelect: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -246,6 +262,35 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.farmersList.filter((item) => item.id !== action.payload.id);
       return { ...state, farmersList: [...data, action.payload] };
+    case SET_SEARCH_FILTER:
+      return { ...state, searchFilter: action.payload };
+    case CHECKBOX_SELECT_ALL:
+      if (state.selectedFarmers.length === state.farmersList.length) {
+        return {
+          ...state,
+          selectedFarmers: [],
+        };
+      } else {
+        return {
+          ...state,
+          selectedFarmers: [...state.farmersList.map((user) => user.id)],
+        };
+      }
+
+    case CHECKBOX_SELECT:
+      let farmerId = action.payload;
+      if (state.selectedFarmers.includes(farmerId)) {
+        return {
+          ...state,
+          selectedFarmers: state.selectedFarmers.filter((id) => id !== farmerId),
+        };
+      } else {
+        return {
+          ...state,
+          selectedFarmers: [...state.selectedFarmers, farmerId],
+        };
+      }
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -257,22 +302,37 @@ export const farmerDetailsContext = createContext<farmerDetailsContextType>(init
 const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  state.addFarmerDetail = (data: farmerDetail) => {
+  const addFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: ADD_FARMER_DETAIL, payload: data });
   };
-  state.editFarmerDetail = (data: farmerDetail) => {
+  const editFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: EDIT_FARMER_DETAIL, payload: data });
   };
-  state.deleteFarmerDetail = (id: string) => {
+  const deleteFarmerDetail = (id: string) => {
     dispatch({ type: DELETE_FARMER_DETAIL, payload: id });
   };
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
+  const setSearchFilter = (searchText: string) => {
+    dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
+  };
+  const checkboxSelectAll = () => {
+    dispatch({ type: CHECKBOX_SELECT_ALL });
+  };
+  const checkboxSelect = (id: string | number) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
+  };
 
   let data = {
     ...state,
+    addFarmerDetail,
+    editFarmerDetail,
+    deleteFarmerDetail,
     editTableIcon,
+    setSearchFilter,
+    checkboxSelectAll,
+    checkboxSelect,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

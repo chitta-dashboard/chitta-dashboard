@@ -21,7 +21,16 @@ namespace S {
     backgroundColor: theme.palette.primary.light,
   }));
 
-  export const ProfileContainer = styled(Box)(({ theme }) => ({}));
+  export const ProfileContainer = styled(Box)(({ theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+
+    ".MuiFormHelperText-root": {
+      marginTop: "4px",
+    },
+  }));
 }
 
 export default S;
