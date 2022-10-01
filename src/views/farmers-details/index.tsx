@@ -7,14 +7,20 @@ import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { IAddFarmersDetailsFormInput } from "../../components/modals/type/formInputs";
 
 import S from "./farmersDetails.styled";
+import ShareAmountModal from "../../components/modals/share-amount-modal";
 
 const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
+  const [shareModal, setShareModal] = useState(false);
   const { addFarmerDetail, setSearchFilter, sortFilter, setSortFilter } = useFarmerDetailsContext();
 
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
+  };
+  //Share Amount Modal Handler
+  const shareAmountModalHandler = () => {
+    setShareModal(!shareModal);
   };
   // Add Farmerdetail Handler
   const addDataHandler = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
@@ -29,9 +35,12 @@ const FarmersDetails = () => {
           searchHandler={setSearchFilter}
           sortFilter={sortFilter}
           sortHandler={setSortFilter}
+          shareAmountModalHandler={shareAmountModalHandler}
         />
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
+      <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
+
       <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>
   );
