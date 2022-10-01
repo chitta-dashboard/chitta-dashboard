@@ -22,7 +22,7 @@ const schema = yup
     decisionHeading: yup.string().required("required"),
     dob: yup.string().required("required"),
     selectAll: yup.string().nullable().required("required"),
-    qualification: yup.string().required("required"),
+    groupName: yup.string().required("required"),
     presenter: yup
       .array()
       .nullable()

@@ -10,7 +10,7 @@ import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addMdDetail, setSearchFilter } = useMdDetailsContext();
+  const { addMdDetail, setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
 
   const addModalHandler = () => {
     setAddModal(!addModal);
@@ -23,7 +23,7 @@ const MdDetails = () => {
   return (
     <>
       <S.MdDetailsContainer>
-        <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
+        <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
         <MdDetailsTable />
       </S.MdDetailsContainer>
       <AddMdDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
