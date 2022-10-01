@@ -121,23 +121,20 @@ namespace S {
     marginBottom: "8px",
   }));
 
-  export const ContentBodyText = styled(Typography)(({ theme }) => ({
+  export const ContentBodyText = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     opacity: theme.palette.shadeOpacity,
     fontSize: ".8rem",
 
-    maxHeight: "210px",
+    maxHeight: "57px",
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "-webkit-box",
-    WebkitLineClamp: "11",
+    WebkitLineClamp: "3",
     WebkitBoxOrient: "vertical",
 
-    [theme.breakpoints.down("md")]: {
-      // maxWidth: "200px",
-      // overflow: "hidden",
-      // textOverflow: "ellipsis",
-      // whiteSpace: "nowrap",
+    "> *": {
+      lineHeight: "1.5",
     },
   }));
 

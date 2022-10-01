@@ -3,11 +3,12 @@ import React, { createContext, useContext, useReducer } from "react";
 //ACTION TYPES
 const ADD_DECISION = "ADD_DECISION";
 
-interface IDecision {
+export interface IDecision {
   groupName: string;
   groupTitle: string;
-  groupDescription: string;
   timestamp: string;
+  groupDescription: string;
+  groupDescriptionRichText?: string;
 }
 
 interface IContextType {

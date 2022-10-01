@@ -10,7 +10,7 @@ import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addFarmerDetail, setSearchFilter } = useFarmerDetailsContext();
+  const { addFarmerDetail, setSearchFilter, sortFilter, setSortFilter } = useFarmerDetailsContext();
 
   //Add Modal Handler
   const addModalHandler = () => {
@@ -24,7 +24,12 @@ const FarmersDetails = () => {
   return (
     <>
       <S.FarmersDetailsContainer>
-        <FarmersDetailsTablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
+        <FarmersDetailsTablePageHeader
+          addModalHandler={addModalHandler}
+          searchHandler={setSearchFilter}
+          sortFilter={sortFilter}
+          sortHandler={setSortFilter}
+        />
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
       <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
