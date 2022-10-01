@@ -139,6 +139,7 @@ const Body = () => {
               <S.TabCell
                 onClick={(e) => {
                   e.stopPropagation();
+                        handleIconClick(user.id);
                 }}
               >
                 <Checkbox
