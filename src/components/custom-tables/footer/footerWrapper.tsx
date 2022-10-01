@@ -12,7 +12,7 @@ namespace S {
       border: "none",
     },
     "& .css-oznjvi-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected": {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: `${theme.palette.primary.light} !important`,
       color: "white",
     },
   }));
