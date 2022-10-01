@@ -8,6 +8,7 @@ export namespace S {
     borderRadius: "1.25rem",
     padding: "0.3rem 0.6rem 0 0.6rem",
     margin: "2rem auto",
+    border: "1px solid #6868684D",
   }));
 
   export const IdImage = styled("img")(({ theme }) => ({

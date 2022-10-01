@@ -48,7 +48,7 @@ const initialState: farmerGroupDetailsContextType = {
     {
       id: "2",
       groupName: "விவசாயிகள் சங்கம்-2",
-      explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      explanation: "இந்த குழு சோழர் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "Ponniyin Selvan",
       treasurer: "Kariakalan",
       secretary: "vanthiyadevan",
@@ -56,7 +56,7 @@ const initialState: farmerGroupDetailsContextType = {
     {
       id: "3",
       groupName: "விவசாயிகள் சங்கம்-3",
-      explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+      explanation: "இந்த குழு பாண்டியன் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "Ponniyin Selvan",
       treasurer: "Kariakalan",
       secretary: "vanthiyadevan",
