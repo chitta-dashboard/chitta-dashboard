@@ -117,7 +117,7 @@ const Body = () => {
             </td>
           </tr>
           {farmersList.map((user: farmerDetail) => (
-            <S.CustomTableRow key={user.id} onClick={(e) => NavigateToFarmerDetailForm(user.id)}>
+            <S.CustomTableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
               <S.RowCheckCell
                 onClick={(e) => {
                   e.stopPropagation();
