@@ -30,10 +30,11 @@ const Body = () => {
   // const test = groupList.some((e) => e === "விவசாயிகள் சங்கம்-2");
   // console.log("testcheck", test);
 
+  const [farmerGroupList, setFarmerGroupList] = useState(listData);
+
   useEffect(() => {
     setFarmerGroupList(listData.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
   }, [listData, page, rowsPerPage]);
-  const [farmerGroupList, setFarmerGroupList] = useState(listData);
 
   useEffect(() => {
     setFarmerGroupList(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
@@ -92,7 +93,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td> No Data</td>
+            <td>No Farmers Group Data</td>
           </tr>
         </S.EmptyMsg>
       )}

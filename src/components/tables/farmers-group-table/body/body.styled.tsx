@@ -21,6 +21,9 @@ namespace S {
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
+    "&:nth-of-type(2)": {
+      color: "red",
+    },
 
     "&:last-of-type": {
       width: "12%",
@@ -65,10 +68,7 @@ namespace S {
       fontSize: "1.2rem",
       textAlign: "center",
       fontWeight: "500",
-      padding: "2rem 0",
-      position: "absolute",
-      top: "50%",
-      left: "47%",
+      padding: "3rem 0",
       translate: "transform(-50%, -50%)",
     },
   }));
