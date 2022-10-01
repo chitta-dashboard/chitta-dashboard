@@ -20,22 +20,25 @@ namespace S {
     alignItems: "center",
     flexDirection: "column",
   }));
+
   export const ContainerStack = styled(Stack)(({ theme }) => ({
     alignItems: "center",
     width: "100%",
     height: "100%",
-    gap: "2rem",
+    gap: "3.5rem",
   }));
+
   export const Adminform = styled("form")(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    width: "50%",
+    width: "60%",
     height: "100%",
     gap: "1rem",
     minWidth: "35rem",
     padding: "0rem 2rem",
   }));
+
   export const ButtonBox = styled(Box)(({ theme }) => ({
     width: "100%",
     display: "flex",
@@ -43,6 +46,7 @@ namespace S {
     paddingBottom: "2rem",
     paddingTop: "1rem",
   }));
+
   export const UpdateButton = styled(Button)(({ theme }) => ({
     width: "30%",
   }));

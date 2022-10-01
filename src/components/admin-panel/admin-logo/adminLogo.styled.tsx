@@ -12,24 +12,27 @@ namespace S {
     lineHeight: "1.688rem",
   }));
   export const UploadStack = styled(Stack)(({ theme }) => ({
-    gap: "1rem",
+    gap: "2.5rem",
     width: "100%",
     flexDirection: "row",
     alignItems: "end",
     justifyContent: "space-between",
+
+    [theme.breakpoints.down("xl")]: {
+      flexWrap: "wrap",
+    },
   }));
 
   export const LogoStack = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "end",
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     width: "100%",
-    gap: "1rem",
+    gap: "2.5rem",
+
     [theme.breakpoints.down("xl")]: {
-      display: "grid",
-      gridTemplateColumns: "auto auto",
-      justifyContent: "start",
+      justifyContent: "center",
     },
   }));
 
