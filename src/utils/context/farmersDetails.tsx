@@ -11,6 +11,7 @@ const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
+const SELECT_FILTER = "SELECT_FILTER";
 
 export type farmerDetail = {
   membershipId?: string;
@@ -64,6 +65,8 @@ interface farmerDetailsContextType {
   setPage: (page: number) => void;
   checkboxSelectAll: () => void;
   checkboxSelect: (id: string | number) => void;
+  groupFilter: string;
+  setGroupFilter: (selectGroup: string) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -251,6 +254,8 @@ const initialState: farmerDetailsContextType = {
   setPage: () => {},
   checkboxSelectAll: () => {},
   checkboxSelect: () => {},
+  groupFilter: "all",
+  setGroupFilter: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -308,6 +313,9 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
 
+    case SELECT_FILTER:
+      return { ...state, groupFilter: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -340,6 +348,9 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const setSortFilter = (sortOrder: "ascending" | "descending") => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
+  const setGroupFilter = (selectGroup: string) => {
+    dispatch({ type: SELECT_FILTER, payload: selectGroup });
+  };
   const checkboxSelectAll = () => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
   };
@@ -358,6 +369,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setSortFilter,
     checkboxSelectAll,
     checkboxSelect,
+    setGroupFilter,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;
