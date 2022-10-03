@@ -1,6 +1,10 @@
-import { styled, Stack, TableCell } from "@mui/material";
+import { styled, Stack, TableCell, TableRow } from "@mui/material";
 
 namespace S {
+  export const Row = styled(TableRow)<{ select: number }>(({ theme, select }) => ({
+    backgroundColor: select ? theme.palette.custom.backgroundLight : "",
+  }));
+
   export const TabCell = styled(TableCell)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
