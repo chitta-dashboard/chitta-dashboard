@@ -3,11 +3,13 @@ import { Theme, useMediaQuery } from "@mui/material";
 import leftConnect from "../../../assets/images/leftDash.svg";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import { sortObj } from "../../../utils/constants";
 import S from "./decisionsList.styled";
 
 const DecisionsList: FC = () => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  const { decisions } = useDecisionsProviderContext();
+  const { decisions: decisionsObj } = useDecisionsProviderContext();
+  const decisions = sortObj<IDecision>(Object.values(decisionsObj), "descending", "creationTime", { asDate: true });
   const leftData = decisions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
   const rightData = isMd ? decisions : decisions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
 
@@ -16,7 +18,7 @@ const DecisionsList: FC = () => {
       {!isMd && (
         <S.LeftContainer>
           {leftData.map((data: IDecision) => (
-            <S.LContent key={data.groupName}>
+            <S.LContent key={data.id}>
               <S.ContentHeader>
                 <S.ContentTitle>{data.groupName}</S.ContentTitle>
                 <S.ContentViewBtn>View</S.ContentViewBtn>
@@ -35,7 +37,7 @@ const DecisionsList: FC = () => {
       <S.Divider />
       <S.RightContainer>
         {rightData.map((data: IDecision) => (
-          <S.RContent key={data.groupName}>
+          <S.RContent key={data.id}>
             <S.ContentHeader>
               <S.ContentTitle>{data.groupName}</S.ContentTitle>
               <S.ContentViewBtn>View</S.ContentViewBtn>

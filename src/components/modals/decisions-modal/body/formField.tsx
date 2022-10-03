@@ -10,6 +10,7 @@ import TextInput from "../../../input-fields/text";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 import DateTimeInput from "../../../input-fields/dateTime";
+import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
 
 import S from "./decisionsModal.styled";
 
@@ -22,7 +23,8 @@ interface CustomProps {
 }
 
 const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, control }) => {
-  const selectAllGroup = useWatch<IAddDecisionsFormInput>({ name: "selectAll", control, defaultValue: "no" });
+  const selectAllGroup = useWatch<IAddDecisionsFormInput>({ name: "selectAll", control, defaultValue: "yes" });
+  const { farmerGroupList } = useFarmerGroupDetailsContext();
 
   useEffect(() => {
     if (selectAllGroup === "yes") setValue("groupName", "~All Groups~");
@@ -44,7 +46,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
               <FormHelperText>{errors.decisionHeading?.message}</FormHelperText>
               <Stack spacing={2} direction={"row"}>
                 <S.DateContainer width={"100%"}>
-                  <DateTimeInput<IAddDecisionsFormInput> register={register} inputName="creationTime" label="தீர்மானம் தேதி" />
+                  <DateTimeInput<IAddDecisionsFormInput> register={register} inputName="creationTime" label="தீர்மானம் தேதி" setDefault />
                   <FormHelperText>{errors.creationTime?.message}</FormHelperText>
                 </S.DateContainer>
                 {selectAllGroup === "yes" ? null : (
@@ -55,6 +57,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
                       label="குழு"
                       setValue={setValue}
                       trigger={trigger}
+                      selectOptions={farmerGroupList.map((g) => [g.groupName, g.groupName])}
                     />
                     <FormHelperText>{errors.groupName?.message}</FormHelperText>
                   </S.QualificationContainer>
