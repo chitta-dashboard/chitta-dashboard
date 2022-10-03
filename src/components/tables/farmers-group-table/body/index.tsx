@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { TableRow } from "@mui/material";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -10,6 +9,7 @@ import { searchWord, sortObj } from "../../../../utils/constants";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useNavigate } from "react-router-dom";
 
 const Body = () => {
   const {
@@ -21,7 +21,8 @@ const Body = () => {
     searchFilter,
     sortFilter,
   } = useFarmerGroupDetailsContext();
-  const { farmersList: farmersDetailsList } = useFarmerDetailsContext();
+  const { farmersList: farmersDetailsList, setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  const navigate = useNavigate();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -73,13 +74,22 @@ const Body = () => {
     editFarmerGroupDetail({ ...data, id: editId });
   };
 
+  const selectGroupHandler = (groupName: string) => {
+    setGroupFilter(groupName);
+    navigate(`/farmers-details`, { replace: true });
+  };
+
   return (
     <>
       {farmerGroupList.length > 0 ? (
         <BodyWrapper>
           {farmerGroupList.map((farmersGroup) => {
             return (
-              <TableRow key={farmersGroup.id}>
+              <S.Row
+                key={farmersGroup.id}
+                onClick={() => selectGroupHandler(farmersGroup.groupName)}
+                select={farmersGroup.groupName === groupFilter ? 1 : 0}
+              >
                 <S.TabCell>
                   <CS.Icon onClick={() => iconModalHandler(farmersGroup.id as string)}>three-dots</CS.Icon>
                 </S.TabCell>
@@ -93,7 +103,7 @@ const Body = () => {
                     <CS.Icon onClick={() => editFarmerGroupHandler(farmersGroup.id as string)}>edit</CS.Icon>
                   </S.IconBox>
                 </S.WebTableCell>
-              </TableRow>
+              </S.Row>
             );
           })}
         </BodyWrapper>

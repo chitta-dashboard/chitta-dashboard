@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { MenuItem } from "@mui/material";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 
 import S from "./selectDropdown.styled";
 
 const SelectDropDown = () => {
-  const [groupName, setGroupName] = useState("Farmer Group");
+  const { groupFilter, setGroupFilter } = useFarmerDetailsContext();
+  const selectHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setGroupFilter(event.target.value);
+  };
   return (
-    <S.SelectInput select value={groupName} onChange={(e) => setGroupName(e.target.value)}>
-      <MenuItem defaultValue="Farmer Group" value="Farmer Group">
-        Farmer Group
-      </MenuItem>
-      <MenuItem value="farmer group 1">Farmer Group 1</MenuItem>
-      <MenuItem value="farmer group 2">Farmer Group 2</MenuItem>
-      <MenuItem value="farmer group 3">Farmer Group 3</MenuItem>
+    // <S.SelectInput select value={groupFilter} onChange={selectHandler} defaultValue="விவசாயிகள் சங்கம்-1">
+    <S.SelectInput select value={groupFilter} onChange={selectHandler}>
+      <MenuItem value="all">Farmer Groups</MenuItem>
+      <MenuItem value="விவசாயிகள் சங்கம்-1">விவசாயிகள் சங்கம்-1</MenuItem>
+      <MenuItem value="விவசாயிகள் சங்கம்-2">விவசாயிகள் சங்கம்-2</MenuItem>
+      <MenuItem value="விவசாயிகள் சங்கம்-3">விவசாயிகள் சங்கம்-3</MenuItem>
     </S.SelectInput>
   );
 };
