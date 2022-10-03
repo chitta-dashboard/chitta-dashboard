@@ -38,8 +38,10 @@ const Body = () => {
     sortFilter,
     rowsPerPage,
     page,
+    groupFilter,
   } = useFarmerDetailsContext();
 
+  const [farmersListGroup, setFarmersListGroup] = useState(listData);
   const [farmersListSearch, setFarmersListSearch] = useState(listData);
   const [farmersListSort, setFarmersListSort] = useState(listData);
   const [farmersListPaginate, setFarmersListPaginate] = useState(listData);
@@ -51,8 +53,12 @@ const Body = () => {
   const [editId, setEditId] = useState<string>("");
 
   useEffect(() => {
-    setFarmersListSearch(listData.filter((farmer) => searchWord(farmer.name, searchFilter)));
-  }, [searchFilter, listData]);
+    setFarmersListGroup(groupFilter === "all" ? listData : listData.filter((list) => list.group === groupFilter));
+  }, [groupFilter, listData]);
+
+  useEffect(() => {
+    setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
+  }, [searchFilter, farmersListGroup]);
 
   useEffect(() => {
     setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
@@ -116,8 +122,8 @@ const Body = () => {
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
-  const NavigateToFarmerDetailForm = (id: string) => {
-    navigate(`/farmers-details/${id}`);
+  const NavigateToFarmerDetailForm = (farmerId: string) => {
+    navigate(`/farmers-details/${farmerId}`);
   };
 
   const handleCroppedImage = (image: string) => {

@@ -8,10 +8,10 @@ import FarmersDetailsModal from "./farmers-details-modal";
 import MdDetailsModal from "./md-details-modal";
 import DecisionsModal from "./decisions-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
-import { IAddDecisionsFormInput, IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
+import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
-import ShareAmountModal from "./share-amount-modal";
+import { IDecision } from "../../utils/context/decisionsContext";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -115,7 +115,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmerGroupDetailsContextProvider>
-      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
+      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IDecision): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );
