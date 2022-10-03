@@ -9,9 +9,9 @@ type Props = {};
 const DashboardStatCard = (props: Props) => {
   return (
     <>
-      <S.StatCardWrapper item sm={12} md={2.5} lg={2.5} xl={2.5}>
+      <S.StatCardWrapper item sm={12} md={3} lg={2.5} xl={2.5}>
         <CardHeader>
-          <Box>Statistics</Box>
+          Statistics
           <Box>
             <i>expand-right</i>
           </Box>
