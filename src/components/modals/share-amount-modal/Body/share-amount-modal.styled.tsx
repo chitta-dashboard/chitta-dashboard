@@ -29,7 +29,7 @@ namespace S {
     height: "4.0625rem",
     width: "9.375rem",
     border: "2px solid #1A9035 ",
-    borderRadius: "10px",
+    borderRadius: "0.625rem",
   }));
   export const FloatingAmount = styled(Box)(({ theme }) => ({
     position: "absolute",

@@ -1,8 +1,7 @@
 import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import AddDecisionsModal from "../../modals/decisions-modal";
-import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
-import { IAddDecisionsFormInput } from "../../modals/type/formInputs";
+import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import S from "./decisionsHeader.styled";
 
 interface CustomProps {
@@ -15,15 +14,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { decisions, addDecision } = useDecisionsProviderContext();
 
-  const addGroupData = (data: IAddDecisionsFormInput) => {
-    addDecision({
-      groupName: data.groupName,
-      groupTitle: data.decisionHeading,
-      groupDescription: data.description,
-      groupDescriptionRichText: data.descriptionRichText,
-      timestamp: data.creationTime,
-    });
-  };
+  const addGroupData = (data: IDecision) => addDecision(data);
 
   return (
     <>
@@ -33,11 +24,12 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
-          {decisions.length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
+          {Object.values(decisions).length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      <AddDecisionsModal openModal={modalOpen} handleClose={() => setModalOpen(false)} cb={addGroupData} />
+      {/* The below logic is because of dynamic current time updation in modal */}
+      {modalOpen && <AddDecisionsModal openModal={true} handleClose={() => setModalOpen(false)} cb={addGroupData} />}
     </>
   );
 };

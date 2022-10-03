@@ -17,27 +17,21 @@ namespace S {
     flexDirection: "row",
     alignItems: "end",
     justifyContent: "space-between",
-
-    [theme.breakpoints.down("xl")]: {
-      flexWrap: "wrap",
-    },
   }));
 
   export const LogoStack = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "end",
-    flexWrap: "wrap",
-    // justifyContent: "space-between",
+    justifyContent: "space-between",
     width: "100%",
-    gap: "2.5rem",
-
-    [theme.breakpoints.down("xl")]: {
-      justifyContent: "center",
-    },
+    gap: "1.5rem",
   }));
 
   export const logoImage = styled("img")<{ isColor: boolean }>(({ theme, isColor }) => ({
     filter: isColor ? "grayscale(100%)" : "",
+    objectFit: "contain",
+    width: "100%",
+    height: "100%",
   }));
 }
 

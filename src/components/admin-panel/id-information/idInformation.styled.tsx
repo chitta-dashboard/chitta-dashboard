@@ -1,4 +1,4 @@
-import { Stack, styled, TextField,Typography } from "@mui/material";
+import { Stack, styled, TextField, Typography } from "@mui/material";
 
 namespace S {
   export const ContainerStack = styled(Stack)(({ theme }) => ({
@@ -14,19 +14,19 @@ namespace S {
     color: "rgba(119, 119, 119, 1)",
     fontSize: "1.125rem",
     lineHeight: "1.688rem",
-    paddingBottom:"0.5rem",
+    paddingBottom: "0.5rem",
   }));
-  
+
   export const IdInput = styled(TextField)(({ theme }) => ({
     backgroundColor: "#FFFFFF",
     width: "100%",
     borderRadius: "0.625rem",
     textAlign: "center",
-    "& .MuiFormLabel-root":{
-      color:theme.palette.primary.light
-  },
+    "& .MuiFormLabel-root": {
+      color: theme.palette.primary.light,
+    },
     "& .MuiFormHelperText-root": {
-      color: `${theme.palette.error.main}`,
+      color: "#FF0000",
       textAlign: "left",
       padding: "0.4rem 0rem",
       margin: "0%",
@@ -61,6 +61,5 @@ namespace S {
       },
     },
   }));
-
 }
 export default S;

@@ -1,14 +1,37 @@
-import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import { Ref, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+
+import { sortObj } from "../../../utils/constants";
+import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 import S from "./decisionsTree.styled";
 
 const DecisionsTree = () => {
-  const { decisions } = useDecisionsProviderContext();
+  const { decisions: decisionsObj } = useDecisionsProviderContext();
+  const decisions = sortObj<IDecision>(Object.values(decisionsObj), "descending", "creationTime", { asDate: true });
   const leafCount = decisions.length <= 4 ? decisions.length : 4;
+  const navigate = useNavigate();
+  const DecisionFormPdf = useRef<HTMLDivElement>();
+
+  const NavigateResolutionGroup = (resolutionId: string) => {
+    navigate(`/board-resolution/${resolutionId}`);
+  };
+
+  // to generate pdf of decision form
+  const generateDecisionPDF = useReactToPrint({
+    documentTitle: `Nerkathir_${+new Date()}`,
+    content: () => DecisionFormPdf.current as HTMLDivElement,
+  });
 
   return (
     <>
+      <S.InvisibleBox>
+        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
+      </S.InvisibleBox>
       <S.DecisionsTreeBox leafCount={leafCount}>
         <S.Bud>
+          {/* don't remove. needed for styling. */}
           <span></span>
         </S.Bud>
         {leafCount >= 1 && (
@@ -17,8 +40,18 @@ const DecisionsTree = () => {
             <S.DecisionTitle>{decisions[0].groupName}</S.DecisionTitle>
             <S.DecisionDescription>{decisions[0].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
-              <S.ViewBtn>View</S.ViewBtn>
-              <S.DownloadBtn>
+              <S.ViewBtn
+                onClick={() => {
+                  NavigateResolutionGroup(decisions[0].id);
+                }}
+              >
+                View
+              </S.ViewBtn>
+              <S.DownloadBtn
+                onClick={() => {
+                  generateDecisionPDF();
+                }}
+              >
                 <i>download</i>
               </S.DownloadBtn>
             </S.ButtonsBar>
@@ -30,8 +63,18 @@ const DecisionsTree = () => {
             <S.DecisionTitle>{decisions[2].groupName}</S.DecisionTitle>
             <S.DecisionDescription>{decisions[2].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
-              <S.ViewBtn>View</S.ViewBtn>
-              <S.DownloadBtn>
+              <S.ViewBtn
+                onClick={() => {
+                  NavigateResolutionGroup(decisions[2].id);
+                }}
+              >
+                View
+              </S.ViewBtn>
+              <S.DownloadBtn
+                onClick={() => {
+                  generateDecisionPDF();
+                }}
+              >
                 <i>download</i>
               </S.DownloadBtn>
             </S.ButtonsBar>
@@ -43,8 +86,18 @@ const DecisionsTree = () => {
             <S.DecisionTitle>{decisions[1].groupName}</S.DecisionTitle>
             <S.DecisionDescription>{decisions[1].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
-              <S.ViewBtn>View</S.ViewBtn>
-              <S.DownloadBtn>
+              <S.ViewBtn
+                onClick={() => {
+                  NavigateResolutionGroup(decisions[1].id);
+                }}
+              >
+                View
+              </S.ViewBtn>
+              <S.DownloadBtn
+                onClick={() => {
+                  generateDecisionPDF();
+                }}
+              >
                 <i>download</i>
               </S.DownloadBtn>
             </S.ButtonsBar>
@@ -56,8 +109,18 @@ const DecisionsTree = () => {
             <S.DecisionTitle>{decisions[3].groupName}</S.DecisionTitle>
             <S.DecisionDescription>{decisions[3].groupTitle}</S.DecisionDescription>
             <S.ButtonsBar>
-              <S.ViewBtn>View</S.ViewBtn>
-              <S.DownloadBtn>
+              <S.ViewBtn
+                onClick={() => {
+                  NavigateResolutionGroup(decisions[3].id);
+                }}
+              >
+                View
+              </S.ViewBtn>
+              <S.DownloadBtn
+                onClick={() => {
+                  generateDecisionPDF();
+                }}
+              >
                 <i>download</i>
               </S.DownloadBtn>
             </S.ButtonsBar>
