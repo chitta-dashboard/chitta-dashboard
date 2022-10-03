@@ -121,15 +121,20 @@ namespace S {
     marginBottom: "8px",
   }));
 
-  export const ContentBodyText = styled(Typography)(({ theme }) => ({
+  export const ContentBodyText = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     opacity: theme.palette.shadeOpacity,
     fontSize: ".8rem",
-    [theme.breakpoints.down("md")]: {
-      // maxWidth: "200px",
-      // overflow: "hidden",
-      // textOverflow: "ellipsis",
-      // whiteSpace: "nowrap",
+
+    maxHeight: "57px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: "3",
+    WebkitBoxOrient: "vertical",
+
+    "> *": {
+      lineHeight: "1.5",
     },
   }));
 

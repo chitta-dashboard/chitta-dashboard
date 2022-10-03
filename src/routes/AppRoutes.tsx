@@ -6,8 +6,8 @@ import CEODetails from "../views/ceo-details";
 import MDDetails from "../views/md-details";
 import FarmersGroup from "../views/farmers-group";
 import FarmersDetails from "../views/farmers-details";
-import Cultivation from "../views/cultivation";
-import Register from "../views/register";
+import Founders from "../views/founders";
+import AdminPanel from "../views/admin-panel";
 import Decisions from "../views/decisions";
 import NotFound from "../views/not-found";
 import FarmerDetailPage from "../views/farmer-detail-page";
@@ -22,9 +22,9 @@ const AppRouters: FC = () => {
       <Route path={`/farmers-group`} element={<FarmersGroup />} />
       <Route path={`/farmers-details`} element={<FarmersDetails />} />
       <Route path={`/farmers-details/:id`} element={<FarmerDetailPage />} />
-      <Route path={`/cultivation`} element={<Cultivation />} />
-      <Route path={`/register`} element={<Register />} />
-      <Route path={`/decisions`} element={<Decisions />} />
+      <Route path={`/founders`} element={<Founders />} />
+      <Route path={`/admin-panel`} element={<AdminPanel />} />
+      <Route path={`/board-resolution`} element={<Decisions />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

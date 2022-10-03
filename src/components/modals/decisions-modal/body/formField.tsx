@@ -1,25 +1,35 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { Control, useWatch } from "react-hook-form";
+import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { FormHelperText, Grid, Stack } from "@mui/material";
 
-import DateInput from "../../../input-fields/date";
 import MultipleSelectChip from "../../../input-fields/multiselect";
 import RadioButton from "../../../input-fields/radio";
 import SelectField from "../../../input-fields/select";
 import TextInput from "../../../input-fields/text";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
+import DateTimeInput from "../../../input-fields/dateTime";
 
 import S from "./decisionsModal.styled";
-import { UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 
 interface CustomProps {
   register: UseFormRegister<IAddDecisionsFormInput>;
   errors: any;
   setValue: UseFormSetValue<IAddDecisionsFormInput>;
   trigger: UseFormTrigger<IAddDecisionsFormInput>;
+  control: Control<IAddDecisionsFormInput>;
 }
 
-const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => {
+const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, control }) => {
+  const selectAllGroup = useWatch<IAddDecisionsFormInput>({ name: "selectAll", control, defaultValue: "no" });
+
+  useEffect(() => {
+    if (selectAllGroup === "yes") setValue("groupName", "~All Groups~");
+    else setValue("groupName", "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectAllGroup]);
+
   return (
     <>
       <S.InputContainer>
@@ -34,19 +44,21 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
               <FormHelperText>{errors.decisionHeading?.message}</FormHelperText>
               <Stack spacing={2} direction={"row"}>
                 <S.DateContainer width={"100%"}>
-                  <DateInput<IAddDecisionsFormInput> register={register} inputName="dob" label="பிறந்த தேதி" />
-                  <FormHelperText>{errors.dob?.message}</FormHelperText>
+                  <DateTimeInput<IAddDecisionsFormInput> register={register} inputName="creationTime" label="தீர்மானம் தேதி" />
+                  <FormHelperText>{errors.creationTime?.message}</FormHelperText>
                 </S.DateContainer>
-                <S.QualificationContainer width={"100%"}>
-                  <SelectField<IAddDecisionsFormInput>
-                    register={register}
-                    inputName="qualification"
-                    label="தகுதி"
-                    setValue={setValue}
-                    trigger={trigger}
-                  />
-                  <FormHelperText>{errors.qualification?.message}</FormHelperText>
-                </S.QualificationContainer>
+                {selectAllGroup === "yes" ? null : (
+                  <S.QualificationContainer width={"100%"}>
+                    <SelectField<IAddDecisionsFormInput>
+                      register={register}
+                      inputName="groupName"
+                      label="குழு"
+                      setValue={setValue}
+                      trigger={trigger}
+                    />
+                    <FormHelperText>{errors.groupName?.message}</FormHelperText>
+                  </S.QualificationContainer>
+                )}
               </Stack>
               <MultipleSelectChip<IAddDecisionsFormInput>
                 register={register}

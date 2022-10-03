@@ -1,5 +1,5 @@
-import { FieldValues, Path, PathValue, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
-
+import React from "react";
+import { FieldValues, Path, PathValue, UseFormClearErrors, UseFormRegister, UseFormSetError, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import S from "./file.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -9,9 +9,20 @@ interface CustomProps<FormInputType extends FieldValues> {
   helperText: string;
   setValue: UseFormSetValue<FormInputType>;
   trigger: UseFormTrigger<FormInputType>;
+  setError: UseFormSetError<FormInputType>;
+  clearErrors: UseFormClearErrors<FormInputType>;
 }
 
-function FileInput<FormInputTypes>({ label, register, helperText, inputName, setValue, trigger }: CustomProps<FormInputTypes & FieldValues>) {
+function FileInput<FormInputTypes>({
+  label,
+  register,
+  helperText,
+  inputName,
+  setValue,
+  trigger,
+  setError,
+  clearErrors,
+}: CustomProps<FormInputTypes & FieldValues>) {
   return (
     <>
       <S.ChooseFile
@@ -19,10 +30,10 @@ function FileInput<FormInputTypes>({ label, register, helperText, inputName, set
         label={label}
         type="file"
         helperText={helperText}
-        onChange={(e: any) => {
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setValue(
             inputName as Path<FormInputTypes & FieldValues>,
-            e.target.files[0] as PathValue<FormInputTypes & FieldValues, Path<FormInputTypes & FieldValues>>,
+            (e.target.files as FileList)[0] as PathValue<FormInputTypes & FieldValues, Path<FormInputTypes & FieldValues>>,
           );
           trigger(inputName as Path<FormInputTypes & FieldValues>);
         }}
