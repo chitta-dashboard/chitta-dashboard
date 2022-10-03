@@ -1,13 +1,14 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 
 import S from "./share-amount-modal.styled";
 import peopleIcon from "../../../../assets/images/People-icon.svg";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
-interface CustomProps {}
+interface CustomProps {
+  setShareAmount: Dispatch<SetStateAction<number>>;
+}
 
-const ShareDetailBody: FC<CustomProps> = () => {
-  const [shareAmount, setShareAmount] = useState(1000);
+const ShareDetailBody: FC<CustomProps> = ({ setShareAmount }) => {
   const { selectedFarmers } = useFarmerDetailsContext();
 
   const shareAmountHandler = (e: any) => {
@@ -32,6 +33,7 @@ const ShareDetailBody: FC<CustomProps> = () => {
             shareAmountHandler(e);
           }}
           type="number"
+          min="1000"
         />
       </S.ShareDetailRight>
     </S.ShareDetailBodyContainer>

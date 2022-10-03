@@ -1,4 +1,4 @@
-import { styled, Stack, TableCell, Typography, Box, TableRow } from "@mui/material";
+import { styled, Stack, TableCell, Box, TableRow } from "@mui/material";
 
 namespace S {
   export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(() => ({

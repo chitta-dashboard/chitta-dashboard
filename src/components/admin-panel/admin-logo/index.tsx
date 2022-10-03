@@ -41,7 +41,7 @@ export const ReactImageFileResizer = ({
     }
   }, [file, height, width]);
 
-  return <S.logoImage style={{ width: width, height: height }} isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
+  return <S.logoImage isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
 const AdminLogo = () => {
@@ -51,10 +51,12 @@ const AdminLogo = () => {
     try {
       const file = event.target.files?.[0];
       if (file) {
-        setFile(file);
+        if (file.type === "image/png" || file.type === "image/jpeg") {
+          setFile(file);
+        }
       }
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 

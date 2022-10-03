@@ -23,7 +23,7 @@ namespace S {
       color: theme.palette.primary.light,
     },
     "& .MuiFormHelperText-root": {
-      color: `${theme.palette.error.main}`,
+      color: "#FF0000",
       textAlign: "left",
       padding: "0.4rem 0rem",
       margin: "0%",

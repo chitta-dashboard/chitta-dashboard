@@ -1,4 +1,4 @@
-import { Ref, useRef, useState } from "react";
+import { useState } from "react";
 
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
@@ -8,14 +8,11 @@ import { IAddFarmersDetailsFormInput } from "../../components/modals/type/formIn
 
 import S from "./farmersDetails.styled";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
-import { useReactToPrint } from "react-to-print";
-import TamilShareHolderCertificate from "../tamil-share-certificate";
 
 const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
   const { addFarmerDetail, setSearchFilter, sortFilter, setSortFilter } = useFarmerDetailsContext();
-  const pdftamilcertificate = useRef<HTMLDivElement>();
 
   //Add Modal Handler
   const addModalHandler = () => {
@@ -30,17 +27,8 @@ const FarmersDetails = () => {
     addFarmerDetail(data);
   };
 
-  // to generate Tamil share holder certificate
-  const generateTamilCertificatePDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
-    content: () => pdftamilcertificate.current as HTMLDivElement,
-  });
-
   return (
     <>
-      <S.InvisibleBox>
-        <TamilShareHolderCertificate ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
-      </S.InvisibleBox>
       <S.FarmersDetailsContainer>
         <FarmersDetailsTablePageHeader
           addModalHandler={addModalHandler}
@@ -51,13 +39,7 @@ const FarmersDetails = () => {
         />
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
-      <ShareAmountModal
-        openModal={shareModal}
-        handleClose={shareAmountModalHandler}
-        generateTamilCertificate={() => {
-          generateTamilCertificatePDF();
-        }}
-      />
+      <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
 
       <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>
