@@ -25,6 +25,9 @@ namespace S {
   export const RightContainer = styled(LeftContainer)(({ theme }) => ({
     margin: "3rem 0 2rem 0",
   }));
+  export const InvisibleBox = styled(Box)(({ theme }) => ({
+    display: "none",
+  }));
 
   export const LContent = styled(Box)(({ theme }) => ({
     border: "2px solid #E7E59A",
