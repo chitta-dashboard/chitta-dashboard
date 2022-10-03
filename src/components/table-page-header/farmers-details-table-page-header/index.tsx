@@ -8,13 +8,20 @@ interface TablePageHeaderProps {
   sortFilter?: "ascending" | "descending";
   sortHandler?: (sortOrder: "ascending" | "descending") => void;
   searchHandler?: (searchText: string) => void;
+  shareAmountModalHandler?: () => void;
 }
 
-const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({ addModalHandler, searchHandler, sortHandler, sortFilter }) => {
+const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({
+  addModalHandler,
+  searchHandler,
+  sortHandler,
+  sortFilter,
+  shareAmountModalHandler,
+}) => {
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} sortHandler={sortHandler} sortFilter={sortFilter} />
-      <RightSection addModalHandler={addModalHandler} />
+      <RightSection addModalHandler={addModalHandler} shareAmountModalHandler={shareAmountModalHandler} />
     </S.PageHeaderContainer>
   );
 };
