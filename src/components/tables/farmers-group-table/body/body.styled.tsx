@@ -21,9 +21,6 @@ namespace S {
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-    "&:nth-of-type(2)": {
-      color: "red",
-    },
 
     "&:last-of-type": {
       width: "12%",
@@ -34,11 +31,14 @@ namespace S {
     },
   }));
 
-  export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
+  export const Cell = styled(TableCell)<{ title: string; ismember?: number }>(({ theme, title, ismember }) => ({
+    "&:nth-of-type(2)": {
+      color: ismember && theme.palette.text.primary,
+    },
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      width: "50%",
+      width: "48%",
       position: "relative",
       left: "50%",
 
