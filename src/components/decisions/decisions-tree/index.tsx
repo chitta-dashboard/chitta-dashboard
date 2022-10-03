@@ -1,8 +1,10 @@
-import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
+import { sortObj } from "../../../utils/constants";
+import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import S from "./decisionsTree.styled";
 
 const DecisionsTree = () => {
-  const { decisions } = useDecisionsProviderContext();
+  const { decisions: decisionsObj } = useDecisionsProviderContext();
+  const decisions = sortObj<IDecision>(Object.values(decisionsObj), "descending", "creationTime", { asDate: true });
   const leafCount = decisions.length <= 4 ? decisions.length : 4;
 
   return (
