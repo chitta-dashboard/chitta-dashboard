@@ -196,6 +196,9 @@ namespace S {
   }));
 
   export const ButtonsBar = styled(Box)(({ theme }) => ({}));
+  export const InvisibleBox = styled(Box)(({ theme }) => ({
+    display: "none",
+  }));
 
   export const ViewBtn = styled(Button)(({ theme }) => ({
     padding: ".2rem 2rem",

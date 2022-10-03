@@ -116,8 +116,8 @@ const Body = () => {
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
-  const NavigateToFarmerDetailForm = (id: string) => {
-    navigate(`/farmers-details/${id}`);
+  const NavigateToFarmerDetailForm = (farmerId: string) => {
+    navigate(`/farmers-details/${farmerId}`);
   };
 
   const handleCroppedImage = (image: string) => {
