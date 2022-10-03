@@ -9,6 +9,7 @@ import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
 import { searchWord, sortObj } from "../../../../utils/constants";
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 const Body = () => {
   const {
@@ -20,6 +21,7 @@ const Body = () => {
     searchFilter,
     sortFilter,
   } = useFarmerGroupDetailsContext();
+  const { farmersList: farmersDetailsList } = useFarmerDetailsContext();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -29,6 +31,9 @@ const Body = () => {
   const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
   const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
   const [farmerGroupPaginate, setFarmerGroupPaginate] = useState(listData);
+
+  //Get Famers Group List from the farmers details list
+  const groupList = farmersDetailsList.map((lists) => lists.group);
 
   useEffect(() => {
     setFarmerGroupListSearch(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
@@ -78,7 +83,9 @@ const Body = () => {
                 <S.TabCell>
                   <CS.Icon onClick={() => iconModalHandler(farmersGroup.id as string)}>three-dots</CS.Icon>
                 </S.TabCell>
-                <S.Cell title="குழுபெயர்">{farmersGroup.groupName}</S.Cell>
+                <S.Cell title="குழுபெயர்" ismember={groupList.some((list) => list === farmersGroup.groupName) ? 1 : 0}>
+                  {farmersGroup.groupName}
+                </S.Cell>
                 <S.Cell title="குழு விவரங்கள்">{farmersGroup.explanation}</S.Cell>
                 <S.WebTableCell>
                   <S.IconBox>
