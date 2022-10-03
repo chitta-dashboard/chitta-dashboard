@@ -9,7 +9,7 @@ export namespace S {
     justifyContent: "center",
     alignItems: "center",
     gap: "1rem",
-    padding: "1.5rem 1.5rem",
+    padding: "1.5rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     borderRadius: "1.25rem",

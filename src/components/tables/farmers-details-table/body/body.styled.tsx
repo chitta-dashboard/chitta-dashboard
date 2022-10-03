@@ -29,6 +29,7 @@ namespace S {
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+      margin: "0 2rem",
     },
   }));
 

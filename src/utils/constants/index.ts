@@ -10,14 +10,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: string, word: string) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const sortObj = <ObjStructure>(arr: Array<ObjStructure>, sortOrder: "ascending" | "descending", sortKey: keyof ObjStructure) => {

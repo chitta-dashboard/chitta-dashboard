@@ -20,13 +20,14 @@ export namespace S {
   export const ProfileHeading = styled(Typography)(({ theme }: any) => ({
     color: LightTheme.palette.text.secondaryDark,
     letterSpacing: "0.05rem",
-    fontSize: "1.3rem",
+    fontSize: "1.4rem",
     fontWeight: "600",
   }));
 
   export const ProfileSubHeading = styled(Typography)(({ theme }: any) => ({
     color: LightTheme.palette.text.secondary,
     fontWeight: "500",
+    fontSize: "1rem"
   }));
 
   export const HeaderIconsBox = styled(Box)(({ theme }: any) => ({

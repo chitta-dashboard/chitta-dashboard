@@ -1,15 +1,15 @@
 import { FC } from "react";
 import SelectDropDown from "../../../common-components/select-dropdown";
 
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
+  shareAmountModalHandler?: () => void;
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { selectedFarmers } = useFarmerDetailsContext();
-  let shareButtonDisable = selectedFarmers.length > 0;
 
   return (
     <S.RightSectionContainer>
@@ -17,7 +17,14 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <SelectDropDown />
       </S.DropdownStack>
       <S.ButtonStack>
-        <S.CustomButton disabled={!shareButtonDisable}>Share Holder</S.CustomButton>
+        <S.CustomButton
+          disabled={selectedFarmers.length === 0}
+          onClick={() => {
+            props.shareAmountModalHandler && props.shareAmountModalHandler();
+          }}
+        >
+          Share Holder
+        </S.CustomButton>
         <S.CustomButton>Export Farmers</S.CustomButton>
         <S.CustomButton
           onClick={() => {
