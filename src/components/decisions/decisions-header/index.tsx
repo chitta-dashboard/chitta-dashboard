@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import AddDecisionsModal from "../../modals/decisions-modal";
-import S from "./decisionsHeader.styled";
 import { useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import { IAddDecisionsFormInput } from "../../modals/type/formInputs";
+import S from "./decisionsHeader.styled";
 
 interface CustomProps {
   viewTree(): void;
@@ -17,10 +17,11 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
 
   const addGroupData = (data: IAddDecisionsFormInput) => {
     addDecision({
-      groupTitle: "Certified true copy of the resolution passed",
+      groupName: data.groupName,
+      groupTitle: data.decisionHeading,
       groupDescription: data.description,
-      timestamp: data.dob,
-      groupName: data.decisionHeading,
+      groupDescriptionRichText: data.descriptionRichText,
+      timestamp: data.creationTime,
     });
   };
 

@@ -1,5 +1,4 @@
 import { styled, Box, Typography } from "@mui/material";
-import { LightTheme } from "../../utils/theme";
 
 namespace S {
   export const ToolbarBox = styled(Box)(({ theme }) => ({
@@ -7,7 +6,7 @@ namespace S {
     flexWrap: "wrap",
     gap: "0.5rem",
     borderBottom: "2px solid",
-    borderColor: LightTheme.palette.text.primary,
+    borderColor: theme.palette.text.primary,
     paddingBottom: ".5rem",
     padding: "0.5rem",
     width: "100%",
@@ -17,19 +16,22 @@ namespace S {
     padding: "0.3rem 0.4rem",
     fontSize: "0.85rem",
     background: "#fff",
-    color: LightTheme.palette.text.primary,
+    color: theme.palette.text.primary,
     border: "1px solid",
-    borderColor: LightTheme.palette.text.primary,
+    borderColor: theme.palette.text.primary,
     borderRadius: "0.5rem",
     cursor: "pointer",
     fontWeight: "400",
   }));
+  ToolbarBtn.defaultProps = {
+    type: "button",
+  };
 
   export const TextBox = styled("div")(({ theme }) => ({
     width: "100%",
     height: "100%",
     border: "2px solid",
-    borderColor: LightTheme.palette.text.primary,
+    borderColor: theme.palette.text.primary,
     background: "#fff",
     borderRadius: "0.5rem",
     display: "flex",
@@ -40,7 +42,7 @@ namespace S {
   export const RichTextLabel = styled(Typography)(({ theme }) => ({
     fontSize: "0.75rem",
     fontWeight: "500",
-    color: LightTheme.palette.primary.light,
+    color: theme.palette.primary.light,
     position: "absolute",
     top: "-3.5%",
     left: "2%",

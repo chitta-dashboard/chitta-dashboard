@@ -16,6 +16,9 @@ namespace S {
       gap: "1rem",
     },
   }));
+  export const InvisibleBox = styled(Box)(({ theme }) => ({
+    display: "none",
+  }));
 }
 
 export default S;

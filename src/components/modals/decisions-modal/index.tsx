@@ -10,6 +10,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
+import { createTimeStamp } from "../../../utils/constants";
 
 interface CustomProps {
   cb: (data: IAddDecisionsFormInput) => void;
@@ -20,9 +21,9 @@ interface CustomProps {
 const schema = yup
   .object({
     decisionHeading: yup.string().required("required"),
-    dob: yup.string().required("required"),
+    creationTime: yup.string().required("required"),
     selectAll: yup.string().nullable().required("required"),
-    qualification: yup.string().required("required"),
+    groupName: yup.string().required("required"),
     presenter: yup
       .array()
       .nullable()
@@ -45,12 +46,13 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     clearErrors,
     reset,
     trigger,
+    control,
   } = useForm<IAddDecisionsFormInput>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    cb({ ...data, dob: new Date(data.dob).toDateString().split(" ").slice(1).join(",").replace(",", " ") });
+    cb({ ...data, creationTime: createTimeStamp(data.creationTime) });
     reset();
     handleClose();
   };
@@ -77,7 +79,7 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
         </ModalHeader>
 
         <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} control={control} />
         </ModalBody>
 
         <ModalFooter>
