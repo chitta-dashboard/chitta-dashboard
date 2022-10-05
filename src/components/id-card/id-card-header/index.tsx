@@ -1,7 +1,4 @@
-import React from "react";
-
 import IdLogo from "../../../assets/images/logo.svg";
-
 import S from "./idCardHeader.styled";
 
 type Props = {};
