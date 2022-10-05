@@ -1,4 +1,4 @@
-import { FC, forwardRef } from "react";
+import { forwardRef } from "react";
 
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";

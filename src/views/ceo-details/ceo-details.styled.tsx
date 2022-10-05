@@ -7,10 +7,14 @@ namespace S {
     height: "100%",
     display: "flex",
     flexWrap: "wrap",
-    // justifyContent: "space-between",
-    gap: "1.875rem",
+    // justifyContent: "center",
+    // alignItems: "flex-start",
+    gap: "2.5rem",
     overflow: "auto",
-    paddingRight: "0.625rem",
+    paddingRight: "5px",
+    [theme.breakpoints.down("xl")]: {
+      justifyContent: "center",
+    },
   }));
   export const CeoDetailCard = styled(Box)(({ theme }: any) => ({
     backgroundColor: "#FFFFFF",

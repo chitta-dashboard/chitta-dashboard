@@ -9,13 +9,13 @@ namespace S {
     backgroundColor: "#DEEFE9",
     display: "flex",
     flexDirection: "column",
-    gap: "1rem",
+    gap: "3rem",
   }));
 
   export const DashBoardBodyWrapper = styled(Box)(({ theme }: any) => ({
     display: "flex",
     flexDirection: "column",
-    gap: "1rem",
+    gap: "6rem",
     // overflowY: "auto",
   }));
 
@@ -24,6 +24,7 @@ namespace S {
     justifyContent: "space-between",
     gap: "1rem",
     width: "100%",
+    marginBottom: "1rem",
   }));
 
   export const DashBoardStatisticsWrapper = styled(Box)(({ theme }: any) => ({

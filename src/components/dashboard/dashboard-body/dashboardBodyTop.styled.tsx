@@ -1,21 +1,31 @@
 import styled from "@emotion/styled";
-import { Rotate90DegreesCcw } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const StasticsCardContainer = styled(Box)(({ theme }: any) => ({
-    width: "91vw",
+    width: "calc(100% - 8.4rem)",
+    maxWidth: "100vw",
     position: "relative",
+    ".slick-slide": {
+      maxWidth: "calc(250px + 1rem) !important",
+    },
     ".slick-prev": {
-      top: "41%",
-      left: "-2%",
+      top: "105% !important",
+      left: "43%",
       zIndex: 5,
       width: "50px",
       height: "50px",
       transform: "rotate(-180deg)",
       background: "white",
       borderRadius: "50%",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      [theme.breakpoints.down("xl")]: {
+        left: "35%",
+      },
+      [theme.breakpoints.down("md")]: {
+        left: "30%",
+      },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -24,17 +34,29 @@ export namespace S {
       },
     },
     ".slick-next": {
-      right: "-2%",
+      right: "43%",
+      top: "115% !important",
       width: "50px",
       height: "50px",
       background: "white",
       borderRadius: "50%",
+      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      zIndex: "5",
+      [theme.breakpoints.down("xl")]: {
+        right: "35%",
+      },
+      [theme.breakpoints.down("md")]: {
+        right: "30%",
+      },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
         color: theme.palette.text.primary,
         fontSize: "30px",
       },
+    },
+    ".slick-dots": {
+      bottom: "-50px",
     },
   }));
   export const StasticsCard = styled(Box)(({ theme }: any) => ({
@@ -44,10 +66,10 @@ export namespace S {
     padding: "1.3rem",
     background: "#fff",
     borderRadius: "1.25rem",
-    display: "flex",
+    display: "flex !important",
     flexDirection: "column",
+    justifyContent:"space-between",
     gap: "0.8rem",
-    margin: "0 5rem",
     [theme.breakpoints.down("xl")]: {
       height: "200px !important",
       width: "220px !important",
@@ -65,11 +87,11 @@ export namespace S {
   export const StatCardBody = styled(Box)(({ theme }: any) => ({
     display: "flex",
     justifyContent: "flex-start",
-    fontSize: "4.2rem",
+    fontSize: "2.5rem !important",
     fontWeight: "500",
     color: LightTheme.palette.text.primary,
     [theme.breakpoints.down("xl")]: {
-      fontSize: "3.8rem",
+      fontSize: "1rem !important",
     },
   }));
 
@@ -84,16 +106,18 @@ export namespace S {
     },
   }));
 
-  export const StatCardIcon = styled("img")(({ theme }: any) => ({
-    height: "2.6rem",
-    width: "3.1rem",
-    [theme.breakpoints.down("xl")]: {
-      height: "2.3rem",
-      width: "2.8rem",
+  export const StatCardIcon = styled("div")(({ theme }: any) => ({
+    i: {
+      fontSize: "2.6rem",
+      [theme.breakpoints.down("xl")]: {
+        fontSize: "2.3rem",
+      },
     },
   }));
 
-  export const StatCardHeaderCount = styled(Box)(({ theme, neg }: any) => ({
+  export const StatCardHeaderCount = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "neg",
+  })(({ theme, neg }: any) => ({
     width: "4rem",
     height: "1.5rem",
     background: neg ? "rgba(255, 0, 0, 0.1)" : LightTheme.palette.custom.backgroundLight,

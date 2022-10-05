@@ -66,10 +66,37 @@ export namespace S {
     borderRadius: "1.25rem",
     overflow: "hidden",
     marginRight: "1.875rem",
+    position: "relative",
+    cursor: "pointer",
     img: {
       height: "100%",
       width: "100%",
     },
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  }));
+  export const EditBox = styled(Box)(({ theme }) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: theme.palette.custom.backgroundLight,
+    opacity: "0.7",
+    // border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  export const EditIcon = styled("i")(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontSize: "30px",
+    opacity: "1",
+  }));
+  export const HiddenInput = styled("input")(() => ({
+    display: "none",
   }));
   export const HeaderTextBox = styled(Typography)(({ theme }: { theme: Theme }) => ({
     width: "100%",
