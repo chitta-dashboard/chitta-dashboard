@@ -8,7 +8,7 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "52.5rem",
+    height: "839.09px",
     width: "74.375rem",
     backgroundColor: "#FFFFFF",
     position: "relative",
