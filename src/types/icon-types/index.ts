@@ -47,4 +47,5 @@ export type IconType =
   | "high-light"
   | "horizontal-rule"
   | "numbering"
-  | "strike-through";
+  | "strike-through"
+  | String;

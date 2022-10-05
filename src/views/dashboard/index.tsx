@@ -4,7 +4,6 @@ import DashboardSummaryCard from "../../components/dashboard/dashboard-cards/das
 import DashboardNotificationCard from "../../components/dashboard/dashboard-cards/dashboard-notification-card/index";
 import S from "./dashboard.styled";
 import DashboardBodyTop from "../../components/dashboard/dashboard-body/dashboard-body-top";
-import { Box } from "@mui/material";
 import DashboardFounder from "../../components/dashboard/dashboard-cards/dashboard-founder-card";
 
 const Dashboard = () => {
