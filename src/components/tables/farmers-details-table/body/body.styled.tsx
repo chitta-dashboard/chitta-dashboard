@@ -97,17 +97,18 @@ namespace S {
 
   export const AvatarImg = styled("img")(() => ({
     width: "100%",
-    height: "100%",
-    borderRadius: "50%",
+    // height: "100%",
+    // borderRadius: "50%",
   }));
 
   export const AvatarBox = styled(Box)(() => ({
     borderRadius: "50%",
     height: "2.5rem",
     width: "2.5rem",
+    minWidth: "2.5rem",
     position: "relative",
     cursor: "pointer",
-
+    overflow: "hidden",
     "&:hover > .MuiBox-root": {
       display: "flex",
     },

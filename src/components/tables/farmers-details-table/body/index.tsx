@@ -41,6 +41,7 @@ const Body = () => {
     groupFilter,
   } = useFarmerDetailsContext();
 
+  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
   const [farmersListGroup, setFarmersListGroup] = useState(listData);
   const [farmersListSearch, setFarmersListSearch] = useState(listData);
   const [farmersListSort, setFarmersListSort] = useState(listData);
@@ -141,7 +142,7 @@ const Body = () => {
           <tr style={{ display: "none" }}>
             <td>
               <IdCardBody ref={idCardRef} />
-              <FarmerDetailsForm ref={farmerDetailFormRef} />
+              <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
             </td>
           </tr>
           {farmersList.map((user: farmerDetail) => (
@@ -200,7 +201,14 @@ const Body = () => {
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon onClick={() => generateIdCard()}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
-                  <CS.Icon onClick={() => generateFarmerDetailForm()}>download</CS.Icon>
+                  <CS.Icon
+                    onClick={async () => {
+                      await setFarmerIdtoPrint(user.id);
+                      generateFarmerDetailForm();
+                    }}
+                  >
+                    download
+                  </CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
             </S.CustomTableRow>
