@@ -1,5 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
