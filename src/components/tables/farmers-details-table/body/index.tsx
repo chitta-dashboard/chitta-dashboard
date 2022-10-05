@@ -13,6 +13,7 @@ import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetail
 import IdCardBody from "../../../id-card/id-card-body";
 import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
+import IdCardModal from "../../../modals/id-download-modal";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
@@ -24,6 +25,7 @@ const Body = () => {
 
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+  const [open, setOpen] = useState(false);
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
@@ -116,6 +118,9 @@ const Body = () => {
   const generateIdCard = useReactToPrint({
     documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
     content: () => idCardRef.current as HTMLDivElement,
+    onAfterPrint() {
+      handleClose();
+    },
   });
 
   const generateFarmerDetailForm = useReactToPrint({
@@ -133,6 +138,11 @@ const Body = () => {
     });
     result[0]["profile"] = image;
     editTableIcon({ ...result[0] });
+  };
+
+  //id generate handler
+  const handleClose = () => {
+    setOpen(!open);
   };
 
   return (
@@ -199,7 +209,7 @@ const Body = () => {
               <S.WebTableCell>
                 <S.IconBox onClick={(e) => e.stopPropagation()}>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                  <CS.Icon onClick={() => generateIdCard()}>id-card</CS.Icon>
+                  <CS.Icon onClick={handleClose}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
                   <CS.Icon
                     onClick={async () => {
@@ -240,6 +250,8 @@ const Body = () => {
           setIconModal(false);
         }}
       />
+      <IdCardModal openModal={open} handleClose={handleClose} generateIdCard={generateIdCard} />
+
       <AddFarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={editId} />
       {image && (
         <tbody>
