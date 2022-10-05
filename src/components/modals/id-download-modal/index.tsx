@@ -9,9 +9,10 @@ import IdCardBody from "../../id-card/id-card-body";
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
+  generateIdCard: () => void;
 }
 
-const IdCardModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, generateIdCard }) => {
   return (
     <>
       <CustomModal openModal={openModal} handleClose={handleClose}>
@@ -23,10 +24,10 @@ const IdCardModal: FC<CustomProps> = ({ openModal, handleClose }) => {
           Preview ID Card
         </ModalHeader>
         <ModalBody id="" onSubmit={() => {}}>
-          <IdCardBody/>
+          <IdCardBody />
         </ModalBody>
         <ModalFooter>
-          <Button>Download</Button>
+          <Button onClick={generateIdCard}>Download</Button>
         </ModalFooter>
       </CustomModal>
     </>
