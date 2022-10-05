@@ -2,9 +2,9 @@ import { Box, Typography } from "@mui/material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import FounderImg from "../../../../assets/images/Founder.png";
-import S from "./dashoardFounder.styled";
 import { CardHeader } from "../common-styles/commonStyles.styled";
+import S from "./dashoardFounder.styled";
+import FounderImg from "../../../../assets/images/Founder.png";
 
 type Props = {};
 

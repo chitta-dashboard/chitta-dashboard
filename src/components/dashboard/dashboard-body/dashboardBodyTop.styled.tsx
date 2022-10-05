@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Rotate90DegreesCcw } from "@mui/icons-material";
 import { Box, Typography } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
 
@@ -8,6 +7,9 @@ export namespace S {
     width: "calc(100% - 8.4rem)",
     maxWidth: "100vw",
     position: "relative",
+    ".slick-slide": {
+      maxWidth: "calc(250px + 1rem) !important",
+    },
     ".slick-prev": {
       top: "105% !important",
       left: "43%",
@@ -18,6 +20,12 @@ export namespace S {
       background: "white",
       borderRadius: "50%",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      [theme.breakpoints.down("xl")]: {
+        left: "35%",
+      },
+      [theme.breakpoints.down("md")]: {
+        left: "30%",
+      },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -34,6 +42,12 @@ export namespace S {
       borderRadius: "50%",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
       zIndex: "5",
+      [theme.breakpoints.down("xl")]: {
+        right: "35%",
+      },
+      [theme.breakpoints.down("md")]: {
+        right: "30%",
+      },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",

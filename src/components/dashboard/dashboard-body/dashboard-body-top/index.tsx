@@ -2,7 +2,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import S from "../dashboardBodyTop.styled";
-import GroupIcon from "../../../../assets/images/Group.png";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Icon from "../../../icons";
 
@@ -17,7 +16,7 @@ const DashboardBodyTop = (props: Props) => {
   // };
   const xl = useMediaQuery((theme:any) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme:any) => theme.breakpoints.up("md"));
-  
+
   const StatisticsItems = [
     {
       id: 1,
@@ -61,6 +60,20 @@ const DashboardBodyTop = (props: Props) => {
       footerName: "Cultivation (Kg)",
       icon: "cultivation",
     },
+    {
+      id: 7,
+      headCount: "-122",
+      bodyCount: 770,
+      footerName: "Cultivation (Kg)",
+      icon: "cultivation",
+    },
+    {
+      id: 8,
+      headCount: "-122",
+      bodyCount: 770,
+      footerName: "Cultivation (Kg)",
+      icon: "cultivation",
+    },
   ];
 
   var settings = {
@@ -68,9 +81,10 @@ const DashboardBodyTop = (props: Props) => {
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow : xl ? 5 : md ? 4 :  3,
+    slidesToShow: xl ? 5 : md ? 4 : 3,
     slidesToScroll: 1,
     autoplay: false,
+    centerPadding: "1rem",
   };
 
   return (
