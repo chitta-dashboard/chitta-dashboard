@@ -3,18 +3,16 @@ import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const IdHeaderWrapper = styled(Box)(({ theme }) => ({
-    height: "5.5rem",
-    width: "100%",
     display: "flex",
-    alignItems: "center",
-    gap: "2.5rem",
+    gap: "4rem",
+    justifyContent: "start",
   }));
 
   export const LogoImage = styled("img")(({ theme }) => ({
     height: "4.5rem",
     width: "5.5rem",
-    margin: "-0.2rem 0 0 0.6rem",
     borderRadius: "50%",
+    alignSelf: "center",
   }));
 
   export const HeaderRight = styled(Box)(({ theme }) => ({

@@ -8,10 +8,13 @@ import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holde
 import { S } from "./tamil-certificate.styled";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
-interface Props {}
+interface Props {
+  shareAmount?: number | string;
+}
 
-const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) => {
+const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
   const { farmersList, selectedFarmers } = useFarmerDetailsContext();
+  const newDate = new Date();
   return (
     <div className="print-container" ref={ref}>
       {farmersList
@@ -47,7 +50,9 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
               </S.ShareCountInnerContainer>
               <S.ShareCountInnerContainer>
                 <S.DateText>நாள் : </S.DateText>
-                <S.DateBox></S.DateBox>
+                <S.DateBox>
+                  {newDate.getDate()}/{newDate.getMonth() + 1}/{newDate.getFullYear()}
+                </S.DateBox>
               </S.ShareCountInnerContainer>
             </S.DateContainer>
             <S.CertificateContent>
@@ -55,10 +60,13 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
                 <S.CertificateText>இந்தப்பங்குப் பத்திரமானது</S.CertificateText>
                 <S.BlankSpace1>{user.name}</S.BlankSpace1>
                 <S.CertificateText>த/க</S.CertificateText>
-                <S.BlankSpace2> அந்தோணி, &nbsp;&nbsp;அன்னை தெரசா தெரு,</S.BlankSpace2>
+                <S.BlankSpace2>
+                  {" "}
+                  {user.fatherName} &nbsp;&nbsp;{user.address.split(" ").splice(0, 3).join(" ")}
+                </S.BlankSpace2>
               </S.CertificateTextLine>
               <S.CertificateTextLine>
-                <S.BlankSpace3>விரியூர் அஞ்சல், சங்கராபுரம் வட்டம், கள்ளக்குறிச்சி மாவட்டம் – 606402</S.BlankSpace3>
+                <S.BlankSpace3>{user.address.split(" ").splice(3).join(" ")}</S.BlankSpace3>
                 <S.CertificateText>என்பவருக்கு</S.CertificateText>
               </S.CertificateTextLine>
               <S.CertificateTextLine>
@@ -75,7 +83,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, re
               </S.ShareCountInnerContainer>
               <S.ShareCountInnerContainer>
                 <S.CertificateText>பங்குத்தொகை</S.CertificateText>
-                <S.ShareCount>ரூ.1000/-</S.ShareCount>
+                <S.ShareCount>ரூ.{shareAmount}/-</S.ShareCount>
               </S.ShareCountInnerContainer>
             </S.ShareCountContainer>
             <S.SignatureLine>

@@ -11,9 +11,22 @@ interface CustomProps<FormInputType extends FieldValues> {
   helperText?: string;
   setValue: UseFormSetValue<FormInputType>;
   trigger: UseFormTrigger<FormInputType>;
+  selectOptions?: Array<[string, string]>;
 }
 
-function SelectField<FormInputTypes>({ label, register, inputName, helperText, trigger, setValue }: CustomProps<FormInputTypes & FieldValues>) {
+function SelectField<FormInputTypes>({
+  label,
+  register,
+  inputName,
+  helperText,
+  trigger,
+  setValue,
+  selectOptions = [
+    ["option-1", "option-1"],
+    ["option-2", "option-2"],
+    ["option-3", "option-3"],
+  ],
+}: CustomProps<FormInputTypes & FieldValues>) {
   const [selected, setSelected] = useState<string>("");
 
   return (
@@ -33,10 +46,14 @@ function SelectField<FormInputTypes>({ label, register, inputName, helperText, t
         }}
         helperText={helperText}
       >
-        <MenuItem value="" defaultValue={""} style={{ display: "none" }}></MenuItem>
-        <MenuItem value="option1">option1</MenuItem>
-        <MenuItem value="option2">option2</MenuItem>
-        <MenuItem value="option3">option3</MenuItem>
+        <MenuItem value="" style={{ display: "none" }}>
+          ""
+        </MenuItem>
+        {selectOptions.map(([actualValue, displayValue]) => (
+          <MenuItem key={actualValue} value={actualValue}>
+            {displayValue}
+          </MenuItem>
+        ))}
       </S.SelectField>
     </>
   );

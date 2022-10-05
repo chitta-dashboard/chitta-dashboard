@@ -79,6 +79,10 @@ const FormFieldPage2: FC<CustomProps> = ({ register, errors, trigger, setValue }
           helperText={errors.groupMember?.message}
           trigger={trigger}
           setValue={setValue}
+          selectOptions={[
+            ["yes", "ஆம்"],
+            ["no", "இல்லை"],
+          ]}
         />
       </S.InputContainer>
     </>

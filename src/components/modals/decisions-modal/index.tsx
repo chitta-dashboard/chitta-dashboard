@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -10,10 +11,11 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
-import { createTimeStamp } from "../../../utils/constants";
+import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
+import { IDecision } from "../../../utils/context/decisionsContext";
 
 interface CustomProps {
-  cb: (data: IAddDecisionsFormInput) => void;
+  cb: (data: IDecision) => void;
   openModal: boolean;
   handleClose: () => void;
 }
@@ -52,7 +54,15 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
   });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    cb({ ...data, creationTime: createTimeStamp(data.creationTime) });
+    cb({
+      id: uuidv4(),
+      groupName: data.groupName,
+      groupTitle: data.decisionHeading,
+      groupDescription: data.description,
+      groupDescriptionRichText: data.descriptionRichText,
+      timestamp: createTimeStamp(data.creationTime),
+      creationTime: getCurrentTime(),
+    });
     reset();
     handleClose();
   };
