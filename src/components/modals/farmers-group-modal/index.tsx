@@ -12,7 +12,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
-import SubmitButton from "../../buttons/submit-button";
+import { Button } from "@mui/material";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput & { id: string }) => void;
@@ -99,7 +99,9 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         </ModalBody>
 
         <ModalFooter>
-          <SubmitButton formId="farmersGroup" handleSubmit={() => {}} />
+          <Button form="farmersGroup" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>
