@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,7 +8,6 @@ import { v4 as uuidv4 } from "uuid";
 import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
-import Submit from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
@@ -126,7 +125,9 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Submit formId="mdDetails" handleSubmit={() => {}} />
+          <Button form="mdDetails" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>

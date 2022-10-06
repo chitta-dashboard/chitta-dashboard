@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Checkbox, Stack } from "@mui/material";
+import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
@@ -38,8 +38,6 @@ const Body = () => {
     checkboxSelect,
     selectedFarmers,
     sortFilter,
-    rowsPerPage,
-    page,
     groupFilter,
   } = useFarmerDetailsContext();
 
@@ -47,7 +45,6 @@ const Body = () => {
   const [farmersListGroup, setFarmersListGroup] = useState(listData);
   const [farmersListSearch, setFarmersListSearch] = useState(listData);
   const [farmersListSort, setFarmersListSort] = useState(listData);
-  const [farmersListPaginate, setFarmersListPaginate] = useState(listData);
   const [farmersList, setFarmersList] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
@@ -68,12 +65,8 @@ const Body = () => {
   }, [farmersListSearch, sortFilter]);
 
   useEffect(() => {
-    setFarmersListPaginate(farmersListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [farmersListSort, page, rowsPerPage]);
-
-  useEffect(() => {
-    setFarmersList(farmersListPaginate);
-  }, [farmersListPaginate]);
+    setFarmersList(farmersListSort);
+  }, [farmersListSort]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {
@@ -156,7 +149,7 @@ const Body = () => {
             </td>
           </tr>
           {farmersList.map((user: farmerDetail) => (
-            <S.CustomTableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
+            <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
               <S.RowCheckCell
                 onClick={(e) => {
                   e.stopPropagation();
@@ -204,10 +197,11 @@ const Body = () => {
                 </S.NameStack>
               </S.Cell>
               <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
+              <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
               <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
               <S.Cell title="குழு பெயர்">{user.group}</S.Cell>
-              <S.WebTableCell>
-                <S.IconBox onClick={(e) => e.stopPropagation()}>
+              <S.WebTableCell onClick={(e) => e.stopPropagation()}>
+                <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon onClick={handleClose}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
@@ -221,13 +215,13 @@ const Body = () => {
                   </CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
-            </S.CustomTableRow>
+            </TableRow>
           ))}
         </BodyWrapper>
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Farmers Details Data</td>
+            <td>No Farmers Details..</td>
           </tr>
         </S.EmptyMsg>
       )}

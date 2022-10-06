@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 namespace S {
   export const FarmersGroupContainer = styled(Box)(({ theme }) => ({
@@ -10,6 +10,18 @@ namespace S {
 
     [theme.breakpoints.down("md")]: {
       gap: "1rem",
+    },
+  }));
+
+  export const Items = styled(Typography)(({ theme }) => ({
+    textAlign: "center",
+    padding: "0.6rem 1rem",
+    borderBottom: "0.1rem solid #6868681A",
+    color: theme.palette.text.secondaryLight,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.custom.backgroundLight,
+      color: "#1E1E1E",
     },
   }));
 }

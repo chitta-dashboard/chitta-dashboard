@@ -15,10 +15,9 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter, page, rowsPerPage } = useFounderContext();
+  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useFounderContext();
   const [mdListSearch, setMdListSearch] = useState(listData);
   const [mdListSort, setMdListSort] = useState(listData);
-  const [mdListPaginate, setMdListPaginate] = useState(listData);
   const [mdList, setMdList] = useState(listData);
 
   useEffect(() => {
@@ -30,12 +29,8 @@ const Body = () => {
   }, [mdListSearch, sortFilter]);
 
   useEffect(() => {
-    setMdListPaginate(mdListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [mdListSort, page, rowsPerPage]);
-
-  useEffect(() => {
-    setMdList(mdListPaginate);
-  }, [mdListPaginate]);
+    setMdList(mdListSort);
+  }, [mdListSort]);
 
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
@@ -117,6 +112,7 @@ const Body = () => {
                   {user.name}
                 </S.NameStack>
               </S.Cell>
+              <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
               <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
               <S.Cell title="தகுதி">{user.qualification}</S.Cell>
               <S.WebTableCell>
@@ -132,7 +128,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Founders Data</td>
+            <td>No Founders..</td>
           </tr>
         </S.EmptyMsg>
       )}

@@ -68,6 +68,7 @@ export namespace S {
 
   export const FlexLine = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
+    alignItems: "center",
   }));
   export const FlexLine2 = styled(FlexLine)(({ theme }: { theme: Theme }) => ({
     width: "100%",
@@ -82,6 +83,7 @@ export namespace S {
     color: theme.palette.text.secondary,
     fontWeight: "500",
     marginLeft: "0.3125rem",
+    lineHeight: "1.2",
   }));
   export const CertificateContent = styled(Box)(({ theme }: { theme: Theme }) => ({
     fontSize: "1.125rem",

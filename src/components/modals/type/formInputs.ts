@@ -18,9 +18,11 @@ export interface IAddFarmersDetailsPage1Input {
   group: string;
   phoneNumber: string;
   addhaarNo: string;
-  voterIdNo: string;
-  acre: string;
   profile: string;
+  surveyNo: { [key: string]: string };
+  acre: { [key: string]: string };
+  border: { [key: string]: string };
+  [dynamicInputs: string]: string | string[] | { [key: string]: string };
 }
 
 export interface IAddFarmersDetailsPage2Input {
@@ -30,16 +32,14 @@ export interface IAddFarmersDetailsPage2Input {
   address: string;
   taluk: string;
   district: string;
-  surveyNo: string;
   landType: string;
-  farmerType: string;
   waterType: string;
-  seedType: string;
+  farmerType: string;
   animals: string;
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;

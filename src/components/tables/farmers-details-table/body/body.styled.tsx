@@ -1,13 +1,8 @@
-import { styled, Stack, TableCell, Box, TableRow } from "@mui/material";
+import { styled, Stack, TableCell, Box } from "@mui/material";
 
 namespace S {
-  export const CustomTableRow = styled(TableRow)<{ children: JSX.Element | JSX.Element[] }>(() => ({
-    cursor: "pointer",
-  }));
-
   export const RowCheckCell = styled(TableCell)(({ theme }) => ({
-    width: "7%",
-    padding: "1rem 0",
+    width: "5%",
     textAlign: "center",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -34,13 +29,13 @@ namespace S {
   }));
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    fontSize: "1.1rem",
-    fontWeight: 500,
-    width: "18%",
-
-    "&:last-of-type": {
-      width: "20%",
+    [theme.breakpoints.down("xl")]: {
+      "&:nth-of-type(2)": {
+        width: "12%",
+      },
+      "&:last-of-type": {
+        width: "15%",
+      },
     },
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -48,20 +43,26 @@ namespace S {
   }));
 
   export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    width: "18%",
+    [theme.breakpoints.down("xl")]: {
+      "&:nth-of-type(6)": {
+        width: "14%",
+      },
+      "&:nth-of-type(7)": {
+        width: "15%",
+      },
+      "&:nth-of-type(8)": {
+        width: "15%",
+      },
+    },
     [theme.breakpoints.up("md")]: {
       "&:nth-of-type(5)": {
         display: "none",
       },
-      "&:nth-of-type(7)": {
-        width: "28%",
-      },
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      width: "100%",
+      width: "100% !important",
       position: "relative",
       left: "50%",
 
@@ -74,15 +75,10 @@ namespace S {
     },
   }));
 
-  export const TabIdStack = styled(Stack)(() => ({
-    flexDirection: "row",
-    gap: "1rem",
-  }));
-
   export const NameStack = styled(Stack)(() => ({
     flexDirection: "row",
-    gap: "1rem",
     alignItems: "center",
+    gap: "1rem",
   }));
 
   export const IconBox = styled(Stack)(({ theme }) => ({

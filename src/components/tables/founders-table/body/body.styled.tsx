@@ -21,17 +21,29 @@ namespace S {
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-    width: "25%",
     [theme.breakpoints.down("md")]: {
       display: "none",
+    },
+    "&:last-of-type": {
+      width: "16%",
     },
   }));
 
   export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    width: "25%",
     [theme.breakpoints.up("md")]: {
+      "&:nth-of-type(2)": {
+        paddingLeft: "1.25rem",
+      },
+      "&:nth-of-type(3)": {
+        width: "15%",
+      },
       "&:nth-of-type(4)": {
-        width: "32%",
+        width: "16%",
+      },
+      [theme.breakpoints.down("lg")]: {
+        "&:nth-of-type(5)": {
+          width: "20%",
+        },
       },
     },
 
