@@ -27,7 +27,7 @@ export namespace S {
   export const ProfileSubHeading = styled(Typography)(({ theme }: any) => ({
     color: LightTheme.palette.text.secondary,
     fontWeight: "500",
-    fontSize: "1rem"
+    fontSize: "1rem",
   }));
 
   export const HeaderIconsBox = styled(Box)(({ theme }: any) => ({
@@ -54,6 +54,34 @@ export namespace S {
     height: "4.5rem",
     width: "4.5rem",
     borderRadius: "50%",
+    position: "relative",
+    cursor: "pointer",
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  }));
+
+  export const EditBox = styled(Box)(({ theme }: any) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: theme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  export const EditIcon = styled("i")(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    opacity: "1",
+  }));
+  export const HiddenInput = styled("input")(() => ({
+    display: "none",
   }));
 
   export const DshboardImg = styled("img")(({ theme }: any) => ({

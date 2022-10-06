@@ -7,6 +7,7 @@ import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { FoundersContextProvider } from "../../utils/context/founders";
 import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
+import { DecisionsProvider } from "../../utils/context/decisionsContext";
 
 type Props = {
   children: JSX.Element | JSX.Element[];
@@ -16,15 +17,17 @@ const Provider: FC<Props> = ({ children }) => {
   return (
     <Router>
       <ThemeProvider theme={LightTheme}>
-        <MdDetailsContextProvider>
-          <FoundersContextProvider>
-            <FarmerGroupDetailsContextProvider>
-              <FarmerDetailsContextProvider>
-                <AuthContextProvider>{children}</AuthContextProvider>
-              </FarmerDetailsContextProvider>
-            </FarmerGroupDetailsContextProvider>
-          </FoundersContextProvider>
-        </MdDetailsContextProvider>
+        <AuthContextProvider>
+          <MdDetailsContextProvider>
+            <FoundersContextProvider>
+              <FarmerGroupDetailsContextProvider>
+                <FarmerDetailsContextProvider>
+                  <DecisionsProvider>{children}</DecisionsProvider>
+                </FarmerDetailsContextProvider>
+              </FarmerGroupDetailsContextProvider>
+            </FoundersContextProvider>
+          </MdDetailsContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </Router>
   );
