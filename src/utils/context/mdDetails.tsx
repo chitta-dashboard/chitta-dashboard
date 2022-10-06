@@ -8,9 +8,9 @@ const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const FILTER_MD_DETAIL = "FILTER_MD_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
-const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
+// const SET_PAGE = "SET_PAGE";
 
 export type mdDetail = {
   id: string;
@@ -39,7 +39,7 @@ export interface mdDetailsContextType {
   deleteMdDetail: (id: string) => void;
   filterMdDetail: (name: string) => void;
   editTableIcon: (data: any) => void;
-  setPage: (page: number) => void;
+  // setPage: (page: number) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -98,42 +98,6 @@ const initialState: mdDetailsContextType = {
       dob: "1996-08-10",
       signature: "",
     },
-    {
-      id: "7",
-      profile: profileImg,
-      name: "Pari",
-      phoneNumber: "8610010875",
-      qualification: "Higher Secondary",
-      dob: "1995-05-11",
-      signature: "",
-    },
-    {
-      id: "8",
-      profile: profileImg,
-      name: "Arjunan",
-      phoneNumber: "9095781278",
-      qualification: "BSc, Computer Science",
-      dob: "1990-01-01",
-      signature: "",
-    },
-    {
-      id: "9",
-      profile: profileImg,
-      name: "Karnan",
-      phoneNumber: "8889955673",
-      qualification: "BSc, Computer Science",
-      dob: "1985-03-27",
-      signature: "",
-    },
-    {
-      id: "10",
-      profile: profileImg,
-      name: "Arul",
-      phoneNumber: "8610010875",
-      qualification: "BSc, Computer Science",
-      dob: "1997-07-19",
-      signature: "",
-    },
   ],
   page: 1,
   rowsPerPage: 6,
@@ -146,7 +110,7 @@ const initialState: mdDetailsContextType = {
   deleteMdDetail: () => {},
   editTableIcon: () => {},
   filterMdDetail: () => {},
-  setPage: () => {},
+  // setPage: () => {},
 };
 
 const reducer = (state: mdDetailsContextType, action: any) => {
@@ -181,8 +145,8 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case EDIT_TABLE_ICON:
       let data = state.mdList.filter((item) => item.id !== action.payload.id);
       return { ...state, mdList: [...data, action.payload] };
-    case SET_PAGE:
-      return { ...state, page: action.payload };
+    // case SET_PAGE:
+    //   return { ...state, page: action.payload };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -219,9 +183,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
-  const setPage = (page: number) => {
-    dispatch({ type: SET_PAGE, payload: page });
-  };
+  // const setPage = (page: number) => {
+  //   dispatch({ type: SET_PAGE, payload: page });
+  // };
   const setSortFilter = (sortOrder: "ascending" | "descending") => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
@@ -233,7 +197,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     deleteMdDetail,
     filterMdDetail,
     editTableIcon,
-    setPage,
+    // setPage,
     setSearchFilter,
     setSortFilter,
   };
