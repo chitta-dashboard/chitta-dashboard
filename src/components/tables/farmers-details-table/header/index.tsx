@@ -1,7 +1,7 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 
 import S from "./header.styled";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 const Header = () => {
   const { farmersList, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
@@ -19,6 +19,7 @@ const Header = () => {
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
         <S.WebTableCell>பெயர்</S.WebTableCell>
+        <S.WebTableCell>பிறந்த தேதி</S.WebTableCell>
         <S.WebTableCell>கைபேசி எண்</S.WebTableCell>
         <S.WebTableCell>குழு பெயர்</S.WebTableCell>
         <S.WebTableCell></S.WebTableCell>

@@ -27,6 +27,8 @@ code {
 }
 
 i {
+  display: inline-block;
+  text-align: center;
   font-family: "nerkathir-icon" !important;
   font-style: normal;
   font-weight: normal;
@@ -125,3 +127,14 @@ h6 {
   margin: 2rem 0;
 }
 /* =========================== */
+
+/* HIDES ARROW IN NUMBER INPUT in moz based browsers */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* HIDES ARROW IN NUMBER INPUT in webkit based browsers */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

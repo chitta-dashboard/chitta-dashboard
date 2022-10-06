@@ -39,6 +39,11 @@ namespace S {
     "&:nth-of-type(2)": {
       color: ismember && theme.palette.text.primary,
     },
+    [theme.breakpoints.up("md")]: {
+      "&:nth-of-type(2)": {
+        paddingLeft: "1.25rem",
+      },
+    },
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
@@ -52,6 +57,18 @@ namespace S {
         position: "absolute",
         left: "-90%",
       },
+    },
+  }));
+
+  export const Icon = styled(Stack)(({ theme }) => ({
+    flexDirection: "row",
+    alignItems: "center",
+    gap: "1rem",
+    "& > p": {
+      fontSize: "1.1rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      alignItems: "end",
     },
   }));
 

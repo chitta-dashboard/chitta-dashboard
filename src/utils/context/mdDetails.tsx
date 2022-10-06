@@ -50,7 +50,7 @@ const initialState: mdDetailsContextType = {
       name: "Aditha Karikalan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
-      dob: "2022-01-01",
+      dob: "1989-10-12",
       signature: "",
     },
     {
@@ -59,7 +59,7 @@ const initialState: mdDetailsContextType = {
       name: "Arulmozhi Varman",
       phoneNumber: "8610010875",
       qualification: "BA",
-      dob: "2022-01-01",
+      dob: "1994-03-01",
       signature: "",
     },
     {
@@ -68,7 +68,7 @@ const initialState: mdDetailsContextType = {
       name: "Nandini",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
-      dob: "2022-01-01",
+      dob: "1998-08-05",
       signature: "",
     },
     {
@@ -77,7 +77,7 @@ const initialState: mdDetailsContextType = {
       name: "Vanthiyathevan ",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
+      dob: "1998-01-07",
       signature: "",
     },
     {
@@ -86,7 +86,7 @@ const initialState: mdDetailsContextType = {
       name: "Kundavai",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
-      dob: "2022-01-01",
+      dob: "1994-01-01",
       signature: "",
     },
     {
@@ -95,7 +95,7 @@ const initialState: mdDetailsContextType = {
       name: "Rajendran Cholan",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
-      dob: "2022-01-01",
+      dob: "1996-08-10",
       signature: "",
     },
     {
@@ -104,7 +104,7 @@ const initialState: mdDetailsContextType = {
       name: "Pari",
       phoneNumber: "8610010875",
       qualification: "Higher Secondary",
-      dob: "2022-01-01",
+      dob: "1995-05-11",
       signature: "",
     },
     {
@@ -113,7 +113,7 @@ const initialState: mdDetailsContextType = {
       name: "Arjunan",
       phoneNumber: "9095781278",
       qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
+      dob: "1990-01-01",
       signature: "",
     },
     {
@@ -122,7 +122,7 @@ const initialState: mdDetailsContextType = {
       name: "Karnan",
       phoneNumber: "8889955673",
       qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
+      dob: "1985-03-27",
       signature: "",
     },
     {
@@ -131,7 +131,7 @@ const initialState: mdDetailsContextType = {
       name: "Arul",
       phoneNumber: "8610010875",
       qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
+      dob: "1997-07-19",
       signature: "",
     },
   ],

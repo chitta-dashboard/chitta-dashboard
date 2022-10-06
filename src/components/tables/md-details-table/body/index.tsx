@@ -117,6 +117,7 @@ const Body = () => {
                   {user.name}
                 </S.NameStack>
               </S.Cell>
+              <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
               <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
               <S.Cell title="தகுதி">{user.qualification}</S.Cell>
               <S.WebTableCell>
@@ -132,7 +133,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Md Details Data</td>
+            <td>No Md Details..</td>
           </tr>
         </S.EmptyMsg>
       )}

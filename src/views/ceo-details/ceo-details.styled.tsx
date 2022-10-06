@@ -4,11 +4,9 @@ import { Box, Button, Typography } from "@mui/material";
 namespace S {
   export const CeoDetailsContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
-    height: "100%",
+    maxHeight: "100%",
     display: "flex",
     flexWrap: "wrap",
-    // justifyContent: "center",
-    // alignItems: "flex-start",
     gap: "2.5rem",
     overflow: "auto",
     paddingRight: "5px",
