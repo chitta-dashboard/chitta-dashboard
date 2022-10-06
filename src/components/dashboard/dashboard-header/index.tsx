@@ -66,15 +66,7 @@ const DashboardHeader = (props: Props) => {
           </S.SearchIconContainer>
         </S.HeaderIconsBox>
       </S.DashboardHeaderWrapper>
-      {image && (
-        <tbody>
-          <tr>
-            <td>
-              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-            </td>
-          </tr>
-        </tbody>
-      )}
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };

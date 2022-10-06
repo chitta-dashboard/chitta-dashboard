@@ -195,15 +195,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
             </S.UserInfoContainer>
           </S.FarmersDetailsContent>
         ))}
-      {image && (
-        <tbody>
-          <tr>
-            <td>
-              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-            </td>
-          </tr>
-        </tbody>
-      )}
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 });
