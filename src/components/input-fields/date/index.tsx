@@ -23,7 +23,7 @@ function DateInput<FormInputTypes>({ label, register, inputName, helperText }: C
       />
       {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DesktopDatePicker
-          value={""}
+          value={"empty"}
           onChange={() => {}}
           label={label}
           renderInput={(params: TextFieldProps) => (

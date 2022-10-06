@@ -167,7 +167,7 @@ export namespace S {
       flexDirection: "column",
       alignItems: "flex-end",
     },
-    "div:nth-child(1)": {
+    "div:nth-of-type(1)": {
       alignItems: "flex-start",
     },
   }));
