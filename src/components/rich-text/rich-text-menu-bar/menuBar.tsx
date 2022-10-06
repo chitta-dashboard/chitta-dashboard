@@ -31,7 +31,6 @@ const MenuBar: FC<TextEditor> = ({ editor }) => {
         <S.ToolbarBtn onClick={() => editor.chain().focus().unsetAllMarks().run()}>
           <Icon iconName="clear-format" />
         </S.ToolbarBtn>
-        <S.ToolbarBtn onClick={() => editor.chain().focus().clearNodes().run()}>clear nodes</S.ToolbarBtn>
         <S.ToolbarBtn onClick={() => editor.chain().focus().setParagraph().run()} className={editor.isActive("paragraph") ? "is-active" : ""}>
           <Icon iconName="paragraph" />
         </S.ToolbarBtn>

@@ -114,15 +114,7 @@ const DashboardFounder = (props: Props) => {
           ))}
         </Slider>
       </S.FounderWrapper>
-      {image && (
-        <tbody>
-          <tr>
-            <td>
-              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-            </td>
-          </tr>
-        </tbody>
-      )}
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };
