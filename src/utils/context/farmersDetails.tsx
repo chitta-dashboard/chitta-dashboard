@@ -16,6 +16,7 @@ const SELECT_FILTER = "SELECT_FILTER";
 export type farmerDetail = {
   membershipId?: string;
   profile?: string;
+  isChecked?: boolean;
   id: string;
   name: string;
   fatherName: string;
@@ -25,22 +26,20 @@ export type farmerDetail = {
   group: string;
   phoneNumber: string;
   addhaarNo: string;
-  voterIdNo: string;
-  acre: string;
+  surveyNo: { [key: string]: string };
+  acre: { [key: string]: string };
+  border: { [key: string]: string };
   education: string;
   village: string;
   postalNo: string;
   address: string;
   taluk: string;
   district: string;
-  surveyNo: string;
   landType: string;
   farmerType: string;
   waterType: string;
-  seedType: string;
   animals: string;
   groupMember: string;
-  isChecked?: boolean;
 };
 
 export type selectedFarmer = number | string;
@@ -83,19 +82,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
@@ -111,19 +109,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
@@ -139,19 +136,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
@@ -167,19 +163,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
@@ -195,19 +190,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
@@ -223,19 +217,18 @@ const initialState: farmerDetailsContextType = {
       spouseName: "",
       dob: "",
       addhaarNo: "",
-      voterIdNo: "",
-      acre: "",
+      acre: {},
+      border: {},
       education: "",
       village: "",
       postalNo: "",
       address: "",
       taluk: "",
       district: "",
-      surveyNo: "",
+      surveyNo: {},
       landType: "",
       farmerType: "",
       waterType: "",
-      seedType: "",
       animals: "",
       groupMember: "",
     },
