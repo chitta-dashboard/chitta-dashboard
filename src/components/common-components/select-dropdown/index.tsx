@@ -1,5 +1,4 @@
 import React from "react";
-import { MenuItem } from "@mui/material";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
 import S from "./selectDropdown.styled";
@@ -18,11 +17,11 @@ const SelectDropDown = () => {
 
   return (
     <S.SelectInput select value={groupFilter} onChange={selectHandler}>
-      <MenuItem value="all">Farmer Groups</MenuItem>
+      <S.Option value="all">Farmer Groups</S.Option>
       {farmerGroupList.map((list) => (
-        <MenuItem key={list.id} value={list.groupName}>
+        <S.Option key={list.id} value={list.groupName}>
           {list.groupName}
-        </MenuItem>
+        </S.Option>
       ))}
     </S.SelectInput>
   );
