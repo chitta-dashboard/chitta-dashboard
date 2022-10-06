@@ -7,6 +7,8 @@ const DELETE_FARMER_GROUP_DETAIL = "DELETE_FARMER_GROUP_DETAIL";
 const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
+const MEMBER_FILTER = "MEMBER_FILTER";
+const ADD_MEMBERS = "ADD_MEMBERS";
 
 export type farmerGroupDetail = {
   id: string;
@@ -15,6 +17,7 @@ export type farmerGroupDetail = {
   chairman: string;
   treasurer: string;
   secretary: string;
+  members?: string[] | undefined;
 };
 
 type Props = {
@@ -32,7 +35,10 @@ interface farmerGroupDetailsContextType {
   addFarmerGroupDetail: (data: farmerGroupDetail) => void;
   editFarmerGroupDetail: (data: farmerGroupDetail) => void;
   deleteFarmerGroupDetail: (id: string) => void;
+  addMembers: (id: string) => void;
   setPage: (page: number) => void;
+  memberFilter: string;
+  setMemberFilter: (setMember: string) => void;
 }
 
 const initialState: farmerGroupDetailsContextType = {
@@ -43,6 +49,7 @@ const initialState: farmerGroupDetailsContextType = {
       explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "Ponniyin Selvan",
       treasurer: "Kariakalan",
+      members: ["1", "4", "5"],
       secretary: "vanthiyadevan",
     },
     {
@@ -52,6 +59,7 @@ const initialState: farmerGroupDetailsContextType = {
       chairman: "Ponniyin Selvan",
       treasurer: "Kariakalan",
       secretary: "vanthiyadevan",
+      members: [],
     },
     {
       id: "3",
@@ -60,6 +68,7 @@ const initialState: farmerGroupDetailsContextType = {
       chairman: "Ponniyin Selvan",
       treasurer: "Kariakalan",
       secretary: "vanthiyadevan",
+      members: ["2", "3", "6"],
     },
   ],
 
@@ -67,12 +76,15 @@ const initialState: farmerGroupDetailsContextType = {
   rowsPerPage: 6,
   searchFilter: "",
   sortFilter: "ascending",
+  addMembers: () => {},
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFarmerGroupDetail: () => {},
   editFarmerGroupDetail: () => {},
   deleteFarmerGroupDetail: () => {},
   setPage: () => {},
+  memberFilter: "all",
+  setMemberFilter: () => {},
 };
 
 const reducer = (state: farmerGroupDetailsContextType, action: any) => {
@@ -95,8 +107,17 @@ const reducer = (state: farmerGroupDetailsContextType, action: any) => {
 
     case DELETE_FARMER_GROUP_DETAIL:
       return { ...state, farmerGroupList: state.farmerGroupList.filter((list) => list.id !== action.payload) };
+
+    case ADD_MEMBERS:
+      return { ...state, farmerGroupList: { ...state.farmerGroupList, members: [...action.payload] } };
+    // objects: { ...state.objects, objectArray: [...state.objectArray, action.value]},
+    // return { ...state.farmerGroupList, members: [...state.members, action.payload] };
+
     case SET_PAGE:
       return { ...state, page: action.payload };
+
+    case MEMBER_FILTER:
+      return { ...state, memberFilter: action.payload };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -124,8 +145,14 @@ const FarmerGroupDetailsContextProvider: FC<Props> = (props) => {
   const deleteFarmerGroupDetail = (id: string) => {
     dispatch({ type: DELETE_FARMER_GROUP_DETAIL, payload: id });
   };
+  const addMembers = (id: string) => {
+    dispatch({ type: ADD_MEMBERS, payload: id });
+  };
   const setPage = (page: number) => {
     dispatch({ type: SET_PAGE, payload: page });
+  };
+  const setMemberFilter = (setMember: string) => {
+    dispatch({ type: MEMBER_FILTER, payload: setMember });
   };
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
@@ -142,6 +169,8 @@ const FarmerGroupDetailsContextProvider: FC<Props> = (props) => {
     setSearchFilter,
     setSortFilter,
     setPage,
+    setMemberFilter,
+    addMembers,
   };
 
   return <farmerGroupDetailsContext.Provider value={data}>{props.children}</farmerGroupDetailsContext.Provider>;

@@ -39,7 +39,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
