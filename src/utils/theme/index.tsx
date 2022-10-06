@@ -20,7 +20,7 @@ export const LightTheme: Theme = createTheme({
     custom: {
       backgroundLight: "#DEEFE9",
       backgroundDark: "#C1E1D6",
-      backdrop: "#deefe97f",
+      backdrop: "#deefe97e",
     },
     shadeOpacity: ".8",
   },
