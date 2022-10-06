@@ -17,8 +17,6 @@ const Body = () => {
     farmerGroupList: listData,
     editFarmerGroupDetail,
     deleteFarmerGroupDetail,
-    page,
-    rowsPerPage,
     searchFilter,
     sortFilter,
     // memberFilter,
@@ -30,13 +28,12 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+
   const [farmerGroupList, setFarmerGroupList] = useState(listData);
 
   // const [farmersGroupList, setFarmersGroupList] = useState(listData);
-  // const [farmerGroupMembersList, setFarmerGroupMembersList] = useState(listData);
   const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
   const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
-  const [farmerGroupPaginate, setFarmerGroupPaginate] = useState(listData);
 
   // console.log(memberFilter);
   // console.log(
@@ -57,20 +54,16 @@ const Body = () => {
   // }, [memberFilter, listData]);
 
   useEffect(() => {
-    setFarmerGroupListSearch(farmerGroupList.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
-  }, [searchFilter, farmerGroupList]);
+    setFarmerGroupListSearch(listData.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
+  }, [searchFilter, listData]);
 
   useEffect(() => {
     setFarmerGroupListSort(sortObj<farmerGroupDetail>(farmerGroupListSearch, sortFilter, "groupName"));
   }, [farmerGroupListSearch, sortFilter]);
 
   useEffect(() => {
-    setFarmerGroupPaginate(farmerGroupListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [farmerGroupListSort, page, rowsPerPage]);
-
-  useEffect(() => {
-    setFarmerGroupList(farmerGroupPaginate);
-  }, [farmerGroupPaginate]);
+    setFarmerGroupList(farmerGroupListSort);
+  }, [farmerGroupListSort]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {

@@ -38,8 +38,6 @@ const Body = () => {
     checkboxSelect,
     selectedFarmers,
     sortFilter,
-    rowsPerPage,
-    page,
     groupFilter,
   } = useFarmerDetailsContext();
 
@@ -47,7 +45,6 @@ const Body = () => {
   const [farmersListGroup, setFarmersListGroup] = useState(listData);
   const [farmersListSearch, setFarmersListSearch] = useState(listData);
   const [farmersListSort, setFarmersListSort] = useState(listData);
-  const [farmersListPaginate, setFarmersListPaginate] = useState(listData);
   const [farmersList, setFarmersList] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
@@ -68,12 +65,8 @@ const Body = () => {
   }, [farmersListSearch, sortFilter]);
 
   useEffect(() => {
-    setFarmersListPaginate(farmersListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [farmersListSort, page, rowsPerPage]);
-
-  useEffect(() => {
-    setFarmersList(farmersListPaginate);
-  }, [farmersListPaginate]);
+    setFarmersList(farmersListSort);
+  }, [farmersListSort]);
 
   // Delete Modal
   const deleteModalHandler = (id: string) => {
