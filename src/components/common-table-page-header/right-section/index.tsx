@@ -1,5 +1,4 @@
-import React, { useState, FC } from "react";
-import { Popover } from "@mui/material";
+import React, { FC } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import S from "./rightSection.styled";
 
@@ -7,45 +6,13 @@ interface RightSectionProps {
   addModalHandler?: () => void;
   sortHandler?: (sortOrder: "ascending" | "descending") => void;
   sortFilter?: "ascending" | "descending";
+  popOverHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const RightSection: FC<RightSectionProps> = ({ addModalHandler, sortFilter, sortHandler }) => {
-  const [popoverOpen, setPopoverOpen] = useState<HTMLButtonElement | null>(null);
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setPopoverOpen(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setPopoverOpen(null);
-  };
-
-  const open = Boolean(popoverOpen);
-
+const RightSection: FC<RightSectionProps> = ({ addModalHandler, sortFilter, sortHandler, popOverHandler }) => {
   return (
     <S.RightSectionContainer>
-      <IconWrapper aria-describedby={open ? "simple-popover" : undefined} onClick={handleClick}>
-        filter
-      </IconWrapper>
-      <Popover
-        id={open ? "simple-popover" : undefined}
-        open={open}
-        anchorEl={popoverOpen}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <S.PopoverText onClick={handleClose}>All</S.PopoverText>
-        <S.PopoverText onClick={handleClose}>With Member</S.PopoverText>
-        <S.PopoverText onClick={handleClose}>Without Member</S.PopoverText>
-      </Popover>
-
+      <IconWrapper onClick={popOverHandler}>filter</IconWrapper>
       <IconWrapper
         isGreen={sortFilter === "descending"}
         onClick={() => {

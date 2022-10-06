@@ -50,7 +50,7 @@ const initialState: mdDetailsContextType = {
       name: "Aditha Karikalan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
-      dob: "2022-01-01",
+      dob: "1982-10-01",
       signature: "",
     },
     {
@@ -59,7 +59,7 @@ const initialState: mdDetailsContextType = {
       name: "Arulmozhi Varman",
       phoneNumber: "8610010875",
       qualification: "BA",
-      dob: "2022-01-01",
+      dob: "1990-01-27",
       signature: "",
     },
     {
@@ -68,7 +68,7 @@ const initialState: mdDetailsContextType = {
       name: "Nandini",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
-      dob: "2022-01-01",
+      dob: "1989-11-09",
       signature: "",
     },
     {
@@ -77,7 +77,7 @@ const initialState: mdDetailsContextType = {
       name: "Vanthiyathevan ",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
-      dob: "2022-01-01",
+      dob: "1994-10-12",
       signature: "",
     },
     {
@@ -86,7 +86,7 @@ const initialState: mdDetailsContextType = {
       name: "Kundavai",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
-      dob: "2022-01-01",
+      dob: "1992-08-02",
       signature: "",
     },
     {
@@ -95,7 +95,7 @@ const initialState: mdDetailsContextType = {
       name: "Rajendran Cholan",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
-      dob: "2022-01-01",
+      dob: "1985-07-12",
       signature: "",
     },
   ],

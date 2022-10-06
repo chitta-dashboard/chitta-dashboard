@@ -11,7 +11,7 @@ const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
-const SELECT_FILTER = "SELECT_FILTER";
+const GROUP_FILTER = "GROUP_FILTER";
 
 export type farmerDetail = {
   membershipId?: string;
@@ -80,7 +80,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1996-08-10",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -107,7 +107,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1994-01-01",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -134,7 +134,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1998-01-07",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -161,7 +161,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1998-08-05",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -188,7 +188,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1989-10-12",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -215,7 +215,7 @@ const initialState: farmerDetailsContextType = {
       fatherName: "",
       sex: "",
       spouseName: "",
-      dob: "",
+      dob: "1994-03-01",
       addhaarNo: "",
       acre: {},
       border: {},
@@ -306,7 +306,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
 
-    case SELECT_FILTER:
+    case GROUP_FILTER:
       return { ...state, groupFilter: action.payload };
 
     default: {
@@ -342,7 +342,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
   const setGroupFilter = (selectGroup: string) => {
-    dispatch({ type: SELECT_FILTER, payload: selectGroup });
+    dispatch({ type: GROUP_FILTER, payload: selectGroup });
   };
   const checkboxSelectAll = () => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
