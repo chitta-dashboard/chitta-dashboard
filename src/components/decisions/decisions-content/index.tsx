@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import DecisionsTree from "../decisions-tree";
 import DecisionsList from "../decisions-list";
 import S from "./decisionsContent.styled";
@@ -8,9 +8,17 @@ interface CustomProps {
 }
 
 const DecisionsContent: FC<CustomProps> = ({ view }) => {
+  const [decisionId, setDecisionId] = useState<string>("");
+
   return (
     <>
-      <S.DecisionsContentContainer>{view === "tree" ? <DecisionsTree /> : <DecisionsList />}</S.DecisionsContentContainer>
+      <S.DecisionsContentContainer>
+        {view === "tree" ? (
+          <DecisionsTree decisionId={decisionId} setDecisionId={setDecisionId} />
+        ) : (
+          <DecisionsList decisionId={decisionId} setDecisionId={setDecisionId} />
+        )}
+      </S.DecisionsContentContainer>
     </>
   );
 };

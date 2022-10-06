@@ -1,20 +1,38 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
 
 import profilePic from "../../../assets/images/profile.png";
 import { Box } from "@mui/material";
+import { fileValidation } from "../../../utils/constants";
+import ImagePreview from "../../../utils/imageCrop/imagePreview";
+import IconWrapper from "../../../utils/iconWrapper";
 import { S } from "./dashboardHeader.styled";
-import IconWrapper from "../../../utils/iconWrapper"; 
-
 
 type Props = {};
 
 const DashboardHeader = (props: Props) => {
   const [openSearch, setOpenSearch] = useState(false);
+  const [image, setImage] = useState("");
+  const [imagePic, setImagePic] = useState("");
+
+  const hiddenFileInput: any = useRef<HTMLInputElement>();
+
   const openSearchHandle = () => {
     setOpenSearch(!openSearch);
+  };
+
+  const handleIconClick = () => {
+    hiddenFileInput && hiddenFileInput.current.click();
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+    let isValid = e.target && fileValidation(e.target.files[0].name);
+    e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+  };
+  const handleCroppedImage = (image: string) => {
+    setImagePic(image);
   };
   return (
     <>
@@ -22,7 +40,15 @@ const DashboardHeader = (props: Props) => {
       <S.DashboardHeaderWrapper>
         <S.ProfileBox>
           <S.ImgContainer>
-            <S.DshboardImg src={profilePic} alt="user-profile" />
+            <S.DshboardImg src={imagePic ? imagePic : profilePic} alt="user-profile" />
+            <S.EditBox
+              onClick={() => {
+                handleIconClick();
+              }}
+            >
+              <S.EditIcon>edit</S.EditIcon>
+              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+            </S.EditBox>
           </S.ImgContainer>
           <Box>
             <S.ProfileHeading>Hi, Arockia!</S.ProfileHeading>
@@ -31,7 +57,7 @@ const DashboardHeader = (props: Props) => {
         </S.ProfileBox>
         <S.HeaderIconsBox>
           <S.SearchBarContainer>
-          <SearchBar />
+            <SearchBar />
           </S.SearchBarContainer>
           <IconWrapper>filter</IconWrapper>
           <IconWrapper>settings</IconWrapper>
@@ -40,6 +66,15 @@ const DashboardHeader = (props: Props) => {
           </S.SearchIconContainer>
         </S.HeaderIconsBox>
       </S.DashboardHeaderWrapper>
+      {image && (
+        <tbody>
+          <tr>
+            <td>
+              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+            </td>
+          </tr>
+        </tbody>
+      )}
     </>
   );
 };

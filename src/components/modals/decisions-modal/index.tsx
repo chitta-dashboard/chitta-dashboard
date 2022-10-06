@@ -62,6 +62,8 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
       groupDescriptionRichText: data.descriptionRichText,
       timestamp: createTimeStamp(data.creationTime),
       creationTime: getCurrentTime(),
+      presenter: data.presenter,
+      participator: data.participator,
     });
     reset();
     handleClose();
