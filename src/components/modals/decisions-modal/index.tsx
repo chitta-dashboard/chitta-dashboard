@@ -6,13 +6,13 @@ import { v4 as uuidv4 } from "uuid";
 
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
-import SubmitButton from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
 import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
 import { IDecision } from "../../../utils/context/decisionsContext";
+import { Button } from "@mui/material";
 
 interface CustomProps {
   cb: (data: IDecision) => void;
@@ -93,7 +93,9 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <SubmitButton formId="addDecisions" handleSubmit={() => {}} />
+          <Button form="addDecisions" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>

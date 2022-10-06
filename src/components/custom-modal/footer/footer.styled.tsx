@@ -6,6 +6,11 @@ namespace S {
     justifyContent: "center",
     alignItems: "center",
     padding: "1.875rem",
+    gap: "1rem",
+
+    ".MuiButton-textPrimary": {
+      width: "10rem",
+    },
   }));
 }
 
