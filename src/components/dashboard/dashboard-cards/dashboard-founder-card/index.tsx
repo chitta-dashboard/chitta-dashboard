@@ -35,7 +35,7 @@ const FoundersItems = [
 const DashboardFounder = (props: Props) => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-  const { mdList } = useFounderContext();
+  const { foundersList } = useFounderContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   var settings = {
@@ -84,7 +84,7 @@ const DashboardFounder = (props: Props) => {
         </Link>
       </CardHeader>
       <Slider {...settings}>
-        {mdList.map((item) => (
+        {foundersList.map((item) => (
           <S.FounderCard key={item.id}>
             <S.FounderImg src={FounderImg} alt="Founder-image" />
             <S.FounderCardContainer>

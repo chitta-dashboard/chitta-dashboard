@@ -65,7 +65,6 @@ namespace S {
       width: "100% !important",
       position: "relative",
       left: "50%",
-
       //Table head for Tab view
       "&::before": {
         content: `"${title}"`,
@@ -129,6 +128,7 @@ namespace S {
     color: theme.palette.text.primary,
     opacity: "1",
   }));
+
   export const HiddenInput = styled("input")(() => ({
     display: "none",
   }));
