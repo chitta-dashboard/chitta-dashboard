@@ -5,7 +5,6 @@ namespace S {
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
@@ -46,14 +45,12 @@ namespace S {
         },
       },
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
       width: "100%",
       position: "relative",
       left: "50%",
-
       //Create Table Title for Tablet view
       "&::before": {
         content: `"${title}"`,
@@ -68,13 +65,15 @@ namespace S {
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   }));
 
   export const Toggle = styled(Switch)(() => ({}));
+  Toggle.defaultProps = {
+    size: "small",
+  };
 
   export const AvatarImg = styled("img")(() => ({
     width: "100%",
@@ -88,7 +87,6 @@ namespace S {
     width: "2.5rem",
     position: "relative",
     cursor: "pointer",
-
     "&:hover > .MuiBox-root": {
       display: "flex",
     },
