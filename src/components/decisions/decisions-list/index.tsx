@@ -1,4 +1,4 @@
-import { FC, Ref, useRef } from "react";
+import { Dispatch, FC, Ref, useRef } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,12 @@ import S from "./decisionsList.styled";
 import { useReactToPrint } from "react-to-print";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 
-const DecisionsList: FC = () => {
+interface Props {
+  decisionId: string;
+  setDecisionId: Dispatch<string>;
+}
+
+const DecisionsList: FC<Props> = ({ decisionId, setDecisionId }) => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const { decisions: decisionsObj } = useDecisionsProviderContext();
   const navigate = useNavigate();
@@ -31,7 +36,7 @@ const DecisionsList: FC = () => {
   return (
     <S.MasterContainer>
       <S.InvisibleBox>
-        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
+        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} decisionId={decisionId} />
       </S.InvisibleBox>
       {!isMd && (
         <S.LeftContainer>
@@ -47,7 +52,8 @@ const DecisionsList: FC = () => {
                   View
                 </S.ContentViewBtn>
                 <S.ContentDownloadBtn
-                  onClick={() => {
+                  onClick={async () => {
+                    await setDecisionId(data.id);
                     generateDecisionPDF();
                   }}
                 >
@@ -76,7 +82,8 @@ const DecisionsList: FC = () => {
                 View
               </S.ContentViewBtn>
               <S.ContentDownloadBtn
-                onClick={() => {
+                onClick={async () => {
+                  await setDecisionId(data.id);
                   generateDecisionPDF();
                 }}
               >

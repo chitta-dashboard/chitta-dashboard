@@ -1,4 +1,4 @@
-import { Box, MenuItem, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 namespace S {
   export const FarmersGroupContainer = styled(Box)(({ theme }) => ({
@@ -13,7 +13,7 @@ namespace S {
     },
   }));
 
-  export const Items = styled(MenuItem)(({ theme }) => ({
+  export const Items = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0.6rem 1rem",
     borderBottom: "0.1rem solid #6868681A",

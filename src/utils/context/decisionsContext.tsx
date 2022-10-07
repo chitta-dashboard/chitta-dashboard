@@ -11,6 +11,8 @@ export interface IDecision {
   creationTime: string;
   groupDescription: string;
   groupDescriptionRichText?: string;
+  presenter: string[];
+  participator: string[];
 }
 
 interface IContextType {
@@ -32,6 +34,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:30",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "3c0bc080-4e1c-40e5-86d2-9f1225287124": {
       id: "3c0bc080-4e1c-40e5-86d2-9f1225287124",
@@ -41,6 +45,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:29",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "05ee8b0c-cbcb-45a9-bb3b-0866077b8374": {
       id: "05ee8b0c-cbcb-45a9-bb3b-0866077b8374",
@@ -50,6 +56,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet ingilla urna porttitor rhoncus dolor purus non enim praesent",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:28",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "2f81d92f-daa4-47bc-a937-65009ef33c78": {
       id: "2f81d92f-daa4-47bc-a937-65009ef33c78",
@@ -59,6 +67,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:27",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "1241d6fe-8f3f-47aa-a47f-5448a5e7fb8f": {
       id: "1241d6fe-8f3f-47aa-a47f-5448a5e7fb8f",
@@ -68,6 +78,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:26",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "4581e5c2-b7f9-4f66-9432-b11d92e9d05b": {
       id: "4581e5c2-b7f9-4f66-9432-b11d92e9d05b",
@@ -77,6 +89,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:25",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "7b8d005b-2ff2-432d-939e-e355592841b4": {
       id: "7b8d005b-2ff2-432d-939e-e355592841b4",
@@ -86,6 +100,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:24",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
     "a39752e8-f070-4e59-9eb9-499f1008ee02": {
       id: "a39752e8-f070-4e59-9eb9-499f1008ee02",
@@ -95,6 +111,8 @@ const initialState: IContextType = {
         "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent",
       timestamp: "Mar 16,2022, 10:30 AM",
       creationTime: "2022-03-16T10:23",
+      presenter: ["person1", "person2", "person3"],
+      participator: ["person1", "person2", "person3"],
     },
   },
   addDecision: () => {},

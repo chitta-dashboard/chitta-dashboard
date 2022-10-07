@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 
-import S from "./ceo-details.styled";
 import ProfilePicture from "./../../assets/images/IdImage.png";
 import { fileValidation } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
+import S from "./ceo-details.styled";
 
 const CeoDetailsCard = () => {
   const [image, setImage] = useState("");
+  const [imagePic, setImagePic] = useState("");
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   const handleIconClick = () => {
@@ -19,7 +20,7 @@ const CeoDetailsCard = () => {
   };
 
   const handleCroppedImage = (image: string) => {
-    setImage(image);
+    setImagePic(image);
   };
 
   return (
@@ -28,7 +29,7 @@ const CeoDetailsCard = () => {
         <S.CeoDetailData>
           <S.CeoDataLeft>
             <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={image ? image : ProfilePicture} alt="profile picture" />
+              <S.CeoProfilePicture src={imagePic ? imagePic : ProfilePicture} alt="profile picture" />
               <S.EditBox
                 onClick={() => {
                   handleIconClick();
@@ -67,15 +68,7 @@ const CeoDetailsCard = () => {
           <S.CustomIconContainer>edit</S.CustomIconContainer>
         </S.ButtonContainer>
       </S.CeoDetailCard>
-      {image && (
-        <tbody>
-          <tr>
-            <td>
-              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-            </td>
-          </tr>
-        </tbody>
-      )}
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };

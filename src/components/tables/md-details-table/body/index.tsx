@@ -15,10 +15,9 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter, page, rowsPerPage } = useMdDetailsContext();
+  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
   const [mdListSearch, setMdListSearch] = useState(listData);
   const [mdListSort, setMdListSort] = useState(listData);
-  const [mdListPaginate, setMdListPaginate] = useState(listData);
   const [mdList, setMdList] = useState(listData);
 
   useEffect(() => {
@@ -30,12 +29,8 @@ const Body = () => {
   }, [mdListSearch, sortFilter]);
 
   useEffect(() => {
-    setMdListPaginate(mdListSort.slice((page - 1) * rowsPerPage, (page - 1) * rowsPerPage + rowsPerPage));
-  }, [mdListSort, page, rowsPerPage]);
-
-  useEffect(() => {
-    setMdList(mdListPaginate);
-  }, [mdListPaginate]);
+    setMdList(mdListSort);
+  }, [mdListSort]);
 
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");

@@ -15,7 +15,7 @@ namespace S {
   export const DashBoardBodyWrapper = styled(Box)(({ theme }: any) => ({
     display: "flex",
     flexDirection: "column",
-    gap: "6rem",
+    gap: "2rem",
     // overflowY: "auto",
   }));
 
