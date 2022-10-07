@@ -17,9 +17,9 @@ const Dashboard = () => {
           </S.DashBoardStatisticsWrapper>
           <S.DashBoardBottom container>
             {/* <DashboardStatCard /> */}
-            <DashboardFounder />
             <DashboardSummaryCard />
-            <DashboardNotificationCard />
+            <DashboardFounder />
+            {/* <DashboardNotificationCard /> */}
           </S.DashBoardBottom>
         </S.DashBoardBodyWrapper>
       </S.DashBoardContainer>

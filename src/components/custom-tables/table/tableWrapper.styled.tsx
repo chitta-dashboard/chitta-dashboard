@@ -5,6 +5,7 @@ namespace S {
     backgroundColor: "white",
     borderRadius: "2rem",
     overflow: "hidden",
+    boxShadow: "0px 4px 10px #00000019",
   }));
 
   export const TableBox = styled(Table)(({ theme }) => ({
@@ -21,7 +22,6 @@ namespace S {
       display: "block",
       tableLayout: "fixed",
       backgroundColor: theme.palette.custom.backgroundDark,
-      // background
 
       "& th": {
         backgroundColor: theme.palette.custom.backgroundDark,
@@ -40,10 +40,6 @@ namespace S {
       "& .MuiSvgIcon-root": {
         color: theme.palette.text.primaryDark,
       },
-
-      [theme.breakpoints.up("md")]: {
-        padding: "0 1.5rem",
-      },
     },
 
     "& tbody": {
@@ -52,12 +48,8 @@ namespace S {
       tableLayout: "fixed",
       overflowY: "auto",
       overflowX: "hidden",
-      [theme.breakpoints.up("md")]: {
-        padding: "0 1.5rem",
-      },
     },
 
-    // "& thead ,& tbody,& tfoot ,
     "& tr": {
       width: "100%",
       display: "table",

@@ -13,7 +13,7 @@ export namespace S {
     ".slick-prev": {
       top: "105% !important",
       left: "43%",
-      zIndex: 5,
+      zIndex: "3",
       width: "50px",
       height: "50px",
       transform: "rotate(-180deg)",
@@ -41,7 +41,7 @@ export namespace S {
       background: "white",
       borderRadius: "50%",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-      zIndex: "5",
+      zIndex: "3",
       [theme.breakpoints.down("xl")]: {
         right: "35%",
       },

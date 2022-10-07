@@ -77,8 +77,8 @@ const DashboardBodyTop = (props: Props) => {
   ];
 
   var settings = {
-    dots: true,
-    arrows: true,
+    dots: false,
+    arrows: false,
     infinite: false,
     speed: 500,
     slidesToShow: xl ? 5 : md ? 4 : 3,

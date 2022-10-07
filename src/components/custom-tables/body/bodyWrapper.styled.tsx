@@ -4,6 +4,7 @@ namespace S {
   export const Content = styled(TableBody)(({ theme }) => ({
     "& tr": {
       borderBottom: "0.2rem solid #F3F3F3",
+      cursor: "pointer",
 
       "&:hover": {
         backgroundColor: theme.palette.custom.backgroundLight,

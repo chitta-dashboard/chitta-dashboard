@@ -110,6 +110,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   const form2Submit: any = (data: IAddFarmersDetailsPage2Input) => {
     let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
+    console.log(params);
     handleClose();
   };
 

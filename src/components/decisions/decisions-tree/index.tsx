@@ -1,4 +1,4 @@
-import { Ref, useRef } from "react";
+import { FC, Ref, useRef, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 
@@ -7,7 +7,12 @@ import { IDecision, useDecisionsProviderContext } from "../../../utils/context/d
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 import S from "./decisionsTree.styled";
 
-const DecisionsTree = () => {
+interface Props {
+  decisionId: string;
+  setDecisionId: Dispatch<string>;
+}
+
+const DecisionsTree: FC<Props> = ({ decisionId, setDecisionId }) => {
   const { decisions: decisionsObj } = useDecisionsProviderContext();
   const decisions = sortObj<IDecision>(Object.values(decisionsObj), "descending", "creationTime", { asDate: true });
   const leafCount = decisions.length <= 4 ? decisions.length : 4;
@@ -27,7 +32,7 @@ const DecisionsTree = () => {
   return (
     <>
       <S.InvisibleBox>
-        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
+        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} decisionId={decisionId} />
       </S.InvisibleBox>
       <S.DecisionsTreeBox leafCount={leafCount}>
         <S.Bud>
@@ -48,7 +53,8 @@ const DecisionsTree = () => {
                 View
               </S.ViewBtn>
               <S.DownloadBtn
-                onClick={() => {
+                onClick={async () => {
+                  await setDecisionId(decisions[0].id);
                   generateDecisionPDF();
                 }}
               >
@@ -71,7 +77,8 @@ const DecisionsTree = () => {
                 View
               </S.ViewBtn>
               <S.DownloadBtn
-                onClick={() => {
+                onClick={async () => {
+                  await setDecisionId(decisions[2].id);
                   generateDecisionPDF();
                 }}
               >
@@ -94,7 +101,8 @@ const DecisionsTree = () => {
                 View
               </S.ViewBtn>
               <S.DownloadBtn
-                onClick={() => {
+                onClick={async () => {
+                  await setDecisionId(decisions[1].id);
                   generateDecisionPDF();
                 }}
               >
@@ -117,7 +125,8 @@ const DecisionsTree = () => {
                 View
               </S.ViewBtn>
               <S.DownloadBtn
-                onClick={() => {
+                onClick={async () => {
+                  await setDecisionId(decisions[3].id);
                   generateDecisionPDF();
                 }}
               >

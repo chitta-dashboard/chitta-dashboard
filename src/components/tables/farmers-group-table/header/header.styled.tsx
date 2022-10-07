@@ -5,6 +5,11 @@ namespace S {
       width: "12%",
     },
 
+    [theme.breakpoints.up("md")]: {
+      "&:first-of-type": {
+        paddingLeft: "1.25rem",
+      },
+    },
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
