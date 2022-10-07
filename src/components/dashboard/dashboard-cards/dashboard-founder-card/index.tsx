@@ -24,7 +24,7 @@ const DashboardFounder = () => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     appendDots: (dots: any) => (
       <Box>
         <S.SliderDotUl> {dots} </S.SliderDotUl>

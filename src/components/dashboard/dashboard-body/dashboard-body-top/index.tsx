@@ -56,7 +56,7 @@ const DashboardBodyTop = () => {
 
   var settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: false,
     speed: 500,
     slidesToShow: xl ? 5 : md ? 4 : 3,

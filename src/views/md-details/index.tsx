@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/md-details-modal";
+// import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import { useMdDetailsContext } from "../../utils/context/mdDetails";
 import { IAddMDDetailsFormInput } from "../../components/modals/type/formInputs";
