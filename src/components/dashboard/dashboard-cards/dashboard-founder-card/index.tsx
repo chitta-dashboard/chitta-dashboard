@@ -45,7 +45,7 @@ const DashboardFounder = (props: Props) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     appendDots: (dots: any) => (
       <div>
         <ul style={{ margin: "0px" }}> {dots} </ul>
