@@ -22,9 +22,8 @@ namespace S {
   export const LogoStack = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "end",
-    justifyContent: "space-between",
     width: "100%",
-    gap: "1.5rem",
+    gap: "2rem",
   }));
 
   export const logoImage = styled("img")<{ isColor: boolean }>(({ theme, isColor }) => ({
