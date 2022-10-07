@@ -79,7 +79,7 @@ const DashboardFounder = (props: Props) => {
     <S.FounderWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
       <CardHeader>
         Founders
-        <Link to="/md-details">
+        <Link to="/founders">
           <i>expand-right</i>
         </Link>
       </CardHeader>

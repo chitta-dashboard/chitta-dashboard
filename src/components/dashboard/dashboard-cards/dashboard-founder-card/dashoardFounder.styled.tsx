@@ -138,7 +138,9 @@ export namespace S {
     flexDirection: "column",
     gap: "0.5rem",
     paddingTop: "0.5rem",
-    width: "30%",
+    // width: "30%",
+    flex:'1.7',
+    // border: "1px solid red",
   }));
 
   export const FounderName = styled(Typography)(({ theme }: any) => ({
@@ -165,7 +167,9 @@ export namespace S {
     display: "flex",
     justifyContent: "space-between",
     //  padding: "0 2rem",
-    width: "50%",
+    // width: "50%",
+    flex:"1",
+    // border:"1px solid blue",
     color: theme.palette.text.secondary,
     div: {
       flex: "1 !important",

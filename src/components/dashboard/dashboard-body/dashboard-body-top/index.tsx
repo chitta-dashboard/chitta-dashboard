@@ -59,21 +59,7 @@ const DashboardBodyTop = (props: Props) => {
       bodyCount: 770,
       footerName: "Cultivation (Kg)",
       icon: "cultivation",
-    },
-    {
-      id: 7,
-      headCount: "-122",
-      bodyCount: 770,
-      footerName: "Cultivation (Kg)",
-      icon: "cultivation",
-    },
-    {
-      id: 8,
-      headCount: "-122",
-      bodyCount: 770,
-      footerName: "Cultivation (Kg)",
-      icon: "cultivation",
-    },
+    }
   ];
 
   var settings = {
