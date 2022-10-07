@@ -2,21 +2,19 @@ import { Box } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
 import Slider from "react-slick";
-import { CardHeader } from "../common-styles/commonStyles.styled";
-import { fileValidation } from "../../../../utils/constants";
-import FounderImg from "../../../../assets/images/Founder.png";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import S from "./dashoardFounder.styled";
+import { CardHeader } from "../common-styles/commonStyles.styled";
+import { fileValidation } from "../../../../utils/constants";
 import { useFounderContext } from "../../../../utils/context/founders";
+import FounderImg from "../../../../assets/images/Founder.png";
+import S from "./dashoardFounder.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 
-type Props = {};
-
-const DashboardFounder = (props: Props) => {
+const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-  const { mdList, editTableIcon } = useFounderContext();
+  const { foundersList, editTableIcon } = useFounderContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   var settings = {
@@ -28,9 +26,9 @@ const DashboardFounder = (props: Props) => {
     slidesToScroll: 1,
     autoplay: false,
     appendDots: (dots: any) => (
-      <div>
-        <ul style={{ margin: "0px" }}> {dots} </ul>
-      </div>
+      <Box>
+        <S.SliderDotUl> {dots} </S.SliderDotUl>
+      </Box>
     ),
   };
 
@@ -52,7 +50,7 @@ const DashboardFounder = (props: Props) => {
   };
 
   const getURL = (id: string) => {
-    let result = mdList.filter((item: any) => {
+    let result = foundersList.filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -61,7 +59,7 @@ const DashboardFounder = (props: Props) => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = mdList.filter((item) => {
+    let result = foundersList.filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -73,12 +71,12 @@ const DashboardFounder = (props: Props) => {
       <S.FounderWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
         <CardHeader>
           Founders
-          <Link to="/md-details">
+          <Link to="/founders">
             <i>expand-right</i>
           </Link>
         </CardHeader>
         <Slider {...settings}>
-          {mdList.map((item) => (
+          {foundersList.map((item) => (
             <S.FounderCard key={item.id}>
               <S.FounderImgContainer>
                 <S.FounderImg src={getURL(item.id) ? getURL(item.id) : FounderImg} alt="Founder-image" />

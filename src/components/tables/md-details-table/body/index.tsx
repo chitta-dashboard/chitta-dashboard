@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableRow } from "@mui/material";
+import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
-import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import ConfirmationModal from "../../../modals/confirmation-modal";
 import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
-import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
-import { mdDetail } from "../../../../utils/context/mdDetails";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -18,6 +18,15 @@ const Body = () => {
   const [mdListSearch, setMdListSearch] = useState(listData);
   const [mdListSort, setMdListSort] = useState(listData);
   const [mdList, setMdList] = useState(listData);
+  const [image, setImage] = useState<string>("");
+  const [userId, setUserId] = useState<string>("");
+  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<string>("");
+  const [iconModal, setIconModal] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editId, setEditId] = useState<string>("");
+  const [isCheck, setIsCheck] = useState<boolean>(false);
 
   useEffect(() => {
     setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
@@ -31,22 +40,6 @@ const Body = () => {
     setMdList(mdListSort);
   }, [mdListSort]);
 
-  const [image, setImage] = useState<string>("");
-  const [userId, setUserId] = useState<string>("");
-
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [deleteId, setDeleteId] = useState<string>("");
-  const [iconModal, setIconModal] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [editId, setEditId] = useState<string>("");
-
-  // Delete ModalHandler
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
@@ -64,6 +57,18 @@ const Body = () => {
   const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
     setIconModal(false);
     editMdDetail(data);
+  };
+
+  // Delete ModalHandler
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  // Switch Handler
+  const checkHandler = (id: string) => {
+    setIsCheck(!isCheck);
+    setDeleteId(id);
   };
 
   const getURL = (id: string) => {
@@ -129,6 +134,7 @@ const Body = () => {
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
                   <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
+                  <S.Toggle checked={!!user.id} onChange={() => checkHandler(user.id)} />
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -149,6 +155,19 @@ const Body = () => {
         }}
         handleEdit={() => {
           setEditMode(true);
+        }}
+        check={deleteId}
+        handleCheck={() => {
+          setIsCheck(true);
+        }}
+      />
+      <ConfirmationModal
+        openModal={isCheck}
+        handleClose={() => setIsCheck(false)}
+        yesAction={() => {
+          deleteMdDetail(deleteId);
+          setIsCheck(false);
+          setIconModal(false);
         }}
       />
       <DeleteModal

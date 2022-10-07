@@ -19,16 +19,6 @@ import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
 const Body = () => {
-  const idCardRef = useRef<HTMLDivElement>();
-  const farmerDetailFormRef = useRef<HTMLDivElement>();
-  const navigate = useNavigate();
-
-  const [image, setImage] = useState("");
-  const [userId, setUserId] = useState<string>("");
-  const [open, setOpen] = useState(false);
-
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-
   const {
     farmersList: listData,
     editTableIcon,
@@ -40,17 +30,24 @@ const Body = () => {
     sortFilter,
     groupFilter,
   } = useFarmerDetailsContext();
-
-  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
+  const [farmersList, setFarmersList] = useState(listData);
   const [farmersListGroup, setFarmersListGroup] = useState(listData);
   const [farmersListSearch, setFarmersListSearch] = useState(listData);
   const [farmersListSort, setFarmersListSort] = useState(listData);
-  const [farmersList, setFarmersList] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const idCardRef = useRef<HTMLDivElement>();
+  const farmerDetailFormRef = useRef<HTMLDivElement>();
+  const navigate = useNavigate();
+  const [image, setImage] = useState("");
+  const [userId, setUserId] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
+
+  const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   useEffect(() => {
     setFarmersListGroup(groupFilter === "all" ? listData : listData.filter((list) => list.group === groupFilter));
@@ -68,26 +65,29 @@ const Body = () => {
     setFarmersList(farmersListSort);
   }, [farmersListSort]);
 
-  // Delete Modal
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
     setEditId(id);
   };
+
   //Edit FarmerDetail Handler
   const editFarmerDetailHandler = (id: string) => {
     setEditMode(!editMode);
     setEditId(id);
   };
+
   //Update FarmerDetail Handler
   const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
     setIconModal(false);
     editFarmerDetail(data);
+  };
+
+  // Delete Modal
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
   };
 
   const getURL = (id: string) => {
