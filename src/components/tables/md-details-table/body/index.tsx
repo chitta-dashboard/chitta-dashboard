@@ -27,6 +27,7 @@ const Body = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
+  const [userConfirm, setUserConfirm] = useState<string>("");
 
   useEffect(() => {
     setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
@@ -65,10 +66,11 @@ const Body = () => {
     setDeleteId(id);
   };
 
-  // Switch Handler
-  const checkHandler = (id: string) => {
+  // confirm Handler
+  const confirmHandler = (user: mdDetail) => {
     setIsCheck(!isCheck);
-    setDeleteId(id);
+    setDeleteId(user.id);
+    setUserConfirm(user.name);
   };
 
   const getURL = (id: string) => {
@@ -126,7 +128,7 @@ const Body = () => {
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
                   <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
-                  <S.Toggle checked={!!user.id} onChange={() => checkHandler(user.id)} />
+                  <S.Toggle checked={!!user.id} onChange={() => confirmHandler(user)} />
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -161,6 +163,7 @@ const Body = () => {
           setIsCheck(false);
           setIconModal(false);
         }}
+        userConfirm={userConfirm}
       />
       <DeleteModal
         openModal={deleteModal}
