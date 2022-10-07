@@ -119,27 +119,63 @@ export namespace S {
     borderColor: "rgba(104, 104, 104, 0.1)",
   }));
 
-  export const FounderImg = styled("img")(({ theme }: any) => ({
+  export const FounderImgContainer = styled(Box)({
     width: "10rem",
     height: "10rem",
-    borderRadius: "10%",
-    // border: "1px solid red",
+    borderRadius: "50%",
     float: "left",
+    overflow: "hidden",
+    position: "relative",
+    cursor: "pointer",
+
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  });
+
+  export const FounderImg = styled("img")({
+    width: "100%",
+    height: "100%",
+  });
+
+  export const EditBox = styled(Box)(({ theme }: any) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: theme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 
-  export const FounderCardHeaderDetails = styled(Box)(({ theme }: any) => ({
+  export const EditIcon = styled("i")(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    opacity: "1",
+    fontSize: "1.5625rem",
+  }));
+
+  export const HiddenInput = styled("input")({
+    display: "none",
+  });
+
+  export const FounderCardHeaderDetails = styled(Box)({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
     paddingTop: "0.5rem",
     width: "30%",
-  }));
+  });
 
   export const FounderName = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.2rem",
     fontWeight: "500",
     color: theme.palette.text.primary,
-    whiteSpace:"nowrap",
+    whiteSpace: "nowrap",
   }));
 
   export const FounderAge = styled(Typography)(({ theme }: any) => ({
