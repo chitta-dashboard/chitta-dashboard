@@ -19,7 +19,7 @@ const DashboardSummaryCard = (props: Props) => {
 
   return (
     <>
-      <S.SummaryCardWrapper item sm={12} md={12} lg={4.5} xl={4.7}>
+      <S.SummaryCardWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
         <CardHeader>
           Summary
           <i onClick={() => optionHandler()}>three-dots</i>
