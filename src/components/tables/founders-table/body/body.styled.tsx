@@ -5,7 +5,6 @@ namespace S {
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
@@ -53,7 +52,6 @@ namespace S {
       width: "100%",
       position: "relative",
       left: "50%",
-
       //Create Table Title for Tablet view
       "&::before": {
         content: `"${title}"`,
@@ -68,7 +66,6 @@ namespace S {
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -86,7 +83,6 @@ namespace S {
     width: "2.5rem",
     position: "relative",
     cursor: "pointer",
-
     "&:hover > .MuiBox-root": {
       display: "flex",
     },

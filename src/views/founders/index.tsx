@@ -10,14 +10,14 @@ import S from "./founders.styled";
 
 const Founders = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addMdDetail, setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
+  const { addFounder, setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
 
   const addModalHandler = () => {
     setAddModal(!addModal);
   };
 
   const addDataHandler = (data: IAddMDDetailsFormInput & { id: string }) => {
-    addMdDetail(data);
+    addFounder(data);
   };
 
   return (

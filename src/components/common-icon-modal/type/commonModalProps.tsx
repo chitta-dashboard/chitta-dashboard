@@ -1,4 +1,5 @@
 interface CommonModalProps {
+  check?: string;
   open: boolean;
   handleClose: () => void;
   children?: React.ReactNode;
@@ -6,5 +7,6 @@ interface CommonModalProps {
   handleDelete?: () => void;
   handleEdit?: () => void;
   generateFarmerDetailForm?: () => void;
+  handleCheck?: () => void;
 }
 export default CommonModalProps;

@@ -4,10 +4,7 @@ import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-
-import AddProfile from "../../buttons/add-profile-icon-and-button";
 import CustomModal from "../../custom-modal";
-// import Submit from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
@@ -24,6 +21,7 @@ interface CustomProps {
   editMode?: boolean;
   id?: string;
 }
+
 const schema = yup
   .object({
     name: yup.string().required("required"),
@@ -54,6 +52,7 @@ const schema = yup
   .required();
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  
   let { mdList } = useMdDetailsContext();
 
   const {
