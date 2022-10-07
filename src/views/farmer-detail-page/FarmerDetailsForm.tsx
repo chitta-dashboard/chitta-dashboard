@@ -38,9 +38,17 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     let result = farmersList.filter((item) => {
       return item.id === userId;
     });
@@ -77,7 +85,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                   }}
                 >
                   <S.EditIcon>edit</S.EditIcon>
-                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
                 </S.EditBox>
               </S.UserImgContainer>
             </S.FarmersDetailsHeader>
