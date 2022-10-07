@@ -18,7 +18,7 @@ export namespace S {
       minHeight: "10vh",
     },
     ".slick-prev": {
-      top: "99%",
+      top: "96%",
       left: "25%",
       zIndex: "3",
       width: "35px",
@@ -35,7 +35,7 @@ export namespace S {
       },
     },
     ".slick-next": {
-      top: "106%",
+      top: "103%",
       right: "25%",
       width: "35px",
       height: "35px",
@@ -55,6 +55,12 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
+      bottom: "-15px",
+      button: {
+        "&:before": {
+          fontSize: "10px",
+        },
+      },
       ".slick-active": {
         button: {
           "&:before": {
@@ -75,7 +81,7 @@ export namespace S {
     // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     // border:"1px solid red",
     borderRadius: "1.25rem",
-    padding: "1rem 0",
+    padding: "1rem 0.2rem",
     [theme.breakpoints.down("lg")]: {
       // width: "70% !important",
       margin: "0 auto",
@@ -83,7 +89,7 @@ export namespace S {
   }));
 
   export const FounderCardContainer = styled(Box)(({ theme }: any) => ({
-    width: "73% !important",
+    width: "calc(100% - 10rem)",
     // height: "250px !important",
     display: "flex",
     flexDirection: "column",
@@ -139,7 +145,7 @@ export namespace S {
     fontSize: "1.2rem",
     fontWeight: "500",
     color: theme.palette.text.primary,
-    whiteSpace:"nowrap",
+    whiteSpace: "nowrap",
   }));
 
   export const FounderAge = styled(Typography)(({ theme }: any) => ({
@@ -181,6 +187,15 @@ export namespace S {
   export const FounderCardDescContainer = styled(Box)(({ theme }: any) => ({
     color: theme.palette.text.secondary,
     textAlign: "justify",
+    p: {
+      // textOverflow: "ellipsis",
+      // overflow: "hidden",
+      // whiteSpace: "nowrap",
+      display: "-webkit-box",
+      "-webkit-box-orient": "vertical",
+      "-webkit-line-clamp": "3",
+      overflow: "hidden",
+    },
   }));
 }
 
