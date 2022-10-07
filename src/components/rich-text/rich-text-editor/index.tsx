@@ -7,7 +7,6 @@ import MenuBar from "../rich-text-menu-bar/menuBar";
 
 import S from "../richText.styled";
 
-
 type EditorProps = {
   cb: (plainText: string, richText: string) => void;
 };
@@ -21,7 +20,7 @@ const Editor: FC<EditorProps> = ({ cb }) => {
       cb(editor.getText(), String(editor.getHTML()));
     },
   });
-  
+
   return (
     <S.RichTextBoxWrapper>
       <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>

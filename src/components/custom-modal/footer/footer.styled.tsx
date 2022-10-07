@@ -5,7 +5,12 @@ namespace S {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1.875rem",
+    padding: " 0  1.875rem 1.875rem 1.875rem",
+    gap: "1rem",
+
+    ".MuiButton-textPrimary": {
+      width: "10rem",
+    },
   }));
 }
 

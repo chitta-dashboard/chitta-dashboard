@@ -12,10 +12,10 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
-import SubmitButton from "../../buttons/submit-button";
+import { Button } from "@mui/material";
 
 interface CustomProps {
-  cb: (data: IAddFarmersGroupFormInput & { id: string }) => void;
+  cb: (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => void;
   openModal: boolean;
   handleClose: () => void;
   editMode?: boolean;
@@ -68,8 +68,8 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() });
+  const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
+    cb({ ...data, id: editMode ? id : uuidv4(), members: [] });
     reset();
     handleClose();
   };
@@ -99,7 +99,9 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         </ModalBody>
 
         <ModalFooter>
-          <SubmitButton formId="farmersGroup" handleSubmit={() => {}} />
+          <Button form="farmersGroup" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>
