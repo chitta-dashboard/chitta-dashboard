@@ -3,7 +3,6 @@ namespace S {
   export const ColCheckCell = styled(TableCell)(({ theme }) => ({
     width: "5%",
     textAlign: "center",
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -27,7 +26,6 @@ namespace S {
         width: "15%",
       },
     },
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -37,7 +35,6 @@ namespace S {
     display: "flex",
     alignItems: "center",
     gap: "30%",
-
     [theme.breakpoints.up("md")]: {
       display: "none",
     },

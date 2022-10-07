@@ -4,7 +4,6 @@ namespace S {
     "&:nth-last-of-type(2)": {
       width: "12%",
     },
-
     [theme.breakpoints.up("md")]: {
       "&:first-of-type": {
         paddingLeft: "1.25rem",
@@ -14,9 +13,9 @@ namespace S {
       display: "none",
     },
   }));
+
   export const TabTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-
     [theme.breakpoints.up("md")]: {
       display: "none",
     },

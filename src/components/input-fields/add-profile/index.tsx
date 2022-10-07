@@ -33,6 +33,11 @@ function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridA
     }
   };
 
+  const handleCroppedImage = (croppedImg: string) => {
+    if (!croppedImg) return;
+    setCroppedImage(croppedImg);
+  };
+
   // sets the profile field with the value of cropped image
   useEffect(() => {
     if (croppedImage !== "")
@@ -73,6 +78,10 @@ function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridA
                     field.onChange((e.target.files as FileList)[0]);
                     handleImage(e);
                   }}
+                  onClick={(event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+                    const element = event.target as HTMLInputElement;
+                    element.value = "";
+                  }}
                 />
                 <FormHelperText sx={{ whiteSpace: "nowrap" }}>{errors[inputName]?.message as string}</FormHelperText>
               </>
@@ -80,9 +89,7 @@ function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridA
           }}
         />
       </S.ProfileContainer>
-      {imageToCrop && (
-        <ImagePreview image={imageToCrop} setImage={setImageToCrop} handleCroppedImage={(croppedImg: string) => setCroppedImage(croppedImg)} />
-      )}
+      {imageToCrop && <ImagePreview image={imageToCrop} setImage={setImageToCrop} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 }
