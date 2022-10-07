@@ -1,21 +1,13 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import S from "../dashboardBodyTop.styled";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Icon from "../../../icons";
+import S from "../dashboardBodyTop.styled";
 
-type Props = {};
-
-const DashboardBodyTop = (props: Props) => {
-  // interface Statistics {
-  //   id: number;
-  //   headerCount: number;
-  //   cardCount: number;
-  //   footerName: string;
-  // };
-  const xl = useMediaQuery((theme:any) => theme.breakpoints.up("xl"));
-  const md = useMediaQuery((theme:any) => theme.breakpoints.up("md"));
+const DashboardBodyTop = () => {
+  const xl = useMediaQuery((theme: any) => theme.breakpoints.up("xl"));
+  const md = useMediaQuery((theme: any) => theme.breakpoints.up("md"));
 
   const StatisticsItems = [
     {
@@ -59,7 +51,7 @@ const DashboardBodyTop = (props: Props) => {
       bodyCount: 770,
       footerName: "Cultivation (Kg)",
       icon: "cultivation",
-    }
+    },
   ];
 
   var settings = {
@@ -81,12 +73,16 @@ const DashboardBodyTop = (props: Props) => {
             return (
               <S.StasticsCard key={card.id}>
                 <S.StatCardHeader>
-                  <S.StatCardIcon>
-                    <Icon iconName={card.icon} />
-                  </S.StatCardIcon>
-                  <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
+                  <S.StatCardHeaderLeft>
+                    <S.StatCardIcon>
+                      <Icon iconName={card.icon} />
+                    </S.StatCardIcon>
+                    <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
+                  </S.StatCardHeaderLeft>
+                  <S.StatCardHeaderRight>
+                    <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
+                  </S.StatCardHeaderRight>
                 </S.StatCardHeader>
-                <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
                 <S.StatCardFooter>
                   {card.footerName}
                   <Icon iconName="three-dots" />

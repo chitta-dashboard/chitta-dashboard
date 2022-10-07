@@ -1,8 +1,7 @@
-import styled from "@emotion/styled";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, styled } from "@mui/material";
 
 export namespace S {
-  export const FounderWrapper = styled(Grid)(({ theme }: any) => ({
+  export const FounderWrapper = styled(Grid)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     // gap: "2rem",
@@ -71,7 +70,11 @@ export namespace S {
     },
   }));
 
-  export const FounderCard = styled(Box)(({ theme }: any) => ({
+  export const SliderDotUl = styled("ul")({
+    margin: "0px",
+  });
+
+  export const FounderCard = styled(Box)(({ theme }) => ({
     width: "100% !important",
     height: "250px !important",
     display: "flex",
@@ -88,7 +91,7 @@ export namespace S {
     },
   }));
 
-  export const FounderCardContainer = styled(Box)(({ theme }: any) => ({
+  export const FounderCardContainer = styled(Box)(({ theme }) => ({
     width: "calc(100% - 10rem)",
     // height: "250px !important",
     display: "flex",
@@ -105,7 +108,7 @@ export namespace S {
     },
   }));
 
-  export const FounderCardHeader = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeader = styled(Box)(() => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -114,7 +117,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeaderRight = styled(Box)(() => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -125,7 +128,7 @@ export namespace S {
     borderColor: "rgba(104, 104, 104, 0.1)",
   }));
 
-  export const FounderImg = styled("img")(({ theme }: any) => ({
+  export const FounderImg = styled("img")(() => ({
     width: "10rem",
     height: "10rem",
     borderRadius: "10%",
@@ -133,42 +136,42 @@ export namespace S {
     float: "left",
   }));
 
-  export const FounderCardHeaderDetails = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeaderDetails = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
     paddingTop: "0.5rem",
     // width: "30%",
-    flex:'1.7',
+    flex: "1.7",
     // border: "1px solid red",
   }));
 
-  export const FounderName = styled(Typography)(({ theme }: any) => ({
+  export const FounderName = styled(Typography)(({ theme }) => ({
     fontSize: "1.2rem",
     fontWeight: "500",
     color: theme.palette.text.primary,
     whiteSpace: "nowrap",
   }));
 
-  export const FounderAge = styled(Typography)(({ theme }: any) => ({
+  export const FounderAge = styled(Typography)(({ theme }) => ({
     fontSize: "1.1rem",
     fontWeight: "500",
     color: theme.palette.text.secondaryLight,
   }));
 
-  export const FounderJoinDate = styled(Typography)(({ theme }: any) => ({
+  export const FounderJoinDate = styled(Typography)(({ theme }) => ({
     fontSize: "0.8rem",
     fontWeight: "500",
     opacity: "0.8",
     color: theme.palette.text.secondaryLight,
   }));
 
-  export const FounderCardBody = styled(Box)(({ theme }: any) => ({
+  export const FounderCardBody = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
     //  padding: "0 2rem",
-    // width: "50%",
-    flex:"1",
+    width: "12rem",
+    // flex:"1",
     // border:"1px solid blue",
     color: theme.palette.text.secondary,
     div: {
@@ -182,23 +185,23 @@ export namespace S {
     },
   }));
 
-  export const FounderCardBodyLeft = styled(Typography)(({ theme }: any) => ({
+  export const FounderCardBodyLeft = styled(Typography)(() => ({
     fontSize: "0.9rem",
     fontWeight: "500",
     margin: "0.3rem 0",
   }));
 
-  export const FounderCardDescContainer = styled(Box)(({ theme }: any) => ({
+  export const FounderCardDescContainer = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondary,
     textAlign: "justify",
     p: {
       // textOverflow: "ellipsis",
       // overflow: "hidden",
       // whiteSpace: "nowrap",
-      display: "-webkit-box",
+      // display: "-webkit-box",
       "-webkit-box-orient": "vertical",
       "-webkit-line-clamp": "3",
-      overflow: "hidden",
+      // overflow: "hidden",
     },
   }));
 }
