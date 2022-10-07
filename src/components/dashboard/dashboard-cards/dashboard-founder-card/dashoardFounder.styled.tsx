@@ -1,8 +1,7 @@
-import styled from "@emotion/styled";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography, styled } from "@mui/material";
 
 export namespace S {
-  export const FounderWrapper = styled(Grid)(({ theme }: any) => ({
+  export const FounderWrapper = styled(Grid)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     // gap: "2rem",
@@ -18,7 +17,7 @@ export namespace S {
       minHeight: "10vh",
     },
     ".slick-prev": {
-      top: "99%",
+      top: "96%",
       left: "25%",
       zIndex: "3",
       width: "35px",
@@ -35,7 +34,7 @@ export namespace S {
       },
     },
     ".slick-next": {
-      top: "106%",
+      top: "103%",
       right: "25%",
       width: "35px",
       height: "35px",
@@ -55,6 +54,12 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
+      bottom: "-15px",
+      button: {
+        "&:before": {
+          fontSize: "10px",
+        },
+      },
       ".slick-active": {
         button: {
           "&:before": {
@@ -65,7 +70,11 @@ export namespace S {
     },
   }));
 
-  export const FounderCard = styled(Box)(({ theme }: any) => ({
+  export const SliderDotUl = styled("ul")({
+    margin: "0px",
+  });
+
+  export const FounderCard = styled(Box)(({ theme }) => ({
     width: "100% !important",
     height: "250px !important",
     display: "flex",
@@ -75,15 +84,15 @@ export namespace S {
     // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     // border:"1px solid red",
     borderRadius: "1.25rem",
-    padding: "1rem 0",
+    padding: "1rem 0.2rem",
     [theme.breakpoints.down("lg")]: {
       // width: "70% !important",
       margin: "0 auto",
     },
   }));
 
-  export const FounderCardContainer = styled(Box)(({ theme }: any) => ({
-    width: "73% !important",
+  export const FounderCardContainer = styled(Box)(({ theme }) => ({
+    width: "calc(100% - 10rem)",
     // height: "250px !important",
     display: "flex",
     flexDirection: "column",
@@ -99,7 +108,7 @@ export namespace S {
     },
   }));
 
-  export const FounderCardHeader = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeader = styled(Box)(() => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -108,7 +117,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeaderRight = styled(Box)(() => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -119,7 +128,7 @@ export namespace S {
     borderColor: "rgba(104, 104, 104, 0.1)",
   }));
 
-  export const FounderImg = styled("img")(({ theme }: any) => ({
+  export const FounderImg = styled("img")(() => ({
     width: "10rem",
     height: "10rem",
     borderRadius: "10%",
@@ -127,39 +136,43 @@ export namespace S {
     float: "left",
   }));
 
-  export const FounderCardHeaderDetails = styled(Box)(({ theme }: any) => ({
+  export const FounderCardHeaderDetails = styled(Box)(() => ({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
     paddingTop: "0.5rem",
-    width: "30%",
+    // width: "30%",
+    flex: "1.7",
+    // border: "1px solid red",
   }));
 
-  export const FounderName = styled(Typography)(({ theme }: any) => ({
+  export const FounderName = styled(Typography)(({ theme }) => ({
     fontSize: "1.2rem",
     fontWeight: "500",
     color: theme.palette.text.primary,
-    whiteSpace:"nowrap",
+    whiteSpace: "nowrap",
   }));
 
-  export const FounderAge = styled(Typography)(({ theme }: any) => ({
+  export const FounderAge = styled(Typography)(({ theme }) => ({
     fontSize: "1.1rem",
     fontWeight: "500",
     color: theme.palette.text.secondaryLight,
   }));
 
-  export const FounderJoinDate = styled(Typography)(({ theme }: any) => ({
+  export const FounderJoinDate = styled(Typography)(({ theme }) => ({
     fontSize: "0.8rem",
     fontWeight: "500",
     opacity: "0.8",
     color: theme.palette.text.secondaryLight,
   }));
 
-  export const FounderCardBody = styled(Box)(({ theme }: any) => ({
+  export const FounderCardBody = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
     //  padding: "0 2rem",
-    width: "50%",
+    width: "12rem",
+    // flex:"1",
+    // border:"1px solid blue",
     color: theme.palette.text.secondary,
     div: {
       flex: "1 !important",
@@ -172,15 +185,24 @@ export namespace S {
     },
   }));
 
-  export const FounderCardBodyLeft = styled(Typography)(({ theme }: any) => ({
+  export const FounderCardBodyLeft = styled(Typography)(() => ({
     fontSize: "0.9rem",
     fontWeight: "500",
     margin: "0.3rem 0",
   }));
 
-  export const FounderCardDescContainer = styled(Box)(({ theme }: any) => ({
+  export const FounderCardDescContainer = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondary,
     textAlign: "justify",
+    p: {
+      // textOverflow: "ellipsis",
+      // overflow: "hidden",
+      // whiteSpace: "nowrap",
+      // display: "-webkit-box",
+      "-webkit-box-orient": "vertical",
+      "-webkit-line-clamp": "3",
+      // overflow: "hidden",
+    },
   }));
 }
 

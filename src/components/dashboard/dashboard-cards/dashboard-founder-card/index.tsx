@@ -1,20 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
-
 import Slider from "react-slick";
-
-import { CardHeader } from "../common-styles/commonStyles.styled";
-import { fileValidation } from "../../../../utils/constants";
-
-import FounderImg from "../../../../assets/images/Founder.png";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import S from "./dashoardFounder.styled";
+import { CardHeader } from "../common-styles/commonStyles.styled";
+import { fileValidation } from "../../../../utils/constants";
 import { useFounderContext } from "../../../../utils/context/founders";
-
-type Props = {};
+import FounderImg from "../../../../assets/images/Founder.png";
+import S from "./dashoardFounder.styled";
 
 const FoundersItems = [
   {
@@ -32,7 +26,7 @@ const FoundersItems = [
     img: FounderImg,
   },
 ];
-const DashboardFounder = (props: Props) => {
+const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const { foundersList } = useFounderContext();
@@ -47,9 +41,9 @@ const DashboardFounder = (props: Props) => {
     slidesToScroll: 1,
     autoplay: false,
     appendDots: (dots: any) => (
-      <div>
-        <ul style={{ margin: "0px" }}> {dots} </ul>
-      </div>
+      <Box>
+        <S.SliderDotUl> {dots} </S.SliderDotUl>
+      </Box>
     ),
   };
 
@@ -62,6 +56,7 @@ const DashboardFounder = (props: Props) => {
     hiddenFileInput && hiddenFileInput.current.click();
     setUserId(id);
   };
+
   const getURL = (id: string) => {
     let result = FoundersItems.filter((item) => {
       return item.id === id ? item.img : null;
@@ -69,17 +64,19 @@ const DashboardFounder = (props: Props) => {
     let data = result.length > 0 ? result[0]["img"] : undefined;
     return data;
   };
+
   const handleCroppedImage = (image: string) => {
     let result = FoundersItems.filter((item) => {
       return item.id === userId;
     });
     result[0]["img"] = image;
   };
+
   return (
     <S.FounderWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
       <CardHeader>
         Founders
-        <Link to="/md-details">
+        <Link to="/founders">
           <i>expand-right</i>
         </Link>
       </CardHeader>
@@ -113,10 +110,10 @@ const DashboardFounder = (props: Props) => {
               </S.FounderCardHeader>
             </S.FounderCardContainer>
             <S.FounderCardDescContainer>
-              <p>
+              <Typography>
                 Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi, quo, minus dolorem molestiae alias ex sed impedit magnam voluptate
                 sapiente rem! Commodi harum excepturi soluta repudiandae eos quis cumque ab.
-              </p>
+              </Typography>
             </S.FounderCardDescContainer>
           </S.FounderCard>
         ))}

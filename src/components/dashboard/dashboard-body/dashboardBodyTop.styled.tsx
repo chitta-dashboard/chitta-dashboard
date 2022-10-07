@@ -8,7 +8,7 @@ export namespace S {
     maxWidth: "100vw",
     position: "relative",
     ".slick-slide": {
-      maxWidth: "calc(250px + 1rem) !important",
+      maxWidth: "calc(278px + 1rem) !important",
     },
     ".slick-prev": {
       top: "105% !important",
@@ -59,16 +59,17 @@ export namespace S {
       bottom: "-50px",
     },
   }));
+
   export const StasticsCard = styled(Box)(({ theme }: any) => ({
-    height: "230px !important",
-    width: "250px !important",
+    height: "130px !important",
+    width: "278px !important",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    padding: "1.3rem",
+    padding: "0.5rem 1.3rem",
     background: "#fff",
-    borderRadius: "1.25rem",
+    borderRadius: "20px",
     display: "flex !important",
     flexDirection: "column",
-    justifyContent:"space-between",
+    justifyContent: "space-between",
     gap: "0.8rem",
     [theme.breakpoints.down("xl")]: {
       height: "200px !important",
@@ -78,17 +79,28 @@ export namespace S {
     },
   }));
 
-  export const StatCardHeader = styled(Box)(({ theme }: any) => ({
+  export const StatCardHeader = styled(Box)(() => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
   }));
 
+  export const StatCardHeaderLeft = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+  });
+
+  export const StatCardHeaderRight = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+  });
+
   export const StatCardBody = styled(Box)(({ theme }: any) => ({
     display: "flex",
     justifyContent: "flex-start",
-    fontSize: "2.5rem !important",
+    fontSize: "2.1rem !important",
     fontWeight: "500",
+    margin: "0 0.5rem",
     color: LightTheme.palette.text.primary,
     [theme.breakpoints.down("xl")]: {
       fontSize: "1rem !important",
