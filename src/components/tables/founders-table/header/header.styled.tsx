@@ -10,7 +10,6 @@ namespace S {
     "&:nth-last-of-type(2)": {
       width: "16%",
     },
-
     [theme.breakpoints.down("lg")]: {
       "&:nth-of-type(4)": {
         width: "20%",
@@ -28,7 +27,6 @@ namespace S {
 
   export const TabTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
