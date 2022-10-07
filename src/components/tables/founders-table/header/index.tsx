@@ -1,5 +1,4 @@
 import { TableHead, TableRow } from "@mui/material";
-
 import S from "./header.styled";
 
 const Header = () => {

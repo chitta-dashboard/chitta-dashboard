@@ -20,6 +20,9 @@ namespace S {
     paddingLeft: "2rem",
     paddingRight: "2rem",
     backgroundColor: theme.palette.primary.light,
+    "&.MuiButton-textPrimary": {
+      width: "6rem",
+    },
   }));
 
   YesButton.defaultProps = {

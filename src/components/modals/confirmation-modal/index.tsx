@@ -11,8 +11,9 @@ interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
   yesAction: () => void;
+  userConfirm?: string;
 }
-const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction }) => {
+const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction, userConfirm }) => {
   return (
     <>
       <CustomModal openModal={openModal} handleClose={handleClose}>
@@ -25,7 +26,7 @@ const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction 
           Confirmation
         </ModalHeader>
         <ModalBody id={""} onSubmit={() => {}}>
-          <ConfirmationBody />
+          <ConfirmationBody userConfirm={userConfirm} />
         </ModalBody>
         <ModalFooter>
           <YesOrNoButtons yesAction={yesAction} handleClose={handleClose} />

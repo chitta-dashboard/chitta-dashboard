@@ -9,7 +9,6 @@ namespace S {
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
@@ -17,7 +16,7 @@ namespace S {
     },
   }));
 
-  export const NameStack = styled(Stack)(({ theme }) => ({
+  export const NameStack = styled(Stack)(() => ({
     flexDirection: "row",
     gap: "1rem",
     alignItems: "center",
@@ -25,11 +24,9 @@ namespace S {
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-
     "&:last-of-type": {
       width: "12%",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -50,7 +47,6 @@ namespace S {
       width: "48%",
       position: "relative",
       left: "50%",
-
       //Create Table head for Tab view
       "&::before": {
         content: `"${title}"`,

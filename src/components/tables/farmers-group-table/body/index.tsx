@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Typography } from "@mui/material";
+import { farmerGroupDetail, useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
-import { farmerGroupDetail, useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
-import { searchWord, sortObj } from "../../../../utils/constants";
-import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import S from "./body.styled";
 
 const Body = () => {
   const {
@@ -23,17 +23,15 @@ const Body = () => {
   } = useFarmerGroupDetailsContext();
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const navigate = useNavigate();
+  const [farmerGroupList, setFarmerGroupList] = useState(listData);
+  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState(listData);
+  const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
+  const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
-
-  const [farmerGroupList, setFarmerGroupList] = useState(listData);
-
-  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState(listData);
-  const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
-  const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
 
   useEffect(() => {
     setFarmersGroupMemberList(
@@ -57,17 +55,13 @@ const Body = () => {
     setFarmerGroupList(farmerGroupListSort);
   }, [farmerGroupListSort]);
 
-  // Delete Modal
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
     setEditId(id);
   };
+
   //Edit FarmerGroups Handler
   const editFarmerGroupHandler = (id: string) => {
     setEditMode(!editMode);
@@ -78,6 +72,12 @@ const Body = () => {
   const updateFarmerGroup = (data: IAddFarmersGroupFormInput) => {
     setIconModal(false);
     editFarmerGroupDetail({ ...data, id: editId });
+  };
+
+  // Delete Modal
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
   };
 
   //Farmer Details list hanlder.

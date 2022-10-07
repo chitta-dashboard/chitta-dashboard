@@ -1,16 +1,18 @@
+import { Switch } from "@mui/material";
+import { FC } from "react";
 import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 
 import S from "../iconModals.styled";
 
-const MdDetailModal = (props: CommonModalProps) => {
+const MdDetailModal: FC<CommonModalProps> = ({ check, open, handleClose, handleDelete, handleEdit, handleCheck }) => {
   return (
     <>
-      <CommonIconModal open={props.open} handleClose={props.handleClose}>
+      <CommonIconModal open={open} handleClose={handleClose}>
         <S.IconStack direction={"row"}>
           <S.IconBox
             onClick={() => {
-              if (props.handleDelete) props.handleDelete();
+              if (handleDelete) handleDelete();
             }}
           >
             <S.Icon>delete</S.Icon>
@@ -22,11 +24,19 @@ const MdDetailModal = (props: CommonModalProps) => {
           </S.IconBox>
           <S.IconBox
             onClick={() => {
-              if (props.handleEdit) props.handleEdit();
+              if (handleEdit) handleEdit();
             }}
           >
             <S.Icon>edit</S.Icon>
             <S.IconText>Edit</S.IconText>
+          </S.IconBox>
+          <S.IconBox
+            onClick={() => {
+              if (handleCheck) handleCheck();
+            }}
+          >
+            <Switch size="small" checked={!!check} />
+            <S.IconText>Active</S.IconText>
           </S.IconBox>
         </S.IconStack>
       </CommonIconModal>
