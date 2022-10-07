@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
 
-import S from "./ceo-details.styled";
 import ProfilePicture from "./../../assets/images/IdImage.png";
 import { fileValidation } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
+import S from "./ceo-details.styled";
 
 const CeoDetailsCard = () => {
   const [image, setImage] = useState("");
