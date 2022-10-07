@@ -13,6 +13,7 @@ import { fileValidation, searchWord, sortObj } from "../../../../utils/constants
 import { mdDetail } from "../../../../utils/context/mdDetails";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ConfirmationModal from "../../../modals/confirmation-modal";
 
 const Body = () => {
   const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
@@ -42,6 +43,7 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [isCheck, setIsCheck] = useState<boolean>(false);
 
   // Delete ModalHandler
   const deleteModalHandler = (id: string) => {
@@ -63,6 +65,11 @@ const Body = () => {
   const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
     setIconModal(false);
     editMdDetail(data);
+  };
+  // Switch Handler
+  const checkHandler = (id: string) => {
+    setIsCheck(!isCheck);
+    setDeleteId(id);
   };
 
   const getURL = (id: string) => {
@@ -120,6 +127,7 @@ const Body = () => {
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
                   <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
+                  <S.Toggle size="small" checked={!!user.id} onChange={() => checkHandler(user.id)} />
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -140,6 +148,19 @@ const Body = () => {
         }}
         handleEdit={() => {
           setEditMode(true);
+        }}
+        check={deleteId}
+        handleCheck={() => {
+          setIsCheck(true);
+        }}
+      />
+      <ConfirmationModal
+        openModal={isCheck}
+        handleClose={() => setIsCheck(false)}
+        yesAction={() => {
+          deleteMdDetail(deleteId);
+          setIsCheck(false);
+          setIconModal(false);
         }}
       />
       <DeleteModal

@@ -1,4 +1,4 @@
-import { Stack, styled, Box, TableCell } from "@mui/material";
+import { Stack, styled, Box, TableCell, Switch } from "@mui/material";
 
 namespace S {
   export const TabCell = styled(TableCell)(({ theme }) => ({
@@ -73,6 +73,8 @@ namespace S {
       display: "none",
     },
   }));
+
+  export const Toggle = styled(Switch)(() => ({}));
 
   export const AvatarImg = styled("img")(() => ({
     width: "100%",
