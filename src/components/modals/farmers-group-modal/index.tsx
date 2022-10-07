@@ -1,18 +1,16 @@
-import { FC, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
+import { IAddFarmersGroupFormInput } from "../type/formInputs";
+import { Button } from "@mui/material";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
-import { IAddFarmersGroupFormInput } from "../type/formInputs";
-
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
-import { Button } from "@mui/material";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => void;
@@ -41,6 +39,8 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     formState: { errors },
     clearErrors,
     reset,
+    setValue,
+    trigger,
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
   });
@@ -95,7 +95,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
         </ModalHeader>
 
         <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} />
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
         </ModalBody>
 
         <ModalFooter>

@@ -1,72 +1,70 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableRow } from "@mui/material";
-
+import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
+import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
-import { useFounderContext } from "../../../../utils/context/founders";
-import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
-import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
-import { mdDetail } from "../../../../utils/context/founders";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useFounderContext();
-  const [mdListSearch, setMdListSearch] = useState(listData);
-  const [mdListSort, setMdListSort] = useState(listData);
-  const [mdList, setMdList] = useState(listData);
-
-  useEffect(() => {
-    setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
-  }, [listData, searchFilter]);
-
-  useEffect(() => {
-    setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
-  }, [mdListSearch, sortFilter]);
-
-  useEffect(() => {
-    setMdList(mdListSort);
-  }, [mdListSort]);
-
+  const { foundersList: listData, editTableIcon, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
+  const [founderSearch, setFounderSearch] = useState(listData);
+  const [founderSort, setFounderSort] = useState(listData);
+  const [founder, setFounder] = useState(listData);
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
-
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
 
-  // Delete ModalHandler
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
+  useEffect(() => {
+    setFounderSearch(listData.filter((list) => searchWord(list.name, searchFilter)));
+  }, [listData, searchFilter]);
+
+  useEffect(() => {
+    setFounderSort(sortObj<Founders>(founderSearch, sortFilter, "name"));
+  }, [founderSearch, sortFilter]);
+
+  useEffect(() => {
+    setFounder(founderSort);
+  }, [founderSort]);
+
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
     setEditId(id);
   };
+
   //Edit MdDetail Handler
   const editMdDetailHandler = (id: string) => {
     setEditMode(!editMode);
     setEditId(id);
   };
+
   //Update MdDetail Handler
   const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
     setIconModal(false);
-    editMdDetail(data);
+    editFounder(data);
+  };
+
+  // Delete ModalHandler
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
   };
 
   const getURL = (id: string) => {
-    let result = mdList.filter((item) => {
+    let result = founder.filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -76,6 +74,13 @@ const Body = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleIconClick = (id: string) => {
@@ -84,7 +89,8 @@ const Body = () => {
   };
 
   const handleCroppedImage = (image: string) => {
-    let result = mdList.filter((item) => {
+    if (!image) return;
+    let result = founder.filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -93,9 +99,9 @@ const Body = () => {
 
   return (
     <>
-      {mdList.length > 0 ? (
+      {founder.length > 0 ? (
         <BodyWrapper>
-          {mdList.map((user) => (
+          {founder.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
                 <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
@@ -106,7 +112,7 @@ const Body = () => {
                     <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
                     <S.EditBox onClick={() => handleIconClick(user.id)}>
                       <S.EditIcon>edit</S.EditIcon>
-                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
                     </S.EditBox>
                   </S.AvatarBox>
                   {user.name}
@@ -146,7 +152,7 @@ const Body = () => {
         openModal={deleteModal}
         handleClose={() => setDeleteModal(false)}
         handleDelete={() => {
-          deleteMdDetail(deleteId);
+          deleteFounder(deleteId);
           setDeleteModal(false);
           setIconModal(false);
         }}
@@ -160,6 +166,7 @@ const Body = () => {
           </tr>
         </tbody>
       )}
+
       <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={editId} />
     </>
   );

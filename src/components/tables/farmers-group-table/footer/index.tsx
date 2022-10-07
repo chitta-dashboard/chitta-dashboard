@@ -1,5 +1,5 @@
-import FooterWrapper from "../../../custom-tables/footer";
 import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
   const { farmerGroupList, page, rowsPerPage } = useFarmerGroupDetailsContext();

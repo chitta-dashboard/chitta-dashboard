@@ -1,18 +1,19 @@
+import { List } from "@mui/material";
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
 import { searchWord } from "../constants";
 
 //ACTION TYPES
-const ADD_MD_DETAIL = "ADD_MD_DETAIL";
-const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
-const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
-const FILTER_MD_DETAIL = "FILTER_MD_DETAIL";
+const ADD_FOUNDERS = "ADD_FOUNDERS";
+const EDIT_FOUNDERS = "EDIT_FOUNDERS";
+const DELETE_FOUNDERS = "DELETE_FOUNDERS";
+const FILTER_FOUNDERS = "FILTER_FOUNDERS";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
 const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 
-export type mdDetail = {
+export type Founders = {
   id: string;
   name: string;
   phoneNumber: string;
@@ -26,28 +27,28 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export interface mdDetailsContextType {
-  mdList: mdDetail[];
+export interface foundersContextType {
+  foundersList: Founders[];
   page: number;
   rowsPerPage: number;
   searchFilter: string;
   sortFilter: "ascending" | "descending";
   setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
-  addMdDetail: (data: mdDetail) => void;
-  editMdDetail: (data: mdDetail) => void;
-  deleteMdDetail: (id: string) => void;
-  filterMdDetail: (name: string) => void;
+  addFounder: (data: Founders) => void;
+  editFounder: (data: Founders) => void;
+  deleteFounder: (id: string) => void;
+  filterFounder: (name: string) => void;
   editTableIcon: (data: any) => void;
   setPage: (page: number) => void;
 }
 
-const initialState: mdDetailsContextType = {
-  mdList: [
+const initialState: foundersContextType = {
+  foundersList: [
     {
       id: "1",
       profile: profileImg,
-      name: "Aditha Karikalan",
+      name: "Veera Raghavan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "1982-10-01",
@@ -56,7 +57,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "2",
       profile: profileImg,
-      name: "Arulmozhi Varman",
+      name: "Jhon Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "1990-01-27",
@@ -65,7 +66,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "3",
       profile: profileImg,
-      name: "Nandini",
+      name: "Vijay Kumar",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "1989-11-09",
@@ -74,7 +75,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "4",
       profile: profileImg,
-      name: "Vanthiyathevan ",
+      name: "kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "1994-10-12",
@@ -83,7 +84,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "5",
       profile: profileImg,
-      name: "Kundavai",
+      name: "Jeevanandham",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "1992-08-02",
@@ -92,7 +93,7 @@ const initialState: mdDetailsContextType = {
     {
       id: "6",
       profile: profileImg,
-      name: "Rajendran Cholan",
+      name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "1985-07-12",
@@ -105,46 +106,47 @@ const initialState: mdDetailsContextType = {
   sortFilter: "ascending",
   setSortFilter: () => {},
   setSearchFilter: () => {},
-  addMdDetail: () => {},
-  editMdDetail: () => {},
-  deleteMdDetail: () => {},
+  addFounder: () => {},
+  editFounder: () => {},
+  deleteFounder: () => {},
   editTableIcon: () => {},
-  filterMdDetail: () => {},
+  filterFounder: () => {},
   setPage: () => {},
 };
 
-const reducer = (state: mdDetailsContextType, action: any) => {
+const reducer = (state: foundersContextType, action: any) => {
   switch (action.type) {
-    case ADD_MD_DETAIL:
-      return { ...state, mdList: [...state.mdList, action.payload] };
+    case ADD_FOUNDERS:
+      return { ...state, foundersList: [...state.foundersList, action.payload] };
 
-    case EDIT_MD_DETAIL:
-      const updatedMdDetail = action.payload;
-      const editMdDetails = state.mdList.map((list) => {
-        if (list.id === updatedMdDetail.id) {
-          return updatedMdDetail;
+    case EDIT_FOUNDERS:
+      const updatedFounder = action.payload;
+      const editFounders = state.foundersList.map((list) => {
+        if (list.id === updatedFounder.id) {
+          return updatedFounder;
         }
         return list;
       });
       return {
         ...state,
-        mdList: editMdDetails,
+        foundersList: editFounders,
       };
 
-    case DELETE_MD_DETAIL:
-      return { ...state, mdList: state.mdList.filter((list) => list.id !== action.payload) };
+    case DELETE_FOUNDERS:
+      return { ...state, foundersList: state.foundersList.filter((list) => list.id !== action.payload) };
 
-    case FILTER_MD_DETAIL:
+    case FILTER_FOUNDERS:
       return {
         ...state,
-        mdList: initialState.mdList.filter((md) => {
-          return searchWord(md.name as string, action.payload);
+        foundersList: initialState.foundersList.filter((list) => {
+          return searchWord(List.name as string, action.payload);
         }),
       };
 
     case EDIT_TABLE_ICON:
-      let data = state.mdList.filter((item) => item.id !== action.payload.id);
-      return { ...state, mdList: [...data, action.payload] };
+      let data = state.foundersList.filter((item) => item.id !== action.payload.id);
+      return { ...state, foundersList: [...data, action.payload] };
+
     case SET_PAGE:
       return { ...state, page: action.payload };
 
@@ -160,42 +162,49 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   }
 };
 
-export const foundersContext = createContext<mdDetailsContextType>(initialState);
+export const foundersContext = createContext<foundersContextType>(initialState);
 
 const FoundersContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addMdDetail = (data: mdDetail) => {
-    dispatch({ type: ADD_MD_DETAIL, payload: data });
+  const addFounder = (data: Founders) => {
+    dispatch({ type: ADD_FOUNDERS, payload: data });
   };
-  const editMdDetail = (data: mdDetail) => {
-    dispatch({ type: EDIT_MD_DETAIL, payload: data });
+
+  const editFounder = (data: Founders) => {
+    dispatch({ type: EDIT_FOUNDERS, payload: data });
   };
-  const deleteMdDetail = (id: string) => {
-    dispatch({ type: DELETE_MD_DETAIL, payload: id });
+
+  const deleteFounder = (id: string) => {
+    dispatch({ type: DELETE_FOUNDERS, payload: id });
   };
-  const filterMdDetail = (name: string) => {
-    dispatch({ type: FILTER_MD_DETAIL, payload: name });
+
+  const filterFounder = (name: string) => {
+    dispatch({ type: FILTER_FOUNDERS, payload: name });
   };
-  const editTableIcon = (data: mdDetail) => {
+
+  const editTableIcon = (data: Founders) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
+
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
+
   const setPage = (page: number) => {
     dispatch({ type: SET_PAGE, payload: page });
   };
+
   const setSortFilter = (sortOrder: "ascending" | "descending") => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
   let data = {
     ...state,
-    addMdDetail,
-    editMdDetail,
-    deleteMdDetail,
-    filterMdDetail,
+    addFounder,
+    editFounder,
+    deleteFounder,
+    filterFounder,
     editTableIcon,
     setPage,
     setSearchFilter,

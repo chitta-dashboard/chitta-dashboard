@@ -34,6 +34,17 @@ function AddProfile<FormInputTypes>({ ImageHandler, setValue, trigger, inputName
     }
   };
 
+  // this function is to clear the value of input field, so we can upload same file as many times as we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
+  };
+
+  const handleCroppedImage = (croppedImg: string) => {
+    if (!croppedImg) return;
+    setCroppedImage(croppedImg);
+  };
+
   useEffect(() => {
     if (croppedImage !== "")
       setValue(
@@ -49,13 +60,13 @@ function AddProfile<FormInputTypes>({ ImageHandler, setValue, trigger, inputName
         <Badge
           overlap="circular"
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          badgeContent={<UploadButton ImageHandler={handleImage} />}
+          badgeContent={<UploadButton ImageHandler={handleImage} onClick={onInputClick} />}
         >
           <S.ProfilePicture alt={inputName} src={croppedImage} />
         </Badge>
         <FormHelperText>{errors[inputName]?.message}</FormHelperText>
       </S.ProfileContainer>
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={(croppedImg: string) => setCroppedImage(croppedImg)} />}
+      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 }
