@@ -1,5 +1,4 @@
 import { Box, Grid, styled } from "@mui/material";
-import { LightTheme } from "../../../../utils/theme";
 
 export namespace S {
   export const NotificationCardWrapper = styled(Grid)(({ theme }: any) => ({
@@ -18,16 +17,16 @@ export namespace S {
     },
   }));
 
-  export const NotificationHeader = styled(Box)({
+  export const NotificationHeader = styled(Box)(({ theme }: any) => ({
     display: "flex",
     justifyContent: "space-between",
     padding: "1.5rem 1.5rem 1.5rem",
     width: "100%",
-    color: LightTheme.palette.primary.light,
+    color: theme.palette.primary.light,
     fontWeight: "600",
     fontSize: "1.2rem",
     height: "3.5rem",
-  });
+  }));
 
   export const NotificationBody = styled(Box)(({ theme }: any) => ({
     fontSize: "0.85rem",
@@ -49,7 +48,7 @@ export namespace S {
     display: "grid",
     gap: "1rem",
     gridTemplateColumns: "2fr auto",
-    color: LightTheme.palette.text.secondaryDark,
+    color: theme.palette.text.secondaryDark,
   }));
 
   export const NotifyLeft = styled(Box)(({ theme }: any) => ({
@@ -65,9 +64,9 @@ export namespace S {
     gap: "0.2rem",
   });
 
-  export const NotifyRead = styled(NotificationContent)({
-    color: LightTheme.palette.text.secondary,
-  });
+  export const NotifyRead = styled(NotificationContent)(({ theme }: any) => ({
+    color: theme.palette.text.secondary,
+  }));
 }
 
 export default S;

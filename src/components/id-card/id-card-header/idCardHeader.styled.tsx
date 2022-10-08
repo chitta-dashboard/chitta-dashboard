@@ -1,5 +1,4 @@
 import { Box, styled, Typography } from "@mui/material";
-import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const IdHeaderWrapper = styled(Box)({
@@ -22,18 +21,18 @@ export namespace S {
     alignItems: "center",
   });
 
-  export const IdHeading = styled(Typography)({
+  export const IdHeading = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.1rem",
     fontWeight: "600",
     textAlign: "center",
     paddingTop: "1rem",
-    color: LightTheme.palette.primary.light,
-  });
+    color: theme.palette.primary.light,
+  }));
 
-  export const IdSubHeading = styled(Box)({
+  export const IdSubHeading = styled(Box)(({ theme }: any) => ({
     fontSize: "0.8rem",
-    color: LightTheme.palette.text.secondaryLight,
-  });
+    color: theme.palette.text.secondaryLight,
+  }));
 }
 
 export default S;

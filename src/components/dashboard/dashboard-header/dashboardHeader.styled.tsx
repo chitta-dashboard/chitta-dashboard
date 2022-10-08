@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
-import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const DashboardHeaderWrapper = styled(Box)({
@@ -17,18 +16,18 @@ export namespace S {
     width: "50%",
   });
 
-  export const ProfileHeading = styled(Typography)({
-    color: LightTheme.palette.text.secondaryDark,
+  export const ProfileHeading = styled(Typography)(({ theme }: any) => ({
+    color: theme.palette.text.secondaryDark,
     letterSpacing: "0.05rem",
     fontSize: "1.4rem",
     fontWeight: "600",
-  });
+  }));
 
-  export const ProfileSubHeading = styled(Typography)({
-    color: LightTheme.palette.text.secondary,
+  export const ProfileSubHeading = styled(Typography)(({ theme }: any) => ({
+    color: theme.palette.text.secondary,
     fontWeight: "500",
     fontSize: "1rem",
-  });
+  }));
 
   export const HeaderIconsBox = styled(Box)({
     width: "50%",

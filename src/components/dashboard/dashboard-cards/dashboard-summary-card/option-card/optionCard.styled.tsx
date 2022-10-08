@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { LightTheme } from "../../../../../utils/theme";
 
 export namespace S {
   export const OptionCardBox = styled(Box)({
@@ -20,10 +19,10 @@ export namespace S {
     right: "1%",
   });
 
-  export const Options = styled(Box)({
+  export const Options = styled(Box)(({ theme }: any) => ({
     fontSize: "0.73rem",
     marginBottom: "0.2rem",
-    color: LightTheme.palette.text.secondary,
+    color: theme.palette.text.secondary,
     cursor: "pointer",
     width: "100%",
     display: "flex",
@@ -31,9 +30,9 @@ export namespace S {
     justifyItems: "center",
     alignItems: "center",
     "&:hover": {
-      backgroundColor: LightTheme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.custom.backgroundLight,
     },
-  });
+  }));
 }
 
 export default S;

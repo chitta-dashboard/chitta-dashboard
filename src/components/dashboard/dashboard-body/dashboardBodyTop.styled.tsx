@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Box } from "@mui/material";
-import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const StasticsCardContainer = styled(Box)(({ theme }: any) => ({
@@ -90,7 +89,7 @@ export namespace S {
     fontSize: "2.1rem !important",
     fontWeight: "500",
     margin: "0 0.5rem",
-    color: LightTheme.palette.text.primary,
+    color: theme.palette.text.primary,
     [theme.breakpoints.down("xl")]: {
       fontSize: "1rem !important",
     },
@@ -101,7 +100,7 @@ export namespace S {
     justifyContent: "space-between",
     fontSize: "1.1rem",
     fontWeight: "500",
-    color: LightTheme.palette.text.secondaryLight,
+    color: theme.palette.text.secondaryLight,
     [theme.breakpoints.down("xl")]: {
       fontSize: "0.9rem",
     },
@@ -121,14 +120,14 @@ export namespace S {
   })(({ theme, neg }: any) => ({
     width: "4rem",
     height: "1.5rem",
-    background: neg ? "rgba(255, 0, 0, 0.1)" : LightTheme.palette.custom.backgroundLight,
+    background: neg ? "rgba(255, 0, 0, 0.1)" : theme.palette.custom.backgroundLight,
     fontSize: "0.8rem",
     fontWeight: "600",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "0.3rem",
-    color: neg ? "red" : LightTheme.palette.text.primary,
+    color: neg ? "red" : theme.palette.text.primary,
     [theme.breakpoints.down("xl")]: {
       height: "1.2rem",
       width: "3.5rem",

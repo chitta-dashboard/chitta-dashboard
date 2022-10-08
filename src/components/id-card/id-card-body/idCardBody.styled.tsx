@@ -1,5 +1,4 @@
 import { Box, styled, Typography } from "@mui/material";
-import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
   export const IdCardWrapper = styled(Box)({
@@ -51,15 +50,15 @@ export namespace S {
     flexDirection: "column",
   });
 
-  export const IdDetails = styled(Typography)({
+  export const IdDetails = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
     fontWeight: "500",
     marginBottom: "0.1rem",
     marginTop: "0.5rem",
-    color: LightTheme.palette.text.secondaryLight,
-  });
+    color: theme.palette.text.secondaryLight,
+  }));
 
-  export const IdDetailsName = styled(Typography)({
+  export const IdDetailsName = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.8rem",
     fontWeight: "500",
     marginBottom: "0.1rem",
@@ -67,8 +66,8 @@ export namespace S {
     width: "100%",
     display: "flex",
     justifyContent: "flex-start",
-    color: LightTheme.palette.text.secondaryLight,
-  });
+    color: theme.palette.text.secondaryLight,
+  }));
 
   export const QrCode = styled(Box)({
     marginTop: "1rem",
