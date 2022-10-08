@@ -45,5 +45,8 @@ namespace S {
     outline: "none",
     fontSize: "1.125rem",
   }));
+  export const InvisibleDiv = styled(Box)({
+    display: "none",
+  });
 }
 export default S;

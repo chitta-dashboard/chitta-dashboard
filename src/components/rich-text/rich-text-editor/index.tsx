@@ -2,9 +2,7 @@ import { FC } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-
 import MenuBar from "../rich-text-menu-bar/menuBar";
-
 import S from "../richText.styled";
 
 type EditorProps = {

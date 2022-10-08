@@ -58,15 +58,12 @@ namespace S {
     // "& .MuiPaper-elevation": {
     //   backgroundColor: "red !important",
     // },
- 
   }));
 
   StyledFormControl.defaultProps = {
     sx: { m: 1, width: 300 },
   };
-  export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
-  
-  }));
+  export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({}));
 }
 
 export default S;

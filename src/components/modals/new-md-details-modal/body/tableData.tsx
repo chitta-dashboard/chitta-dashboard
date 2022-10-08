@@ -1,11 +1,10 @@
-import React from "react";
 import S from "./tableData.styled";
 
 const TableData = () => {
   return (
     <S.MdDetailsTableContainer>
       <S.MdDetailsTableHeadContainer container>
-        <S.MdDetailsTableCheckBox/>
+        <S.MdDetailsTableCheckBox />
         <S.MdDetailsTableHeadTitle>பெயர்</S.MdDetailsTableHeadTitle>
         <S.MdDetailsTableHeadTitle>கைபேசி என்</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableHeadContainer>

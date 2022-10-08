@@ -1,12 +1,11 @@
 import { forwardRef } from "react";
-
-import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { S } from "./tamil-certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
-import { S } from "./tamil-certificate.styled";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 
 interface Props {
   shareAmount?: number | string;

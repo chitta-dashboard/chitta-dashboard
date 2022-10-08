@@ -1,7 +1,6 @@
 import { FC, Ref, useRef, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-
 import { sortObj } from "../../../utils/constants";
 import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";

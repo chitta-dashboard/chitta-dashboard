@@ -11,15 +11,13 @@ const DecisionsContent: FC<CustomProps> = ({ view }) => {
   const [decisionId, setDecisionId] = useState<string>("");
 
   return (
-    <>
-      <S.DecisionsContentContainer>
-        {view === "tree" ? (
-          <DecisionsTree decisionId={decisionId} setDecisionId={setDecisionId} />
-        ) : (
-          <DecisionsList decisionId={decisionId} setDecisionId={setDecisionId} />
-        )}
-      </S.DecisionsContentContainer>
-    </>
+    <S.DecisionsContentContainer>
+      {view === "tree" ? (
+        <DecisionsTree decisionId={decisionId} setDecisionId={setDecisionId} />
+      ) : (
+        <DecisionsList decisionId={decisionId} setDecisionId={setDecisionId} />
+      )}
+    </S.DecisionsContentContainer>
   );
 };
 

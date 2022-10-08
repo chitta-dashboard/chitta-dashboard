@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import S from "./customModal.styled";
 
 interface CustomProps {
@@ -11,11 +10,9 @@ interface CustomProps {
 
 const CustomModal: FC<CustomProps> = ({ children, handleClose, openModal, openAddDecisionModal }) => {
   return (
-    <>
-      <S.ModalContainer open={openModal} onClose={handleClose} openAddDecisionModal={openAddDecisionModal}>
-        {children}
-      </S.ModalContainer>
-    </>
+    <S.ModalContainer open={openModal} onClose={handleClose} openAddDecisionModal={openAddDecisionModal}>
+      {children}
+    </S.ModalContainer>
   );
 };
 

@@ -16,17 +16,15 @@ const SearchBar: FC<CustomProps> = ({ searchHandler }) => {
   );
 
   return (
-    <>
-      <S.SearchBarPaper>
-        <IconGreen>search</IconGreen>
-        <S.SearchBar
-          placeholder="  Search..."
-          onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-            searchHandler && searchHandler((e.target as HTMLInputElement).value);
-          }}
-        />
-      </S.SearchBarPaper>
-    </>
+    <S.SearchBarPaper>
+      <IconGreen>search</IconGreen>
+      <S.SearchBar
+        placeholder="  Search..."
+        onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+          searchHandler && searchHandler((e.target as HTMLInputElement).value);
+        }}
+      />
+    </S.SearchBarPaper>
   );
 };
 export default SearchBar;
