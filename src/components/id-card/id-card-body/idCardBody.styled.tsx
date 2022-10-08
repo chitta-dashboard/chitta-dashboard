@@ -2,7 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
-  export const IdCardWrapper = styled(Box)(({ theme }) => ({
+  export const IdCardWrapper = styled(Box)({
     maxWidth: "34.5rem",
     backgroundColor: "#fff",
     borderRadius: "1.25rem",
@@ -16,14 +16,14 @@ export namespace S {
     alignItems: "start !important",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
     margin: "1rem 2rem",
-  }));
+  });
 
-  export const IdImage = styled("img")(({ theme }) => ({
+  export const IdImage = styled("img")({
     width: "8.3rem",
     height: "9.5rem",
-  }));
+  });
 
-  export const IdCardBodyWrapper = styled(Box)(({ theme }) => ({
+  export const IdCardBodyWrapper = styled(Box)({
     display: "flex",
     justifyContent: "center",
     width: "100%",
@@ -31,33 +31,35 @@ export namespace S {
     gap: "1.5rem",
     alignItems: "start !important",
     overflow: "hidden",
-  }));
+  });
 
-  export const IdDetailsWrapper = styled(Box)(({ theme }) => ({
+  export const IdDetailsWrapper = styled(Box)({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     gap: "1rem",
-  }));
-  export const IdDetailBox = styled(Box)(({ theme }) => ({
+  });
+
+  export const IdDetailBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "start !important",
-  }));
-  export const IdDescriptionBox = styled(Box)(({ theme }) => ({
+  });
+
+  export const IdDescriptionBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
-  }));
+  });
 
-  export const IdDetails = styled(Typography)(({ theme }) => ({
+  export const IdDetails = styled(Typography)({
     fontSize: "0.75rem",
     fontWeight: "500",
     marginBottom: "0.1rem",
     marginTop: "0.5rem",
     color: LightTheme.palette.text.secondaryLight,
-  }));
+  });
 
-  export const IdDetailsName = styled(Typography)(({ theme }) => ({
+  export const IdDetailsName = styled(Typography)({
     fontSize: "0.8rem",
     fontWeight: "500",
     marginBottom: "0.1rem",
@@ -66,23 +68,23 @@ export namespace S {
     display: "flex",
     justifyContent: "flex-start",
     color: LightTheme.palette.text.secondaryLight,
-  }));
+  });
 
-  export const QrCode = styled(Box)(({ theme }) => ({
+  export const QrCode = styled(Box)({
     marginTop: "1rem",
-  }));
+  });
 
-  export const MiddleBox = styled(Box)(({ theme }) => ({
+  export const MiddleBox = styled(Box)({
     display: "flex",
     flexDirection: "column",
     marginBottom: "-0.5rem",
-  }));
+  });
 
-  export const Signature = styled("img")(({ theme }) => ({
+  export const Signature = styled("img")({
     height: "5.3rem",
     width: "8.3rem",
     margin: "0 auto",
-  }));
+  });
 }
 
 export default S;

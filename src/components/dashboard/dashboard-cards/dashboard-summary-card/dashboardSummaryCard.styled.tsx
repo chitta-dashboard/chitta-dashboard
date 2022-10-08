@@ -18,7 +18,7 @@ export namespace S {
     },
   }));
 
-  export const SummaryHeader = styled(Box)(({ theme }: any) => ({
+  export const SummaryHeader = styled(Box)({
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
@@ -26,7 +26,7 @@ export namespace S {
     fontWeight: "500",
     fontSize: "1.1rem",
     marginBottom: "0.3rem",
-  }));
+  });
 }
 
 export default S;

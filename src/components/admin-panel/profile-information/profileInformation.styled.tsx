@@ -1,16 +1,18 @@
 import { Stack, styled, Typography, TextField } from "@mui/material";
 
 namespace S {
-  export const ProfileStack = styled(Stack)(({ theme }) => ({
+  export const ProfileStack = styled(Stack)({
     gap: "1rem",
     width: "100%",
-  }));
-  export const ProfileText = styled(Typography)(({ theme }) => ({
+  });
+
+  export const ProfileText = styled(Typography)({
     color: "rgba(119, 119, 119, 1)",
     fontSize: "1.125rem",
     lineHeight: "1.688rem",
     paddingBottom: "0.5rem",
-  }));
+  });
+
   export const profileInput = styled(TextField)(({ theme }) => ({
     backgroundColor: "#FFFFFF",
     width: "100%",
@@ -30,7 +32,6 @@ namespace S {
       fontSize: "0.75rem",
       lineHeight: "1.125rem",
     },
-
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
         borderColor: theme.palette.primary.main,
@@ -48,7 +49,6 @@ namespace S {
         borderRadius: "0.625rem",
       },
     },
-
     "& .MuiInputBase-input": {
       color: theme.palette.primary.main,
     },

@@ -17,34 +17,34 @@ export namespace S {
     },
   }));
 
-  export const StatBodyContainer = styled(Grid)(({ theme }: any) => ({
+  export const StatBodyContainer = styled(Grid)({
     width: "100%",
-  }));
+  });
 
-  export const StatBody = styled(Grid)(({ theme }: any) => ({
+  export const StatBody = styled(Grid)({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
     margin: "0.7rem 0",
-  }));
+  });
 
-  export const StatBodyFont = styled(Typography)(({ theme }: any) => ({
+  export const StatBodyFont = styled(Typography)({
     fontSize: "0.9rem",
     fontWeight: "400",
     color: LightTheme.palette.text.secondaryLight,
-  }));
+  });
 
-  export const StatBodyNumberFont = styled(Typography)(({ theme }: any) => ({
+  export const StatBodyNumberFont = styled(Typography)({
     fontSize: "1.4rem",
     fontWeight: "500",
     color: LightTheme.palette.text.secondary,
     marginTop: "0.3rem",
-  }));
+  });
 
-  export const Span = styled("span")(({ theme }: any) => ({
+  export const Span = styled("span")({
     fontSize: "1.1rem",
-  }));
+  });
 }
 
 export default S;

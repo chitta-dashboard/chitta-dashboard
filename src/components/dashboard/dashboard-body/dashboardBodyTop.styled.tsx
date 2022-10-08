@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
@@ -21,12 +21,6 @@ export namespace S {
       background: "white",
       borderRadius: "50%",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-      // [theme.breakpoints.down("xl")]: {
-      //   left: "35%",
-      // },
-      // [theme.breakpoints.down("md")]: {
-      //   left: "30%",
-      // },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -43,12 +37,6 @@ export namespace S {
       borderRadius: "50%",
       boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
       zIndex: "3",
-      // [theme.breakpoints.down("xl")]: {
-      //   right: "35%",
-      // },
-      // [theme.breakpoints.down("md")]: {
-      //   right: "30%",
-      // },
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -80,11 +68,11 @@ export namespace S {
     },
   }));
 
-  export const StatCardHeader = styled(Box)(() => ({
+  export const StatCardHeader = styled(Box)({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  }));
+  });
 
   export const StatCardHeaderLeft = styled(Box)({
     display: "flex",

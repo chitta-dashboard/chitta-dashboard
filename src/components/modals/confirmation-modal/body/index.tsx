@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Stack } from "@mui/material";
-import ConfirmationIcon from "./confirmationIcon";
 import S from "./confirmationModal.styled";
+import ConfirmationIcon from "./confirmationIcon";
 
 interface ConfirmProps {
   userConfirm?: string;

@@ -7,7 +7,6 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "2rem",
-
     [theme.breakpoints.down("md")]: {
       gap: "1rem",
     },

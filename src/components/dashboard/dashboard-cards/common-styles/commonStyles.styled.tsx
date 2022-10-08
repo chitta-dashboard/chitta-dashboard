@@ -3,7 +3,7 @@ import { Box } from "@mui/material";
 
 import { LightTheme } from "../../../../utils/theme";
 
-export const CardHeader = styled(Box)(({ theme }: any) => ({
+export const CardHeader = styled(Box)({
   display: "flex",
   justifyContent: "space-between",
   width: "100%",
@@ -13,9 +13,9 @@ export const CardHeader = styled(Box)(({ theme }: any) => ({
   marginBottom: "0.3rem",
   position: "relative",
   padding: "0.2rem 0 0 0",
-}));
+});
 
-export const CardIconContainer = styled(Box)(({ theme }: any) => ({
+export const CardIconContainer = styled(Box)({
   height: "1.2rem",
   width: "1.3rem",
   borderRadius: "50%",
@@ -23,13 +23,13 @@ export const CardIconContainer = styled(Box)(({ theme }: any) => ({
   justifyContent: "center",
   alignItems: "center",
   cursor: "pointer",
-}));
+});
 
-export const IconGreen = styled("i")(({ theme }: any) => ({
+export const IconGreen = styled("i")({
   fontSize: "1.2rem",
   color: LightTheme.palette.primary.light,
   cursor: "pointer",
-}));
+});
 
 export const NotifyIcons = styled("i")(({ theme }: any) => ({
   fontSize: "1.1rem",
