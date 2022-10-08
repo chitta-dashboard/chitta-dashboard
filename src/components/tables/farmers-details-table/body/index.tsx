@@ -1,10 +1,10 @@
-import { useState, useRef } from "react";
-import { Checkbox, Stack } from "@mui/material";
+import { useState, useRef, useEffect } from "react";
+import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { fileValidation } from "../../../../utils/constants";
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import BodyWrapper from "../../../custom-tables/body";
 import userPic from "../../../../assets/images/user.png";
 import DeleteModal from "../../../modals/delete-modal";
@@ -13,53 +13,81 @@ import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetail
 import IdCardBody from "../../../id-card/id-card-body";
 import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
+import IdCardModal from "../../../modals/id-download-modal";
 
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
-interface Props {
-  users: any;
-  handleChange: any;
-}
-
-const Body = (props: Props) => {
-  const idCardRef = useRef<HTMLDivElement>();
-  const farmerDetailFormRef = useRef<HTMLDivElement>();
-  const navigate = useNavigate();
-
-  const [image, setImage] = useState("");
-  const [userId, setUserId] = useState<string>("");
-
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-
-  const { farmersList, editTableIcon, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-
+const Body = () => {
+  const {
+    farmersList: listData,
+    editTableIcon,
+    editFarmerDetail,
+    deleteFarmerDetail,
+    searchFilter,
+    checkboxSelect,
+    selectedFarmers,
+    sortFilter,
+    groupFilter,
+  } = useFarmerDetailsContext();
+  const [farmersList, setFarmersList] = useState(listData);
+  const [farmersListGroup, setFarmersListGroup] = useState(listData);
+  const [farmersListSearch, setFarmersListSearch] = useState(listData);
+  const [farmersListSort, setFarmersListSort] = useState(listData);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const idCardRef = useRef<HTMLDivElement>();
+  const farmerDetailFormRef = useRef<HTMLDivElement>();
+  const navigate = useNavigate();
+  const [image, setImage] = useState("");
+  const [userId, setUserId] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
 
-  // Delete Modal
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
+  const hiddenFileInput: any = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    setFarmersListGroup(groupFilter === "all" ? listData : listData.filter((list) => list.group === groupFilter));
+  }, [groupFilter, listData]);
+
+  useEffect(() => {
+    setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
+  }, [searchFilter, farmersListGroup]);
+
+  useEffect(() => {
+    setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
+  }, [farmersListSearch, sortFilter]);
+
+  useEffect(() => {
+    setFarmersList(farmersListSort);
+  }, [farmersListSort]);
+
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
     setEditId(id);
   };
+
   //Edit FarmerDetail Handler
   const editFarmerDetailHandler = (id: string) => {
     setEditMode(!editMode);
     setEditId(id);
   };
+
   //Update FarmerDetail Handler
   const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
     setIconModal(false);
     editFarmerDetail(data);
+  };
+
+  // Delete Modal
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
   };
 
   const getURL = (id: string) => {
@@ -73,6 +101,13 @@ const Body = (props: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleIconClick = (id: string) => {
@@ -83,6 +118,9 @@ const Body = (props: Props) => {
   const generateIdCard = useReactToPrint({
     documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
     content: () => idCardRef.current as HTMLDivElement,
+    onAfterPrint() {
+      handleClose();
+    },
   });
 
   const generateFarmerDetailForm = useReactToPrint({
@@ -90,78 +128,111 @@ const Body = (props: Props) => {
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
-  const NavigateToFarmerDetailForm = (id: string, e: any) => {
-    navigate(`/farmers-details/${id}`);
+  const NavigateToFarmerDetailForm = (farmerId: string) => {
+    navigate(`/farmers-details/${farmerId}`);
   };
 
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     let result = farmersList.filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
     editTableIcon({ ...result[0] });
   };
+
+  //id generate handler
+  const handleClose = () => {
+    setOpen(!open);
+  };
+
   return (
     <>
-      <BodyWrapper>
-        <tr style={{ display: "none" }}>
-          <td>
-            <IdCardBody ref={idCardRef} />
-            <FarmerDetailsForm ref={farmerDetailFormRef} />
-          </td>
-        </tr>
-        {farmersList.map((user: any) => (
-          <S.CustomTableRow key={user.id} onClick={(e) => NavigateToFarmerDetailForm(user.id, e)}>
-            <S.RowCheckCell
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <Checkbox name={user.id.toString()} onChange={props.handleChange} checked={user?.isChecked || false} />
-            </S.RowCheckCell>
-            <S.WebTableCell>{user.membershipId}</S.WebTableCell>
-            {/* for tablet view*/}
-            <S.TabCell>
-              <Checkbox />
-              <Stack
+      {farmersList.length > 0 ? (
+        <BodyWrapper>
+          <tr style={{ display: "none" }}>
+            <td>
+              <IdCardBody ref={idCardRef} />
+              <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
+            </td>
+          </tr>
+          {farmersList.map((user: farmerDetail) => (
+            <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
+              <S.RowCheckCell
                 onClick={(e) => {
                   e.stopPropagation();
                 }}
               >
-                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
-              </Stack>
-            </S.TabCell>
-            <S.Cell title="பெயர்">
-              <S.NameStack>
-                <S.AvatarBox>
-                  <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
-                  <S.EditBox
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleIconClick(user.id);
+                <Checkbox
+                  onChange={(e) => {
+                    checkboxSelect(user.id);
+                  }}
+                  checked={selectedFarmers.includes(user.id)}
+                />
+              </S.RowCheckCell>
+              <S.WebTableCell>{user.membershipId}</S.WebTableCell>
+              {/* for tablet view*/}
+              <S.TabCell
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                <Checkbox
+                  onChange={(e) => {
+                    checkboxSelect(user.id);
+                  }}
+                  checked={selectedFarmers.includes(user.id)}
+                />
+                <Stack>
+                  <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
+                </Stack>
+              </S.TabCell>
+              <S.Cell title="பெயர்">
+                <S.NameStack>
+                  <S.AvatarBox>
+                    <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
+                    <S.EditBox
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleIconClick(user.id);
+                      }}
+                    >
+                      <S.EditIcon>edit</S.EditIcon>
+                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                    </S.EditBox>
+                  </S.AvatarBox>
+                  {user.name}
+                </S.NameStack>
+              </S.Cell>
+              <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
+              <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
+              <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
+              <S.Cell title="குழு பெயர்">{user.group}</S.Cell>
+              <S.WebTableCell onClick={(e) => e.stopPropagation()}>
+                <S.IconBox>
+                  <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
+                  <CS.Icon onClick={handleClose}>id-card</CS.Icon>
+                  <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
+                  <CS.Icon
+                    onClick={async () => {
+                      await setFarmerIdtoPrint(user.id);
+                      generateFarmerDetailForm();
                     }}
                   >
-                    <S.EditIcon>edit</S.EditIcon>
-                    <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
-                  </S.EditBox>
-                </S.AvatarBox>
-                {user.name}
-              </S.NameStack>
-            </S.Cell>
-            <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
-            <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
-            <S.Cell title="குழு பெயர்">{user.group}</S.Cell>
-            <S.WebTableCell>
-              <S.IconBox onClick={(e) => e.stopPropagation()}>
-                <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                <CS.Icon onClick={() => generateIdCard()}>id-card</CS.Icon>
-                <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
-                <CS.Icon onClick={() => generateFarmerDetailForm()}>download</CS.Icon>
-              </S.IconBox>
-            </S.WebTableCell>
-          </S.CustomTableRow>
-        ))}
-      </BodyWrapper>
+                    download
+                  </CS.Icon>
+                </S.IconBox>
+              </S.WebTableCell>
+            </TableRow>
+          ))}
+        </BodyWrapper>
+      ) : (
+        <S.EmptyMsg>
+          <tr>
+            <td>No Farmers Details..</td>
+          </tr>
+        </S.EmptyMsg>
+      )}
       <FarmersDetailsModal
         open={iconModal}
         handleClose={() => setIconModal(false)}
@@ -181,6 +252,8 @@ const Body = (props: Props) => {
           setIconModal(false);
         }}
       />
+      <IdCardModal openModal={open} handleClose={handleClose} generateIdCard={generateIdCard} />
+
       <AddFarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={editId} />
       {image && (
         <tbody>

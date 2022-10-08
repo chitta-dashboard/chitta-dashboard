@@ -1,52 +1,76 @@
-import React, { useState, useRef } from "react";
-import { Stack, TableRow } from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
+import { TableRow } from "@mui/material";
+import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
-import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import ConfirmationModal from "../../../modals/confirmation-modal";
 import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
-import { fileValidation } from "../../../../utils/constants";
-
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList, editTableIcon, editMdDetail, deleteMdDetail } = useMdDetailsContext();
-
+  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState(listData);
+  const [mdListSort, setMdListSort] = useState(listData);
+  const [mdList, setMdList] = useState(listData);
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
-
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [isCheck, setIsCheck] = useState<boolean>(false);
+  const [userConfirm, setUserConfirm] = useState<string>("");
 
-  // Delete ModalHandler
-  const deleteModalHandler = (id: string) => {
-    setDeleteModal(!deleteModal);
-    setDeleteId(id);
-  };
+  useEffect(() => {
+    setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
+  }, [listData, searchFilter]);
+
+  useEffect(() => {
+    setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
+  }, [mdListSearch, sortFilter]);
+
+  useEffect(() => {
+    setMdList(mdListSort);
+  }, [mdListSort]);
+
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
     setIconModal(!iconModal);
     setDeleteId(id);
     setEditId(id);
   };
+
   //Edit MdDetail Handler
   const editMdDetailHandler = (id: string) => {
     setEditMode(!editMode);
     setEditId(id);
   };
+
   //Update MdDetail Handler
   const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
     setIconModal(false);
     editMdDetail(data);
+  };
+
+  // Delete ModalHandler
+  const deleteModalHandler = (id: string) => {
+    setDeleteModal(!deleteModal);
+    setDeleteId(id);
+  };
+
+  // confirm Handler
+  const confirmHandler = (user: mdDetail) => {
+    setIsCheck(!isCheck);
+    setDeleteId(user.id);
+    setUserConfirm(user.name);
   };
 
   const getURL = (id: string) => {
@@ -60,6 +84,13 @@ const Body = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleIconClick = (id: string) => {
@@ -68,6 +99,7 @@ const Body = () => {
   };
 
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     let result = mdList.filter((item) => {
       return item.id === userId;
     });
@@ -82,9 +114,7 @@ const Body = () => {
           {mdList.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <Stack>
-                  <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
-                </Stack>
+                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>
@@ -92,12 +122,13 @@ const Body = () => {
                     <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
                     <S.EditBox onClick={() => handleIconClick(user.id)}>
                       <S.EditIcon>edit</S.EditIcon>
-                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
                     </S.EditBox>
                   </S.AvatarBox>
                   {user.name}
                 </S.NameStack>
               </S.Cell>
+              <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
               <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
               <S.Cell title="தகுதி">{user.qualification}</S.Cell>
               <S.WebTableCell>
@@ -105,6 +136,7 @@ const Body = () => {
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
                   <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
+                  <S.Toggle checked={!!user.id} onChange={() => confirmHandler(user)} />
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -113,7 +145,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td> No Data</td>
+            <td>No Md Details..</td>
           </tr>
         </S.EmptyMsg>
       )}
@@ -126,6 +158,20 @@ const Body = () => {
         handleEdit={() => {
           setEditMode(true);
         }}
+        check={deleteId}
+        handleCheck={() => {
+          setIsCheck(true);
+        }}
+      />
+      <ConfirmationModal
+        openModal={isCheck}
+        handleClose={() => setIsCheck(false)}
+        yesAction={() => {
+          deleteMdDetail(deleteId);
+          setIsCheck(false);
+          setIconModal(false);
+        }}
+        userConfirm={userConfirm}
       />
       <DeleteModal
         openModal={deleteModal}

@@ -186,9 +186,19 @@ namespace S {
     lineHeight: "1.3",
     fontSize: ".8rem",
     marginBottom: "10px",
+
+    height: "35px",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitLineClamp: "2",
+    WebkitBoxOrient: "vertical",
   }));
 
   export const ButtonsBar = styled(Box)(({ theme }) => ({}));
+  export const InvisibleBox = styled(Box)(({ theme }) => ({
+    display: "none",
+  }));
 
   export const ViewBtn = styled(Button)(({ theme }) => ({
     padding: ".2rem 2rem",

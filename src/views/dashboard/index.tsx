@@ -3,18 +3,26 @@ import DashboardStatCard from "../../components/dashboard/dashboard-cards/dashbo
 import DashboardSummaryCard from "../../components/dashboard/dashboard-cards/dashboard-summary-card/index";
 import DashboardNotificationCard from "../../components/dashboard/dashboard-cards/dashboard-notification-card/index";
 import S from "./dashboard.styled";
+import DashboardBodyTop from "../../components/dashboard/dashboard-body/dashboard-body-top";
+import DashboardFounder from "../../components/dashboard/dashboard-cards/dashboard-founder-card";
 
 const Dashboard = () => {
   return (
     <>
-      <S.DashBoaderContainer>
+      <S.DashBoardContainer>
         <DashboardHeader />
-        <S.DashBoaderBodyWrapper container>
-          <DashboardStatCard />
-          <DashboardSummaryCard />
-          <DashboardNotificationCard />
-        </S.DashBoaderBodyWrapper>
-      </S.DashBoaderContainer>
+        <S.DashBoardBodyWrapper>
+          <S.DashBoardStatisticsWrapper>
+            <DashboardBodyTop />
+          </S.DashBoardStatisticsWrapper>
+          <S.DashBoardBottom container>
+            {/* <DashboardStatCard /> */}
+            <DashboardSummaryCard />
+            <DashboardFounder />
+            {/* <DashboardNotificationCard /> */}
+          </S.DashBoardBottom>
+        </S.DashBoardBodyWrapper>
+      </S.DashBoardContainer>
     </>
   );
 };

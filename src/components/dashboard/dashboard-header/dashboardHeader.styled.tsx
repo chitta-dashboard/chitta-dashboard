@@ -3,33 +3,34 @@ import { Box, Typography } from "@mui/material";
 import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
-  export const DashboardHeaderWrapper = styled(Box)(({ theme }: any) => ({
+  export const DashboardHeaderWrapper = styled(Box)(() => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
   }));
 
-  export const ProfileBox = styled(Box)(({ theme }: any) => ({
+  export const ProfileBox = styled(Box)(() => ({
     display: "flex",
     alignItems: "center",
     gap: "1rem",
     width: "50%",
   }));
 
-  export const ProfileHeading = styled(Typography)(({ theme }: any) => ({
+  export const ProfileHeading = styled(Typography)(() => ({
     color: LightTheme.palette.text.secondaryDark,
     letterSpacing: "0.05rem",
-    fontSize: "1.3rem",
+    fontSize: "1.4rem",
     fontWeight: "600",
   }));
 
-  export const ProfileSubHeading = styled(Typography)(({ theme }: any) => ({
+  export const ProfileSubHeading = styled(Typography)(() => ({
     color: LightTheme.palette.text.secondary,
     fontWeight: "500",
+    fontSize: "1rem",
   }));
 
-  export const HeaderIconsBox = styled(Box)(({ theme }: any) => ({
+  export const HeaderIconsBox = styled(Box)(() => ({
     width: "50%",
     marginLeft: "2rem",
     display: "flex",
@@ -38,7 +39,7 @@ export namespace S {
     gap: "1.5rem",
   }));
 
-  export const IconContainer = styled(Box)(({ theme }: any) => ({
+  export const IconContainer = styled(Box)(() => ({
     height: "2rem",
     width: "2rem",
     borderRadius: "50%",
@@ -49,13 +50,42 @@ export namespace S {
     cursor: "pointer",
   }));
 
-  export const ImgContainer = styled(Box)(({ theme }: any) => ({
+  export const ImgContainer = styled(Box)(() => ({
     height: "4.5rem",
     width: "4.5rem",
     borderRadius: "50%",
+    position: "relative",
+    cursor: "pointer",
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
   }));
 
-  export const DshboardImg = styled("img")(({ theme }: any) => ({
+  export const EditBox = styled(Box)(({ theme }: any) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: theme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
+
+  export const EditIcon = styled("i")(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    opacity: "1",
+  }));
+
+  export const HiddenInput = styled("input")(() => ({
+    display: "none",
+  }));
+
+  export const DshboardImg = styled("img")(() => ({
     height: "100%",
     width: "100%",
     borderRadius: "50%",

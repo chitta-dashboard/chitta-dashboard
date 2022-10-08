@@ -12,7 +12,7 @@ namespace S {
       border: "none",
     },
     "& .css-oznjvi-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected": {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: `${theme.palette.primary.light} !important`,
       color: "white",
     },
   }));
@@ -21,8 +21,8 @@ namespace S {
     color: theme.palette.text.secondary,
     opacity: theme.palette.shadeOpacity,
   }));
-  export const PageStack = styled(Stack)(({ theme }) => ({
-    padding: "0 0.8rem",
+  export const PageStack = styled(Stack)(() => ({
+    // padding: "0 1.25rem",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",

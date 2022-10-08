@@ -3,18 +3,24 @@ import { useState } from "react";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
-import { FarmerDetailsContextProvider, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { IAddFarmersDetailsFormInput } from "../../components/modals/type/formInputs";
 
 import S from "./farmersDetails.styled";
+import ShareAmountModal from "../../components/modals/share-amount-modal";
 
 const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addFarmerDetail } = useFarmerDetailsContext();
+  const [shareModal, setShareModal] = useState(false);
+  const { addFarmerDetail, setSearchFilter, sortFilter, setSortFilter } = useFarmerDetailsContext();
 
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
+  };
+  //Share Amount Modal Handler
+  const shareAmountModalHandler = () => {
+    setShareModal(!shareModal);
   };
   // Add Farmerdetail Handler
   const addDataHandler = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
@@ -22,13 +28,21 @@ const FarmersDetails = () => {
   };
 
   return (
-    <FarmerDetailsContextProvider>
+    <>
       <S.FarmersDetailsContainer>
-        <FarmersDetailsTablePageHeader addModalHandler={addModalHandler} />
+        <FarmersDetailsTablePageHeader
+          addModalHandler={addModalHandler}
+          searchHandler={setSearchFilter}
+          sortFilter={sortFilter}
+          sortHandler={setSortFilter}
+          shareAmountModalHandler={shareAmountModalHandler}
+        />
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
+      <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
+
       <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
-    </FarmerDetailsContextProvider>
+    </>
   );
 };
 

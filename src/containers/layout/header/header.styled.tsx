@@ -1,4 +1,4 @@
-import { Theme, Box, styled, Typography } from "@mui/material";
+import { Theme, Box, styled, Typography, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -8,7 +8,7 @@ namespace S {
     justifyContent: "space-between",
     backgroundColor: "#ffffff",
     padding: ".5rem 1.2rem",
-    gap: "2rem",
+    gap: "1rem",
   }));
 
   export const LogoBox = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -154,6 +154,18 @@ namespace S {
     i: {
       fontSize: "1.6rem",
       cursor: "pointer",
+    },
+  }));
+
+  export const NotificationBadge = styled(Badge)(({ theme }: { theme: Theme }) => ({
+    cursor: "pointer",
+    "& .MuiBadge-badge": {
+      right: 2,
+      top: 5,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+      backgroundColor: theme.palette.primary.light,
+      color: "#ffffff",
     },
   }));
 }

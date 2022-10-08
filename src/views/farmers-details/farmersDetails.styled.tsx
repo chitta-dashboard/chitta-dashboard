@@ -4,17 +4,20 @@ namespace S {
   export const FarmersDetailsContainer = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "2rem",
 
-    "& .MuiTableContainer-root": {
-      [theme.breakpoints.down("lg")]: {
-        margin: "1.5rem 0",
-        height: "calc(100% - 8rem)",
-      },
-      [theme.breakpoints.down("md")]: {
-        margin: "1rem 0",
-        height: "calc(100% - 10.5rem)",
-      },
+    [theme.breakpoints.down("md")]: {
+      gap: "1.5rem",
     },
+
+    [theme.breakpoints.down("md")]: {
+      gap: "1rem",
+    },
+  }));
+  export const InvisibleBox = styled(Box)(() => ({
+    display: "none",
   }));
 }
 

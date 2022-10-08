@@ -1,6 +1,10 @@
-import { styled, Stack, TableCell } from "@mui/material";
+import { styled, Stack, TableCell, TableRow } from "@mui/material";
 
 namespace S {
+  export const Row = styled(TableRow)<{ select: number }>(({ theme, select }) => ({
+    backgroundColor: select ? theme.palette.custom.backgroundLight : "",
+  }));
+
   export const TabCell = styled(TableCell)(({ theme }) => ({
     [theme.breakpoints.up("md")]: {
       display: "none",
@@ -9,18 +13,17 @@ namespace S {
       display: "flex",
       alignItems: "center",
       justifyContent: "end",
-      fontSize: "1rem",
-      padding: "0 2rem",
-      paddingTop: "1rem",
     },
+  }));
+
+  export const NameStack = styled(Stack)(() => ({
+    flexDirection: "row",
+    gap: "1rem",
+    alignItems: "center",
   }));
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
-    color: theme.palette.text.secondary,
-    fontSize: "1.1rem",
-    fontWeight: 500,
-    padding: "1rem 0",
     "&:last-of-type": {
       width: "12%",
     },
@@ -29,37 +32,40 @@ namespace S {
     },
   }));
 
-  export const Cell = styled(TableCell)<{ title: string }>(({ theme, title }) => ({
-    color: theme.palette.text.secondary,
-    fontSize: "1.1rem",
-    fontWeight: 500,
-    borderBottom: "1rem solid red",
-    padding: "1rem 0",
-
+  export const Cell = styled(TableCell)<{ title: string; ismember?: number }>(({ theme, title, ismember }) => ({
+    "&:nth-of-type(2)": {
+      color: ismember && theme.palette.text.primary,
+    },
+    [theme.breakpoints.up("md")]: {
+      "&:nth-of-type(2)": {
+        paddingLeft: "1.25rem",
+      },
+    },
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
-      fontSize: "1rem",
-      padding: "0.8rem",
-      width: "45%",
+      width: "48%",
       position: "relative",
       left: "50%",
       //Create Table head for Tab view
       "&::before": {
         content: `"${title}"`,
-        color: theme.palette.text.primary,
-        fontSize: "1rem",
-        fontWeight: 600,
         position: "absolute",
-        left: "-100%",
+        left: "-90%",
       },
     },
   }));
 
-  export const NameStack = styled(Stack)(({ theme }) => ({
+  export const Icon = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
-    gap: "1rem",
     alignItems: "center",
+    gap: "1rem",
+    "& > p": {
+      fontSize: "1.1rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      alignItems: "end",
+    },
   }));
 
   export const IconBox = styled(Stack)(({ theme }) => ({
@@ -69,6 +75,18 @@ namespace S {
     width: "100%",
     [theme.breakpoints.down("md")]: {
       display: "none",
+    },
+  }));
+
+  export const EmptyMsg = styled("tbody")(({ theme }) => ({
+    position: "relative",
+    "> tr > td": {
+      color: theme.palette.text.secondaryLight,
+      fontSize: "1.2rem",
+      textAlign: "center",
+      fontWeight: "500",
+      padding: "3rem 0",
+      translate: "transform(-50%, -50%)",
     },
   }));
 }

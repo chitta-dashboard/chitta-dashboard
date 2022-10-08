@@ -2,17 +2,20 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { v4 as uuidv4 } from "uuid";
 
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
-import SubmitButton from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
+import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
+import { IDecision } from "../../../utils/context/decisionsContext";
+import { Button } from "@mui/material";
 
 interface CustomProps {
-  cb: (data: IAddDecisionsFormInput) => void;
+  cb: (data: IDecision) => void;
   openModal: boolean;
   handleClose: () => void;
 }
@@ -20,9 +23,9 @@ interface CustomProps {
 const schema = yup
   .object({
     decisionHeading: yup.string().required("required"),
-    dob: yup.string().required("required"),
+    creationTime: yup.string().required("required"),
     selectAll: yup.string().nullable().required("required"),
-    qualification: yup.string().required("required"),
+    groupName: yup.string().required("required"),
     presenter: yup
       .array()
       .nullable()
@@ -45,12 +48,23 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     clearErrors,
     reset,
     trigger,
+    control,
   } = useForm<IAddDecisionsFormInput>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
-    cb({ ...data, dob: new Date(data.dob).toDateString().split(" ").slice(1).join(",").replace(",", " ") });
+    cb({
+      id: uuidv4(),
+      groupName: data.groupName,
+      groupTitle: data.decisionHeading,
+      groupDescription: data.description,
+      groupDescriptionRichText: data.descriptionRichText,
+      timestamp: createTimeStamp(data.creationTime),
+      creationTime: getCurrentTime(),
+      presenter: data.presenter,
+      participator: data.participator,
+    });
     reset();
     handleClose();
   };
@@ -77,11 +91,13 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
         </ModalHeader>
 
         <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} control={control} />
         </ModalBody>
 
         <ModalFooter>
-          <SubmitButton formId="addDecisions" handleSubmit={() => {}} />
+          <Button form="addDecisions" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>

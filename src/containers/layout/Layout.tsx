@@ -1,22 +1,21 @@
 import { FC } from "react";
 import { GlobalStyles } from "@mui/material";
-import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 import Header from "./header";
 import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
+import { useAuthContext } from "../../utils/context/authContext";
 import S from "./Layout.styled";
-import authContext from "../../utils/context/authContext";
-import { Navigate } from "react-router-dom";
 
 const Layout: FC = () => {
-  const { isAuthenticated } = useContext(authContext);
+  const { isAuthenticated } = useAuthContext();
 
   return (
     <S.Layout>
       <GlobalStyles
         styles={(theme) => ({
-          "body, div, nav, span, table, tbody, thead, ul, ol": {
+          "body, div, nav, span, table, tbody, thead, ul, ol, form": {
             "&::-webkit-scrollbar": {
               width: "5px",
               // backgroundColor: "#F5F5F5",

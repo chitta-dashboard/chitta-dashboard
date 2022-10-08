@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,12 +8,12 @@ import { v4 as uuidv4 } from "uuid";
 import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
-import Submit from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import { fileValidation } from "../../../utils/constants";
 
 interface CustomProps {
   openModal: boolean;
@@ -28,7 +28,26 @@ const schema = yup
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup.mixed().required("required"),
+    signature: yup
+      .mixed()
+      .test("signatureTest1", "required", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return file?.size > 0;
+      })
+      .test("signatureTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return fileValidation(file ? file?.name : "");
+      }),
+    profile: yup
+      .mixed()
+      .test("profileTest1", "required", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return file?.size > 0;
+      })
+      .test("profileTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
+        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+        return fileValidation(file ? file?.name : "");
+      }),
   })
   .required();
 
@@ -40,6 +59,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     handleSubmit,
     formState: { errors },
     reset,
+    setError,
     clearErrors,
     setValue,
     trigger,
@@ -56,6 +76,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         qualification: userData?.qualification as string,
         dob: userData?.dob as string,
         signature: "", // temporary, until sbucket integration
+        profile: "", // temporary, until sbucket integration
       });
     }
 
@@ -65,7 +86,8 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         phoneNumber: "",
         qualification: "",
         dob: "",
-        signature: "", // temporary, until sbucket integration
+        signature: "",
+        profile: "",
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
@@ -98,12 +120,14 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         </ModalHeader>
         <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={4}>
-            <AddProfile />
-            <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+            <AddProfile setValue={setValue} trigger={trigger} inputName="profile" errors={errors} />
+            <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
           </Stack>
         </ModalBody>
         <ModalFooter>
-          <Submit formId="mdDetails" handleSubmit={() => {}} />
+          <Button form="mdDetails" type="submit">
+            Submit
+          </Button>
         </ModalFooter>
       </CustomModal>
     </>

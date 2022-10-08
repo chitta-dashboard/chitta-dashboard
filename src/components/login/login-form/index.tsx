@@ -1,11 +1,11 @@
-import { FC, useContext, useState } from "react";
+import { FC, useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
-import authContext from "../../../utils/context/authContext";
+import { useAuthContext } from "../../../utils/context/authContext";
 
 interface LoginFormInputs {
   mobileNo: string;
@@ -23,7 +23,7 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { setIsAuthenticated } = useContext(authContext);
+  const { login } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -53,9 +53,8 @@ const LoginForm: FC = () => {
       }
       return;
     }
-    window.localStorage.setItem("isAuthenticated", "true");
     reset();
-    setIsAuthenticated(true);
+    login();
   };
 
   const handleClickShowHidePassword = () => setShowPassword(!showPassword);
@@ -116,7 +115,7 @@ const LoginForm: FC = () => {
               </S.LoginButton>
             </S.ButtonBox>
             <S.LoginText variant="subtitle1">
-              Don't have an account?<span>Signup</span>
+              Don't have an account?&nbsp;<span>Signup</span>
             </S.LoginText>
           </S.ButtonContainer>
         </S.FormContainer>

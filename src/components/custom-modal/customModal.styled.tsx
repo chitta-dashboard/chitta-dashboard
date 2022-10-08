@@ -11,8 +11,8 @@ namespace S {
       "& .MuiPaper-root": {
         borderRadius: ".75rem",
         margin: "2rem",
-        width: openAddDecisionModal ? "100% !important" : "",
-        maxWidth: openAddDecisionModal ? "1400px" : "",
+        width: openAddDecisionModal ? "102.9375rem" : "",
+        maxWidth: openAddDecisionModal ? "calc(100vw - 7rem)" : "",
       },
 
       "& .MuiDialogContent-root": {

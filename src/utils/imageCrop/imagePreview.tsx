@@ -7,7 +7,7 @@ import "react-image-crop/dist/ReactCrop.css";
 type ImagePreviewType = {
   image: string;
   setImage: React.Dispatch<React.SetStateAction<string>>;
-  handleCroppedImage: (image: string) => void;
+  handleCroppedImage: (croppedImg: string) => void;
 };
 
 type FinalImageType = {
@@ -45,9 +45,9 @@ export default function ImagePreview({ image, setImage, handleCroppedImage }: Im
   useEffect(() => {
     let pixelData = {
       aspect: 1,
-      height: 146.7,
+      height: crop.height,
       unit: "px",
-      width: 146.7,
+      width: crop.width,
       x: 0,
       y: 0,
     };

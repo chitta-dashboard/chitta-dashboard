@@ -1,12 +1,12 @@
 import { FC } from "react";
-
 import S from "./addProfile.styled";
 
 interface CustomProps {
   ImageHandler: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => void;
 }
 
-const UploadButton: FC<CustomProps> = ({ ImageHandler }) => {
+const UploadButton: FC<CustomProps> = ({ ImageHandler, onClick }) => {
   const getImage = ImageHandler;
 
   return (
@@ -16,7 +16,7 @@ const UploadButton: FC<CustomProps> = ({ ImageHandler }) => {
           <i>add</i>
         </S.UploadButton>
       </label>
-      <input id="files" type="file" style={{ visibility: "hidden" }} onChange={getImage} />
+      <input id="files" type="file" style={{ visibility: "hidden" }} onChange={getImage} onClick={onClick} />
     </>
   );
 };

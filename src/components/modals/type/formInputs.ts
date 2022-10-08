@@ -1,15 +1,8 @@
-export interface IDecisionsFormInput {
-  signature: string;
-  image: string;
-  file: any;
-  files: any;
-}
-
 export interface IAddDecisionsFormInput {
   selectAll: boolean;
   decisionHeading: string;
-  dob: string;
-  qualification: string;
+  creationTime: string;
+  groupName: string;
   presenter: string[];
   participator: string[];
   description: string;
@@ -25,8 +18,11 @@ export interface IAddFarmersDetailsPage1Input {
   group: string;
   phoneNumber: string;
   addhaarNo: string;
-  voterIdNo: string;
-  acre: string;
+  profile: string;
+  surveyNo: { [key: string]: string };
+  acre: { [key: string]: string };
+  border: { [key: string]: string };
+  [dynamicInputs: string]: string | string[] | { [key: string]: string };
 }
 
 export interface IAddFarmersDetailsPage2Input {
@@ -36,16 +32,14 @@ export interface IAddFarmersDetailsPage2Input {
   address: string;
   taluk: string;
   district: string;
-  surveyNo: string;
   landType: string;
-  farmerType: string;
   waterType: string;
-  seedType: string;
+  farmerType: string;
   animals: string;
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -61,4 +55,5 @@ export interface IAddMDDetailsFormInput {
   qualification: string;
   dob: string;
   signature: string;
+  profile: string;
 }

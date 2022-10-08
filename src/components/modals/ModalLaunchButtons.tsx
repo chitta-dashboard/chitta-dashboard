@@ -8,9 +8,10 @@ import FarmersDetailsModal from "./farmers-details-modal";
 import MdDetailsModal from "./md-details-modal";
 import DecisionsModal from "./decisions-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
-import { IAddDecisionsFormInput, IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
+import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
+import { IDecision } from "../../utils/context/decisionsContext";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -19,6 +20,7 @@ const ModalLaunchButtons = () => {
   const [openAddFarmerGroup, setOpenAddFarmerGroup] = React.useState(false);
   const [openAddFarmerDetails, setOpenAddFarmerDetails] = React.useState(false);
   const [openAddDecisions, setOpenAddDecisions] = React.useState(false);
+  const [openShareAmount, setOpenShareAmount] = React.useState(false);
 
   const deleteHandleClickOpen = () => {
     setOpenDelete(!openDelete);
@@ -38,6 +40,9 @@ const ModalLaunchButtons = () => {
   };
   const addDecisions = () => {
     setOpenAddDecisions(!openAddDecisions);
+  };
+  const addShareAmount = () => {
+    setOpenShareAmount(!openShareAmount);
   };
 
   return (
@@ -59,6 +64,9 @@ const ModalLaunchButtons = () => {
       </Button>
       <Button variant="outlined" onClick={addDecisions}>
         add decicions
+      </Button>
+      <Button variant="outlined" onClick={addShareAmount}>
+        Share Amount
       </Button>
       <DeleteModal
         openModal={openDelete}
@@ -107,7 +115,8 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmerGroupDetailsContextProvider>
-      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IAddDecisionsFormInput): void => {}} />
+      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IDecision): void => {}} />
+      {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );
 };
