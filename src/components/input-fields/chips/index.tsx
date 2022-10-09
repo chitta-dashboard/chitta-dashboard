@@ -1,5 +1,4 @@
 import { FieldValues } from "react-hook-form";
-
 import S from "./chips.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {

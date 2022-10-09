@@ -1,21 +1,21 @@
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 import Slider from "react-slick";
+import { fileValidation } from "../../../../utils/constants";
+import { useFounderContext } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardHeader } from "../common-styles/commonStyles.styled";
-import { fileValidation } from "../../../../utils/constants";
-import { useFounderContext } from "../../../../utils/context/founders";
-import FounderImg from "../../../../assets/images/Founder.png";
 import S from "./dashoardFounder.styled";
+import FounderImg from "../../../../assets/images/Founder.png";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 
 const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const { foundersList, editTableIcon } = useFounderContext();
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
   var settings = {
     dots: true,

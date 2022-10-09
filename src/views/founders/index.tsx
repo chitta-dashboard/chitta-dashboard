@@ -1,11 +1,9 @@
 import { useState } from "react";
-
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/md-details-modal";
 import FoundersTable from "../../components/tables/founders-table";
 import { useFounderContext } from "../../utils/context/founders";
 import { IAddMDDetailsFormInput } from "../../components/modals/type/formInputs";
-
 import S from "./founders.styled";
 
 const Founders = () => {

@@ -1,14 +1,14 @@
 import { Avatar, styled, Box } from "@mui/material";
 
 namespace S {
-  export const ProfilePicture = styled(Avatar)(({ theme }) => ({
+  export const ProfilePicture = styled(Avatar)({
     width: "5rem",
     height: "5rem",
     ".MuiSvgIcon-root": {
       width: "2rem",
       height: "2rem",
     },
-  }));
+  });
 
   export const UploadButton = styled(Box)(({ theme }) => ({
     width: "1.7rem",
@@ -21,16 +21,15 @@ namespace S {
     backgroundColor: theme.palette.primary.light,
   }));
 
-  export const ProfileContainer = styled(Box)(({ theme }) => ({
+  export const ProfileContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-
     ".MuiFormHelperText-root": {
       marginTop: "4px",
     },
-  }));
+  });
 }
 
 export default S;

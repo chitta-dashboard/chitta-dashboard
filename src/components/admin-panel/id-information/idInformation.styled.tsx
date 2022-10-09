@@ -1,21 +1,23 @@
 import { Stack, styled, TextField, Typography } from "@mui/material";
 
 namespace S {
-  export const ContainerStack = styled(Stack)(({ theme }) => ({
+  export const ContainerStack = styled(Stack)({
     gap: "1rem",
     width: "100%",
-  }));
-  export const InputStack = styled(Stack)(({ theme }) => ({
+  });
+
+  export const InputStack = styled(Stack)({
     gap: "1rem",
     flexDirection: "row",
     width: "100%",
-  }));
-  export const IdText = styled(Typography)(({ theme }) => ({
+  });
+
+  export const IdText = styled(Typography)({
     color: "rgba(119, 119, 119, 1)",
     fontSize: "1.125rem",
     lineHeight: "1.688rem",
     paddingBottom: "0.5rem",
-  }));
+  });
 
   export const IdInput = styled(TextField)(({ theme }) => ({
     backgroundColor: "#FFFFFF",

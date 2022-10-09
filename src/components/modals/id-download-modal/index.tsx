@@ -14,23 +14,21 @@ interface CustomProps {
 
 const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, generateIdCard }) => {
   return (
-    <>
-      <CustomModal openModal={openModal} handleClose={handleClose}>
-        <ModalHeader
-          handleClose={() => {
-            handleClose();
-          }}
-        >
-          Preview ID Card
-        </ModalHeader>
-        <ModalBody id="" onSubmit={() => {}}>
-          <IdCardBody />
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={generateIdCard}>Download</Button>
-        </ModalFooter>
-      </CustomModal>
-    </>
+    <CustomModal openModal={openModal} handleClose={handleClose}>
+      <ModalHeader
+        handleClose={() => {
+          handleClose();
+        }}
+      >
+        Preview ID Card
+      </ModalHeader>
+      <ModalBody id="" onSubmit={() => {}}>
+        <IdCardBody />
+      </ModalBody>
+      <ModalFooter>
+        <Button onClick={generateIdCard}>Download</Button>
+      </ModalFooter>
+    </CustomModal>
   );
 };
 

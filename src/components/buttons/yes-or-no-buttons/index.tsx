@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import S from "./YesOrNoButtons.Styled";
 
 type YesOrNoButtonsProps = {
@@ -7,12 +6,12 @@ type YesOrNoButtonsProps = {
   handleClose: () => void;
 };
 
-const YesOrNoButtons: FC<YesOrNoButtonsProps> = (props) => {
+const YesOrNoButtons: FC<YesOrNoButtonsProps> = ({ handleClose, yesAction }) => {
   return (
     <>
       <S.ButtonContainer>
-        <S.NoButton onClick={props.handleClose}>No</S.NoButton>
-        <S.YesButton onClick={props.yesAction}>Yes</S.YesButton>
+        <S.NoButton onClick={handleClose}>No</S.NoButton>
+        <S.YesButton onClick={yesAction}>Yes</S.YesButton>
       </S.ButtonContainer>
     </>
   );

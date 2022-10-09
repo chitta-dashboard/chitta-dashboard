@@ -9,30 +9,29 @@ namespace S {
     gap: "1rem",
   }));
 
-  export const InfoBar = styled(Box)(({ theme }) => ({
+  export const InfoBar = styled(Box)({
     display: "flex",
     gap: "1rem",
-  }));
+  });
 
   export const InfoText = styled(Typography)(({ theme }) => ({
     fontSize: ".8rem",
     textTransform: "uppercase",
     cursor: "pointer",
     whiteSpace: "nowrap",
-
     "&:hover": {
       opacity: theme.palette.shadeOpacity,
     },
   }));
 
-  export const ArticleBar = styled(Box)(({ theme }) => ({
+  export const ArticleBar = styled(Box)({
     display: "flex",
     gap: "1.5rem",
-  }));
+  });
 
-  export const ArticleText = styled(InfoText)(({ theme }) => ({
+  export const ArticleText = styled(InfoText)({
     textTransform: "unset",
-  }));
+  });
 }
 
 export default S;

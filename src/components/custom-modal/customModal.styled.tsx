@@ -7,22 +7,18 @@ namespace S {
         width: "100%",
         height: "100%",
       },
-
       "& .MuiPaper-root": {
         borderRadius: ".75rem",
         margin: "2rem",
         width: openAddDecisionModal ? "102.9375rem" : "",
         maxWidth: openAddDecisionModal ? "calc(100vw - 7rem)" : "",
       },
-
       "& .MuiDialogContent-root": {
         padding: theme.spacing(2),
       },
-
       "& .MuiInputLabel-root": {
         color: theme.palette.primary.light,
       },
-
       "& .MuiOutlinedInput-root": {
         color: theme.palette.text.secondaryDark,
         "& fieldset": {
@@ -41,7 +37,6 @@ namespace S {
         marginTop: 0,
         marginLeft: 0,
       },
-
       "& .MuiBox-root": {
         display: "flex",
         justifyContent: "center",

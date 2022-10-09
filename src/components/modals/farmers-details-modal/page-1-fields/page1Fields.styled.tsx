@@ -1,7 +1,7 @@
 import { styled, Button } from "@mui/material";
 
 namespace S {
-  export const StaticBox = styled("div")(() => ({
+  export const StaticBox = styled("div")({
     display: "grid",
     gridTemplateAreas: `
       "prf prf"
@@ -12,21 +12,21 @@ namespace S {
       "dyn dyn"
     `,
     gap: "1.5rem 1.2rem",
-  }));
+  });
 
-  export const DynamicInputsBox = styled("div")(() => ({
+  export const DynamicInputsBox = styled("div")({
     gridArea: "dyn",
     display: "grid",
     gap: "1.5rem 1.2rem",
-  }));
+  });
 
-  export const DynamicInputs = styled("div")(() => ({
+  export const DynamicInputs = styled("div")({
     display: "grid",
     gridTemplateAreas: `"srv acr bdr btn"`,
     gap: "1.5rem 1.2rem",
-  }));
+  });
 
-  export const AddBtn = styled(Button)(({ theme }) => ({
+  export const AddBtn = styled(Button)({
     gridArea: "btn",
     padding: "0",
     minWidth: "unset",
@@ -34,7 +34,7 @@ namespace S {
     width: "2.75rem",
     borderRadius: "5px",
     fontSize: "1rem",
-  }));
+  });
 
   AddBtn.defaultProps = {
     children: <i>add</i>,

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 import { ROUTES } from "../../../utils/constants";
-import Logo from "../../../assets/images/logo.svg";
 import { useAuthContext } from "../../../utils/context/authContext";
 import NotificationModal from "../../../components/modals/notification-modal";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import S from "./header.styled";
+import Logo from "../../../assets/images/logo.svg";
 
 const Header = () => {
   const { userNotification, clearNotification } = useAuthContext();

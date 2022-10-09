@@ -1,11 +1,12 @@
 import { styled, Box, Button } from "@mui/material";
 
 namespace S {
-  export const ShareDetailFooterContainer = styled(Box)(({ theme }) => ({
+  export const ShareDetailFooterContainer = styled(Box)({
     display: "flex",
     gap: "2.8125rem",
     height: "5rem",
-  }));
+  });
+
   export const CustomButton = styled(Button)(({ theme }) => ({
     fontSize: "1.25rem",
     backgroundColor: "white",

@@ -1,14 +1,13 @@
 import { Dispatch, FC, Ref, useRef } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
-import leftConnect from "../../../assets/images/leftDash.svg";
-import rightConnect from "../../../assets/images/rightDash.svg";
+import { useReactToPrint } from "react-to-print";
 import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
 import { sortObj } from "../../../utils/constants";
 import S from "./decisionsList.styled";
-import { useReactToPrint } from "react-to-print";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
+import rightConnect from "../../../assets/images/rightDash.svg";
+import leftConnect from "../../../assets/images/leftDash.svg";
 
 interface Props {
   decisionId: string;
@@ -20,13 +19,14 @@ const DecisionsList: FC<Props> = ({ decisionId, setDecisionId }) => {
   const { decisions: decisionsObj } = useDecisionsProviderContext();
   const navigate = useNavigate();
   const DecisionFormPdf = useRef<HTMLDivElement>();
-
   const decisions = sortObj<IDecision>(Object.values(decisionsObj), "descending", "creationTime", { asDate: true });
   const leftData = decisions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
   const rightData = isMd ? decisions : decisions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
+
   const NavigateResolutionGroup = (resolutionId: string) => {
     navigate(`/board-resolution/${resolutionId}`);
   };
+
   // to generate pdf of decision form
   const generateDecisionPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,

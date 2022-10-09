@@ -7,8 +7,6 @@ interface CustomProps {
 }
 
 const UploadButton: FC<CustomProps> = ({ ImageHandler, onClick }) => {
-  const getImage = ImageHandler;
-
   return (
     <>
       <label htmlFor="files">
@@ -16,7 +14,7 @@ const UploadButton: FC<CustomProps> = ({ ImageHandler, onClick }) => {
           <i>add</i>
         </S.UploadButton>
       </label>
-      <input id="files" type="file" style={{ visibility: "hidden" }} onChange={getImage} onClick={onClick} />
+      <input id="files" type="file" style={{ visibility: "hidden" }} onChange={ImageHandler} onClick={onClick} />
     </>
   );
 };
