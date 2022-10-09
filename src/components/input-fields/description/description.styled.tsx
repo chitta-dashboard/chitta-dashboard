@@ -1,7 +1,7 @@
 import { styled, TextField } from "@mui/material";
 
 namespace S {
-  export const Description = styled(TextField)(({ theme }) => ({
+  export const Description = styled(TextField)({
     "& .MuiInputLabel-root": {
       fontSize: ".9rem",
     },
@@ -12,7 +12,7 @@ namespace S {
     },
     width: "100%",
     height: "100%",
-  }));
+  });
   Description.defaultProps = {
     InputLabelProps: { shrink: true },
   };

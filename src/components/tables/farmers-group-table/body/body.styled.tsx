@@ -16,11 +16,11 @@ namespace S {
     },
   }));
 
-  export const NameStack = styled(Stack)(() => ({
+  export const NameStack = styled(Stack)({
     flexDirection: "row",
     gap: "1rem",
     alignItems: "center",
-  }));
+  });
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",

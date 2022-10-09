@@ -1,13 +1,11 @@
 import React from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useTheme } from "@mui/material";
-import { Select, SelectChangeEvent, OutlinedInput, InputLabel, MenuItem } from "@mui/material";
+import { Select, SelectChangeEvent, OutlinedInput, InputLabel } from "@mui/material";
 import { FieldValues, UseFormRegister, Path, UseFormSetValue, PathValue, UseFormTrigger } from "react-hook-form";
-
 import names from "./menuItems";
 import MenuProps from "./menuProps";
 import { getStyles } from "./getStyles";
-
 import S from "./multiSelect.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -46,42 +44,40 @@ function MultiSelect<FormInputTypes>({ label, register, inputName, setValue, tri
   };
 
   return (
-    <>
-      <S.StyledFormControl>
-        <InputLabel shrink id="demo-multiple-chip-label">
-          {label}
-        </InputLabel>
-        <Select
-          label="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          maxRows={4}
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Chip" {...register(inputName as Path<FormInputTypes & FieldValues>)} />}
-          renderValue={(selected) => (
-            <S.ChipContainer>
-              {selected.map((value) => (
-                <S.StyledChip
-                  clickable
-                  deleteIcon={<CancelIcon onMouseDown={(event: any) => event.stopPropagation()} />}
-                  key={value}
-                  label={value}
-                  onDelete={() => handleDelete(value)}
-                />
-              ))}
-            </S.ChipContainer>
-          )}
-          MenuProps={MenuProps}
-        >
-          {nameList.map((name) => (
-            <S.StyledMenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
-              {name}
-            </S.StyledMenuItem>
-          ))}
-        </Select>
-      </S.StyledFormControl>
-    </>
+    <S.StyledFormControl>
+      <InputLabel shrink id="demo-multiple-chip-label">
+        {label}
+      </InputLabel>
+      <Select
+        label="demo-multiple-chip-label"
+        id="demo-multiple-chip"
+        multiple
+        maxRows={4}
+        value={personName}
+        onChange={handleChange}
+        input={<OutlinedInput id="select-multiple-chip" label="Chip" {...register(inputName as Path<FormInputTypes & FieldValues>)} />}
+        renderValue={(selected) => (
+          <S.ChipContainer>
+            {selected.map((value) => (
+              <S.StyledChip
+                clickable
+                deleteIcon={<CancelIcon onMouseDown={(event: any) => event.stopPropagation()} />}
+                key={value}
+                label={value}
+                onDelete={() => handleDelete(value)}
+              />
+            ))}
+          </S.ChipContainer>
+        )}
+        MenuProps={MenuProps}
+      >
+        {nameList.map((name) => (
+          <S.StyledMenuItem key={name} value={name} style={getStyles(name, personName, theme)}>
+            {name}
+          </S.StyledMenuItem>
+        ))}
+      </Select>
+    </S.StyledFormControl>
   );
 }
 

@@ -1,7 +1,7 @@
 import { styled } from "@mui/material";
 
 namespace S {
-  export const FieldsBox = styled("div")(() => ({
+  export const FieldsBox = styled("div")({
     display: "grid",
     gridTemplateAreas: `
       "edu edu vil vil pst pst"
@@ -13,7 +13,7 @@ namespace S {
     `,
     gridTemplateRows: "auto 120px",
     gap: "1.5rem 1.2rem",
-  }));
+  });
 }
 
 export default S;

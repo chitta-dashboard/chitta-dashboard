@@ -21,6 +21,7 @@ namespace S {
       justifyContent: "center",
     },
   }));
+
   export const CeoDetailCard = styled(Box)(({ theme }: any) => ({
     backgroundColor: "#FFFFFF",
     height: "19.375rem",
@@ -36,6 +37,7 @@ namespace S {
       padding: "1rem",
     },
   }));
+
   export const CeoDetailData = styled(Box)(({ theme }: any) => ({
     display: "flex",
     justifyContent: "space-between",
@@ -44,12 +46,14 @@ namespace S {
       height: "40%",
     },
   }));
-  export const CeoDataLeft = styled(Box)(({ theme }: any) => ({
+
+  export const CeoDataLeft = styled(Box)({
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
-  }));
-  export const ProfilePictureBox = styled(Box)(({ theme }: any) => ({
+  });
+
+  export const ProfilePictureBox = styled(Box)({
     borderRadius: "50%",
     height: "100%",
     width: "5rem",
@@ -59,11 +63,13 @@ namespace S {
     "&:hover > .MuiBox-root": {
       display: "flex",
     },
-  }));
-  export const CeoProfilePicture = styled("img")(({ theme }: any) => ({
+  });
+
+  export const CeoProfilePicture = styled("img")({
     width: "100%",
     height: "100%",
-  }));
+  });
+
   export const EditBox = styled(Box)(({ theme }: any) => ({
     width: "100%",
     height: "100%",
@@ -78,20 +84,24 @@ namespace S {
     alignItems: "center",
     justifyContent: "center",
   }));
+
   export const EditIcon = styled("i")(({ theme }: any) => ({
     color: theme.palette.text.primary,
     opacity: "1",
     fontSize: "1.5625rem",
   }));
-  export const HiddenInput = styled("input")(({ theme }: any) => ({
+
+  export const HiddenInput = styled("input")({
     display: "none",
-  }));
-  export const CeoData = styled(Box)(({ theme }: any) => ({
+  });
+
+  export const CeoData = styled(Box)({
     height: "90%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-  }));
+  });
+
   export const CeoName = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.3125rem",
     fontWeight: "500",
@@ -100,6 +110,7 @@ namespace S {
       fontSize: "0.9375rem",
     },
   }));
+
   export const CeoAge = styled(Typography)(({ theme }: any) => ({
     fontSize: "1rem",
     fontWeight: "500",
@@ -108,6 +119,7 @@ namespace S {
       fontSize: "0.75rem",
     },
   }));
+
   export const CeoJoinedDate = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
     marginTop: "0.625rem",
@@ -116,6 +128,7 @@ namespace S {
       fontSize: "0.625rem",
     },
   }));
+
   export const CeoInfo = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.9375rem",
     fontWeight: "500",
@@ -124,6 +137,7 @@ namespace S {
       fontSize: "0.75rem",
     },
   }));
+
   export const CeoDataRight = styled(CeoDataLeft)(({ theme }: any) => ({
     justifyContent: "space-between",
     gap: "3rem",
@@ -131,6 +145,7 @@ namespace S {
       gap: "0.5rem",
     },
   }));
+
   export const CeoDetailDescription = styled(Box)(({ theme }: any) => ({
     fontSize: "1.125rem",
     height: "35%",
@@ -141,11 +156,13 @@ namespace S {
       fontSize: "0.75rem",
     },
   }));
-  export const ButtonContainer = styled(Box)(({ theme }: any) => ({
+
+  export const ButtonContainer = styled(Box)({
     display: "flex",
     alignSelf: "flex-end",
     gap: "2.3125rem",
-  }));
+  });
+
   export const CustomIconContainer = styled("i")(({ theme }: any) => ({
     color: theme.palette.text.primary,
     fontSize: "1.875rem",
@@ -153,10 +170,12 @@ namespace S {
       fontSize: "1.375rem",
     },
   }));
-  export const CeoDetailAdd = styled(CeoDetailCard)(({ theme }: any) => ({
+
+  export const CeoDetailAdd = styled(CeoDetailCard)({
     alignItems: "center",
     justifyContent: "center",
-  }));
+  });
+
   export const CustomButton = styled(Button)(({ theme }: any) => ({
     color: theme.palette.text.primary,
     backgroundColor: "white",

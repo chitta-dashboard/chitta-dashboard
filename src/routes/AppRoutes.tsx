@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-
 import Dashboard from "../views/dashboard";
 import CEODetails from "../views/ceo-details";
 import MDDetails from "../views/md-details";

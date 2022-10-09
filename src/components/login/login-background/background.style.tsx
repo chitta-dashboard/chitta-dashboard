@@ -10,14 +10,15 @@ namespace S {
     },
   }));
 
-  export const TopImageBox = styled(Box)(({ theme }) => ({
+  export const TopImageBox = styled(Box)({
     width: "38rem",
     height: "38rem",
     position: "absolute",
     top: "0",
     left: "0",
-  }));
-  export const TopImage = styled(Box)(({ theme }) => ({
+  });
+
+  export const TopImage = styled(Box)({
     width: "100%",
     height: "100%",
     borderRadius: "50%",
@@ -25,9 +26,9 @@ namespace S {
     top: "-75%",
     left: "-40%",
     backgroundColor: "rgba(48, 111, 84, 0.08)",
-  }));
+  });
 
-  export const FarmerImageBox = styled(Box)(({ theme }) => ({
+  export const FarmerImageBox = styled(Box)({
     overflow: "hidden",
     position: "absolute",
     width: "70%",
@@ -35,27 +36,29 @@ namespace S {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-  }));
-  export const BottomImageBox = styled(Box)(({ theme }) => ({
+  });
+
+  export const BottomImageBox = styled(Box)({
     position: "absolute",
     width: "100%",
     height: "25%",
     bottom: "0%",
     right: "-60%",
-  }));
+  });
 
-  export const FarmerImage = styled("img")(({ theme }) => ({
+  export const FarmerImage = styled("img")({
     position: "absolute",
     height: "100%",
     width: "100%",
     objectFit: "contain",
-  }));
-  export const BottomImage = styled("img")(({ theme }) => ({
+  });
+
+  export const BottomImage = styled("img")({
     position: "absolute",
     height: "100%",
     width: "100%",
     objectFit: "fill",
-  }));
+  });
 
   export const HeadingText = styled(Typography)(({ theme }) => ({
     color: theme.palette.primary.light,
@@ -65,11 +68,13 @@ namespace S {
     textAlign: "center",
     marginTop: "10vh",
   }));
-  export const RegTextBox = styled(Box)(({ theme }) => ({
+
+  export const RegTextBox = styled(Box)({
     position: "absolute",
     bottom: "4%",
     left: "6%",
-  }));
+  });
+
   export const RegText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     fontWeight: "400",

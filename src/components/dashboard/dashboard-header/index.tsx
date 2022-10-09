@@ -1,18 +1,14 @@
 import React, { useRef, useState } from "react";
-
+import { Box } from "@mui/material";
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
-
-import profilePic from "../../../assets/images/profile.png";
-import { Box } from "@mui/material";
 import { fileValidation } from "../../../utils/constants";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { S } from "./dashboardHeader.styled";
+import profilePic from "../../../assets/images/profile.png";
 
-type Props = {};
-
-const DashboardHeader = (props: Props) => {
+const DashboardHeader = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [image, setImage] = useState("");
   const [imagePic, setImagePic] = useState("");
@@ -30,10 +26,20 @@ const DashboardHeader = (props: Props) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
   };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
+  };
+
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     setImagePic(image);
   };
+
   return (
     <>
       <SearchModal open={openSearch} handleClose={openSearchHandle} />
@@ -47,7 +53,7 @@ const DashboardHeader = (props: Props) => {
               }}
             >
               <S.EditIcon>edit</S.EditIcon>
-              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
             </S.EditBox>
           </S.ImgContainer>
           <Box>

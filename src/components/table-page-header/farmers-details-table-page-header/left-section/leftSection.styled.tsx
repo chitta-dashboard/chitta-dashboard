@@ -10,7 +10,6 @@ namespace S {
       width: "100%",
       justifyContent: "space-between",
     },
-
     "& .MuiPaper-root": {
       width: "75%",
       [theme.breakpoints.down("lg")]: {

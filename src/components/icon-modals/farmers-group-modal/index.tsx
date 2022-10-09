@@ -1,6 +1,5 @@
 import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
-
 import S from "../iconModals.styled";
 
 const FarmersGroupModal = (props: CommonModalProps) => {

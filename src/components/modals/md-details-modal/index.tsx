@@ -4,7 +4,6 @@ import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-
 import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
@@ -100,37 +99,35 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   };
 
   return (
-    <>
-      <CustomModal
-        openModal={openModal}
+    <CustomModal
+      openModal={openModal}
+      handleClose={() => {
+        clearErrors();
+        reset();
+        handleClose();
+      }}
+    >
+      <ModalHeader
         handleClose={() => {
           clearErrors();
           reset();
           handleClose();
         }}
       >
-        <ModalHeader
-          handleClose={() => {
-            clearErrors();
-            reset();
-            handleClose();
-          }}
-        >
-          Add MD Details
-        </ModalHeader>
-        <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={4}>
-            <AddProfile setValue={setValue} trigger={trigger} inputName="profile" errors={errors} />
-            <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
-          </Stack>
-        </ModalBody>
-        <ModalFooter>
-          <Button form="mdDetails" type="submit">
-            Submit
-          </Button>
-        </ModalFooter>
-      </CustomModal>
-    </>
+        Add MD Details
+      </ModalHeader>
+      <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <AddProfile setValue={setValue} trigger={trigger} inputName="profile" errors={errors} />
+          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
+        </Stack>
+      </ModalBody>
+      <ModalFooter>
+        <Button form="mdDetails" type="submit">
+          Submit
+        </Button>
+      </ModalFooter>
+    </CustomModal>
   );
 };
 

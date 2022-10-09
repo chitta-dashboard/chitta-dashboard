@@ -84,6 +84,13 @@ const Body = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleIconClick = (id: string) => {
@@ -92,6 +99,7 @@ const Body = () => {
   };
 
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     let result = mdList.filter((item) => {
       return item.id === userId;
     });
@@ -114,7 +122,7 @@ const Body = () => {
                     <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
                     <S.EditBox onClick={() => handleIconClick(user.id)}>
                       <S.EditIcon>edit</S.EditIcon>
-                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
                     </S.EditBox>
                   </S.AvatarBox>
                   {user.name}

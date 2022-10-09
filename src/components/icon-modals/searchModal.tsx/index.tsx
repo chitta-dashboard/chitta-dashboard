@@ -1,6 +1,6 @@
+import { InputAdornment } from "@mui/material";
 import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
-import { InputAdornment } from "@mui/material";
 import S from "../iconModals.styled";
 
 const SearchModal = (props: CommonModalProps) => {

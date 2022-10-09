@@ -1,6 +1,5 @@
 import { FieldValues, UseFormRegister, Path } from "react-hook-form";
 import { getCurrentTime } from "../../../utils/constants";
-
 import S from "./dateTime.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -12,16 +11,14 @@ interface CustomProps<FormInputType extends FieldValues> {
 }
 function DateTimeInput<FormInputTypes>({ label, register, inputName, helperText, setDefault = false }: CustomProps<FormInputTypes & FieldValues>) {
   return (
-    <>
-      <S.ChooseDateTime
-        variant="outlined"
-        label={label}
-        {...register(inputName as Path<FormInputTypes & FieldValues>)}
-        helperText={helperText}
-        inputProps={{ noValidate: true }}
-        defaultValue={setDefault ? getCurrentTime() : ""}
-      />
-    </>
+    <S.ChooseDateTime
+      variant="outlined"
+      label={label}
+      {...register(inputName as Path<FormInputTypes & FieldValues>)}
+      helperText={helperText}
+      inputProps={{ noValidate: true }}
+      defaultValue={setDefault ? getCurrentTime() : ""}
+    />
   );
 }
 

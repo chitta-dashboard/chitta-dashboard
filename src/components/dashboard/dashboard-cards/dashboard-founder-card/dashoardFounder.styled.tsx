@@ -4,7 +4,6 @@ export namespace S {
   export const FounderWrapper = styled(Grid)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
-    // gap: "2rem",
     padding: "1rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
@@ -81,29 +80,22 @@ export namespace S {
     flexDirection: "column",
     gap: "1rem",
     background: "#fff",
-    // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    // border:"1px solid red",
     borderRadius: "1.25rem",
     padding: "1rem 0.2rem",
     [theme.breakpoints.down("lg")]: {
-      // width: "70% !important",
       margin: "0 auto",
     },
   }));
 
   export const FounderCardContainer = styled(Box)(({ theme }) => ({
     width: "calc(100% - 10rem)",
-    // height: "250px !important",
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
     background: "#fff",
-    // boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    // border:"1px solid red",
     borderRadius: "1.25rem",
     paddingLeft: "2rem",
     [theme.breakpoints.down("lg")]: {
-      // width: "70% !important",
       margin: "0 auto",
     },
   }));
@@ -117,7 +109,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)(() => ({
+  export const FounderCardHeaderRight = styled(Box)({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -126,25 +118,59 @@ export namespace S {
     paddingBottom: "1rem",
     borderBottom: "1px solid",
     borderColor: "rgba(104, 104, 104, 0.1)",
-  }));
+  });
 
-  export const FounderImg = styled("img")(() => ({
+  export const FounderImgContainer = styled(Box)({
     width: "10rem",
     height: "10rem",
-    borderRadius: "10%",
-    // border: "1px solid red",
+    borderRadius: "50%",
     float: "left",
+    overflow: "hidden",
+    position: "relative",
+    cursor: "pointer",
+
+    "&:hover > .MuiBox-root": {
+      display: "flex",
+    },
+  });
+
+  export const FounderImg = styled("img")({
+    width: "100%",
+    height: "100%",
+  });
+
+  export const EditBox = styled(Box)(({ theme }: any) => ({
+    width: "100%",
+    height: "100%",
+    position: "absolute",
+    top: "0",
+    left: "0",
+    background: theme.palette.custom.backgroundLight,
+    borderRadius: "50%",
+    opacity: "0.8",
+    border: "none",
+    display: "none",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 
-  export const FounderCardHeaderDetails = styled(Box)(() => ({
+  export const EditIcon = styled("i")(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    opacity: "1",
+    fontSize: "1.5625rem",
+  }));
+
+  export const HiddenInput = styled("input")({
+    display: "none",
+  });
+
+  export const FounderCardHeaderDetails = styled(Box)({
     display: "flex",
     flexDirection: "column",
     gap: "0.5rem",
     paddingTop: "0.5rem",
-    // width: "30%",
     flex: "1.7",
-    // border: "1px solid red",
-  }));
+  });
 
   export const FounderName = styled(Typography)(({ theme }) => ({
     fontSize: "1.2rem",
@@ -169,10 +195,7 @@ export namespace S {
   export const FounderCardBody = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "space-between",
-    //  padding: "0 2rem",
     width: "12rem",
-    // flex:"1",
-    // border:"1px solid blue",
     color: theme.palette.text.secondary,
     div: {
       flex: "1 !important",
@@ -185,23 +208,18 @@ export namespace S {
     },
   }));
 
-  export const FounderCardBodyLeft = styled(Typography)(() => ({
+  export const FounderCardBodyLeft = styled(Typography)({
     fontSize: "0.9rem",
     fontWeight: "500",
     margin: "0.3rem 0",
-  }));
+  });
 
   export const FounderCardDescContainer = styled(Box)(({ theme }) => ({
     color: theme.palette.text.secondary,
     textAlign: "justify",
     p: {
-      // textOverflow: "ellipsis",
-      // overflow: "hidden",
-      // whiteSpace: "nowrap",
-      // display: "-webkit-box",
       "-webkit-box-orient": "vertical",
       "-webkit-line-clamp": "3",
-      // overflow: "hidden",
     },
   }));
 }

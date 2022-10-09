@@ -8,26 +8,26 @@ namespace S {
     gridTemplateColumns: "1fr auto 1fr",
     justifyContent: "center",
     gap: "90px",
-
     [theme.breakpoints.down("md")]: {
       gridTemplateColumns: "auto 1fr",
       padding: "0 4rem",
     },
   }));
 
-  export const LeftContainer = styled(Box)(({ theme }) => ({
+  export const LeftContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     gap: "3.5rem",
     margin: "5.5rem 0 2rem 0",
-  }));
+  });
 
-  export const RightContainer = styled(LeftContainer)(({ theme }) => ({
+  export const RightContainer = styled(LeftContainer)({
     margin: "3rem 0 2rem 0",
-  }));
-  export const InvisibleBox = styled(Box)(({ theme }) => ({
+  });
+
+  export const InvisibleBox = styled(Box)({
     display: "none",
-  }));
+  });
 
   export const LContent = styled(Box)(({ theme }) => ({
     border: "2px solid #E7E59A",
@@ -35,13 +35,11 @@ namespace S {
     padding: "1.2rem",
     width: "100%",
     position: "relative",
-
     img: {
       position: "absolute",
       top: "0",
       right: "-90px",
     },
-
     "&::after": {
       content: "''",
       width: "18px",
@@ -56,20 +54,18 @@ namespace S {
     },
   }));
 
-  export const RContent = styled(LContent)(({ theme }) => ({
+  export const RContent = styled(LContent)({
     borderRadius: "40px 0 40px 0",
-
     img: {
       right: "unset",
       left: "-90px",
     },
-
     "&::after": {
       right: "unset",
       left: "-102px",
       transform: "matrix(-0.71, 0.73, -0.69, -0.71, 0, 0) rotate(-10deg)",
     },
-  }));
+  });
 
   export const Divider = styled("span")(({ theme }) => ({
     display: "inline-block",
@@ -77,7 +73,6 @@ namespace S {
     backgroundColor: "#E7E59A",
     width: "2px",
     position: "relative",
-
     "&::before": {
       content: "''",
       backgroundColor: theme.palette.primary.light,
@@ -89,7 +84,6 @@ namespace S {
       borderRadius: "0px 40px",
       transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0) rotate(-15deg)",
     },
-
     "&::after": {
       content: "''",
       width: "25px",
@@ -103,12 +97,12 @@ namespace S {
     },
   }));
 
-  export const ContentHeader = styled(Box)(({ theme }) => ({
+  export const ContentHeader = styled(Box)({
     display: "flex",
     gap: ".8rem",
     marginBottom: ".3rem",
     alignItems: "center",
-  }));
+  });
 
   export const ContentTitle = styled(Typography)(({ theme }) => ({
     fontSize: ".9rem",
@@ -150,11 +144,11 @@ namespace S {
     right: "10px",
   }));
 
-  export const ContentViewBtn = styled(Button)(({ theme }) => ({
+  export const ContentViewBtn = styled(Button)({
     padding: ".2rem 2rem",
     fontSize: ".7rem",
     marginLeft: "auto",
-  }));
+  });
 
   export const ContentDownloadBtn = styled(IconButton)(({ theme }) => ({
     width: "1.7rem",
