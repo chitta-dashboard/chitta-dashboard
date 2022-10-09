@@ -60,8 +60,9 @@ const Header = () => {
           <S.NotificationBadge onClick={notificationClick} badgeContent={userNotification.length}>
             <NotificationsIcon />
           </S.NotificationBadge>
-          <i>account</i>
-          <i onClick={logout}>logout</i>
+          <S.webIcon>three-dots</S.webIcon>
+        <S.TabIcon>account</S.TabIcon>
+          <S.TabIcon onClick={logout}>logout</S.TabIcon>
           {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
         </S.ActionsBox>
       </S.Header>

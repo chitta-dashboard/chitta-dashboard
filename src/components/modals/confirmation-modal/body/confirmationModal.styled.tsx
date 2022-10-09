@@ -6,17 +6,17 @@ namespace S {
     height: "18rem",
   });
 
-  export const ContainerItems = styled(DialogContent)({
+  export const ContainerItems = styled(DialogContent)(() => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  });
+  }));
 
-  export const SuccessImg = styled(`img`)({
+  export const SuccessImg = styled(`img`)(({ theme }) => ({
     marginTop: "1.5rem",
     width: "7rem",
     heigth: "7rem",
-  });
+  }));
 
   export const DialogueText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,
@@ -27,5 +27,11 @@ namespace S {
   DialogueText.defaultProps = {
     variant: "body1",
   };
+
+  export const Bold = styled("b")(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontSize: "1.4rem",
+    fontWeight: 600,
+  }));
 }
 export default S;
