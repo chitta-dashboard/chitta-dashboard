@@ -1,15 +1,11 @@
 import { Ref, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-
 import IconWrapper from "../../utils/iconWrapper";
-
-import { S } from "./decision-certificate.styled";
 import DecisionPdf from "./DecisionPdf";
+import { S } from "./decision-certificate.styled";
 
-interface Props {}
-
-const DecisionCertificatePage = (props: Props) => {
+const DecisionCertificatePage = () => {
   const navigate = useNavigate();
   const DecisionFormPdf = useRef<HTMLDivElement>();
 

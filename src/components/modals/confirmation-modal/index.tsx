@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import CustomModal from "../../custom-modal";
 import ModalBody from "../../custom-modal/body";
@@ -13,26 +12,25 @@ interface CustomProps {
   yesAction: () => void;
   userConfirm?: string;
 }
+
 const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction, userConfirm }) => {
   return (
-    <>
-      <CustomModal openModal={openModal} handleClose={handleClose}>
-        <ModalHeader
-          handleClose={() => {
-            handleClose();
-          }}
-          alignment="center"
-        >
-          Confirmation
-        </ModalHeader>
-        <ModalBody id={""} onSubmit={() => {}}>
-          <ConfirmationBody userConfirm={userConfirm} />
-        </ModalBody>
-        <ModalFooter>
-          <YesOrNoButtons yesAction={yesAction} handleClose={handleClose} />
-        </ModalFooter>
-      </CustomModal>
-    </>
+    <CustomModal openModal={openModal} handleClose={handleClose}>
+      <ModalHeader
+        handleClose={() => {
+          handleClose();
+        }}
+        alignment="center"
+      >
+        Confirmation
+      </ModalHeader>
+      <ModalBody id={""} onSubmit={() => {}}>
+        <ConfirmationBody userConfirm={userConfirm} />
+      </ModalBody>
+      <ModalFooter>
+        <YesOrNoButtons yesAction={yesAction} handleClose={handleClose} />
+      </ModalFooter>
+    </CustomModal>
   );
 };
 export default ConfirmationModal;

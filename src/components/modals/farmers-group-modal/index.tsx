@@ -3,9 +3,9 @@ import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
 import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
-import { Button } from "@mui/material";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
 import ModalHeader from "../../custom-modal/header";
@@ -75,36 +75,34 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
   };
 
   return (
-    <>
-      <CustomModal
-        openModal={openModal}
+    <CustomModal
+      openModal={openModal}
+      handleClose={() => {
+        clearErrors();
+        reset();
+        handleClose();
+      }}
+    >
+      <ModalHeader
         handleClose={() => {
           clearErrors();
           reset();
           handleClose();
         }}
       >
-        <ModalHeader
-          handleClose={() => {
-            clearErrors();
-            reset();
-            handleClose();
-          }}
-        >
-          Add Farmer's Group
-        </ModalHeader>
+        Add Farmer's Group
+      </ModalHeader>
 
-        <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
-        </ModalBody>
+      <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
+        <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+      </ModalBody>
 
-        <ModalFooter>
-          <Button form="farmersGroup" type="submit">
-            Submit
-          </Button>
-        </ModalFooter>
-      </CustomModal>
-    </>
+      <ModalFooter>
+        <Button form="farmersGroup" type="submit">
+          Submit
+        </Button>
+      </ModalFooter>
+    </CustomModal>
   );
 };
 export default FarmersGroupModal;

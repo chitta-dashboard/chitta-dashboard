@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 import ProfilePicture from "./../../assets/images/IdImage.png";
 import { fileValidation } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";

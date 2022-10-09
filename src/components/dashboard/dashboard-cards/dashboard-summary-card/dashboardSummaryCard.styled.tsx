@@ -1,6 +1,5 @@
 import styled from "@emotion/styled";
 import { Box, Grid } from "@mui/material";
-import { LightTheme } from "../../../../utils/theme";
 
 export namespace S {
   export const SummaryCardWrapper = styled(Grid)(({ theme }: any) => ({
@@ -22,7 +21,7 @@ export namespace S {
     display: "flex",
     justifyContent: "space-between",
     width: "100%",
-    color: LightTheme.palette.primary.light,
+    color: theme.palette.primary.light,
     fontWeight: "500",
     fontSize: "1.1rem",
     marginBottom: "0.3rem",

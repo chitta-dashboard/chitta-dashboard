@@ -1,4 +1,4 @@
-import { Theme, Box, styled, Typography } from "@mui/material";
+import { Theme, Box, styled, Typography, Badge } from "@mui/material";
 import { Link } from "react-router-dom";
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -11,17 +11,17 @@ namespace S {
     gap: "1rem",
   }));
 
-  export const LogoBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const LogoBox = styled(Box)({
     display: "inline-flex",
     alignItems: "center",
     gap: "1rem",
-  }));
+  });
 
-  export const Logo = styled("img")(({ theme }: { theme: Theme }) => ({
+  export const Logo = styled("img")({
     height: "5rem",
     width: "5rem",
     cursor: "pointer",
-  }));
+  });
 
   export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
     fontSize: "1rem",
@@ -43,11 +43,9 @@ namespace S {
     gap: ".5rem 1rem",
     flexWrap: "wrap",
     backgroundColor: "white",
-
     [theme.breakpoints.down("lg")]: {
       gridTemplateColumns: "repeat(4, auto)",
     },
-
     [theme.breakpoints.down("md")]: {
       position: "absolute",
       gridTemplateColumns: "18.75rem",
@@ -72,10 +70,8 @@ namespace S {
   })<{ isActive: boolean }>(({ theme, isActive }) => ({
     position: "relative",
     textDecoration: "none",
-
     [theme.breakpoints.down("md")]: {
       padding: "1rem 1rem 1rem 2rem",
-
       "&::after": {
         content: "''",
         width: "100%",
@@ -88,12 +84,10 @@ namespace S {
         transition: "transform .3s ease-out",
         backgroundColor: theme.palette.custom.backgroundLight,
       },
-
       "&:hover::after": {
         transform: "scaleX(1)",
       },
     },
-
     "&:hover .MuiTypography-root": isActive
       ? {}
       : {
@@ -113,7 +107,6 @@ namespace S {
     position: "relative",
     fontSize: ".9rem",
     zIndex: "1",
-
     "&::after": {
       content: "''",
       backgroundColor: theme.palette.warning.main,
@@ -135,7 +128,6 @@ namespace S {
     gap: "1.5rem",
     color: theme.palette.text.secondaryLight,
     fontSize: "1.6rem",
-
     i: {
       cursor: "pointer",
     },
@@ -150,10 +142,21 @@ namespace S {
     marginBottom: "2rem",
     fontWeight: "600",
     fontSize: "1.2rem",
-
     i: {
       fontSize: "1.6rem",
       cursor: "pointer",
+    },
+  }));
+
+  export const NotificationBadge = styled(Badge)(({ theme }: { theme: Theme }) => ({
+    cursor: "pointer",
+    "& .MuiBadge-badge": {
+      right: 2,
+      top: 5,
+      border: `2px solid ${theme.palette.background.paper}`,
+      padding: "0 4px",
+      backgroundColor: theme.palette.primary.light,
+      color: "#ffffff",
     },
   }));
 }

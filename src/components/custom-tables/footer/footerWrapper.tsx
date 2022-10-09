@@ -16,17 +16,18 @@ namespace S {
       color: "white",
     },
   }));
+
   export const PageNoDetails = styled(Typography)(({ theme }) => ({
     fontSize: "1rem",
     color: theme.palette.text.secondary,
     opacity: theme.palette.shadeOpacity,
   }));
-  export const PageStack = styled(Stack)(() => ({
-    // padding: "0 1.25rem",
+
+  export const PageStack = styled(Stack)({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-  }));
+  });
 }
 
 export default S;

@@ -1,8 +1,6 @@
-import { FC } from "react";
-
 import S from "./notFound.styled";
 
-const NotFound: FC = () => (
+const NotFound = () => (
   <S.NotFountBox>
     <S.NotFountText variant="h5">404</S.NotFountText>
     <S.NotFountText variant="h6">Page Not Found</S.NotFountText>

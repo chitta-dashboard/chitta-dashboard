@@ -1,8 +1,4 @@
-import { TextField, TextFieldProps } from "@mui/material";
 import { FieldValues, UseFormRegister, Path } from "react-hook-form";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import { LocalizationProvider } from "@mui/x-date-pickers";
 import S from "./date.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -13,31 +9,29 @@ interface CustomProps<FormInputType extends FieldValues> {
 }
 function DateInput<FormInputTypes>({ label, register, inputName, helperText }: CustomProps<FormInputTypes & FieldValues>) {
   return (
-    <>
-      <S.ChooseDate
-        variant="outlined"
-        label={label}
-        {...register(inputName as Path<FormInputTypes & FieldValues>)}
-        helperText={helperText}
-        inputProps={{ noValidate: true }}
-      />
-      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DesktopDatePicker
-          value={"empty"}
-          onChange={() => {}}
-          label={label}
-          renderInput={(params: TextFieldProps) => (
-            <S.ChooseDate
-              variant="outlined"
-              {...params}
-              {...register(inputName as Path<FormInputTypes & FieldValues>)}
-              helperText={helperText}
-              inputProps={{ noValidate: true }}
-            />
-          )}
-        />
-      </LocalizationProvider> */}
-    </>
+    <S.ChooseDate
+      variant="outlined"
+      label={label}
+      {...register(inputName as Path<FormInputTypes & FieldValues>)}
+      helperText={helperText}
+      inputProps={{ noValidate: true }}
+    />
+    //  <LocalizationProvider dateAdapter={AdapterDayjs}>
+    //   <DesktopDatePicker
+    //     value={"empty"}
+    //     onChange={() => {}}
+    //     label={label}
+    //     renderInput={(params: TextFieldProps) => (
+    //       <S.ChooseDate
+    //         variant="outlined"
+    //         {...params}
+    //         {...register(inputName as Path<FormInputTypes & FieldValues>)}
+    //         helperText={helperText}
+    //         inputProps={{ noValidate: true }}
+    //       />
+    //     )}
+    //   />
+    // </LocalizationProvider>
   );
 }
 

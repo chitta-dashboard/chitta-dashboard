@@ -1,13 +1,11 @@
 import { useState } from "react";
-
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { IAddFarmersDetailsFormInput } from "../../components/modals/type/formInputs";
-
-import S from "./farmersDetails.styled";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
+import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
@@ -18,10 +16,12 @@ const FarmersDetails = () => {
   const addModalHandler = () => {
     setAddModal(!addModal);
   };
+
   //Share Amount Modal Handler
   const shareAmountModalHandler = () => {
     setShareModal(!shareModal);
   };
+
   // Add Farmerdetail Handler
   const addDataHandler = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
     addFarmerDetail(data);
@@ -40,7 +40,6 @@ const FarmersDetails = () => {
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
       <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
-
       <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>
   );

@@ -6,10 +6,6 @@ import S from "./selectDropdown.styled";
 const SelectDropDown = () => {
   const { groupFilter, setGroupFilter } = useFarmerDetailsContext();
   const { farmerGroupList } = useFarmerGroupDetailsContext();
-  // console.log(
-  // "farmerGroupList",
-  // farmerGroupList.map((e) => e.groupName),
-  // );
 
   const selectHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setGroupFilter(event.target.value);

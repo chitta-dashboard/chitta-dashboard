@@ -1,15 +1,16 @@
-import { IconButton } from "@mui/material";
 import { FC } from "react";
-
+import { IconButton } from "@mui/material";
 import S from "./titleCloseButton.styled";
 
-const TitleCloseButton: FC<{ handleClose: () => void }> = ({ handleClose }) => {
+interface Props {
+  handleClose: () => void;
+}
+
+const TitleCloseButton: FC<Props> = ({ handleClose }) => {
   return (
-    <>
-      <IconButton onClick={handleClose}>
-        <S.Wrapper>close</S.Wrapper>
-      </IconButton>
-    </>
+    <IconButton onClick={handleClose}>
+      <S.Wrapper>close</S.Wrapper>
+    </IconButton>
   );
 };
 

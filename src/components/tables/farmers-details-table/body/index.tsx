@@ -14,7 +14,6 @@ import IdCardBody from "../../../id-card/id-card-body";
 import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import IdCardModal from "../../../modals/id-download-modal";
-
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
