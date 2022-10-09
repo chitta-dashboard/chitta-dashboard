@@ -1,14 +1,13 @@
+import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
-
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import ShareDetailBody from "./Body/ShareDetailBody";
 import ShareDetailFooter from "./Footer/ShareDetailFooter";
-
-import { useReactToPrint } from "react-to-print";
 import TamilShareHolderCertificate from "../../../views/tamil-share-certificate";
+import S from "./Body/share-amount-modal.styled";
 
 interface CustomProps {
   openModal: boolean;
@@ -27,9 +26,9 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
 
   return (
     <>
-      <div style={{ display: "none" }}>
+      <S.InvisibleDiv>
         <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
-      </div>
+      </S.InvisibleDiv>
       <CustomModal openModal={openModal} handleClose={handleClose}>
         <ModalHeader
           handleClose={() => {

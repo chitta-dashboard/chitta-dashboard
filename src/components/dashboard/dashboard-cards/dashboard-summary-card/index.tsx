@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-
-import { S } from "./dashboardSummaryCard.styled";
-import { CardHeader } from "../common-styles/commonStyles.styled";
-
+import { useState } from "react";
 import SummaryChart from "./summary-chart/index";
 import OptionCard from "./option-card/index";
-import { Box } from "@mui/system";
+import { CardHeader } from "../common-styles/commonStyles.styled";
+import { S } from "./dashboardSummaryCard.styled";
 
-type Props = {};
-
-const DashboardSummaryCard = (props: Props) => {
+const DashboardSummaryCard = () => {
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
 
   const optionHandler = () => {
@@ -18,16 +13,14 @@ const DashboardSummaryCard = (props: Props) => {
   };
 
   return (
-    <>
-      <S.SummaryCardWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
-        <CardHeader>
-          Summary
-          <i onClick={() => optionHandler()}>three-dots</i>
-          {isOptionOpen && <OptionCard />}
-        </CardHeader>
-        <SummaryChart />
-      </S.SummaryCardWrapper>
-    </>
+    <S.SummaryCardWrapper item sm={12} md={12} lg={5.9} xl={5.9}>
+      <CardHeader>
+        Summary
+        <i onClick={() => optionHandler()}>three-dots</i>
+        {isOptionOpen && <OptionCard />}
+      </CardHeader>
+      <SummaryChart />
+    </S.SummaryCardWrapper>
   );
 };
 

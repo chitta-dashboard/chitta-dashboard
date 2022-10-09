@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Button } from "@mui/material";
-
 import DeleteModal from "./delete-modal";
 import ConfirmationModal from "./confirmation-modal";
 import FarmersGroupModal from "./farmers-group-modal";
@@ -29,18 +28,23 @@ const ModalLaunchButtons = () => {
   const submitHandleClickOpen = () => {
     setOpenConfirmation(!openConfirmation);
   };
+
   const addMDOpen = () => {
     setOpenAddMd(!openAddMd);
   };
+
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
   };
+
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
   };
+
   const addDecisions = () => {
     setOpenAddDecisions(!openAddDecisions);
   };
+
   const addShareAmount = () => {
     setOpenShareAmount(!openShareAmount);
   };

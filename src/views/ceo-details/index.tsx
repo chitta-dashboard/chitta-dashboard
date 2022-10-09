@@ -5,7 +5,6 @@ const CeoDetails = () => {
   return (
     <S.CeoDetailsContainer>
       <CeoDetailsCard />
-
       <S.CeoDetailAdd>
         <S.CustomButton>+</S.CustomButton>
       </S.CeoDetailAdd>

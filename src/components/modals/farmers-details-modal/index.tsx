@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -10,11 +10,9 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
+import S from "./farmersDetailsModal.styled";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-
-import S from "./farmersDetailsModal.styled";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => void;
@@ -115,55 +113,53 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   };
 
   return (
-    <>
-      <CustomModal openModal={openModal} handleClose={handleClose}>
-        <ModalHeader handleClose={handleClose}>Add Farmer's Details</ModalHeader>
+    <CustomModal openModal={openModal} handleClose={handleClose}>
+      <ModalHeader handleClose={handleClose}>Add Farmer's Details</ModalHeader>
 
-        {next ? (
-          <>
-            <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
-              <FormFieldPage2 control={form2Control as unknown as Control} />
-            </ModalBody>
-            <ModalFooter>
-              <S.PageNumber alt="page number 2" src={page2} />
-              <S.ButtonContainer>
-                <Button
-                  onClick={() => {
-                    form2ClearErrors();
-                    setNext(!next);
-                  }}
-                >
-                  Back
-                </Button>
-                <Button type="submit" form={"farmersDetailsForm2"}>
-                  Submit
-                </Button>
-              </S.ButtonContainer>
-            </ModalFooter>
-          </>
-        ) : (
-          <>
-            <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
-              <FormField
-                dynamicInputs={dynamicInputs}
-                addInput={addInput}
-                removeInput={removeInput}
-                control={form1Control as unknown as Control}
-                setValue={form1SetValue}
-                getValues={form1GetValues}
-                unregister={form1Unregister}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <S.PageNumber alt="page number 1" src={page1} />
-              <Button type="submit" form={"farmersDetailsForm1"}>
-                Next
+      {next ? (
+        <>
+          <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
+            <FormFieldPage2 control={form2Control as unknown as Control} />
+          </ModalBody>
+          <ModalFooter>
+            <S.PageNumber alt="page number 2" src={page2} />
+            <S.ButtonContainer>
+              <Button
+                onClick={() => {
+                  form2ClearErrors();
+                  setNext(!next);
+                }}
+              >
+                Back
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </CustomModal>
-    </>
+              <Button type="submit" form={"farmersDetailsForm2"}>
+                Submit
+              </Button>
+            </S.ButtonContainer>
+          </ModalFooter>
+        </>
+      ) : (
+        <>
+          <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
+            <FormField
+              dynamicInputs={dynamicInputs}
+              addInput={addInput}
+              removeInput={removeInput}
+              control={form1Control as unknown as Control}
+              setValue={form1SetValue}
+              getValues={form1GetValues}
+              unregister={form1Unregister}
+            />
+          </ModalBody>
+          <ModalFooter>
+            <S.PageNumber alt="page number 1" src={page1} />
+            <Button type="submit" form={"farmersDetailsForm1"}>
+              Next
+            </Button>
+          </ModalFooter>
+        </>
+      )}
+    </CustomModal>
   );
 };
 

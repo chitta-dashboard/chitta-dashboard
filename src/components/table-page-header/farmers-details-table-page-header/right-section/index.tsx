@@ -1,6 +1,5 @@
 import { FC } from "react";
 import SelectDropDown from "../../../common-components/select-dropdown";
-
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {

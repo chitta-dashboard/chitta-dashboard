@@ -1,14 +1,12 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import NerkathirLogo from "../../assets/images/logo.svg";
-import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import { fileValidation } from "../../utils/constants";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
-
 import { FARMER_DATA } from "./constant";
 import { S } from "./farmerDetailPage.styled";
+import NerkathirUser from "../../assets/images/nerkathir-user.svg";
+import NerkathirLogo from "../../assets/images/logo.svg";
 
 interface Props {
   farmerIdtoPrint?: number | string;

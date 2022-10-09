@@ -1,5 +1,4 @@
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
-
 import S from "./description.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -9,11 +8,7 @@ interface CustomProps<FormInputType extends FieldValues> {
   inputName: string;
 }
 function DescriptionField<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
-  return (
-    <>
-      <S.Description label={label} multiline maxRows={3} {...register(inputName as Path<FormInputTypes & FieldValues>)} helperText={helperText} />
-    </>
-  );
+  return <S.Description label={label} multiline maxRows={3} {...register(inputName as Path<FormInputTypes & FieldValues>)} helperText={helperText} />;
 }
 
 export default DescriptionField;

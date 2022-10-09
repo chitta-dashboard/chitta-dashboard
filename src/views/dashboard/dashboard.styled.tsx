@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Box, Grid } from "@mui/material";
 
 namespace S {
-  export const DashBoardContainer = styled(Box)(() => ({
+  export const DashBoardContainer = styled(Box)({
     width: "100%",
     height: "100%",
     margin: "0 auto",
@@ -10,30 +10,28 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-  }));
+  });
 
-  export const DashBoardBodyWrapper = styled(Box)(() => ({
+  export const DashBoardBodyWrapper = styled(Box)({
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    // overflowY: "auto",
-  }));
+  });
 
-  export const DashBoardBottom = styled(Grid)(() => ({
+  export const DashBoardBottom = styled(Grid)({
     display: "flex",
     justifyContent: "space-between",
     gap: "1rem",
     width: "100%",
     marginBottom: "1rem",
-  }));
+  });
 
-  export const DashBoardStatisticsWrapper = styled(Box)(() => ({
+  export const DashBoardStatisticsWrapper = styled(Box)({
     width: "100%",
     display: "grid",
     flexDirection: "row",
     gap: "1rem",
-    //gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr",
-  }));
+  });
 }
 
 export default S;

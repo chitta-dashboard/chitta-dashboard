@@ -1,11 +1,9 @@
 import { useState } from "react";
-
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/md-details-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import { useMdDetailsContext } from "../../utils/context/mdDetails";
 import { IAddMDDetailsFormInput } from "../../components/modals/type/formInputs";
-
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
