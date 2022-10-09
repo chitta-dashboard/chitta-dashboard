@@ -1,25 +1,21 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, FC } from "react";
+import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
 import S from "./adminLogo.styled";
-import Resizer from "react-image-file-resizer";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
 import DummyLogo156 from "../../../assets/images/DummyLogo156.svg";
 import DummyLogo180 from "../../../assets/images/DummyLogo180.svg";
 
-export const ReactImageFileResizer = ({
-  file,
-  width,
-  height,
-  placeholder,
-  color,
-}: {
+interface CustomProps {
   file?: File;
   width: number;
   height: number;
   placeholder: string;
   color?: boolean;
-}) => {
+}
+
+export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {

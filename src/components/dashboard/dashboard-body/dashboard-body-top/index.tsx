@@ -1,21 +1,14 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import S from "../dashboardBodyTop.styled";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Theme } from "@mui/material";
+import S from "../dashboardBodyTop.styled";
 import Icon from "../../../icons";
 
-type Props = {};
-
-const DashboardBodyTop = (props: Props) => {
-  // interface Statistics {
-  //   id: number;
-  //   headerCount: number;
-  //   cardCount: number;
-  //   footerName: string;
-  // };
-  const xl = useMediaQuery((theme:any) => theme.breakpoints.up("xl"));
-  const md = useMediaQuery((theme:any) => theme.breakpoints.up("md"));
+const DashboardBodyTop = () => {
+  const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
+  const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
   const StatisticsItems = [
     {
@@ -60,25 +53,11 @@ const DashboardBodyTop = (props: Props) => {
       footerName: "Cultivation (Kg)",
       icon: "cultivation",
     },
-    {
-      id: 7,
-      headCount: "-122",
-      bodyCount: 770,
-      footerName: "Cultivation (Kg)",
-      icon: "cultivation",
-    },
-    {
-      id: 8,
-      headCount: "-122",
-      bodyCount: 770,
-      footerName: "Cultivation (Kg)",
-      icon: "cultivation",
-    },
   ];
 
   var settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: false,
     speed: 500,
     slidesToShow: xl ? 5 : md ? 4 : 3,
@@ -88,29 +67,31 @@ const DashboardBodyTop = (props: Props) => {
   };
 
   return (
-    <>
-      <S.StasticsCardContainer>
-        <Slider {...settings}>
-          {StatisticsItems.map((card) => {
-            return (
-              <S.StasticsCard key={card.id}>
-                <S.StatCardHeader>
+    <S.StasticsCardContainer>
+      <Slider {...settings}>
+        {StatisticsItems.map((card) => {
+          return (
+            <S.StasticsCard key={card.id}>
+              <S.StatCardHeader>
+                <S.StatCardHeaderLeft>
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
+                  <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
+                </S.StatCardHeaderLeft>
+                <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
-                </S.StatCardHeader>
-                <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
-                <S.StatCardFooter>
-                  {card.footerName}
-                  <Icon iconName="three-dots" />
-                </S.StatCardFooter>
-              </S.StasticsCard>
-            );
-          })}
-        </Slider>
-      </S.StasticsCardContainer>
-    </>
+                </S.StatCardHeaderRight>
+              </S.StatCardHeader>
+              <S.StatCardFooter>
+                {card.footerName}
+                <Icon iconName="three-dots" />
+              </S.StatCardFooter>
+            </S.StasticsCard>
+          );
+        })}
+      </Slider>
+    </S.StasticsCardContainer>
   );
 };
 

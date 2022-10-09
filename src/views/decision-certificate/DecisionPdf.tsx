@@ -1,10 +1,8 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
-
-import NerkathirLogo from "../../assets/images/logo.svg";
 import { useDecisionsProviderContext } from "../../utils/context/decisionsContext";
-
 import { S } from "./decision-certificate.styled";
+import NerkathirLogo from "../../assets/images/logo.svg";
 
 interface Props {
   decisionId?: string;

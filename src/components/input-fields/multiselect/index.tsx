@@ -1,5 +1,4 @@
 import { FieldValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
-
 import MultiSelect from "./multiSelectField";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -10,10 +9,6 @@ interface CustomProps<FormInputType extends FieldValues> {
   trigger: UseFormTrigger<FormInputType>;
 }
 function MultipleSelectChip<FormInputTypes>({ multiSelectLabel, register, inputName, setValue, trigger }: CustomProps<FormInputTypes & FieldValues>) {
-  return (
-    <>
-      <MultiSelect register={register} inputName={inputName} label={multiSelectLabel} setValue={setValue} trigger={trigger} />
-    </>
-  );
+  return <MultiSelect register={register} inputName={inputName} label={multiSelectLabel} setValue={setValue} trigger={trigger} />;
 }
 export default MultipleSelectChip;

@@ -7,16 +7,19 @@ namespace S {
     fontSize: "1.2rem",
     cursor: "text",
   }));
+
   export const EyeIcon = styled("i")(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontSize: "1.2rem",
     cursor: "pointer",
   }));
-  export const LogoImage = styled("img")(({ theme }) => ({
+
+  export const LogoImage = styled("img")({
     width: "100%",
     height: "100%",
     objectFit: "contain",
-  }));
+  });
+
   export const LoginMainContainer = styled(Box)(({ theme }) => ({
     width: "45%",
     height: "100vh",
@@ -31,7 +34,7 @@ namespace S {
     },
   }));
 
-  export const LoginContainer = styled(Box)(({ theme }) => ({
+  export const LoginContainer = styled(Box)({
     width: "65%",
     backgroundColor: "#FFFFFF;",
     boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.5)",
@@ -39,20 +42,24 @@ namespace S {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  }));
-  export const FormContainer = styled(Stack)(({ theme }) => ({
+  });
+
+  export const FormContainer = styled(Stack)({
     width: "85%",
     padding: "4rem 0rem",
     justifyContent: "center",
     alignItems: "center",
     gap: "2rem",
-  }));
-  export const ImageBox = styled(Box)(({ theme }) => ({
+  });
+
+  export const ImageBox = styled(Box)({
     width: "35%",
-  }));
-  export const LoginForm = styled("form")(({ theme }) => ({
+  });
+
+  export const LoginForm = styled("form")({
     width: "100%",
-  }));
+  });
+
   export const LoginFormLabel = styled(FormLabel)(({ theme }) => ({
     color: `${theme.palette.primary.main}`,
     fontWeight: "700",
@@ -102,7 +109,6 @@ namespace S {
         borderRadius: "0.625rem",
       },
     },
-
     "& .MuiInputBase-input": {
       color: theme.palette.text.secondaryDark,
     },
@@ -113,24 +119,27 @@ namespace S {
       },
     },
   }));
-  export const ButtonContainer = styled(Box)(({ theme }) => ({
+
+  export const ButtonContainer = styled(Box)({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
-  }));
+  });
 
-  export const ButtonBox = styled(Stack)(({ theme }) => ({
+  export const ButtonBox = styled(Stack)({
     width: "52%",
     textAlign: "center",
-  }));
+  });
+
   export const LoginButton = styled(Button)(({ theme }) => ({
     background: `${theme.palette.primary.light}`,
     "&:hover": {
       background: `${theme.palette.primary.main}`,
     },
   }));
+
   export const LoginText = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0%",
@@ -139,7 +148,6 @@ namespace S {
     paddingTop: "0.7rem",
     width: "max-content",
     zIndex: "1",
-
     "& span": {
       color: theme.palette.primary.light,
       cursor: "pointer",

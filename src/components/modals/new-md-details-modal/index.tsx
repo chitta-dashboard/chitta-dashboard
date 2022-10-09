@@ -4,10 +4,7 @@ import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-
-import AddProfile from "../../buttons/add-profile-icon-and-button";
 import CustomModal from "../../custom-modal";
-// import Submit from "../../buttons/submit-button";
 import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
@@ -24,6 +21,7 @@ interface CustomProps {
   editMode?: boolean;
   id?: string;
 }
+
 const schema = yup
   .object({
     name: yup.string().required("required"),
@@ -56,16 +54,7 @@ const schema = yup
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { mdList } = useMdDetailsContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setError,
-    clearErrors,
-    setValue,
-    trigger,
-  } = useForm<IAddMDDetailsFormInput>({
+  const { handleSubmit, reset, clearErrors } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
   });
 
@@ -102,36 +91,32 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   };
 
   return (
-    <>
-      <CustomModal
-        openModal={openModal}
+    <CustomModal
+      openModal={openModal}
+      handleClose={() => {
+        clearErrors();
+        reset();
+        handleClose();
+      }}
+    >
+      <ModalHeader
         handleClose={() => {
           clearErrors();
           reset();
           handleClose();
         }}
       >
-        <ModalHeader
-          handleClose={() => {
-            clearErrors();
-            reset();
-            handleClose();
-          }}
-        >
-          Add MD Details
-        </ModalHeader>
-        <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing={4}>
-            <SearchBar />
-            <TableData />
-            {/* <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} /> */}
-          </Stack>
-        </ModalBody>
-        <ModalFooter>
-          {/* <Submit formId="mdDetails" handleSubmit={() => {}} /> */}
-        </ModalFooter>
-      </CustomModal>
-    </>
+        Add MD Details
+      </ModalHeader>
+      <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
+        <Stack spacing={4}>
+          <SearchBar />
+          <TableData />
+          {/* <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} /> */}
+        </Stack>
+      </ModalBody>
+      <ModalFooter>{/* <Submit formId="mdDetails" handleSubmit={() => {}} /> */}</ModalFooter>
+    </CustomModal>
   );
 };
 

@@ -1,5 +1,4 @@
 import { wrapChildrenProps } from "../../../types/wrap-child-props";
-
 import S from "./bodyWrapper.styled";
 
 const BodyWrapper = ({ children }: wrapChildrenProps) => {

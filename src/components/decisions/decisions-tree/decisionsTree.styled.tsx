@@ -14,14 +14,13 @@ namespace S {
     },
   }));
 
-  const LeafStyles = styled(Box)(({ theme }) => ({
+  const LeafStyles = styled(Box)({
     width: "265px",
     height: "150px",
     position: "absolute",
     padding: "6px", //10px to overlap border & 6px for actual padding
     textAlign: "center",
     border: "11px solid",
-
     "&::before": {
       content: "''",
       position: "absolute",
@@ -37,14 +36,13 @@ namespace S {
       height: "90px",
       bottom: "-148px",
     },
-  }));
+  });
 
-  export const L1 = styled(LeafStyles)(({ theme }) => ({
+  export const L1 = styled(LeafStyles)({
     top: "18px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
     borderColor: "#1A9035",
-
     "&::before": {
       backgroundColor: "#1A9035",
       transform: "rotate(30deg)",
@@ -56,14 +54,13 @@ namespace S {
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  }));
+  });
 
-  export const L2 = styled(LeafStyles)(({ theme }) => ({
+  export const L2 = styled(LeafStyles)({
     top: "218px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
     borderColor: "#D8C411",
-
     "&::before": {
       backgroundColor: "#D8C411",
       transform: "rotate(30deg)",
@@ -75,14 +72,13 @@ namespace S {
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  }));
+  });
 
-  export const R1 = styled(LeafStyles)(({ theme }) => ({
+  export const R1 = styled(LeafStyles)({
     top: "118px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
     borderColor: "#4DC82F",
-
     "&::before": {
       backgroundColor: "#4DC82F",
       transform: "rotate(-30deg)",
@@ -94,14 +90,13 @@ namespace S {
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  }));
+  });
 
-  export const R2 = styled(LeafStyles)(({ theme }) => ({
+  export const R2 = styled(LeafStyles)({
     top: "318px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
     borderColor: "#B2A20F",
-
     "&::before": {
       backgroundColor: "#B2A20F",
       transform: "rotate(-30deg)",
@@ -113,9 +108,9 @@ namespace S {
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //17px to cope border with and border radius
     },
-  }));
+  });
 
-  export const Bud = styled(Box)(({ theme }) => ({
+  export const Bud = styled(Box)({
     // LEAF STYLING
     position: "absolute",
     top: "105px",
@@ -124,7 +119,6 @@ namespace S {
     height: "100px",
     backgroundColor: "#2B9C03",
     borderRadius: "0 0 0 80px",
-
     "&::before": {
       content: "''",
       position: "absolute",
@@ -136,7 +130,6 @@ namespace S {
       transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0)",
       backgroundColor: "#2B9C03",
     },
-
     "&::after": {
       content: "''",
       position: "absolute",
@@ -148,11 +141,11 @@ namespace S {
       transform: "matrix(-1, 0, 0, 1, 0, 0)",
       backgroundColor: "#2B9C03",
     },
-  }));
+  });
 
   export const Shadow = styled(Box, {
     shouldForwardProp: (prop) => prop !== "leafCount",
-  })<{ leafCount: number }>(({ theme, leafCount }) => ({
+  })<{ leafCount: number }>(({ leafCount }) => ({
     position: "absolute",
     left: "260px",
     top: `calc(210px + ${100 * leafCount}px)`,
@@ -195,15 +188,16 @@ namespace S {
     WebkitBoxOrient: "vertical",
   }));
 
-  export const ButtonsBar = styled(Box)(({ theme }) => ({}));
-  export const InvisibleBox = styled(Box)(({ theme }) => ({
-    display: "none",
-  }));
+  export const ButtonsBar = styled(Box)({});
 
-  export const ViewBtn = styled(Button)(({ theme }) => ({
+  export const InvisibleBox = styled(Box)({
+    display: "none",
+  });
+
+  export const ViewBtn = styled(Button)({
     padding: ".2rem 2rem",
     fontSize: ".7rem",
-  }));
+  });
 
   export const DownloadBtn = styled(IconButton)(({ theme }) => ({
     width: "1.7rem",

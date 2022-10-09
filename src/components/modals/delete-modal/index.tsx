@@ -1,5 +1,4 @@
 import { FC } from "react";
-
 import CustomModal from "../../custom-modal";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import DeleteBody from "./body";
@@ -15,24 +14,22 @@ interface CustomProps {
 
 const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete }) => {
   return (
-    <>
-      <CustomModal openModal={openModal} handleClose={handleClose}>
-        <ModalHeader
-          handleClose={() => {
-            handleClose();
-          }}
-          alignment="warning"
-        >
-          Warning
-        </ModalHeader>
-        <ModalBody id="" onSubmit={() => {}}>
-          <DeleteBody />
-        </ModalBody>
-        <ModalFooter>
-          <YesOrNoButtons yesAction={handleDelete} handleClose={handleClose} />
-        </ModalFooter>
-      </CustomModal>
-    </>
+    <CustomModal openModal={openModal} handleClose={handleClose}>
+      <ModalHeader
+        handleClose={() => {
+          handleClose();
+        }}
+        alignment="warning"
+      >
+        Warning
+      </ModalHeader>
+      <ModalBody id="" onSubmit={() => {}}>
+        <DeleteBody />
+      </ModalBody>
+      <ModalFooter>
+        <YesOrNoButtons yesAction={handleDelete} handleClose={handleClose} />
+      </ModalFooter>
+    </CustomModal>
   );
 };
 

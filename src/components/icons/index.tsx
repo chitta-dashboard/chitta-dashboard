@@ -1,4 +1,3 @@
-import React from "react";
 import { IconType } from "../../types/icon-types";
 import S from "./icon-styled";
 

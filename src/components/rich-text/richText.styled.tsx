@@ -51,12 +51,12 @@ namespace S {
     padding: "0 0.2rem",
   }));
 
-  export const RichTextBoxWrapper = styled(Box)(({ theme }) => ({
+  export const RichTextBoxWrapper = styled(Box)({
     position: "relative",
     height: "100%",
     width: "100%",
     justifyContent: "initial",
-  }));
+  });
 }
 
 export default S;

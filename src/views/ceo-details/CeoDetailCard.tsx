@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-
 import ProfilePicture from "./../../assets/images/IdImage.png";
 import { fileValidation } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
@@ -17,9 +16,17 @@ const CeoDetailsCard = () => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+    return false;
+  };
+
+  // this function is to clear the value of input field, so we can upload same file as many time has we want.
+  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    const element = event.target as HTMLInputElement;
+    element.value = "";
   };
 
   const handleCroppedImage = (image: string) => {
+    if (!image) return;
     setImagePic(image);
   };
 
@@ -36,7 +43,7 @@ const CeoDetailsCard = () => {
                 }}
               >
                 <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} />
+                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
             </S.ProfilePictureBox>
             <S.CeoData>

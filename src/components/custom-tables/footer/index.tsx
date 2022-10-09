@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { TableRow, TableCell, Pagination } from "@mui/material";
-
 import S from "./footerWrapper";
 
 interface pageHandlerProps {

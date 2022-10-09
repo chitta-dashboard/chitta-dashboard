@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
 import { Paper } from "@mui/material";
-import { LightTheme } from "../../../utils/theme";
 
 export namespace S {
-  export const SearchBarPaper = styled(Paper)(({ theme }: any) => ({
+  export const SearchBarPaper = styled(Paper)({
     borderRadius: "1.2rem",
     width: "29rem",
     height: "2.5rem",
@@ -13,7 +12,7 @@ export namespace S {
     paddingLeft: "1rem",
     backgroundColor: "#fff",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-  }));
+  });
 
   export const SearchBar = styled("input")(({ theme }: any) => ({
     height: "100%",
@@ -24,7 +23,7 @@ export namespace S {
     paddingLeft: "0.5rem",
     fontSize: "0.9rem",
     "::placeholder": {
-      color: LightTheme.palette.primary.light,
+      color: theme.palette.primary.light,
     },
   }));
 }

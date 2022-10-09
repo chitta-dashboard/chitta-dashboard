@@ -5,7 +5,6 @@ namespace S {
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
-
     [theme.breakpoints.down("md")]: {
       display: "flex",
       alignItems: "center",
@@ -13,11 +12,11 @@ namespace S {
     },
   }));
 
-  export const NameStack = styled(Stack)(() => ({
+  export const NameStack = styled(Stack)({
     flexDirection: "row",
     gap: "1rem",
     alignItems: "center",
-  }));
+  });
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
@@ -53,7 +52,6 @@ namespace S {
       width: "100%",
       position: "relative",
       left: "50%",
-
       //Create Table Title for Tablet view
       "&::before": {
         content: `"${title}"`,
@@ -68,29 +66,27 @@ namespace S {
     alignItems: "center",
     justifyContent: "space-around",
     width: "100%",
-
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   }));
 
-  export const AvatarImg = styled("img")(() => ({
+  export const AvatarImg = styled("img")({
     width: "100%",
     height: "100%",
     borderRadius: "50%",
-  }));
+  });
 
-  export const AvatarBox = styled(Box)(() => ({
+  export const AvatarBox = styled(Box)({
     borderRadius: "50%",
     height: "2.5rem",
     width: "2.5rem",
     position: "relative",
     cursor: "pointer",
-
     "&:hover > .MuiBox-root": {
       display: "flex",
     },
-  }));
+  });
 
   export const EditBox = styled(Box)(({ theme }) => ({
     width: "100%",
@@ -124,9 +120,9 @@ namespace S {
     },
   }));
 
-  export const HiddenInput = styled("input")(() => ({
+  export const HiddenInput = styled("input")({
     display: "none",
-  }));
+  });
 }
 
 export default S;

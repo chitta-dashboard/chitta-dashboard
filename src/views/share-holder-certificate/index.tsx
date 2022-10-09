@@ -1,14 +1,12 @@
 import { forwardRef } from "react";
-
-import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import { S } from "./certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
-import { S } from "./certificate.styled";
-interface Props {}
+import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 
-const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) => (
+const ShareHolderCertificate = forwardRef<HTMLDivElement>((props, ref) => (
   <div className="print-container" ref={ref}>
     {[1].map((item) => {
       return (
@@ -57,10 +55,8 @@ const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) =>
             <S.CertificateTextLine>
               <S.CertificateText>Name</S.CertificateText>
               <S.BlankSpace1></S.BlankSpace1>
-
               <S.CertificateText>Father’s/Husband Name</S.CertificateText>
               <S.BlankSpace1></S.BlankSpace1>
-
               <S.CertificateText>Occupation</S.CertificateText>
               <S.BlankSpace1></S.BlankSpace1>
             </S.CertificateTextLine>
@@ -83,7 +79,6 @@ const ShareHolderCertificate = forwardRef<HTMLDivElement>((props: Props, ref) =>
               <S.BlankSpace4></S.BlankSpace4>
             </S.CertificateTextLine>
             <br />
-
             <S.SignatureTextLine>
               <S.CertificateText>Authorised Signatory</S.CertificateText>
               <S.CertificateText>Director</S.CertificateText>

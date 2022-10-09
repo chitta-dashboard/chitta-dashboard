@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
 import { searchWord } from "../constants";
+import profileImg from "../../assets/images/profile.png";
 
 //ACTION TYPES
 const ADD_MD_DETAIL = "ADD_MD_DETAIL";
