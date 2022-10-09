@@ -1,5 +1,4 @@
 import { Dispatch, FC, SetStateAction } from "react";
-
 import S from "./share-amount-modal.styled";
 import peopleIcon from "../../../../assets/images/People-icon.svg";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";

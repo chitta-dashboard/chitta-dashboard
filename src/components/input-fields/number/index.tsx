@@ -1,5 +1,4 @@
 import { FieldValues, UseFormRegister, Path } from "react-hook-form";
-
 import S from "./number.styled";
 
 interface CustomProps<FormInputType extends FieldValues> {
@@ -10,14 +9,12 @@ interface CustomProps<FormInputType extends FieldValues> {
 }
 function NumberInput<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
   return (
-    <>
-      <S.InputNumber
-        label={label}
-        {...register(inputName as Path<FormInputTypes & FieldValues>)}
-        helperText={helperText}
-        inputProps={{ noValidate: true }}
-      />
-    </>
+    <S.InputNumber
+      label={label}
+      {...register(inputName as Path<FormInputTypes & FieldValues>)}
+      helperText={helperText}
+      inputProps={{ noValidate: true }}
+    />
   );
 }
 

@@ -1,4 +1,3 @@
-import React, { PureComponent } from "react";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label } from "recharts";
 
 const data = [

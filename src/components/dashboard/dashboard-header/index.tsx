@@ -1,18 +1,14 @@
 import React, { useRef, useState } from "react";
-
+import { Box } from "@mui/material";
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
-
-import profilePic from "../../../assets/images/profile.png";
-import { Box } from "@mui/material";
 import { fileValidation } from "../../../utils/constants";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { S } from "./dashboardHeader.styled";
+import profilePic from "../../../assets/images/profile.png";
 
-type Props = {};
-
-const DashboardHeader = (props: Props) => {
+const DashboardHeader = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [image, setImage] = useState("");
   const [imagePic, setImagePic] = useState("");
@@ -38,10 +34,12 @@ const DashboardHeader = (props: Props) => {
     const element = event.target as HTMLInputElement;
     element.value = "";
   };
+
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     setImagePic(image);
   };
+
   return (
     <>
       <SearchModal open={openSearch} handleClose={openSearchHandle} />

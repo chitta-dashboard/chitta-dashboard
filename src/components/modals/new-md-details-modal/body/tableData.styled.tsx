@@ -2,26 +2,26 @@
 import { Box, Grid, Typography, Checkbox, styled } from "@mui/material";
 
 namespace S {
-  export const MdDetailsTableContainer = styled(Box)(() => ({
+  export const MdDetailsTableContainer = styled(Box)({
     width: "100%",
     height: "100%",
     margin: "0 auto",
-  }));
+  });
 
   export const MdDetailsTableHeadContainer = styled(Grid)(({ theme }) => ({
     width: "100%",
     display: "grid",
     gridTemplateColumns: "auto auto auto",
-    alignItems:"center",
+    alignItems: "center",
     backgroundColor: theme.palette.custom.backgroundLight,
     padding: "10px",
   }));
 
   export const MdDetailsTableCheckBox = styled(Checkbox)({});
 
-  export const MdDetailsTableHeadTitle = styled(Typography)(() => ({
+  export const MdDetailsTableHeadTitle = styled(Typography)({
     display: "grid",
-  }));
+  });
 }
 
 export default S;

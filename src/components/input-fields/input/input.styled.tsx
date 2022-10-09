@@ -24,11 +24,17 @@ namespace S {
   };
 
   export const TextInput = styled(CommonInputStyled)(() => ({}));
+
   export const NumberInput = styled(CommonInputStyled)(() => ({}));
+
   export const DateInput = styled(CommonInputStyled)(() => ({}));
+
   export const SelectInput = styled(CommonInputStyled)(() => ({}));
+
   export const MultiSelectInput = styled(CommonInputStyled)(() => ({}));
+
   export const RadioInput = styled(CommonInputStyled)(() => ({}));
+
   export const FileInput = styled(CommonInputStyled)<{ hide?: boolean }>(({ hide }) => ({
     ...(hide
       ? {

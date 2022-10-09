@@ -5,7 +5,6 @@ namespace S {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       gap: "1rem",

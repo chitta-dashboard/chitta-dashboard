@@ -1,13 +1,12 @@
 import { styled, TextField } from "@mui/material";
 
 namespace S {
-  export const InputText = styled(TextField)(({ theme }) => ({
+  export const InputText = styled(TextField)({
     width: "100%",
-
     "& .MuiOutlinedInput-root": {
       height: "2.7rem",
     },
-  }));
+  });
 
   InputText.defaultProps = {
     variant: "outlined",

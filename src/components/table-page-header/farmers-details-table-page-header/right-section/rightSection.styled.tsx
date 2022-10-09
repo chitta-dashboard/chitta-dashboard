@@ -7,7 +7,6 @@ namespace S {
     alignItems: "center",
     justifyContent: "flex-end",
     gap: "1rem",
-
     [theme.breakpoints.down("lg")]: {
       justifyContent: "space-between",
     },
@@ -38,10 +37,10 @@ namespace S {
     },
   }));
 
-  export const ButtonStack = styled(Stack)(({ theme }) => ({
+  export const ButtonStack = styled(Stack)({
     flexDirection: "row",
     alignItems: "center",
     gap: "1rem",
-  }));
+  });
 }
 export default S;
