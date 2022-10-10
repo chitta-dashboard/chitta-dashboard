@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -24,14 +24,41 @@ const schema = yup
   .object({
     groupName: yup.string().required("required"),
     explanation: yup.string().required("required"),
-    chairman: yup.string().required("required"),
-    treasurer: yup.string().required("required"),
-    secretary: yup.string().required("required"),
+    chairman: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string)) {
+          return true;
+        }
+        return false;
+      }),
+    treasurer: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string) && value) {
+          return true;
+        }
+        return false;
+      }),
+    secretary: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string)) {
+          return true;
+        }
+        return false;
+      }),
   })
   .required();
 
 const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  const { farmerGroupList } = useFarmerGroupDetailsContext();
+  const { farmersGroupList } = useFarmersGroupContext();
 
   const {
     register,
@@ -47,7 +74,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
 
   useEffect(() => {
     if (editMode) {
-      let groupData = farmerGroupList.find((f) => String(f.id) === id);
+      let groupData = Object.values(farmersGroupList).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,

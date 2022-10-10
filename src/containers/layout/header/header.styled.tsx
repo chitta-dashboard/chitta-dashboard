@@ -133,6 +133,18 @@ namespace S {
     },
   }));
 
+  export const webIcon = styled("i")(({ theme }) => ({
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  }));
+
+  export const TabIcon = styled("i")(({ theme }) => ({
+    [theme.breakpoints.up("md")]: {
+      display: "none",
+    },
+  }));
+
   export const NavBarMenu = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     justifyContent: "space-between",

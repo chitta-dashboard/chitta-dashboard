@@ -4,12 +4,12 @@ import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import { IAddFarmersGroupFormInput } from "../../components/modals/type/formInputs";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
-import { useFarmerGroupDetailsContext } from "../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
   const [addModal, setAddModal] = useState(false);
-  const { addFarmerGroupDetail, setSearchFilter, setSortFilter, sortFilter, setMemberFilter } = useFarmerGroupDetailsContext();
+  const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, setMemberFilter } = useFarmersGroupContext();
   const [pop, setPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
 
@@ -30,7 +30,7 @@ const FarmersGroup = () => {
 
   // Add Farmergroup Handler
   const addDataHandler = (data: IAddFarmersGroupFormInput & { id: string }) => {
-    addFarmerGroupDetail(data);
+    addFarmersGroup(data);
   };
 
   return (
