@@ -2,7 +2,7 @@ import { Theme, Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)({
+  export const TamilShareCertificateContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -13,7 +13,7 @@ export namespace S {
     backgroundColor: "#FFFFFF",
     position: "relative",
     padding: "4.375rem 6.25rem ",
-  });
+  }));
 
   export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
@@ -72,6 +72,7 @@ export namespace S {
     left: "0",
     width: "10rem",
   });
+
   export const BottomRightIcon = styled("img")({
     transform: "scaleX(-1)",
     position: "absolute",
@@ -90,17 +91,20 @@ export namespace S {
   export const HeadingContainerLogo = styled(Box)({
     width: "fit-content",
   });
+
   export const NerkathirLogo = styled("img")({
     width: "8.125rem",
     marginRight: "4.375rem",
   });
-  export const HeadingContainerHeading = styled(Typography)({
+
+  export const HeadingContainerHeading = styled(Typography)(({ theme }: { theme: Theme }) => ({
     fontSize: "2.125rem",
-    color: "#1A9035",
+    color: theme.palette.text.primary,
     fontFamily: "Poppins",
     fontWeight: "600",
     textAlign: "center",
-  });
+  }));
+
   export const HeadingContainerSignNo = styled(Box)({});
   export const RegNoCin = styled(Typography)({
     fontSize: "0.9375rem",
@@ -111,6 +115,7 @@ export namespace S {
     fontSize: "1.75rem",
     fontWeight: "600",
   });
+
   export const DateContainer = styled(Box)({
     width: "100%",
     display: "flex",
@@ -118,6 +123,7 @@ export namespace S {
     alignSelf: "flex-start",
     justifyContent: "space-between",
   });
+
   export const DateBox = styled(Box)({
     minWidth: "9.6875rem",
   });
