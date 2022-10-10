@@ -14,10 +14,10 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
-  const [mdListSearch, setMdListSearch] = useState(listData);
-  const [mdListSort, setMdListSort] = useState(listData);
-  const [mdList, setMdList] = useState(listData);
+  const { mdList: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
+  const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
+  const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -30,7 +30,7 @@ const Body = () => {
   const [userConfirm, setUserConfirm] = useState<string>("");
 
   useEffect(() => {
-    setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
+    setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
   }, [listData, searchFilter]);
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const Body = () => {
   };
 
   const getURL = (id: string) => {
-    let result = mdList.filter((item) => {
+    let result = Object.values(mdList).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -100,18 +100,18 @@ const Body = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = mdList.filter((item) => {
+    let result = Object.values(mdList).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    editMdDetail({ ...result[0] });
   };
 
   return (
     <>
-      {mdList.length > 0 ? (
+      {Object.values(mdList).length > 0 ? (
         <BodyWrapper>
-          {mdList.map((user) => (
+          {Object.values(mdList).map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
                 <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>

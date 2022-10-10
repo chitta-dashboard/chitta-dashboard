@@ -8,7 +8,13 @@ interface ConfirmProps {
 }
 
 const ConfirmationBody: FC<ConfirmProps> = ({ userConfirm }) => {
-  const message = userConfirm ? `Do you want to remove ${userConfirm} from mdList?` : "Do you want to save changes?";
+  const message = userConfirm ? (
+    <>
+      Do you want to remove <S.Bold>{userConfirm}</S.Bold> from mdList?
+    </>
+  ) : (
+    "Do you want to save changes?"
+  );
   return (
     <S.Container>
       <S.ContainerItems>

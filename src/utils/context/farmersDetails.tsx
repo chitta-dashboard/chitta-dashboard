@@ -6,7 +6,6 @@ const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
 const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
-const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
@@ -49,7 +48,7 @@ type Props = {
 };
 
 interface farmerDetailsContextType {
-  farmersList: farmerDetail[];
+  farmersList: { [id: string]: farmerDetail };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -69,8 +68,8 @@ interface farmerDetailsContextType {
 }
 
 const initialState: farmerDetailsContextType = {
-  farmersList: [
-    {
+  farmersList: {
+    "1": {
       id: "1",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -97,7 +96,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-    {
+    "2": {
       id: "2",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -124,7 +123,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-    {
+    "3": {
       id: "3",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -151,7 +150,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-    {
+    "4": {
       id: "4",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -178,7 +177,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-    {
+    "5": {
       id: "5",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -205,7 +204,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-    {
+    "6": {
       id: "6",
       membershipId: "NER-FPC-2",
       profile: profileImg,
@@ -232,7 +231,7 @@ const initialState: farmerDetailsContextType = {
       animals: "",
       groupMember: "",
     },
-  ],
+  },
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
@@ -254,30 +253,20 @@ const initialState: farmerDetailsContextType = {
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMER_DETAIL:
-      return { ...state, farmersList: [...state.farmersList, action.payload] };
+      return { ...state, farmersList: { ...state.farmersList, [action.payload.id]: action.payload } };
+
     case EDIT_FARMER_DETAIL:
-      const updatedfarmerDetailList = action.payload;
-      const editfarmerDetailList = state.farmersList.map((list) => {
-        if (list.id === updatedfarmerDetailList.id) {
-          return updatedfarmerDetailList;
-        }
-        return list;
-      });
-      return {
-        ...state,
-        farmersList: editfarmerDetailList,
-      };
+      return { ...state, farmersList: { ...state.farmersList, [action.payload.id]: action.payload } };
+
     case DELETE_FARMER_DETAIL:
-      return { ...state, farmersList: state.farmersList.filter((list) => list.id !== action.payload) };
-    case EDIT_TABLE_ICON:
-      let data = state.farmersList.filter((item) => item.id !== action.payload.id);
-      return { ...state, farmersList: [...data, action.payload] };
-    case SET_PAGE:
-      return { ...state, page: action.payload };
+      delete state.farmersList[action.payload];
+      return { ...state, farmersList: { ...state.farmersList } };
+
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
+
     case CHECKBOX_SELECT_ALL:
-      if (state.selectedFarmers.length === state.farmersList.length) {
+      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersList).length) {
         return {
           ...state,
           selectedFarmers: [],
@@ -285,7 +274,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
       } else {
         return {
           ...state,
-          selectedFarmers: [...state.farmersList.map((user) => user.id)],
+          selectedFarmers: [...Object.keys(state.farmersList)],
         };
       }
 
@@ -323,30 +312,35 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const addFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: ADD_FARMER_DETAIL, payload: data });
   };
+
   const editFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: EDIT_FARMER_DETAIL, payload: data });
   };
+
   const deleteFarmerDetail = (id: string) => {
     dispatch({ type: DELETE_FARMER_DETAIL, payload: id });
   };
+
   const editTableIcon = (data: farmerDetail) => {
     dispatch({ type: EDIT_TABLE_ICON, payload: data });
   };
-  const setPage = (page: number) => {
-    dispatch({ type: SET_PAGE, payload: page });
-  };
+
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
+
   const setSortFilter = (sortOrder: "ascending" | "descending") => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
+
   const setGroupFilter = (selectGroup: string) => {
     dispatch({ type: GROUP_FILTER, payload: selectGroup });
   };
+
   const checkboxSelectAll = () => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
   };
+
   const checkboxSelect = (id: string | number) => {
     dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
@@ -357,7 +351,6 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     editFarmerDetail,
     deleteFarmerDetail,
     editTableIcon,
-    setPage,
     setSearchFilter,
     setSortFilter,
     checkboxSelectAll,

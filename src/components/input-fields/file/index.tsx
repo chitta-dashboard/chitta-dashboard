@@ -1,4 +1,3 @@
-import React from "react";
 import { FieldValues, Path, PathValue, UseFormClearErrors, UseFormRegister, UseFormSetError, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import S from "./file.styled";
 

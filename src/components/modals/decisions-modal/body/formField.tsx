@@ -9,7 +9,7 @@ import TextInput from "../../../input-fields/text";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IAddDecisionsFormInput } from "../../type/formInputs";
 import DateTimeInput from "../../../input-fields/dateTime";
-import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import S from "./decisionsModal.styled";
 
 interface CustomProps {
@@ -22,7 +22,7 @@ interface CustomProps {
 
 const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, control }) => {
   const selectAllGroup = useWatch<IAddDecisionsFormInput>({ name: "selectAll", control, defaultValue: "yes" });
-  const { farmerGroupList } = useFarmerGroupDetailsContext();
+  const { farmersGroupList } = useFarmersGroupContext();
 
   useEffect(() => {
     if (selectAllGroup === "yes") setValue("groupName", "~All Groups~");
@@ -54,7 +54,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
                     label="குழு"
                     setValue={setValue}
                     trigger={trigger}
-                    selectOptions={farmerGroupList.map((g) => [g.groupName, g.groupName])}
+                    selectOptions={Object.values(farmersGroupList).map((g) => [g.groupName, g.groupName])}
                   />
                   <FormHelperText>{errors.groupName?.message}</FormHelperText>
                 </S.QualificationContainer>

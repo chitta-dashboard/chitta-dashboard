@@ -3,9 +3,9 @@ import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetail
 
 const Footer = () => {
   const { farmersList, page, rowsPerPage } = useFarmerDetailsContext();
-  const count = Math.ceil(farmersList.length / rowsPerPage);
+  const count = Math.ceil(Object.values(farmersList).length / rowsPerPage);
 
-  return <FooterWrapper count={count} page={page} totalCount={farmersList.length} rowsPerPage={rowsPerPage} />;
+  return <FooterWrapper count={count} page={page} totalCount={Object.values(farmersList).length} rowsPerPage={rowsPerPage} />;
 };
 
 export default Footer;
