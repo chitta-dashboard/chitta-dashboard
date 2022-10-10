@@ -9,7 +9,7 @@ import DecisionsModal from "./decisions-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
+import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { IDecision } from "../../utils/context/decisionsContext";
 
 const ModalLaunchButtons = () => {
@@ -108,7 +108,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmerDetailsContextProvider>
-      <FarmerGroupDetailsContextProvider>
+      <FarmersGroupContextProvider>
         <FarmersGroupModal
           openModal={openAddFarmerGroup}
           cb={(data: IAddFarmersGroupFormInput): void => {
@@ -118,7 +118,7 @@ const ModalLaunchButtons = () => {
           editMode
           id={"3"}
         />
-      </FarmerGroupDetailsContextProvider>
+      </FarmersGroupContextProvider>
       <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IDecision): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>

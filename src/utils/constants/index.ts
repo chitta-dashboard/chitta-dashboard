@@ -1,3 +1,5 @@
+// import { mdDetail } from "../context/mdDetails";
+
 export const fileValidation = (file: string) => {
   var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
@@ -10,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: string, word: string) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const sortObj = <ObjStructure>(
@@ -27,8 +29,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
