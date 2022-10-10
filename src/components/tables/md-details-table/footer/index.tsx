@@ -3,9 +3,11 @@ import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
   const { mdList, page, rowsPerPage } = useMdDetailsContext();
-  const count = Math.ceil(mdList.length / rowsPerPage);
+  const count = Math.ceil(Object.values(mdList).length / rowsPerPage);
 
-  return mdList.length > 0 ? <FooterWrapper count={count} page={page} totalCount={mdList.length} rowsPerPage={rowsPerPage} /> : null;
+  return Object.values(mdList).length > 0 ? (
+    <FooterWrapper count={count} page={page} totalCount={Object.values(mdList).length} rowsPerPage={rowsPerPage} />
+  ) : null;
 };
 
 export default Footer;

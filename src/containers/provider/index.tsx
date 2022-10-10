@@ -5,7 +5,7 @@ import { AuthContextProvider } from "../../utils/context/authContext";
 import { LightTheme } from "../../utils/theme";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { FoundersContextProvider } from "../../utils/context/founders";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
+import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { DecisionsProvider } from "../../utils/context/decisionsContext";
 
@@ -20,11 +20,11 @@ const Provider: FC<Props> = ({ children }) => {
         <AuthContextProvider>
           <MdDetailsContextProvider>
             <FoundersContextProvider>
-              <FarmerGroupDetailsContextProvider>
+              <FarmersGroupContextProvider>
                 <FarmerDetailsContextProvider>
                   <DecisionsProvider>{children}</DecisionsProvider>
                 </FarmerDetailsContextProvider>
-              </FarmerGroupDetailsContextProvider>
+              </FarmersGroupContextProvider>
             </FoundersContextProvider>
           </MdDetailsContextProvider>
         </AuthContextProvider>

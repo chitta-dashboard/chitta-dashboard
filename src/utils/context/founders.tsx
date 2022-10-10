@@ -1,15 +1,10 @@
-import { List } from "@mui/material";
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
-import { searchWord } from "../constants";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
 const EDIT_FOUNDERS = "EDIT_FOUNDERS";
 const DELETE_FOUNDERS = "DELETE_FOUNDERS";
-const FILTER_FOUNDERS = "FILTER_FOUNDERS";
-const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
-const SET_PAGE = "SET_PAGE";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 
@@ -28,7 +23,7 @@ type Props = {
 };
 
 export interface foundersContextType {
-  foundersList: Founders[];
+  foundersList: { [id: string]: Founders };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -38,14 +33,11 @@ export interface foundersContextType {
   addFounder: (data: Founders) => void;
   editFounder: (data: Founders) => void;
   deleteFounder: (id: string) => void;
-  filterFounder: (name: string) => void;
-  editTableIcon: (data: any) => void;
-  setPage: (page: number) => void;
 }
 
 const initialState: foundersContextType = {
-  foundersList: [
-    {
+  foundersList: {
+    "1": {
       id: "1",
       profile: profileImg,
       name: "Veera Raghavan",
@@ -54,7 +46,7 @@ const initialState: foundersContextType = {
       dob: "1982-10-01",
       signature: "",
     },
-    {
+    "2": {
       id: "2",
       profile: profileImg,
       name: "Jhon Durairaj",
@@ -63,7 +55,7 @@ const initialState: foundersContextType = {
       dob: "1990-01-27",
       signature: "",
     },
-    {
+    "3": {
       id: "3",
       profile: profileImg,
       name: "Vijay Kumar",
@@ -72,16 +64,16 @@ const initialState: foundersContextType = {
       dob: "1989-11-09",
       signature: "",
     },
-    {
+    "4": {
       id: "4",
       profile: profileImg,
-      name: "kathiresan",
+      name: "Kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "1994-10-12",
       signature: "",
     },
-    {
+    "5": {
       id: "5",
       profile: profileImg,
       name: "Jeevanandham",
@@ -90,7 +82,7 @@ const initialState: foundersContextType = {
       dob: "1992-08-02",
       signature: "",
     },
-    {
+    "6": {
       id: "6",
       profile: profileImg,
       name: "Arockiyaraj Reddy",
@@ -99,7 +91,7 @@ const initialState: foundersContextType = {
       dob: "1985-07-12",
       signature: "",
     },
-  ],
+  },
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
@@ -109,46 +101,19 @@ const initialState: foundersContextType = {
   addFounder: () => {},
   editFounder: () => {},
   deleteFounder: () => {},
-  editTableIcon: () => {},
-  filterFounder: () => {},
-  setPage: () => {},
 };
 
 const reducer = (state: foundersContextType, action: any) => {
   switch (action.type) {
     case ADD_FOUNDERS:
-      return { ...state, foundersList: [...state.foundersList, action.payload] };
+      return { ...state, foundersList: { ...state.foundersList, [action.payload.id]: action.payload } };
 
     case EDIT_FOUNDERS:
-      const updatedFounder = action.payload;
-      const editFounders = state.foundersList.map((list) => {
-        if (list.id === updatedFounder.id) {
-          return updatedFounder;
-        }
-        return list;
-      });
-      return {
-        ...state,
-        foundersList: editFounders,
-      };
+      return { ...state, foundersList: { ...state.foundersList, [action.payload.id]: action.payload } };
 
     case DELETE_FOUNDERS:
-      return { ...state, foundersList: state.foundersList.filter((list) => list.id !== action.payload) };
-
-    case FILTER_FOUNDERS:
-      return {
-        ...state,
-        foundersList: initialState.foundersList.filter((list) => {
-          return searchWord(List.name as string, action.payload);
-        }),
-      };
-
-    case EDIT_TABLE_ICON:
-      let data = state.foundersList.filter((item) => item.id !== action.payload.id);
-      return { ...state, foundersList: [...data, action.payload] };
-
-    case SET_PAGE:
-      return { ...state, page: action.payload };
+      delete state.foundersList[action.payload];
+      return { ...state, foundersList: { ...state.foundersList } };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -179,20 +144,8 @@ const FoundersContextProvider: FC<Props> = (props) => {
     dispatch({ type: DELETE_FOUNDERS, payload: id });
   };
 
-  const filterFounder = (name: string) => {
-    dispatch({ type: FILTER_FOUNDERS, payload: name });
-  };
-
-  const editTableIcon = (data: Founders) => {
-    dispatch({ type: EDIT_TABLE_ICON, payload: data });
-  };
-
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
-  };
-
-  const setPage = (page: number) => {
-    dispatch({ type: SET_PAGE, payload: page });
   };
 
   const setSortFilter = (sortOrder: "ascending" | "descending") => {
@@ -204,9 +157,6 @@ const FoundersContextProvider: FC<Props> = (props) => {
     addFounder,
     editFounder,
     deleteFounder,
-    filterFounder,
-    editTableIcon,
-    setPage,
     setSearchFilter,
     setSortFilter,
   };

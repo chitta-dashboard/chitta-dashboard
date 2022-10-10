@@ -26,7 +26,6 @@ function AutoCompleteField<FormInputTypes>({
 
   return (
     <S.StyledAutocomplete
-      freeSolo
       disableClearable
       id="autocomplete-box"
       options={selectOptions}
@@ -36,9 +35,9 @@ function AutoCompleteField<FormInputTypes>({
           label={label}
           size="small"
           InputLabelProps={{ shrink: true }}
-          helperText={helperText}
-          {...register(inputName as Path<FormInputTypes & FieldValues>)}
           value={selected}
+          {...register(inputName as Path<FormInputTypes & FieldValues>)}
+          helperText={helperText}
           onChange={(e) => {
             setSelected(e.target.value);
             setValue(

@@ -60,7 +60,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
 
   useEffect(() => {
     if (editMode) {
-      let userData = mdList.find((md) => String(md.id) === id);
+      let userData = Object.values(mdList).find((md) => String(md.id) === id);
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
