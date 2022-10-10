@@ -5,7 +5,7 @@ import Header from "./header";
 import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
-import { useAuthContext } from "../../utils/context/authContext";
+import { useAuthContext } from "../../utils/context/auth";
 import S from "./Layout.styled";
 
 const Layout: FC = () => {

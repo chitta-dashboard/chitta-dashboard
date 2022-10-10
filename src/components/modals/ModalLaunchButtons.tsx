@@ -10,7 +10,7 @@ import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
-import { IDecision } from "../../utils/context/decisionsContext";
+import { IResolution } from "../../utils/context/resolutions";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -119,7 +119,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmersGroupContextProvider>
-      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IDecision): void => {}} />
+      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );

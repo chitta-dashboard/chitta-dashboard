@@ -1,7 +1,7 @@
 import { Box, Button, IconButton, styled, Typography } from "@mui/material";
 
 namespace S {
-  export const DecisionsTreeBox = styled(Box, {
+  export const ResolutionsTreeBox = styled(Box, {
     shouldForwardProp: (prop) => prop !== "leafCount",
   })<{ leafCount: number }>(({ theme, leafCount }) => ({
     minWidth: "790px",
@@ -166,14 +166,14 @@ namespace S {
     },
   }));
 
-  export const DecisionTitle = styled(Typography)(({ theme }) => ({
+  export const ResolutionTitle = styled(Typography)(({ theme }) => ({
     color: theme.palette.primary.light,
     fontSize: "1.1rem",
     fontWeight: "600",
     marginBottom: "10px",
   }));
 
-  export const DecisionDescription = styled(Typography)(({ theme }) => ({
+  export const ResolutionDescription = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     lineHeight: "1.3",
     fontSize: ".8rem",
@@ -211,7 +211,7 @@ namespace S {
     },
   }));
 
-  export const DecisionsTimestamp = styled(DecisionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
+  export const ResolutionsTimestamp = styled(ResolutionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
     placement: "left" | "right";
   }>(({ theme, placement }) => ({
     color: theme.palette.text.secondary,
