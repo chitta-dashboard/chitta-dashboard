@@ -66,7 +66,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
 
   useEffect(() => {
     if (editMode) {
-      let farmerData = farmersList.find((f) => String(f.id) === id);
+      let farmerData = Object.values(farmersList).find((f) => String(f.id) === id);
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,

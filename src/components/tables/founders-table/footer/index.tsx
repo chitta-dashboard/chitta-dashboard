@@ -3,9 +3,11 @@ import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
   const { foundersList, page, rowsPerPage } = useFounderContext();
-  const count = Math.ceil(foundersList.length / rowsPerPage);
+  const count = Math.ceil(Object.values(foundersList).length / rowsPerPage);
 
-  return foundersList.length > 0 ? <FooterWrapper count={count} page={page} totalCount={foundersList.length} rowsPerPage={rowsPerPage} /> : null;
+  return Object.values(foundersList).length > 0 ? (
+    <FooterWrapper count={count} page={page} totalCount={Object.values(foundersList).length} rowsPerPage={rowsPerPage} />
+  ) : null;
 };
 
 export default Footer;

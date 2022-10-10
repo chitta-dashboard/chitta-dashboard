@@ -16,7 +16,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
   const newDate = new Date();
   return (
     <div className="print-container" ref={ref}>
-      {farmersList
+      {Object.values(farmersList)
         .filter((name) => selectedFarmers.includes(name.id))
         .map((user) => (
           <S.TamilShareCertificateContainer key={user.id}>

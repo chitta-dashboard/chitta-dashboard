@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -31,7 +31,7 @@ const schema = yup
   .required();
 
 const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  const { farmerGroupList } = useFarmerGroupDetailsContext();
+  const { farmersGroupList } = useFarmersGroupContext();
 
   const {
     register,
@@ -47,7 +47,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
 
   useEffect(() => {
     if (editMode) {
-      let groupData = farmerGroupList.find((f) => String(f.id) === id);
+      let groupData = Object.values(farmersGroupList).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,
