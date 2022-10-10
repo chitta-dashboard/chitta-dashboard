@@ -24,9 +24,36 @@ const schema = yup
   .object({
     groupName: yup.string().required("required"),
     explanation: yup.string().required("required"),
-    chairman: yup.string().required("required"),
-    treasurer: yup.string().required("required"),
-    secretary: yup.string().required("required"),
+    chairman: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string)) {
+          return true;
+        }
+        return false;
+      }),
+    treasurer: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string) && value) {
+          return true;
+        }
+        return false;
+      }),
+    secretary: yup
+      .string()
+      .required("required")
+      .test("chairman", "choose a option", (value: string | undefined) => {
+        const selectOptions = ["option-1", "option-2", "option-3"];
+        if (selectOptions.includes(value as string)) {
+          return true;
+        }
+        return false;
+      }),
   })
   .required();
 
