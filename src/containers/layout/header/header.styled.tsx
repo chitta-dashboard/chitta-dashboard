@@ -1,4 +1,4 @@
-import { Theme, Box, styled, Typography, Badge } from "@mui/material";
+import { Theme, Box, styled, Typography, Badge, Popover } from "@mui/material";
 import { Link } from "react-router-dom";
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -169,6 +169,22 @@ namespace S {
       padding: "0 4px",
       backgroundColor: theme.palette.primary.light,
       color: "#ffffff",
+    },
+  }));
+
+  export const Pop = styled(Popover)(({ theme }) => ({
+    margin: "0.6rem -0.6rem",
+  }));
+
+  export const Items = styled(Typography)(({ theme }) => ({
+    textAlign: "center",
+    padding: "0.6rem 2rem",
+    borderBottom: "0.1rem solid #6868681A",
+    color: theme.palette.text.secondaryLight,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.custom.backgroundLight,
+      color: theme.palette.text.secondaryDark,
     },
   }));
 }

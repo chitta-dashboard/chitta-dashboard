@@ -8,6 +8,12 @@ namespace S {
       fontSize: "1.25rem",
     },
   }));
+
+  export const Bold = styled("b")(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontSize: "1.4rem",
+    fontWeight: 600,
+  }));
 }
 
 export default S;

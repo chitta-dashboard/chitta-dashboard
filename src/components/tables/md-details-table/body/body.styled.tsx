@@ -127,12 +127,6 @@ namespace S {
   export const HiddenInput = styled("input")({
     display: "none",
   });
-
-  export const Bold = styled("b")(({ theme }) => ({
-    color: theme.palette.text.primary,
-    fontSize: "1.4rem",
-    fontWeight: 600,
-  }));
 }
 
 export default S;
