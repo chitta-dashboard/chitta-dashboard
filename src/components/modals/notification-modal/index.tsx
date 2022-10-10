@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 import S from "./NotificationModal.styled";
 import { useAuthContext } from "../../../utils/context/authContext";
+import Icon from "../../icons";
 
 //
 interface notificationProps {
@@ -36,8 +36,8 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
       <S.HeadingBox>
         <S.HeadingText variant="h6">Notification</S.HeadingText>
         <S.HeadingIcons>
-          <S.IconBox>settings</S.IconBox>
-          <DoneAllIcon style={{ cursor: "pointer" }} onClick={clearNotifyHandler} />
+          <Icon iconName={"settings"} />
+          <Icon iconName={"mark-all-as-read"} clickHandler={clearNotifyHandler} />
         </S.HeadingIcons>
       </S.HeadingBox>
       <S.BodyContainer isheight={seeMore ? 1 : 0}>
