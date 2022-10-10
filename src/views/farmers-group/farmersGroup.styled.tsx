@@ -15,7 +15,7 @@ namespace S {
   export const Items = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0.6rem 1rem",
-    borderBottom: "0.1rem solid #686868",
+    borderBottom: "0.1rem solid #6868681A",
     color: theme.palette.text.secondaryLight,
     cursor: "pointer",
     "&:hover": {

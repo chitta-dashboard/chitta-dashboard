@@ -27,7 +27,7 @@ const Body = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
-  const [userConfirm, setUserConfirm] = useState<string>("");
+  const [confirmUser, setConfirmUser] = useState<string>("");
 
   useEffect(() => {
     setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
@@ -46,7 +46,7 @@ const Body = () => {
     setIconModal(!iconModal);
     setDeleteId(user.id);
     setEditId(user.id);
-    setUserConfirm(user.name);
+    setConfirmUser(user.name);
   };
 
   //Edit MdDetail Handler
@@ -71,7 +71,7 @@ const Body = () => {
   const confirmHandler = (user: mdDetail) => {
     setIsCheck(!isCheck);
     setDeleteId(user.id);
-    setUserConfirm(user.name);
+    setConfirmUser(user.name);
   };
 
   const getURL = (id: string) => {
@@ -172,7 +172,11 @@ const Body = () => {
           setIsCheck(false);
           setIconModal(false);
         }}
-        userConfirm={userConfirm}
+        confirmMessage={
+          <>
+            Do you want to remove <S.Bold>{confirmUser}</S.Bold> from mdList?
+          </>
+        }
       />
       <DeleteModal
         openModal={deleteModal}
