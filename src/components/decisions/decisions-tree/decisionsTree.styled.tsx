@@ -8,7 +8,6 @@ namespace S {
     position: "relative",
     height: `calc(230px + ${100 * leafCount}px)`,
     margin: "auto 0 15px 0",
-
     [theme.breakpoints.down("md")]: {
       transform: "scale(.8)",
     },
@@ -38,23 +37,23 @@ namespace S {
     },
   });
 
-  export const L1 = styled(LeafStyles)({
+  export const L1 = styled(LeafStyles)(({ theme }) => ({
     top: "18px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    borderColor: "#1A9035",
+    borderColor: theme.palette.primary.light,
     "&::before": {
-      backgroundColor: "#1A9035",
+      backgroundColor: theme.palette.primary.light,
       transform: "rotate(30deg)",
       transformOrigin: "left",
       left: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#1A9035",
+      backgroundColor: theme.palette.primary.light,
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  });
+  }));
 
   export const L2 = styled(LeafStyles)({
     top: "218px",
@@ -179,7 +178,6 @@ namespace S {
     lineHeight: "1.3",
     fontSize: ".8rem",
     marginBottom: "10px",
-
     height: "35px",
     overflow: "hidden",
     textOverflow: "ellipsis",

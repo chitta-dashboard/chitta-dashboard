@@ -2,15 +2,15 @@ import styled from "@emotion/styled";
 import { Box, Grid } from "@mui/material";
 
 namespace S {
-  export const DashBoardContainer = styled(Box)({
+  export const DashBoardContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
     height: "100%",
     margin: "0 auto",
-    backgroundColor: "#DEEFE9",
+    backgroundColor: theme.palette.custom.backgroundLight,
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-  });
+  }));
 
   export const DashBoardBodyWrapper = styled(Box)({
     display: "flex",
