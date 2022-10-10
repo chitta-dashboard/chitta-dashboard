@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister } from "react-hook-form";
 import { fileValidation } from "../../../../utils/constants";
-import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import AddProfile from "../../../input-fields/add-profile";
 import Input from "../../../input-fields/input/input";
 import { IAddFarmersDetailsPage1Input } from "../../type/formInputs";
@@ -21,7 +21,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
-  const { farmerGroupList } = useFarmerGroupDetailsContext();
+  const { farmersGroupList } = useFarmersGroupContext();
 
   useEffect(() => {
     setValue("surveyNo", surveyNo);
@@ -84,7 +84,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="select"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "குழு", gridArea: "grp", selectOptions: farmerGroupList.map((g) => [g.groupName, g.groupName]) }}
+        options={{ label: "குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupList).map((g) => [g.groupName, g.groupName]) }}
       />
       <Input
         name="phoneNumber"

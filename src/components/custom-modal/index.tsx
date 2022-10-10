@@ -3,14 +3,14 @@ import S from "./customModal.styled";
 
 interface CustomProps {
   children: React.ReactNode | string;
-  handleClose: () => void;
+  handleClose?: () => void;
   openModal: boolean;
   openAddDecisionModal?: boolean;
 }
 
-const CustomModal: FC<CustomProps> = ({ children, handleClose, openModal, openAddDecisionModal }) => {
+const CustomModal: FC<CustomProps> = ({ children, openModal, openAddDecisionModal }) => {
   return (
-    <S.ModalContainer open={openModal} onClose={handleClose} openAddDecisionModal={openAddDecisionModal}>
+    <S.ModalContainer open={openModal} openAddDecisionModal={openAddDecisionModal}>
       {children}
     </S.ModalContainer>
   );

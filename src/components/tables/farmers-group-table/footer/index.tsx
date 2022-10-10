@@ -1,11 +1,11 @@
-import { useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
-  const { farmerGroupList, page, rowsPerPage } = useFarmerGroupDetailsContext();
-  const count = Math.ceil(farmerGroupList.length / rowsPerPage);
+  const { farmersGroupList, page, rowsPerPage } = useFarmersGroupContext();
+  const count = Math.ceil(Object.values(farmersGroupList).length / rowsPerPage);
 
-  return <FooterWrapper count={count} page={page} totalCount={farmerGroupList.length} rowsPerPage={rowsPerPage} />;
+  return <FooterWrapper count={count} page={page} totalCount={Object.values(farmersGroupList).length} rowsPerPage={rowsPerPage} />;
 };
 
 export default Footer;
