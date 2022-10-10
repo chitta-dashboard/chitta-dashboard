@@ -13,7 +13,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { farmersGroupList: listData, editFarmersGroup, deleteFarmersGroup, searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
+  const { farmersGroupById: listData, editFarmersGroup, deleteFarmersGroup, searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const navigate = useNavigate();
   const [farmersGroupList, setFarmersGroupList] = useState(Object.values(listData));

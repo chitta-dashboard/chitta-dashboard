@@ -48,7 +48,7 @@ type Props = {
 };
 
 interface farmerDetailsContextType {
-  farmersList: { [id: string]: farmerDetail };
+  farmersDetailsById: { [id: string]: farmerDetail };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -68,7 +68,7 @@ interface farmerDetailsContextType {
 }
 
 const initialState: farmerDetailsContextType = {
-  farmersList: {
+  farmersDetailsById: {
     "1": {
       id: "1",
       membershipId: "NER-FPC-2",
@@ -253,20 +253,20 @@ const initialState: farmerDetailsContextType = {
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMER_DETAIL:
-      return { ...state, farmersList: { ...state.farmersList, [action.payload.id]: action.payload } };
+      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [action.payload.id]: action.payload } };
 
     case EDIT_FARMER_DETAIL:
-      return { ...state, farmersList: { ...state.farmersList, [action.payload.id]: action.payload } };
+      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [action.payload.id]: action.payload } };
 
     case DELETE_FARMER_DETAIL:
-      delete state.farmersList[action.payload];
-      return { ...state, farmersList: { ...state.farmersList } };
+      delete state.farmersDetailsById[action.payload];
+      return { ...state, farmersDetailsById: { ...state.farmersDetailsById } };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
     case CHECKBOX_SELECT_ALL:
-      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersList).length) {
+      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersDetailsById).length) {
         return {
           ...state,
           selectedFarmers: [],
@@ -274,7 +274,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
       } else {
         return {
           ...state,
-          selectedFarmers: [...Object.keys(state.farmersList)],
+          selectedFarmers: [...Object.keys(state.farmersDetailsById)],
         };
       }
 

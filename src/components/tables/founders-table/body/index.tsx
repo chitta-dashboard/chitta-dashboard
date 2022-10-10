@@ -13,7 +13,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { foundersList: listData, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
+  const { foundersById: listData, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
   const [founderSearch, setFounderSearch] = useState<Founders[]>(Object.values(listData));
   const [founderSort, setFounderSort] = useState<Founders[]>(Object.values(listData));
   const [founder, setFounder] = useState<Founders[]>(Object.values(listData));

@@ -22,7 +22,7 @@ interface CustomProps {
 
 const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, control }) => {
   const selectAllGroup = useWatch<IAddDecisionsFormInput>({ name: "selectAll", control, defaultValue: "yes" });
-  const { farmersGroupList } = useFarmersGroupContext();
+  const { farmersGroupById } = useFarmersGroupContext();
 
   useEffect(() => {
     if (selectAllGroup === "yes") setValue("groupName", "~All Groups~");
@@ -54,7 +54,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
                     label="குழு"
                     setValue={setValue}
                     trigger={trigger}
-                    selectOptions={Object.values(farmersGroupList).map((g) => [g.groupName, g.groupName])}
+                    selectOptions={Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName])}
                   />
                   <FormHelperText>{errors.groupName?.message}</FormHelperText>
                 </S.QualificationContainer>

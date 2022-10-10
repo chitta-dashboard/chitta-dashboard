@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import { ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/authContext";
 import NotificationModal from "../../../components/modals/notification-modal";
 import S from "./header.styled";
 import Logo from "../../../assets/images/logo.svg";
+import Icon from "../../../components/icons";
 
 const Header = () => {
   const { userNotification, clearNotification } = useAuthContext();
@@ -58,7 +58,7 @@ const Header = () => {
         </S.NavBar>
         <S.ActionsBox>
           <S.NotificationBadge onClick={notificationClick} badgeContent={userNotification.length}>
-            <NotificationsIcon />
+            <Icon color={true} iconName={"notification1"}/>
           </S.NotificationBadge>
           <S.webIcon>three-dots</S.webIcon>
         <S.TabIcon>account</S.TabIcon>
