@@ -27,12 +27,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
           helperText={errors.chairman?.message}
           setValue={setValue}
           trigger={trigger}
-          selectOptions={[
-            { label: "option1", id: 1 },
-            { label: "option2", id: 2 },
-            { label: "option3", id: 3 },
-            { label: "option4", id: 4 },
-          ]}
+          selectOptions={["option-1", "option-2", "option-3"]}
         />
         <AutoCompleteField
           label="பொருளாளர்"
@@ -41,12 +36,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
           helperText={errors.treasurer?.message}
           setValue={setValue}
           trigger={trigger}
-          selectOptions={[
-            { label: "option1", id: 1 },
-            { label: "option2", id: 2 },
-            { label: "option3", id: 3 },
-            { label: "option4", id: 4 },
-          ]}
+          selectOptions={["option-1", "option-2", "option-3"]}
         />
         <AutoCompleteField
           label="செயலாளர்"
@@ -55,12 +45,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger }) => 
           helperText={errors.secretary?.message}
           setValue={setValue}
           trigger={trigger}
-          selectOptions={[
-            { label: "option1", id: 1 },
-            { label: "option2", id: 2 },
-            { label: "option3", id: 3 },
-            { label: "option4", id: 4 },
-          ]}
+          selectOptions={["option-1", "option-2", "option-3"]}
         />
       </Stack>
     </S.InputContainer>
