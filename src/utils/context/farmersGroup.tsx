@@ -24,7 +24,7 @@ type Props = {
 };
 
 interface farmersGroupContextType {
-  farmersGroupList: { [id: string]: FarmersGroup };
+  farmersGroupById: { [id: string]: FarmersGroup };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -40,7 +40,7 @@ interface farmersGroupContextType {
 }
 
 const initialState: farmersGroupContextType = {
-  farmersGroupList: {
+  farmersGroupById: {
     "1": {
       id: "1",
       groupName: "விவசாயிகள் சங்கம்-1",
@@ -87,17 +87,17 @@ const initialState: farmersGroupContextType = {
 const reducer = (state: farmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, [action.payload.id]: action.payload } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
 
     case EDIT_FARMERS_GROUP:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, [action.payload.id]: action.payload } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
 
     case DELETE_FARMERS_GROUP:
-      delete state.farmersGroupList[action.payload];
-      return { ...state, farmersGroupList: { ...state.farmersGroupList } };
+      delete state.farmersGroupById[action.payload];
+      return { ...state, farmersGroupById: { ...state.farmersGroupById } };
 
     case ADD_MEMBERS:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, members: [...action.payload] } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, members: [...action.payload] } };
 
     case MEMBER_FILTER:
       return { ...state, memberFilter: action.payload };

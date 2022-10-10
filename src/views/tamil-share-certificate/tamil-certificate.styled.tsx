@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const TamilShareCertificateContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -13,7 +13,7 @@ export namespace S {
     backgroundColor: "#FFFFFF",
     position: "relative",
     padding: "4.375rem 6.25rem ",
-  }));
+  });
 
   export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
@@ -97,7 +97,7 @@ export namespace S {
     marginRight: "4.375rem",
   });
 
-  export const HeadingContainerHeading = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
     fontSize: "2.125rem",
     color: theme.palette.text.primary,
     fontFamily: "Poppins",

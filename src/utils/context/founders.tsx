@@ -23,7 +23,7 @@ type Props = {
 };
 
 export interface foundersContextType {
-  foundersList: { [id: string]: Founders };
+  foundersById: { [id: string]: Founders };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -36,7 +36,7 @@ export interface foundersContextType {
 }
 
 const initialState: foundersContextType = {
-  foundersList: {
+  foundersById: {
     "1": {
       id: "1",
       profile: profileImg,
@@ -106,14 +106,14 @@ const initialState: foundersContextType = {
 const reducer = (state: foundersContextType, action: any) => {
   switch (action.type) {
     case ADD_FOUNDERS:
-      return { ...state, foundersList: { ...state.foundersList, [action.payload.id]: action.payload } };
+      return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };
 
     case EDIT_FOUNDERS:
-      return { ...state, foundersList: { ...state.foundersList, [action.payload.id]: action.payload } };
+      return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };
 
     case DELETE_FOUNDERS:
-      delete state.foundersList[action.payload];
-      return { ...state, foundersList: { ...state.foundersList } };
+      delete state.foundersById[action.payload];
+      return { ...state, foundersById: { ...state.foundersById } };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };

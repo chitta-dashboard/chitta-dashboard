@@ -14,7 +14,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
+  const { mdDetailsById: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
   const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
   const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
   const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));
@@ -42,10 +42,11 @@ const Body = () => {
   }, [mdListSort]);
 
   // Tab IconModal Open & Close Handler
-  const iconModalHandler = (id: string) => {
+  const iconModalHandler = (user: mdDetail) => {
     setIconModal(!iconModal);
-    setDeleteId(id);
-    setEditId(id);
+    setDeleteId(user.id);
+    setEditId(user.id);
+    setUserConfirm(user.name);
   };
 
   //Edit MdDetail Handler
@@ -114,7 +115,7 @@ const Body = () => {
           {Object.values(mdList).map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
+                <CS.Icon onClick={() => iconModalHandler(user)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>

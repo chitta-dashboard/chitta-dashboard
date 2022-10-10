@@ -34,6 +34,7 @@ export const sortObj = <ObjStructure>(
 ) => {
   const arrClone = [...arr];
 
+
   switch (sortOrder) {
     case "ascending":
       if (options.asDate) {
@@ -43,7 +44,7 @@ export const sortObj = <ObjStructure>(
         });
       } else {
         arrClone.sort((a, b) => {
-          if (a[sortKey] > b[sortKey]) return 1;
+          if ((a[sortKey] as unknown as string).toLowerCase() > (b[sortKey] as unknown as string).toLowerCase()) return 1;
           else return -1;
         });
       }
@@ -56,7 +57,7 @@ export const sortObj = <ObjStructure>(
         });
       } else {
         arrClone.sort((a, b) => {
-          if (a[sortKey] < b[sortKey]) return 1;
+          if ((a[sortKey] as unknown as string).toLowerCase() < (b[sortKey] as unknown as string).toLowerCase()) return 1;
           else return -1;
         });
       }
