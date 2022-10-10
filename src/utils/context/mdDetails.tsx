@@ -23,7 +23,7 @@ type Props = {
 };
 
 export interface mdDetailsContextType {
-  mdList: { [id: string]: mdDetail };
+  mdDetailsById: { [id: string]: mdDetail };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
@@ -37,7 +37,7 @@ export interface mdDetailsContextType {
 }
 
 const initialState: mdDetailsContextType = {
-  mdList: {
+  mdDetailsById: {
     "1": {
       id: "1",
       profile: profileImg,
@@ -108,14 +108,14 @@ const initialState: mdDetailsContextType = {
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_MD_DETAIL:
-      return { ...state, mdList: { ...state.mdList, [action.payload.id]: action.payload } };
+      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
 
     case EDIT_MD_DETAIL:
-      return { ...state, mdList: { ...state.mdList, [action.payload.id]: action.payload } };
+      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
 
     case DELETE_MD_DETAIL:
-      delete state.mdList[action.payload];
-      return { ...state, mdList: { ...state.mdList } };
+      delete state.mdDetailsById[action.payload];
+      return { ...state, mdDetailsById: { ...state.mdDetailsById } };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };

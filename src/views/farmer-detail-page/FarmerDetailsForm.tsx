@@ -13,7 +13,7 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
-  const { farmersList, editTableIcon } = useFarmerDetailsContext();
+  const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
   const { farmerId } = useParams();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -21,7 +21,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   const getURL = (id: string) => {
-    let result = Object.values(farmersList).filter((item) => {
+    let result = Object.values(farmersDetailsById).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -47,7 +47,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = Object.values(farmersList).filter((item) => {
+    let result = Object.values(farmersDetailsById).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -56,7 +56,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   return (
     <>
-      {Object.values(farmersList)
+      {Object.values(farmersDetailsById)
         .filter((name) => [farmerId, farmerIdtoPrint].includes(name.id))
         .map((user) => (
           <S.FarmersDetailsContent ref={ref} key={user.id}>

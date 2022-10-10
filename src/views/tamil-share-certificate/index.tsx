@@ -12,11 +12,11 @@ interface Props {
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
-  const { farmersList, selectedFarmers } = useFarmerDetailsContext();
+  const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
   const newDate = new Date();
   return (
     <div className="print-container" ref={ref}>
-      {Object.values(farmersList)
+      {Object.values(farmersDetailsById)
         .filter((name) => selectedFarmers.includes(name.id))
         .map((user) => (
           <S.TamilShareCertificateContainer key={user.id}>
