@@ -6,17 +6,17 @@ namespace S {
     height: "18rem",
   });
 
-  export const ContainerItems = styled(DialogContent)(() => ({
+  export const ContainerItems = styled(DialogContent)({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  }));
+  });
 
-  export const SuccessImg = styled(`img`)(({ theme }) => ({
+  export const SuccessImg = styled(`img`)({
     marginTop: "1.5rem",
     width: "7rem",
     heigth: "7rem",
-  }));
+  });
 
   export const DialogueText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondary,

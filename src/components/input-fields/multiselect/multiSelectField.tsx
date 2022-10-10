@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import CancelIcon from "@mui/icons-material/Cancel";
 import { useTheme } from "@mui/material";
 import { Select, SelectChangeEvent, OutlinedInput, InputLabel } from "@mui/material";
@@ -18,8 +18,8 @@ interface CustomProps<FormInputType extends FieldValues> {
 
 function MultiSelect<FormInputTypes>({ label, register, inputName, setValue, trigger }: CustomProps<FormInputTypes & FieldValues>) {
   const theme = useTheme();
-  const [nameList, setNameList] = React.useState<string[]>(names);
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [nameList, setNameList] = useState<string[]>(names);
+  const [personName, setPersonName] = useState<string[]>([]);
 
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
