@@ -28,6 +28,7 @@ const Body = () => {
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
   const [userConfirm, setUserConfirm] = useState<string>("");
+  
 
   useEffect(() => {
     setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
@@ -61,7 +62,7 @@ const Body = () => {
   };
 
   // Delete ModalHandler
-  const deleteModalHandler = (id: string) => {
+  const deleteModalHandler = (id:string) => {
     setDeleteModal(!deleteModal);
     setDeleteId(id);
   };

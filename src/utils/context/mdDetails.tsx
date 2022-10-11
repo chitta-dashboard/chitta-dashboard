@@ -2,7 +2,7 @@ import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
 
 //ACTION TYPES
-const ADD_MD_DETAIL = "ADD_MD_DETAIL";
+const ADD_MD_DETAIL = "ADD_MD_DETAIL";  
 const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
@@ -18,7 +18,7 @@ export type mdDetail = {
   signature?: string;
 };
 
-type Props = {
+type Props = {  
   children: React.ReactNode | React.ReactNode[];
 };
 

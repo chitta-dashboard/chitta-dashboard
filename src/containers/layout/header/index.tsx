@@ -25,15 +25,14 @@ const Header = () => {
   };
 
   const notificationClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setnotification(event.currentTarget);
+    Object.values(userNotification).length > 0 ? setnotification(event.currentTarget) : setnotification(null);
   };
 
   const notificationHandler = () => {
     setnotification(null);
   };
 
-  const open = userNotification.length > 0 ? Boolean(notification) : false;
-  const shouldOpen = Boolean(notification);
+  const open = Boolean(notification);
 
   return (
     <>
@@ -58,17 +57,15 @@ const Header = () => {
         </S.NavBar>
         <S.ActionsBox>
           <S.NotificationBadge onClick={notificationClick} badgeContent={userNotification.length}>
-            <Icon color={true} iconName={"notification1"}/>
+            <Icon color={true} iconName={"notification1"} />
           </S.NotificationBadge>
           <S.webIcon>three-dots</S.webIcon>
-        <S.TabIcon>account</S.TabIcon>
+          <S.TabIcon>account</S.TabIcon>
           <S.TabIcon onClick={logout}>logout</S.TabIcon>
           {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
         </S.ActionsBox>
       </S.Header>
-      {shouldOpen && (
-        <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />
-      )}
+      {open && <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />}
     </>
   );
 };

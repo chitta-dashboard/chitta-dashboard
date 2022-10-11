@@ -1,9 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useState, useRef } from "react";
 import S from "./NotificationModal.styled";
 import { useAuthContext } from "../../../utils/context/authContext";
 import Icon from "../../icons";
 
-//
 interface notificationProps {
   open: boolean;
   handleClose: () => void;
@@ -14,9 +13,10 @@ interface notificationProps {
 const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler }) => {
   const { userNotification } = useAuthContext();
   const [seeMore, setSeeMore] = useState(false);
+  const bodyref = useRef<any>();
 
   const styleHandler = () => {
-    setSeeMore(!seeMore);
+    bodyref.current.scrollHeight > bodyref.current.clientHeight ? setSeeMore(!seeMore) : setSeeMore(false);
   };
 
   return (
@@ -40,7 +40,7 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
           <Icon iconName={"mark-all-as-read"} clickHandler={clearNotifyHandler} />
         </S.HeadingIcons>
       </S.HeadingBox>
-      <S.BodyContainer isheight={seeMore ? 1 : 0}>
+      <S.BodyContainer isheight={seeMore ? 1 : 0} ref={bodyref}>
         {userNotification.map((user) => (
           <S.BodyBox key={user.id}>
             <S.UserImage alt="userImage" src={user.image} />
