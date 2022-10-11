@@ -12,6 +12,8 @@ interface CustomProps {
   dynamicInputs: Array<{ [key: string]: [string, string, string] }>;
   addInput: () => void;
   removeInput: (key: string) => void;
+
+  
   setValue: UseFormSetValue<IAddFarmersDetailsPage1Input>;
   getValues: UseFormGetValues<IAddFarmersDetailsPage1Input>;
   unregister: UseFormUnregister<IAddFarmersDetailsPage1Input>;

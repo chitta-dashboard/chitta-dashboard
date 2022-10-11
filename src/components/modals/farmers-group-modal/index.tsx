@@ -2,7 +2,7 @@ import * as yup from "yup";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
@@ -24,36 +24,9 @@ const schema = yup
   .object({
     groupName: yup.string().required("required"),
     explanation: yup.string().required("required"),
-    chairman: yup
-      .string()
-      .required("required")
-      .test("chairman", "choose a option", (value: string | undefined) => {
-        const selectOptions = ["option-1", "option-2", "option-3"];
-        if (selectOptions.includes(value as string)) {
-          return true;
-        }
-        return false;
-      }),
-    treasurer: yup
-      .string()
-      .required("required")
-      .test("chairman", "choose a option", (value: string | undefined) => {
-        const selectOptions = ["option-1", "option-2", "option-3"];
-        if (selectOptions.includes(value as string) && value) {
-          return true;
-        }
-        return false;
-      }),
-    secretary: yup
-      .string()
-      .required("required")
-      .test("chairman", "choose a option", (value: string | undefined) => {
-        const selectOptions = ["option-1", "option-2", "option-3"];
-        if (selectOptions.includes(value as string)) {
-          return true;
-        }
-        return false;
-      }),
+    chairman: yup.string().required("required"),
+    treasurer: yup.string().required("required"),
+    secretary: yup.string().required("required"),
   })
   .required();
 
@@ -68,6 +41,9 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     reset,
     setValue,
     trigger,
+    unregister: formUnregister,
+    getValues: formGetValues,
+    control: formControl,
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
   });
@@ -121,7 +97,15 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
       </ModalHeader>
 
       <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
-        <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
+        <FormField
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          trigger={trigger}
+          control={formControl as unknown as Control}
+          getValues={formGetValues}
+          unregister={formUnregister}
+        />
       </ModalBody>
 
       <ModalFooter>
