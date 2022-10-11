@@ -13,7 +13,7 @@ namespace S {
   });
 
   export const IdText = styled(Typography)({
-    color: "rgba(119, 119, 119, 1)",
+    color: "#777777",
     fontSize: "1.125rem",
     lineHeight: "1.688rem",
     paddingBottom: "0.5rem",

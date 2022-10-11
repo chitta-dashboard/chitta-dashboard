@@ -145,7 +145,7 @@ export namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",

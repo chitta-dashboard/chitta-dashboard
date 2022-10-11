@@ -19,9 +19,9 @@ namespace S {
     "& thead": {
       display: "block",
       tableLayout: "fixed",
-      backgroundColor: theme.palette.custom.backgroundDark,
+      backgroundColor: theme.palette.bg.dark,
       "& th": {
-        backgroundColor: theme.palette.custom.backgroundDark,
+        backgroundColor: theme.palette.bg.dark,
         color: theme.palette.text.primaryDark,
         fontSize: "1.1rem",
         fontWeight: 600,

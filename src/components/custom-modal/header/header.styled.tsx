@@ -16,7 +16,7 @@ namespace S {
       alignItems: "center",
     },
     padding: "1.125rem 1.875rem",
-    backgroundColor: theme.palette.custom.backgroundDark,
+    backgroundColor: theme.palette.bg.dark,
   }));
 
   export const Title = styled("div", { shouldForwardProp: (prop) => prop !== "alignment" })<{ alignment?: string }>(({ theme, alignment }) => ({

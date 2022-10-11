@@ -13,7 +13,7 @@ namespace S {
     display: "grid",
     gridTemplateColumns: "auto auto auto",
     alignItems: "center",
-    backgroundColor: theme.palette.custom.backgroundLight,
+    backgroundColor: theme.palette.bg.light,
     padding: "10px",
   }));
 
