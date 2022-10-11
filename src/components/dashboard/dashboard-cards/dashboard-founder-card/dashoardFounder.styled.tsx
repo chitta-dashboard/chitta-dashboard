@@ -218,8 +218,8 @@ export namespace S {
     color: theme.palette.text.secondary,
     textAlign: "justify",
     p: {
-      "-webkit-box-orient": "vertical",
-      "-webkit-line-clamp": "3",
+      WebkitBoxOrient: "vertical",
+      WebkiLineClamp: "3",
     },
   }));
 }
