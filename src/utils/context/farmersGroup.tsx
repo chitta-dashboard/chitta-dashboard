@@ -1,4 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FARMERS_GROUP = "ADD_FARMERS_GROUP";
@@ -29,8 +30,8 @@ interface farmersGroupContextType {
   rowsPerPage: number;
   searchFilter: string;
   memberFilter: string;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFarmersGroup: (data: FarmersGroup) => void;
   editFarmersGroup: (data: FarmersGroup) => void;
@@ -73,7 +74,7 @@ const initialState: farmersGroupContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
-  sortFilter: "ascending",
+  sortFilter: ASCENDING,
   addMembers: () => {},
   setSortFilter: () => {},
   setSearchFilter: () => {},
@@ -143,7 +144,7 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
