@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
-import { useDecisionsProviderContext } from "../../utils/context/decisionsContext";
+import { useResolutionsProviderContext } from "../../utils/context/resolutions";
 import { S } from "./decision-certificate.styled";
 import NerkathirLogo from "../../assets/images/logo.svg";
 
@@ -9,12 +9,12 @@ interface Props {
 }
 
 const DecisionPdf = forwardRef<HTMLDivElement, Props>(({ decisionId }, ref) => {
-  const { decisions } = useDecisionsProviderContext();
+  const { resolutions } = useResolutionsProviderContext();
   const { resolutionId } = useParams();
 
   return (
     <>
-      {Object.values(decisions)
+      {Object.values(resolutions)
         .filter((name) => [resolutionId, decisionId].includes(name.id))
         .map((user) => (
           <S.DecisionCertificateContainer ref={ref} key={user.id}>

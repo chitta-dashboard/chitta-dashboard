@@ -11,10 +11,10 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
 import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
-import { IDecision } from "../../../utils/context/decisionsContext";
+import { IResolution } from "../../../utils/context/resolutions";
 
 interface CustomProps {
-  cb: (data: IDecision) => void;
+  cb: (data: IResolution) => void;
   openModal: boolean;
   handleClose: () => void;
 }

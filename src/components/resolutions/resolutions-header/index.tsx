@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import AddDecisionsModal from "../../modals/decisions-modal";
-import { IDecision, useDecisionsProviderContext } from "../../../utils/context/decisionsContext";
-import S from "./decisionsHeader.styled";
+import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
+import S from "./resolutionsHeader.styled";
 
 interface CustomProps {
   viewTree(): void;
@@ -10,11 +10,11 @@ interface CustomProps {
   treeView: boolean;
 }
 
-const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
+const ResolutionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { decisions, addDecision } = useDecisionsProviderContext();
+  const { resolutions, addResolution } = useResolutionsProviderContext();
 
-  const addGroupData = (data: IDecision) => addDecision(data);
+  const addGroupData = (data: IResolution) => addResolution(data);
 
   return (
     <>
@@ -24,7 +24,7 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
-          {Object.values(decisions).length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
+          {Object.values(resolutions).length > 4 && treeView ? <S.Button onClick={viewList}>View All</S.Button> : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
@@ -34,4 +34,4 @@ const DecisionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   );
 };
 
-export default DecisionsHeader;
+export default ResolutionsHeader;
