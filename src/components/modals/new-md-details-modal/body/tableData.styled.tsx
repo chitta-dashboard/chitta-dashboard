@@ -16,7 +16,7 @@ namespace S {
     display: "grid",
     gridTemplateColumns: "1fr 3fr 2fr",
     alignItems: "center",
-    backgroundColor: theme.palette.custom.backgroundLight,
+    backgroundColor: theme.palette.bg.light,
     padding: "10px",
     p: {
       fontWeight: "600",

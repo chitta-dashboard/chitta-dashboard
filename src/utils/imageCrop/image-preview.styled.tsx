@@ -14,10 +14,10 @@ namespace S {
     zIndex: "5",
   }));
 
-  export const ImagePopUp = styled(Box)({
+  export const ImagePopUp = styled(Box)(({ theme }) => ({
     margin: "2%",
     padding: "2% 3%",
-    boxShadow: "1px 1px 10px #bababa",
+    boxShadow: `1px 1px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.2)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -26,7 +26,7 @@ namespace S {
     backgroundColor: "white",
     position: "relative",
     borderRadius: "0.75rem",
-  });
+  }));
 
   export const CloseIconContainer = styled(Box)(({ theme }) => ({
     position: "absolute",
@@ -35,7 +35,7 @@ namespace S {
     width: "1.3rem",
     height: "1.3em",
     cursor: "pointer",
-    backgroundColor: theme.palette.custom.backgroundDark,
+    backgroundColor: theme.palette.bg.dark,
     borderRadius: "50%",
     display: "flex",
     alignItems: "center",
@@ -83,10 +83,10 @@ namespace S {
     textAlign: "center",
   });
 
-  export const PreviewImageContainer = styled(Box)({
+  export const PreviewImageContainer = styled(Box)(({ theme }) => ({
     width: "70%",
     aspectRatio: "1/1",
-    border: "1px solid #dbdbdb",
+    border: `1px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.2)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -95,10 +95,10 @@ namespace S {
       width: "100%",
       height: "100%",
     },
-    ".image-preview-title": {
-      color: "#bababa",
-    },
-  });
+    // ".image-preview-title": {
+    //   color: "#bababa",
+    // },
+  }));
 
   export const UploadBtn = styled(Box)(({ theme }) => ({
     display: "flex",

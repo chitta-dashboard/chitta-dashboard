@@ -123,7 +123,7 @@ export namespace S {
   })(({ theme, neg }: any) => ({
     width: "4rem",
     height: "1.5rem",
-    background: neg ? "rgba(255, 0, 0, 0.1)" : theme.palette.custom.backgroundLight,
+    background: neg ? "rgba(255, 0, 0, 0.1)" : theme.palette.bg.light,
     fontSize: "0.8rem",
     fontWeight: "600",
     display: "flex",

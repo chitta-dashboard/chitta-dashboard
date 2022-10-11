@@ -18,20 +18,20 @@ interface CustomProps {
 }
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, handleConfirmModal }) => {
-  let { mdList } = useMdDetailsContext();
-  const [mdListData, setMdListData] = useState(Object.values(mdList));
+  let { mdDetailsById } = useMdDetailsContext();
+  const [mdDetailsByIdData, setmdDetailsByIdData] = useState(Object.values(mdDetailsById));
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
-  // let mdListData = Object.values(mdList);
+  // let mdDetailsByIdData = Object.values(mdDetailsById);
   useEffect(() => {
     var reg = new RegExp("^[0-9]+$");
 
-    let data = Object.values(mdList).filter((item) => {
+    let data = Object.values(mdDetailsById).filter((item) => {
       let search = reg.test(searchKeyWord) ? item.phoneNumber : item.name;
       return searchWord(search, searchKeyWord);
     });
-    setMdListData(data);
-    // mdListData = data
-    // console.log("MdListData : ",mdListData)
+    setmdDetailsByIdData(data);
+    // mdDetailsByIdData = data
+    // console.log("mdDetailsByIdData : ",mdDetailsByIdData)
   }, [searchKeyWord]);
 
   return (
@@ -51,7 +51,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, handleConfirm
       <ModalBody id="mdDetails" isPadding={false}>
         <Stack spacing={0}>
           <SearchBar setSearchKeyWord={setSearchKeyWord} />
-          <TableData mdListData={mdListData} />
+          <TableData mdListData={mdDetailsByIdData} />
         </Stack>
       </ModalBody>
       <ModalFooter>

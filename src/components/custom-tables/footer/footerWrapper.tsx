@@ -8,7 +8,7 @@ namespace S {
     "& .MuiButtonBase-root": {
       fontSize: "0.8rem",
       backgroundColor: "#CED6E0", //Custom Color
-      color: "#0B213E", //Custom Color
+      color: theme.palette.text.secondaryDark, //Custom Color
       border: "none",
     },
     "& .css-oznjvi-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected": {
@@ -19,8 +19,7 @@ namespace S {
 
   export const PageNoDetails = styled(Typography)(({ theme }) => ({
     fontSize: "1rem",
-    color: theme.palette.text.secondary,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondary, 0.8),
   }));
 
   export const PageStack = styled(Stack)({

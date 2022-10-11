@@ -3,10 +3,10 @@ import { styled, TableBody } from "@mui/material";
 namespace S {
   export const Content = styled(TableBody)(({ theme }) => ({
     "& tr": {
-      borderBottom: "0.2rem solid #F3F3F3",
+      borderBottom: `0.2rem solid ${theme.palette.addAlpha(theme.palette.text.secondary, 0.1)}`,
       cursor: "pointer",
       "&:hover": {
-        backgroundColor: theme.palette.custom.backgroundLight,
+        backgroundColor: theme.palette.bg.light,
       },
       "& td": {
         color: theme.palette.text.secondaryLight,

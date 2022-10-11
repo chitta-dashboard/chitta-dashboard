@@ -16,7 +16,7 @@ namespace S {
     zIndex: "999999 !important",
     borderRadius: ".2rem",
     height: "1.5rem",
-    backgroundColor: theme.palette.custom.backgroundLight,
+    backgroundColor: theme.palette.bg.light,
     color: theme.palette.text.secondary,
     "& 	.MuiChip-deleteIconSmall": {
       color: theme.palette.primary.dark,
