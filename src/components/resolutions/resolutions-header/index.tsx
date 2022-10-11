@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
-import AddDecisionsModal from "../../modals/decisions-modal";
-import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
+import { useResolutionsProviderContext } from "../../../utils/context/resolutions";
+import ModalHandler from "./modal-handler";
 import S from "./resolutionsHeader.styled";
 
 interface CustomProps {
@@ -12,9 +12,7 @@ interface CustomProps {
 
 const ResolutionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { resolutions, addResolution } = useResolutionsProviderContext();
-
-  const addGroupData = (data: IResolution) => addResolution(data);
+  const { resolutions } = useResolutionsProviderContext();
 
   return (
     <>
@@ -28,8 +26,7 @@ const ResolutionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) =>
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      {/* The below logic is because of dynamic current time updation in modal */}
-      {modalOpen && <AddDecisionsModal openModal={true} handleClose={() => setModalOpen(false)} cb={addGroupData} />}
+      <ModalHandler isOpen={modalOpen} handleClose={() => setModalOpen(false)} />
     </>
   );
 };
