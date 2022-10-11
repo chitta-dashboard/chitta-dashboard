@@ -4,17 +4,11 @@ import S from "./confirmationModal.styled";
 import ConfirmationIcon from "./confirmationIcon";
 
 interface ConfirmProps {
-  userConfirm?: string;
+  confirmMessage?: JSX.Element;
 }
 
-const ConfirmationBody: FC<ConfirmProps> = ({ userConfirm }) => {
-  const message = userConfirm ? (
-    <>
-      Do you want to remove <S.Bold>{userConfirm}</S.Bold> from mdList?
-    </>
-  ) : (
-    "Do you want to save changes?"
-  );
+const ConfirmationBody: FC<ConfirmProps> = ({ confirmMessage }) => {
+  const message = confirmMessage ? confirmMessage : "Do you want to save changes?";
   return (
     <S.Container>
       <S.ContainerItems>

@@ -58,7 +58,7 @@ const schema = yup
   .required();
 
 const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  const { farmersGroupList } = useFarmersGroupContext();
+  const { farmersGroupById } = useFarmersGroupContext();
 
   const {
     register,
@@ -74,7 +74,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
 
   useEffect(() => {
     if (editMode) {
-      let groupData = Object.values(farmersGroupList).find((f) => String(f.id) === id);
+      let groupData = Object.values(farmersGroupById).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,
