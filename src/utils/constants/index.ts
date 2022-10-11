@@ -9,7 +9,7 @@ export const fileValidation = (file: string) => {
   return true;
 };
 
-export const searchWord = (text: string, word: string) =>
+export const searchWord = (text: String, word: String) =>
   text
     ? text
       .trim()
