@@ -5,11 +5,11 @@ namespace S {
     width: "100%",
     padding: "0 2.5rem",
     display: "grid",
-    gridTemplateColumns: "1fr auto 1fr",
+    gridTemplateColumns: "40% auto 40%",
     justifyContent: "center",
     gap: "90px",
     [theme.breakpoints.down("md")]: {
-      gridTemplateColumns: "auto 1fr",
+      gridTemplateColumns: "auto 80%",
       padding: "0 4rem",
     },
   }));

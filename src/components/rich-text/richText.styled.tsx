@@ -37,6 +37,10 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     color: "#000",
+
+    "> div:nth-of-type(2)": {
+      height: "100%",
+    },
   }));
 
   export const RichTextLabel = styled(Typography)(({ theme }) => ({

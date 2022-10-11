@@ -3,7 +3,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useAuthContext } from "../../../utils/context/authContext";
+import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
 
