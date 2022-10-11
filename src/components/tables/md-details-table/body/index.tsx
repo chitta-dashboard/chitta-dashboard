@@ -174,7 +174,7 @@ const Body = () => {
         }}
         confirmMessage={
           <>
-            Do you want to remove <S.Bold>{confirmUser}</S.Bold> from mdList?
+            Do you want to remove <CS.Bold>{confirmUser}</CS.Bold> from mdList?
           </>
         }
       />

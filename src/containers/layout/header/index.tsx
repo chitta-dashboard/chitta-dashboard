@@ -18,6 +18,10 @@ const Header = () => {
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
   const { logout } = useAuthContext();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const open = userNotification.length > 0 ? Boolean(notification) : false;
+  const shouldOpen = Boolean(notification);
 
   const clearNotifyHandler = () => {
     setnotification(null);
@@ -32,8 +36,13 @@ const Header = () => {
     setnotification(null);
   };
 
-  const open = userNotification.length > 0 ? Boolean(notification) : false;
-  const shouldOpen = Boolean(notification);
+  const popHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const popCloseHandler = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
@@ -60,7 +69,7 @@ const Header = () => {
           <S.NotificationBadge onClick={notificationClick} badgeContent={userNotification.length}>
             <Icon color={true} iconName={"notification1"} />
           </S.NotificationBadge>
-          <S.webIcon>three-dots</S.webIcon>
+          <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
           <S.TabIcon>account</S.TabIcon>
           <S.TabIcon onClick={logout}>logout</S.TabIcon>
           {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
@@ -69,6 +78,22 @@ const Header = () => {
       {shouldOpen && (
         <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />
       )}
+      <S.Pop
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={popCloseHandler}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <S.Items>Account</S.Items>
+        <S.Items onClick={logout}>Logout</S.Items>
+      </S.Pop>
     </>
   );
 };
