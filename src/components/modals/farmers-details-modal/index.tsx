@@ -3,6 +3,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -29,6 +30,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     { first: ["surveyNo-first", "acre-first", "border-first"] },
   ]);
   const { farmersDetailsById } = useFarmerDetailsContext();
+  const { addGroupMembers } = useFarmersGroupContext();
 
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
@@ -106,9 +108,11 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   };
 
   const form2Submit: any = (data: IAddFarmersDetailsPage2Input) => {
-    let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" };
+    let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" } as IAddFarmersDetailsPage1Input &
+      IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    // console.log(params);
+    const newMember = { id: params.id, group: params.group };
+    addGroupMembers(newMember);
     handleClose();
   };
 
