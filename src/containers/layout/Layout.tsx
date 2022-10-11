@@ -17,7 +17,8 @@ const Layout: FC = () => {
         styles={(theme) => ({
           "body, div, nav, span, table, tbody, thead, ul, ol, form": {
             "&::-webkit-scrollbar": {
-              width: "5px",
+              width: "5px", // for vertical scroll
+              height: "5px", // for horizontal scroll
               // backgroundColor: "#F5F5F5",
               backgroundColor: "transparent",
               borderRadius: "10px",
