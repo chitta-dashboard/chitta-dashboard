@@ -19,7 +19,7 @@ namespace S {
     color: theme.palette.text.secondaryLight,
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.bg.light,
       color: theme.palette.text.secondaryDark,
     },
   }));

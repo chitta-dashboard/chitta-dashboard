@@ -41,82 +41,82 @@ namespace S {
     top: "18px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    borderColor: theme.palette.primary.light,
+    borderColor: theme.palette.tree.l1,
     "&::before": {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.palette.tree.l1,
       transform: "rotate(30deg)",
       transformOrigin: "left",
       left: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: theme.palette.primary.light,
+      backgroundColor: theme.palette.tree.l1,
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
   }));
 
-  export const L2 = styled(LeafStyles)({
+  export const L2 = styled(LeafStyles)(({ theme }) => ({
     top: "218px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    borderColor: "#D8C411",
+    borderColor: theme.palette.tree.l2,
     "&::before": {
-      backgroundColor: "#D8C411",
+      backgroundColor: theme.palette.tree.l2,
       transform: "rotate(30deg)",
       transformOrigin: "left",
       left: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#D8C411",
+      backgroundColor: theme.palette.tree.l2,
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  });
+  }));
 
-  export const R1 = styled(LeafStyles)({
+  export const R1 = styled(LeafStyles)(({ theme }) => ({
     top: "118px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    borderColor: "#4DC82F",
+    borderColor: theme.palette.tree.r1,
     "&::before": {
-      backgroundColor: "#4DC82F",
+      backgroundColor: theme.palette.tree.r1,
       transform: "rotate(-30deg)",
       transformOrigin: "right",
       right: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#4DC82F",
+      backgroundColor: theme.palette.tree.r1,
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
-  });
+  }));
 
-  export const R2 = styled(LeafStyles)({
+  export const R2 = styled(LeafStyles)(({ theme }) => ({
     top: "318px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    borderColor: "#B2A20F",
+    borderColor: theme.palette.tree.r2,
     "&::before": {
-      backgroundColor: "#B2A20F",
+      backgroundColor: theme.palette.tree.r2,
       transform: "rotate(-30deg)",
       transformOrigin: "right",
       right: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#B2A20F",
+      backgroundColor: theme.palette.tree.r2,
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //17px to cope border with and border radius
     },
-  });
+  }));
 
-  export const Bud = styled(Box)({
+  export const Bud = styled(Box)(({ theme }) => ({
     // LEAF STYLING
     position: "absolute",
     top: "105px",
     left: "390px",
     width: "11px",
     height: "100px",
-    backgroundColor: "#2B9C03",
+    backgroundColor: theme.palette.tree.bud,
     borderRadius: "0 0 0 80px",
     "&::before": {
       content: "''",
@@ -127,7 +127,7 @@ namespace S {
       height: "35px",
       borderRadius: "0px 40px",
       transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0)",
-      backgroundColor: "#2B9C03",
+      backgroundColor: theme.palette.tree.bud,
     },
     "&::after": {
       content: "''",
@@ -138,26 +138,26 @@ namespace S {
       height: "58px",
       borderRadius: "0px 40px",
       transform: "matrix(-1, 0, 0, 1, 0, 0)",
-      backgroundColor: "#2B9C03",
+      backgroundColor: theme.palette.tree.bud,
     },
-  });
+  }));
 
   export const Shadow = styled(Box, {
     shouldForwardProp: (prop) => prop !== "leafCount",
-  })<{ leafCount: number }>(({ leafCount }) => ({
+  })<{ leafCount: number }>(({ theme, leafCount }) => ({
     position: "absolute",
     left: "260px",
     top: `calc(210px + ${100 * leafCount}px)`,
     width: "276px",
     height: "15px",
-    backgroundColor: "#e6e6e6",
+    backgroundColor: theme.palette.addAlpha(theme.palette.tree.shadow, 0.3),
     borderRadius: "100%",
 
     "&::after": {
       content: "''",
       width: "60%",
       height: "60%",
-      backgroundColor: "#D5D5D5",
+      backgroundColor: theme.palette.addAlpha(theme.palette.tree.shadow, 0.2),
       borderRadius: "50%",
       position: "absolute",
       top: "0",
@@ -206,7 +206,7 @@ namespace S {
     "&.MuiButtonBase-root": {
       backgroundColor: theme.palette.primary.light,
       "&:hover": {
-        backgroundColor: "#57ab5b",
+        backgroundColor: theme.palette.addAlpha(theme.palette.primary.light, 0.75),
       },
     },
   }));
@@ -214,8 +214,8 @@ namespace S {
   export const ResolutionsTimestamp = styled(ResolutionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
     placement: "left" | "right";
   }>(({ theme, placement }) => ({
-    color: theme.palette.text.secondary,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondary, 0.8),
+
     position: "absolute",
     top: "-28px",
     [placement]: "-10px",
