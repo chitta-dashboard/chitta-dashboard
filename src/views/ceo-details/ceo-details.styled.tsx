@@ -68,6 +68,7 @@ namespace S {
   export const CeoProfilePicture = styled("img")({
     width: "100%",
     height: "100%",
+    objectFit: "cover",
   });
 
   export const EditBox = styled(Box)(({ theme }: any) => ({

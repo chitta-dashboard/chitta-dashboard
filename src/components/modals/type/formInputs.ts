@@ -57,3 +57,12 @@ export interface IAddMDDetailsFormInput {
   signature: string;
   profile: string;
 }
+
+export interface IAddCEODetailsFormInput {
+  name: string;
+  phoneNumber: string;
+  qualification: string;
+  dob: string;
+  profile: string;
+  description:string
+}
