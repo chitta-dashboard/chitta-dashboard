@@ -5,6 +5,7 @@ import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
+import DeleteModal from "../../components/modals/delete-modal";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
 const CeoDetailsCard = ({ user }: Props) => {
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
 
@@ -108,7 +110,7 @@ const CeoDetailsCard = ({ user }: Props) => {
         <S.ButtonContainer>
           <S.CustomIconContainer
             onClick={() => {
-              deleteCeoDetail(user.id);
+              setOpenDeleteModal(true);
             }}
           >
             delete
@@ -123,7 +125,16 @@ const CeoDetailsCard = ({ user }: Props) => {
           </S.CustomIconContainer>
         </S.ButtonContainer>
       </S.CeoDetailCard>
-      <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />
+      {addModal && <AddCeoDetailsModal openModal={true} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />}
+      {openDeleteModal && (
+        <DeleteModal
+          openModal={true}
+          handleClose={() => setOpenDeleteModal(false)}
+          handleDelete={() => {
+            deleteCeoDetail(user.id);
+          }}
+        />
+      )}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
