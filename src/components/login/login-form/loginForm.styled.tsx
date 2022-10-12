@@ -34,15 +34,15 @@ namespace S {
     },
   }));
 
-  export const LoginContainer = styled(Box)({
+  export const LoginContainer = styled(Box)(({ theme }) => ({
     width: "65%",
-    backgroundColor: "#FFFFFF;",
-    boxShadow: "0px 8px 10px rgba(0, 0, 0, 0.5)",
+    backgroundColor: theme.palette.bg.main,
+    boxShadow: `0px 8px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.5)}`,
     borderRadius: "0.938rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-  });
+  }));
 
   export const FormContainer = styled(Stack)({
     width: "85%",
@@ -84,27 +84,27 @@ namespace S {
   }));
 
   export const LoginInput = styled(TextField)(({ theme }) => ({
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     width: "100%",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     borderRadius: "0.625rem",
     textAlign: "center",
     "& label.Mui-focused-root": {
-      color: "#ff1111",
+      color: theme.palette.text.red,
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "0.625rem",
       },
       "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "0.625rem",
       },
       "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "0.625rem",
       },

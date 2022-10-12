@@ -23,6 +23,7 @@ export const LightTheme: Theme = createTheme({
     border: {
       primary: "#1A9035",
       //primary-shades => theme.palette.addAlpha(theme.palette.border.primary, <alpha-value>)
+      primaryDark: "#306F54",
       secondary: "#686868",
       //secondary-shades => theme.palette.addAlpha(theme.palette.border.secondary, <alpha-value>)
       tertiary: "#E7E59A",
@@ -68,7 +69,7 @@ export const LightTheme: Theme = createTheme({
         textPrimary: ({ theme }) => {
           return {
             backgroundColor: theme.palette.primary.light,
-            color: "white",
+            color: theme.palette.text.white,
             textTransform: "capitalize",
             padding: ".4rem 1.2rem",
             borderRadius: "10px",

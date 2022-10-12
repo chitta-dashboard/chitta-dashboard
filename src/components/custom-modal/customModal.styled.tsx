@@ -23,17 +23,17 @@ namespace S {
         color: theme.palette.text.secondaryDark,
         "& fieldset": {
           border: ".15rem solid",
-          borderColor: theme.palette.primary.light,
+          borderColor: theme.palette.border.primary,
         },
         "&:hover fieldset": {
-          borderColor: theme.palette.primary.main,
+          borderColor: theme.palette.border.primaryDark,
         },
         "&.Mui-focused fieldset": {
-          borderColor: theme.palette.primary.main,
+          borderColor: theme.palette.border.primaryDark,
         },
       },
       "& .MuiFormHelperText-root": {
-        color: "#FF0000",
+        color: theme.palette.text.red,
         marginTop: 0,
         marginLeft: 0,
       },

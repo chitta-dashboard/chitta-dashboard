@@ -28,21 +28,21 @@ namespace S {
     color: theme.palette.text.secondaryLight,
   }));
 
-  export const ShareDetailRight = styled(Box)({
+  export const ShareDetailRight = styled(Box)(({ theme }) => ({
     position: "relative",
     height: "4.0625rem",
     width: "9.375rem",
-    border: "2px solid #1A9035 ",
+    border: `2px solid ${theme.palette.border.primary}`,
     borderRadius: "0.625rem",
-  });
+  }));
 
-  export const FloatingAmount = styled(Box)({
+  export const FloatingAmount = styled(Box)(({ theme }) => ({
     position: "absolute",
     padding: "0 0.3125rem",
     top: "-0.75rem",
     left: "0.4375rem",
-    backgroundColor: "white",
-  });
+    backgroundColor: theme.palette.bg.main,
+  }));
 
   export const CustomInput = styled("input")(({ theme }) => ({
     width: "90%",

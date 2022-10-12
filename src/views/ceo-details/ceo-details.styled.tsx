@@ -23,7 +23,7 @@ namespace S {
   }));
 
   export const CeoDetailCard = styled(Box)(({ theme }: any) => ({
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     height: "19.375rem",
     width: "46.85rem",
     borderRadius: "1.25rem",
@@ -179,14 +179,14 @@ namespace S {
 
   export const CustomButton = styled(Button)(({ theme }: any) => ({
     color: theme.palette.text.primary,
-    backgroundColor: "white",
-    border: "0.0625rem dotted #1A9035",
+    backgroundColor: theme.palette.bg.main,
+    border: `0.0625rem dotted ${theme.palette.border.primary}`,
     borderRadius: "50%",
     height: "4.375rem",
     width: "4.375rem",
     fontSize: "1.875rem",
     "&:hover": {
-      color: "white",
+      color: theme.palette.text.white,
     },
   }));
 }

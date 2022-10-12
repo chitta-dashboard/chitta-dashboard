@@ -5,10 +5,10 @@ interface CustomProps {
   id: string;
   onSubmit?: () => void;
   children: React.ReactNode;
-  isPadding?:Boolean
+  isPadding?: Boolean;
 }
 
-const ModalBody: FC<CustomProps> = ({ children, id, onSubmit,isPadding }) => {
+const ModalBody: FC<CustomProps> = ({ children, id, onSubmit, isPadding }) => {
   return (
     <S.Container isPadding={isPadding}>
       <form id={id} onSubmit={onSubmit}>

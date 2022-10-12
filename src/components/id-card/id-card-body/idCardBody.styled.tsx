@@ -1,21 +1,21 @@
 import { Box, styled, Typography } from "@mui/material";
 
 export namespace S {
-  export const IdCardWrapper = styled(Box)({
+  export const IdCardWrapper = styled(Box)(({ theme }) => ({
     maxWidth: "34.5rem",
-    backgroundColor: "#fff",
+    backgroundColor: theme.palette.bg.main,
     borderRadius: "1.25rem",
     padding: "0.3rem 0.6rem 0 0.6rem",
-    border: "1px solid #6868684D",
+    border: `1px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.3)}`,
     height: "fit-content",
     width: "fit-content",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
     alignItems: "start !important",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     margin: "1rem 2rem",
-  });
+  }));
 
   export const IdImage = styled("img")({
     width: "8.3rem",

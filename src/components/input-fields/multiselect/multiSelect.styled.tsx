@@ -36,7 +36,7 @@ namespace S {
     },
     "& .MuiInputLabel-root": {
       fontSize: ".9rem",
-      backgroundColor: "#ffffff",
+      backgroundColor: theme.palette.bg.main,
       paddingRight: ".5rem",
     },
     "& .MuiSvgIcon-root": {
