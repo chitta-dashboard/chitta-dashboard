@@ -1,5 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_MD_DETAIL = "ADD_MD_DETAIL";
@@ -31,9 +32,9 @@ export interface mdDetailsContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
-  sortFilter: "ascending" | "descending";
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   selectedMdListData: selectedMdListData[];
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
@@ -104,7 +105,7 @@ const initialState: mdDetailsContextType = {
   rowsPerPage: 6,
   searchFilter: "",
   selectedMdListData: [],
-  sortFilter: "ascending",
+  sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addMdDetail: () => {},
@@ -187,7 +188,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 

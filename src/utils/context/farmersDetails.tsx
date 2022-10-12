@@ -1,5 +1,6 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/nerkathir-user.svg";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
@@ -52,8 +53,8 @@ interface farmerDetailsContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
   addFarmerDetail: (data: farmerDetail) => void;
@@ -235,7 +236,7 @@ const initialState: farmerDetailsContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
-  sortFilter: "ascending",
+  sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   selectedFarmers: [],
@@ -329,7 +330,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 

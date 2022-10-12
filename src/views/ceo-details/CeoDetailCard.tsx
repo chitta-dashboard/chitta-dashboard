@@ -2,12 +2,31 @@ import { useRef, useState } from "react";
 import ProfilePicture from "./../../assets/images/IdImage.png";
 import { fileValidation } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
+import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
+import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
+import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import S from "./ceo-details.styled";
 
-const CeoDetailsCard = () => {
+interface Props {
+  user: ceoDetail;
+}
+
+const CeoDetailsCard = ({ user }: Props) => {
   const [image, setImage] = useState("");
-  const [imagePic, setImagePic] = useState("");
+  const [addModal, setAddModal] = useState(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
+
+  const calculateAge = (dob1: string) => {
+    var today = new Date();
+    var birthDate = new Date(dob1);
+    var age_now = today.getFullYear() - birthDate.getFullYear();
+    var month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age_now--;
+    }
+    return age_now;
+  };
 
   const handleIconClick = () => {
     hiddenFileInput && hiddenFileInput.current.click();
@@ -19,6 +38,14 @@ const CeoDetailsCard = () => {
     return false;
   };
 
+  const getURL = (id: string) => {
+    let result = Object.values(ceoDetailsById).filter((item) => {
+      return item.id === id ? item.profile : null;
+    });
+    let data = result.length > 0 ? result[0]["profile"] : undefined;
+    return data;
+  };
+
   // this function is to clear the value of input field, so we can upload same file as many time has we want.
   const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement;
@@ -27,7 +54,19 @@ const CeoDetailsCard = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    setImagePic(image);
+    let result = Object.values(ceoDetailsById).filter((item) => {
+      return item.id === user.id;
+    });
+    result[0]["profile"] = image;
+    editCeoDetail({ ...result[0] });
+  };
+
+  const addModalHandler = () => {
+    setAddModal(!addModal);
+  };
+
+  const updateMdDetail = (data: IAddCEODetailsFormInput & { id: string }) => {
+    editCeoDetail(data);
   };
 
   return (
@@ -36,7 +75,7 @@ const CeoDetailsCard = () => {
         <S.CeoDetailData>
           <S.CeoDataLeft>
             <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={imagePic ? imagePic : ProfilePicture} alt="profile picture" />
+              <S.CeoProfilePicture src={getURL(user.id) ? getURL(user.id) : ProfilePicture} alt="profile picture" />
               <S.EditBox
                 onClick={() => {
                   handleIconClick();
@@ -47,9 +86,9 @@ const CeoDetailsCard = () => {
               </S.EditBox>
             </S.ProfilePictureBox>
             <S.CeoData>
-              <S.CeoName>Arokiyaraj Reddy</S.CeoName>
-              <S.CeoAge>Age: 48</S.CeoAge>
-              <S.CeoJoinedDate>Joined 28th Jul 2022</S.CeoJoinedDate>
+              <S.CeoName>{user.name}</S.CeoName>
+              <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
+              <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
             </S.CeoData>
           </S.CeoDataLeft>
           <S.CeoDataRight>
@@ -59,22 +98,32 @@ const CeoDetailsCard = () => {
               <S.CeoInfo>தகுதி:</S.CeoInfo>
             </S.CeoData>
             <S.CeoData>
-              <S.CeoInfo>8940065783</S.CeoInfo>
-              <S.CeoInfo>10/02/1969</S.CeoInfo>
-              <S.CeoInfo>BBA, MBA</S.CeoInfo>
+              <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
+              <S.CeoInfo>{user.dob}</S.CeoInfo>
+              <S.CeoInfo>{user.qualification}</S.CeoInfo>
             </S.CeoData>
           </S.CeoDataRight>
         </S.CeoDetailData>
-        <S.CeoDetailDescription>
-          Morbi pretium semper ipsum, ut rhoncus ligula pellentesque non. In hac habitasse platea dictumst. Sed laoreet dictum libero, ac sagittis
-          purus tincidunt sed. Duis non mi rhoncus, imperdiet urna id, suscipit elit.
-        </S.CeoDetailDescription>
+        <S.CeoDetailDescription>{user.description}</S.CeoDetailDescription>
         <S.ButtonContainer>
-          <S.CustomIconContainer>delete</S.CustomIconContainer>
+          <S.CustomIconContainer
+            onClick={() => {
+              deleteCeoDetail(user.id);
+            }}
+          >
+            delete
+          </S.CustomIconContainer>
           <S.CustomIconContainer>id-card</S.CustomIconContainer>
-          <S.CustomIconContainer>edit</S.CustomIconContainer>
+          <S.CustomIconContainer
+            onClick={() => {
+              addModalHandler();
+            }}
+          >
+            edit
+          </S.CustomIconContainer>
         </S.ButtonContainer>
       </S.CeoDetailCard>
+      <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
