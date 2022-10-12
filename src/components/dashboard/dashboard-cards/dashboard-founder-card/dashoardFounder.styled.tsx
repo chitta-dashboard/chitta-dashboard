@@ -5,8 +5,8 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     padding: "1rem",
-    backgroundColor: "#fff",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: theme.palette.bg.main,
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     borderRadius: "1.25rem",
     [theme.breakpoints.up("xl")]: {
       minHeight: "15vh",
@@ -22,9 +22,9 @@ export namespace S {
       width: "35px",
       height: "35px",
       transform: "rotate(-180deg)",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -38,9 +38,9 @@ export namespace S {
       width: "35px",
       height: "35px",
       zIndex: "3",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -79,7 +79,7 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    background: "#fff",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     padding: "1rem 0.2rem",
     [theme.breakpoints.down("lg")]: {
@@ -92,7 +92,7 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    background: "#fff",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     paddingLeft: "2rem",
     [theme.breakpoints.down("lg")]: {
@@ -109,7 +109,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)({
+  export const FounderCardHeaderRight = styled(Box)(({ theme }) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -117,8 +117,8 @@ export namespace S {
     gap: "1rem",
     paddingBottom: "1rem",
     borderBottom: "1px solid",
-    borderColor: "rgba(104, 104, 104, 0.1)",
-  });
+    borderColor: theme.palette.addAlpha(theme.palette.border.secondary, 0.1),
+  }));
 
   export const FounderImgContainer = styled(Box)({
     width: "10rem",

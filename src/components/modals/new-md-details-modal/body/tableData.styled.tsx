@@ -29,7 +29,7 @@ namespace S {
     gridTemplateColumns: "1fr 3fr 2fr",
     alignItems: "center",
     padding: "10px",
-    borderBottom: "2px solid rgba(104, 104, 104, 0.1)",
+    borderBottom: `2px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
     p: {
       color: theme.palette.text.secondaryLight,
       fontWeight: "500",
