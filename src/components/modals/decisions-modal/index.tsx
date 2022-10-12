@@ -62,7 +62,7 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
       presenter: data.presenter,
       participator: data.participator,
     });
-    // handleClose(); // close is handled inside cb (with confirmation)
+    handleClose();
   };
 
   return (
