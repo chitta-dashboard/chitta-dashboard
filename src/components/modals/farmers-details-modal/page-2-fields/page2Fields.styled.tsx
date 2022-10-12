@@ -12,7 +12,7 @@ namespace S {
       "gmb gmb gmb gmb gmb gmb"
     `,
     gridTemplateRows: "auto 120px",
-    gap: "1.5rem 1.2rem",
+    gap: "1rem",
   });
 }
 
