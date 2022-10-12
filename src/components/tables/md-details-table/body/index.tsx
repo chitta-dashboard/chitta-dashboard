@@ -110,9 +110,9 @@ const Body = () => {
 
   return (
     <>
-      {Object.values(mdList).length > 0 ? (
+      {mdList.length > 0 ? (
         <BodyWrapper>
-          {Object.values(mdList).map((user) => (
+          {mdList.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
                 <CS.Icon onClick={() => iconModalHandler(user)}>three-dots</CS.Icon>

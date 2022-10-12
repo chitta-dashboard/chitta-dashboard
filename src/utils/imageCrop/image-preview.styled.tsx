@@ -10,7 +10,7 @@ namespace S {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "rgba(22,22,22,0.2)",
+    background: theme.palette.custom.backdrop,
     zIndex: "5",
   }));
 
@@ -23,7 +23,7 @@ namespace S {
     justifyContent: "space-between",
     width: "70%",
     height: "70vh",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     position: "relative",
     borderRadius: "0.75rem",
   }));
@@ -43,7 +43,7 @@ namespace S {
   }));
 
   export const CloseIcon = styled("i")(({ theme }) => ({
-    color: "white",
+    color: theme.palette.text.white,
     fontSize: "0.7rem",
   }));
 
@@ -109,7 +109,7 @@ namespace S {
       padding: "10px 20px",
       fontSize: "1rem",
       backgroundColor: theme.palette.primary.light,
-      color: "white",
+      color: theme.palette.text.white,
       border: "none",
       cursor: "pointer",
       borderRadius: "0.4rem",

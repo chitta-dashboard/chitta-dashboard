@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 
 export namespace S {
   export const DashboardHeaderWrapper = styled(Box)({
@@ -38,16 +37,16 @@ export namespace S {
     gap: "1.5rem",
   });
 
-  export const IconContainer = styled(Box)({
+  export const IconContainer = styled(Box)(({ theme }) => ({
     height: "2rem",
     width: "2rem",
     borderRadius: "50%",
-    backgroundColor: "#fff",
+    backgroundColor: theme.palette.bg.main,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     cursor: "pointer",
-  });
+  }));
 
   export const ImgContainer = styled(Box)({
     height: "4.5rem",

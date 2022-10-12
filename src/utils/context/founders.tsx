@@ -25,8 +25,6 @@ type Props = {
 
 export interface foundersContextType {
   foundersById: { [id: string]: Founders };
-  page: number;
-  rowsPerPage: number;
   searchFilter: string;
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
@@ -50,7 +48,7 @@ const initialState: foundersContextType = {
     "2": {
       id: "2",
       profile: profileImg,
-      name: "Jhon Durairaj",
+      name: "John Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "1990-01-27",
@@ -93,8 +91,6 @@ const initialState: foundersContextType = {
       signature: "",
     },
   },
-  page: 1,
-  rowsPerPage: 6,
   searchFilter: "",
   sortFilter: ASCENDING,
   setSortFilter: () => {},

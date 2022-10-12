@@ -19,7 +19,6 @@ const Layout: FC = () => {
             "&::-webkit-scrollbar": {
               width: "5px", // for vertical scroll
               height: "5px", // for horizontal scroll
-              // backgroundColor: "#F5F5F5",
               backgroundColor: "transparent",
               borderRadius: "10px",
             },

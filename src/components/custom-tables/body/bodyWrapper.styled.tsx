@@ -3,7 +3,7 @@ import { styled, TableBody } from "@mui/material";
 namespace S {
   export const Content = styled(TableBody)(({ theme }) => ({
     "& tr": {
-      borderBottom: `0.2rem solid ${theme.palette.addAlpha(theme.palette.text.secondary, 0.1)}`,
+      borderBottom: `0.2rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
       cursor: "pointer",
       "&:hover": {
         backgroundColor: theme.palette.bg.light,

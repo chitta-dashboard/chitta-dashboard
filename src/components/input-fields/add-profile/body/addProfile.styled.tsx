@@ -15,8 +15,8 @@ namespace S {
     height: "1.7rem",
     lineHeight: "1.8rem",
     borderRadius: "50%",
-    color: "#ffffff",
-    border: theme.palette.primary.light,
+    color: theme.palette.bg.main,
+    border: theme.palette.border.primary,
     backgroundColor: theme.palette.primary.light,
   }));
 
