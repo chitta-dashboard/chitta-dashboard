@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { customMemberFilter, FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
@@ -27,9 +27,9 @@ const Body = () => {
 
   useEffect(() => {
     setFarmersGroupMemberList(
-      memberFilter === "all"
+      customMemberFilter.ALL === memberFilter
         ? Object.values(listData)
-        : memberFilter === "1"
+        : customMemberFilter.WITH_MEMBERS === memberFilter
         ? Object.values(listData).filter((list) => list.members?.length !== 0)
         : Object.values(listData).filter((list) => list.members?.length === 0),
     );
@@ -80,9 +80,9 @@ const Body = () => {
 
   return (
     <>
-      {Object.values(farmersGroupList).length > 0 ? (
+      {farmersGroupList.length > 0 ? (
         <BodyWrapper>
-          {Object.values(farmersGroupList).map((list) => {
+          {farmersGroupList.map((list) => {
             return (
               <S.Row key={list.id} onClick={() => selectGroupHandler(list.groupName)} select={list.groupName === groupFilter ? 1 : 0}>
                 <S.TabCell>

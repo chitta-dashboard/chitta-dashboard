@@ -147,7 +147,7 @@ const Body = () => {
 
   return (
     <>
-      {Object.values(farmersList).length > 0 ? (
+      {farmersList.length > 0 ? (
         <BodyWrapper>
           <tr style={{ display: "none" }}>
             <td>
@@ -155,7 +155,7 @@ const Body = () => {
               <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
             </td>
           </tr>
-          {Object.values(farmersList).map((user: farmerDetail) => (
+          {farmersList.map((user: farmerDetail) => (
             <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
               <S.RowCheckCell
                 onClick={(e) => {

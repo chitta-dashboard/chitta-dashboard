@@ -49,8 +49,6 @@ type Props = {
 
 interface farmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
-  page: number;
-  rowsPerPage: number;
   searchFilter: string;
   sortFilter: "ascending" | "descending";
   setSortFilter: (sortOrder: "ascending" | "descending") => void;
@@ -60,7 +58,6 @@ interface farmerDetailsContextType {
   editFarmerDetail: (data: farmerDetail) => void;
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
-  setPage: (page: number) => void;
   checkboxSelectAll: () => void;
   checkboxSelect: (id: string | number) => void;
   groupFilter: string;
@@ -232,8 +229,6 @@ const initialState: farmerDetailsContextType = {
       groupMember: "",
     },
   },
-  page: 1,
-  rowsPerPage: 6,
   searchFilter: "",
   sortFilter: "ascending",
   setSortFilter: () => {},
@@ -243,7 +238,6 @@ const initialState: farmerDetailsContextType = {
   editFarmerDetail: () => {},
   deleteFarmerDetail: () => {},
   editTableIcon: () => {},
-  setPage: () => {},
   checkboxSelectAll: () => {},
   checkboxSelect: () => {},
   groupFilter: "all",

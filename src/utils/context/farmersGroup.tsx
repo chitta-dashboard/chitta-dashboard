@@ -9,9 +9,12 @@ const SET_SORT_FILTER = "SET_SORT_FILTER";
 const MEMBER_FILTER = "MEMBER_FILTER";
 const ADD_GROUP_MEMBERS = "ADD_GROUP_MEMBERS";
 
-// export const ALL = 1;
-// export const WITH_MEMBERS = 2;
-// export const WITHOUT_MEMBERS = 3;
+//Group Filter by Member
+export const customMemberFilter = {
+  ALL: 1,
+  WITH_MEMBERS: 2,
+  WITHOUT_MEMBERS: 3,
+};
 
 export type FarmersGroup = {
   id: string;
@@ -34,10 +37,8 @@ type Props = {
 
 interface farmersGroupContextType {
   farmersGroupById: { [id: string]: FarmersGroup };
-  page: number;
-  rowsPerPage: number;
   searchFilter: string;
-  memberFilter: string;
+  memberFilter: number;
   sortFilter: "ascending" | "descending";
   setSortFilter: (sortOrder: "ascending" | "descending") => void;
   setSearchFilter: (searchText: string) => void;
@@ -45,7 +46,7 @@ interface farmersGroupContextType {
   editFarmersGroup: (data: FarmersGroup) => void;
   deleteFarmersGroup: (id: string) => void;
   addGroupMembers: (data: test) => void;
-  setMemberFilter: (setMember: string) => void;
+  setMemberFilter: (value: number) => void;
 }
 
 const initialState: farmersGroupContextType = {
@@ -78,9 +79,6 @@ const initialState: farmersGroupContextType = {
       members: ["2", "3", "6"],
     },
   },
-
-  page: 1,
-  rowsPerPage: 6,
   searchFilter: "",
   sortFilter: "ascending",
   addGroupMembers: () => {},
@@ -89,7 +87,7 @@ const initialState: farmersGroupContextType = {
   addFarmersGroup: () => {},
   editFarmersGroup: () => {},
   deleteFarmersGroup: () => {},
-  memberFilter: "all",
+  memberFilter: customMemberFilter.ALL,
   setMemberFilter: () => {},
 };
 
@@ -173,8 +171,8 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
     dispatch({ type: ADD_GROUP_MEMBERS, payload: data });
   };
 
-  const setMemberFilter = (setMember: string) => {
-    dispatch({ type: MEMBER_FILTER, payload: setMember });
+  const setMemberFilter = (value: number) => {
+    dispatch({ type: MEMBER_FILTER, payload: value });
   };
 
   const setSearchFilter = (searchText: string) => {

@@ -10,9 +10,10 @@ interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
   handleDelete: () => void;
+  deleteMessage?: JSX.Element;
 }
 
-const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete }) => {
+const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete, deleteMessage }) => {
   return (
     <CustomModal openModal={openModal} handleClose={handleClose}>
       <ModalHeader
@@ -24,7 +25,7 @@ const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete }) 
         Warning
       </ModalHeader>
       <ModalBody id="" onSubmit={() => {}}>
-        <DeleteBody />
+        <DeleteBody deleteMessage={deleteMessage} />
       </ModalBody>
       <ModalFooter>
         <YesOrNoButtons yesAction={handleDelete} handleClose={handleClose} />

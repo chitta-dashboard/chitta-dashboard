@@ -24,8 +24,6 @@ type Props = {
 
 export interface foundersContextType {
   foundersById: { [id: string]: Founders };
-  page: number;
-  rowsPerPage: number;
   searchFilter: string;
   sortFilter: "ascending" | "descending";
   setSortFilter: (sortOrder: "ascending" | "descending") => void;
@@ -92,8 +90,6 @@ const initialState: foundersContextType = {
       signature: "",
     },
   },
-  page: 1,
-  rowsPerPage: 6,
   searchFilter: "",
   sortFilter: "ascending",
   setSortFilter: () => {},
