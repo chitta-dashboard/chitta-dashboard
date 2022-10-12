@@ -29,14 +29,14 @@ export namespace S {
     padding: "0.4rem 0.5rem",
   });
 
-  export const DecisionCertificateContainer = styled(Box)({
+  export const DecisionCertificateContainer = styled(Box)(({ theme }) => ({
     height: "90%",
     width: "100%",
-    background: "#FFFFFF",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     overflowY: "auto",
     padding: "1rem 5%",
-  });
+  }));
 
   export const DecisionCertificateHeader = styled(Box)({
     display: "flex",
@@ -59,12 +59,12 @@ export namespace S {
     lineHeight: "1.25",
   }));
 
-  export const HeaderSubText = styled(HeaderText)({
+  export const HeaderSubText = styled(HeaderText)(({ theme }) => ({
     fontSize: "1rem",
     fontWeight: "400",
     textAlign: "center",
-    color: "#323232",
-  });
+    color: theme.palette.text.certificateDark,
+  }));
 
   export const DateContainer = styled(Box)({
     display: "flex",

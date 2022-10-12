@@ -21,17 +21,17 @@ namespace S {
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "0.2.25rem",
       },
       "&:hover fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "2.25rem",
       },
       "&.Mui-focused fieldset": {
-        borderColor: theme.palette.primary.main,
+        borderColor: theme.palette.border.primaryDark,
         border: "0.125rem solid",
         borderRadius: "2.25rem",
       },
@@ -59,7 +59,7 @@ namespace S {
     padding: "1.3rem",
     gap: "0.4rem",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.bg.light,
       cursor: "pointer",
       "& p": {
         fontWeight: 700,

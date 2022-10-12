@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useReducer } from "react";
 
 //ACTION TYPES
-const ADD_DECISION = "ADD_DECISION";
+const ADD_RESOLUTION = "ADD_RESOLUTION";
 
-export interface IDecision {
+export interface IResolution {
   id: string;
   groupName: string;
   groupTitle: string;
@@ -16,8 +16,8 @@ export interface IDecision {
 }
 
 interface IContextType {
-  decisions: { [id: string]: IDecision };
-  addDecision: (decision: IDecision) => void;
+  resolutions: { [id: string]: IResolution };
+  addResolution: (resolution: IResolution) => void;
 }
 
 interface PropType {
@@ -25,7 +25,7 @@ interface PropType {
 }
 
 const initialState: IContextType = {
-  decisions: {
+  resolutions: {
     "61ef4c82-3629-41ea-bbbe-6ec2ffdfce73": {
       id: "61ef4c82-3629-41ea-bbbe-6ec2ffdfce73",
       groupName: "Group - 1",
@@ -115,15 +115,15 @@ const initialState: IContextType = {
       participator: ["person1", "person2", "person3"],
     },
   },
-  addDecision: () => {},
+  addResolution: () => {},
 };
 
-const decisionsContext = createContext<IContextType>(initialState);
+const resolutionsContext = createContext<IContextType>(initialState);
 
 const reducer = (state: IContextType, action: { type: string; payload: any }) => {
   switch (action.type) {
-    case ADD_DECISION:
-      return { ...state, decisions: { ...state.decisions, [action.payload.id]: action.payload } };
+    case ADD_RESOLUTION:
+      return { ...state, resolutions: { ...state.resolutions, [action.payload.id]: action.payload } };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -131,21 +131,21 @@ const reducer = (state: IContextType, action: { type: string; payload: any }) =>
   }
 };
 
-const DecisionsProvider: React.FC<PropType> = ({ children }) => {
+const ResolutionsProvider: React.FC<PropType> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addDecision = (decision: IDecision) => {
-    dispatch({ type: ADD_DECISION, payload: decision });
+  const addResolution = (resolution: IResolution) => {
+    dispatch({ type: ADD_RESOLUTION, payload: resolution });
   };
 
   const data = {
     ...state,
-    addDecision,
+    addResolution,
   };
 
-  return <decisionsContext.Provider value={data}>{children}</decisionsContext.Provider>;
+  return <resolutionsContext.Provider value={data}>{children}</resolutionsContext.Provider>;
 };
 
-const useDecisionsProviderContext = () => useContext(decisionsContext);
+const useResolutionsProviderContext = () => useContext(resolutionsContext);
 
-export { DecisionsProvider, useDecisionsProviderContext };
+export { ResolutionsProvider, useResolutionsProviderContext };

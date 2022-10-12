@@ -6,7 +6,7 @@ namespace S {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#ffffff",
+    backgroundColor: theme.palette.bg.main,
     padding: ".5rem 1.2rem",
     gap: "1rem",
   }));
@@ -42,7 +42,7 @@ namespace S {
     width: "100%",
     gap: ".5rem 1rem",
     flexWrap: "wrap",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     [theme.breakpoints.down("lg")]: {
       gridTemplateColumns: "repeat(4, auto)",
     },
@@ -52,7 +52,7 @@ namespace S {
       width: "unset",
       top: "0",
       right: "0",
-      boxShadow: "0 5px 20px rgba(0, 0, 0, .3)",
+      boxShadow: `0 5px 20px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.3)}`,
       borderTopLeftRadius: "40px",
       borderBottomLeftRadius: "40px",
       height: "100%",
@@ -82,7 +82,7 @@ namespace S {
         transform: isActive ? "scaleX(1)" : "scaleX(0)",
         transformOrigin: "right",
         transition: "transform .3s ease-out",
-        backgroundColor: theme.palette.custom.backgroundLight,
+        backgroundColor: theme.palette.bg.light,
       },
       "&:hover::after": {
         transform: "scaleX(1)",
@@ -148,7 +148,7 @@ namespace S {
   export const NavBarMenu = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: theme.palette.custom.backgroundDark,
+    backgroundColor: theme.palette.bg.dark,
     padding: "1.5rem 1.5rem 1.2rem 2rem",
     color: theme.palette.text.primaryDark,
     marginBottom: "2rem",
@@ -168,7 +168,7 @@ namespace S {
       border: `2px solid ${theme.palette.background.paper}`,
       padding: "0 4px",
       backgroundColor: theme.palette.primary.light,
-      color: "#ffffff",
+      color: theme.palette.text.white,
     },
   }));
 
@@ -179,11 +179,11 @@ namespace S {
   export const Items = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0.6rem 2rem",
-    borderBottom: "0.1rem solid #6868681A",
+    borderBottom: `0.1rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
     color: theme.palette.text.secondaryLight,
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.bg.light,
       color: theme.palette.text.secondaryDark,
     },
   }));

@@ -7,6 +7,9 @@ export namespace S {
     maxWidth: "100vw",
     height: "130px !important",
     position: "relative",
+    [theme.breakpoints.down("md")]: {
+      width: "calc(100% - 4rem)",
+    },
     ".slick-slide": {
       maxWidth: "calc(278px + 1rem) !important",
     },
@@ -17,9 +20,9 @@ export namespace S {
       width: "50px",
       height: "50px",
       transform: "rotate(-180deg)",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -32,9 +35,9 @@ export namespace S {
       top: "50% !important",
       width: "50px",
       height: "50px",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       zIndex: "3",
       ":before": {
         content: '"j"',
@@ -51,9 +54,9 @@ export namespace S {
   export const StasticsCard = styled(Box)(({ theme }: any) => ({
     height: "130px !important",
     width: "278px !important",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     padding: "0.5rem 1.3rem",
-    background: "#fff",
+    background: theme.palette.bg.main,
     borderRadius: "20px",
     display: "flex !important",
     flexDirection: "column",
@@ -61,7 +64,7 @@ export namespace S {
     gap: "0.8rem",
     [theme.breakpoints.down("xl")]: {
       height: "130px !important",
-      width: "250px !important",
+      width: "200px !important",
       padding: "1rem",
       gap: "0.5rem",
     },
@@ -120,7 +123,7 @@ export namespace S {
   })(({ theme, neg }: any) => ({
     width: "4rem",
     height: "1.5rem",
-    background: neg ? "rgba(255, 0, 0, 0.1)" : theme.palette.custom.backgroundLight,
+    background: neg ? theme.palette.addAlpha(theme.palette.text.red, 0.1) : theme.palette.bg.light,
     fontSize: "0.8rem",
     fontWeight: "600",
     display: "flex",

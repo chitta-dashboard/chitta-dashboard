@@ -23,7 +23,7 @@ namespace S {
   }));
 
   export const CeoDetailCard = styled(Box)(({ theme }: any) => ({
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     height: "19.375rem",
     width: "46.85rem",
     borderRadius: "1.25rem",
@@ -68,6 +68,7 @@ namespace S {
   export const CeoProfilePicture = styled("img")({
     width: "100%",
     height: "100%",
+    objectFit: "cover",
   });
 
   export const EditBox = styled(Box)(({ theme }: any) => ({
@@ -76,7 +77,7 @@ namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -123,7 +124,7 @@ namespace S {
   export const CeoJoinedDate = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
     marginTop: "0.625rem",
-    color: "rgba(119, 119, 119, 0.8)",
+    color: `${theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8)}`,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.625rem",
     },
@@ -178,14 +179,14 @@ namespace S {
 
   export const CustomButton = styled(Button)(({ theme }: any) => ({
     color: theme.palette.text.primary,
-    backgroundColor: "white",
-    border: "0.0625rem dotted #1A9035",
+    backgroundColor: theme.palette.bg.main,
+    border: `0.0625rem dotted ${theme.palette.border.primary}`,
     borderRadius: "50%",
     height: "4.375rem",
     width: "4.375rem",
     fontSize: "1.875rem",
     "&:hover": {
-      color: "white",
+      color: theme.palette.text.white,
     },
   }));
 }

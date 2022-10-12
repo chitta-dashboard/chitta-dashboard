@@ -2,7 +2,7 @@ import { Theme, Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const ShareHolderCertificateContainer = styled(Box)({
+  export const ShareHolderCertificateContainer = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -10,10 +10,10 @@ export namespace S {
     boxSizing: "border-box",
     height: "839.09px",
     width: "74.375rem",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem ",
-  });
+  }));
 
   export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
@@ -107,17 +107,17 @@ export namespace S {
 
   export const HeadingContainerSignNo = styled(Box)({});
 
-  export const RegNoCin = styled(Typography)({
+  export const RegNoCin = styled(Typography)(({ theme }) => ({
     fontSize: "0.9375rem",
     fontFamily: "Poppins",
-    color: "#323232",
-  });
+    color: theme.palette.text.certificateDark,
+  }));
 
-  export const ShareCertificateHeading = styled(Typography)({
+  export const ShareCertificateHeading = styled(Typography)(({ theme }) => ({
     fontFamily: "My Soul",
     fontSize: "4.0625rem",
-    color: "#0D0D0D",
-  });
+    color: theme.palette.text.certificateExtraDark,
+  }));
 
   export const CertificateContent = styled(Box)({
     width: "100%",
@@ -132,13 +132,13 @@ export namespace S {
     height: "2.8125rem",
   });
 
-  export const CertificateText = styled(Typography)({
+  export const CertificateText = styled(Typography)(({ theme }) => ({
     display: "flex",
     alignItems: "flex-end",
     fontFamily: "Poppins",
     fontSize: "1.125rem",
-    color: "#12441E",
-  });
+    color: theme.palette.primary.light,
+  }));
 
   export const SignatureTextLine = styled(Box)({
     Width: "100%",
@@ -151,17 +151,17 @@ export namespace S {
     paddingRight: "1.4375rem",
   });
 
-  export const BlankSpace1 = styled(Typography)({
+  export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     fontFamily: "Poppins",
     fontSize: "1.125rem",
     textAlign: "center",
-    color: "#12441E",
-    borderBottom: "1px solid #404040",
+    color: theme.palette.primary.light,
+    borderBottom: `1px solid ${theme.palette.border.certificate}`,
     minWidth: "13.125rem",
     maxWidth: "14.375rem",
     height: "1.625rem",
-  });
+  }));
 
   export const BlankSpace2 = styled(BlankSpace1)({
     minWidth: "90%",

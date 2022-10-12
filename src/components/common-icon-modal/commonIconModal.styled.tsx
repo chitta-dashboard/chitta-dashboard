@@ -8,7 +8,7 @@ namespace S {
     "& .MuiPaper-root": {
       borderRadius: "2.25rem",
       width: "max-content",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     },
   }));
 }

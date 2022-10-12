@@ -5,11 +5,11 @@ namespace S {
     width: "100%",
     padding: "0 2.5rem",
     display: "grid",
-    gridTemplateColumns: "1fr auto 1fr",
+    gridTemplateColumns: "40% auto 40%",
     justifyContent: "center",
     gap: "90px",
     [theme.breakpoints.down("md")]: {
-      gridTemplateColumns: "auto 1fr",
+      gridTemplateColumns: "auto 80%",
       padding: "0 4rem",
     },
   }));
@@ -30,7 +30,7 @@ namespace S {
   });
 
   export const LContent = styled(Box)(({ theme }) => ({
-    border: "2px solid #E7E59A",
+    border: `2px solid ${theme.palette.border.tertiary}`,
     borderRadius: "0 40px 0 40px",
     padding: "1.2rem",
     width: "100%",
@@ -70,7 +70,7 @@ namespace S {
   export const Divider = styled("span")(({ theme }) => ({
     display: "inline-block",
     height: "1",
-    backgroundColor: "#E7E59A",
+    backgroundColor: theme.palette.border.tertiary,
     width: "2px",
     position: "relative",
     "&::before": {
@@ -119,8 +119,7 @@ namespace S {
   }));
 
   export const ContentBodyText = styled(Box)(({ theme }) => ({
-    color: theme.palette.text.secondaryLight,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8),
     fontSize: ".8rem",
 
     maxHeight: "57px",
@@ -136,8 +135,7 @@ namespace S {
   }));
 
   export const ContentTimeStamp = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.secondary,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondary, 0.8),
     position: "absolute",
     fontSize: ".8rem",
     top: "-28px",
@@ -158,7 +156,7 @@ namespace S {
     "&.MuiButtonBase-root": {
       backgroundColor: theme.palette.primary.light,
       "&:hover": {
-        backgroundColor: "#57ab5b",
+        backgroundColor: theme.palette.addAlpha(theme.palette.primary.light, 0.75),
       },
     },
   }));

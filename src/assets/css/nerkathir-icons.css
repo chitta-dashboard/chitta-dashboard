@@ -228,3 +228,15 @@
     content: "\22b1";
     color: #686868;
 }
+
+.nerkathir-icon-mark-all-as-read:before {
+  content: "\2600";
+}
+
+.nerkathir-icon-notification1:before {
+  content: "\2601";
+}
+
+.nerkathir-icon-rupee:before {
+  content: "\2603";
+}

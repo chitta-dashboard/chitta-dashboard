@@ -9,8 +9,8 @@ export namespace S {
     alignItems: "center",
     gap: "1rem",
     padding: "1.5rem",
-    backgroundColor: "#fff",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: theme.palette.bg.main,
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     borderRadius: "1.25rem",
     [theme.breakpoints.up("xl")]: {
       padding: "2.5rem",

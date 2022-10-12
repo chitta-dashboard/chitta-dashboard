@@ -1,7 +1,7 @@
 import { styled, Box, Typography, Popover, Stack } from "@mui/material";
 
 namespace S {
-  export const ModalContainer = styled(Popover)({
+  export const ModalContainer = styled(Popover)(({ theme }) => ({
     "& .MuiBackdrop-root": {
       backgroundColor: "none",
     },
@@ -10,18 +10,18 @@ namespace S {
       width: "24rem",
       minWidth: "24rem",
       height: "auto",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     },
-  });
+  }));
 
-  export const HeadingBox = styled(Box)({
+  export const HeadingBox = styled(Box)(({ theme }) => ({
     height: "auto",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     padding: "1rem 1rem",
-    borderBottom: "2px solid rgba(104, 104, 104, 0.1)",
-  });
+    borderBottom: `2px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
+  }));
 
   export const HeadingText = styled(Typography)(({ theme }) => ({
     fontWeight: "600",
@@ -35,33 +35,27 @@ namespace S {
     gap: "1rem",
   });
 
-  export const IconBox = styled("i")(({ theme }) => ({
-    color: theme.palette.text.primary,
-    fontSize: "1.5rem",
-    cursor: "pointer",
-  }));
-
   export const BodyContainer = styled(Box)<{ isheight: number }>(({ isheight }) => ({
     maxHeight: isheight ? "31rem" : "18.5rem",
     overflowY: "auto",
     transition: "max-height 0.2s ease-in",
   }));
 
-  export const BodyBox = styled(Box)({
+  export const BodyBox = styled(Box)(({ theme }) => ({
     display: "flex",
     gap: "2rem",
     padding: "1rem 2rem",
-    borderBottom: "2px solid #68686818",
-  });
+    borderBottom: `2px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
+  }));
 
   export const UserImage = styled("img")({
     width: "4rem",
     height: "4rem",
   });
 
-  export const UserText = styled(Typography)({
-    color: "black",
-  });
+  export const UserText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.black,
+  }));
 
   export const FooterBox = styled(Box)({
     display: "flex",
