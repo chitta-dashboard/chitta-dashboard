@@ -5,7 +5,6 @@ import ModalHeader from "../../custom-modal/header";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import ConfirmationModal from "../confirmation-modal";
 import TableData from "./body/tableData";
 import { searchWord } from "../../../utils/constants";
 import SearchBar from "../../common-components/search-bar";
@@ -30,9 +29,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, handleConfirm
       return searchWord(search, searchKeyWord);
     });
     setmdDetailsByIdData(data);
-    // mdDetailsByIdData = data
-    // console.log("mdDetailsByIdData : ",mdDetailsByIdData)
-  }, [searchKeyWord]);
+  }, [searchKeyWord, mdDetailsById]);
 
   return (
     <CustomModal

@@ -78,4 +78,4 @@ declare module "@mui/system" {
   }
 }
 
-export {};
+export { };
