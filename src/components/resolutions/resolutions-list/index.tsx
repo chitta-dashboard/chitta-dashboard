@@ -3,7 +3,7 @@ import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
-import { sortObj } from "../../../utils/constants";
+import { DESCENDING, sortObj } from "../../../utils/constants";
 import S from "./resolutionsList.styled";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
@@ -19,7 +19,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const { resolutions: resolutionsObj } = useResolutionsProviderContext();
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
-  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), "descending", "creationTime", { asDate: true });
+  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leftData = resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
   const rightData = isMd ? resolutions : resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
 

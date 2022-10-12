@@ -1,7 +1,7 @@
 import { FC, Ref, useRef, Dispatch } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-import { sortObj } from "../../../utils/constants";
+import { DESCENDING, sortObj } from "../../../utils/constants";
 import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 import S from "./resolutionsTree.styled";
@@ -13,7 +13,7 @@ interface Props {
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const { resolutions: resolutionsObj } = useResolutionsProviderContext();
-  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), "descending", "creationTime", { asDate: true });
+  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leafCount = resolutions.length <= 4 ? resolutions.length : 4;
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
