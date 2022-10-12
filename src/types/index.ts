@@ -24,6 +24,7 @@ declare module "@mui/material" {
     };
     border: {
       primary: string;
+      primaryDark: string;
       secondary: string;
       tertiary: string;
       certificate: string;
@@ -54,6 +55,7 @@ declare module "@mui/material" {
     };
     border: {
       primary: string;
+      primaryDark: string;
       secondary: string;
       tertiary: string;
       certificate: string;

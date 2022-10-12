@@ -21,7 +21,7 @@ const SearchBar: FC<CustomProps> = ({ searchHandler, setSearchKeyWord }) => {
       <IconGreen>search</IconGreen>
       <S.SearchBar
         placeholder="  Search..."
-        onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent> | ChangeEvent<HTMLInputElement>) => {
+        onChange={(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>) => {
           setSearchKeyWord
             ? setSearchKeyWord((e.target as HTMLInputElement).value)
             : searchHandler && searchHandler((e.target as HTMLInputElement).value);

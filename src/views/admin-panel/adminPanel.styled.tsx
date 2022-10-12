@@ -18,9 +18,9 @@ namespace S {
     fontWeight: "500",
   }));
 
-  export const ContainerBox = styled(Box)({
+  export const ContainerBox = styled(Box)(({ theme }) => ({
     borderRadius: "1.25rem",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     width: "100%",
     height: "100%",
     overflowX: "hidden",
@@ -28,7 +28,7 @@ namespace S {
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-  });
+  }));
 
   export const ContainerStack = styled(Stack)({
     alignItems: "center",

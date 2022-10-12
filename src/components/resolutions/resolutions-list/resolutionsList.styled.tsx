@@ -30,7 +30,7 @@ namespace S {
   });
 
   export const LContent = styled(Box)(({ theme }) => ({
-    border: "2px solid #E7E59A",
+    border: `2px solid ${theme.palette.border.tertiary}`,
     borderRadius: "0 40px 0 40px",
     padding: "1.2rem",
     width: "100%",
