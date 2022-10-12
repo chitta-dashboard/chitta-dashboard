@@ -94,8 +94,8 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
 
   const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
     cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
-    handleClose();
-    reset();
+    // handleClose();
+    // reset();
   };
 
   return (
