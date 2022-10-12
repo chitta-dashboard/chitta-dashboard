@@ -7,6 +7,7 @@ import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { FoundersContextProvider } from "../../utils/context/founders";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
+import { CeoDetailsContextProvider } from "../../utils/context/ceoDetails";
 import { ResolutionsProvider } from "../../utils/context/resolutions";
 
 type Props = {
@@ -22,7 +23,9 @@ const Provider: FC<Props> = ({ children }) => {
             <FoundersContextProvider>
               <FarmersGroupContextProvider>
                 <FarmerDetailsContextProvider>
-                  <ResolutionsProvider>{children}</ResolutionsProvider>
+                  <CeoDetailsContextProvider>
+                    <ResolutionsProvider>{children}</ResolutionsProvider>
+                  </CeoDetailsContextProvider>
                 </FarmerDetailsContextProvider>
               </FarmersGroupContextProvider>
             </FoundersContextProvider>
