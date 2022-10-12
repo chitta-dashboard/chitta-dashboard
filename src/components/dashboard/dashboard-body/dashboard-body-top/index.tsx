@@ -2,12 +2,13 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Icon from "../../../icons";
+import { Theme } from "@mui/material";
 import S from "../dashboardBodyTop.styled";
+import Icon from "../../../icons";
 
 const DashboardBodyTop = () => {
-  const xl = useMediaQuery((theme: any) => theme.breakpoints.up("xl"));
-  const md = useMediaQuery((theme: any) => theme.breakpoints.up("md"));
+  const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
+  const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
   const StatisticsItems = [
     {
@@ -66,33 +67,31 @@ const DashboardBodyTop = () => {
   };
 
   return (
-    <>
-      <S.StasticsCardContainer>
-        <Slider {...settings}>
-          {StatisticsItems.map((card) => {
-            return (
-              <S.StasticsCard key={card.id}>
-                <S.StatCardHeader>
-                  <S.StatCardHeaderLeft>
-                    <S.StatCardIcon>
-                      <Icon iconName={card.icon} />
-                    </S.StatCardIcon>
-                    <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
-                  </S.StatCardHeaderLeft>
-                  <S.StatCardHeaderRight>
-                    <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
-                  </S.StatCardHeaderRight>
-                </S.StatCardHeader>
-                <S.StatCardFooter>
-                  {card.footerName}
-                  <Icon iconName="three-dots" />
-                </S.StatCardFooter>
-              </S.StasticsCard>
-            );
-          })}
-        </Slider>
-      </S.StasticsCardContainer>
-    </>
+    <S.StasticsCardContainer>
+      <Slider {...settings}>
+        {StatisticsItems.map((card) => {
+          return (
+            <S.StasticsCard key={card.id}>
+              <S.StatCardHeader>
+                <S.StatCardHeaderLeft>
+                  <S.StatCardIcon>
+                    <Icon iconName={card.icon} />
+                  </S.StatCardIcon>
+                  <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
+                </S.StatCardHeaderLeft>
+                <S.StatCardHeaderRight>
+                  <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
+                </S.StatCardHeaderRight>
+              </S.StatCardHeader>
+              <S.StatCardFooter>
+                {card.footerName}
+                <Icon iconName="three-dots" />
+              </S.StatCardFooter>
+            </S.StasticsCard>
+          );
+        })}
+      </Slider>
+    </S.StasticsCardContainer>
   );
 };
 

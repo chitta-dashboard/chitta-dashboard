@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { farmerGroupDetail, useFarmerGroupDetailsContext } from "../../../../utils/context/farmersGroup";
+import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
@@ -13,20 +13,13 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const {
-    farmerGroupList: listData,
-    editFarmerGroupDetail,
-    deleteFarmerGroupDetail,
-    searchFilter,
-    sortFilter,
-    memberFilter,
-  } = useFarmerGroupDetailsContext();
+  const { farmersGroupById: listData, editFarmersGroup, deleteFarmersGroup, searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const navigate = useNavigate();
-  const [farmerGroupList, setFarmerGroupList] = useState(listData);
-  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState(listData);
-  const [farmerGroupListSearch, setFarmerGroupListSearch] = useState(listData);
-  const [farmerGroupListSort, setFarmerGroupListSort] = useState(listData);
+  const [farmersGroupList, setFarmersGroupList] = useState(Object.values(listData));
+  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState(Object.values(listData));
+  const [farmersGroupListSearch, setFarmersGroupListSearch] = useState(Object.values(listData));
+  const [farmersGroupListSort, setFarmersGroupListSort] = useState(Object.values(listData));
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -36,24 +29,24 @@ const Body = () => {
   useEffect(() => {
     setFarmersGroupMemberList(
       memberFilter === "all"
-        ? listData
+        ? Object.values(listData)
         : memberFilter === "1"
-        ? listData.filter((list) => list.members?.length !== 0)
-        : listData.filter((list) => list.members?.length === 0),
+        ? Object.values(listData).filter((list) => list.members?.length !== 0)
+        : Object.values(listData).filter((list) => list.members?.length === 0),
     );
   }, [memberFilter, listData]);
 
   useEffect(() => {
-    setFarmerGroupListSearch(farmersGroupMemberList.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
+    setFarmersGroupListSearch(farmersGroupMemberList.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
   }, [searchFilter, farmersGroupMemberList]);
 
   useEffect(() => {
-    setFarmerGroupListSort(sortObj<farmerGroupDetail>(farmerGroupListSearch, sortFilter, "groupName"));
-  }, [farmerGroupListSearch, sortFilter]);
+    setFarmersGroupListSort(sortObj<FarmersGroup>(farmersGroupListSearch, sortFilter, "groupName"));
+  }, [farmersGroupListSearch, sortFilter]);
 
   useEffect(() => {
-    setFarmerGroupList(farmerGroupListSort);
-  }, [farmerGroupListSort]);
+    setFarmersGroupList(farmersGroupListSort);
+  }, [farmersGroupListSort]);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = (id: string) => {
@@ -71,7 +64,7 @@ const Body = () => {
   //Update FarmerGroup Handler
   const updateFarmerGroup = (data: IAddFarmersGroupFormInput) => {
     setIconModal(false);
-    editFarmerGroupDetail({ ...data, id: editId });
+    editFarmersGroup({ ...data, id: editId });
   };
 
   // Delete Modal
@@ -88,39 +81,35 @@ const Body = () => {
 
   return (
     <>
-      {farmerGroupList.length > 0 ? (
+      {Object.values(farmersGroupList).length > 0 ? (
         <BodyWrapper>
-          {farmerGroupList.map((farmersGroup) => {
+          {Object.values(farmersGroupList).map((list) => {
             return (
-              <S.Row
-                key={farmersGroup.id}
-                onClick={() => selectGroupHandler(farmersGroup.groupName)}
-                select={farmersGroup.groupName === groupFilter ? 1 : 0}
-              >
+              <S.Row key={list.id} onClick={() => selectGroupHandler(list.groupName)} select={list.groupName === groupFilter ? 1 : 0}>
                 <S.TabCell>
                   <CS.Icon
                     onClick={(e) => {
                       e.stopPropagation();
-                      iconModalHandler(farmersGroup.id);
+                      iconModalHandler(list.id);
                     }}
                   >
                     three-dots
                   </CS.Icon>
                 </S.TabCell>
-                <S.Cell title="குழுபெயர்" ismember={farmersGroup?.members?.length ? 1 : 0}>
-                  {farmersGroup.groupName}
+                <S.Cell title="குழுபெயர்" ismember={list?.members?.length ? 1 : 0}>
+                  {list.groupName}
                 </S.Cell>
                 <S.Cell title="எண்ணிக்கை">
                   <S.Icon>
                     <CS.Icon shade>farmer-count</CS.Icon>
-                    <Typography>{farmersGroup?.members?.length}</Typography>
+                    <Typography>{list?.members?.length}</Typography>
                   </S.Icon>
                 </S.Cell>
-                <S.Cell title="குழு விவரங்கள்">{farmersGroup.explanation}</S.Cell>
+                <S.Cell title="குழு விவரங்கள்">{list.explanation}</S.Cell>
                 <S.WebTableCell onClick={(e) => e.stopPropagation()}>
                   <S.IconBox>
-                    <CS.Icon onClick={() => deleteModalHandler(farmersGroup.id)}>delete</CS.Icon>
-                    <CS.Icon onClick={() => editFarmerGroupHandler(farmersGroup.id)}>edit</CS.Icon>
+                    <CS.Icon onClick={() => deleteModalHandler(list.id)}>delete</CS.Icon>
+                    <CS.Icon onClick={() => editFarmerGroupHandler(list.id)}>edit</CS.Icon>
                   </S.IconBox>
                 </S.WebTableCell>
               </S.Row>
@@ -149,7 +138,7 @@ const Body = () => {
         openModal={deleteModal}
         handleClose={() => setDeleteModal(false)}
         handleDelete={() => {
-          deleteFarmerGroupDetail(deleteId);
+          deleteFarmersGroup(deleteId);
           setDeleteModal(false);
           setIconModal(false);
         }}

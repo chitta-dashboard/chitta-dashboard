@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Button } from "@mui/material";
-
 import DeleteModal from "./delete-modal";
 import ConfirmationModal from "./confirmation-modal";
 import FarmersGroupModal from "./farmers-group-modal";
@@ -10,8 +9,8 @@ import DecisionsModal from "./decisions-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
-import { FarmerGroupDetailsContextProvider } from "../../utils/context/farmersGroup";
-import { IDecision } from "../../utils/context/decisionsContext";
+import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
+import { IResolution } from "../../utils/context/resolutions";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -29,18 +28,23 @@ const ModalLaunchButtons = () => {
   const submitHandleClickOpen = () => {
     setOpenConfirmation(!openConfirmation);
   };
+
   const addMDOpen = () => {
     setOpenAddMd(!openAddMd);
   };
+
   const addFarmerGroup = () => {
     setOpenAddFarmerGroup(!openAddFarmerGroup);
   };
+
   const addFarmerDetails = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
   };
+
   const addDecisions = () => {
     setOpenAddDecisions(!openAddDecisions);
   };
+
   const addShareAmount = () => {
     setOpenShareAmount(!openShareAmount);
   };
@@ -104,7 +108,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmerDetailsContextProvider>
-      <FarmerGroupDetailsContextProvider>
+      <FarmersGroupContextProvider>
         <FarmersGroupModal
           openModal={openAddFarmerGroup}
           cb={(data: IAddFarmersGroupFormInput): void => {
@@ -114,8 +118,8 @@ const ModalLaunchButtons = () => {
           editMode
           id={"3"}
         />
-      </FarmerGroupDetailsContextProvider>
-      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IDecision): void => {}} />
+      </FarmersGroupContextProvider>
+      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );

@@ -2,7 +2,7 @@ import { styled, Stack, TableCell, TableRow } from "@mui/material";
 
 namespace S {
   export const Row = styled(TableRow)<{ select: number }>(({ theme, select }) => ({
-    backgroundColor: select ? theme.palette.custom.backgroundLight : "",
+    backgroundColor: select ? theme.palette.bg.light : "",
   }));
 
   export const TabCell = styled(TableCell)(({ theme }) => ({
@@ -16,11 +16,11 @@ namespace S {
     },
   }));
 
-  export const NameStack = styled(Stack)(() => ({
+  export const NameStack = styled(Stack)({
     flexDirection: "row",
     gap: "1rem",
     alignItems: "center",
-  }));
+  });
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { SortOrder } from "../../utils/constants";
 import LeftSection from "./left-section";
 import RightSection from "./right-section";
 import S from "./tablePageHeader.styled";
@@ -6,8 +7,8 @@ import S from "./tablePageHeader.styled";
 interface TablePageHeaderProps {
   addModalHandler?: () => void;
   searchHandler?: (searchText: string) => void;
-  sortHandler?: (sortOrder: "ascending" | "descending") => void;
-  sortFilter?: "ascending" | "descending";
+  sortHandler?: (sortOrder: SortOrder) => void;
+  sortFilter?: SortOrder;
   popOverHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 

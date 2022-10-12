@@ -29,11 +29,11 @@ namespace S {
     size: "small",
   };
 
-  export const ButtonContainer = styled(Stack)(({ theme }) => ({
+  export const ButtonContainer = styled(Stack)({
     display: "flex",
     justifyContent: "center",
     paddingBottom: "3rem",
-  }));
+  });
 
   ButtonContainer.defaultProps = {
     direction: "row",

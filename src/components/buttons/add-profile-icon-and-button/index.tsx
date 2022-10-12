@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import { Badge, FormHelperText } from "@mui/material";
 import { FieldValues, Path, PathValue, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { Badge, FormHelperText } from "@mui/material";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import UploadButton from "./body/uploadButton";
 import { fileValidation } from "../../../utils/constants";
 import S from "./body/addProfile.styled";
 
 interface CustomProps<FormInputTypes extends FieldValues> {
-  ImageHandler?: () => void;
   inputName: string;
   setValue: UseFormSetValue<FormInputTypes>;
   trigger: UseFormTrigger<FormInputTypes>;
   errors: any;
 }
 
-function AddProfile<FormInputTypes>({ ImageHandler, setValue, trigger, inputName, errors }: CustomProps<FormInputTypes & FieldValues>) {
+function AddProfile<FormInputTypes>({ setValue, trigger, inputName, errors }: CustomProps<FormInputTypes & FieldValues>) {
   const [image, setImage] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | undefined>("");
 

@@ -1,8 +1,8 @@
-import { Theme, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const TamilShareCertificateContainer = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -13,148 +13,171 @@ export namespace S {
     backgroundColor: "#FFFFFF",
     position: "relative",
     padding: "4.375rem 6.25rem ",
-  }));
-  export const CertificateTopBorderImg = styled("img")(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
     width: "70%",
     left: "50%",
     right: "50%",
     top: "2.3125rem",
     transform: "translate(-50%, -50%)",
-  }));
-  export const CertificateBottomBorderImg = styled("img")(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateBottomBorderImg = styled("img")({
     position: "absolute",
     width: "70%",
     left: "50%",
     right: "50%",
     bottom: "0.625rem",
     transform: "translate(-50%, -50%)",
-  }));
-  export const CertificateLeftBorderImg = styled("img")(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateLeftBorderImg = styled("img")({
     position: "absolute",
     height: "70%",
     top: "50%",
     bottom: "50%",
     left: "1.875rem",
     transform: "translate(-50%, -50%)",
-  }));
-  export const CertificateRightBorderImg = styled("img")(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateRightBorderImg = styled("img")({
     position: "absolute",
     height: "70%",
     top: "50%",
     bottom: "50%",
     right: "0.75rem",
     transform: "translate(-50%, -50%)",
-  }));
-  export const TopLeftIcon = styled("img")(({ theme }: { theme: Theme }) => ({
-    position: "absolute",
-    left: "0",
-    top: "0",
-    width: "10rem",
-  }));
-  export const TopRightIcon = styled("img")(({ theme }: { theme: Theme }) => ({
-    transform: "scaleX(-1)",
-    position: "absolute",
-    right: "0",
-    top: "0",
-    width: "10rem",
-  }));
-  export const BottomLeftIcon = styled("img")(({ theme }: { theme: Theme }) => ({
-    position: "absolute",
-    bottom: "0",
-    left: "0",
-    width: "10rem",
-  }));
-  export const BottomRightIcon = styled("img")(({ theme }: { theme: Theme }) => ({
-    transform: "scaleX(-1)",
-    position: "absolute",
-    bottom: "0",
-    right: "0",
-    width: "10rem",
-  }));
+  });
 
-  export const CertificateHeadingContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const TopLeftIcon = styled("img")({
+    position: "absolute",
+    left: "0",
+    top: "0",
+    width: "10rem",
+  });
+
+  export const TopRightIcon = styled("img")({
+    transform: "scaleX(-1)",
+    position: "absolute",
+    right: "0",
+    top: "0",
+    width: "10rem",
+  });
+
+  export const BottomLeftIcon = styled("img")({
+    position: "absolute",
+    bottom: "0",
+    left: "0",
+    width: "10rem",
+  });
+
+  export const BottomRightIcon = styled("img")({
+    transform: "scaleX(-1)",
+    position: "absolute",
+    bottom: "0",
+    right: "0",
+    width: "10rem",
+  });
+
+  export const CertificateHeadingContainer = styled(Box)({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-  }));
+  });
 
-  export const HeadingContainerLogo = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const HeadingContainerLogo = styled(Box)({
     width: "fit-content",
-  }));
-  export const NerkathirLogo = styled("img")(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const NerkathirLogo = styled("img")({
     width: "8.125rem",
     marginRight: "4.375rem",
-  }));
-  export const HeadingContainerHeading = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
     fontSize: "2.125rem",
-    color: "#1A9035",
+    color: theme.palette.text.primary,
     fontFamily: "Poppins",
     fontWeight: "600",
     textAlign: "center",
   }));
-  export const HeadingContainerSignNo = styled(Box)(({ theme }: { theme: Theme }) => ({}));
-  export const RegNoCin = styled(Typography)(({ theme }: { theme: Theme }) => ({
+
+  export const HeadingContainerSignNo = styled(Box)({});
+
+  export const RegNoCin = styled(Typography)({
     fontSize: "0.9375rem",
     fontFamily: "Poppins",
-  }));
+  });
 
-  export const CertificateHeader = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  export const CertificateHeader = styled(Typography)({
     fontSize: "1.75rem",
     fontWeight: "600",
-  }));
-  export const DateContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const DateContainer = styled(Box)({
     width: "100%",
     display: "flex",
     alignItems: "center",
     alignSelf: "flex-start",
     justifyContent: "space-between",
-  }));
-  export const DateBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const DateBox = styled(Box)({
     minWidth: "9.6875rem",
-  }));
-  export const DateText = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const DateText = styled(Typography)({
     fontSize: "1.125rem",
     fontWeight: "600",
-  }));
-  export const CertificateContent = styled(Box)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateContent = styled(Box)({
     width: "100%",
     height: "fit-content",
-  }));
-  export const CertificateTextLine = styled(Box)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateTextLine = styled(Box)({
     Width: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
     height: "3rem",
-  }));
-  export const CertificateText = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateText = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
     fontSize: "1.125rem",
     fontWeight: "600",
-  }));
-  export const CertificateText2 = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const CertificateText2 = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
     fontSize: "1.125rem",
     fontWeight: "600",
     textAlign: "justify",
     width: "100%",
-  }));
-  export const ShareCountContainer = styled(DateContainer)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const ShareCountContainer = styled(DateContainer)({
     width: "80%",
-  }));
-  export const ShareCountInnerContainer = styled(DateContainer)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const ShareCountInnerContainer = styled(DateContainer)({
     width: "fit-content",
     gap: "1rem",
-  }));
-  export const SignatureLine = styled(DateContainer)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const SignatureLine = styled(DateContainer)({
     width: "100%",
     marginTop: "3.125rem",
-  }));
-  export const ShareCount = styled(Box)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const ShareCount = styled(Box)({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -165,8 +188,9 @@ export namespace S {
     fontSize: "1.125rem",
     fontWeight: "600",
     color: "red",
-  }));
-  export const BlankSpace1 = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const BlankSpace1 = styled(Typography)({
     boxSizing: "border-box",
     textAlign: "center",
     borderBottom: "1px solid #404040",
@@ -175,13 +199,15 @@ export namespace S {
     fontSize: "1.125rem",
     fontWeight: "600",
     color: "red",
-  }));
-  export const BlankSpace2 = styled(BlankSpace1)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const BlankSpace2 = styled(BlankSpace1)({
     width: "23.75rem",
     color: "red",
-  }));
-  export const BlankSpace3 = styled(BlankSpace1)(({ theme }: { theme: Theme }) => ({
+  });
+
+  export const BlankSpace3 = styled(BlankSpace1)({
     width: "85%",
     color: "red",
-  }));
+  });
 }

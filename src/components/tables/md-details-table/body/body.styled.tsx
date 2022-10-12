@@ -12,11 +12,11 @@ namespace S {
     },
   }));
 
-  export const NameStack = styled(Stack)(() => ({
+  export const NameStack = styled(Stack)({
     flexDirection: "row",
     gap: "1rem",
     alignItems: "center",
-  }));
+  });
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
     textAlign: "center",
@@ -70,18 +70,18 @@ namespace S {
     },
   }));
 
-  export const Toggle = styled(Switch)(() => ({}));
+  export const Toggle = styled(Switch)({});
   Toggle.defaultProps = {
     size: "small",
   };
 
-  export const AvatarImg = styled("img")(() => ({
+  export const AvatarImg = styled("img")({
     width: "100%",
     height: "100%",
     borderRadius: "50%",
-  }));
+  });
 
-  export const AvatarBox = styled(Box)(() => ({
+  export const AvatarBox = styled(Box)({
     borderRadius: "50%",
     height: "2.5rem",
     width: "2.5rem",
@@ -90,7 +90,7 @@ namespace S {
     "&:hover > .MuiBox-root": {
       display: "flex",
     },
-  }));
+  });
 
   export const EditBox = styled(Box)(({ theme }) => ({
     width: "100%",
@@ -98,7 +98,7 @@ namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -124,9 +124,9 @@ namespace S {
     },
   }));
 
-  export const HiddenInput = styled("input")(() => ({
+  export const HiddenInput = styled("input")({
     display: "none",
-  }));
+  });
 }
 
 export default S;

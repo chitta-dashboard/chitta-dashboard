@@ -14,13 +14,12 @@ import IdCardBody from "../../../id-card/id-card-body";
 import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import IdCardModal from "../../../modals/id-download-modal";
-
 import S from "./body.styled";
 import CS from "../../../common-styles/commonStyles.styled";
 
 const Body = () => {
   const {
-    farmersList: listData,
+    farmersDetailsById: listData,
     editTableIcon,
     editFarmerDetail,
     deleteFarmerDetail,
@@ -30,10 +29,10 @@ const Body = () => {
     sortFilter,
     groupFilter,
   } = useFarmerDetailsContext();
-  const [farmersList, setFarmersList] = useState(listData);
-  const [farmersListGroup, setFarmersListGroup] = useState(listData);
-  const [farmersListSearch, setFarmersListSearch] = useState(listData);
-  const [farmersListSort, setFarmersListSort] = useState(listData);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>(Object.values(listData));
+  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(Object.values(listData));
+  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(Object.values(listData));
+  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(Object.values(listData));
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -50,7 +49,7 @@ const Body = () => {
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   useEffect(() => {
-    setFarmersListGroup(groupFilter === "all" ? listData : listData.filter((list) => list.group === groupFilter));
+    setFarmersListGroup(groupFilter === "all" ? Object.values(listData) : Object.values(listData).filter((list) => list.group === groupFilter));
   }, [groupFilter, listData]);
 
   useEffect(() => {
@@ -91,7 +90,7 @@ const Body = () => {
   };
 
   const getURL = (id: string) => {
-    let result = farmersList.filter((item) => {
+    let result = Object.values(farmersList).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -134,7 +133,7 @@ const Body = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = farmersList.filter((item) => {
+    let result = Object.values(farmersList).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -148,7 +147,7 @@ const Body = () => {
 
   return (
     <>
-      {farmersList.length > 0 ? (
+      {Object.values(farmersList).length > 0 ? (
         <BodyWrapper>
           <tr style={{ display: "none" }}>
             <td>
@@ -156,7 +155,7 @@ const Body = () => {
               <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
             </td>
           </tr>
-          {farmersList.map((user: farmerDetail) => (
+          {Object.values(farmersList).map((user: farmerDetail) => (
             <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
               <S.RowCheckCell
                 onClick={(e) => {

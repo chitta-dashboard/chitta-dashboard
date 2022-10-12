@@ -2,10 +2,10 @@ import * as yup from "yup";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { useFarmerGroupDetailsContext } from "../../../utils/context/farmersGroup";
-import { IAddFarmersGroupFormInput } from "../type/formInputs";
+import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
 import ModalHeader from "../../custom-modal/header";
@@ -31,7 +31,7 @@ const schema = yup
   .required();
 
 const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  const { farmerGroupList } = useFarmerGroupDetailsContext();
+  const { farmersGroupById } = useFarmersGroupContext();
 
   const {
     register,
@@ -41,13 +41,16 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     reset,
     setValue,
     trigger,
+    unregister: formUnregister,
+    getValues: formGetValues,
+    control: formControl,
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     if (editMode) {
-      let groupData = farmerGroupList.find((f) => String(f.id) === id);
+      let groupData = Object.values(farmersGroupById).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,
@@ -75,36 +78,42 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
   };
 
   return (
-    <>
-      <CustomModal
-        openModal={openModal}
+    <CustomModal
+      openModal={openModal}
+      handleClose={() => {
+        clearErrors();
+        reset();
+        handleClose();
+      }}
+    >
+      <ModalHeader
         handleClose={() => {
           clearErrors();
           reset();
           handleClose();
         }}
       >
-        <ModalHeader
-          handleClose={() => {
-            clearErrors();
-            reset();
-            handleClose();
-          }}
-        >
-          Add Farmer's Group
-        </ModalHeader>
+        Add Farmer's Group
+      </ModalHeader>
 
-        <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
-          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} />
-        </ModalBody>
+      <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
+        <FormField
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          trigger={trigger}
+          control={formControl as unknown as Control}
+          getValues={formGetValues}
+          unregister={formUnregister}
+        />
+      </ModalBody>
 
-        <ModalFooter>
-          <Button form="farmersGroup" type="submit">
-            Submit
-          </Button>
-        </ModalFooter>
-      </CustomModal>
-    </>
+      <ModalFooter>
+        <Button form="farmersGroup" type="submit">
+          Submit
+        </Button>
+      </ModalFooter>
+    </CustomModal>
   );
 };
 export default FarmersGroupModal;

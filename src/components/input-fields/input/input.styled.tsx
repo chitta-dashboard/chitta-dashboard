@@ -1,4 +1,4 @@
-import { styled, TextField } from "@mui/material";
+import { styled, TextField, Autocomplete } from "@mui/material";
 
 namespace S {
   export const CommonInputStyled = styled(TextField, {
@@ -24,11 +24,33 @@ namespace S {
   };
 
   export const TextInput = styled(CommonInputStyled)(() => ({}));
+
   export const NumberInput = styled(CommonInputStyled)(() => ({}));
+
   export const DateInput = styled(CommonInputStyled)(() => ({}));
+
   export const SelectInput = styled(CommonInputStyled)(() => ({}));
+
   export const MultiSelectInput = styled(CommonInputStyled)(() => ({}));
+
   export const RadioInput = styled(CommonInputStyled)(() => ({}));
+  export const StyledAutocomplete = styled(Autocomplete)({
+    width: "18.75rem",
+    "& .MuiOutlinedInput-root": {
+      height: "2.5rem",
+      fontSize: "0.9rem",
+      "& .MuiAutocomplete-input": {
+        padding: "0.5px 4px 0.5px 6px",
+      },
+    },
+    "& .MuiInputLabel-root": {
+      fontSize: ".9em",
+    },
+    "& .MuiSvgIcon-root": {
+      display: "none",
+    },
+  });
+
   export const FileInput = styled(CommonInputStyled)<{ hide?: boolean }>(({ hide }) => ({
     ...(hide
       ? {

@@ -1,21 +1,19 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-
-import NerkathirLogo from "../../assets/images/logo.svg";
-import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import { fileValidation } from "../../utils/constants";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
-
 import { FARMER_DATA } from "./constant";
 import { S } from "./farmerDetailPage.styled";
+import NerkathirUser from "../../assets/images/nerkathir-user.svg";
+import NerkathirLogo from "../../assets/images/logo.svg";
 
 interface Props {
   farmerIdtoPrint?: number | string;
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
-  const { farmersList, editTableIcon } = useFarmerDetailsContext();
+  const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
   const { farmerId } = useParams();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -23,7 +21,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   const getURL = (id: string) => {
-    let result = farmersList.filter((item) => {
+    let result = Object.values(farmersDetailsById).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -49,7 +47,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = farmersList.filter((item) => {
+    let result = Object.values(farmersDetailsById).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -58,7 +56,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   return (
     <>
-      {farmersList
+      {Object.values(farmersDetailsById)
         .filter((name) => [farmerId, farmerIdtoPrint].includes(name.id))
         .map((user) => (
           <S.FarmersDetailsContent ref={ref} key={user.id}>

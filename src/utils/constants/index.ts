@@ -1,3 +1,5 @@
+// import { mdDetail } from "../context/mdDetails";
+
 export const fileValidation = (file: string) => {
   var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
@@ -7,7 +9,7 @@ export const fileValidation = (file: string) => {
   return true;
 };
 
-export const searchWord = (text: string, word: string) =>
+export const searchWord = (text: String, word: String) =>
   text
     ? text
         .trim()
@@ -20,9 +22,13 @@ export const searchWord = (text: string, word: string) =>
         ) >= 0
     : false;
 
+export const ASCENDING = "ascending";
+export const DESCENDING = "descending";
+export type SortOrder = typeof ASCENDING | typeof DESCENDING;
+
 export const sortObj = <ObjStructure>(
   arr: Array<ObjStructure>,
-  sortOrder: "ascending" | "descending",
+  sortOrder: SortOrder,
   sortKey: keyof ObjStructure,
   options: {
     asDate?: boolean;
@@ -33,7 +39,7 @@ export const sortObj = <ObjStructure>(
   const arrClone = [...arr];
 
   switch (sortOrder) {
-    case "ascending":
+    case ASCENDING:
       if (options.asDate) {
         arrClone.sort((a, b) => {
           if (new Date(a[sortKey] as unknown as string) > new Date(b[sortKey] as unknown as string)) return 1;
@@ -41,12 +47,12 @@ export const sortObj = <ObjStructure>(
         });
       } else {
         arrClone.sort((a, b) => {
-          if (a[sortKey] > b[sortKey]) return 1;
+          if ((a[sortKey] as unknown as string).toLowerCase() > (b[sortKey] as unknown as string).toLowerCase()) return 1;
           else return -1;
         });
       }
       break;
-    case "descending":
+    case DESCENDING:
       if (options.asDate) {
         arrClone.sort((a, b) => {
           if (new Date(a[sortKey] as unknown as string) < new Date(b[sortKey] as unknown as string)) return 1;
@@ -54,7 +60,7 @@ export const sortObj = <ObjStructure>(
         });
       } else {
         arrClone.sort((a, b) => {
-          if (a[sortKey] < b[sortKey]) return 1;
+          if ((a[sortKey] as unknown as string).toLowerCase() < (b[sortKey] as unknown as string).toLowerCase()) return 1;
           else return -1;
         });
       }

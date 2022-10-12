@@ -1,21 +1,21 @@
-import { Box } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { Box } from "@mui/material";
 import Slider from "react-slick";
+import { fileValidation } from "../../../../utils/constants";
+import { useFounderContext } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardHeader } from "../common-styles/commonStyles.styled";
-import { fileValidation } from "../../../../utils/constants";
-import { useFounderContext } from "../../../../utils/context/founders";
-import FounderImg from "../../../../assets/images/Founder.png";
 import S from "./dashoardFounder.styled";
+import FounderImg from "../../../../assets/images/Founder.png";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 
 const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-  const { foundersList, editTableIcon } = useFounderContext();
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const { foundersById, editFounder } = useFounderContext();
+  const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
   var settings = {
     dots: true,
@@ -50,7 +50,7 @@ const DashboardFounder = () => {
   };
 
   const getURL = (id: string) => {
-    let result = foundersList.filter((item) => {
+    let result = Object.values(foundersById).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -59,11 +59,11 @@ const DashboardFounder = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = foundersList.filter((item) => {
+    let result = Object.values(foundersById).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    editFounder({ ...result[0] });
   };
 
   return (
@@ -76,7 +76,7 @@ const DashboardFounder = () => {
           </Link>
         </CardHeader>
         <Slider {...settings}>
-          {foundersList.map((item) => (
+          {Object.values(foundersById).map((item) => (
             <S.FounderCard key={item.id}>
               <S.FounderImgContainer>
                 <S.FounderImg src={getURL(item.id) ? getURL(item.id) : FounderImg} alt="Founder-image" />

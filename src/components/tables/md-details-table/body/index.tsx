@@ -14,10 +14,10 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editTableIcon, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
-  const [mdListSearch, setMdListSearch] = useState(listData);
-  const [mdListSort, setMdListSort] = useState(listData);
-  const [mdList, setMdList] = useState(listData);
+  const { mdDetailsById: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
+  const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
+  const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -27,10 +27,10 @@ const Body = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
-  const [userConfirm, setUserConfirm] = useState<string>("");
+  const [confirmUser, setConfirmUser] = useState<string>("");
 
   useEffect(() => {
-    setMdListSearch(listData.filter((md) => searchWord(md.name, searchFilter)));
+    setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
   }, [listData, searchFilter]);
 
   useEffect(() => {
@@ -42,10 +42,11 @@ const Body = () => {
   }, [mdListSort]);
 
   // Tab IconModal Open & Close Handler
-  const iconModalHandler = (id: string) => {
+  const iconModalHandler = (user: mdDetail) => {
     setIconModal(!iconModal);
-    setDeleteId(id);
-    setEditId(id);
+    setDeleteId(user.id);
+    setEditId(user.id);
+    setConfirmUser(user.name);
   };
 
   //Edit MdDetail Handler
@@ -70,11 +71,11 @@ const Body = () => {
   const confirmHandler = (user: mdDetail) => {
     setIsCheck(!isCheck);
     setDeleteId(user.id);
-    setUserConfirm(user.name);
+    setConfirmUser(user.name);
   };
 
   const getURL = (id: string) => {
-    let result = mdList.filter((item) => {
+    let result = Object.values(mdList).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -100,21 +101,21 @@ const Body = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = mdList.filter((item) => {
+    let result = Object.values(mdList).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    editMdDetail({ ...result[0] });
   };
 
   return (
     <>
-      {mdList.length > 0 ? (
+      {Object.values(mdList).length > 0 ? (
         <BodyWrapper>
-          {mdList.map((user) => (
+          {Object.values(mdList).map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
+                <CS.Icon onClick={() => iconModalHandler(user)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>
@@ -171,7 +172,11 @@ const Body = () => {
           setIsCheck(false);
           setIconModal(false);
         }}
-        userConfirm={userConfirm}
+        confirmMessage={
+          <>
+            Do you want to remove <CS.Bold>{confirmUser}</CS.Bold> from mdList?
+          </>
+        }
       />
       <DeleteModal
         openModal={deleteModal}

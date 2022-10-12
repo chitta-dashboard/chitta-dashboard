@@ -1,16 +1,16 @@
 import { FC } from "react";
-
 import S from "./body.styled";
 
 interface CustomProps {
   id: string;
-  onSubmit: () => void;
+  onSubmit?: () => void;
   children: React.ReactNode;
+  isPadding?:Boolean
 }
 
-const ModalBody: FC<CustomProps> = ({ children, id, onSubmit }) => {
+const ModalBody: FC<CustomProps> = ({ children, id, onSubmit,isPadding }) => {
   return (
-    <S.Container>
+    <S.Container isPadding={isPadding}>
       <form id={id} onSubmit={onSubmit}>
         {children}
       </form>

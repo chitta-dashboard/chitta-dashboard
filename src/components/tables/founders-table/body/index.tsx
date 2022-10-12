@@ -13,10 +13,10 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { foundersList: listData, editTableIcon, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
-  const [founderSearch, setFounderSearch] = useState(listData);
-  const [founderSort, setFounderSort] = useState(listData);
-  const [founder, setFounder] = useState(listData);
+  const { foundersById: listData, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
+  const [founderSearch, setFounderSearch] = useState<Founders[]>(Object.values(listData));
+  const [founderSort, setFounderSort] = useState<Founders[]>(Object.values(listData));
+  const [founder, setFounder] = useState<Founders[]>(Object.values(listData));
   const [image, setImage] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -27,7 +27,7 @@ const Body = () => {
   const [editId, setEditId] = useState<string>("");
 
   useEffect(() => {
-    setFounderSearch(listData.filter((list) => searchWord(list.name, searchFilter)));
+    setFounderSearch(Object.values(listData).filter((list) => searchWord(list.name, searchFilter)));
   }, [listData, searchFilter]);
 
   useEffect(() => {
@@ -45,14 +45,14 @@ const Body = () => {
     setEditId(id);
   };
 
-  //Edit MdDetail Handler
-  const editMdDetailHandler = (id: string) => {
+  //Edit Founders Handler
+  const editFoundersHandler = (id: string) => {
     setEditMode(!editMode);
     setEditId(id);
   };
 
-  //Update MdDetail Handler
-  const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string }) => {
+  //Update Founders Handler
+  const updateFounders = (data: IAddMDDetailsFormInput & { id: string }) => {
     setIconModal(false);
     editFounder(data);
   };
@@ -64,7 +64,7 @@ const Body = () => {
   };
 
   const getURL = (id: string) => {
-    let result = founder.filter((item) => {
+    let result = Object.values(founder).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -90,18 +90,18 @@ const Body = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = founder.filter((item) => {
+    let result = Object.values(founder).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    editFounder({ ...result[0] });
   };
 
   return (
     <>
-      {founder.length > 0 ? (
+      {Object.values(founder).length > 0 ? (
         <BodyWrapper>
-          {founder.map((user) => (
+          {Object.values(founder).map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
                 <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
@@ -125,7 +125,7 @@ const Body = () => {
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
                   <CS.Icon>id-card</CS.Icon>
-                  <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
+                  <CS.Icon onClick={() => editFoundersHandler(user.id)}>edit</CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
             </TableRow>
@@ -167,7 +167,7 @@ const Body = () => {
         </tbody>
       )}
 
-      <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={editId} />
+      <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={editId} />
     </>
   );
 };

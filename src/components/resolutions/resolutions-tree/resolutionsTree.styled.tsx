@@ -1,27 +1,25 @@
 import { Box, Button, IconButton, styled, Typography } from "@mui/material";
 
 namespace S {
-  export const DecisionsTreeBox = styled(Box, {
+  export const ResolutionsTreeBox = styled(Box, {
     shouldForwardProp: (prop) => prop !== "leafCount",
   })<{ leafCount: number }>(({ theme, leafCount }) => ({
     minWidth: "790px",
     position: "relative",
     height: `calc(230px + ${100 * leafCount}px)`,
     margin: "auto 0 15px 0",
-
     [theme.breakpoints.down("md")]: {
       transform: "scale(.8)",
     },
   }));
 
-  const LeafStyles = styled(Box)(({ theme }) => ({
+  const LeafStyles = styled(Box)({
     width: "265px",
     height: "150px",
     position: "absolute",
     padding: "6px", //10px to overlap border & 6px for actual padding
     textAlign: "center",
     border: "11px solid",
-
     "&::before": {
       content: "''",
       position: "absolute",
@@ -37,22 +35,21 @@ namespace S {
       height: "90px",
       bottom: "-148px",
     },
-  }));
+  });
 
   export const L1 = styled(LeafStyles)(({ theme }) => ({
     top: "18px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    borderColor: "#1A9035",
-
+    borderColor: theme.palette.tree.l1,
     "&::before": {
-      backgroundColor: "#1A9035",
+      backgroundColor: theme.palette.tree.l1,
       transform: "rotate(30deg)",
       transformOrigin: "left",
       left: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#1A9035",
+      backgroundColor: theme.palette.tree.l1,
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
@@ -62,16 +59,15 @@ namespace S {
     top: "218px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    borderColor: "#D8C411",
-
+    borderColor: theme.palette.tree.l2,
     "&::before": {
-      backgroundColor: "#D8C411",
+      backgroundColor: theme.palette.tree.l2,
       transform: "rotate(30deg)",
       transformOrigin: "left",
       left: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#D8C411",
+      backgroundColor: theme.palette.tree.l2,
       borderRadius: "40px 40px 80px 0px",
       left: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
@@ -81,16 +77,15 @@ namespace S {
     top: "118px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    borderColor: "#4DC82F",
-
+    borderColor: theme.palette.tree.r1,
     "&::before": {
-      backgroundColor: "#4DC82F",
+      backgroundColor: theme.palette.tree.r1,
       transform: "rotate(-30deg)",
       transformOrigin: "right",
       right: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#4DC82F",
+      backgroundColor: theme.palette.tree.r1,
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //15px to cope border with and border radius
     },
@@ -100,16 +95,15 @@ namespace S {
     top: "318px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    borderColor: "#B2A20F",
-
+    borderColor: theme.palette.tree.r2,
     "&::before": {
-      backgroundColor: "#B2A20F",
+      backgroundColor: theme.palette.tree.r2,
       transform: "rotate(-30deg)",
       transformOrigin: "right",
       right: "calc(265px - 17px)", //17px to cope border with and border radius
     },
     "&::after": {
-      backgroundColor: "#B2A20F",
+      backgroundColor: theme.palette.tree.r2,
       borderRadius: "40px 40px 0px 80px",
       right: "calc((265px - 17px) + 130px)", //17px to cope border with and border radius
     },
@@ -122,9 +116,8 @@ namespace S {
     left: "390px",
     width: "11px",
     height: "100px",
-    backgroundColor: "#2B9C03",
+    backgroundColor: theme.palette.tree.bud,
     borderRadius: "0 0 0 80px",
-
     "&::before": {
       content: "''",
       position: "absolute",
@@ -134,9 +127,8 @@ namespace S {
       height: "35px",
       borderRadius: "0px 40px",
       transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0)",
-      backgroundColor: "#2B9C03",
+      backgroundColor: theme.palette.tree.bud,
     },
-
     "&::after": {
       content: "''",
       position: "absolute",
@@ -146,7 +138,7 @@ namespace S {
       height: "58px",
       borderRadius: "0px 40px",
       transform: "matrix(-1, 0, 0, 1, 0, 0)",
-      backgroundColor: "#2B9C03",
+      backgroundColor: theme.palette.tree.bud,
     },
   }));
 
@@ -158,14 +150,14 @@ namespace S {
     top: `calc(210px + ${100 * leafCount}px)`,
     width: "276px",
     height: "15px",
-    backgroundColor: "#e6e6e6",
+    backgroundColor: theme.palette.addAlpha(theme.palette.tree.shadow, 0.3),
     borderRadius: "100%",
 
     "&::after": {
       content: "''",
       width: "60%",
       height: "60%",
-      backgroundColor: "#D5D5D5",
+      backgroundColor: theme.palette.addAlpha(theme.palette.tree.shadow, 0.2),
       borderRadius: "50%",
       position: "absolute",
       top: "0",
@@ -174,19 +166,18 @@ namespace S {
     },
   }));
 
-  export const DecisionTitle = styled(Typography)(({ theme }) => ({
+  export const ResolutionTitle = styled(Typography)(({ theme }) => ({
     color: theme.palette.primary.light,
     fontSize: "1.1rem",
     fontWeight: "600",
     marginBottom: "10px",
   }));
 
-  export const DecisionDescription = styled(Typography)(({ theme }) => ({
+  export const ResolutionDescription = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     lineHeight: "1.3",
     fontSize: ".8rem",
     marginBottom: "10px",
-
     height: "35px",
     overflow: "hidden",
     textOverflow: "ellipsis",
@@ -195,15 +186,16 @@ namespace S {
     WebkitBoxOrient: "vertical",
   }));
 
-  export const ButtonsBar = styled(Box)(({ theme }) => ({}));
-  export const InvisibleBox = styled(Box)(({ theme }) => ({
-    display: "none",
-  }));
+  export const ButtonsBar = styled(Box)({});
 
-  export const ViewBtn = styled(Button)(({ theme }) => ({
+  export const InvisibleBox = styled(Box)({
+    display: "none",
+  });
+
+  export const ViewBtn = styled(Button)({
     padding: ".2rem 2rem",
     fontSize: ".7rem",
-  }));
+  });
 
   export const DownloadBtn = styled(IconButton)(({ theme }) => ({
     width: "1.7rem",
@@ -214,16 +206,16 @@ namespace S {
     "&.MuiButtonBase-root": {
       backgroundColor: theme.palette.primary.light,
       "&:hover": {
-        backgroundColor: "#57ab5b",
+        backgroundColor: theme.palette.addAlpha(theme.palette.primary.light, 0.75),
       },
     },
   }));
 
-  export const DecisionsTimestamp = styled(DecisionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
+  export const ResolutionsTimestamp = styled(ResolutionDescription, { shouldForwardProp: (prop) => prop !== "placement" })<{
     placement: "left" | "right";
   }>(({ theme, placement }) => ({
-    color: theme.palette.text.secondary,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondary, 0.8),
+
     position: "absolute",
     top: "-28px",
     [placement]: "-10px",

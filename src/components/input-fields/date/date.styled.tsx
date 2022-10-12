@@ -9,7 +9,6 @@ namespace S {
       color: theme.palette.text.secondaryLight,
       height: "2.65rem",
     },
-
     width: "100%",
   }));
 

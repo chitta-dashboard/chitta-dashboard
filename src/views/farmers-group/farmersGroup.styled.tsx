@@ -7,7 +7,6 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "2rem",
-
     [theme.breakpoints.down("md")]: {
       gap: "1rem",
     },
@@ -20,8 +19,8 @@ namespace S {
     color: theme.palette.text.secondaryLight,
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
-      color: "#1E1E1E",
+      backgroundColor: theme.palette.bg.light,
+      color: theme.palette.text.secondaryDark,
     },
   }));
 }

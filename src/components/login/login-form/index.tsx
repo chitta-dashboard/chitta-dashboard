@@ -3,9 +3,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
 import S from "./loginForm.styled";
-import { useAuthContext } from "../../../utils/context/authContext";
 
 interface LoginFormInputs {
   mobileNo: string;
@@ -16,7 +16,9 @@ interface UserAuth {
   mobileNo: string;
   loginPassword: string;
 }
+
 const userAuth: UserAuth = { mobileNo: "0123456789", loginPassword: "nerkathir" };
+
 const LoginSchema = yup.object().shape({
   mobileNo: yup.string().required("Mobile number is required !"),
   loginPassword: yup.string().required("Password is required !"),

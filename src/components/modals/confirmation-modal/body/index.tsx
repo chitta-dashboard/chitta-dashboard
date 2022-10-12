@@ -1,25 +1,23 @@
 import { FC } from "react";
 import { Stack } from "@mui/material";
-import ConfirmationIcon from "./confirmationIcon";
 import S from "./confirmationModal.styled";
+import ConfirmationIcon from "./confirmationIcon";
 
 interface ConfirmProps {
-  userConfirm?: string;
+  confirmMessage?: JSX.Element;
 }
 
-const ConfirmationBody: FC<ConfirmProps> = ({ userConfirm }) => {
-  const message = userConfirm ? `Do you want to remove ${userConfirm} from mdList?` : "Do you want to save changes?";
+const ConfirmationBody: FC<ConfirmProps> = ({ confirmMessage }) => {
+  const message = confirmMessage ? confirmMessage : "Do you want to save changes?";
   return (
-    <>
-      <S.Container>
-        <S.ContainerItems>
-          <Stack spacing={4}>
-            <ConfirmationIcon />
-            <S.DialogueText>{message}</S.DialogueText>
-          </Stack>
-        </S.ContainerItems>
-      </S.Container>
-    </>
+    <S.Container>
+      <S.ContainerItems>
+        <Stack spacing={4}>
+          <ConfirmationIcon />
+          <S.DialogueText>{message}</S.DialogueText>
+        </Stack>
+      </S.ContainerItems>
+    </S.Container>
   );
 };
 
