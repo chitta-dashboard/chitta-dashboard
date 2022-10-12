@@ -6,7 +6,7 @@ import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
-import MdDetailModal from "../../../icon-modals/md-detail-modal";
+import FoundersModal from "../../../icon-modals/founders-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
 import CS from "../../../common-styles/commonStyles.styled";
@@ -138,7 +138,7 @@ const Body = () => {
           </tr>
         </S.EmptyMsg>
       )}
-      <MdDetailModal
+      <FoundersModal
         open={iconModal}
         handleClose={() => setIconModal(false)}
         handleDelete={() => {
