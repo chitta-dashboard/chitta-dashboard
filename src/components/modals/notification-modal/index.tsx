@@ -1,6 +1,6 @@
 import { FC, useState, useRef } from "react";
 import S from "./NotificationModal.styled";
-import { useAuthContext } from "../../../utils/context/authContext";
+import { useAuthContext } from "../../../utils/context/auth";
 import Icon from "../../icons";
 
 interface notificationProps {

@@ -19,7 +19,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 
 const Body = () => {
   const {
-    farmersList: listData,
+    farmersDetailsById: listData,
     editTableIcon,
     editFarmerDetail,
     deleteFarmerDetail,

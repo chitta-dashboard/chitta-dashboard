@@ -14,7 +14,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
 const Body = () => {
-  const { mdList: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
+  const { mdDetailsById: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
   const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
   const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
   const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));
@@ -27,8 +27,7 @@ const Body = () => {
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
-  const [userConfirm, setUserConfirm] = useState<string>("");
-  
+  const [confirmUser, setConfirmUser] = useState<string>("");
 
   useEffect(() => {
     setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
@@ -43,10 +42,11 @@ const Body = () => {
   }, [mdListSort]);
 
   // Tab IconModal Open & Close Handler
-  const iconModalHandler = (id: string) => {
+  const iconModalHandler = (user: mdDetail) => {
     setIconModal(!iconModal);
-    setDeleteId(id);
-    setEditId(id);
+    setDeleteId(user.id);
+    setEditId(user.id);
+    setConfirmUser(user.name);
   };
 
   //Edit MdDetail Handler
@@ -62,7 +62,7 @@ const Body = () => {
   };
 
   // Delete ModalHandler
-  const deleteModalHandler = (id:string) => {
+  const deleteModalHandler = (id: string) => {
     setDeleteModal(!deleteModal);
     setDeleteId(id);
   };
@@ -71,7 +71,7 @@ const Body = () => {
   const confirmHandler = (user: mdDetail) => {
     setIsCheck(!isCheck);
     setDeleteId(user.id);
-    setUserConfirm(user.name);
+    setConfirmUser(user.name);
   };
 
   const getURL = (id: string) => {
@@ -115,7 +115,7 @@ const Body = () => {
           {Object.values(mdList).map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
-                <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
+                <CS.Icon onClick={() => iconModalHandler(user)}>three-dots</CS.Icon>
               </S.TabCell>
               <S.Cell title="பெயர்">
                 <S.NameStack>
@@ -172,7 +172,11 @@ const Body = () => {
           setIsCheck(false);
           setIconModal(false);
         }}
-        userConfirm={userConfirm}
+        confirmMessage={
+          <>
+            Do you want to remove <CS.Bold>{confirmUser}</CS.Bold> from mdList?
+          </>
+        }
       />
       <DeleteModal
         openModal={deleteModal}

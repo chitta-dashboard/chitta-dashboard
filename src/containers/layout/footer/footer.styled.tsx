@@ -20,7 +20,7 @@ namespace S {
     cursor: "pointer",
     whiteSpace: "nowrap",
     "&:hover": {
-      opacity: theme.palette.shadeOpacity,
+      color: theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8),
     },
   }));
 

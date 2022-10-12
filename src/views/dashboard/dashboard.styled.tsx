@@ -6,7 +6,7 @@ namespace S {
     width: "100%",
     height: "100%",
     margin: "0 auto",
-    backgroundColor: theme.palette.custom.backgroundLight,
+    backgroundColor: theme.palette.bg.light,
     display: "flex",
     flexDirection: "column",
     gap: "1rem",

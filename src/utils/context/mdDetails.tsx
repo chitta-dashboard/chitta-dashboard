@@ -1,12 +1,15 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
-const ADD_MD_DETAIL = "ADD_MD_DETAIL";  
+const ADD_MD_DETAIL = "ADD_MD_DETAIL";
 const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
+const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
+const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type mdDetail = {
   id: string;
@@ -18,26 +21,31 @@ export type mdDetail = {
   signature?: string;
 };
 
-type Props = {  
+export type selectedMdListData = number | string;
+
+type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
 export interface mdDetailsContextType {
-  mdList: { [id: string]: mdDetail };
+  mdDetailsById: { [id: string]: mdDetail };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
+  selectedMdListData: selectedMdListData[];
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
+  checkboxSelectAll: () => void;
+  checkboxSelect: (id: string | number) => void;
 }
 
 const initialState: mdDetailsContextType = {
-  mdList: {
+  mdDetailsById: {
     "1": {
       id: "1",
       profile: profileImg,
@@ -96,32 +104,62 @@ const initialState: mdDetailsContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
-  sortFilter: "ascending",
+  selectedMdListData: [],
+  sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addMdDetail: () => {},
   editMdDetail: () => {},
   deleteMdDetail: () => {},
   editTableIcon: () => {},
+  checkboxSelectAll: () => {},
+  checkboxSelect: () => {},
 };
 
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_MD_DETAIL:
-      return { ...state, mdList: { ...state.mdList, [action.payload.id]: action.payload } };
+      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
 
     case EDIT_MD_DETAIL:
-      return { ...state, mdList: { ...state.mdList, [action.payload.id]: action.payload } };
+      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
 
     case DELETE_MD_DETAIL:
-      delete state.mdList[action.payload];
-      return { ...state, mdList: { ...state.mdList } };
+      delete state.mdDetailsById[action.payload];
+      return { ...state, mdDetailsById: { ...state.mdDetailsById } };
 
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
+
+    case CHECKBOX_SELECT_ALL:
+      if (Object.values(state.selectedMdListData).length === Object.values(state.mdDetailsById).length) {
+        return {
+          ...state,
+          selectedMdListData: [],
+        };
+      } else {
+        return {
+          ...state,
+          selectedMdListData: [...Object.keys(state.mdDetailsById)],
+        };
+      }
+
+    case CHECKBOX_SELECT:
+      let farmerId = action.payload;
+      if (state.selectedMdListData.includes(farmerId)) {
+        return {
+          ...state,
+          selectedMdListData: state.selectedMdListData.filter((id) => id !== farmerId),
+        };
+      } else {
+        return {
+          ...state,
+          selectedMdListData: [...state.selectedMdListData, farmerId],
+        };
+      }
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -150,8 +188,16 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
+  };
+
+  const checkboxSelectAll = () => {
+    dispatch({ type: CHECKBOX_SELECT_ALL });
+  };
+
+  const checkboxSelect = (id: string | number) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
   let data = {
@@ -161,6 +207,8 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     deleteMdDetail,
     setSearchFilter,
     setSortFilter,
+    checkboxSelectAll,
+    checkboxSelect,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

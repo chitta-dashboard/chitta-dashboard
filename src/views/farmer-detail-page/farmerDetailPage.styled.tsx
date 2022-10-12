@@ -93,7 +93,7 @@ export namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     opacity: "0.7",
     display: "none",
     alignItems: "center",
@@ -127,7 +127,7 @@ export namespace S {
     justifyContent: "space-between",
     alignItems: "center",
     color: "#666666",
-    borderBottom: "4px solid #F1F1F1",
+    borderBottom: `4px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
     marginBottom: "0.1875rem",
     [theme.breakpoints.down("md")]: {
       margin: "0.3125rem 0 0.3125rem 0",
@@ -151,7 +151,7 @@ export namespace S {
     marginTop: "0.625rem",
     "&::-webkit-scrollbar": {
       width: "0.4375rem",
-      background: "#F5F5F5",
+      background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
     },
     "&::-webkit-scrollbar-thumb": {
       backgroundColor: theme.palette.text.primary,

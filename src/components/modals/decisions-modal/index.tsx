@@ -11,10 +11,10 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddDecisionsFormInput } from "../type/formInputs";
 import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
-import { IDecision } from "../../../utils/context/decisionsContext";
+import { IResolution } from "../../../utils/context/resolutions";
 
 interface CustomProps {
-  cb: (data: IDecision) => void;
+  cb: (data: IResolution) => void;
   openModal: boolean;
   handleClose: () => void;
 }
@@ -44,8 +44,6 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
     handleSubmit,
     formState: { errors },
     setValue,
-    clearErrors,
-    reset,
     trigger,
     control,
   } = useForm<IAddDecisionsFormInput>({
@@ -64,29 +62,12 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose }) => {
       presenter: data.presenter,
       participator: data.participator,
     });
-    reset();
-    handleClose();
+    // handleClose(); // close is handled inside cb (with confirmation)
   };
 
   return (
-    <CustomModal
-      openModal={openModal}
-      handleClose={() => {
-        clearErrors();
-        reset();
-        handleClose();
-      }}
-      openAddDecisionModal={true}
-    >
-      <ModalHeader
-        handleClose={() => {
-          clearErrors();
-          reset();
-          handleClose();
-        }}
-      >
-        Add Decisions
-      </ModalHeader>
+    <CustomModal openModal={openModal} handleClose={handleClose} openAddDecisionModal={true}>
+      <ModalHeader handleClose={handleClose}>Add Decisions</ModalHeader>
 
       <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
         <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} control={control} />

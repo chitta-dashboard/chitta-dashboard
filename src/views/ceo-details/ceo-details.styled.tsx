@@ -68,6 +68,7 @@ namespace S {
   export const CeoProfilePicture = styled("img")({
     width: "100%",
     height: "100%",
+    objectFit: "cover",
   });
 
   export const EditBox = styled(Box)(({ theme }: any) => ({
@@ -76,7 +77,7 @@ namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -123,7 +124,7 @@ namespace S {
   export const CeoJoinedDate = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
     marginTop: "0.625rem",
-    color: "rgba(119, 119, 119, 0.8)",
+    color: `${theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8)}`,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.625rem",
     },

@@ -28,7 +28,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>([
     { first: ["surveyNo-first", "acre-first", "border-first"] },
   ]);
-  const { farmersList } = useFarmerDetailsContext();
+  const { farmersDetailsById } = useFarmerDetailsContext();
 
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
@@ -66,7 +66,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
 
   useEffect(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersList).find((f) => String(f.id) === id);
+      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id);
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,

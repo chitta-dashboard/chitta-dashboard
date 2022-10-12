@@ -4,7 +4,7 @@ import S from "./selectDropdown.styled";
 
 const SelectDropDown = () => {
   const { groupFilter, setGroupFilter } = useFarmerDetailsContext();
-  const { farmersGroupList } = useFarmersGroupContext();
+  const { farmersGroupById } = useFarmersGroupContext();
 
   const selectHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setGroupFilter(event.target.value);
@@ -13,7 +13,7 @@ const SelectDropDown = () => {
   return (
     <S.SelectInput select value={groupFilter} onChange={selectHandler}>
       <S.Option value="all">Farmer Groups</S.Option>
-      {Object.values(farmersGroupList).map((list) => (
+      {Object.values(farmersGroupById).map((list) => (
         <S.Option key={list.id} value={list.groupName}>
           {list.groupName}
         </S.Option>

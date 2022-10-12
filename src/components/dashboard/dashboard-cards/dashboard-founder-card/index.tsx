@@ -14,7 +14,7 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-  const { foundersList, editFounder } = useFounderContext();
+  const { foundersById, editFounder } = useFounderContext();
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
   var settings = {
@@ -50,7 +50,7 @@ const DashboardFounder = () => {
   };
 
   const getURL = (id: string) => {
-    let result = Object.values(foundersList).filter((item) => {
+    let result = Object.values(foundersById).filter((item) => {
       return item.id === id ? item.profile : null;
     });
     let data = result.length > 0 ? result[0]["profile"] : undefined;
@@ -59,7 +59,7 @@ const DashboardFounder = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = Object.values(foundersList).filter((item) => {
+    let result = Object.values(foundersById).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
@@ -76,7 +76,7 @@ const DashboardFounder = () => {
           </Link>
         </CardHeader>
         <Slider {...settings}>
-          {Object.values(foundersList).map((item) => (
+          {Object.values(foundersById).map((item) => (
             <S.FounderCard key={item.id}>
               <S.FounderImgContainer>
                 <S.FounderImg src={getURL(item.id) ? getURL(item.id) : FounderImg} alt="Founder-image" />
