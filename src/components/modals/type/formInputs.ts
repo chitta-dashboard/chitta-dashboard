@@ -22,6 +22,7 @@ export interface IAddFarmersDetailsPage1Input {
   surveyNo: { [key: string]: string };
   acre: { [key: string]: string };
   border: { [key: string]: string };
+
   [dynamicInputs: string]: string | string[] | { [key: string]: string };
 }
 
@@ -39,7 +40,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
