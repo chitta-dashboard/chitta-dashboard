@@ -122,7 +122,7 @@ export namespace S {
     padding: "0.9rem 2.2rem",
     fontWeight: "400",
     border: "1px solid",
-    borderColor: "#6868681A",
+    borderColor: theme.palette.addAlpha(theme.palette.border.secondary, 0.1),
     color: theme.palette.text.secondary,
     fontSize: "16px",
     cursor: "pointer",

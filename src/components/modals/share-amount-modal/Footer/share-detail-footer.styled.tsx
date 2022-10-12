@@ -9,12 +9,12 @@ namespace S {
 
   export const CustomButton = styled(Button)(({ theme }) => ({
     fontSize: "1.25rem",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     color: theme.palette.text.primary,
-    border: "2px solid #1A9035",
+    border: `2px solid ${theme.palette.border.primary}`,
     minWidth: "8.4375rem",
     "&:hover": {
-      color: "white",
+      color: theme.palette.text.white,
     },
   }));
 }

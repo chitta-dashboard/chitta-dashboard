@@ -10,9 +10,9 @@ namespace S {
     padding: ".6rem",
     borderRadius: "50%",
     lineHeight: "1",
-    color: isGreen ? "white" : theme.palette.primary.light,
-    backgroundColor: isGreen ? theme.palette.primary.light : "white",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, .2)",
+    color: isGreen ? theme.palette.text.white : theme.palette.primary.light,
+    backgroundColor: isGreen ? theme.palette.primary.light : theme.palette.text.white,
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.2)}`,
     transition: "background .3s, color .3s",
     visibility: isDummy ? "hidden" : "visible", // acts as a static placeholder if isDummy is true
 

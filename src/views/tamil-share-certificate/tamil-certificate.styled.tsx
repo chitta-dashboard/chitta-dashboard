@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)({
+  export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -10,10 +10,10 @@ export namespace S {
     boxSizing: "border-box",
     height: "839.09px",
     width: "74.375rem",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
-  });
+  }));
 
   export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
@@ -176,38 +176,34 @@ export namespace S {
     width: "100%",
     marginTop: "3.125rem",
   });
-
-  export const ShareCount = styled(Box)({
+  export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     boxSizing: "border-box",
-    border: "1px solid #404040",
+    border: `px solid ${theme.palette.border.certificate}`,
     padding: "1.1rem 0.7rem",
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: "red",
-  });
-
-  export const BlankSpace1 = styled(Typography)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     textAlign: "center",
-    borderBottom: "1px solid #404040",
+    borderBottom: `1px solid ${theme.palette.border.certificate}`,
     minWidth: "250px",
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: "red",
-  });
-
-  export const BlankSpace2 = styled(BlankSpace1)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace2 = styled(BlankSpace1)(({ theme }) => ({
     width: "23.75rem",
-    color: "red",
-  });
-
-  export const BlankSpace3 = styled(BlankSpace1)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
     width: "85%",
-    color: "red",
-  });
+    color: theme.palette.text.red,
+  }));
 }
