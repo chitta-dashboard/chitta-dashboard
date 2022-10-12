@@ -2,10 +2,10 @@ import FooterWrapper from "../../../custom-tables/footer";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 const Footer = () => {
-  const { farmersDetailsById, page, rowsPerPage } = useFarmerDetailsContext();
-  const count = Math.ceil(Object.values(farmersDetailsById).length / rowsPerPage);
+  const { farmersDetailsById } = useFarmerDetailsContext();
+  const count = Math.ceil(Object.values(farmersDetailsById).length / 6);
 
-  return <FooterWrapper count={count} page={page} totalCount={Object.values(farmersDetailsById).length} rowsPerPage={rowsPerPage} />;
+  return <FooterWrapper count={count} page={1} totalCount={Object.values(farmersDetailsById).length} rowsPerPage={6} />;
 };
 
 export default Footer;

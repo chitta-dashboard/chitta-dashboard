@@ -10,7 +10,7 @@ namespace S {
       padding: ".7rem",
       color: theme.palette.primary.main,
       borderRadius: "50%",
-      backgroundColor: "#ffffff",
+      backgroundColor: theme.palette.bg.main,
       width: "1rem",
       height: "1rem",
       alignItems: "center",
