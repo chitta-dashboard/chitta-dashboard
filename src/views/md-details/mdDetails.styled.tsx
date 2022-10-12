@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 namespace S {
   export const MdDetailsContainer = styled(Box)(({ theme }) => ({
@@ -10,6 +10,15 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       gap: "1rem",
     },
+  }));
+
+  export const CustomMessageDetails = styled("span")({
+    fontSize: "1.5rem",
+  });
+
+  export const CustomMessage = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 600,
   }));
 }
 

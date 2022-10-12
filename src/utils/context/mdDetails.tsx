@@ -8,7 +8,6 @@ const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
-const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type mdDetail = {
@@ -19,6 +18,7 @@ export type mdDetail = {
   profile?: string;
   dob: string;
   signature?: string;
+  farmerId?: string;
 };
 
 export type selectedMdListData = number | string;
@@ -38,8 +38,7 @@ export interface mdDetailsContextType {
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
-  checkboxSelectAll: () => void;
-  checkboxSelect: (id: string | number) => void;
+  checkboxSelect: (id: string[]) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -108,7 +107,6 @@ const initialState: mdDetailsContextType = {
   editMdDetail: () => {},
   deleteMdDetail: () => {},
   editTableIcon: () => {},
-  checkboxSelectAll: () => {},
   checkboxSelect: () => {},
 };
 
@@ -130,32 +128,13 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
 
-    case CHECKBOX_SELECT_ALL:
-      if (Object.values(state.selectedMdListData).length === Object.values(state.mdDetailsById).length) {
-        return {
-          ...state,
-          selectedMdListData: [],
-        };
-      } else {
-        return {
-          ...state,
-          selectedMdListData: [...Object.keys(state.mdDetailsById)],
-        };
-      }
-
     case CHECKBOX_SELECT:
-      let farmerId = action.payload;
-      if (state.selectedMdListData.includes(farmerId)) {
-        return {
-          ...state,
-          selectedMdListData: state.selectedMdListData.filter((id) => id !== farmerId),
-        };
-      } else {
-        return {
-          ...state,
-          selectedMdListData: [...state.selectedMdListData, farmerId],
-        };
-      }
+      let data = state.selectedMdListData;
+      let newData: string[] = [];
+      action.payload.map((id:string) => {
+        !data.includes(id) && newData.push(id);
+      });
+      return {...state,selectedMdListData:[...newData,...data]}
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -188,11 +167,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
-  const checkboxSelectAll = () => {
-    dispatch({ type: CHECKBOX_SELECT_ALL });
-  };
-
-  const checkboxSelect = (id: string | number) => {
+  const checkboxSelect = (id: string[]) => {
     dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
@@ -203,7 +178,6 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     deleteMdDetail,
     setSearchFilter,
     setSortFilter,
-    checkboxSelectAll,
     checkboxSelect,
   };
 
