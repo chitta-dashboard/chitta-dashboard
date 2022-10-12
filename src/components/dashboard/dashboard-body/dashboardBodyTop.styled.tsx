@@ -7,6 +7,9 @@ export namespace S {
     maxWidth: "100vw",
     height: "130px !important",
     position: "relative",
+    [theme.breakpoints.down("md")]: {
+      width: "calc(100% - 4rem)",
+    },
     ".slick-slide": {
       maxWidth: "calc(278px + 1rem) !important",
     },
@@ -61,7 +64,7 @@ export namespace S {
     gap: "0.8rem",
     [theme.breakpoints.down("xl")]: {
       height: "130px !important",
-      width: "250px !important",
+      width: "200px !important",
       padding: "1rem",
       gap: "0.5rem",
     },

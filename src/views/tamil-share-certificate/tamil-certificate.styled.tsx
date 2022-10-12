@@ -106,6 +106,7 @@ export namespace S {
   }));
 
   export const HeadingContainerSignNo = styled(Box)({});
+
   export const RegNoCin = styled(Typography)({
     fontSize: "0.9375rem",
     fontFamily: "Poppins",
@@ -127,14 +128,17 @@ export namespace S {
   export const DateBox = styled(Box)({
     minWidth: "9.6875rem",
   });
+
   export const DateText = styled(Typography)({
     fontSize: "1.125rem",
     fontWeight: "600",
   });
+
   export const CertificateContent = styled(Box)({
     width: "100%",
     height: "fit-content",
   });
+
   export const CertificateTextLine = styled(Box)({
     Width: "100%",
     display: "flex",
@@ -142,12 +146,14 @@ export namespace S {
     alignItems: "flex-end",
     height: "3rem",
   });
+
   export const CertificateText = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
     fontSize: "1.125rem",
     fontWeight: "600",
   });
+
   export const CertificateText2 = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
@@ -156,17 +162,21 @@ export namespace S {
     textAlign: "justify",
     width: "100%",
   });
+
   export const ShareCountContainer = styled(DateContainer)({
     width: "80%",
   });
+
   export const ShareCountInnerContainer = styled(DateContainer)({
     width: "fit-content",
     gap: "1rem",
   });
+
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
     marginTop: "3.125rem",
   });
+
   export const ShareCount = styled(Box)({
     display: "flex",
     alignItems: "center",
@@ -179,6 +189,7 @@ export namespace S {
     fontWeight: "600",
     color: "red",
   });
+
   export const BlankSpace1 = styled(Typography)({
     boxSizing: "border-box",
     textAlign: "center",
@@ -189,10 +200,12 @@ export namespace S {
     fontWeight: "600",
     color: "red",
   });
+
   export const BlankSpace2 = styled(BlankSpace1)({
     width: "23.75rem",
     color: "red",
   });
+
   export const BlankSpace3 = styled(BlankSpace1)({
     width: "85%",
     color: "red",

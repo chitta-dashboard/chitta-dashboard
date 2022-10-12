@@ -8,6 +8,8 @@ const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
+const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
+const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type mdDetail = {
   id: string;
@@ -18,6 +20,8 @@ export type mdDetail = {
   dob: string;
   signature?: string;
 };
+
+export type selectedMdListData = number | string;
 
 type Props = {
   children: React.ReactNode | React.ReactNode[];
@@ -30,11 +34,14 @@ export interface mdDetailsContextType {
   searchFilter: string;
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
+  selectedMdListData: selectedMdListData[];
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
+  checkboxSelectAll: () => void;
+  checkboxSelect: (id: string | number) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -97,6 +104,7 @@ const initialState: mdDetailsContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
+  selectedMdListData: [],
   sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
@@ -104,6 +112,8 @@ const initialState: mdDetailsContextType = {
   editMdDetail: () => {},
   deleteMdDetail: () => {},
   editTableIcon: () => {},
+  checkboxSelectAll: () => {},
+  checkboxSelect: () => {},
 };
 
 const reducer = (state: mdDetailsContextType, action: any) => {
@@ -123,6 +133,33 @@ const reducer = (state: mdDetailsContextType, action: any) => {
 
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
+
+    case CHECKBOX_SELECT_ALL:
+      if (Object.values(state.selectedMdListData).length === Object.values(state.mdDetailsById).length) {
+        return {
+          ...state,
+          selectedMdListData: [],
+        };
+      } else {
+        return {
+          ...state,
+          selectedMdListData: [...Object.keys(state.mdDetailsById)],
+        };
+      }
+
+    case CHECKBOX_SELECT:
+      let farmerId = action.payload;
+      if (state.selectedMdListData.includes(farmerId)) {
+        return {
+          ...state,
+          selectedMdListData: state.selectedMdListData.filter((id) => id !== farmerId),
+        };
+      } else {
+        return {
+          ...state,
+          selectedMdListData: [...state.selectedMdListData, farmerId],
+        };
+      }
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -155,6 +192,14 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
+  const checkboxSelectAll = () => {
+    dispatch({ type: CHECKBOX_SELECT_ALL });
+  };
+
+  const checkboxSelect = (id: string | number) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
+  };
+
   let data = {
     ...state,
     addMdDetail,
@@ -162,6 +207,8 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     deleteMdDetail,
     setSearchFilter,
     setSortFilter,
+    checkboxSelectAll,
+    checkboxSelect,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;
