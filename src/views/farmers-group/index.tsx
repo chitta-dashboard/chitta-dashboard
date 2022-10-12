@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Popover } from "@mui/material";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
-import { IAddFarmersGroupFormInput } from "../../components/modals/type/formInputs";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
-import { useFarmersGroupContext } from "../../utils/context/farmersGroup";
+import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
@@ -29,7 +28,7 @@ const FarmersGroup = () => {
   };
 
   // Add Farmergroup Handler
-  const addDataHandler = (data: IAddFarmersGroupFormInput & { id: string }) => {
+  const addDataHandler = (data: FarmersGroupType) => {
     addFarmersGroup(data);
   };
 

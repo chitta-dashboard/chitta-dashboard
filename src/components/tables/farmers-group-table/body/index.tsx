@@ -8,7 +8,6 @@ import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupModal from "../../../icon-modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
-import { IAddFarmersGroupFormInput } from "../../../modals/type/formInputs";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -62,7 +61,7 @@ const Body = () => {
   };
 
   //Update FarmerGroup Handler
-  const updateFarmerGroup = (data: IAddFarmersGroupFormInput) => {
+  const updateFarmerGroup = (data: FarmersGroup) => {
     setIconModal(false);
     editFarmersGroup({ ...data, id: editId });
   };
