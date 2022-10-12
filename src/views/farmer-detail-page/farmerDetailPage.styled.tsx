@@ -28,16 +28,16 @@ export namespace S {
     padding: "0.4rem 0.5rem",
   });
 
-  export const FarmersDetailsContent = styled(Box)({
+  export const FarmersDetailsContent = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
-    background: "#FFFFFF",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     height: "calc(100% - 5rem)",
     padding: "0.625rem 5%",
-  });
+  }));
 
   export const FarmersDetailsHeader = styled(Box)({
     display: "flex",
@@ -110,7 +110,7 @@ export namespace S {
     display: "none",
   });
 
-  export const HeaderTextBox = styled(Typography)({
+  export const HeaderTextBox = styled(Typography)(({ theme }) => ({
     width: "100%",
     padding: "0 6%",
     textAlign: "center",
@@ -118,15 +118,15 @@ export namespace S {
     fontSize: "1.0625rem",
     fontWeight: "500",
     lineHeight: "1.2",
-    color: " #666666",
-  });
+    color: theme.palette.text.secondary,
+  }));
 
   export const HeaderDateBox = styled(Box)(({ theme }: { theme: Theme }) => ({
     width: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    color: "#666666",
+    color: theme.palette.text.secondary,
     borderBottom: `4px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
     marginBottom: "0.1875rem",
     [theme.breakpoints.down("md")]: {
@@ -134,13 +134,13 @@ export namespace S {
     },
   }));
 
-  export const HeaderDateText = styled(Typography)({
+  export const HeaderDateText = styled(Typography)(({ theme }) => ({
     fontFamily: "Poppins",
     fontWeight: "500",
     lineHeight: "1",
-    color: " #666666",
+    color: theme.palette.text.secondary,
     padding: " 0.5rem 0.625rem 0.5rem 0.625rem",
-  });
+  }));
 
   export const UserInfoContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
@@ -154,21 +154,21 @@ export namespace S {
       background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: theme.palette.text.primary,
+      backgroundColor: theme.palette.primary.light,
       borderRadius: "1.25rem",
       height: "3.75rem",
     },
   }));
 
-  export const UserInfoRow = styled(Box)({
+  export const UserInfoRow = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "center",
     width: "100%",
     height: "fit-content",
     padding: "0.0938rem 0",
-    color: "#505050",
-  });
+    color: theme.palette.text.secondary,
+  }));
 
   export const UserInfoData1 = styled(Typography)(({ theme }: { theme: Theme }) => ({
     display: "flex",

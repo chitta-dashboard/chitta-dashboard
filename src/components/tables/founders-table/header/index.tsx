@@ -10,7 +10,7 @@ const Header = () => {
         <S.WebTableCell>கைபேசி எண்</S.WebTableCell>
         <S.WebTableCell>தகுதி</S.WebTableCell>
         <S.WebTableCell></S.WebTableCell>
-        <S.TabTableCell colSpan={5}>MD Details</S.TabTableCell>
+        <S.TabTableCell colSpan={5}>Founder Details</S.TabTableCell>
       </TableRow>
     </TableHead>
   );

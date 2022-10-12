@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import { DESCENDING, sortObj } from "../../../utils/constants";
-import S from "./resolutionsList.styled";
 import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
+import S from "./resolutionsList.styled";
 
 interface Props {
   resolutionId: string;

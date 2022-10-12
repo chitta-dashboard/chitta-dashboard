@@ -202,7 +202,7 @@ namespace S {
     height: "1.7rem",
     fontSize: "1rem",
     marginLeft: "15px",
-    color: "white",
+    color: theme.palette.text.white,
     "&.MuiButtonBase-root": {
       backgroundColor: theme.palette.primary.light,
       "&:hover": {

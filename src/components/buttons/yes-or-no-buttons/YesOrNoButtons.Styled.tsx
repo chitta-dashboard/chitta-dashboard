@@ -6,7 +6,7 @@ namespace S {
     paddingLeft: "2rem",
     paddingRight: "2rem",
     color: theme.palette.primary.light,
-    borderColor: theme.palette.primary.light,
+    borderColor: theme.palette.border.primary,
     borderRadius: ".6rem",
   }));
 
