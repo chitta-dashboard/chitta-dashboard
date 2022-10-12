@@ -1,8 +1,8 @@
 import { styled, Box } from "@mui/material";
 
 namespace S {
-  export const DecisionsContentContainer = styled(Box)(({ theme }) => ({
-    backgroundColor: "white",
+  export const ResolutionsContentContainer = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.bg.main,
     borderRadius: theme.shape.containerRadius,
     height: "100%",
     overflowX: "hidden",

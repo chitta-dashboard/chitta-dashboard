@@ -23,7 +23,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
-  const { farmersGroupList } = useFarmersGroupContext();
+  const { farmersGroupById } = useFarmersGroupContext();
 
   useEffect(() => {
     setValue("surveyNo", surveyNo);
@@ -86,7 +86,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="select"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupList).map((g) => [g.groupName, g.groupName]) }}
+        options={{ label: "குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
       />
       <Input
         name="phoneNumber"

@@ -1,121 +1,63 @@
-import { useForm } from "react-hook-form";
 import { Stack } from "@mui/material";
-import { FC, useEffect } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { v4 as uuidv4 } from "uuid";
+import { FC, useState, useEffect } from "react";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
-import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ConfirmationModal from "../confirmation-modal";
 import TableData from "./body/tableData";
-import { fileValidation } from "../../../utils/constants";
+import { searchWord } from "../../../utils/constants";
 import SearchBar from "../../common-components/search-bar";
+import S from "./index.styled";
 
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
-  cb: (data: IAddMDDetailsFormInput & { id: string }) => void;
-  editMode?: boolean;
-  id?: string;
+  handleConfirmModal: () => void;
 }
 
-const schema = yup
-  .object({
-    name: yup.string().required("required"),
-    phoneNumber: yup.string().required("required"),
-    qualification: yup.string().required("required"),
-    dob: yup.string().required("required"),
-    signature: yup
-      .mixed()
-      .test("signatureTest1", "required", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return file?.size > 0;
-      })
-      .test("signatureTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return fileValidation(file ? file?.name : "");
-      }),
-    profile: yup
-      .mixed()
-      .test("profileTest1", "required", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return file?.size > 0;
-      })
-      .test("profileTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return fileValidation(file ? file?.name : "");
-      }),
-  })
-  .required();
-
-const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { mdList } = useMdDetailsContext();
-
-  const { handleSubmit, reset, clearErrors } = useForm<IAddMDDetailsFormInput>({
-    resolver: yupResolver(schema),
-  });
-
+const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, handleConfirmModal }) => {
+  let { mdDetailsById } = useMdDetailsContext();
+  const [mdDetailsByIdData, setmdDetailsByIdData] = useState(Object.values(mdDetailsById));
+  const [searchKeyWord, setSearchKeyWord] = useState<string>("");
+  // let mdDetailsByIdData = Object.values(mdDetailsById);
   useEffect(() => {
-    if (editMode) {
-      let userData = Object.values(mdList).find((md) => String(md.id) === id);
-      reset({
-        name: userData?.name as string,
-        phoneNumber: userData?.phoneNumber as unknown as string,
-        qualification: userData?.qualification as string,
-        dob: userData?.dob as string,
-        signature: "", // temporary, until sbucket integration
-        profile: "", // temporary, until sbucket integration
-      });
-    }
+    var reg = new RegExp("^[0-9]+$");
 
-    return () =>
-      reset({
-        name: "",
-        phoneNumber: "",
-        qualification: "",
-        dob: "",
-        signature: "",
-        profile: "",
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode]);
-  // }, [editMode, id]);
-
-  const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
-    handleClose();
-    reset();
-  };
+    let data = Object.values(mdDetailsById).filter((item) => {
+      let search = reg.test(searchKeyWord) ? item.phoneNumber : item.name;
+      return searchWord(search, searchKeyWord);
+    });
+    setmdDetailsByIdData(data);
+    // mdDetailsByIdData = data
+    // console.log("mdDetailsByIdData : ",mdDetailsByIdData)
+  }, [searchKeyWord]);
 
   return (
     <CustomModal
       openModal={openModal}
       handleClose={() => {
-        clearErrors();
-        reset();
         handleClose();
       }}
     >
       <ModalHeader
         handleClose={() => {
-          clearErrors();
-          reset();
           handleClose();
         }}
       >
         Add MD Details
       </ModalHeader>
-      <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={4}>
-          <SearchBar />
-          <TableData />
-          {/* <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} /> */}
+      <ModalBody id="mdDetails" isPadding={false}>
+        <Stack spacing={0}>
+          <SearchBar setSearchKeyWord={setSearchKeyWord} />
+          <TableData mdListData={mdDetailsByIdData} />
         </Stack>
       </ModalBody>
-      <ModalFooter>{/* <Submit formId="mdDetails" handleSubmit={() => {}} /> */}</ModalFooter>
+      <ModalFooter>
+        {" "}
+        <S.AddButton onClick={handleConfirmModal}>Add</S.AddButton>
+      </ModalFooter>
     </CustomModal>
   );
 };

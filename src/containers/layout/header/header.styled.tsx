@@ -1,4 +1,4 @@
-import { Theme, Box, styled, Typography, Badge } from "@mui/material";
+import { Theme, Box, styled, Typography, Badge, Popover } from "@mui/material";
 import { Link } from "react-router-dom";
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -82,7 +82,7 @@ namespace S {
         transform: isActive ? "scaleX(1)" : "scaleX(0)",
         transformOrigin: "right",
         transition: "transform .3s ease-out",
-        backgroundColor: theme.palette.custom.backgroundLight,
+        backgroundColor: theme.palette.bg.light,
       },
       "&:hover::after": {
         transform: "scaleX(1)",
@@ -148,7 +148,7 @@ namespace S {
   export const NavBarMenu = styled(Box)(({ theme }: { theme: Theme }) => ({
     display: "flex",
     justifyContent: "space-between",
-    backgroundColor: theme.palette.custom.backgroundDark,
+    backgroundColor: theme.palette.bg.dark,
     padding: "1.5rem 1.5rem 1.2rem 2rem",
     color: theme.palette.text.primaryDark,
     marginBottom: "2rem",
@@ -169,6 +169,22 @@ namespace S {
       padding: "0 4px",
       backgroundColor: theme.palette.primary.light,
       color: "#ffffff",
+    },
+  }));
+
+  export const Pop = styled(Popover)(({ theme }) => ({
+    margin: "0.6rem -0.6rem",
+  }));
+
+  export const Items = styled(Typography)(({ theme }) => ({
+    textAlign: "center",
+    padding: "0.6rem 2rem",
+    borderBottom: "0.1rem solid #6868681A",
+    color: theme.palette.text.secondaryLight,
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.bg.light,
+      color: theme.palette.text.secondaryDark,
     },
   }));
 }

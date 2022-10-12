@@ -1,4 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FARMERS_GROUP = "ADD_FARMERS_GROUP";
@@ -24,13 +25,13 @@ type Props = {
 };
 
 interface farmersGroupContextType {
-  farmersGroupList: { [id: string]: FarmersGroup };
+  farmersGroupById: { [id: string]: FarmersGroup };
   page: number;
   rowsPerPage: number;
   searchFilter: string;
   memberFilter: string;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFarmersGroup: (data: FarmersGroup) => void;
   editFarmersGroup: (data: FarmersGroup) => void;
@@ -40,7 +41,7 @@ interface farmersGroupContextType {
 }
 
 const initialState: farmersGroupContextType = {
-  farmersGroupList: {
+  farmersGroupById: {
     "1": {
       id: "1",
       groupName: "விவசாயிகள் சங்கம்-1",
@@ -73,7 +74,7 @@ const initialState: farmersGroupContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
-  sortFilter: "ascending",
+  sortFilter: ASCENDING,
   addMembers: () => {},
   setSortFilter: () => {},
   setSearchFilter: () => {},
@@ -87,17 +88,17 @@ const initialState: farmersGroupContextType = {
 const reducer = (state: farmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, [action.payload.id]: action.payload } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
 
     case EDIT_FARMERS_GROUP:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, [action.payload.id]: action.payload } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
 
     case DELETE_FARMERS_GROUP:
-      delete state.farmersGroupList[action.payload];
-      return { ...state, farmersGroupList: { ...state.farmersGroupList } };
+      delete state.farmersGroupById[action.payload];
+      return { ...state, farmersGroupById: { ...state.farmersGroupById } };
 
     case ADD_MEMBERS:
-      return { ...state, farmersGroupList: { ...state.farmersGroupList, members: [...action.payload] } };
+      return { ...state, farmersGroupById: { ...state.farmersGroupById, members: [...action.payload] } };
 
     case MEMBER_FILTER:
       return { ...state, memberFilter: action.payload };
@@ -143,7 +144,7 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 

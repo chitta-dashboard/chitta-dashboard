@@ -7,9 +7,9 @@ import FarmersGroup from "../views/farmers-group";
 import FarmersDetails from "../views/farmers-details";
 import Founders from "../views/founders";
 import AdminPanel from "../views/admin-panel";
-import Decisions from "../views/decisions";
+import Resolutions from "../views/resolution";
 import NotFound from "../views/not-found";
-import FarmerDetailPage from "../views/farmer-detail-page";
+import FarmerFormPreview from "../views/farmer-detail-page/farmer-form-preview/FarmerFormPreview";
 import DecisionCertificate from "../views/decision-certificate";
 
 const AppRouters: FC = () => {
@@ -21,10 +21,10 @@ const AppRouters: FC = () => {
       <Route path={`/md-details`} element={<MDDetails />} />
       <Route path={`/farmers-group`} element={<FarmersGroup />} />
       <Route path={`/farmers-details`} element={<FarmersDetails />} />
-      <Route path={`/farmers-details/:farmerId`} element={<FarmerDetailPage />} />
+      <Route path={`/farmers-details/:farmerId`} element={<FarmerFormPreview />} />
       <Route path={`/founders`} element={<Founders />} />
       <Route path={`/admin-panel`} element={<AdminPanel />} />
-      <Route path={`/board-resolution`} element={<Decisions />} />
+      <Route path={`/board-resolution`} element={<Resolutions />} />
       <Route path={`/board-resolution/:resolutionId`} element={<DecisionCertificate />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>

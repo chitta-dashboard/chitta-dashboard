@@ -59,7 +59,7 @@ namespace S {
     padding: "1.3rem",
     gap: "0.4rem",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.bg.light,
       cursor: "pointer",
       "& p": {
         fontWeight: 700,

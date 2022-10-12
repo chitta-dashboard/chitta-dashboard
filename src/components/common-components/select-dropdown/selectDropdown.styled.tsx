@@ -30,7 +30,7 @@ namespace S {
     padding: "0.5rem 1rem",
     borderBottom: "0.1rem solid #6868681A",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.bg.light,
       color: "#1E1E1E",
     },
   }));

@@ -35,12 +35,6 @@ namespace S {
     gap: "1rem",
   });
 
-  export const IconBox = styled("i")(({ theme }) => ({
-    color: theme.palette.text.primary,
-    fontSize: "1.5rem",
-    cursor: "pointer",
-  }));
-
   export const BodyContainer = styled(Box)<{ isheight: number }>(({ isheight }) => ({
     maxHeight: isheight ? "31rem" : "18.5rem",
     overflowY: "auto",

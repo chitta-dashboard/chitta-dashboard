@@ -1,12 +1,13 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, ChangeEvent } from "react";
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 
 interface CustomProps {
   searchHandler?: (searchText: string) => void;
+  setSearchKeyWord?: (value: string) => void;
 }
 
-const SearchBar: FC<CustomProps> = ({ searchHandler }) => {
+const SearchBar: FC<CustomProps> = ({ searchHandler, setSearchKeyWord }) => {
   useEffect(
     () => () => {
       searchHandler && searchHandler("");
@@ -20,8 +21,10 @@ const SearchBar: FC<CustomProps> = ({ searchHandler }) => {
       <IconGreen>search</IconGreen>
       <S.SearchBar
         placeholder="  Search..."
-        onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-          searchHandler && searchHandler((e.target as HTMLInputElement).value);
+        onChange={(e: React.MouseEvent<HTMLInputElement, MouseEvent> | ChangeEvent<HTMLInputElement>) => {
+          setSearchKeyWord
+            ? setSearchKeyWord((e.target as HTMLInputElement).value)
+            : searchHandler && searchHandler((e.target as HTMLInputElement).value);
         }}
       />
     </S.SearchBarPaper>

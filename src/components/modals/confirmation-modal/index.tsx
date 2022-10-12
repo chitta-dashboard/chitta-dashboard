@@ -10,10 +10,10 @@ interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
   yesAction: () => void;
-  userConfirm?: string;
+  confirmMessage?: JSX.Element;
 }
 
-const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction, userConfirm }) => {
+const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction, confirmMessage }) => {
   return (
     <CustomModal openModal={openModal} handleClose={handleClose}>
       <ModalHeader
@@ -25,7 +25,7 @@ const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction,
         Confirmation
       </ModalHeader>
       <ModalBody id={""} onSubmit={() => {}}>
-        <ConfirmationBody userConfirm={userConfirm} />
+        <ConfirmationBody confirmMessage={confirmMessage} />
       </ModalBody>
       <ModalFooter>
         <YesOrNoButtons yesAction={yesAction} handleClose={handleClose} />

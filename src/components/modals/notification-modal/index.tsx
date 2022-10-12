@@ -1,9 +1,8 @@
-import { FC, useState } from "react";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
+import { FC, useState, useRef } from "react";
 import S from "./NotificationModal.styled";
-import { useAuthContext } from "../../../utils/context/authContext";
+import { useAuthContext } from "../../../utils/context/auth";
+import Icon from "../../icons";
 
-//
 interface notificationProps {
   open: boolean;
   handleClose: () => void;
@@ -14,9 +13,10 @@ interface notificationProps {
 const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler }) => {
   const { userNotification } = useAuthContext();
   const [seeMore, setSeeMore] = useState(false);
+  const bodyref = useRef<any>();
 
   const styleHandler = () => {
-    setSeeMore(!seeMore);
+    bodyref.current.scrollHeight > bodyref.current.clientHeight ? setSeeMore(!seeMore) : setSeeMore(false);
   };
 
   return (
@@ -36,11 +36,11 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
       <S.HeadingBox>
         <S.HeadingText variant="h6">Notification</S.HeadingText>
         <S.HeadingIcons>
-          <S.IconBox>settings</S.IconBox>
-          <DoneAllIcon style={{ cursor: "pointer" }} onClick={clearNotifyHandler} />
+          <Icon iconName={"settings"} />
+          <Icon iconName={"mark-all-as-read"} clickHandler={clearNotifyHandler} />
         </S.HeadingIcons>
       </S.HeadingBox>
-      <S.BodyContainer isheight={seeMore ? 1 : 0}>
+      <S.BodyContainer isheight={seeMore ? 1 : 0} ref={bodyref}>
         {userNotification.map((user) => (
           <S.BodyBox key={user.id}>
             <S.UserImage alt="userImage" src={user.image} />
