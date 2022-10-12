@@ -2,7 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 namespace S {
   export const Footer = styled(Box)(({ theme }) => ({
     padding: ".5rem 1rem",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     color: theme.palette.text.secondaryLight,
     display: "flex",
     justifyContent: "space-between",
@@ -20,7 +20,7 @@ namespace S {
     cursor: "pointer",
     whiteSpace: "nowrap",
     "&:hover": {
-      opacity: theme.palette.shadeOpacity,
+      color: theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8),
     },
   }));
 

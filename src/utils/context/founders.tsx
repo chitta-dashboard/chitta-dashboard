@@ -1,5 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
+import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
@@ -27,8 +28,8 @@ export interface foundersContextType {
   page: number;
   rowsPerPage: number;
   searchFilter: string;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFounder: (data: Founders) => void;
   editFounder: (data: Founders) => void;
@@ -95,7 +96,7 @@ const initialState: foundersContextType = {
   page: 1,
   rowsPerPage: 6,
   searchFilter: "",
-  sortFilter: "ascending",
+  sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFounder: () => {},
@@ -148,7 +149,7 @@ const FoundersContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
   };
 
-  const setSortFilter = (sortOrder: "ascending" | "descending") => {
+  const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 

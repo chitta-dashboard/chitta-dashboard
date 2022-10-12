@@ -18,15 +18,15 @@ namespace S {
     left: "0",
   });
 
-  export const TopImage = styled(Box)({
+  export const TopImage = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
     borderRadius: "50%",
     position: "absolute",
     top: "-75%",
     left: "-40%",
-    backgroundColor: "rgba(48, 111, 84, 0.08)",
-  });
+    backgroundColor: theme.palette.addAlpha(theme.palette.primary.main, 0.08),
+  }));
 
   export const FarmerImageBox = styled(Box)({
     overflow: "hidden",

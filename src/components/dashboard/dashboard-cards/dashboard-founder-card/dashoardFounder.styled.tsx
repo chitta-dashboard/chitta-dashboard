@@ -5,26 +5,26 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     padding: "1rem",
-    backgroundColor: "#fff",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: theme.palette.bg.main,
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     borderRadius: "1.25rem",
     [theme.breakpoints.up("xl")]: {
       minHeight: "15vh",
       padding: "2.5rem",
     },
     [theme.breakpoints.down("lg")]: {
-      minHeight: "10vh",
+      minHeight: "340px",
     },
     ".slick-prev": {
-      top: "96%",
+      top: "98%",
       left: "25%",
       zIndex: "3",
       width: "35px",
       height: "35px",
       transform: "rotate(-180deg)",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -33,14 +33,14 @@ export namespace S {
       },
     },
     ".slick-next": {
-      top: "103%",
+      top: "105%",
       right: "25%",
       width: "35px",
       height: "35px",
       zIndex: "3",
-      background: "white",
+      background: theme.palette.bg.main,
       borderRadius: "50%",
-      boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+      boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
       ":before": {
         content: '"j"',
         fontFamily: "nerkathir-icon",
@@ -53,7 +53,7 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
-      bottom: "-15px",
+      bottom: "-20px",
       button: {
         "&:before": {
           fontSize: "10px",
@@ -79,7 +79,7 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    background: "#fff",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     padding: "1rem 0.2rem",
     [theme.breakpoints.down("lg")]: {
@@ -92,7 +92,7 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "1rem",
-    background: "#fff",
+    background: theme.palette.bg.main,
     borderRadius: "1.25rem",
     paddingLeft: "2rem",
     [theme.breakpoints.down("lg")]: {
@@ -109,7 +109,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)({
+  export const FounderCardHeaderRight = styled(Box)(({ theme }) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -117,8 +117,8 @@ export namespace S {
     gap: "1rem",
     paddingBottom: "1rem",
     borderBottom: "1px solid",
-    borderColor: "rgba(104, 104, 104, 0.1)",
-  });
+    borderColor: theme.palette.addAlpha(theme.palette.border.secondary, 0.1),
+  }));
 
   export const FounderImgContainer = styled(Box)({
     width: "10rem",
@@ -145,7 +145,7 @@ export namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",
@@ -218,8 +218,8 @@ export namespace S {
     color: theme.palette.text.secondary,
     textAlign: "justify",
     p: {
-      "-webkit-box-orient": "vertical",
-      "-webkit-line-clamp": "3",
+      WebkitBoxOrient: "vertical",
+      WebkiLineClamp: "3",
     },
   }));
 }

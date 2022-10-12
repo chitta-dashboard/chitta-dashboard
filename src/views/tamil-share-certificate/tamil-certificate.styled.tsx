@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)({
+  export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -10,10 +10,10 @@ export namespace S {
     boxSizing: "border-box",
     height: "839.09px",
     width: "74.375rem",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
-  });
+  }));
 
   export const CertificateTopBorderImg = styled("img")({
     position: "absolute",
@@ -106,6 +106,7 @@ export namespace S {
   }));
 
   export const HeadingContainerSignNo = styled(Box)({});
+
   export const RegNoCin = styled(Typography)({
     fontSize: "0.9375rem",
     fontFamily: "Poppins",
@@ -127,14 +128,17 @@ export namespace S {
   export const DateBox = styled(Box)({
     minWidth: "9.6875rem",
   });
+
   export const DateText = styled(Typography)({
     fontSize: "1.125rem",
     fontWeight: "600",
   });
+
   export const CertificateContent = styled(Box)({
     width: "100%",
     height: "fit-content",
   });
+
   export const CertificateTextLine = styled(Box)({
     Width: "100%",
     display: "flex",
@@ -142,12 +146,14 @@ export namespace S {
     alignItems: "flex-end",
     height: "3rem",
   });
+
   export const CertificateText = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
     fontSize: "1.125rem",
     fontWeight: "600",
   });
+
   export const CertificateText2 = styled(Typography)({
     display: "flex",
     alignItems: "flex-end",
@@ -156,45 +162,48 @@ export namespace S {
     textAlign: "justify",
     width: "100%",
   });
+
   export const ShareCountContainer = styled(DateContainer)({
     width: "80%",
   });
+
   export const ShareCountInnerContainer = styled(DateContainer)({
     width: "fit-content",
     gap: "1rem",
   });
+
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
     marginTop: "3.125rem",
   });
-  export const ShareCount = styled(Box)({
+  export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     boxSizing: "border-box",
-    border: "1px solid #404040",
+    border: `px solid ${theme.palette.border.certificate}`,
     padding: "1.1rem 0.7rem",
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: "red",
-  });
-  export const BlankSpace1 = styled(Typography)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     textAlign: "center",
-    borderBottom: "1px solid #404040",
+    borderBottom: `1px solid ${theme.palette.border.certificate}`,
     minWidth: "250px",
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: "red",
-  });
-  export const BlankSpace2 = styled(BlankSpace1)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace2 = styled(BlankSpace1)(({ theme }) => ({
     width: "23.75rem",
-    color: "red",
-  });
-  export const BlankSpace3 = styled(BlankSpace1)({
+    color: theme.palette.text.red,
+  }));
+  export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
     width: "85%",
-    color: "red",
-  });
+    color: theme.palette.text.red,
+  }));
 }

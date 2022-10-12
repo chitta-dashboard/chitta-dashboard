@@ -3,7 +3,7 @@ namespace S {
   export const SelectInput = styled(TextField)(({ theme }) => ({
     width: "18rem",
     borderRadius: "3.5rem",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     color: theme.palette.text.primary,
     "& .MuiOutlinedInput-notchedOutline": {
       border: "none",
@@ -24,14 +24,14 @@ namespace S {
   }));
 
   export const Option = styled(MenuItem)(({ theme }) => ({
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.palette.bg.main,
     color: theme.palette.text.primary,
     textAlign: "center",
     padding: "0.5rem 1rem",
-    borderBottom: "0.1rem solid #6868681A",
+    borderBottom: `0.1rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
-      color: "#1E1E1E",
+      backgroundColor: theme.palette.bg.light,
+      color: theme.palette.text.secondaryDark,
     },
   }));
 }

@@ -1,12 +1,12 @@
 import { TableContainer, styled, Table } from "@mui/material";
 
 namespace S {
-  export const TableContainerBox = styled(TableContainer)({
-    backgroundColor: "white",
+  export const TableContainerBox = styled(TableContainer)(({ theme }) => ({
+    backgroundColor: theme.palette.bg.main,
     borderRadius: "2rem",
     overflow: "hidden",
-    boxShadow: "0px 4px 10px #00000019",
-  });
+    boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
+  }));
 
   export const TableBox = styled(Table)(({ theme }) => ({
     height: "100%",
@@ -19,9 +19,9 @@ namespace S {
     "& thead": {
       display: "block",
       tableLayout: "fixed",
-      backgroundColor: theme.palette.custom.backgroundDark,
+      backgroundColor: theme.palette.bg.dark,
       "& th": {
-        backgroundColor: theme.palette.custom.backgroundDark,
+        backgroundColor: theme.palette.bg.dark,
         color: theme.palette.text.primaryDark,
         fontSize: "1.1rem",
         fontWeight: 600,

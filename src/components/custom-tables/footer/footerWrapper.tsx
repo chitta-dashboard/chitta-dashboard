@@ -4,23 +4,22 @@ namespace S {
   export const Footer = styled(TableFooter)(({ theme }) => ({
     position: "sticky",
     bottom: "0%",
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     "& .MuiButtonBase-root": {
       fontSize: "0.8rem",
-      backgroundColor: "#CED6E0", //Custom Color
-      color: "#0B213E", //Custom Color
+      backgroundColor: theme.palette.bg.pagination,
+      color: theme.palette.text.secondaryDark,
       border: "none",
     },
     "& .css-oznjvi-MuiButtonBase-root-MuiPaginationItem-root.Mui-selected": {
       backgroundColor: `${theme.palette.primary.light} !important`,
-      color: "white",
+      color: theme.palette.text.white,
     },
   }));
 
   export const PageNoDetails = styled(Typography)(({ theme }) => ({
     fontSize: "1rem",
-    color: theme.palette.text.secondary,
-    opacity: theme.palette.shadeOpacity,
+    color: theme.palette.addAlpha(theme.palette.text.secondary, 0.8),
   }));
 
   export const PageStack = styled(Stack)({
