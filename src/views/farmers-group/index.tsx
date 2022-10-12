@@ -7,19 +7,24 @@ import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
-  const [addModal, setAddModal] = useState(false);
   const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, setMemberFilter } = useFarmersGroupContext();
-  const [pop, setPop] = useState<boolean>(false);
+  const [addModal, setAddModal] = useState(false);
+  const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
+  const groupMembersFilter = [
+    { id: "1", value: 1, label: "All" },
+    { id: "2", value: 2, label: "With Members" },
+    { id: "3", value: 3, label: "Without Members" },
+  ];
 
   const popOverHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setPop(!pop);
+    setMemberFilterPop(!membersFilterPop);
     setAnchor(event.currentTarget);
   };
 
-  const setMemberHandler = (value: string) => {
+  const setMemberHandler = (value: number) => {
     setMemberFilter(value);
-    setPop(!pop);
+    setMemberFilterPop(!membersFilterPop);
   };
 
   //Add Modal Handler
@@ -47,9 +52,9 @@ const FarmersGroup = () => {
       <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
 
       <Popover
-        open={pop}
+        open={membersFilterPop}
         anchorEl={anchor}
-        onClose={() => setPop(false)}
+        onClose={() => setMemberFilterPop(false)}
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -59,9 +64,11 @@ const FarmersGroup = () => {
           horizontal: "right",
         }}
       >
-        <S.Items onClick={() => setMemberHandler("all")}>All</S.Items>
-        <S.Items onClick={() => setMemberHandler("1")}>With Member</S.Items>
-        <S.Items onClick={() => setMemberHandler("0")}>Without Member</S.Items>
+        {groupMembersFilter.map((data) => (
+          <S.Items onClick={() => setMemberHandler(data.value)} key={data.id}>
+            {data.label}
+          </S.Items>
+        ))}
       </Popover>
     </>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Autocomplete, MenuItem, TextField } from "@mui/material";
+import { MenuItem, TextField } from "@mui/material";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 

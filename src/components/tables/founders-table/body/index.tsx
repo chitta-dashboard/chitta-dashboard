@@ -99,9 +99,9 @@ const Body = () => {
 
   return (
     <>
-      {Object.values(founder).length > 0 ? (
+      {founder.length > 0 ? (
         <BodyWrapper>
-          {Object.values(founder).map((user) => (
+          {founder.map((user) => (
             <TableRow key={user.id}>
               <S.TabCell>
                 <CS.Icon onClick={() => iconModalHandler(user.id)}>three-dots</CS.Icon>
