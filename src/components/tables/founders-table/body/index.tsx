@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
-import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
+import { IAddCEODetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import MdDetailModal from "../../../icon-modals/md-detail-modal";
+import FoundersModal from "../../../modals/founders-modal";
 import DeleteModal from "../../../modals/delete-modal";
-import AddMdDetailsModal from "../../../modals/md-details-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -52,7 +52,7 @@ const Body = () => {
   };
 
   //Update Founders Handler
-  const updateFounders = (data: IAddMDDetailsFormInput & { id: string }) => {
+  const updateFounders = (data: IAddCEODetailsFormInput & { id: string }) => {
     setIconModal(false);
     editFounder(data);
   };
@@ -167,7 +167,7 @@ const Body = () => {
         </tbody>
       )}
 
-      <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={editId} />
+      <FoundersModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={editId} />
     </>
   );
 };

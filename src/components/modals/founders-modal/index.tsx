@@ -12,7 +12,7 @@ import { IAddCEODetailsFormInput } from "../type/formInputs";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
-import { useCeoDetailsContext } from "../../../utils/context/ceoDetails";
+import { useFounderContext } from "../../../utils/context/founders";
 
 interface CustomProps {
   openModal: boolean;
@@ -42,8 +42,8 @@ const schema = yup
   })
   .required();
 
-const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { ceoDetailsById } = useCeoDetailsContext();
+const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  let { foundersById } = useFounderContext();
 
   const {
     register,
@@ -60,14 +60,14 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   useEffect(() => {
     if (editMode) {
-      let userData = Object.values(ceoDetailsById).find((ceo) => String(ceo.id) === id);
+      let userData = Object.values(foundersById).find((f) => String(f.id) === id);
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: userData?.dob as string,
         description: userData?.description as string,
-        profile: "", // temporary, until sbucket integration
+        profile: userData?.profile, // temporary, until sbucket integration
       });
     }
 
@@ -106,7 +106,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
           handleClose();
         }}
       >
-        {editMode ? " Edit CEO's Details" : " Add CEO's Details "}
+        {editMode ? " Edit Founder's Details" : " Add Founder's Details "}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
@@ -123,4 +123,4 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   );
 };
 
-export default CeoDetailsModal;
+export default FoundersModal;

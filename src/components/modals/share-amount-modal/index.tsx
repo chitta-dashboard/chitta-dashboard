@@ -1,6 +1,7 @@
 import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -15,6 +16,8 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+  const { checkboxUnselectAll } = useFarmerDetailsContext();
+
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
@@ -22,6 +25,12 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   const generateTamilCertificatePDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
     content: () => pdftamilcertificate.current as HTMLDivElement,
+    onBeforePrint() {
+      handleClose();
+    },
+    onAfterPrint() {
+      checkboxUnselectAll();
+    },
   });
 
   return (

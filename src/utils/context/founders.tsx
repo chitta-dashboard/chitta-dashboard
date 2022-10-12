@@ -16,7 +16,7 @@ export type Founders = {
   qualification: string;
   profile?: string;
   dob: string;
-  signature?: string;
+  description?: string;
 };
 
 type Props = {
@@ -45,7 +45,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "1982-10-01",
-      signature: "",
+      description: "",
     },
     "2": {
       id: "2",
@@ -54,7 +54,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "1990-01-27",
-      signature: "",
+      description: "",
     },
     "3": {
       id: "3",
@@ -63,7 +63,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "1989-11-09",
-      signature: "",
+      description: "",
     },
     "4": {
       id: "4",
@@ -72,7 +72,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "1994-10-12",
-      signature: "",
+      description: "",
     },
     "5": {
       id: "5",
@@ -81,7 +81,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "1992-08-02",
-      signature: "",
+      description: "",
     },
     "6": {
       id: "6",
@@ -90,7 +90,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "1985-07-12",
-      signature: "",
+      description: "",
     },
   },
   page: 1,

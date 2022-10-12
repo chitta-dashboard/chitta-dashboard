@@ -35,9 +35,10 @@ const initialState: ceoDetailsContextType = {
       profile: profileImg,
       name: "goku",
       phoneNumber: "8610010875",
-      dob: "1996-08-10",
+      dob: "1986-08-10",
       qualification: "B.E.agri",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
       joinedDate: "oct 20 1989",
     },
     "2": {
@@ -45,9 +46,10 @@ const initialState: ceoDetailsContextType = {
       profile: profileImg,
       name: "vegeta",
       phoneNumber: "8610010875",
-      dob: "1996-08-10",
+      dob: "1982-08-10",
       qualification: "B.E.agri",
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
       joinedDate: "oct 20 1989",
     },
   },
