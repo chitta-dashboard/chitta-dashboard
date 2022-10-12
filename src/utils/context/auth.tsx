@@ -1,16 +1,25 @@
-import { createContext, FC, useContext, useState } from "react";
+import { createContext, FC, useContext, useState, useReducer } from "react";
 import profile from "../../assets/images/profile.png";
+
+//Action type
+const ADD_NOTIFICATION = "ADD_NOTIFICATION";
+const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
 
 export type Notification = {
   id: string;
-  image: string;
+  image: string | undefined;
   message: string;
+};
+
+type Props = {
+  children: React.ReactNode | React.ReactNode[];
 };
 interface IContextType {
   isAuthenticated: boolean;
   login: () => void;
   logout: () => void;
   clearNotification: () => void;
+  addNotification: (data: Notification) => void;
   userNotification: Notification[];
 }
 
@@ -19,23 +28,36 @@ const initialState: IContextType = {
   login: () => {},
   logout: () => {},
   clearNotification: () => {},
+  addNotification: () => {},
   userNotification: [
-    { id: "1", image: profile, message: `New MD "Arockiaraj" has been registered` },
-    { id: "2", image: profile, message: `New MD "Arockiaraj" has been registered` },
-    { id: "3", image: profile, message: `New MD "Arockiaraj" has been registered` },
-    { id: "4", image: profile, message: `New MD "Arockiaraj" has been registered` },
-    { id: "5", image: profile, message: `New MD "Arockiaraj" has been registered` },
+    { id: "100", image: profile, message: `New MD "Arockiaraj" has been registered` },
+    { id: "101", image: profile, message: `New MD "Arockiaraj" has been registered` },
+    { id: "102", image: profile, message: `New MD "Arockiaraj" has been registered` },
+    { id: "103", image: profile, message: `New MD "Arockiaraj" has been registered` },
+    { id: "104", image: profile, message: `New MD "Arockiaraj" has been registered` },
   ],
+};
+// Reducer function
+const reducer = (state: IContextType, action: any) => {
+  switch (action.type) {
+    case ADD_NOTIFICATION:
+      return { ...state, userNotification: [action.payload, ...state.userNotification] };
+    case CLEAR_NOTIFICATION:
+      return { ...state, userNotification: [] };
+
+    default: {
+      throw new Error(`Unknown type: ${action.type}`);
+    }
+  }
 };
 
 const authContext = createContext<IContextType>(initialState);
-
 const useAuthContext = () => useContext(authContext);
 
-const AuthContextProvider: FC<{ children: React.ReactNode | React.ReactNode[] }> = ({ children }) => {
+const AuthContextProvider: FC<Props> = (props) => {
   const localAuth = window.localStorage.getItem("isAuthenticated");
   const [isAuthenticated, setIsAuthenticated] = useState(!!localAuth);
-  const [notify, setNotify] = useState(initialState.userNotification);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const login = () => {
     window.localStorage.setItem("isAuthenticated", "true");
@@ -47,19 +69,24 @@ const AuthContextProvider: FC<{ children: React.ReactNode | React.ReactNode[] }>
     setIsAuthenticated(false);
   };
 
+  const addNotification = (data: Notification) => {
+    dispatch({ type: ADD_NOTIFICATION, payload: data });
+  };
+
   const clearNotification = () => {
-    setNotify([]);
+    dispatch({ type: CLEAR_NOTIFICATION });
   };
 
   const data = {
+    ...state,
     isAuthenticated,
     login,
     logout,
-    userNotification: notify,
     clearNotification,
+    addNotification,
   };
 
-  return <authContext.Provider value={data}>{children}</authContext.Provider>;
+  return <authContext.Provider value={data}>{props.children}</authContext.Provider>;
 };
 
 export { AuthContextProvider, useAuthContext };

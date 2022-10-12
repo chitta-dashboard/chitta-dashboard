@@ -1,4 +1,5 @@
-import { MenuItem } from "@mui/material";
+import { useState } from "react";
+import { Autocomplete, MenuItem, TextField } from "@mui/material";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 
@@ -11,6 +12,7 @@ interface InputProps extends UseControllerProps {
 }
 
 function Input({ type, name, rules = {}, control, shouldUnregister = false, onChange, options = {} }: InputProps) {
+  const [selected, setSelected] = useState<string | null>(null);
   switch (type) {
     case "text":
       return (
@@ -149,6 +151,39 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
                   field.onChange(e.target.value);
                 }}
                 onBlur={field.onBlur}
+              />
+            );
+          }}
+        />
+      );
+    case "autocomplete":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue=""
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => {
+            return (
+              <S.StyledAutocomplete
+                options={options.selectoptions}
+                renderInput={(params) => (
+                  <TextField
+                    {...options}
+                    {...params}
+                    helperText={errors[name]?.message as string}
+                    label={options.label}
+                    InputLabelProps={{ shrink: true }}
+                  />
+                )}
+                value={field.value ? field.value : selected}
+                ref={field.ref}
+                onChange={(event: any, newValue: any) => {
+                  setSelected(newValue);
+                  onChange && onChange(event);
+                  field.onChange(newValue);
+                }}
               />
             );
           }}

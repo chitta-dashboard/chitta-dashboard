@@ -9,19 +9,15 @@ import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
 
 const Header = () => {
-  const { userNotification, clearNotification } = useAuthContext();
+  const { userNotification, clearNotification, logout } = useAuthContext();
+  const navigate = useNavigate();
   let { pathname } = useLocation();
-  pathname = pathname.split("/")[1];
-
-  const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const [navOpen, setNavOpen] = useState(false);
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
-  const { logout } = useAuthContext();
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  const open = userNotification.length > 0 ? Boolean(notification) : false;
-  const shouldOpen = Boolean(notification);
+  pathname = pathname.split("/")[1];
+  const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+  const open = Boolean(notification);
 
   const clearNotifyHandler = () => {
     setnotification(null);
@@ -29,7 +25,7 @@ const Header = () => {
   };
 
   const notificationClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setnotification(event.currentTarget);
+    Object.values(userNotification).length > 0 ? setnotification(event.currentTarget) : setnotification(null);
   };
 
   const notificationHandler = () => {
@@ -75,9 +71,6 @@ const Header = () => {
           {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
         </S.ActionsBox>
       </S.Header>
-      {shouldOpen && (
-        <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />
-      )}
       <S.Pop
         open={!!anchorEl}
         anchorEl={anchorEl}
@@ -94,6 +87,7 @@ const Header = () => {
         <S.Items>Account</S.Items>
         <S.Items onClick={logout}>Logout</S.Items>
       </S.Pop>
+      {open && <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />}
     </>
   );
 };
