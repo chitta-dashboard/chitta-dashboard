@@ -132,13 +132,13 @@ export namespace S {
     height: "2.8125rem",
   });
 
-  export const CertificateText = styled(Typography)({
+  export const CertificateText = styled(Typography)(({ theme }) => ({
     display: "flex",
     alignItems: "flex-end",
     fontFamily: "Poppins",
     fontSize: "1.125rem",
-    color: "#12441E",
-  });
+    color: theme.palette.primary.light,
+  }));
 
   export const SignatureTextLine = styled(Box)({
     Width: "100%",
@@ -151,17 +151,17 @@ export namespace S {
     paddingRight: "1.4375rem",
   });
 
-  export const BlankSpace1 = styled(Typography)({
+  export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     fontFamily: "Poppins",
     fontSize: "1.125rem",
     textAlign: "center",
-    color: "#12441E",
+    color: theme.palette.primary.light,
     borderBottom: "1px solid #404040",
     minWidth: "13.125rem",
     maxWidth: "14.375rem",
     height: "1.625rem",
-  });
+  }));
 
   export const BlankSpace2 = styled(BlankSpace1)({
     minWidth: "90%",

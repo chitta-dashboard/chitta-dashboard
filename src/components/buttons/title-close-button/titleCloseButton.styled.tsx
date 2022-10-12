@@ -5,7 +5,7 @@ namespace S {
     fontSize: ".7rem",
     padding: ".5rem",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundDark,
+      backgroundColor: theme.palette.bg.dark,
     },
   }));
 }

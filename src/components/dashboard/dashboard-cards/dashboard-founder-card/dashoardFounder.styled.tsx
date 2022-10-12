@@ -13,10 +13,10 @@ export namespace S {
       padding: "2.5rem",
     },
     [theme.breakpoints.down("lg")]: {
-      minHeight: "10vh",
+      minHeight: "340px",
     },
     ".slick-prev": {
-      top: "96%",
+      top: "98%",
       left: "25%",
       zIndex: "3",
       width: "35px",
@@ -33,7 +33,7 @@ export namespace S {
       },
     },
     ".slick-next": {
-      top: "103%",
+      top: "105%",
       right: "25%",
       width: "35px",
       height: "35px",
@@ -53,7 +53,7 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
-      bottom: "-15px",
+      bottom: "-20px",
       button: {
         "&:before": {
           fontSize: "10px",
@@ -145,7 +145,7 @@ export namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.bg.light,
     borderRadius: "50%",
     opacity: "0.8",
     border: "none",

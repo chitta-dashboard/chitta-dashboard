@@ -81,7 +81,7 @@ export namespace S {
     position: "absolute",
     top: "0",
     left: "0",
-    background: theme.palette.custom.backgroundLight,
+    background: theme.palette.custom.backdrop,
     opacity: "0.7",
     display: "none",
     alignItems: "center",
@@ -127,7 +127,7 @@ export namespace S {
     fontSize: "16px",
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.custom.backgroundLight,
+      backgroundColor: theme.palette.custom.shadow,
       color: theme.palette.text.secondaryDark,
     },
   }));
