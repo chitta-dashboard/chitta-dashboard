@@ -4,16 +4,19 @@ import { IResolution, useResolutionsProviderContext } from "../../utils/context/
 import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import DecisionPdf from "./DecisionPdf";
-import { S } from "./decision-certificate.styled";
 import DeleteModal from "../../components/modals/delete-modal";
 import DecisionsModal from "../../components/modals/decisions-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
+import { useAuthContext } from "../../utils/context/auth";
+import profile from "../../assets/images/Founder.png";
+import { S } from "./decision-certificate.styled";
 
 const DecisionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
   const [edition, setEdition] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const editedData = useRef<Partial<IResolution>>({});
+  const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const DecisionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
@@ -33,6 +36,11 @@ const DecisionCertificatePage = () => {
   const deleteResolution = useCallback(() => {
     resolutionId && deleteResolutionInContext(resolutionId);
     navigate(-1);
+    addNotification({
+      id: "edit" + resolutionId,
+      image: profile,
+      message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been deleted.`,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolutionId]);
 
@@ -78,6 +86,11 @@ const DecisionCertificatePage = () => {
             editResolution(resolutionId || "", editedData.current as IResolution);
             setConfirmation(false);
             setEdition(false);
+            addNotification({
+              id: "edit" + resolutionId,
+              image: profile,
+              message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been edited.`,
+            });
           }}
         />
       )}
