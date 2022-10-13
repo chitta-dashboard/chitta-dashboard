@@ -1,9 +1,9 @@
 import { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
-import AddMdDetailsModal from "../../components/modals/md-details-modal";
+import FoundersModal from "../../components/modals/founders-modal";
 import FoundersTable from "../../components/tables/founders-table";
 import { useFounderContext } from "../../utils/context/founders";
-import { IAddMDDetailsFormInput } from "../../components/modals/type/formInputs";
+import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import S from "./founders.styled";
 
 const Founders = () => {
@@ -14,7 +14,7 @@ const Founders = () => {
     setAddModal(!addModal);
   };
 
-  const addDataHandler = (data: IAddMDDetailsFormInput & { id: string }) => {
+  const addDataHandler = (data: IAddCEODetailsFormInput & { id: string }) => {
     addFounder(data);
   };
 
@@ -24,7 +24,7 @@ const Founders = () => {
         <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
         <FoundersTable />
       </S.foundersContainer>
-      <AddMdDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
+      <FoundersModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>
   );
 };

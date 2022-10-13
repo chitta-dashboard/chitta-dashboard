@@ -1,37 +1,35 @@
-import { styled, Stack, Grid } from "@mui/material";
+import { styled } from "@mui/material";
 
 namespace S {
-  export const InputContainer = styled(Stack)({});
-  InputContainer.defaultProps = {
-    width: "100%",
-  };
+  export const Container = styled("div", { shouldForwardProp: (prop) => prop !== "selectAll" })<{ selectAll?: boolean }>(({ theme, selectAll }) => ({
+    display: "grid",
+    gridTemplateAreas: `
+    "sel sel . ."
+    "dhd dhd ric ric"
+    "dct ${selectAll ? "dct" : "grp"} ric ric"
+    "pre pre ric ric"
+    "par par ric ric"
+    `,
+    gridAutoColumns: "1fr 1fr 1fr 1fr",
+    gap: "1rem",
 
-  export const Title = styled("div")({
-    display: "contents",
-  });
-
-  export const ChildContainer = styled(Grid)(({ theme }) => ({
-    width: "100%",
+    [theme.breakpoints.down("md")]: {
+      gridTemplateAreas: `
+    "sel sel"
+    "dhd dhd"
+    "dct ${selectAll ? "dct" : "grp"}"
+    "pre pre"
+    "par par"
+    "ric ric"
+    `,
+      gridAutoColumns: "1fr 1fr",
+      gridAutoRows: "auto auto auto auto auto 300px",
+    },
   }));
 
-  ChildContainer.defaultProps = {
-    md: 6,
-  };
-
-  export const RadioContainer = styled(Stack)({
-    marginBottom: "1rem",
-    display: "flex",
-    justifyContent: "flex-start",
-    width: "100%",
-  });
-
-  export const DateContainer = styled(Stack)({});
-
-  export const QualificationContainer = styled(Stack)({});
-
-  QualificationContainer.defaultProps = {
-    width: "100%",
-  };
+  export const EditorBox = styled("div")(() => ({
+    gridArea: "ric",
+  }));
 }
 
 export default S;

@@ -1,5 +1,5 @@
 export interface IAddDecisionsFormInput {
-  selectAll: boolean;
+  selectAll: string;
   decisionHeading: string;
   creationTime: string;
   groupName: string;
@@ -65,5 +65,5 @@ export interface IAddCEODetailsFormInput {
   qualification: string;
   dob: string;
   profile: string;
-  description:string
+  description: string;
 }

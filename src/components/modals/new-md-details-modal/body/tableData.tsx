@@ -1,24 +1,28 @@
 import S from "./tableData.styled";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import MdDetailsTableBody from "./tableBody";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
 
 type TableDataPropsType = {
-  mdListData: mdDetail[];
+  farmerDetails: farmerDetail[];
+  handleCheckBox: (id: string) => void;
+  handleCheckBoxAll: () => void;
+  selectedFarmerKeys: string[];
 };
 
-const TableData: FC<TableDataPropsType> = ({ mdListData }) => {
-  const { checkboxSelectAll } = useMdDetailsContext();
+const TableData: FC<TableDataPropsType> = (props) => {
+  const { farmerDetails, handleCheckBoxAll, handleCheckBox, selectedFarmerKeys } = props;
   return (
     <S.MdDetailsTableContainer>
       <S.MdDetailsTableHeadContainer container>
-        <S.MdDetailsTableCheckBox onChange={() => checkboxSelectAll()} />
+        <S.MdDetailsTableCheckBox checked={selectedFarmerKeys.length === Object.values(farmerDetails).length} onChange={handleCheckBoxAll} />
         <S.MdDetailsTableHeadTitle>பெயர்</S.MdDetailsTableHeadTitle>
         <S.MdDetailsTableHeadTitle>கைபேசி என்</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableHeadContainer>
-      {mdListData.map((item) => (
+      {farmerDetails.map((item) => (
         <React.Fragment key={item.id}>
-          <MdDetailsTableBody mdData={item} />
+          <MdDetailsTableBody farmerData={item} selectedFarmerKeys={selectedFarmerKeys} handleCheckBox={handleCheckBox} />
         </React.Fragment>
       ))}
     </S.MdDetailsTableContainer>
