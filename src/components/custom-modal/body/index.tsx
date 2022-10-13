@@ -2,7 +2,7 @@ import { FC } from "react";
 import S from "./body.styled";
 
 interface CustomProps {
-  id: string;
+  id?: string;
   onSubmit?: () => void;
   children: React.ReactNode;
   isPadding?: Boolean;

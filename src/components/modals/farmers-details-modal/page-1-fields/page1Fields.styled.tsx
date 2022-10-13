@@ -11,7 +11,7 @@ namespace S {
       "phn adh"
       "dyn dyn"
     `,
-    gap: "1.5rem 1.2rem",
+    gap: "1rem",
   });
 
   export const DynamicInputsBox = styled("div")({
@@ -47,7 +47,7 @@ namespace S {
   }));
 
   RemoveBtn.defaultProps = {
-    children: <i>close</i>,
+    children: "-"
   };
 }
 

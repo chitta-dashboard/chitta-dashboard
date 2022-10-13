@@ -12,14 +12,13 @@ interface CustomProps {
   dynamicInputs: Array<{ [key: string]: [string, string, string] }>;
   addInput: () => void;
   removeInput: (key: string) => void;
-
-  
   setValue: UseFormSetValue<IAddFarmersDetailsPage1Input>;
   getValues: UseFormGetValues<IAddFarmersDetailsPage1Input>;
   unregister: UseFormUnregister<IAddFarmersDetailsPage1Input>;
+  editMode?: boolean;
 }
 
-const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister }) => {
+const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode }) => {
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
@@ -143,7 +142,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                 }}
               />
               <Input
-                type="number"
+                type="text"
                 name={borderName}
                 control={control}
                 rules={{ required: "required" }}

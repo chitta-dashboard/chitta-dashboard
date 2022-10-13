@@ -42,6 +42,13 @@ const reducer = (state: IContextType, action: any) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
       return { ...state, userNotification: [action.payload, ...state.userNotification] };
+    // return {
+    //   ...state,
+    //   userNotification: [
+    //     ...state.userNotification,
+    //     { id: action.payload.id, image: profile, message: `New MD ${action.payload.message} has been registered` },
+    //   ],
+    // };
     case CLEAR_NOTIFICATION:
       return { ...state, userNotification: [] };
 

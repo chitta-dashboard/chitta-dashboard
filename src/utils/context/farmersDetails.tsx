@@ -10,6 +10,7 @@ const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
+const CHECKBOX_UNSELECT_ALL = "CHECKBOX_UNSELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const GROUP_FILTER = "GROUP_FILTER";
 
@@ -40,6 +41,7 @@ export type farmerDetail = {
   waterType: string;
   animals: string;
   groupMember: string;
+  qualification?: string;
 };
 
 export type selectedFarmer = number | string;
@@ -60,6 +62,7 @@ interface farmerDetailsContextType {
   deleteFarmerDetail: (id: string) => void;
   editTableIcon: (data: farmerDetail) => void;
   checkboxSelectAll: () => void;
+  checkboxUnselectAll: () => void;
   checkboxSelect: (id: string | number) => void;
   groupFilter: string;
   setGroupFilter: (selectGroup: string) => void;
@@ -240,6 +243,7 @@ const initialState: farmerDetailsContextType = {
   deleteFarmerDetail: () => {},
   editTableIcon: () => {},
   checkboxSelectAll: () => {},
+  checkboxUnselectAll: () => {},
   checkboxSelect: () => {},
   groupFilter: "all",
   setGroupFilter: () => {},
@@ -273,6 +277,11 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
         };
       }
 
+    case CHECKBOX_UNSELECT_ALL:
+      return {
+        ...state,
+        selectedFarmers: [],
+      };
     case CHECKBOX_SELECT:
       let farmerId = action.payload;
       if (state.selectedFarmers.includes(farmerId)) {
@@ -336,6 +345,10 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: CHECKBOX_SELECT_ALL });
   };
 
+  const checkboxUnselectAll = () => {
+    dispatch({ type: CHECKBOX_UNSELECT_ALL });
+  };
+
   const checkboxSelect = (id: string | number) => {
     dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
@@ -349,6 +362,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setSearchFilter,
     setSortFilter,
     checkboxSelectAll,
+    checkboxUnselectAll,
     checkboxSelect,
     setGroupFilter,
   };

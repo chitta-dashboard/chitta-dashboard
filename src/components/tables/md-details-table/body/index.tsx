@@ -4,6 +4,7 @@ import { searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import MdDetailsRow from "./row";
 import S from "./body.styled";
+//
 
 const Body = () => {
   const { mdDetailsById: listData, searchFilter, sortFilter } = useMdDetailsContext();

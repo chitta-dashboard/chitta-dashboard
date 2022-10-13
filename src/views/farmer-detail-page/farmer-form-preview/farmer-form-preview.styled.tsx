@@ -127,7 +127,7 @@ export namespace S {
     fontSize: "16px",
     cursor: "pointer",
     "&:hover": {
-      backgroundColor: theme.palette.custom.shadow,
+      backgroundColor: theme.palette.bg.light,
       color: theme.palette.text.secondaryDark,
     },
   }));

@@ -8,7 +8,7 @@ namespace S {
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "flex-start !important",
   });
 
   export const MdDetailsTableHeadContainer = styled(Grid)(({ theme }) => ({
@@ -37,8 +37,21 @@ namespace S {
   }));
 
   export const MdDetailsTableCheckBox = styled(Checkbox)(({ theme }) => ({
+    ".MuiCheckbox-root": {
+      "&:hover": {
+        backgroundColor: "transparent !important",
+      },
+    },
+    span: {
+      "&:hover": {
+        backgroundColor: "transparent !important",
+      },
+    },
     ".MuiSvgIcon-root": {
       color: theme.palette.text.primary,
+      "&:hover": {
+        backgroundColor: "transparent !important",
+      },
     },
   }));
 
