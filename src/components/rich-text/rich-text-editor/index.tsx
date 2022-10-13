@@ -7,15 +7,19 @@ import S from "../richText.styled";
 
 type EditorProps = {
   cb: (plainText: string, richText: string) => void;
+  defaultValue?: string;
 };
 
-const Editor: FC<EditorProps> = ({ cb }) => {
+const Editor: FC<EditorProps> = ({ cb, defaultValue = "" }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
-    content: "",
+    content: defaultValue,
     autofocus: true,
     onUpdate: ({ editor }) => {
       cb(editor.getText(), String(editor.getHTML()));
+    },
+    onCreate: ({ editor }) => {
+      if (defaultValue) cb(editor.getText(), String(editor.getHTML()));
     },
   });
 

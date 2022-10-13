@@ -34,7 +34,10 @@ const DecisionPdf = forwardRef<HTMLDivElement, Props>(({ decisionId }, ref) => {
                   <S.DateText>குழு : </S.DateText>
                   <S.DateText2>{user.groupName}</S.DateText2>
                 </S.FlexLine>
-                <S.DateText>நாள் :{user.timestamp}</S.DateText>
+                <S.FlexLine>
+                  <S.DateText>நாள் : </S.DateText>
+                  <S.DateText2>{user.timestamp}</S.DateText2>
+                </S.FlexLine>
               </S.FlexLine2>
               <S.FlexLine>
                 <S.DateText>தீர்மானம் தலைப்பு : </S.DateText>

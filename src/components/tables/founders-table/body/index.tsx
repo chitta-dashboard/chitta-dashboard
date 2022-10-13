@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
-import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
+import { IAddCEODetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
-import FoundersModal from "../../../icon-modals/founders-modal";
+import FoundersModal from "../../../modals/founders-modal";
 import DeleteModal from "../../../modals/delete-modal";
-import AddMdDetailsModal from "../../../modals/md-details-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -25,6 +25,8 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [idCardData, setIdCardData] = useState<Founders>();
 
   useEffect(() => {
     setFounderSearch(Object.values(listData).filter((list) => searchWord(list.name, searchFilter)));
@@ -52,7 +54,7 @@ const Body = () => {
   };
 
   //Update Founders Handler
-  const updateFounders = (data: IAddMDDetailsFormInput & { id: string }) => {
+  const updateFounders = (data: IAddCEODetailsFormInput & { id: string }) => {
     setIconModal(false);
     editFounder(data);
   };
@@ -97,6 +99,11 @@ const Body = () => {
     editFounder({ ...result[0] });
   };
 
+  const handleClose = (user?: Founders) => {
+    setOpen(!open);
+    setIdCardData(user);
+  };
+
   return (
     <>
       {founder.length > 0 ? (
@@ -124,7 +131,7 @@ const Body = () => {
               <S.WebTableCell>
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                  <CS.Icon>id-card</CS.Icon>
+                  <CS.Icon onClick={() => handleClose(user)}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFoundersHandler(user.id)}>edit</CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
@@ -138,8 +145,8 @@ const Body = () => {
           </tr>
         </S.EmptyMsg>
       )}
-      <FoundersModal
-        open={iconModal}
+      {/* <FoundersModal
+        openModal={iconModal}
         handleClose={() => setIconModal(false)}
         handleDelete={() => {
           setDeleteModal(true);
@@ -147,7 +154,7 @@ const Body = () => {
         handleEdit={() => {
           setEditMode(true);
         }}
-      />
+      /> */}
       <DeleteModal
         openModal={deleteModal}
         handleClose={() => setDeleteModal(false)}
@@ -157,6 +164,8 @@ const Body = () => {
           setIconModal(false);
         }}
       />
+      <IdCardModal cardData={idCardData} openModal={open} handleClose={handleClose} />
+
       {image && (
         <tbody>
           <tr>
@@ -167,7 +176,7 @@ const Body = () => {
         </tbody>
       )}
 
-      <AddMdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={editId} />
+      <FoundersModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={editId} />
     </>
   );
 };

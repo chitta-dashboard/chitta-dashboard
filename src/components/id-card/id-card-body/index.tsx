@@ -1,30 +1,58 @@
 import { forwardRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import IDCardHeader from "../id-card-header";
-import S from "./idCardBody.styled";
-import IdPhoto from "../../../assets/images/IdImage.png";
 import Signature from "../../../assets/images/Signature.png";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { mdDetail } from "../../../utils/context/mdDetails";
+import S from "./idCardBody.styled";
 
-const IdCardBody = forwardRef<HTMLDivElement | undefined>((props, ref) => {
+interface Props {
+  data?: farmerDetail | mdDetail;
+}
+
+type Ref = HTMLDivElement | undefined;
+
+const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
+  const { data } = props;
   return (
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />
       <S.IdCardBodyWrapper>
-        <S.IdImage src={IdPhoto} alt="id-photo" />
+        <S.IdImage src={data?.profile} alt="id-photo" />
         <S.MiddleBox>
           <S.IdDetailsWrapper>
-            <S.IdDetailBox>
-              <S.IdDetails>பெயர்:</S.IdDetails>
-              <S.IdDetails>கைபேசி எண்:</S.IdDetails>
-              <S.IdDetails>பிறந்த தேதி:</S.IdDetails>
-              <S.IdDetails>தகுதி:</S.IdDetails>{" "}
-            </S.IdDetailBox>
-            <S.IdDescriptionBox>
-              <S.IdDetails>Arockiyaraj</S.IdDetails>
-              <S.IdDetails>8940065783</S.IdDetails>
-              <S.IdDetails>10/02/1969</S.IdDetails>
-              <S.IdDetails>BBA, MBA</S.IdDetails>
-            </S.IdDescriptionBox>
+            <S.DescriptionBox>
+              <S.UserBox>
+                <S.IdDetails>பெயர்:</S.IdDetails>
+              </S.UserBox>
+              <S.UserBox>
+                <S.IdDetails>{data?.name}</S.IdDetails>
+              </S.UserBox>
+            </S.DescriptionBox>
+            <S.DescriptionBox>
+              <S.UserBox>
+                <S.IdDetails>கைபேசி எண்:</S.IdDetails>
+              </S.UserBox>
+              <S.UserBox>
+                <S.IdDetails>{data?.phoneNumber}</S.IdDetails>
+              </S.UserBox>
+            </S.DescriptionBox>
+            <S.DescriptionBox>
+              <S.UserBox>
+                <S.IdDetails>பிறந்த தேதி:</S.IdDetails>
+              </S.UserBox>
+              <S.UserBox>
+                <S.IdDetails>{data?.dob}</S.IdDetails>
+              </S.UserBox>
+            </S.DescriptionBox>
+            <S.DescriptionBox>
+              <S.UserBox>
+                <S.IdDetails>தகுதி:</S.IdDetails>
+              </S.UserBox>
+              <S.UserBox>
+                <S.IdDetails>{data?.qualification}</S.IdDetails>
+              </S.UserBox>
+            </S.DescriptionBox>
           </S.IdDetailsWrapper>
           <S.Signature src={Signature} alt="Signature" />
         </S.MiddleBox>

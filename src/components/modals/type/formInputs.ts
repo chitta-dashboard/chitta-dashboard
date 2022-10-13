@@ -1,5 +1,5 @@
 export interface IAddDecisionsFormInput {
-  selectAll: boolean;
+  selectAll: string;
   decisionHeading: string;
   creationTime: string;
   groupName: string;
@@ -22,6 +22,7 @@ export interface IAddFarmersDetailsPage1Input {
   surveyNo: { [key: string]: string };
   acre: { [key: string]: string };
   border: { [key: string]: string };
+
   [dynamicInputs: string]: string | string[] | { [key: string]: string };
 }
 
@@ -39,7 +40,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -64,5 +65,5 @@ export interface IAddCEODetailsFormInput {
   qualification: string;
   dob: string;
   profile: string;
-  description:string
+  description: string;
 }

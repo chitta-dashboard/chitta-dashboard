@@ -1,21 +1,23 @@
 import { FC } from "react";
-import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import S from "./tableData.styled";
 
 interface Props {
-  mdData: mdDetail;
+  farmerData: farmerDetail;
+  selectedFarmerKeys: string[];
+  handleCheckBox: (id: string) => void;
 }
 
-const TableBody: FC<Props> = ({ mdData }) => {
-  const { selectedMdListData, checkboxSelect } = useMdDetailsContext();
+const TableBody: FC<Props> = (props) => {
+  const { farmerData, selectedFarmerKeys, handleCheckBox } = props;
   return (
-    <S.MdDetailsTableBodyContainer key={mdData.id}>
-      <S.MdDetailsTableCheckBox onChange={() => checkboxSelect(mdData.id)} checked={selectedMdListData.includes(mdData.id)} />
+    <S.MdDetailsTableBodyContainer key={farmerData.id}>
+      <S.MdDetailsTableCheckBox onChange={() => handleCheckBox(farmerData.id)} checked={selectedFarmerKeys.includes(farmerData.id)} />
       <S.MdDetailsTableBodyNameContainer>
-        <S.MdDetailsTableProfileImg src={mdData.profile} alt="profile" />
-        <S.MdDetailsTableHeadTitle>{mdData.name}</S.MdDetailsTableHeadTitle>
+        <S.MdDetailsTableProfileImg src={farmerData.profile} alt="profile" />
+        <S.MdDetailsTableHeadTitle>{farmerData.name}</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableBodyNameContainer>
-      <S.MdDetailsTableHeadTitle>{mdData.phoneNumber}</S.MdDetailsTableHeadTitle>
+      <S.MdDetailsTableHeadTitle>{farmerData.phoneNumber}</S.MdDetailsTableHeadTitle>
     </S.MdDetailsTableBodyContainer>
   );
 };
