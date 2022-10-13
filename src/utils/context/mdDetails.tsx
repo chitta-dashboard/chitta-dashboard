@@ -29,8 +29,6 @@ type Props = {
 
 export interface mdDetailsContextType {
   mdDetailsById: { [id: string]: mdDetail };
-  page: number;
-  rowsPerPage: number;
   searchFilter: string;
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
@@ -101,8 +99,6 @@ const initialState: mdDetailsContextType = {
       signature: "",
     },
   },
-  page: 1,
-  rowsPerPage: 6,
   searchFilter: "",
   selectedMdListData: [],
   sortFilter: ASCENDING,

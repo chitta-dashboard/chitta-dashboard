@@ -7,11 +7,12 @@ namespace S {
     paddingTop: "1rem",
   });
 
-  export const LogoText = styled(Typography)({
-    color: "#777777",
+  export const LogoText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.secondaryLight,
     fontSize: "1.125rem",
     lineHeight: "1.688rem",
-  });
+  }));
+
   export const UploadStack = styled(Stack)({
     gap: "2.5rem",
     width: "100%",

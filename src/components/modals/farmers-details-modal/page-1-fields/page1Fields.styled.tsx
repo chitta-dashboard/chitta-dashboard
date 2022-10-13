@@ -41,9 +41,9 @@ namespace S {
   };
 
   export const RemoveBtn = styled(AddBtn)(({ theme }) => ({
-    backgroundColor: "white",
+    backgroundColor: theme.palette.bg.main,
     color: theme.palette.primary.light,
-    border: `2px solid ${theme.palette.primary.light}`,
+    border: `2px solid ${theme.palette.border.primary}`,
   }));
 
   RemoveBtn.defaultProps = {
