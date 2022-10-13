@@ -135,6 +135,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         )}
         <S.Shadow leafCount={leafCount} />
       </S.ResolutionsTreeBox>
+      {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
   );
 };

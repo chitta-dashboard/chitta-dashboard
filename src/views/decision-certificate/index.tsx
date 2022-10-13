@@ -32,6 +32,7 @@ const DecisionCertificatePage = () => {
   });
 
   const deleteResolution = useCallback(() => {
+    setDeletion(false);
     resolutionId && deleteResolutionInContext(resolutionId);
     navigate(-1);
     addNotification({
