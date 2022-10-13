@@ -1,6 +1,7 @@
-import { Ref, useCallback, useRef, useState } from "react";
+import { Ref, RefObject, useCallback, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IResolution, useResolutionsProviderContext } from "../../utils/context/resolutions";
+import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import DecisionPdf from "./DecisionPdf";
@@ -21,6 +22,8 @@ const DecisionCertificatePage = () => {
   const DecisionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const { resolutions, editResolution, deleteResolution: deleteResolutionInContext } = useResolutionsProviderContext();
+  const threeDotRef = useRef<HTMLSpanElement>();
+  const [popoverOpen, setPopoverOpen] = useState(false);
 
   // to generate pdf of decision form
   const generateDecisionPDF = useReactToPrint({
@@ -42,7 +45,7 @@ const DecisionCertificatePage = () => {
   return (
     <>
       <S.DecisionCertificateMainContainer>
-        <S.ButtonContainer>
+        {/* <S.ButtonContainer>
           <IconWrapper onClick={() => navigate(-1)}>back</IconWrapper>
           <S.ButtonAlignmentBox>
             <S.Button onClick={() => setDeletion(true)}>Delete</S.Button>
@@ -55,7 +58,56 @@ const DecisionCertificatePage = () => {
             </S.Button>
             <S.Button onClick={() => setEdition(true)}>Edit</S.Button>
           </S.ButtonAlignmentBox>
-        </S.ButtonContainer>
+        </S.ButtonContainer> */}
+        <S.CustomBackIcon onClick={() => navigate(-1)}>
+          <IconWrapper>back</IconWrapper>
+        </S.CustomBackIcon>
+        <S.CustomThreeDotsIcon
+          aria-describedby={"resolution-certificate-popover"}
+          ref={threeDotRef as RefObject<HTMLSpanElement>}
+          onClick={() => setPopoverOpen(true)}
+        >
+          <IconWrapper>three-dots</IconWrapper>
+        </S.CustomThreeDotsIcon>
+        <Popover
+          id={"resolution-certificate-popover"}
+          open={popoverOpen}
+          anchorEl={threeDotRef.current}
+          onClose={() => setPopoverOpen(false)}
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right",
+          }}
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+        >
+          <S.CustomPopoverList
+            onClick={() => {
+              generateDecisionPDF();
+              setPopoverOpen(false);
+            }}
+          >
+            Download
+          </S.CustomPopoverList>
+          <S.CustomPopoverList
+            onClick={() => {
+              setEdition(true);
+              setPopoverOpen(false);
+            }}
+          >
+            Edit
+          </S.CustomPopoverList>
+          <S.CustomPopoverList
+            onClick={() => {
+              setDeletion(true);
+              setPopoverOpen(false);
+            }}
+          >
+            Delete
+          </S.CustomPopoverList>
+        </Popover>
         <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
       </S.DecisionCertificateMainContainer>
       {deletion && (
