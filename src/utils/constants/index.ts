@@ -117,3 +117,14 @@ export const ROUTES = [
     name: "Admin Panel",
   },
 ];
+
+export const Message = (name: string) => {
+  return {
+    addMd: `New Md "${name}" has been registered`,
+    deleteMd: `Md "${name}" has been removed`,
+    addFarmGroup: `new farmer group "${name}" has been registered`,
+    deleteFarmGroup: `new farmer group "${name}" has been removed`,
+    addFarmDetail: `New farmer "${name}" has been registered`,
+    deleteFarmDetail: `farmer "${name}" has been removed`,
+  };
+};

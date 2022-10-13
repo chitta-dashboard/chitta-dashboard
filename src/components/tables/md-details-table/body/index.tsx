@@ -10,8 +10,10 @@ import DeleteModal from "../../../modals/delete-modal";
 import AddMdDetailsModal from "../../../modals/md-details-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import { IAddMDDetailsFormInput } from "../../../modals/type/formInputs";
+import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+//
 
 const Body = () => {
   const { mdDetailsById: listData, editMdDetail, deleteMdDetail, searchFilter, sortFilter } = useMdDetailsContext();
@@ -28,6 +30,8 @@ const Body = () => {
   const [editId, setEditId] = useState<string>("");
   const [isCheck, setIsCheck] = useState<boolean>(false);
   const [confirmUser, setConfirmUser] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [idCardData, setIdCardData] = useState<mdDetail>();
 
   useEffect(() => {
     setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
@@ -108,6 +112,11 @@ const Body = () => {
     editMdDetail({ ...result[0] });
   };
 
+  const handleClose = (user?: mdDetail) => {
+    setOpen(!open);
+    setIdCardData(user);
+  };
+
   return (
     <>
       {mdList.length > 0 ? (
@@ -135,7 +144,7 @@ const Body = () => {
               <S.WebTableCell>
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                  <CS.Icon>id-card</CS.Icon>
+                  <CS.Icon onClick={() => handleClose(user)}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editMdDetailHandler(user.id)}>edit</CS.Icon>
                   <S.Toggle checked={!!user.id} onChange={() => confirmHandler(user)} />
                 </S.IconBox>
@@ -187,6 +196,8 @@ const Body = () => {
           setIconModal(false);
         }}
       />
+      <IdCardModal cardData={idCardData} openModal={open} handleClose={handleClose} />
+
       {image && (
         <tbody>
           <tr>

@@ -5,8 +5,9 @@ export namespace S {
     maxWidth: "34.5rem",
     backgroundColor: theme.palette.bg.main,
     borderRadius: "1.25rem",
-    padding: "0.3rem 0.6rem 0 0.6rem",
     border: `1px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.3)}`,
+    maxHeight: "20.7rem",
+    padding: "0rem 1rem",
     height: "fit-content",
     width: "fit-content",
     boxSizing: "border-box",
@@ -22,6 +23,18 @@ export namespace S {
     height: "9.5rem",
   });
 
+  export const DescriptionBox = styled(Box)({
+    display: "flex !important",
+    gap: "0.3rem !important",
+    width: "100%",
+  });
+
+  export const UserBox = styled(Box)({
+    width: "50%",
+    display: "flex",
+    justifyContent: "start !important",
+  });
+
   export const IdCardBodyWrapper = styled(Box)({
     display: "flex",
     justifyContent: "center",
@@ -30,39 +43,27 @@ export namespace S {
     gap: "1.5rem",
     alignItems: "start !important",
     overflow: "hidden",
+    paddingBottom: "1rem",
   });
 
   export const IdDetailsWrapper = styled(Box)({
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: "1rem",
-  });
-
-  export const IdDetailBox = styled(Box)({
-    display: "flex",
     flexDirection: "column",
-    alignItems: "start !important",
-  });
-
-  export const IdDescriptionBox = styled(Box)({
-    display: "flex",
-    flexDirection: "column",
+    gap: "0.2rem",
+    justifyContent: "flex-start",
+    // alignItems: "start !important",
+    width: "10rem",
   });
 
   export const IdDetails = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
     fontWeight: "500",
-    marginBottom: "0.1rem",
-    marginTop: "0.5rem",
     color: theme.palette.text.secondaryLight,
   }));
 
   export const IdDetailsName = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.8rem",
     fontWeight: "500",
-    marginBottom: "0.1rem",
-    marginTop: "0.5rem",
     width: "100%",
     display: "flex",
     justifyContent: "flex-start",
@@ -82,7 +83,6 @@ export namespace S {
   export const Signature = styled("img")({
     height: "5.3rem",
     width: "8.3rem",
-    margin: "0 auto",
   });
 }
 

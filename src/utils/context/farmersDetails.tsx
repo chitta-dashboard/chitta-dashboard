@@ -40,6 +40,7 @@ export type farmerDetail = {
   waterType: string;
   animals: string;
   groupMember: string;
+  qualification?: string;
 };
 
 export type selectedFarmer = number | string;
