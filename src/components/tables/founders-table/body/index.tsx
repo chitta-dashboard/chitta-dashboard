@@ -6,9 +6,9 @@ import { IAddCEODetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
-// import MdDetailModal from "../../../icon-modals/md-detail-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import DeleteModal from "../../../modals/delete-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -25,6 +25,8 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [open, setOpen] = useState(false);
+  const [idCardData, setIdCardData] = useState<Founders>();
 
   useEffect(() => {
     setFounderSearch(Object.values(listData).filter((list) => searchWord(list.name, searchFilter)));
@@ -97,6 +99,11 @@ const Body = () => {
     editFounder({ ...result[0] });
   };
 
+  const handleClose = (user?: Founders) => {
+    setOpen(!open);
+    setIdCardData(user);
+  };
+
   return (
     <>
       {founder.length > 0 ? (
@@ -124,7 +131,7 @@ const Body = () => {
               <S.WebTableCell>
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                  <CS.Icon>id-card</CS.Icon>
+                  <CS.Icon onClick={() => handleClose(user)}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFoundersHandler(user.id)}>edit</CS.Icon>
                 </S.IconBox>
               </S.WebTableCell>
@@ -157,6 +164,8 @@ const Body = () => {
           setIconModal(false);
         }}
       />
+      <IdCardModal cardData={idCardData} openModal={open} handleClose={handleClose} />
+
       {image && (
         <tbody>
           <tr>

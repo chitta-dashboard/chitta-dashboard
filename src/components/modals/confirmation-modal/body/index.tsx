@@ -4,7 +4,7 @@ import S from "./confirmationModal.styled";
 import ConfirmationIcon from "./confirmationIcon";
 
 interface ConfirmProps {
-  confirmMessage?: JSX.Element;
+  confirmMessage?: JSX.Element | boolean;
 }
 
 const ConfirmationBody: FC<ConfirmProps> = ({ confirmMessage }) => {

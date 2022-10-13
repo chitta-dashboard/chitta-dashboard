@@ -10,7 +10,6 @@ import userPic from "../../../../assets/images/user.png";
 import DeleteModal from "../../../modals/delete-modal";
 import FarmersDetailsModal from "../../../icon-modals/farmers-detail-modal";
 import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
-import IdCardBody from "../../../id-card/id-card-body";
 import AddFarmersDetailsModal from "../../../modals/farmers-details-modal";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import IdCardModal from "../../../modals/id-download-modal";
@@ -38,15 +37,14 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
-  const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const navigate = useNavigate();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
-
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const [idCardData, setIdCardData] = useState<farmerDetail>();
 
   useEffect(() => {
     setFarmersListGroup(groupFilter === "all" ? Object.values(listData) : Object.values(listData).filter((list) => list.group === groupFilter));
@@ -114,14 +112,6 @@ const Body = () => {
     setUserId(id);
   };
 
-  const generateIdCard = useReactToPrint({
-    documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
-    content: () => idCardRef.current as HTMLDivElement,
-    onAfterPrint() {
-      handleClose();
-    },
-  });
-
   const generateFarmerDetailForm = useReactToPrint({
     documentTitle: `Nerkathir_User_Form_${+new Date()}`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,
@@ -140,9 +130,9 @@ const Body = () => {
     editTableIcon({ ...result[0] });
   };
 
-  //id generate handler
-  const handleClose = () => {
+  const handleClose = (user?: farmerDetail) => {
     setOpen(!open);
+    setIdCardData(user);
   };
 
   return (
@@ -151,7 +141,6 @@ const Body = () => {
         <BodyWrapper>
           <tr style={{ display: "none" }}>
             <td>
-              <IdCardBody ref={idCardRef} />
               <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
             </td>
           </tr>
@@ -210,7 +199,7 @@ const Body = () => {
               <S.WebTableCell onClick={(e) => e.stopPropagation()}>
                 <S.IconBox>
                   <CS.Icon onClick={() => deleteModalHandler(user.id)}>delete</CS.Icon>
-                  <CS.Icon onClick={handleClose}>id-card</CS.Icon>
+                  <CS.Icon onClick={() => handleClose(user)}>id-card</CS.Icon>
                   <CS.Icon onClick={() => editFarmerDetailHandler(user.id)}>edit</CS.Icon>
                   <CS.Icon
                     onClick={async () => {
@@ -251,7 +240,7 @@ const Body = () => {
           setIconModal(false);
         }}
       />
-      <IdCardModal openModal={open} handleClose={handleClose} generateIdCard={generateIdCard} />
+      <IdCardModal cardData={idCardData} openModal={open} handleClose={handleClose} />
 
       <AddFarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={editId} />
       {image && (
