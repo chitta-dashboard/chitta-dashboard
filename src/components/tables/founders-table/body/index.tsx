@@ -6,7 +6,7 @@ import { IAddCEODetailsFormInput } from "../../../modals/type/formInputs";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
-// import MdDetailModal from "../../../icon-modals/md-detail-modal";
+import ConfirmationModal from "../../../modals/confirmation-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import CS from "../../../common-styles/commonStyles.styled";
@@ -25,6 +25,7 @@ const Body = () => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editId, setEditId] = useState<string>("");
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
 
   useEffect(() => {
     setFounderSearch(Object.values(listData).filter((list) => searchWord(list.name, searchFilter)));
@@ -54,7 +55,7 @@ const Body = () => {
   //Update Founders Handler
   const updateFounders = (data: IAddCEODetailsFormInput & { id: string }) => {
     setIconModal(false);
-    editFounder(data);
+    setOpenConfirmationModal(data);
   };
 
   // Delete ModalHandler
@@ -138,25 +139,39 @@ const Body = () => {
           </tr>
         </S.EmptyMsg>
       )}
-      {/* <FoundersModal
-        openModal={iconModal}
-        handleClose={() => setIconModal(false)}
-        handleDelete={() => {
-          setDeleteModal(true);
-        }}
-        handleEdit={() => {
-          setEditMode(true);
-        }}
-      /> */}
-      <DeleteModal
-        openModal={deleteModal}
-        handleClose={() => setDeleteModal(false)}
-        handleDelete={() => {
-          deleteFounder(deleteId);
-          setDeleteModal(false);
-          setIconModal(false);
-        }}
-      />
+      {deleteModal && (
+        <DeleteModal
+          openModal={true}
+          handleClose={() => setDeleteModal(false)}
+          handleDelete={() => {
+            deleteFounder(deleteId);
+            setDeleteModal(false);
+            setIconModal(false);
+          }}
+          deleteMessage={
+            <span>
+              Do you want to remove <S.DeleteName>{listData[deleteId]?.name}</S.DeleteName> from FoundersList?
+            </span>
+          }
+        />
+      )}
+      {openConfirmationModal && (
+        <ConfirmationModal
+          openModal={true}
+          handleClose={() => {
+            setOpenConfirmationModal(null);
+          }}
+          yesAction={() => {
+            editFounder(openConfirmationModal);
+            setOpenConfirmationModal(null);
+          }}
+          confirmMessage={
+            <span>
+              Do you want to remove <S.DeleteName>{listData[editId]?.name}</S.DeleteName> from CeoList?
+            </span>
+          }
+        />
+      )}
       {image && (
         <tbody>
           <tr>
