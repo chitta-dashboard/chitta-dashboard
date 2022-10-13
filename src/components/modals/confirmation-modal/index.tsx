@@ -10,7 +10,7 @@ interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
   yesAction: () => void;
-  confirmMessage?: JSX.Element;
+  confirmMessage?: JSX.Element | boolean;
 }
 
 const ConfirmationModal: FC<CustomProps> = ({ openModal, handleClose, yesAction, confirmMessage }) => {

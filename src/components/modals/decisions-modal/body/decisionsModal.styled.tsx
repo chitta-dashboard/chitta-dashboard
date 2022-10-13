@@ -23,7 +23,7 @@ namespace S {
     "ric ric"
     `,
       gridAutoColumns: "1fr 1fr",
-      gridAutoRows: "auto auto auto auto auto 250px",
+      gridAutoRows: "auto auto auto auto auto 300px",
     },
   }));
 

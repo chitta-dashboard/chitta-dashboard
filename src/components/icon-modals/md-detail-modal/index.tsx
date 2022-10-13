@@ -4,15 +4,12 @@ import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
-const MdDetailModal: FC<CommonModalProps> = ({ check, open, handleClose, handleDelete, handleEdit, handleCheck }) => {
+const MdDetailModal: FC<CommonModalProps> = ({ ...props }) => {
+  const { check, open, handleClose, handleDelete, handleEdit, handleConfirm } = props;
   return (
     <CommonIconModal open={open} handleClose={handleClose}>
       <S.IconStack direction={"row"}>
-        <S.IconBox
-          onClick={() => {
-            if (handleDelete) handleDelete();
-          }}
-        >
+        <S.IconBox onClick={handleDelete}>
           <S.Icon>delete</S.Icon>
           <S.IconText>Delete</S.IconText>
         </S.IconBox>
@@ -20,19 +17,11 @@ const MdDetailModal: FC<CommonModalProps> = ({ check, open, handleClose, handleD
           <S.Icon>id-card</S.Icon>
           <S.IconText>ID</S.IconText>
         </S.IconBox>
-        <S.IconBox
-          onClick={() => {
-            if (handleEdit) handleEdit();
-          }}
-        >
+        <S.IconBox onClick={handleEdit}>
           <S.Icon>edit</S.Icon>
           <S.IconText>Edit</S.IconText>
         </S.IconBox>
-        <S.IconBox
-          onClick={() => {
-            if (handleCheck) handleCheck();
-          }}
-        >
+        <S.IconBox onClick={handleConfirm}>
           <Switch size="small" checked={!!check} />
           <S.IconText>Active</S.IconText>
         </S.IconBox>

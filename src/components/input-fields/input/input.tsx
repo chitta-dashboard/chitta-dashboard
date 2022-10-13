@@ -5,7 +5,7 @@ import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
-  type: string;
+  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options?: {
     [key: string]: any;
