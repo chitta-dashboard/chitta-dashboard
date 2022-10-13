@@ -10,27 +10,28 @@ export namespace S {
     justifyContent: "space-between",
     height: "100%",
     width: "100%",
+    position: "relative",
   });
 
-  export const ButtonContainer = styled(Box)({
-    display: "flex",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-  });
+  // export const ButtonContainer = styled(Box)({
+  //   display: "flex",
+  //   width: "100%",
+  //   justifyContent: "space-between",
+  //   alignItems: "center",
+  // });
 
-  export const ButtonAlignmentBox = styled(Box)({
-    display: "flex",
-    gap: "1.5625rem",
-  });
+  // export const ButtonAlignmentBox = styled(Box)({
+  //   display: "flex",
+  //   gap: "1.5625rem",
+  // });
 
-  export const Button = styled(MuiButton)({
-    minWidth: "6.8rem",
-    padding: "0.4rem 0.5rem",
-  });
+  // export const Button = styled(MuiButton)({
+  //   minWidth: "6.8rem",
+  //   padding: "0.4rem 0.5rem",
+  // });
 
   export const DecisionCertificateContainer = styled(Box)(({ theme }) => ({
-    height: "90%",
+    height: "100%",
     width: "100%",
     background: theme.palette.bg.main,
     borderRadius: "1.25rem",
@@ -118,4 +119,35 @@ export namespace S {
   });
 
   export const SignatureContainerRight = styled(Box)({});
+
+  export const HightlightText = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+  }));
+
+  export const CustomBackIcon = styled("span")({
+    position: "absolute",
+    left: "20px",
+    top: "25px",
+  });
+
+  export const CustomThreeDotsIcon = styled("span")({
+    position: "absolute",
+    right: "25px",
+    top: "20px",
+  });
+
+  export const CustomPopoverList = styled(Typography)(({ theme }) => ({
+    textAlign: "center",
+    padding: "0.9rem 2.2rem",
+    fontWeight: "400",
+    border: "1px solid",
+    borderColor: theme.palette.addAlpha(theme.palette.border.secondary, 0.1),
+    color: theme.palette.text.secondary,
+    fontSize: "16px",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: theme.palette.bg.light,
+      color: theme.palette.text.secondaryDark,
+    },
+  }));
 }
