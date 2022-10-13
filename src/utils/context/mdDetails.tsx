@@ -32,13 +32,13 @@ export interface mdDetailsContextType {
   searchFilter: string;
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
-  selectedMdListData: selectedMdListData[];
+  // selectedMdListData: selectedMdListData[];
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
-  checkboxSelect: (id: string[]) => void;
+  checkboxSelect: (id: object) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -99,7 +99,7 @@ const initialState: mdDetailsContextType = {
     },
   },
   searchFilter: "",
-  selectedMdListData: [],
+  // selectedMdListData: [],
   sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
@@ -129,12 +129,13 @@ const reducer = (state: mdDetailsContextType, action: any) => {
       return { ...state, sortFilter: action.payload };
 
     case CHECKBOX_SELECT:
-      let data = state.selectedMdListData;
-      let newData: string[] = [];
-      action.payload.map((id:string) => {
-        !data.includes(id) && newData.push(id);
-      });
-      return {...state,selectedMdListData:[...newData,...data]}
+      // let data = state.selectedMdListData;
+      // let newData: string[] = [];
+      // action.payload.map((id:string) => {
+      //   !data.includes(id) && newData.push(id);
+      // });
+      // return {...state,selectedMdListData:[...newData,...data]}
+      return { ...state, mdDetailsById: { ...state.mdDetailsById, ...action.payload } };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -167,8 +168,8 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
-  const checkboxSelect = (id: string[]) => {
-    dispatch({ type: CHECKBOX_SELECT, payload: id });
+  const checkboxSelect = (farmerData: object) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: farmerData });
   };
 
   let data = {
