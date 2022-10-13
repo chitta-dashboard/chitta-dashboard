@@ -17,7 +17,6 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const leafCount = resolutions.length <= 4 ? resolutions.length : 4;
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
-
   const NavigateResolutionGroup = (resolutionId: string) => {
     navigate(`/board-resolution/${resolutionId}`);
   };
@@ -136,6 +135,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         )}
         <S.Shadow leafCount={leafCount} />
       </S.ResolutionsTreeBox>
+      {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
   );
 };

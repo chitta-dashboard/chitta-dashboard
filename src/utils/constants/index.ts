@@ -77,8 +77,10 @@ export const createTimeStamp = (dateTimeInString: string) => {
   return date + ", " + time;
 };
 
-export const getCurrentTime = (): string => {
-  const currentDate = new Date();
+// if no value specified, returns current time in input accepting format
+// if value specified, returns the value in input accepting format
+export const getCurrentTime = (value?: string): string => {
+  const currentDate = value ? new Date(value) : new Date();
   const formattedDate = currentDate.toLocaleDateString("en-CA") + "T" + currentDate.toLocaleTimeString().slice(0, 5);
   return formattedDate;
 };
@@ -117,3 +119,14 @@ export const ROUTES = [
     name: "Admin Panel",
   },
 ];
+
+export const Message = (name: string) => {
+  return {
+    addMd: `New Md "${name}" has been registered`,
+    deleteMd: `Md "${name}" has been removed`,
+    addFarmGroup: `new farmer group "${name}" has been registered`,
+    deleteFarmGroup: `new farmer group "${name}" has been removed`,
+    addFarmDetail: `New farmer "${name}" has been registered`,
+    deleteFarmDetail: `farmer "${name}" has been removed`,
+  };
+};

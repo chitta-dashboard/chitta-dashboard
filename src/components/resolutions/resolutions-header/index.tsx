@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useResolutionsProviderContext } from "../../../utils/context/resolutions";
-import ModalHandler from "./modal-handler";
+import AddDecisionsModal from "../../modals/decisions-modal";
 import S from "./resolutionsHeader.styled";
 
 interface CustomProps {
@@ -12,7 +12,7 @@ interface CustomProps {
 
 const ResolutionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) => {
   const [modalOpen, setModalOpen] = useState(false);
-  const { resolutions } = useResolutionsProviderContext();
+  const { resolutions, addResolution } = useResolutionsProviderContext();
 
   return (
     <>
@@ -26,7 +26,7 @@ const ResolutionsHeader: FC<CustomProps> = ({ viewTree, viewList, treeView }) =>
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      <ModalHandler isOpen={modalOpen} handleClose={() => setModalOpen(false)} />
+      {modalOpen && <AddDecisionsModal openModal={true} handleClose={() => setModalOpen(false)} cb={addResolution} />}
     </>
   );
 };
