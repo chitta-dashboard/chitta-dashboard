@@ -77,8 +77,10 @@ export const createTimeStamp = (dateTimeInString: string) => {
   return date + ", " + time;
 };
 
-export const getCurrentTime = (): string => {
-  const currentDate = new Date();
+// if no value specified, returns current time in input accepting format
+// if value specified, returns the value in input accepting format
+export const getCurrentTime = (value?: string): string => {
+  const currentDate = value ? new Date(value) : new Date();
   const formattedDate = currentDate.toLocaleDateString("en-CA") + "T" + currentDate.toLocaleTimeString().slice(0, 5);
   return formattedDate;
 };

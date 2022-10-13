@@ -223,7 +223,7 @@ namespace S {
 
   export const NodataMessage = styled(Typography)(({ theme }) => ({
     position: "absolute",
-    top: "45%",
+    top: "50%",
     left: "50%",
     transform: "translateX(-50%)",
     fontSize: "1.2rem",
