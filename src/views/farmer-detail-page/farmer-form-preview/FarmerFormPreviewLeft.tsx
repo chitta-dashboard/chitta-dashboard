@@ -7,17 +7,23 @@ import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { fileValidation } from "../../../utils/constants";
+import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
+import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import DeleteModal from "../../../components/modals/delete-modal";
 import { S } from "./farmer-form-preview.styled";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
 
 const FarmerFormPreviewLeft = () => {
+  const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+  const [openEditModal, setOpenEditModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
-  const { farmersDetailsById, editFarmerDetail } = useFarmerDetailsContext();
   const navigate = useNavigate();
 
   // popover open
@@ -75,6 +81,11 @@ const FarmerFormPreviewLeft = () => {
     editFarmerDetail({ ...result[0] });
   };
 
+  //Update FarmerDetail Handler
+  const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
+    editFarmerDetail(data);
+  };
+
   return (
     <>
       <S.InvisibleBox>
@@ -112,8 +123,22 @@ const FarmerFormPreviewLeft = () => {
               >
                 Download
               </S.CustomPopoverList>
-              <S.CustomPopoverList onClick={handleClose}>Edit </S.CustomPopoverList>
-              <S.CustomPopoverList onClick={handleClose}>Delete </S.CustomPopoverList>
+              <S.CustomPopoverList
+                onClick={() => {
+                  setOpenEditModal(true);
+                  handleClose();
+                }}
+              >
+                Edit{" "}
+              </S.CustomPopoverList>
+              <S.CustomPopoverList
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                  handleClose();
+                }}
+              >
+                Delete{" "}
+              </S.CustomPopoverList>
             </Popover>
             <S.FormHeading>
               <S.Text1>
@@ -143,6 +168,25 @@ const FarmerFormPreviewLeft = () => {
               ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
               அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
             </S.HeaderText>
+            {openEditModal && (
+              <AddFarmersDetailsModal
+                openModal={true}
+                handleClose={() => setOpenEditModal(false)}
+                cb={updateFarmerDetail}
+                editMode={true}
+                id={user.id}
+              />
+            )}
+            {openDeleteModal && (
+              <DeleteModal
+                openModal={true}
+                handleClose={() => setOpenDeleteModal(false)}
+                handleDelete={() => {
+                  deleteFarmerDetail(user.id);
+                  navigate(-1);
+                }}
+              />
+            )}
           </S.FarmerFormPreviewLeft>
         ))}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}

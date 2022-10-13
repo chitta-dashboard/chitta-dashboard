@@ -12,7 +12,8 @@ interface TablePageHeaderProps {
   popOverHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const TablePageHeader: FC<TablePageHeaderProps> = ({ searchHandler, addModalHandler, sortHandler, sortFilter, popOverHandler }) => {
+const TablePageHeader: FC<TablePageHeaderProps> = (props) => {
+  const { searchHandler, addModalHandler, sortHandler, sortFilter, popOverHandler } = props;
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} />

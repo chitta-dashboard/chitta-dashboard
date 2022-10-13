@@ -60,7 +60,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   useEffect(() => {
     if (editMode) {
-      let userData = Object.values(ceoDetailsById).find((md) => String(md.id) === id);
+      let userData = Object.values(ceoDetailsById).find((ceo) => String(ceo.id) === id);
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
@@ -106,7 +106,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
           handleClose();
         }}
       >
-        Add CEO's Details
+        {editMode ? " Edit CEO's Details" : " Add CEO's Details "}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>

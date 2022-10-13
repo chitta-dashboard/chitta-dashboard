@@ -7,6 +7,6 @@ interface CommonModalProps {
   handleDelete?: () => void;
   handleEdit?: () => void;
   generateFarmerDetailForm?: () => void;
-  handleCheck?: () => void;
+  handleConfirm?: () => void;
 }
 export default CommonModalProps;

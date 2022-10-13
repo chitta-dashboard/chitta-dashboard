@@ -47,7 +47,7 @@ namespace S {
   }));
 
   RemoveBtn.defaultProps = {
-    children: <i>close</i>,
+    children: "-"
   };
 }
 

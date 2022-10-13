@@ -22,6 +22,7 @@ export interface IAddFarmersDetailsPage1Input {
   surveyNo: { [key: string]: string };
   acre: { [key: string]: string };
   border: { [key: string]: string };
+
   [dynamicInputs: string]: string | string[] | { [key: string]: string };
 }
 
