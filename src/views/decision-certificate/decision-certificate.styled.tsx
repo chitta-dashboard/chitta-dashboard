@@ -118,4 +118,8 @@ export namespace S {
   });
 
   export const SignatureContainerRight = styled(Box)({});
+
+  export const HightlightText = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+  }));
 }

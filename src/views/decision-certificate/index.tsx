@@ -21,11 +21,6 @@ const DecisionCertificatePage = () => {
   const DecisionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const { resolutions, editResolution, deleteResolution: deleteResolutionInContext } = useResolutionsProviderContext();
-  const deleteMessage = useRef(
-    <span>
-      Do you want to delete resolution <span style={{ color: "green" }}>"{resolutions[resolutionId as string]?.groupTitle}"</span> ?
-    </span>,
-  );
 
   // to generate pdf of decision form
   const generateDecisionPDF = useReactToPrint({
@@ -64,7 +59,16 @@ const DecisionCertificatePage = () => {
         <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
       </S.DecisionCertificateMainContainer>
       {deletion && (
-        <DeleteModal openModal={true} handleClose={() => setDeletion(false)} handleDelete={deleteResolution} deleteMessage={deleteMessage.current} />
+        <DeleteModal
+          openModal={true}
+          handleClose={() => setDeletion(false)}
+          handleDelete={deleteResolution}
+          deleteMessage={
+            <span>
+              Do you want to delete resolution <S.HightlightText>"{resolutions[resolutionId as string]?.groupTitle}"</S.HightlightText> ?
+            </span>
+          }
+        />
       )}
       {edition && (
         <DecisionsModal
