@@ -8,35 +8,27 @@ import AddProfile from "../../buttons/add-profile-icon-and-button";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
-import { IAddMDDetailsFormInput } from "../type/formInputs";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { IAddCEODetailsFormInput } from "../type/formInputs";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
+import { useFounderContext } from "../../../utils/context/founders";
 
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
-  cb: (data: IAddMDDetailsFormInput & { id: string }) => void;
+  cb: (data: IAddCEODetailsFormInput & { id: string }) => void;
   editMode?: boolean;
   id?: string;
 }
+
 const schema = yup
   .object({
     name: yup.string().required("required"),
     phoneNumber: yup.string().required("required"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
-    signature: yup
-      .mixed()
-      .test("signatureTest1", "required", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return file?.size > 0;
-      })
-      .test("signatureTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return fileValidation(file ? file?.name : "");
-      }),
+    description: yup.string().required("required"),
     profile: yup
       .mixed()
       .test("profileTest1", "required", (file: File) => {
@@ -50,8 +42,8 @@ const schema = yup
   })
   .required();
 
-const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { mdDetailsById } = useMdDetailsContext();
+const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  let { foundersById } = useFounderContext();
 
   const {
     register,
@@ -62,20 +54,20 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     clearErrors,
     setValue,
     trigger,
-  } = useForm<IAddMDDetailsFormInput>({
+  } = useForm<IAddCEODetailsFormInput>({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     if (editMode) {
-      let userData = Object.values(mdDetailsById).find((md) => String(md.id) === id);
+      let userData = Object.values(foundersById).find((f) => String(f.id) === id);
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: userData?.dob as string,
-        signature: "", // temporary, until sbucket integration
-        profile: "", // temporary, until sbucket integration
+        description: userData?.description as string,
+        profile: userData?.profile, // temporary, until sbucket integration
       });
     }
 
@@ -85,17 +77,17 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         phoneNumber: "",
         qualification: "",
         dob: "",
-        signature: "",
+        description: "",
         profile: "",
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
   // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
-    // handleClose();
-    // reset();
+  const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
+    cb({ ...data, id: editMode ? id : uuidv4() } as IAddCEODetailsFormInput & { id: string });
+    handleClose();
+    reset();
   };
 
   return (
@@ -114,7 +106,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
           handleClose();
         }}
       >
-        Add MD Details
+        {editMode ? " Edit Founder's Details" : " Add Founder's Details "}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
@@ -131,4 +123,4 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   );
 };
 
-export default MdDetailsModal;
+export default FoundersModal;

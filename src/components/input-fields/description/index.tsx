@@ -8,7 +8,16 @@ interface CustomProps<FormInputType extends FieldValues> {
   inputName: string;
 }
 function DescriptionField<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
-  return <S.Description label={label} multiline maxRows={3} {...register(inputName as Path<FormInputTypes & FieldValues>)} helperText={helperText} />;
+  return (
+    <S.Description
+      label={label}
+      // multiline
+      fullWidth
+      maxRows={3}
+      {...register(inputName as Path<FormInputTypes & FieldValues>)}
+      helperText={helperText}
+    />
+  );
 }
 
 export default DescriptionField;

@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -26,11 +26,31 @@ interface CustomProps {
 const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
-  const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>([
-    { first: ["surveyNo-first", "acre-first", "border-first"] },
-  ]);
   const { farmersDetailsById } = useFarmerDetailsContext();
   const { addGroupMembers } = useFarmersGroupContext();
+
+  const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
+    if (editMode) {
+      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id) as farmerDetail;
+      let masterKey = "";
+      let surveyName = "";
+      let acreName = "";
+      let borderName = "";
+      let temp: Array<{ [key: string]: [string, string, string] }> = [];
+
+      farmerData &&
+        Object.keys(farmerData.acre).map((item, index) => {
+          masterKey = uuidv4();
+          surveyName = Object.keys(farmerData.surveyNo)[index];
+          acreName = item;
+          borderName = Object.keys(farmerData.border)[index];
+          temp = [...temp, { [masterKey]: [surveyName, acreName, borderName] }];
+          return undefined;
+        });
+      return temp;
+    }
+    return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
+  });
 
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
@@ -68,7 +88,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
 
   useEffect(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id);
+      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id) as farmerDetail;
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,
@@ -78,6 +98,9 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
         group: farmerData?.group,
         phoneNumber: farmerData?.phoneNumber,
         addhaarNo: farmerData?.addhaarNo,
+        ...farmerData?.surveyNo,
+        ...farmerData?.acre,
+        ...farmerData?.border,
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
@@ -153,6 +176,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
               setValue={form1SetValue}
               getValues={form1GetValues}
               unregister={form1Unregister}
+              editMode={editMode}
             />
           </ModalBody>
           <ModalFooter>

@@ -1,25 +1,28 @@
 import { useState } from "react";
-import { MenuItem, TextField } from "@mui/material";
+import { Box, Chip, FormHelperText, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
-  type: string;
+  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options?: {
     [key: string]: any;
   };
 }
 
-function Input({ type, name, rules = {}, control, shouldUnregister = false, onChange, options = {} }: InputProps) {
-  const [selected, setSelected] = useState<string | null>(null);
+function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {} }: InputProps) {
+  const [autocomplete, setAutocomplete] = useState<string | null>(null);
+  const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
+
   switch (type) {
     case "text":
       return (
         <Controller
           name={name}
           control={control}
-          defaultValue=""
+          defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => (
@@ -45,8 +48,8 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
         <Controller
           name={name}
           control={control}
-          defaultValue=""
           rules={rules}
+          defaultValue={defaultValue || ""}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => (
             <S.NumberInput
@@ -71,7 +74,7 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
         <Controller
           name={name}
           control={control}
-          defaultValue=""
+          defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => (
@@ -92,12 +95,38 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
         />
       );
 
+    case "datetime":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          rules={rules}
+          defaultValue={defaultValue || ""}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => (
+            <S.DateInput
+              helperText={errors[name]?.message as string}
+              type="datetime-local"
+              {...options}
+              name={field.name}
+              value={field.value}
+              ref={field.ref}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                field.onChange(e.target.value);
+                onChange && onChange(e);
+              }}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
+      );
+
     case "select":
       return (
         <Controller
           name={name}
           control={control}
-          defaultValue=""
+          defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => {
@@ -121,18 +150,90 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
                     {displayValue}
                   </MenuItem>
                 ))}
+                {/* special options are something that user cannot select, but you can set explicitly (programatically) ex: ~All Groups~ */}
+                {/* inorder to set a select field value, it must be in the menu items, we here we're adding it without showing to user */}
+                {options?.specialOptions?.map((value: string) => (
+                  <MenuItem key={value} value={value} style={{ display: "none" }}></MenuItem>
+                ))}
               </S.SelectInput>
             );
           }}
         />
       );
 
+    case "multiselect":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || ""}
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => {
+            return (
+              <S.MultiSelectInput {...(options?.gridArea ? { gridArea: options.gridArea } : {})}>
+                <InputLabel shrink id="demo-multiple-chip-label">
+                  {options?.label}
+                </InputLabel>
+                <Select
+                  multiple
+                  maxRows={4}
+                  input={<OutlinedInput />}
+                  value={multiSelect || []}
+                  ref={field.ref}
+                  name={field.name}
+                  onBlur={field.onBlur}
+                  onChange={({ target: { value } }) => {
+                    field.onChange(value);
+                    setMultiselect(value as string[]);
+                  }}
+                  renderValue={(selected) => (
+                    <S.MultiSelectChipContainer>
+                      {selected.map((value: string) => (
+                        <S.MultiSelectChip
+                          clickable
+                          deleteIcon={<Cancel onMouseDown={(event: React.MouseEvent<SVGSVGElement>) => event.stopPropagation()} />}
+                          key={value}
+                          label={value}
+                          onDelete={() => {
+                            field.onChange(selected.filter((val) => val !== value));
+                            setMultiselect((selected) => selected.filter((val) => val !== value));
+                          }}
+                        />
+                      ))}
+                    </S.MultiSelectChipContainer>
+                  )}
+                  MenuProps={{
+                    PaperProps: {
+                      style: {
+                        maxHeight: 48 * 4.5 + 8,
+                        width: 50,
+                      },
+                    },
+                  }}
+                >
+                  {options.selectOptions
+                    ?.filter((val: string) => !multiSelect.includes(val))
+                    ?.map((val: any) => (
+                      <MenuItem key={val} value={val}>
+                        {val}
+                      </MenuItem>
+                    ))}
+                </Select>
+                <FormHelperText>{errors[name]?.message as string}</FormHelperText>
+              </S.MultiSelectInput>
+            );
+          }}
+        />
+      );
+
+    // Note: we cannot change the 'value' of file input programmatically due to security reasons.
     case "file":
       return (
         <Controller
           name={name}
           control={control}
-          defaultValue=""
+          defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => {
@@ -142,9 +243,7 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
                 type="file"
                 {...options}
                 name={field.name}
-                // cannot modify file input value due to security reasons.
-                // so handle the change in memory
-                // value={field.value}
+                value={field.value}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onChange && onChange(e);
@@ -156,6 +255,31 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
           }}
         />
       );
+
+    case "radio":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || ""}
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => {
+            return (
+              <S.RadioInput {...(options?.gridArea ? { gridArea: options.gridArea } : {})}>
+                <S.RadioInputLabel>{options.label}</S.RadioInputLabel>
+                <RadioGroup row defaultValue={options.defaultValue || ""} {...field}>
+                  {options.radioOptions?.map(([value, label]: string[]) => (
+                    <S.RadipInputControlLabel key={value} value={value} label={label} control={<Radio />} />
+                  ))}
+                </RadioGroup>
+                <FormHelperText>{errors[name]?.message as string}</FormHelperText>
+              </S.RadioInput>
+            );
+          }}
+        />
+      );
+
     case "autocomplete":
       return (
         <Controller
@@ -177,10 +301,10 @@ function Input({ type, name, rules = {}, control, shouldUnregister = false, onCh
                     InputLabelProps={{ shrink: true }}
                   />
                 )}
-                value={field.value ? field.value : selected}
+                value={field.value ? field.value : autocomplete}
                 ref={field.ref}
                 onChange={(event: any, newValue: any) => {
-                  setSelected(newValue);
+                  setAutocomplete(newValue);
                   onChange && onChange(event);
                   field.onChange(newValue);
                 }}
