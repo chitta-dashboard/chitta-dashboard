@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
-import { ASCENDING, SortOrder } from "../constants";
+import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
@@ -92,7 +92,7 @@ const initialState: foundersContextType = {
     },
   },
   searchFilter: "",
-  sortFilter: ASCENDING,
+  sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFounder: () => {},

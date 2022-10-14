@@ -1,6 +1,6 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/nerkathir-user.svg";
-import { ASCENDING, SortOrder } from "../constants";
+import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
@@ -234,7 +234,7 @@ const initialState: farmerDetailsContextType = {
     },
   },
   searchFilter: "",
-  sortFilter: ASCENDING,
+  sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   selectedFarmers: [],
