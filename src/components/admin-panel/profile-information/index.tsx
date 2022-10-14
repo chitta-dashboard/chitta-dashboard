@@ -18,14 +18,14 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
     <S.ProfileStack>
       <S.ProfileText>Profile information</S.ProfileText>
       <S.profileInput
-        label="Name"
+        label="பெயர்"
         type="text"
         InputLabelProps={{ shrink: true }}
         {...register("name")}
         helperText={errors.name && errors.name.message}
       />
       <S.profileInput
-        label="Address"
+        label="முகவரி"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}
@@ -33,7 +33,7 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
         helperText={errors.address && errors.address.message}
       />
       <S.profileInput
-        label="Coordinator Address"
+        label="ஒருங்கிணைப்பாளர் முகவரி"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}

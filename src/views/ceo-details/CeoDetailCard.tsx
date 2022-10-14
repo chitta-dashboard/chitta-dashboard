@@ -8,6 +8,7 @@ import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs
 import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
+import IdCardModal from "../../components/modals/id-download-modal";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -19,6 +20,7 @@ const CeoDetailsCard = ({ user }: Props) => {
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
+  const [idCard, setIdCard] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
   const [cardExpand, setCardExpand] = useState<boolean>(true);
@@ -67,6 +69,8 @@ const CeoDetailsCard = ({ user }: Props) => {
   const updateMdDetail = (data: IAddCEODetailsFormInput & { id: string }) => {
     setOpenConfirmationModal(data);
   };
+
+  const idCardModalHandler = () => setIdCard(!idCard);
 
   return (
     <>
@@ -132,7 +136,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           >
             delete
           </S.CustomIconContainer>
-          <S.CustomIconContainer>id-card</S.CustomIconContainer>
+          <S.CustomIconContainer onClick={idCardModalHandler}>id-card</S.CustomIconContainer>
           <S.CustomIconContainer
             onClick={() => {
               addModalHandler();
@@ -142,6 +146,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           </S.CustomIconContainer>
         </S.ButtonContainer>
       </S.CeoDetailCard>
+      <IdCardModal cardData={user} openModal={idCard} handleClose={idCardModalHandler} />
       {addModal && <AddCeoDetailsModal openModal={true} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />}
       {openDeleteModal && (
         <DeleteModal
