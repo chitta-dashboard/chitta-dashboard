@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ASCENDING, DESCENDING, SortOrder } from "../../../utils/constants";
+import { ASCENDING, DESCENDING, NORMAL, SortOrder } from "../../../utils/constants";
 import IconWrapper from "../../../utils/iconWrapper";
 import S from "./rightSection.styled";
 
@@ -15,13 +15,12 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler, sortFilter, sort
     <S.RightSectionContainer>
       <IconWrapper onClick={popOverHandler}>filter</IconWrapper>
       <IconWrapper
-        isGreen={sortFilter === DESCENDING}
         onClick={() => {
-          sortHandler && sortHandler(sortFilter === ASCENDING ? DESCENDING : ASCENDING);
+          sortHandler && sortHandler(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
         }}
         tooltip={sortFilter}
       >
-        sort
+        {sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}
       </IconWrapper>
       <S.CustomButton
         onClick={() => {

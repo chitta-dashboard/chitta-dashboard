@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import profileImg from "../../assets/images/profile.png";
-import { ASCENDING, SortOrder } from "../constants";
+import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_MD_DETAIL = "ADD_MD_DETAIL";
@@ -104,7 +104,7 @@ const initialState: mdDetailsContextType = {
     },
   },
   searchFilter: "",
-  sortFilter: ASCENDING,
+  sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addMdDetail: () => {},

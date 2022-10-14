@@ -4,31 +4,31 @@ import { IResolution, useResolutionsProviderContext } from "../../utils/context/
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
-import DecisionPdf from "./DecisionPdf";
+import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
-import DecisionsModal from "../../components/modals/decisions-modal";
+import ResolutionModal from "../../components/modals/resolution-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import profile from "../../assets/images/Founder.png";
-import { S } from "./decision-certificate.styled";
+import { S } from "./resolutionCertificate.styled";
 
-const DecisionCertificatePage = () => {
+const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
   const [edition, setEdition] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
   const editedData = useRef<Partial<IResolution>>({});
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
-  const DecisionFormPdf = useRef<HTMLDivElement>();
+  const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const { resolutions, editResolution, deleteResolution: deleteResolutionInContext } = useResolutionsProviderContext();
   const threeDotRef = useRef<HTMLSpanElement>();
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  // to generate pdf of decision form
-  const generateDecisionPDF = useReactToPrint({
+  // to generate pdf of resolution form
+  const generateResolutionPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
-    content: () => DecisionFormPdf.current as HTMLDivElement,
+    content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
   const deleteResolution = useCallback(() => {
@@ -45,21 +45,7 @@ const DecisionCertificatePage = () => {
 
   return (
     <>
-      <S.DecisionCertificateMainContainer>
-        {/* <S.ButtonContainer>
-          <IconWrapper onClick={() => navigate(-1)}>back</IconWrapper>
-          <S.ButtonAlignmentBox>
-            <S.Button onClick={() => setDeletion(true)}>Delete</S.Button>
-            <S.Button
-              onClick={() => {
-                generateDecisionPDF();
-              }}
-            >
-              Download
-            </S.Button>
-            <S.Button onClick={() => setEdition(true)}>Edit</S.Button>
-          </S.ButtonAlignmentBox>
-        </S.ButtonContainer> */}
+      <S.ResolutionCertificateMainContainer>
         <S.CustomBackIcon onClick={() => navigate(-1)}>
           <IconWrapper>back</IconWrapper>
         </S.CustomBackIcon>
@@ -86,7 +72,7 @@ const DecisionCertificatePage = () => {
         >
           <S.CustomPopoverList
             onClick={() => {
-              generateDecisionPDF();
+              generateResolutionPDF();
               setPopoverOpen(false);
             }}
           >
@@ -109,8 +95,8 @@ const DecisionCertificatePage = () => {
             Delete
           </S.CustomPopoverList>
         </Popover>
-        <DecisionPdf ref={DecisionFormPdf as Ref<HTMLDivElement> | undefined} />
-      </S.DecisionCertificateMainContainer>
+        <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
+      </S.ResolutionCertificateMainContainer>
       {deletion && (
         <DeleteModal
           openModal={true}
@@ -124,7 +110,7 @@ const DecisionCertificatePage = () => {
         />
       )}
       {edition && (
-        <DecisionsModal
+        <ResolutionModal
           openModal={true}
           editMode
           handleClose={() => setEdition(false)}
@@ -155,4 +141,4 @@ const DecisionCertificatePage = () => {
   );
 };
 
-export default DecisionCertificatePage;
+export default ResolutionCertificatePage;
