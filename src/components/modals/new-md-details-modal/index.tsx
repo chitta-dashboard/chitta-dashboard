@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect,Dispatch,SetStateAction } from "react";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -28,12 +28,16 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
   useEffect(() => {
     var reg = new RegExp("^[0-9]+$");
 
-    let data = farmerDetails.filter((item) => {
+    let filteredFarmerData = farmerDetails.filter((item) => {
       let search = reg.test(searchKeyWord) ? item.phoneNumber : item.name;
       return searchWord(search, searchKeyWord);
     });
-    setFarmerDetailsByIdData(data);
+    setFarmerDetailsByIdData(filteredFarmerData);
   }, [searchKeyWord]);
+
+  useEffect(() => {
+    setFarmerDetailsByIdData(farmerDetails);
+  }, [farmerDetails]);
 
   return (
     <CustomModal
@@ -52,7 +56,7 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
       <ModalBody id="mdDetails" isPadding={false}>
         <Stack spacing={0}>
           <SearchBar setSearchKeyWord={setSearchKeyWord} />
-          <S.TableBodyContainer>
+          <S.TableBodyContainer isDataAvailable={farmerDetailsByIdData.length > 0 ? true : false}>
             {farmerDetailsByIdData.length > 0 ? (
               <TableData
                 farmerDetails={farmerDetailsByIdData}

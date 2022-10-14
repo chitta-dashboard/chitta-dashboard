@@ -77,14 +77,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     reset: form1Reset,
     unregister: form1Unregister,
     control: form1Control,
-  } = useForm<IAddFarmersDetailsPage1Input>({});
+    formState: { isValid: page1Validation },
+  } = useForm<IAddFarmersDetailsPage1Input>({
+    mode: "onChange",
+  });
 
   const {
     handleSubmit: form2HandleSubmit,
     reset: form2Reset,
     clearErrors: form2ClearErrors,
     control: form2Control,
-  } = useForm<IAddFarmersDetailsPage2Input>({});
+    formState: { isValid: page2Validation },
+  } = useForm<IAddFarmersDetailsPage2Input>({
+    mode: "onChange",
+  });
 
   useEffect(() => {
     if (editMode) {
@@ -159,7 +165,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
               >
                 Back
               </Button>
-              <Button type="submit" form={"farmersDetailsForm2"}>
+              <Button type="submit" form={"farmersDetailsForm2"} disabled={!page2Validation}>
                 Submit
               </Button>
             </S.ButtonContainer>
@@ -181,7 +187,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
           </ModalBody>
           <ModalFooter>
             <S.PageNumber alt="page number 1" src={page1} />
-            <Button type="submit" form={"farmersDetailsForm1"}>
+            <Button type="submit" form={"farmersDetailsForm1"} disabled={!page1Validation}>
               Next
             </Button>
           </ModalFooter>
