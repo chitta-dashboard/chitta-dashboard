@@ -21,18 +21,18 @@ interface CustomProps {
 }
 
 const schema = yup
-  .object({
+  .object()
+  .shape({
     groupName: yup.string().required("required"),
     explanation: yup.string().required("required"),
-    chairman: yup.string().required("required"),
-    treasurer: yup.string().required("required"),
-    secretary: yup.string().required("required"),
+    chairman: yup.string().required("required").nullable(),
+    treasurer: yup.string().required("required").nullable(),
+    secretary: yup.string().required("required").nullable(),
   })
   .required();
 
 const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   const { farmersGroupById } = useFarmersGroupContext();
-
   const {
     register,
     handleSubmit,
@@ -44,8 +44,10 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     unregister: formUnregister,
     getValues: formGetValues,
     control: formControl,
+    formState: { isValid },
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -109,7 +111,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
       </ModalBody>
 
       <ModalFooter>
-        <Button form="farmersGroup" type="submit">
+        <Button form="farmersGroup" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>
