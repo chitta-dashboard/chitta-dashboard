@@ -49,7 +49,7 @@ const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode
   return (
     <>
       <CustomModal openModal={openModal} handleClose={handleClose} openAddResolutionModal={true}>
-        <ModalHeader handleClose={handleClose}>Add Resolution</ModalHeader>
+        <ModalHeader handleClose={handleClose}>{`${editMode ? "Edit" : "Add"} Resolution`}</ModalHeader>
 
         <ModalBody id="resolution-form" onSubmit={handleSubmit(onSubmit)}>
           <FormField setValue={setValue} trigger={trigger} control={control} editMode={editMode} id={id} />
