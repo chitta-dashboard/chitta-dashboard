@@ -7,7 +7,7 @@ import FormField from "./body/formField";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { IAddDecisionsFormInput } from "../type/formInputs";
+import { IResolutionFormInput } from "../type/formInputs";
 import { IResolution } from "../../../utils/context/resolutions";
 import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
 
@@ -19,20 +19,20 @@ interface CustomProps {
   id?: string;
 }
 
-const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
+const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
   const {
     handleSubmit,
     setValue,
     trigger,
     control,
     formState: { isValid },
-  } = useForm<IAddDecisionsFormInput>({ mode: "onChange" });
+  } = useForm<IResolutionFormInput>({ mode: "onChange" });
 
-  const onSubmit: any = (data: IAddDecisionsFormInput) => {
+  const onSubmit: any = (data: IResolutionFormInput) => {
     cb({
       id: editMode ? id : uuidv4(),
       groupName: data.groupName,
-      groupTitle: data.decisionHeading,
+      groupTitle: data.resolutionHeading,
       groupDescription: data.description,
       groupDescriptionRichText: data.descriptionRichText,
       // the date which the user selects as dob
@@ -48,15 +48,15 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode 
 
   return (
     <>
-      <CustomModal openModal={openModal} handleClose={handleClose} openAddDecisionModal={true}>
-        <ModalHeader handleClose={handleClose}>Add Decisions</ModalHeader>
+      <CustomModal openModal={openModal} handleClose={handleClose} openAddResolutionModal={true}>
+        <ModalHeader handleClose={handleClose}>Add Resolution</ModalHeader>
 
-        <ModalBody id="addDecisions" onSubmit={handleSubmit(onSubmit)}>
+        <ModalBody id="resolution-form" onSubmit={handleSubmit(onSubmit)}>
           <FormField setValue={setValue} trigger={trigger} control={control} editMode={editMode} id={id} />
         </ModalBody>
 
         <ModalFooter>
-          <Button form="addDecisions" type="submit" disabled={!isValid}>
+          <Button form="resolution-form" type="submit" disabled={!isValid}>
             Submit
           </Button>
         </ModalFooter>
@@ -64,4 +64,4 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode 
     </>
   );
 };
-export default DecisionsModal;
+export default ResolutionModal;

@@ -1,8 +1,8 @@
-import { Theme, Box, Typography, Button as MuiButton } from "@mui/material";
+import { Theme, Box, Typography } from "@mui/material";
 import { styled } from "@mui/material";
 
 export namespace S {
-  export const DecisionCertificateMainContainer = styled(Box)({
+  export const ResolutionCertificateMainContainer = styled(Box)({
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
@@ -13,24 +13,7 @@ export namespace S {
     position: "relative",
   });
 
-  // export const ButtonContainer = styled(Box)({
-  //   display: "flex",
-  //   width: "100%",
-  //   justifyContent: "space-between",
-  //   alignItems: "center",
-  // });
-
-  // export const ButtonAlignmentBox = styled(Box)({
-  //   display: "flex",
-  //   gap: "1.5625rem",
-  // });
-
-  // export const Button = styled(MuiButton)({
-  //   minWidth: "6.8rem",
-  //   padding: "0.4rem 0.5rem",
-  // });
-
-  export const DecisionCertificateContainer = styled(Box)(({ theme }) => ({
+  export const ResolutionCertificateContainer = styled(Box)(({ theme }) => ({
     height: "100%",
     width: "100%",
     background: theme.palette.bg.main,
@@ -39,7 +22,7 @@ export namespace S {
     padding: "1rem 5%",
   }));
 
-  export const DecisionCertificateHeader = styled(Box)({
+  export const ResolutionCertificateHeader = styled(Box)({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

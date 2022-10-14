@@ -2,17 +2,17 @@ import { FC, useEffect, useRef } from "react";
 import { Control, useWatch } from "react-hook-form";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
-import { IAddDecisionsFormInput } from "../../type/formInputs";
+import { IResolutionFormInput } from "../../type/formInputs";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import Input from "../../../input-fields/input/input";
 import { getCurrentTime } from "../../../../utils/constants";
 import { useResolutionsProviderContext } from "../../../../utils/context/resolutions";
-import S from "./decisionsModal.styled";
+import S from "./formField.styled";
 
 interface CustomProps {
-  setValue: UseFormSetValue<IAddDecisionsFormInput>;
-  trigger: UseFormTrigger<IAddDecisionsFormInput>;
-  control: Control<IAddDecisionsFormInput>;
+  setValue: UseFormSetValue<IResolutionFormInput>;
+  trigger: UseFormTrigger<IResolutionFormInput>;
+  control: Control<IResolutionFormInput>;
   editMode?: boolean;
   id?: string;
 }
@@ -22,7 +22,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
   const farmerGroupList = Object.values(farmersGroupById);
   const { resolutions } = useResolutionsProviderContext();
   const { current: resolution } = useRef(resolutions[id]);
-  const selectAllGroup = useWatch<IAddDecisionsFormInput>({
+  const selectAllGroup = useWatch<IResolutionFormInput>({
     name: "selectAll",
     control,
     defaultValue: editMode && resolution.groupName !== "~All Groups~" ? "no" : "yes",
@@ -55,7 +55,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
         <Input
           type="text"
           rules={{ required: "required" }}
-          name="decisionHeading"
+          name="resolutionHeading"
           defaultValue={editMode ? resolution.groupTitle : ""}
           control={control as unknown as Control}
           options={{
