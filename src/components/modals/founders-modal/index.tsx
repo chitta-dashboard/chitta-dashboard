@@ -90,8 +90,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
     cb({ ...data, id: editMode ? id : uuidv4() } as IAddCEODetailsFormInput & { id: string });
-    handleClose();
-    reset();
+    !editMode && handleClose();
   };
 
   return (
