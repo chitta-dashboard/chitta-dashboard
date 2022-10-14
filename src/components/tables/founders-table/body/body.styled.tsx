@@ -123,6 +123,12 @@ namespace S {
   export const HiddenInput = styled("input")({
     display: "none",
   });
+
+  export const DeleteName = styled("span")(({ theme }: any) => ({
+    fontSize: "1.3125rem",
+    fontWeight: "500",
+    color: theme.palette.text.primary,
+  }));
 }
 
 export default S;

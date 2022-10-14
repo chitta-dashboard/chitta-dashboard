@@ -185,6 +185,11 @@ const FarmerFormPreviewLeft = () => {
                   deleteFarmerDetail(user.id);
                   navigate(-1);
                 }}
+                deleteMessage={
+                  <span>
+                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from CeoList?
+                  </span>
+                }
               />
             )}
           </S.FarmerFormPreviewLeft>

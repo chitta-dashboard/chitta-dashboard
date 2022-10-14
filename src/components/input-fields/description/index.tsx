@@ -12,7 +12,7 @@ function DescriptionField<FormInputTypes>({ label, register, helperText, inputNa
   return (
     <S.Container>
       <S.Label>{label}</S.Label>
-      <S.Description maxRows={3} {...register(inputName as Path<FormInputTypes & FieldValues>)} />
+      <S.Description maxRows={3} id="floating" {...register(inputName as Path<FormInputTypes & FieldValues>)} />
       <FormHelperText>{helperText}</FormHelperText>
     </S.Container>
   );
