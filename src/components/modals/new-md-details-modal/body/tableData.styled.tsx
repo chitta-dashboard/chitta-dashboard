@@ -21,6 +21,16 @@ namespace S {
     p: {
       fontWeight: "600",
     },
+    ".MuiButtonBase-root": {
+      "&:hover": {
+        backgroundColor: "transparent !important",
+      },
+    },
+    span: {
+      "&:active": {
+        backgroundColor: "transparent !important",
+      },
+    },
   }));
 
   export const MdDetailsTableBodyContainer = styled(Grid)(({ theme }) => ({
@@ -34,14 +44,19 @@ namespace S {
       color: theme.palette.text.secondaryLight,
       fontWeight: "500",
     },
-  }));
-
-  export const MdDetailsTableCheckBox = styled(Checkbox)(({ theme }) => ({
-    ".MuiCheckbox-root": {
+    ".MuiButtonBase-root": {
       "&:hover": {
         backgroundColor: "transparent !important",
       },
     },
+    span: {
+      "&:active": {
+        backgroundColor: "transparent !important",
+      },
+    },
+  }));
+
+  export const MdDetailsTableCheckBox = styled(Checkbox)(({ theme }) => ({
     span: {
       "&:hover": {
         backgroundColor: "transparent !important",
@@ -49,6 +64,16 @@ namespace S {
     },
     ".MuiSvgIcon-root": {
       color: theme.palette.text.primary,
+      ".MuiCheckbox-root": {
+        "&:hover": {
+          backgroundColor: "transparent !important",
+        },
+      },
+      span: {
+        "&:hover": {
+          backgroundColor: "transparent !important",
+        },
+      },
       "&:hover": {
         backgroundColor: "transparent !important",
       },

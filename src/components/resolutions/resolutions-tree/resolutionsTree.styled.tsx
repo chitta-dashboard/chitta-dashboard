@@ -140,6 +140,12 @@ namespace S {
       transform: "matrix(-1, 0, 0, 1, 0, 0)",
       backgroundColor: theme.palette.tree.bud,
     },
+    img: {
+      position: "absolute",
+      top: "-40px",
+      left: "-34px",
+      zIndex: 1,
+    },
   }));
 
   export const Shadow = styled(Box, {

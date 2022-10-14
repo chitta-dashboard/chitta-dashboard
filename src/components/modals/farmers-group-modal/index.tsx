@@ -18,21 +18,23 @@ interface CustomProps {
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
+  members?: string[];
 }
 
 const schema = yup
-  .object({
+  .object()
+  .shape({
     groupName: yup.string().required("required"),
     explanation: yup.string().required("required"),
-    chairman: yup.string().required("required"),
-    treasurer: yup.string().required("required"),
-    secretary: yup.string().required("required"),
+    chairman: yup.string().required("required").nullable(),
+    treasurer: yup.string().required("required").nullable(),
+    secretary: yup.string().required("required").nullable(),
   })
   .required();
 
-const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const FarmersGroupModal: FC<CustomProps> = (props) => {
+  const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
   const { farmersGroupById } = useFarmersGroupContext();
-
   const {
     register,
     handleSubmit,
@@ -44,8 +46,10 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
     unregister: formUnregister,
     getValues: formGetValues,
     control: formControl,
+    formState: { isValid },
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -72,9 +76,8 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
   }, [editMode, id]);
 
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
-    cb({ ...data, id: editMode ? id : uuidv4(), members: [] });
-    reset();
-    handleClose();
+    cb({ ...data, id: editMode ? id : uuidv4(), members: members });
+    !editMode && handleClose();
   };
 
   return (
@@ -93,7 +96,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
           handleClose();
         }}
       >
-        Add Farmer's Group
+        {editMode ? "Edit Farmer's Group" : "Add Farmer's Group"}
       </ModalHeader>
 
       <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
@@ -109,7 +112,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
       </ModalBody>
 
       <ModalFooter>
-        <Button form="farmersGroup" type="submit">
+        <Button form="farmersGroup" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>

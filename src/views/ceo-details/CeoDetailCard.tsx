@@ -168,11 +168,6 @@ const CeoDetailsCard = ({ user }: Props) => {
             editCeoDetail(openConfirmationModal);
             setOpenConfirmationModal(null);
           }}
-          confirmMessage={
-            <span>
-              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CEO Details?
-            </span>
-          }
         />
       )}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}

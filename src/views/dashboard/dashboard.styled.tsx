@@ -15,7 +15,7 @@ namespace S {
   export const DashBoardBodyWrapper = styled(Box)({
     display: "flex",
     flexDirection: "column",
-    gap: "1rem",
+    gap: "2rem",
   });
 
   export const DashBoardBottom = styled(Grid)({

@@ -4,17 +4,14 @@ import { Box, Button, Typography } from "@mui/material";
 namespace S {
   export const CeoDetailsContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
-    maxHeight: "100%",
+    maxHeight: "fit-content",
     display: "flex",
     flexWrap: "wrap",
     gap: "1.5rem",
-    overflow: "auto",
     [theme.breakpoints.down("xl")]: {
-      // justifyContent: "center",
       gap: "1rem",
     },
     [theme.breakpoints.down("lg")]: {
-      // justifyContent: "flex-start",
       gap: "0.75rem",
     },
     [theme.breakpoints.down("md")]: {
@@ -59,7 +56,6 @@ namespace S {
   export const ProfilePictureBox = styled(Box)({
     borderRadius: "50%",
     height: "100%",
-    // width: "5rem",
     position: "relative",
     cursor: "pointer",
     overflow: "hidden",
