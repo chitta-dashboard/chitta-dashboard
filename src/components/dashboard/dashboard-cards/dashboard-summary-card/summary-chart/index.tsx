@@ -1,4 +1,5 @@
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label } from "recharts";
+import { LightTheme } from "../../../../../utils/theme";
 
 const data = [
   {
@@ -58,21 +59,21 @@ const SummaryChart = () => {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" stroke="#636262" fontSize="0.7rem">
+        <XAxis dataKey="name" stroke={LightTheme.palette.border.secondary} fontSize="0.7rem">
           <Label
             style={{
               textAnchor: "middle",
               fontSize: "0.7rem",
               fontWeight: "500",
-              color: "#1E1E1E",
+              color: LightTheme.palette.text.secondaryDark,
             }}
             dy={20}
             value={"Harvest Report (Example)"}
           />
         </XAxis>
-        <YAxis stroke="#636262" fontSize="0.7rem" />
+        <YAxis stroke={LightTheme.palette.border.secondary} fontSize="0.7rem" />
         <Tooltip />
-        <Area type="monotone" dataKey="HR" stroke="#1A9035" fillOpacity={1} fill="#1A9035" />
+        <Area type="monotone" dataKey="HR" stroke={LightTheme.palette.border.primary} fillOpacity={1} fill={LightTheme.palette.border.primary} />
       </AreaChart>
     </ResponsiveContainer>
   );

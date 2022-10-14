@@ -5,12 +5,12 @@ interface CustomProps {
   children: React.ReactNode | string;
   handleClose?: () => void;
   openModal: boolean;
-  openAddDecisionModal?: boolean;
+  openAddResolutionModal?: boolean;
 }
 
-const CustomModal: FC<CustomProps> = ({ children, openModal, openAddDecisionModal }) => {
+const CustomModal: FC<CustomProps> = ({ children, openModal, openAddResolutionModal }) => {
   return (
-    <S.ModalContainer open={openModal} openAddDecisionModal={openAddDecisionModal}>
+    <S.ModalContainer open={openModal} openAddResolutionModal={openAddResolutionModal}>
       {children}
     </S.ModalContainer>
   );

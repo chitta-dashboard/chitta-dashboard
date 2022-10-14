@@ -1,5 +1,5 @@
 import { Stack } from "@mui/material";
-import { FC, useState, useEffect,Dispatch,SetStateAction } from "react";
+import { FC, useState, useEffect } from "react";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";

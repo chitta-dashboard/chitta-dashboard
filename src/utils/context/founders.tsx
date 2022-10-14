@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
-import { ASCENDING, SortOrder } from "../constants";
+import profileImg from "../../assets/images/nerkathir-user.svg";
+import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
@@ -14,7 +14,7 @@ export type Founders = {
   name: string;
   phoneNumber: string;
   qualification: string;
-  profile?: string;
+  profile: string;
   dob: string;
   description?: string;
 };
@@ -43,7 +43,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "1982-10-01",
-      description: "",
+      description: "Works on a farm",
     },
     "2": {
       id: "2",
@@ -52,7 +52,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "1990-01-27",
-      description: "",
+      description: "Works on a farm",
     },
     "3": {
       id: "3",
@@ -61,7 +61,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "1989-11-09",
-      description: "",
+      description: "Works on a farm",
     },
     "4": {
       id: "4",
@@ -70,7 +70,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "1994-10-12",
-      description: "",
+      description: "Works on a farm",
     },
     "5": {
       id: "5",
@@ -79,7 +79,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "1992-08-02",
-      description: "",
+      description: "Works on a farm",
     },
     "6": {
       id: "6",
@@ -88,11 +88,11 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "1985-07-12",
-      description: "",
+      description: "Works on a farm",
     },
   },
   searchFilter: "",
-  sortFilter: ASCENDING,
+  sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFounder: () => {},
