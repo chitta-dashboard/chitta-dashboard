@@ -4,7 +4,7 @@ import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
-const MdDetailModal: FC<CommonModalProps> = ({ ...props }) => {
+const MdDetailsIconModal: FC<CommonModalProps> = ({ ...props }) => {
   const { check, open, handleClose, handleDelete, handleEdit, handleConfirm } = props;
   return (
     <CommonIconModal open={open} handleClose={handleClose}>
@@ -30,4 +30,4 @@ const MdDetailModal: FC<CommonModalProps> = ({ ...props }) => {
   );
 };
 
-export default MdDetailModal;
+export default MdDetailsIconModal;

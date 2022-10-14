@@ -14,7 +14,7 @@ const SelectDropDown = () => {
     <S.SelectInput select value={groupFilter} onChange={selectHandler}>
       <S.Option value="all">Farmer Groups</S.Option>
       {Object.values(farmersGroupById).map((list) => (
-        <S.Option key={list.id} value={list.groupName}>
+        <S.Option key={list.id} value={list.groupName} selectfilter={groupFilter === list.groupName ? 1 : 0}>
           {list.groupName}
         </S.Option>
       ))}

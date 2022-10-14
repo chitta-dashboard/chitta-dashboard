@@ -18,6 +18,7 @@ interface CustomProps {
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
+  members?: string[];
 }
 
 const schema = yup
@@ -31,7 +32,8 @@ const schema = yup
   })
   .required();
 
-const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const FarmersGroupModal: FC<CustomProps> = (props) => {
+  const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
   const { farmersGroupById } = useFarmersGroupContext();
   const {
     register,
@@ -74,9 +76,8 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
   }, [editMode, id]);
 
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
-    cb({ ...data, id: editMode ? id : uuidv4(), members: [] });
-    reset();
-    handleClose();
+    cb({ ...data, id: editMode ? id : uuidv4(), members: members });
+    !editMode && handleClose();
   };
 
   return (
@@ -95,7 +96,7 @@ const FarmersGroupModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMo
           handleClose();
         }}
       >
-        Add Farmer's Group
+        {editMode ? "Edit Farmer's Group" : "Add Farmer's Group"}
       </ModalHeader>
 
       <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
