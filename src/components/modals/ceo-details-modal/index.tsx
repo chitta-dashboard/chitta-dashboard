@@ -110,7 +110,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
           handleClose();
         }}
       >
-        {editMode ? " Edit CEO's Details" : " Add CEO's Details "}
+        {editMode ? " Edit CEO Details" : " Add CEO Details "}
       </ModalHeader>
       <ModalBody id="ceoDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>

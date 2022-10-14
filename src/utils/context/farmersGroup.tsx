@@ -83,7 +83,6 @@ const initialState: farmersGroupContextType = {
     },
   },
   searchFilter: "",
-  addGroupMembers: () => {},
   sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},

@@ -43,8 +43,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   // confirm Modal Handler
   const confirmModalHandler = () => setConfirmModal(!confirmModal);
 
-  const getURL = (data: mdDetail) => data["profile"];
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
@@ -67,14 +65,14 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   };
 
   return (
-    <TableRow>
+    <TableRow key={user.id}>
       <S.TabCell>
         <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
       </S.TabCell>
       <S.Cell title="பெயர்">
         <S.NameStack>
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
+            <S.AvatarImg alt="User-img" src={user.profile ? user.profile : userPic} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
@@ -93,6 +91,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
           <S.Toggle checked={!!user.id} onChange={confirmModalHandler} />
         </S.IconBox>
+        {/* </S.WebTableCell> */}
         <MdDetailsIconModal
           open={iconModal}
           handleClose={() => setIconModal(false)}

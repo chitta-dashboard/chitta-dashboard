@@ -135,5 +135,9 @@ export const Message = (name: string) => {
     deleteFarmGroup: `new farmer group "${name}" has been removed`,
     addFarmDetail: `New farmer "${name}" has been registered`,
     deleteFarmDetail: `farmer "${name}" has been removed`,
+    addCeoDetails: `New ceo "${name}" has been registered`,
+    deleteCeoDetails: `ceo "${name}" has been removed`,
+    addFoundersDetails: `New founder "${name}" has been registered`,
+    deleteFoundersDetails: `founder "${name}" has been removed`,
   };
 };
