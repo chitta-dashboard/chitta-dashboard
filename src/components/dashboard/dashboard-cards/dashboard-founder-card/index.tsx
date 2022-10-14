@@ -49,14 +49,6 @@ const DashboardFounder = () => {
     setUserId(id);
   };
 
-  const getURL = (id: string) => {
-    let result = Object.values(foundersById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     let result = Object.values(foundersById).filter((item) => {
@@ -79,7 +71,7 @@ const DashboardFounder = () => {
           {Object.values(foundersById).map((item) => (
             <S.FounderCard key={item.id}>
               <S.FounderImgContainer>
-                <S.FounderImg src={getURL(item.id) ? getURL(item.id) : FounderImg} alt="Founder-image" />
+                <S.FounderImg src={foundersById[item.id].profile ? foundersById[item.id].profile : FounderImg} alt="Founder-image" />
                 <S.EditBox onClick={() => handleIconClick(item.id)}>
                   <S.EditIcon>edit</S.EditIcon>
                   <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />

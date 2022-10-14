@@ -109,7 +109,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
           handleClose();
         }}
       >
-        {editMode ? " Edit Founder's Details" : " Add Founder's Details "}
+        {editMode ? " Edit Founder Details" : " Add Founder Details "}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
