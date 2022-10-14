@@ -6,6 +6,7 @@ import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails"
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
+import ConfirmationModal from "../../components/modals/confirmation-modal";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -13,11 +14,13 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
+  const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
+  const [cardExpand, setCardExpand] = useState<boolean>(true);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
 
   const calculateAge = (dob1: string) => {
     var today = new Date();
@@ -68,46 +71,66 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const updateMdDetail = (data: IAddCEODetailsFormInput & { id: string }) => {
-    editCeoDetail(data);
+    setOpenConfirmationModal(data);
   };
 
   return (
     <>
       <S.CeoDetailCard>
-        <S.CeoDetailData>
-          <S.CeoDataLeft>
-            <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={getURL(user.id) ? getURL(user.id) : ProfilePicture} alt="profile picture" />
-              <S.EditBox
-                onClick={() => {
-                  handleIconClick();
-                }}
-              >
-                <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-              </S.EditBox>
-            </S.ProfilePictureBox>
-            <S.CeoData>
-              <S.CeoName>{user.name}</S.CeoName>
-              <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
-              <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
-            </S.CeoData>
-          </S.CeoDataLeft>
-          <S.CeoDataRight>
-            <S.CeoData>
-              <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-              <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-              <S.CeoInfo>தகுதி:</S.CeoInfo>
-            </S.CeoData>
-            <S.CeoData>
-              <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
-              <S.CeoInfo>{user.dob}</S.CeoInfo>
-              <S.CeoInfo>{user.qualification}</S.CeoInfo>
-            </S.CeoData>
-          </S.CeoDataRight>
-        </S.CeoDetailData>
+        {!cardExpand && (
+          <S.SeeLess
+            onClick={() => {
+              setCardExpand(true);
+            }}
+          >
+            See less...
+          </S.SeeLess>
+        )}
+        {cardExpand && (
+          <S.CeoDetailData>
+            <S.CeoDataLeft>
+              <S.ProfilePictureBox>
+                <S.CeoProfilePicture src={getURL(user.id) ? getURL(user.id) : ProfilePicture} alt="profile picture" />
+                <S.EditBox
+                  onClick={() => {
+                    handleIconClick();
+                  }}
+                >
+                  <S.EditIcon>edit</S.EditIcon>
+                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                </S.EditBox>
+              </S.ProfilePictureBox>
+              <S.CeoData>
+                <S.CeoName>{user.name}</S.CeoName>
+                <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
+                <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
+              </S.CeoData>
+            </S.CeoDataLeft>
+            <S.CeoDataRight>
+              <S.CeoData>
+                <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
+                <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
+                <S.CeoInfo>தகுதி:</S.CeoInfo>
+              </S.CeoData>
+              <S.CeoData>
+                <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
+                <S.CeoInfo>{user.dob}</S.CeoInfo>
+                <S.CeoInfo>{user.qualification}</S.CeoInfo>
+              </S.CeoData>
+            </S.CeoDataRight>
+          </S.CeoDetailData>
+        )}
         <S.CeoDetailDescription>{user.description}</S.CeoDetailDescription>
         <S.ButtonContainer>
+          {cardExpand && (
+            <S.SeeMore
+              onClick={() => {
+                setCardExpand(false);
+              }}
+            >
+              See More...
+            </S.SeeMore>
+          )}
           <S.CustomIconContainer
             onClick={() => {
               setOpenDeleteModal(true);
@@ -133,6 +156,28 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleDelete={() => {
             deleteCeoDetail(user.id);
           }}
+          deleteMessage={
+            <span>
+              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
+            </span>
+          }
+        />
+      )}
+      {openConfirmationModal && (
+        <ConfirmationModal
+          openModal={true}
+          handleClose={() => {
+            setOpenConfirmationModal(null);
+          }}
+          yesAction={() => {
+            editCeoDetail(openConfirmationModal);
+            setOpenConfirmationModal(null);
+          }}
+          confirmMessage={
+            <span>
+              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
+            </span>
+          }
         />
       )}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}

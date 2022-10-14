@@ -50,14 +50,14 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         unregister={unregister}
         gridArea="prf"
       />
-      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "பெயர்", gridArea: "nme" }} />
+      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "*பெயர்", gridArea: "nme" }} />
       <Input
         name="sex"
         type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
-          label: "பாலினம்",
+          label: "*பாலினம்",
           gridArea: "sex",
           selectOptions: [
             ["male", "ஆண்"],
@@ -70,22 +70,22 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "தந்தையின் பெயர்", gridArea: "fnm" }}
+        options={{ label: "*தந்தையின் பெயர்", gridArea: "fnm" }}
       />
       <Input
         name="spouseName"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "கணவன்/மணைவி பெயர்", gridArea: "spo" }}
+        options={{ label: "*கணவன்/மணைவி பெயர்", gridArea: "spo" }}
       />
-      <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "பிறந்த தேதி", gridArea: "dob" }} />
+      <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "*பிறந்த தேதி", gridArea: "dob" }} />
       <Input
         name="group"
         type="select"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
+        options={{ label: "*குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
       />
       <Input
         name="phoneNumber"
@@ -96,7 +96,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 10, message: "10 digits expected" },
           maxLength: { value: 10, message: "10 digits expected" },
         }}
-        options={{ label: "கைபேசி எண்", gridArea: "phn" }}
+        options={{ label: "*கைபேசி எண்", gridArea: "phn" }}
       />
       <Input
         name="addhaarNo"
@@ -107,7 +107,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 12, message: "12 digits expected" },
           maxLength: { value: 12, message: "12 digits expected" },
         }}
-        options={{ label: "ஆதார் எண்", gridArea: "adh" }}
+        options={{ label: "*ஆதார் எண்", gridArea: "adh" }}
       />
       <S.DynamicInputsBox>
         {dynamicInputs.map((inp, ind) => {
@@ -124,7 +124,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setSurveyNo({ ...surveyNo, [surveyName]: e.target.value });
                 }}
                 options={{
-                  label: "கணக்கெடுப்பு எண்",
+                  label: "*கணக்கெடுப்பு எண்",
                   gridArea: "srv",
                 }}
               />
@@ -137,7 +137,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setAcre({ ...acre, [acreName]: e.target.value });
                 }}
                 options={{
-                  label: "ஏக்கர்",
+                  label: "*ஏக்கர்",
                   gridArea: "acr",
                 }}
               />
@@ -150,7 +150,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setBorder({ ...border, [borderName]: e.target.value });
                 }}
                 options={{
-                  label: "நில எல்லை",
+                  label: "*நில எல்லை",
                   gridArea: "bdr",
                 }}
               />

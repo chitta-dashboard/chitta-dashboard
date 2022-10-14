@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Chip, FormHelperText, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import { FormHelperText, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from "@mui/material";
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
@@ -29,6 +29,8 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
             <S.TextInput
               helperText={errors[name]?.message as string}
               type="text"
+              // multiline
+              // maxRows={3}
               {...options}
               name={field.name}
               value={field.value}

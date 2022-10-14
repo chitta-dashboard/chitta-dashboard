@@ -1,7 +1,7 @@
 import { Stack, styled } from "@mui/material";
 
 namespace S {
-  export const Container = styled(Stack)({
+  export const Container = styled(Stack)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -10,7 +10,10 @@ namespace S {
     ".MuiButton-textPrimary": {
       width: "10rem",
     },
-  });
+    "& .Mui-disabled": {
+      backgroundColor: theme.palette.bg.dark,
+    },
+  }));
 }
 
 export default S;

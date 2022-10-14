@@ -25,7 +25,7 @@ const Editor: FC<EditorProps> = ({ cb, defaultValue = "" }) => {
 
   return (
     <S.RichTextBoxWrapper>
-      <S.RichTextLabel>தீர்மானம்</S.RichTextLabel>
+      <S.RichTextLabel>*தீர்மானம்</S.RichTextLabel>
       <S.TextBox>
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />

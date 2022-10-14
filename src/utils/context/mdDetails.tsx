@@ -32,7 +32,6 @@ export interface mdDetailsContextType {
   searchFilter: string;
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
-  // selectedMdListData: selectedMdListData[];
   setSearchFilter: (searchText: string) => void;
   addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
@@ -51,6 +50,7 @@ const initialState: mdDetailsContextType = {
       qualification: "BBA, MBA",
       dob: "1989-10-12",
       signature: "",
+      farmerId: "123",
     },
     "2": {
       id: "2",
@@ -60,6 +60,7 @@ const initialState: mdDetailsContextType = {
       qualification: "BA",
       dob: "1994-03-01",
       signature: "",
+      farmerId: "124",
     },
     "3": {
       id: "3",
@@ -69,6 +70,7 @@ const initialState: mdDetailsContextType = {
       qualification: "BCom CA",
       dob: "1998-08-05",
       signature: "",
+      farmerId: "125",
     },
     "4": {
       id: "4",
@@ -78,6 +80,7 @@ const initialState: mdDetailsContextType = {
       qualification: "BSc, Computer Science",
       dob: "1998-01-07",
       signature: "",
+      farmerId: "126",
     },
     "5": {
       id: "5",
@@ -87,6 +90,7 @@ const initialState: mdDetailsContextType = {
       qualification: "B.Tech, Information Technology",
       dob: "1994-01-01",
       signature: "",
+      farmerId: "127",
     },
     "6": {
       id: "6",
@@ -96,10 +100,10 @@ const initialState: mdDetailsContextType = {
       qualification: "B.Tech, Computer Science",
       dob: "1996-08-10",
       signature: "",
+      farmerId: "128",
     },
   },
   searchFilter: "",
-  // selectedMdListData: [],
   sortFilter: ASCENDING,
   setSortFilter: () => {},
   setSearchFilter: () => {},
@@ -129,13 +133,7 @@ const reducer = (state: mdDetailsContextType, action: any) => {
       return { ...state, sortFilter: action.payload };
 
     case CHECKBOX_SELECT:
-      // let data = state.selectedMdListData;
-      // let newData: string[] = [];
-      // action.payload.map((id:string) => {
-      //   !data.includes(id) && newData.push(id);
-      // });
-      // return {...state,selectedMdListData:[...newData,...data]}
-      return { ...state, mdDetailsById: { ...state.mdDetailsById, ...action.payload } };
+      return { ...state, mdDetailsById: { ...action.payload, ...state.mdDetailsById } };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
