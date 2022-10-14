@@ -20,7 +20,13 @@ interface CustomProps {
 }
 
 const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
-  const { handleSubmit, setValue, trigger, control } = useForm<IAddDecisionsFormInput>({});
+  const {
+    handleSubmit,
+    setValue,
+    trigger,
+    control,
+    formState: { isValid },
+  } = useForm<IAddDecisionsFormInput>({ mode: "onChange" });
 
   const onSubmit: any = (data: IAddDecisionsFormInput) => {
     cb({
@@ -50,7 +56,7 @@ const DecisionsModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode 
         </ModalBody>
 
         <ModalFooter>
-          <Button form="addDecisions" type="submit">
+          <Button form="addDecisions" type="submit" disabled={!isValid}>
             Submit
           </Button>
         </ModalFooter>

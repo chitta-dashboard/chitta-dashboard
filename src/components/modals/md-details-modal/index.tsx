@@ -57,7 +57,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
     setError,
     clearErrors,
@@ -68,6 +68,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     control: formControl,
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -144,7 +145,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="mdDetails" type="submit">
+        <Button form="mdDetails" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>
