@@ -51,10 +51,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     setConfirmModal(!confirmModal);
   };
 
-  const getURL = (data: mdDetail) => {
-    return data["profile"];
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
@@ -86,7 +82,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
         <S.Cell title="பெயர்">
           <S.NameStack>
             <S.AvatarBox>
-              <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
+              <S.AvatarImg alt="User-img" src={user.profile ? user.profile : userPic} />
               <S.EditBox onClick={() => handleIconClick(user.id)}>
                 <S.EditIcon>edit</S.EditIcon>
                 <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />

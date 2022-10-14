@@ -19,7 +19,6 @@ import CS from "../../../common-styles/commonStyles.styled";
 const Body = () => {
   const {
     farmersDetailsById: listData,
-    editTableIcon,
     editFarmerDetail,
     deleteFarmerDetail,
     searchFilter,
@@ -87,14 +86,6 @@ const Body = () => {
     setDeleteId(id);
   };
 
-  const getURL = (id: string) => {
-    let result = Object.values(farmersList).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
@@ -127,7 +118,7 @@ const Body = () => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    editFarmerDetail({ ...result[0] });
   };
 
   const handleClose = (user?: farmerDetail) => {
@@ -178,7 +169,7 @@ const Body = () => {
               <S.Cell title="பெயர்">
                 <S.NameStack>
                   <S.AvatarBox>
-                    <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
+                    <S.AvatarImg alt="User-img" src={listData[user.id].profile ? listData[user.id].profile : userPic} />
                     <S.EditBox
                       onClick={(e) => {
                         e.stopPropagation();

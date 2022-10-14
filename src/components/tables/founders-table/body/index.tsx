@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
-import { fileValidation, searchWord, sortObj } from "../../../../utils/constants";
+import { fileValidation, Message, searchWord, sortObj } from "../../../../utils/constants";
 import { IAddCEODetailsFormInput } from "../../../modals/type/formInputs";
+import { useAuthContext } from "../../../../utils/context/auth";
 import BodyWrapper from "../../../custom-tables/body";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
@@ -15,6 +16,7 @@ import S from "./body.styled";
 
 const Body = () => {
   const { foundersById: listData, editFounder, deleteFounder, searchFilter, sortFilter } = useFounderContext();
+  const { addNotification } = useAuthContext();
   const [founderSearch, setFounderSearch] = useState<Founders[]>(Object.values(listData));
   const [founderSort, setFounderSort] = useState<Founders[]>(Object.values(listData));
   const [founder, setFounder] = useState<Founders[]>(Object.values(listData));
@@ -67,14 +69,6 @@ const Body = () => {
     setDeleteId(id);
   };
 
-  const getURL = (id: string) => {
-    let result = Object.values(founder).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
@@ -118,7 +112,7 @@ const Body = () => {
               <S.Cell title="பெயர்">
                 <S.NameStack>
                   <S.AvatarBox>
-                    <S.AvatarImg alt="User-img" src={getURL(user.id) ? getURL(user.id) : userPic} />
+                    <S.AvatarImg alt="User-img" src={listData[user.id].profile ? listData[user.id].profile : userPic} />
                     <S.EditBox onClick={() => handleIconClick(user.id)}>
                       <S.EditIcon>edit</S.EditIcon>
                       <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
@@ -155,10 +149,15 @@ const Body = () => {
             deleteFounder(deleteId);
             setDeleteModal(false);
             setIconModal(false);
+            addNotification({
+              id: listData[deleteId]?.id,
+              image: listData[deleteId]?.profile,
+              message: Message(listData[deleteId]?.name).deleteFoundersDetails,
+            });
           }}
           deleteMessage={
             <span>
-              Do you want to remove <S.DeleteName>{listData[deleteId]?.name}</S.DeleteName> from FoundersList?
+              Do you want to remove <S.DeleteName>{listData[deleteId]?.name}</S.DeleteName> from Founders Details?
             </span>
           }
         />
@@ -175,7 +174,7 @@ const Body = () => {
           }}
           confirmMessage={
             <span>
-              Do you want to remove <S.DeleteName>{listData[editId]?.name}</S.DeleteName> from CeoList?
+              Do you want to remove <S.DeleteName>{listData[editId]?.name}</S.DeleteName> from Founders Details?
             </span>
           }
         />

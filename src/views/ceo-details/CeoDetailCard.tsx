@@ -1,12 +1,13 @@
 import { useRef, useState } from "react";
 import ProfilePicture from "./../../assets/images/IdImage.png";
-import { fileValidation } from "../../utils/constants";
+import { fileValidation, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
+import { useAuthContext } from "../../utils/context/auth";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 
 const CeoDetailsCard = ({ user }: Props) => {
   const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
+  const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -41,14 +43,6 @@ const CeoDetailsCard = ({ user }: Props) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
-  };
-
-  const getURL = (id: string) => {
-    let result = Object.values(ceoDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
   };
 
   // this function is to clear the value of input field, so we can upload same file as many time has we want.
@@ -90,7 +84,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           <S.CeoDetailData>
             <S.CeoDataLeft>
               <S.ProfilePictureBox>
-                <S.CeoProfilePicture src={getURL(user.id) ? getURL(user.id) : ProfilePicture} alt="profile picture" />
+                <S.CeoProfilePicture src={ceoDetailsById[user.id].profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
                 <S.EditBox
                   onClick={() => {
                     handleIconClick();
@@ -155,10 +149,11 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={() => {
             deleteCeoDetail(user.id);
+            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
           }}
           deleteMessage={
             <span>
-              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
+              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CEO Details?
             </span>
           }
         />
@@ -175,7 +170,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           }}
           confirmMessage={
             <span>
-              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
+              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CEO Details?
             </span>
           }
         />
