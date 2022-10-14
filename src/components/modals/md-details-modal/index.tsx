@@ -119,7 +119,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
           handleClose();
         }}
       >
-        Add MD Details
+        {editMode ? "Edit MD Details" : "Add MD Details"}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>

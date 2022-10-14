@@ -27,7 +27,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
   const { farmersDetailsById } = useFarmerDetailsContext();
-  const { addGroupMembers } = useFarmersGroupContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -140,14 +140,15 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" } as IAddFarmersDetailsPage1Input &
       IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    const newMember = { id: params.id, group: params.group };
-    addGroupMembers(newMember);
-    handleClose();
+    // const newMember = { id: params.id, group: params.group };
+    // editMode && removeGroupMember(newMember);
+    // addGroupMember(newMember);
+    !editMode && handleClose();
   };
 
   return (
     <CustomModal openModal={openModal} handleClose={handleClose}>
-      <ModalHeader handleClose={handleClose}>Add Farmer's Details</ModalHeader>
+      <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
 
       {next ? (
         <>

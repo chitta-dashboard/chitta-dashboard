@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 import { ASCENDING, SortOrder } from "../constants";
 
 //ACTION TYPES
@@ -15,7 +15,7 @@ export type mdDetail = {
   name: string;
   phoneNumber: string;
   qualification: string;
-  profile?: string;
+  profile: string;
   dob: string;
   signature?: string;
   farmerId?: string;
@@ -37,7 +37,7 @@ export interface mdDetailsContextType {
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
-  checkboxSelect: (id: object) => void;
+  checkboxSelect: (id: string | {}) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -49,7 +49,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "1989-10-12",
-      signature: "",
+      signature: profileImg,
       farmerId: "123",
     },
     "2": {
@@ -59,7 +59,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "1994-03-01",
-      signature: "",
+      signature: profileImg,
       farmerId: "124",
     },
     "3": {
@@ -69,7 +69,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "1998-08-05",
-      signature: "",
+      signature: profileImg,
       farmerId: "125",
     },
     "4": {
@@ -79,7 +79,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "1998-01-07",
-      signature: "",
+      signature: profileImg,
       farmerId: "126",
     },
     "5": {
@@ -89,7 +89,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "1994-01-01",
-      signature: "",
+      signature: profileImg,
       farmerId: "127",
     },
     "6": {
@@ -99,7 +99,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "1996-08-10",
-      signature: "",
+      signature: profileImg,
       farmerId: "128",
     },
   },
@@ -166,8 +166,8 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
-  const checkboxSelect = (farmerData: object) => {
-    dispatch({ type: CHECKBOX_SELECT, payload: farmerData });
+  const checkboxSelect = (id: string | {}) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
   let data = {
