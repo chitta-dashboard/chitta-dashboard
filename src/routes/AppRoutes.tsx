@@ -10,7 +10,7 @@ import AdminPanel from "../views/admin-panel";
 import Resolutions from "../views/resolution";
 import NotFound from "../views/not-found";
 import FarmerFormPreview from "../views/farmer-detail-page/farmer-form-preview/FarmerFormPreview";
-import DecisionCertificate from "../views/decision-certificate";
+import ResolutionCertificate from "../views/resolution-certificate";
 
 const AppRouters: FC = () => {
   return (
@@ -25,7 +25,7 @@ const AppRouters: FC = () => {
       <Route path={`/founders`} element={<Founders />} />
       <Route path={`/admin-panel`} element={<AdminPanel />} />
       <Route path={`/board-resolution`} element={<Resolutions />} />
-      <Route path={`/board-resolution/:resolutionId`} element={<DecisionCertificate />} />
+      <Route path={`/board-resolution/:resolutionId`} element={<ResolutionCertificate />} />
       <Route path="/*" element={<NotFound />} />
     </Routes>
   );

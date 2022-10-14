@@ -1,6 +1,6 @@
-export interface IAddDecisionsFormInput {
+export interface IResolutionFormInput {
   selectAll: string;
-  decisionHeading: string;
+  resolutionHeading: string;
   creationTime: string;
   groupName: string;
   presenter: string[];

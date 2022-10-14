@@ -1,5 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import { ASCENDING, SortOrder } from "../constants";
+import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
 const ADD_FARMERS_GROUP = "ADD_FARMERS_GROUP";
@@ -41,8 +41,8 @@ interface farmersGroupContextType {
   farmersGroupById: { [id: string]: FarmersGroup };
   searchFilter: string;
   memberFilter: number;
-  sortFilter: "ascending" | "descending";
-  setSortFilter: (sortOrder: "ascending" | "descending") => void;
+  sortFilter: SortOrder;
+  setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFarmersGroup: (data: FarmersGroup) => void;
   editFarmersGroup: (data: FarmersGroup) => void;
@@ -83,7 +83,8 @@ const initialState: farmersGroupContextType = {
     },
   },
   searchFilter: "",
-  sortFilter: ASCENDING,
+  addGroupMembers: () => {},
+  sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFarmersGroup: () => {},
