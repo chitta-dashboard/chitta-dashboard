@@ -64,7 +64,7 @@ namespace S {
   export const IconBox = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     width: "100%",
     [theme.breakpoints.down("md")]: {
       display: "none",

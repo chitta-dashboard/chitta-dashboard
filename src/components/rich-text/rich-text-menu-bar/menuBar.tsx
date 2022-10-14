@@ -25,7 +25,7 @@ const MenuBar: FC<TextEditor> = ({ editor }) => {
         <Icon iconName="strike-through" />
       </S.ToolbarBtn>
       <S.ToolbarBtn onClick={() => editor.chain().focus().toggleUnderline().run()} className={editor.isActive("underline") ? "is-active" : ""}>
-        underline
+        <Icon iconName="underline" />
       </S.ToolbarBtn>
       <S.ToolbarBtn onClick={() => editor.chain().focus().unsetAllMarks().run()}>
         <Icon iconName="clear-format" />

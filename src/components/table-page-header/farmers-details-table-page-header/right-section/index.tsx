@@ -8,6 +8,7 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
+  const { shareAmountModalHandler, addModalHandler } = props;
   const { selectedFarmers } = useFarmerDetailsContext();
 
   return (
@@ -16,18 +17,13 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <SelectDropDown />
       </S.DropdownStack>
       <S.ButtonStack>
-        <S.CustomButton
-          disabled={selectedFarmers.length === 0}
-          onClick={() => {
-            props.shareAmountModalHandler && props.shareAmountModalHandler();
-          }}
-        >
+        <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
         <S.CustomButton>Export Farmers</S.CustomButton>
         <S.CustomButton
           onClick={() => {
-            if (props.addModalHandler) props.addModalHandler();
+            if (addModalHandler) addModalHandler();
           }}
         >
           Add

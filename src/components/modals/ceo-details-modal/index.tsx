@@ -1,6 +1,6 @@
 import { Control, useForm } from "react-hook-form";
 import { Button, Stack } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
@@ -48,7 +48,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
     setError,
     clearErrors,
@@ -59,6 +59,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
     unregister,
   } = useForm<IAddCEODetailsFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -134,7 +135,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="ceoDetails" type="submit">
+        <Button form="ceoDetails" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>

@@ -240,3 +240,11 @@
 .nerkathir-icon-rupee:before {
   content: "\2603";
 }
+
+.nerkathir-icon-ascending:before {
+    content: "\bf";
+}
+
+.nerkathir-icon-descending:before {
+    content: "\a2";
+}

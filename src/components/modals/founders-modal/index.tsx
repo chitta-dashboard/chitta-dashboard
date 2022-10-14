@@ -48,7 +48,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
     setError,
     clearErrors,
@@ -59,6 +59,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
     unregister,
   } = useForm<IAddCEODetailsFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -89,8 +90,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
     cb({ ...data, id: editMode ? id : uuidv4() } as IAddCEODetailsFormInput & { id: string });
-    handleClose();
-    reset();
+    !editMode && handleClose();
   };
 
   return (
@@ -135,7 +135,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="mdDetails" type="submit">
+        <Button form="mdDetails" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>

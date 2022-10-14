@@ -5,7 +5,7 @@ import ConfirmationModal from "./confirmation-modal";
 import FarmersGroupModal from "./farmers-group-modal";
 import FarmersDetailsModal from "./farmers-details-modal";
 import MdDetailsModal from "./md-details-modal";
-import DecisionsModal from "./decisions-modal";
+import ResolutionModal from "./resolution-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
@@ -18,7 +18,7 @@ const ModalLaunchButtons = () => {
   const [openAddMd, setOpenAddMd] = React.useState(false);
   const [openAddFarmerGroup, setOpenAddFarmerGroup] = React.useState(false);
   const [openAddFarmerDetails, setOpenAddFarmerDetails] = React.useState(false);
-  const [openAddDecisions, setOpenAddDecisions] = React.useState(false);
+  const [openAddResolution, setOpenAddResolution] = React.useState(false);
   const [openShareAmount, setOpenShareAmount] = React.useState(false);
 
   const deleteHandleClickOpen = () => {
@@ -41,8 +41,8 @@ const ModalLaunchButtons = () => {
     setOpenAddFarmerDetails(!openAddFarmerDetails);
   };
 
-  const addDecisions = () => {
-    setOpenAddDecisions(!openAddDecisions);
+  const addResolution = () => {
+    setOpenAddResolution(!openAddResolution);
   };
 
   const addShareAmount = () => {
@@ -66,7 +66,7 @@ const ModalLaunchButtons = () => {
       <Button variant="outlined" onClick={addFarmerDetails}>
         add farmer's details
       </Button>
-      <Button variant="outlined" onClick={addDecisions}>
+      <Button variant="outlined" onClick={addResolution}>
         add decicions
       </Button>
       <Button variant="outlined" onClick={addShareAmount}>
@@ -119,7 +119,7 @@ const ModalLaunchButtons = () => {
           id={"3"}
         />
       </FarmersGroupContextProvider>
-      <DecisionsModal openModal={openAddDecisions} handleClose={addDecisions} cb={(data: IResolution): void => {}} />
+      <ResolutionModal openModal={openAddResolution} handleClose={addResolution} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
     </Fragment>
   );
