@@ -4,6 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { DESCENDING, sortObj } from "../../../utils/constants";
 import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
+import leafLine from "../../../assets/images/leafLine.svg";
 import S from "./resolutionsTree.styled";
 
 interface Props {
@@ -34,8 +35,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
       </S.InvisibleBox>
       <S.ResolutionsTreeBox leafCount={leafCount}>
         <S.Bud>
-          {/* don't remove. needed for styling. */}
-          <span></span>
+          <img src={leafLine} alt={""} draggable={false} />
         </S.Bud>
         {leafCount >= 1 && (
           <S.L1>
