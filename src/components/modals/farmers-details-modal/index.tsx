@@ -27,7 +27,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
   const { farmersDetailsById } = useFarmerDetailsContext();
-  const { addGroupMembers } = useFarmersGroupContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -77,14 +77,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     reset: form1Reset,
     unregister: form1Unregister,
     control: form1Control,
-  } = useForm<IAddFarmersDetailsPage1Input>({});
+    formState: { isValid: page1Validation },
+  } = useForm<IAddFarmersDetailsPage1Input>({
+    mode: "onChange",
+  });
 
   const {
     handleSubmit: form2HandleSubmit,
     reset: form2Reset,
     clearErrors: form2ClearErrors,
     control: form2Control,
-  } = useForm<IAddFarmersDetailsPage2Input>({});
+    formState: { isValid: page2Validation },
+  } = useForm<IAddFarmersDetailsPage2Input>({
+    mode: "onChange",
+  });
 
   useEffect(() => {
     if (editMode) {
@@ -134,14 +140,15 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" } as IAddFarmersDetailsPage1Input &
       IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    const newMember = { id: params.id, group: params.group };
-    addGroupMembers(newMember);
-    handleClose();
+    // const newMember = { id: params.id, group: params.group };
+    // editMode && removeGroupMember(newMember);
+    // addGroupMember(newMember);
+    !editMode && handleClose();
   };
 
   return (
     <CustomModal openModal={openModal} handleClose={handleClose}>
-      <ModalHeader handleClose={handleClose}>Add Farmer's Details</ModalHeader>
+      <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
 
       {next ? (
         <>
@@ -159,7 +166,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
               >
                 Back
               </Button>
-              <Button type="submit" form={"farmersDetailsForm2"}>
+              <Button type="submit" form={"farmersDetailsForm2"} disabled={!page2Validation}>
                 Submit
               </Button>
             </S.ButtonContainer>
@@ -181,7 +188,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
           </ModalBody>
           <ModalFooter>
             <S.PageNumber alt="page number 1" src={page1} />
-            <Button type="submit" form={"farmersDetailsForm1"}>
+            <Button type="submit" form={"farmersDetailsForm1"} disabled={!page1Validation}>
               Next
             </Button>
           </ModalFooter>

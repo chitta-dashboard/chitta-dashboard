@@ -95,9 +95,6 @@ namespace S {
       width: "100%",
       height: "100%",
     },
-    // ".image-preview-title": {
-    //   color: "#bababa",
-    // },
   }));
 
   export const UploadBtn = styled(Box)(({ theme }) => ({

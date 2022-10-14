@@ -2,17 +2,17 @@ import { FC, useEffect, useRef } from "react";
 import { Control, useWatch } from "react-hook-form";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
-import { IAddDecisionsFormInput } from "../../type/formInputs";
+import { IResolutionFormInput } from "../../type/formInputs";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import Input from "../../../input-fields/input/input";
 import { getCurrentTime } from "../../../../utils/constants";
 import { useResolutionsProviderContext } from "../../../../utils/context/resolutions";
-import S from "./decisionsModal.styled";
+import S from "./formField.styled";
 
 interface CustomProps {
-  setValue: UseFormSetValue<IAddDecisionsFormInput>;
-  trigger: UseFormTrigger<IAddDecisionsFormInput>;
-  control: Control<IAddDecisionsFormInput>;
+  setValue: UseFormSetValue<IResolutionFormInput>;
+  trigger: UseFormTrigger<IResolutionFormInput>;
+  control: Control<IResolutionFormInput>;
   editMode?: boolean;
   id?: string;
 }
@@ -22,7 +22,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
   const farmerGroupList = Object.values(farmersGroupById);
   const { resolutions } = useResolutionsProviderContext();
   const { current: resolution } = useRef(resolutions[id]);
-  const selectAllGroup = useWatch<IAddDecisionsFormInput>({
+  const selectAllGroup = useWatch<IResolutionFormInput>({
     name: "selectAll",
     control,
     defaultValue: editMode && resolution.groupName !== "~All Groups~" ? "no" : "yes",
@@ -44,7 +44,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           name="selectAll"
           defaultValue={editMode && resolution.groupName !== "~All Groups~" ? "no" : "yes"}
           options={{
-            label: "அனைத்து குழுக்களையும் தேர்ந்தெடுக்கவா?",
+            label: "*அனைத்து குழுக்களையும் தேர்ந்தெடுக்கவா?",
             gridArea: "sel",
             radioOptions: [
               ["yes", "ஆம்"],
@@ -55,11 +55,11 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
         <Input
           type="text"
           rules={{ required: "required" }}
-          name="decisionHeading"
+          name="resolutionHeading"
           defaultValue={editMode ? resolution.groupTitle : ""}
           control={control as unknown as Control}
           options={{
-            label: "தீர்மானம் தலைப்பு",
+            label: "*தீர்மானம் தலைப்பு",
             gridArea: "dhd",
           }}
         />
@@ -70,7 +70,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           defaultValue={editMode ? getCurrentTime(resolution.timestamp) : getCurrentTime()}
           control={control as unknown as Control}
           options={{
-            label: "தீர்மானம் தேதி",
+            label: "*தீர்மானம் தேதி",
             gridArea: "dct",
           }}
         />
@@ -82,7 +82,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             defaultValue={editMode ? resolution.groupName : ""}
             control={control as unknown as Control}
             options={{
-              label: "குழு",
+              label: "*குழு",
               gridArea: "grp",
               selectOptions: farmerGroupList.map((g) => [g.groupName, g.groupName]),
               specialOptions: ["~All Groups~"],
@@ -96,7 +96,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           defaultValue={editMode ? resolution.presenter : ""}
           control={control as unknown as Control}
           options={{
-            label: "தொகுப்பாளர்",
+            label: "*தொகுப்பாளர்",
             gridArea: "pre",
             selectOptions: ["person 1", "person 2", "person 3", "person 4", "person 5"],
           }}
@@ -108,7 +108,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           defaultValue={editMode ? resolution.participator : ""}
           control={control as unknown as Control}
           options={{
-            label: "பங்கேற்பாளர்கள்",
+            label: "*பங்கேற்பாளர்கள்",
             gridArea: "par",
             selectOptions: ["person 1", "person 2", "person 3", "person 4", "person 5"],
           }}

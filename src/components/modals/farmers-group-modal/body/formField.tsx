@@ -20,8 +20,8 @@ interface CustomProps {
 const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, control }) => {
   return (
     <S.InputContainer spacing={3}>
-      <TextInput<IAddFarmersGroupFormInput> label="குழு பெயர்" register={register} inputName="groupName" helperText={errors.groupName?.message} />
-      <DescriptionField label="விளக்கம்" register={register} inputName="explanation" helperText={errors.explanation?.message} />
+      <TextInput<IAddFarmersGroupFormInput> label="*குழு பெயர்" register={register} inputName="groupName" helperText={errors.groupName?.message} />
+      <DescriptionField label="*விளக்கம்" register={register} inputName="explanation" helperText={errors.explanation?.message} />
       <Stack direction={"row"} spacing={2}>
         <Input
           name="chairman"
@@ -29,7 +29,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
           control={control}
           rules={{ required: "required" }}
           options={{
-            label: "தலைவர்",
+            label: "*தலைவர்",
             selectoptions: ["option-1", "option-2", "option-3"],
           }}
         />
@@ -39,7 +39,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
           control={control}
           rules={{ required: "required" }}
           options={{
-            label: "பொருளாளர்",
+            label: "*பொருளாளர்",
             selectoptions: ["option-1", "option-2", "option-3"],
           }}
         />
@@ -49,7 +49,7 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, contr
           control={control}
           rules={{ required: "required" }}
           options={{
-            label: "செயலாளர்",
+            label: "*செயலாளர்",
             selectoptions: ["option-1", "option-2", "option-3"],
           }}
         />

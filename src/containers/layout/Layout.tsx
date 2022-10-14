@@ -15,7 +15,7 @@ const Layout: FC = () => {
     <S.Layout>
       <GlobalStyles
         styles={(theme) => ({
-          "body, div, nav, span, table, tbody, thead, ul, ol, form": {
+          "body, div, nav, span, table, tbody, thead, ul, ol, form, textarea": {
             "&::-webkit-scrollbar": {
               width: "5px", // for vertical scroll
               height: "5px", // for horizontal scroll

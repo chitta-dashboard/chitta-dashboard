@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import { DESCENDING, sortObj } from "../../../utils/constants";
-import DecisionPdf from "../../../views/decision-certificate/DecisionPdf";
+import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
 import S from "./resolutionsList.styled";
@@ -27,7 +27,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
     navigate(`/board-resolution/${resolutionId}`);
   };
 
-  // to generate pdf of decision form
+  // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
@@ -36,7 +36,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   return (
     <S.MasterContainer>
       <S.InvisibleBox>
-        <DecisionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} decisionId={resolutionId} />
+        <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} resolutionId={resolutionId} />
       </S.InvisibleBox>
       {!isMd && (
         <S.LeftContainer>

@@ -10,11 +10,15 @@ export namespace S {
     [theme.breakpoints.down("md")]: {
       width: "calc(100% - 4rem)",
     },
+    ".slick-list":{
+      minHeight:"200px",
+      paddingTop:"0.7rem"
+    },
     ".slick-slide": {
       maxWidth: "calc(278px + 1rem) !important",
     },
     ".slick-prev": {
-      top: "32% !important",
+      top: "27% !important",
       left: "-1%",
       zIndex: "3",
       width: "50px",
@@ -32,7 +36,7 @@ export namespace S {
     },
     ".slick-next": {
       right: "-1%",
-      top: "50% !important",
+      top: "38% !important",
       width: "50px",
       height: "50px",
       background: theme.palette.bg.main,
