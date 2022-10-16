@@ -8,19 +8,20 @@ export namespace S {
     border: `1px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.3)}`,
     maxHeight: "20.7rem",
     padding: "0rem 1rem",
-    height: "fit-content",
     width: "fit-content",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
     alignItems: "start !important",
     boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
-    margin: "1rem 2rem",
+    margin: "1rem ",
+    height: "20rem",
   }));
 
   export const IdImage = styled("img")({
     width: "8.3rem",
     height: "9.5rem",
+    borderRadius: "1.25rem",
   });
 
   export const DescriptionBox = styled(Box)({
@@ -30,7 +31,13 @@ export namespace S {
   });
 
   export const UserBox = styled(Box)({
-    width: "50%",
+    width: "42%",
+    display: "flex",
+    justifyContent: "start !important",
+  });
+
+  export const UserDetailBox = styled(Box)({
+    width: "58%",
     display: "flex",
     justifyContent: "start !important",
   });
@@ -40,7 +47,7 @@ export namespace S {
     justifyContent: "center",
     width: "100%",
     paddingTop: "1.3rem",
-    gap: "1.5rem",
+    gap: "0.5rem",
     alignItems: "start !important",
     overflow: "hidden",
     paddingBottom: "1rem",
@@ -52,7 +59,7 @@ export namespace S {
     gap: "0.2rem",
     justifyContent: "flex-start",
     // alignItems: "start !important",
-    width: "10rem",
+    width: "13rem",
   });
 
   export const IdDetails = styled(Typography)(({ theme }: any) => ({

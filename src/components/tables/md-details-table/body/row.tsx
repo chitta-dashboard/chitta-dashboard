@@ -4,6 +4,7 @@ import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetai
 import { fileValidation } from "../../../../utils/constants";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import MdDetailsModal from "../../../modals/md-details-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
@@ -21,6 +22,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<mdDetail>();
+  const [idCard, setIdCard] = useState(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -37,7 +39,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     confirmModalHandler();
   };
 
-  // Delete Modal Handler
+  // ID Card Modal Handler
+  const idCardhandler = () => setIdCard(!idCard);
+
+  // Delete ModalHandler
   const deleteModalHandler = () => setDeleteModal(!deleteModal);
 
   // confirm Modal Handler
@@ -87,7 +92,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
       <S.WebTableCell>
         <S.IconBox>
           <CS.Icon onClick={deleteModalHandler}>delete</CS.Icon>
-          <CS.Icon>id-card</CS.Icon>
+          <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
           <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
           <S.Toggle checked={!!user.id} onChange={confirmModalHandler} />
         </S.IconBox>
@@ -99,8 +104,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           handleEdit={() => setEditMode(true)}
           check={user.id}
           handleConfirm={() => setConfirmModal(true)}
+          handleIdCard={() => setIdCard(true)}
         />
         <MdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <DeleteModal
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}

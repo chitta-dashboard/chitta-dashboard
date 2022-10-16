@@ -141,3 +141,7 @@ export const Message = (name: string) => {
     deleteFoundersDetails: `founder "${name}" has been removed`,
   };
 };
+
+export const dateFormat = (mydate?: string) => {
+  return mydate && mydate.split("-").reverse().join("-");
+};
