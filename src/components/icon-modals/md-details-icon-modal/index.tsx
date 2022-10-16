@@ -5,7 +5,7 @@ import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
 const MdDetailsIconModal: FC<CommonModalProps> = ({ ...props }) => {
-  const { check, open, handleClose, handleDelete, handleEdit, handleConfirm } = props;
+  const { check, open, handleClose, handleDelete, handleEdit, handleConfirm, handleIdCard } = props;
   return (
     <CommonIconModal open={open} handleClose={handleClose}>
       <S.IconStack direction={"row"}>
@@ -13,7 +13,7 @@ const MdDetailsIconModal: FC<CommonModalProps> = ({ ...props }) => {
           <S.Icon>delete</S.Icon>
           <S.IconText>Delete</S.IconText>
         </S.IconBox>
-        <S.IconBox>
+        <S.IconBox onClick={handleIdCard}>
           <S.Icon>id-card</S.Icon>
           <S.IconText>ID</S.IconText>
         </S.IconBox>

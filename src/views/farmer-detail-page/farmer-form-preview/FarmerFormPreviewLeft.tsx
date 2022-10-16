@@ -46,15 +46,6 @@ const FarmerFormPreviewLeft = () => {
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 
-  // to change profile picture
-  const getURL = (id: string) => {
-    let result = Object.values(farmersDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
     setUserId(id);
@@ -149,7 +140,7 @@ const FarmerFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.FarmerImgContainer>
-              <S.FarmerImg src={getURL(user.id) ? getURL(user.id) : NerkathirUser} alt="profie-picture" />
+              <S.FarmerImg src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : NerkathirUser} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();

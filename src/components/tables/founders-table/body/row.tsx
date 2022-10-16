@@ -23,7 +23,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<Founders>();
-  const [open, setOpen] = useState(false);
+  const [idCard, setIdCard] = useState(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
@@ -40,7 +40,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   };
 
   // ID Card Modal Handler
-  const handleClose = () => setOpen(!open);
+  const idCardhandler = () => setIdCard(!idCard);
 
   // Delete Modal Handler
   const deleteModalHandler = () => setDeleteModal(!deleteModal);
@@ -94,7 +94,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
       <S.WebTableCell>
         <S.IconBox>
           <CS.Icon onClick={deleteModalHandler}>delete</CS.Icon>
-          <CS.Icon onClick={handleClose}>id-card</CS.Icon>
+          <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
           <CS.Icon onClick={editFoundersHandler}>edit</CS.Icon>
         </S.IconBox>
         <FounderDetailsIconModal
@@ -102,9 +102,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           handleClose={() => setIconModal(false)}
           handleDelete={() => setDeleteModal(true)}
           handleEdit={() => setEditMode(true)}
+          handleIdCard={() => setIdCard(true)}
         />
         <FoundersModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFounders} editMode={editMode} id={user.id} />
-        <IdCardModal cardData={user} openModal={open} handleClose={handleClose} />
+        <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <DeleteModal
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}

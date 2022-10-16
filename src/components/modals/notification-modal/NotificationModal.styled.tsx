@@ -1,4 +1,4 @@
-import { styled, Box, Typography, Popover, Stack } from "@mui/material";
+import { styled, Box, Typography, Popover, Stack, Avatar } from "@mui/material";
 
 namespace S {
   export const ModalContainer = styled(Popover)(({ theme }) => ({
@@ -45,10 +45,11 @@ namespace S {
     display: "flex",
     gap: "2rem",
     padding: "1rem 2rem",
+    alignItems: "center",
     borderBottom: `2px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
   }));
 
-  export const UserImage = styled("img")({
+  export const UserImage = styled(Avatar)({
     width: "4rem",
     height: "4rem",
   });

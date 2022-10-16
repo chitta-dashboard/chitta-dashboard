@@ -3,8 +3,8 @@ interface CommonModalProps {
   open: boolean;
   handleClose: () => void;
   children?: React.ReactNode;
-  generateIdCard?: () => void;
   handleDelete?: () => void;
+  handleIdCard?: () => void;
   handleEdit?: () => void;
   generateFarmerDetailForm?: () => void;
   handleConfirm?: () => void;
