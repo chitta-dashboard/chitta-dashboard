@@ -14,6 +14,7 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
+import { dateFormat } from "../../../utils/constants";
 
 interface CustomProps {
   openModal: boolean;
@@ -78,9 +79,9 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
-        dob: userData?.dob as string,
-        signature: userData?.signature, // temporary, until sbucket integration
-        profile: userData?.profile, // temporary, wuntil sbucket integration
+        dob: dateFormat(userData?.dob) as string,
+        signature: "", // temporary, until sbucket integration
+        profile: "", // temporary, until sbucket integration
       });
     }
 
@@ -98,7 +99,15 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   // }, [editMode, id]);
 
   const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
+    cb({
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      qualification: data.qualification,
+      dob: dateFormat(data.dob),
+      signature: data.signature,
+      profile: data.profile,
+      id: editMode ? id : uuidv4(),
+    } as IAddMDDetailsFormInput & { id: string });
     // handleClose();
     // reset();
   };

@@ -25,33 +25,33 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
               <S.UserBox>
                 <S.IdDetails>பெயர்:</S.IdDetails>
               </S.UserBox>
-              <S.UserBox>
+              <S.UserDetailBox>
                 <S.IdDetails>{data?.name}</S.IdDetails>
-              </S.UserBox>
+              </S.UserDetailBox>
             </S.DescriptionBox>
             <S.DescriptionBox>
               <S.UserBox>
                 <S.IdDetails>கைபேசி எண்:</S.IdDetails>
               </S.UserBox>
-              <S.UserBox>
+              <S.UserDetailBox>
                 <S.IdDetails>{data?.phoneNumber}</S.IdDetails>
-              </S.UserBox>
+              </S.UserDetailBox>
             </S.DescriptionBox>
             <S.DescriptionBox>
               <S.UserBox>
                 <S.IdDetails>பிறந்த தேதி:</S.IdDetails>
               </S.UserBox>
-              <S.UserBox>
+              <S.UserDetailBox>
                 <S.IdDetails>{data?.dob}</S.IdDetails>
-              </S.UserBox>
+              </S.UserDetailBox>
             </S.DescriptionBox>
             <S.DescriptionBox>
               <S.UserBox>
                 <S.IdDetails>தகுதி:</S.IdDetails>
               </S.UserBox>
-              <S.UserBox>
+              <S.UserDetailBox>
                 <S.IdDetails>{data?.qualification}</S.IdDetails>
-              </S.UserBox>
+              </S.UserDetailBox>
             </S.DescriptionBox>
           </S.IdDetailsWrapper>
           <S.Signature src={Signature} alt="Signature" />

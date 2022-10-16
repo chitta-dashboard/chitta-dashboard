@@ -11,6 +11,7 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
+import { dateFormat } from "../../../utils/constants";
 import S from "./farmersDetailsModal.styled";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
@@ -100,7 +101,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
         fatherName: farmerData?.fatherName,
         sex: farmerData?.sex,
         spouseName: farmerData?.spouseName,
-        dob: farmerData?.dob,
+        dob: dateFormat(farmerData?.dob),
         group: farmerData?.group,
         phoneNumber: farmerData?.phoneNumber,
         addhaarNo: farmerData?.addhaarNo,
@@ -132,13 +133,29 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   }, [editMode, id]);
 
   const form1Submit: any = (data: IAddFarmersDetailsPage1Input) => {
-    setForm1Data(data);
+    setForm1Data({
+      acre: data.acre,
+      addhaarNo: data.addhaarNo,
+      border: data.border,
+      dob: dateFormat(data.dob),
+      fatherName: data.fatherName,
+      group: data.group,
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      profile: data.profile,
+      sex: data.sex,
+      spouseName: data.spouseName,
+    });
     setNext(true);
   };
 
   const form2Submit: any = (data: IAddFarmersDetailsPage2Input) => {
-    let params = { ...form1Data, ...data, id: editMode ? id : uuidv4(), membershipId: "NEF-FPC-2" } as IAddFarmersDetailsPage1Input &
-      IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
+    let params = {
+      ...form1Data,
+      ...data,
+      id: editMode ? id : uuidv4(),
+      membershipId: "NEF-FPC-2",
+    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
     // const newMember = { id: params.id, group: params.group };
     // editMode && removeGroupMember(newMember);
