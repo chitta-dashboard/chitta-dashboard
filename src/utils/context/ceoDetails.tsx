@@ -1,5 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/Founder.png";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_CEO_DETAIL = "ADD_CEO_DETAIL";
@@ -9,7 +9,7 @@ const DELETE_CEO_DETAIL = "DELETE_CEO_DETAIL";
 export type ceoDetail = {
   id: string;
   name: string;
-  profile?: string;
+  profile: string;
   dob: string;
   phoneNumber: string;
   qualification: string;
@@ -35,7 +35,7 @@ const initialState: ceoDetailsContextType = {
       profile: profileImg,
       name: "goku",
       phoneNumber: "8610010875",
-      dob: "1986-08-10",
+      dob: "10-08-1996",
       qualification: "B.E.agri",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
@@ -46,7 +46,7 @@ const initialState: ceoDetailsContextType = {
       profile: profileImg,
       name: "vegeta",
       phoneNumber: "8610010875",
-      dob: "1982-08-10",
+      dob: "10-08-1982",
       qualification: "B.E.agri",
       description:
         "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",

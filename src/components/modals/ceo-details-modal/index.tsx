@@ -13,6 +13,7 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
 import { useCeoDetailsContext } from "../../../utils/context/ceoDetails";
+import { dateFormat } from "../../../utils/constants";
 
 interface CustomProps {
   openModal: boolean;
@@ -69,7 +70,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
-        dob: userData?.dob as string,
+        dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
         profile: userData?.profile, // temporary, until sbucket integration
       });
@@ -89,7 +90,15 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   // }, [editMode, id]);
 
   const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddCEODetailsFormInput & { id: string });
+    cb({
+      description: data.description,
+      dob: dateFormat(data.dob),
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      profile: data.profile,
+      qualification: data.qualification,
+      id: editMode ? id : uuidv4(),
+    } as IAddCEODetailsFormInput & { id: string });
     handleClose();
     reset();
   };
@@ -110,7 +119,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
           handleClose();
         }}
       >
-        {editMode ? " Edit CEO's Details" : " Add CEO's Details "}
+        {editMode ? " Edit CEO Details" : " Add CEO Details "}
       </ModalHeader>
       <ModalBody id="ceoDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>

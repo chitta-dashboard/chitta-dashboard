@@ -20,14 +20,6 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const getURL = (id: string) => {
-    let result = Object.values(farmersDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
     setUserId(id);
@@ -75,7 +67,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 </S.HeaderText2>
               </S.HeaderTextContainer>
               <S.UserImgContainer>
-                <img src={getURL(user.id) ? getURL(user.id) : NerkathirUser} alt="nerkathir-user" />
+                <img src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : NerkathirUser} alt="nerkathir-user" />
                 <S.EditBox
                   onClick={(e) => {
                     e.stopPropagation();
