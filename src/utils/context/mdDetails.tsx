@@ -14,11 +14,33 @@ export type mdDetail = {
   id: string;
   name: string;
   phoneNumber: string;
-  qualification: string;
+  qualification?: string;
   profile: string;
   dob: string;
   signature?: string;
   farmerId?: string;
+
+  membershipId?: string;
+  isChecked?: boolean;
+  fatherName?: string;
+  sex?: string;
+  spouseName?: string;
+  group?: string;
+  addhaarNo?: string;
+  surveyNo?: { [key: string]: string };
+  acre?: { [key: string]: string };
+  border?: { [key: string]: string };
+  education?: string;
+  village?: string;
+  postalNo?: string;
+  address?: string;
+  taluk?: string;
+  district?: string;
+  landType?: string;
+  farmerType?: string;
+  waterType?: string;
+  animals?: string;
+  groupMember?: string;
 };
 
 export type selectedMdListData = number | string;
