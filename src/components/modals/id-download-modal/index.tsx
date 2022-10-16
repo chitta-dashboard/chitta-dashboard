@@ -33,7 +33,7 @@ const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {
           handleClose();
         }}
       >
-        Preview ID Card
+        ID Card Preview
       </ModalHeader>
       <ModalBody>
         <IdCardBody ref={idCardRef} data={cardData} />

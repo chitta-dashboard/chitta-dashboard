@@ -31,7 +31,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const [image, setImage] = useState("");
   const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
-  const [open, setOpen] = useState(false);
+  const [idCard, setIdCard] = useState(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   // Tab IconModal Open & Close Handler
@@ -45,6 +45,9 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     setEditData(data);
     confirmModalHandler();
   };
+
+  // ID Card Modal Handler
+  const idCardhandler = () => setIdCard(!idCard);
 
   // Delete Modal Handler
   const deleteModalHandler = () => setDeleteModal(!deleteModal);
@@ -68,14 +71,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
 
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
-  // const generateIdCard = useReactToPrint({
-  //   documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
-  //   content: () => idCardRef.current as HTMLDivElement,
-  //   onAfterPrint() {
-  //     handleClose();
-  //   },
-  // });
-
   const generateFarmerDetailForm = useReactToPrint({
     documentTitle: `Nerkathir_User_Form_${+new Date()}`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,
@@ -90,9 +85,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     user["profile"] = image;
     editFarmerDetail({ ...user });
   };
-
-  //id generate handler
-  const handleClose = () => setOpen(!open);
 
   return (
     <>
@@ -157,7 +149,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
         <S.WebTableCell onClick={(e) => e.stopPropagation()}>
           <S.IconBox>
             <CS.Icon onClick={deleteModalHandler}>delete</CS.Icon>
-            <CS.Icon onClick={handleClose}>id-card</CS.Icon>
+            <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
             <CS.Icon onClick={editFarmerDetailHandler}>edit</CS.Icon>
             <CS.Icon
               onClick={async () => {
@@ -171,16 +163,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
           <FarmersDetailsIconModal
             open={iconModal}
             handleClose={() => setIconModal(false)}
-            handleDelete={() => {
-              setDeleteModal(true);
-            }}
-            handleEdit={() => {
-              setEditMode(true);
-            }}
+            handleDelete={() => setDeleteModal(true)}
+            handleEdit={() => setEditMode(true)}
+            handleIdCard={() => setIdCard(true)}
           />
           <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={user.id} />
-          <IdCardModal openModal={open} handleClose={handleClose} />
-          {/* <IdCardModal openModal={open} handleClose={handleClose} generateIdCard={generateIdCard} /> */}
+          <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
           <DeleteModal
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
