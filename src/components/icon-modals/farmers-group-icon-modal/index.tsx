@@ -1,28 +1,22 @@
-import { FC } from "react";
 import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
-const FoundersModal: FC<CommonModalProps> = (props) => {
-  const { open, handleClose, handleDelete, handleEdit } = props;
+const FarmersGroupIconModal = (props: CommonModalProps) => {
   return (
-    <CommonIconModal open={open} handleClose={handleClose}>
+    <CommonIconModal open={props.open} handleClose={props.handleClose}>
       <S.IconStack direction={"row"}>
         <S.IconBox
           onClick={() => {
-            if (handleDelete) handleDelete();
+            if (props.handleDelete) props.handleDelete();
           }}
         >
           <S.Icon>delete</S.Icon>
           <S.IconText>Delete</S.IconText>
         </S.IconBox>
-        <S.IconBox>
-          <S.Icon>id-card</S.Icon>
-          <S.IconText>ID</S.IconText>
-        </S.IconBox>
         <S.IconBox
           onClick={() => {
-            if (handleEdit) handleEdit();
+            if (props.handleEdit) props.handleEdit();
           }}
         >
           <S.Icon>edit</S.Icon>
@@ -33,4 +27,4 @@ const FoundersModal: FC<CommonModalProps> = (props) => {
   );
 };
 
-export default FoundersModal;
+export default FarmersGroupIconModal;

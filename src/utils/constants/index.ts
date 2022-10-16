@@ -12,19 +12,20 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
 export const DESCENDING = "descending";
-export type SortOrder = typeof ASCENDING | typeof DESCENDING;
+export const NORMAL = "normal";
+export type SortOrder = typeof ASCENDING | typeof DESCENDING | typeof NORMAL;
 
 export const sortObj = <ObjStructure>(
   arr: Array<ObjStructure>,
@@ -33,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -52,6 +53,7 @@ export const sortObj = <ObjStructure>(
         });
       }
       break;
+
     case DESCENDING:
       if (options.asDate) {
         arrClone.sort((a, b) => {
@@ -64,6 +66,11 @@ export const sortObj = <ObjStructure>(
           else return -1;
         });
       }
+      break;
+
+    case NORMAL:
+      // do nothing;
+      break;
   }
 
   return arrClone;
@@ -128,5 +135,13 @@ export const Message = (name: string) => {
     deleteFarmGroup: `new farmer group "${name}" has been removed`,
     addFarmDetail: `New farmer "${name}" has been registered`,
     deleteFarmDetail: `farmer "${name}" has been removed`,
+    addCeoDetails: `New ceo "${name}" has been registered`,
+    deleteCeoDetails: `ceo "${name}" has been removed`,
+    addFoundersDetails: `New founder "${name}" has been registered`,
+    deleteFoundersDetails: `founder "${name}" has been removed`,
   };
+};
+
+export const dateFormat = (mydate?: string) => {
+  return mydate && mydate.split("-").reverse().join("-");
 };

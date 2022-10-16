@@ -1,3 +1,4 @@
+import { FormHelperText } from "@mui/material";
 import { FieldValues, Path, UseFormRegister } from "react-hook-form";
 import S from "./description.styled";
 
@@ -9,14 +10,11 @@ interface CustomProps<FormInputType extends FieldValues> {
 }
 function DescriptionField<FormInputTypes>({ label, register, helperText, inputName }: CustomProps<FormInputTypes & FieldValues>) {
   return (
-    <S.Description
-      label={label}
-      // multiline
-      fullWidth
-      maxRows={3}
-      {...register(inputName as Path<FormInputTypes & FieldValues>)}
-      helperText={helperText}
-    />
+    <S.Container>
+      <S.Label>{label}</S.Label>
+      <S.Description maxRows={3} id="floating" {...register(inputName as Path<FormInputTypes & FieldValues>)} />
+      <FormHelperText>{helperText}</FormHelperText>
+    </S.Container>
   );
 }
 

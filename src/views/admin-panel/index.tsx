@@ -17,13 +17,13 @@ export interface adminFormInputs {
 }
 
 const adminSchema = yup.object().shape({
-  name: yup.string().required("required !"),
-  address: yup.string().required("required !"),
-  coordinatorAddress: yup.string().required("required !"),
-  regNo: yup.string().required("required !"),
-  cinNo: yup.string().required("required !"),
-  membershipPrefix: yup.string().required("required !"),
-  folioPrefix: yup.string().required("required !"),
+  name: yup.string().required("required"),
+  address: yup.string().required("required"),
+  coordinatorAddress: yup.string().required("required"),
+  regNo: yup.string().required("required"),
+  cinNo: yup.string().required("required"),
+  membershipPrefix: yup.string().required("required"),
+  folioPrefix: yup.string().required("required"),
 });
 
 const AdminPanel = () => {

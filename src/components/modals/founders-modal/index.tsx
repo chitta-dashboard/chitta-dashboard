@@ -1,10 +1,10 @@
-import { useForm } from "react-hook-form";
+import { Control, useForm } from "react-hook-form";
 import { Button, Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-import AddProfile from "../../buttons/add-profile-icon-and-button";
+import AddProfile from "../../input-fields/add-profile";
 import FormField from "./body/formField";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -13,6 +13,7 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
 import { useFounderContext } from "../../../utils/context/founders";
+import { dateFormat } from "../../../utils/constants";
 
 interface CustomProps {
   openModal: boolean;
@@ -48,14 +49,18 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     reset,
     setError,
     clearErrors,
     setValue,
+    getValues,
     trigger,
+    control: formControl,
+    unregister,
   } = useForm<IAddCEODetailsFormInput>({
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
 
   useEffect(() => {
@@ -65,7 +70,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
-        dob: userData?.dob as string,
+        dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
         profile: userData?.profile, // temporary, until sbucket integration
       });
@@ -85,7 +90,15 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   // }, [editMode, id]);
 
   const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddCEODetailsFormInput & { id: string });
+    cb({
+      description: data.description,
+      dob: dateFormat(data.dob),
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      profile: data.profile,
+      qualification: data.qualification,
+      id: editMode ? id : uuidv4(),
+    } as IAddCEODetailsFormInput & { id: string });
     handleClose();
     reset();
   };
@@ -106,16 +119,33 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
           handleClose();
         }}
       >
-        {editMode ? " Edit Founder's Details" : " Add Founder's Details "}
+        {editMode ? " Edit Founder Details" : " Add Founder Details "}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
-          <AddProfile setValue={setValue} trigger={trigger} inputName="profile" errors={errors} />
+          <AddProfile<IAddCEODetailsFormInput>
+            inputName="profile"
+            control={formControl as unknown as Control}
+            rules={{
+              required: "required",
+              validate: {
+                fileFormat: (file: File) => {
+                  if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
+                  return fileValidation(file ? file?.name : "") || "expected format: .jpg, .jpeg, .png";
+                },
+              },
+            }}
+            setValue={setValue}
+            getValues={getValues}
+            unregister={unregister}
+            gridArea="prf"
+          />
+
           <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="mdDetails" type="submit">
+        <Button form="mdDetails" type="submit" disabled={!isValid}>
           Submit
         </Button>
       </ModalFooter>

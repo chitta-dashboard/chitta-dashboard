@@ -43,7 +43,7 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
       <S.BodyContainer isheight={seeMore ? 1 : 0} ref={bodyref}>
         {userNotification.map((user) => (
           <S.BodyBox key={user.id}>
-            <S.UserImage alt="userImage" src={user.image} />
+            <S.UserImage alt="Remy Sharp" src={user.image} />
             <S.UserText variant="subtitle1">{user.message}</S.UserText>
           </S.BodyBox>
         ))}

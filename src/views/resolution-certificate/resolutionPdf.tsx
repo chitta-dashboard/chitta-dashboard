@@ -1,24 +1,25 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
 import { useResolutionsProviderContext } from "../../utils/context/resolutions";
-import { S } from "./decision-certificate.styled";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import { S } from "./resolutionCertificate.styled";
 
 interface Props {
-  decisionId?: string;
+  resolutionId?: string;
 }
 
-const DecisionPdf = forwardRef<HTMLDivElement, Props>(({ decisionId }, ref) => {
+const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
   const { resolutions } = useResolutionsProviderContext();
-  const { resolutionId } = useParams();
+  const { resolutionId: resolutionIdFromUrl } = useParams();
+  const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
   return (
     <>
       {Object.values(resolutions)
-        .filter((name) => [resolutionId, decisionId].includes(name.id))
+        .filter((name) => name.id === resolutionId)
         .map((user) => (
-          <S.DecisionCertificateContainer ref={ref} key={user.id}>
-            <S.DecisionCertificateHeader>
+          <S.ResolutionCertificateContainer ref={ref} key={user.id}>
+            <S.ResolutionCertificateHeader>
               <S.NerkathirLogo src={NerkathirLogo} alt="NerkathirLogoGray" />
               <S.HeaderText>
                 நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
@@ -27,7 +28,7 @@ const DecisionPdf = forwardRef<HTMLDivElement, Props>(({ decisionId }, ref) => {
                 REG No:139086 <br />
                 CIN:UO1409TN2020PTC139086
               </S.HeaderSubText>
-            </S.DecisionCertificateHeader>
+            </S.ResolutionCertificateHeader>
             <S.DateContainer>
               <S.FlexLine2>
                 <S.FlexLine>
@@ -66,10 +67,10 @@ const DecisionPdf = forwardRef<HTMLDivElement, Props>(({ decisionId }, ref) => {
                 ))}
               </S.SignatureContainerContent>
             </S.SignatureContainer>
-          </S.DecisionCertificateContainer>
+          </S.ResolutionCertificateContainer>
         ))}
     </>
   );
 });
 
-export default DecisionPdf;
+export default ResolutionPdf;

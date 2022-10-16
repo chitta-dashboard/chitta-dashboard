@@ -4,18 +4,15 @@ import { Box, Button, Typography } from "@mui/material";
 namespace S {
   export const CeoDetailsContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
-    maxHeight: "100%",
+    maxHeight: "fit-content",
     display: "flex",
     flexWrap: "wrap",
     gap: "1.5rem",
-    overflow: "auto",
     [theme.breakpoints.down("xl")]: {
-      justifyContent: "center",
       gap: "1rem",
     },
     [theme.breakpoints.down("lg")]: {
-      justifyContent: "flex-start",
-      gap: "1rem",
+      gap: "0.75rem",
     },
     [theme.breakpoints.down("md")]: {
       justifyContent: "center",
@@ -23,17 +20,20 @@ namespace S {
   }));
 
   export const CeoDetailCard = styled(Box)(({ theme }: any) => ({
+    display: "flex",
+    gap: "1rem",
     backgroundColor: theme.palette.bg.main,
     height: "19.375rem",
-    width: "46.85rem",
+    width: "37.5rem",
     borderRadius: "1.25rem",
     padding: "1.5rem 2rem",
-    display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     [theme.breakpoints.down("lg")]: {
-      height: "15rem",
-      width: "27rem",
+      gap: "0.8125rem",
+      height: "13.125rem",
+      width: "23.75rem",
+      minWidth: "20.625rem",
       padding: "1rem",
     },
   }));
@@ -56,7 +56,6 @@ namespace S {
   export const ProfilePictureBox = styled(Box)({
     borderRadius: "50%",
     height: "100%",
-    width: "5rem",
     position: "relative",
     cursor: "pointer",
     overflow: "hidden",
@@ -112,6 +111,12 @@ namespace S {
     },
   }));
 
+  export const DeleteName = styled("span")(({ theme }: any) => ({
+    fontSize: "1.3125rem",
+    fontWeight: "500",
+    color: theme.palette.text.primary,
+  }));
+
   export const CeoAge = styled(Typography)(({ theme }: any) => ({
     fontSize: "1rem",
     fontWeight: "500",
@@ -148,6 +153,7 @@ namespace S {
   }));
 
   export const CeoDetailDescription = styled(Box)(({ theme }: any) => ({
+    flex: "1",
     fontSize: "1.125rem",
     height: "35%",
     overflow: "auto",
@@ -159,10 +165,32 @@ namespace S {
   }));
 
   export const ButtonContainer = styled(Box)({
+    position: "relative",
     display: "flex",
-    alignSelf: "flex-end",
+    justifyContent: "flex-end",
     gap: "2.3125rem",
+    width: "100%",
   });
+
+  export const SeeMore = styled("span")(({ theme }: any) => ({
+    position: "absolute",
+    left: "0",
+    bottom: "1.25rem",
+    fontSize: "0.8125rem",
+    cursor: "pointer",
+    color: theme.palette.text.primary,
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "0.6875rem",
+    },
+  }));
+  export const SeeLess = styled(Typography)(({ theme }: any) => ({
+    fontSize: "0.8125rem",
+    cursor: "pointer",
+    color: theme.palette.text.primary,
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "0.6875rem",
+    },
+  }));
 
   export const CustomIconContainer = styled("i")(({ theme }: any) => ({
     color: theme.palette.text.primary,

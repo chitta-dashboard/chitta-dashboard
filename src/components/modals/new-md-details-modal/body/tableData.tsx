@@ -1,8 +1,7 @@
-import S from "./tableData.styled";
-import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import MdDetailsTableBody from "./tableBody";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
+import S from "./tableData.styled";
 
 type TableDataPropsType = {
   farmerDetails: farmerDetail[];
@@ -13,10 +12,11 @@ type TableDataPropsType = {
 
 const TableData: FC<TableDataPropsType> = (props) => {
   const { farmerDetails, handleCheckBoxAll, handleCheckBox, selectedFarmerKeys } = props;
+
   return (
     <S.MdDetailsTableContainer>
       <S.MdDetailsTableHeadContainer container>
-        <S.MdDetailsTableCheckBox checked={selectedFarmerKeys.length === Object.values(farmerDetails).length} onChange={handleCheckBoxAll} />
+        <S.MdDetailsTableCheckBox checked={selectedFarmerKeys.length === farmerDetails.length} onChange={handleCheckBoxAll} />
         <S.MdDetailsTableHeadTitle>பெயர்</S.MdDetailsTableHeadTitle>
         <S.MdDetailsTableHeadTitle>கைபேசி என்</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableHeadContainer>

@@ -30,6 +30,7 @@ namespace S {
       margin: "0%",
       fontSize: "0.75rem",
       lineHeight: "1.125rem",
+      fontWeight: "400",
     },
     "& .MuiOutlinedInput-root": {
       "& fieldset": {
