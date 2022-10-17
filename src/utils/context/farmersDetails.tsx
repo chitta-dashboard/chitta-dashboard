@@ -14,6 +14,9 @@ const CHECKBOX_UNSELECT_ALL = "CHECKBOX_UNSELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const GROUP_FILTER = "GROUP_FILTER";
 
+//Group filter value
+export const DEFAULT_GROUP_FILTER = "all";
+
 export type farmerDetail = {
   membershipId?: string;
   profile?: string;
@@ -251,7 +254,7 @@ const initialState: farmerDetailsContextType = {
   checkboxSelectAll: () => {},
   checkboxUnselectAll: () => {},
   checkboxSelect: () => {},
-  groupFilter: "all",
+  groupFilter: DEFAULT_GROUP_FILTER,
   setGroupFilter: () => {},
 };
 

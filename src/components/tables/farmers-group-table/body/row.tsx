@@ -1,14 +1,17 @@
 import React, { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { Message } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
 import FarmersGroupModal from "../../../modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
+import ConfirmationModal from "../../../modals/confirmation-modal";
+// import
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
-import ConfirmationModal from "../../../modals/confirmation-modal";
 
 interface FarmersGroupRowProp {
   user: FarmersGroup;
@@ -17,6 +20,7 @@ interface FarmersGroupRowProp {
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const { editFarmersGroup, deleteFarmersGroup } = useFarmersGroupContext();
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -73,7 +77,9 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
       <S.Cell title="குழு விவரங்கள்">{user.explanation}</S.Cell>
       <S.WebTableCell onClick={(e) => e.stopPropagation()}>
         <S.IconBox>
-          <CS.Icon onClick={deleteModalHandler}>delete</CS.Icon>
+          <CS.Icon onClick={deleteModalHandler} deleteicon={user?.members?.length > 0 ? 1 : 0}>
+            delete
+          </CS.Icon>
           <CS.Icon onClick={editFarmersGroupHandler}>edit</CS.Icon>
         </S.IconBox>
         <FarmersGroupIconModal
@@ -81,6 +87,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           handleClose={() => setIconModal(false)}
           handleDelete={() => setDeleteModal(true)}
           handleEdit={() => setEditMode(true)}
+          deleteicon={user?.members?.length > 0 ? 1 : 0}
         />
         <DeleteModal
           openModal={deleteModal}
@@ -89,6 +96,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
             deleteFarmersGroup(user.id);
             setDeleteModal(false);
             setIconModal(false);
+            addNotification({ id: user.id, message: Message(user.groupName).deleteFarmGroup });
           }}
           deleteMessage={
             <>
@@ -109,7 +117,6 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
             !editMode && deleteFarmersGroup(user.id);
-            console.log(editData);
             editMode && editData && editFarmersGroup(editData);
             setEditMode(false);
             setConfirmModal(false);

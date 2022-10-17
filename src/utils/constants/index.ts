@@ -131,14 +131,14 @@ export const Message = (name: string) => {
   return {
     addMd: `New Md "${name}" has been registered`,
     deleteMd: `Md "${name}" has been removed`,
-    addFarmGroup: `new farmer group "${name}" has been registered`,
-    deleteFarmGroup: `new farmer group "${name}" has been removed`,
-    addFarmDetail: `New farmer "${name}" has been registered`,
-    deleteFarmDetail: `farmer "${name}" has been removed`,
+    addFarmGroup: `New Farmer group "${name}" has been registered`,
+    deleteFarmGroup: `Farmer group "${name}" has been removed`,
+    addFarmDetail: `New Farmer "${name}" has been registered`,
+    deleteFarmDetail: `Farmer "${name}" has been removed`,
     addCeoDetails: `New ceo "${name}" has been registered`,
     deleteCeoDetails: `ceo "${name}" has been removed`,
-    addFoundersDetails: `New founder "${name}" has been registered`,
-    deleteFoundersDetails: `founder "${name}" has been removed`,
+    addFoundersDetails: `New Founder "${name}" has been registered`,
+    deleteFoundersDetails: `Founder "${name}" has been removed`,
   };
 };
 
