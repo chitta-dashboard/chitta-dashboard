@@ -118,9 +118,15 @@ const CeoDetailsCard = ({ user }: Props) => {
             </S.CeoDataRight>
           </S.CeoDetailData>
         )}
-        <S.CeoDetailDescription>{user.description}</S.CeoDetailDescription>
+        {!cardExpand && <S.CeoDetailDescription>{user.description}...</S.CeoDetailDescription>}
+        {cardExpand && (
+          <S.CeoDetailDescription>
+            {user.description.split(" ").splice(0, 19).join(" ")}
+            {user.description.split(" ").length > 19 ? "..." : ""}
+          </S.CeoDetailDescription>
+        )}
         <S.ButtonContainer>
-          {cardExpand && (
+          {cardExpand && user.description.split(" ").length > 19 && (
             <S.SeeMore
               onClick={() => {
                 setCardExpand(false);

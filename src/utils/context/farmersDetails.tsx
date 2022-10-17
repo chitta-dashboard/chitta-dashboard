@@ -96,6 +96,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "2": {
       id: "2",
@@ -123,6 +124,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "3": {
       id: "3",
@@ -150,6 +152,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "4": {
       id: "4",
@@ -177,6 +180,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "5": {
       id: "5",
@@ -204,6 +208,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "6": {
       id: "6",
@@ -231,6 +236,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
   },
   searchFilter: "",
