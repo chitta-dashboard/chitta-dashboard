@@ -46,11 +46,24 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
     unregister: formUnregister,
     getValues: formGetValues,
     control: formControl,
-    formState: { isValid },
+    watch,
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
-    mode: "onChange",
   });
+
+  // for enabling the submit button
+  const groupNameEvent = watch("groupName");
+  const explanationEvent = watch("explanation");
+  const chairmanEvent = watch("chairman");
+  const treasurerEvent = watch("treasurer");
+  const secretaryEvent = watch("secretary");
+  let enableButton = true;
+
+  if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
+    enableButton = false;
+  } else {
+    enableButton = true;
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -112,7 +125,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
       </ModalBody>
 
       <ModalFooter>
-        <Button form="farmersGroup" type="submit" disabled={!isValid}>
+        <Button form="farmersGroup" type="submit" disabled={enableButton}>
           Submit
         </Button>
       </ModalFooter>

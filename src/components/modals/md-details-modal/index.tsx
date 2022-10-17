@@ -26,7 +26,10 @@ interface CustomProps {
 const schema = yup
   .object({
     name: yup.string().required("required"),
-    phoneNumber: yup.string().required("required"),
+    phoneNumber: yup
+      .string()
+      .required("required")
+      .matches(/^\d{10}$/, "10 digits expected"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
     signature: yup
@@ -58,7 +61,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
     setError,
     clearErrors,
@@ -67,10 +70,24 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     trigger,
     unregister,
     control: formControl,
+    watch,
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
-    mode: "onChange",
   });
+
+  // enabling submit button
+
+  let enableButton = true;
+  const nameEvent = watch("name");
+  const phoneNumberEvent = watch("phoneNumber");
+  const qualificationEvent = watch("qualification");
+  const dobEvent = watch("dob");
+  const signatureEvent = watch("signature");
+  const profileEvent = watch("profile");
+
+  if (nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && signatureEvent && profileEvent) {
+    enableButton = false;
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -154,7 +171,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="mdDetails" type="submit" disabled={!isValid}>
+        <Button form="mdDetails" type="submit" disabled={enableButton}>
           Submit
         </Button>
       </ModalFooter>

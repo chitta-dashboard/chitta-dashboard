@@ -11,7 +11,8 @@ namespace S {
       width: "10rem",
     },
     "& .Mui-disabled": {
-      backgroundColor: theme.palette.bg.dark,
+      // backgroundColor: theme.palette.text.secondaryLight,
+      backgroundColor: " #B3B3B3",
     },
   }));
 }
