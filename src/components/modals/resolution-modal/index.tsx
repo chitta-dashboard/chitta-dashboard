@@ -20,13 +20,19 @@ interface CustomProps {
 }
 
 const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
-  const {
-    handleSubmit,
-    setValue,
-    trigger,
-    control,
-    formState: { isValid },
-  } = useForm<IResolutionFormInput>({ mode: "onChange" });
+  const { handleSubmit, setValue, trigger, control, watch } = useForm<IResolutionFormInput>({});
+
+  // enabling submit button
+
+  let enableButton = true;
+  const groupNameEvent = watch("groupName");
+  const groupTitleEvent = watch("resolutionHeading");
+  const groupDescriptionEvent = watch("description");
+  const groupDescriptionRichText = watch("descriptionRichText");
+
+  if (groupNameEvent && groupTitleEvent && groupDescriptionEvent && groupDescriptionRichText) {
+    enableButton = false;
+  }
 
   const onSubmit: any = (data: IResolutionFormInput) => {
     cb({
@@ -56,7 +62,7 @@ const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode
         </ModalBody>
 
         <ModalFooter>
-          <Button form="resolution-form" type="submit" disabled={!isValid}>
+          <Button form="resolution-form" type="submit" disabled={enableButton}>
             Submit
           </Button>
         </ModalFooter>
