@@ -28,9 +28,9 @@ export type FarmersGroup = {
   members: string[];
 };
 
-interface GroupMembers {
-  id: string;
-  group: string;
+interface IAddGroupMembers {
+  id?: string;
+  group?: string;
 }
 
 type Props = {
@@ -47,8 +47,8 @@ interface farmersGroupContextType {
   addFarmersGroup: (data: FarmersGroup) => void;
   editFarmersGroup: (data: FarmersGroup) => void;
   deleteFarmersGroup: (id: string) => void;
-  addGroupMember: (data: GroupMembers) => void;
-  removeGroupMember: (data: GroupMembers) => void;
+  addGroupMember: (data: IAddGroupMembers) => void;
+  removeGroupMember: (groupMemberId: string) => void;
   setMemberFilter: (value: number) => void;
 }
 
@@ -108,52 +108,21 @@ const reducer = (state: farmersGroupContextType, action: any) => {
       return { ...state, farmersGroupById: { ...state.farmersGroupById } };
 
     case ADD_GROUP_MEMBER:
-      // let removeIndex: any = {
-      //   id: "",
-      //   mem: [],
-      // };
-      // const removeMember = Object.values(state.farmersGroupById).map((list) => list.members);
-      // removeMember.map((person, i) => {
-      //   person.filter((list) => {
-      //     if (list.includes(action.payload.id)) {
-      //       removeIndex["id"] = list;
-      //       removeIndex["mem"] = person.filter((per) => per !== action.payload.id);
-      //     }
-      //   });
-      // });
-      // console.log("removeIndex", removeIndex);
-      // // console.log("Test Id : ", testId);
-      // // console.log("revMember", state.farmersGroupById[removeIndex["id"]]);
-      // if (removeIndex.id !== "") {
-      //   return {
-      //     ...state,
-      //     farmersGroupById: {
-      //       ...(state.farmersGroupById[removeIndex["id"]].members = removeIndex["mem"]),
-      //     },
-      //   };
-      // }
-      console.log(action.payload, action.payload);
-      const addMember = Object.values(state.farmersGroupById).filter((list) => list.groupName === action.payload.group);
-      console.log("addMember", addMember);
-      let data = !addMember[0].members.includes(action.payload.id) ? [...addMember[0].members, action.payload.id] : [...addMember[0].members];
-      addMember[0].members = data;
+      const farmersGroupList = Object.values(state.farmersGroupById);
+      const groupIndex = farmersGroupList.findIndex((list) => list.groupName === action.payload.group);
+      if (groupIndex >= 0) {
+        // This condition is to avoid one more extra count in the members groups.
+        !farmersGroupList[groupIndex].members.includes(action.payload.id) && farmersGroupList[groupIndex].members.push(action.payload.id);
+        return { ...state };
+      }
       return { ...state };
 
     case REMOVE_GROUP_MEMBER:
-      let removeMember = action.payload.id; //user id from the
-      console.log(typeof action.payload.id, "action.payload.id");
-      // let farmersGroup = Object.values(state.farmersGroupById)
-      // let removeMember = "1"; //user id from the
-      // console.log("before", farmersGroupById);
-      let removeMemberIndex = Object.values(state.farmersGroupById)
+      const removeMemberIndex = Object.values(state.farmersGroupById)
         .map((farmersGroup) => farmersGroup.members)
-        .findIndex((arr) => arr.includes(removeMember));
-      console.log("removeMemberIndex", removeMemberIndex);
+        .findIndex((arr) => arr.includes(action.payload));
       if (removeMemberIndex !== -1) {
-        const updatedMember = Object.values(state.farmersGroupById)[removeMemberIndex].members.filter((member) => member !== removeMember);
-        console.log("updatedMember", updatedMember);
-        console.log("if", removeMemberIndex);
-        // console.log("final farmerlist", (Object.values(state.farmersGroupById)[removeMemberIndex].members = updatedMember));
+        const updatedMember = Object.values(state.farmersGroupById)[removeMemberIndex]["members"].filter((member) => member !== action.payload);
         return {
           ...state,
           farmersGroupById: {
@@ -161,36 +130,6 @@ const reducer = (state: farmersGroupContextType, action: any) => {
           },
         };
       }
-      // let out2 = Object.values(farmersGroupById)[out].members.filter((id) => id !== newMember);
-      //
-      // Object.values(farmersGroupById)[out].members = out2;
-
-      // -------------------------------------------------------- OLD ----------------------------
-      // console.log("test",test)
-      // let removeIndex: any = {
-      //   id: "",
-      //   mem: [],
-      // };
-      // const removeMember = Object.values(state.farmersGroupById).map((list) => list.members);
-      // removeMember.map((person) => {
-      //   person.filter((list) => {
-      //     if (list.includes(action.payload.id)) {
-      //       removeIndex["id"] = list;
-      //       removeIndex["mem"] = person.filter((per) => per !== action.payload.id);
-      //     }
-      //   });
-      // });
-      // console.log("removeIndex", removeIndex);
-      // // console.log("Test Id : ", testId);
-      // console.log("revMember", removeIndex["id"] && state.farmersGroupById.removeIndex.id);
-      // if (removeIndex.id !== "") {
-      //   return {
-      //     ...state,
-      //     farmersGroupById: {
-      //       ...(state.farmersGroupById[removeIndex["id"]].members = removeIndex["mem"]),
-      //     },
-      //   };
-      // }
       return { ...state };
 
     case MEMBER_FILTER:
@@ -225,11 +164,11 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
     dispatch({ type: DELETE_FARMERS_GROUP, payload: id });
   };
 
-  const addGroupMember = (data: GroupMembers) => {
+  const addGroupMember = (data: IAddGroupMembers) => {
     dispatch({ type: ADD_GROUP_MEMBER, payload: data });
   };
-  const removeGroupMember = (data: GroupMembers) => {
-    dispatch({ type: REMOVE_GROUP_MEMBER, payload: data });
+  const removeGroupMember = (groupMemberId: string) => {
+    dispatch({ type: REMOVE_GROUP_MEMBER, payload: groupMemberId });
   };
 
   const setMemberFilter = (value: number) => {
