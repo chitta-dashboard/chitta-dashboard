@@ -5,7 +5,7 @@ namespace S {
     fontSize: "1.75rem",
     color: isColor ? "none" : theme.palette.text.primary,
     [theme.breakpoints.down("md")]: {
-      fontSize: "1.25rem",
+      fontSize: isColor ? "1.75rem" : "1.25rem",
     },
   }));
 }

@@ -32,9 +32,25 @@ const AdminPanel = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<adminFormInputs>({
     resolver: yupResolver(adminSchema),
   });
+
+  // enabling submit button
+
+  let enableButton = true;
+  const addressEvent = watch("address");
+  const cinNoEvent = watch("cinNo");
+  const coordinatorAddressEvent = watch("coordinatorAddress");
+  const folioPrefixEvent = watch("folioPrefix");
+  const membershipPrefixEvent = watch("membershipPrefix");
+  const nameEvent = watch("name");
+  const regNoEvent = watch("regNo");
+
+  if (addressEvent && cinNoEvent && coordinatorAddressEvent && folioPrefixEvent && membershipPrefixEvent && nameEvent && regNoEvent) {
+    enableButton = false;
+  }
 
   const onSubmit = (data: adminFormInputs) => {
     reset();
@@ -46,11 +62,11 @@ const AdminPanel = () => {
       <S.ContainerBox>
         <S.Adminform id="adminForm" onSubmit={handleSubmit(onSubmit)}>
           <S.ContainerStack>
-            <AdminLogo />
+            <AdminLogo/>
             <ProfileInformation register={register} errors={errors} />
             <IdInformation register={register} errors={errors} />
             <S.ButtonBox>
-              <S.UpdateButton form="adminForm" type="submit">
+              <S.UpdateButton form="adminForm" type="submit" disabled={enableButton}>
                 Update
               </S.UpdateButton>
             </S.ButtonBox>

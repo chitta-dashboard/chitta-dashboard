@@ -1,5 +1,4 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //Action type
 const ADD_NOTIFICATION = "ADD_NOTIFICATION";
@@ -29,13 +28,7 @@ const initialState: IContextType = {
   logout: () => {},
   clearNotification: () => {},
   addNotification: () => {},
-  userNotification: [
-    { id: "100", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "101", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "102", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "103", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "104", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-  ],
+  userNotification: [],
 };
 
 // Reducer function
