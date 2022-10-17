@@ -75,64 +75,56 @@ const CeoDetailsCard = ({ user }: Props) => {
   return (
     <>
       <S.CeoDetailCard>
-        {!cardExpand && (
-          <S.SeeLess
-            onClick={() => {
-              setCardExpand(true);
-            }}
-          >
-            See less...
-          </S.SeeLess>
-        )}
-        {cardExpand && (
-          <S.CeoDetailData>
-            <S.CeoDataLeft>
-              <S.ProfilePictureBox>
-                <S.CeoProfilePicture src={ceoDetailsById[user.id].profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
-                <S.EditBox
-                  onClick={() => {
-                    handleIconClick();
-                  }}
-                >
-                  <S.EditIcon>edit</S.EditIcon>
-                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-                </S.EditBox>
-              </S.ProfilePictureBox>
-              <S.CeoData>
-                <S.CeoName>{user.name}</S.CeoName>
-                <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
-                <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
-              </S.CeoData>
-            </S.CeoDataLeft>
-            <S.CeoDataRight>
-              <S.CeoData>
-                <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-                <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-                <S.CeoInfo>தகுதி:</S.CeoInfo>
-              </S.CeoData>
-              <S.CeoData>
-                <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
-                <S.CeoInfo>{user.dob}</S.CeoInfo>
-                <S.CeoInfo>{user.qualification}</S.CeoInfo>
-              </S.CeoData>
-            </S.CeoDataRight>
-          </S.CeoDetailData>
-        )}
-        {!cardExpand && <S.CeoDetailDescription>{user.description}...</S.CeoDetailDescription>}
-        {cardExpand && (
-          <S.CeoDetailDescription>
-            {user.description.split(" ").splice(0, 19).join(" ")}
-            {user.description.split(" ").length > 19 ? "..." : ""}
-          </S.CeoDetailDescription>
-        )}
+        <S.CeoDetailData>
+          <S.CeoDataLeft>
+            <S.ProfilePictureBox>
+              <S.CeoProfilePicture src={ceoDetailsById[user.id].profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
+              <S.EditBox
+                onClick={() => {
+                  handleIconClick();
+                }}
+              >
+                <S.EditIcon>edit</S.EditIcon>
+                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+              </S.EditBox>
+            </S.ProfilePictureBox>
+            <S.CeoData>
+              <S.CeoName>{user.name}</S.CeoName>
+              <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
+              <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
+            </S.CeoData>
+          </S.CeoDataLeft>
+          <S.CeoDataRight>
+            <S.CeoData>
+              <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
+              <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
+              <S.CeoInfo>தகுதி:</S.CeoInfo>
+            </S.CeoData>
+            <S.CeoData>
+              <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
+              <S.CeoInfo>{user.dob}</S.CeoInfo>
+              <S.CeoInfo>{user.qualification}</S.CeoInfo>
+            </S.CeoData>
+          </S.CeoDataRight>
+        </S.CeoDetailData>
+        <S.CeoDetailDescription cardexpand={cardExpand.toString()}>
+          {cardExpand ? (
+            <>
+              {user.description.split(" ").splice(0, 19).join(" ")}
+              {user.description.split(" ").length > 19 ? "..." : ""}
+            </>
+          ) : (
+            user.description
+          )}
+        </S.CeoDetailDescription>
         <S.ButtonContainer>
-          {cardExpand && user.description.split(" ").length > 19 && (
+          {user.description.split(" ").length > 19 && (
             <S.SeeMore
               onClick={() => {
-                setCardExpand(false);
+                setCardExpand(!cardExpand);
               }}
             >
-              See More...
+              {cardExpand ? "See More..." : "See Less..."}
             </S.SeeMore>
           )}
           <S.CustomIconContainer
