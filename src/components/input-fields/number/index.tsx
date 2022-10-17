@@ -11,6 +11,7 @@ function NumberInput<FormInputTypes>({ label, register, helperText, inputName }:
   return (
     <S.InputNumber
       label={label}
+      type="number"
       {...register(inputName as Path<FormInputTypes & FieldValues>)}
       helperText={helperText}
       inputProps={{ noValidate: true }}

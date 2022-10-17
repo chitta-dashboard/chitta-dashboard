@@ -21,24 +21,29 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, setEr
   return (
     <S.InputContainer spacing={3}>
       <Stack>
-        <TextInput<IAddCEODetailsFormInput> label="பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
+        <TextInput<IAddCEODetailsFormInput> label="பெயர் *" register={register} inputName="name" helperText={errors.name?.message} />
       </Stack>
       <Stack direction={"row"} spacing={2}>
-        <DateInput<IAddCEODetailsFormInput> label="பிறந்த தேதி" register={register} inputName="dob" helperText={errors.dob?.message} />
+        <DateInput<IAddCEODetailsFormInput> label="பிறந்த தேதி *" register={register} inputName="dob" helperText={errors.dob?.message} />
         <NumberInput<IAddCEODetailsFormInput>
-          label="கைபேசி எண்"
+          label="கைபேசி எண் *"
           register={register}
           inputName="phoneNumber"
           helperText={errors.phoneNumber?.message}
         />
       </Stack>
       <Stack>
-        <TextInput<IAddCEODetailsFormInput> label="தகுதி" register={register} inputName="qualification" helperText={errors.qualification?.message} />
+        <TextInput<IAddCEODetailsFormInput>
+          label="தகுதி *"
+          register={register}
+          inputName="qualification"
+          helperText={errors.qualification?.message}
+        />
       </Stack>
 
       <Stack>
         <DescriptionField<IAddCEODetailsFormInput>
-          label="சுயவிவரம்"
+          label="சுயவிவரம் *"
           register={register}
           inputName="description"
           helperText={errors.description?.message}
