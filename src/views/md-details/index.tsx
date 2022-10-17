@@ -70,15 +70,16 @@ const MdDetails = () => {
 
   const handleYesAction = () => {
     let farmerData: { [id: string]: mdDetail } = {};
-    selectedKeys.map((item) => {
+    selectedKeys.map((item:string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: mdDetail = {} as mdDetail;
-      let farmerKeys = ["name", "phoneNumber", "profile", "dob", "name"];
+      let farmerKeys = Object.keys(farmersDetailsById[item]);
       farmerDetailsResult.id = generatedId;
       farmerDetailsResult.farmerId = farmersDetailsById[item].id;
-      farmerDetailsResult.qualification = farmersDetailsById[item].education;
       farmerKeys.map((key) => {
-        farmerDetailsResult[key as keyof mdDetail] = farmersDetailsById[item][key as keyof farmerDetail] as string;
+        if (key !== "id") {
+          farmerDetailsResult[key as keyof mdDetail] = farmersDetailsById[item][key as keyof farmerDetail] as never;
+        }
       });
       farmerData[generatedId] = farmerDetailsResult;
 

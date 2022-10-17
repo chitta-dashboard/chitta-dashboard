@@ -191,7 +191,6 @@ const reducer = (state: farmersGroupContextType, action: any) => {
       //     },
       //   };
       // }
-      console.log("state");
       return { ...state };
 
     case MEMBER_FILTER:

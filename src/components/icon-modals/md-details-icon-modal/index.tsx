@@ -9,11 +9,7 @@ const MdDetailsIconModal: FC<CommonModalProps> = ({ ...props }) => {
   return (
     <CommonIconModal open={open} handleClose={handleClose}>
       <S.IconStack direction={"row"}>
-        <S.IconBox onClick={handleDelete}>
-          <S.Icon>delete</S.Icon>
-          <S.IconText>Delete</S.IconText>
-        </S.IconBox>
-        <S.IconBox onClick={handleIdCard}>
+        <S.IconBox>
           <S.Icon>id-card</S.Icon>
           <S.IconText>ID</S.IconText>
         </S.IconBox>
