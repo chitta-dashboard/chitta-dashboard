@@ -8,6 +8,7 @@ import S from "./body.styled";
 
 const Body = () => {
   const { mdDetailsById: listData, searchFilter, sortFilter } = useMdDetailsContext();
+
   const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
   const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
   const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));

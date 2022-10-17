@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -135,5 +135,13 @@ export const Message = (name: string) => {
     deleteFarmGroup: `new farmer group "${name}" has been removed`,
     addFarmDetail: `New farmer "${name}" has been registered`,
     deleteFarmDetail: `farmer "${name}" has been removed`,
+    addCeoDetails: `New ceo "${name}" has been registered`,
+    deleteCeoDetails: `ceo "${name}" has been removed`,
+    addFoundersDetails: `New founder "${name}" has been registered`,
+    deleteFoundersDetails: `founder "${name}" has been removed`,
   };
+};
+
+export const dateFormat = (mydate?: string) => {
+  return mydate && mydate.split("-").reverse().join("-");
 };

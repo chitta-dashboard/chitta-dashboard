@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, Popover, styled, Typography } from "@mui/material";
 
 namespace S {
   export const FarmersGroupContainer = styled(Box)(({ theme }) => ({
@@ -12,12 +12,17 @@ namespace S {
     },
   }));
 
-  export const Items = styled(Typography)(({ theme }) => ({
+  export const Pop = styled(Popover)(({ theme }) => ({
+    margin: "0.5rem  -0.2rem",
+  }));
+
+  export const Items = styled(Typography)<{ selectfilter: number }>(({ theme, selectfilter }) => ({
+    cursor: "pointer",
     textAlign: "center",
     padding: "0.6rem 1rem",
     borderBottom: `0.1rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
-    color: theme.palette.text.secondaryLight,
-    cursor: "pointer",
+    color: selectfilter ? theme.palette.text.secondaryDark : theme.palette.text.secondaryLight,
+    backgroundColor: selectfilter ? theme.palette.bg.light : "",
     "&:hover": {
       backgroundColor: theme.palette.bg.light,
       color: theme.palette.text.secondaryDark,

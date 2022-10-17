@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Popover } from "@mui/material";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
@@ -7,7 +6,7 @@ import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
-  const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, setMemberFilter } = useFarmersGroupContext();
+  const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
@@ -51,7 +50,7 @@ const FarmersGroup = () => {
       </S.FarmersGroupContainer>
       <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
 
-      <Popover
+      <S.Pop
         open={membersFilterPop}
         anchorEl={anchor}
         onClose={() => setMemberFilterPop(false)}
@@ -65,11 +64,11 @@ const FarmersGroup = () => {
         }}
       >
         {groupMembersFilter.map((data) => (
-          <S.Items onClick={() => setMemberHandler(data.value)} key={data.id}>
+          <S.Items onClick={() => setMemberHandler(data.value)} key={data.id} selectfilter={data.value === memberFilter ? 1 : 0}>
             {data.label}
           </S.Items>
         ))}
-      </Popover>
+      </S.Pop>
     </>
   );
 };

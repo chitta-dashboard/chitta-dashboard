@@ -1,9 +1,11 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { fileValidation } from "../../../../utils/constants";
-import MdDetailModal from "../../../icon-modals/md-detail-modal";
+import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import MdDetailsModal from "../../../modals/md-details-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
@@ -21,43 +23,37 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<mdDetail>();
+  const [idCard, setIdCard] = useState(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const navigate = useNavigate();
 
   // Tab IconModal Open & Close Handler
-  const iconModalHandler = () => {
-    setIconModal(!iconModal);
-  };
+  const iconModalHandler = () => setIconModal(!iconModal);
 
   //Edit MdDetail Handler
-  const editMdDetailHandler = () => {
-    setEditMode(!editMode);
-  };
+  const editMdDetailHandler = () => setEditMode(!editMode);
 
   //Update MdDetail Handler
   const updateMdDetail = (data: mdDetail) => {
     setEditData(data);
-    confirmHandler();
+    confirmModalHandler();
   };
+
+  // ID Card Modal Handler
+  const idCardhandler = () => setIdCard(!idCard);
 
   // Delete ModalHandler
-  const deleteModalHandler = () => {
-    setDeleteModal(!deleteModal);
-  };
+  const deleteModalHandler = () => setDeleteModal(!deleteModal);
 
-  // confirm Handler
-  const confirmHandler = () => {
-    setConfirmModal(!confirmModal);
-  };
-
-  const getURL = (data: mdDetail) => {
-    return data["profile"];
-  };
+  // confirm Modal Handler
+  const confirmModalHandler = () => setConfirmModal(!confirmModal);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+
     return false;
   };
 
@@ -67,9 +63,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     element.value = "";
   };
 
-  const handleIconClick = (id: string) => {
-    hiddenFileInput && hiddenFileInput.current.click();
-  };
+  const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
@@ -77,65 +71,60 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     editMdDetail({ ...user });
   };
 
+  const NavigateToMdDetailForm = (mdId: string) => {
+    navigate(`/md-details/${mdId}`);
+  };
+
   return (
-    <>
-      <TableRow key={user.id}>
-        <S.TabCell>
-          <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
-        </S.TabCell>
-        <S.Cell title="பெயர்">
-          <S.NameStack>
-            <S.AvatarBox>
-              <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
-              <S.EditBox onClick={() => handleIconClick(user.id)}>
-                <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-              </S.EditBox>
-            </S.AvatarBox>
-            {user.name}
-          </S.NameStack>
-        </S.Cell>
-        <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
-        <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
-        <S.Cell title="தகுதி">{user.qualification}</S.Cell>
-        <S.WebTableCell>
-          <S.IconBox>
-            <CS.Icon onClick={deleteModalHandler}>delete</CS.Icon>
-            <CS.Icon>id-card</CS.Icon>
-            <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
-            <S.Toggle checked={!!user.id} onChange={confirmHandler} />
-          </S.IconBox>
-        </S.WebTableCell>
-        <MdDetailModal
+    <TableRow onClick={() => NavigateToMdDetailForm(user.id)}>
+      <S.TabCell
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
+      </S.TabCell>
+      <S.Cell title="பெயர்">
+        <S.NameStack
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        >
+          <S.AvatarBox>
+            <S.AvatarImg alt="User-img" src={user.profile ? user.profile : userPic} />
+            <S.EditBox onClick={handleIconClick}>
+              <S.EditIcon>edit</S.EditIcon>
+              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+            </S.EditBox>
+          </S.AvatarBox>
+          {user.name}
+        </S.NameStack>
+      </S.Cell>
+      <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
+      <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
+      <S.Cell title="தகுதி">{user.qualification}</S.Cell>
+      <S.WebTableCell
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
+        <S.IconBox>
+          <CS.Icon>id-card</CS.Icon>
+          <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
+          <S.Toggle checked={!!user.id} onChange={confirmModalHandler} />
+        </S.IconBox>
+        {/* </S.WebTableCell> */}
+        <MdDetailsIconModal
           open={iconModal}
           handleClose={() => setIconModal(false)}
-          handleDelete={() => {
-            setDeleteModal(true);
-          }}
-          handleEdit={() => {
-            setEditMode(true);
-          }}
+          handleDelete={() => setDeleteModal(true)}
+          handleEdit={() => setEditMode(true)}
           check={user.id}
-          handleConfirm={() => {
-            setConfirmModal(true);
-          }}
-        />
-
-        <DeleteModal
-          openModal={deleteModal}
-          handleClose={() => setDeleteModal(false)}
-          handleDelete={() => {
-            deleteMdDetail(user.id);
-            setDeleteModal(false);
-            setIconModal(false);
-          }}
-          deleteMessage={
-            <>
-              Do you want to remove <CS.Bold>{user.name}</CS.Bold> from MD Details?
-            </>
-          }
+          handleConfirm={() => setConfirmModal(true)}
+          handleIdCard={() => setIdCard(true)}
         />
         <MdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
@@ -154,13 +143,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             )
           }
         />
-        {image && (
-          <td>
-            <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-          </td>
-        )}
-      </TableRow>
-    </>
+        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
+      </S.WebTableCell>
+    </TableRow>
   );
 };
 

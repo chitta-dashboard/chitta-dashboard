@@ -12,9 +12,11 @@ namespace S {
       fontSize: "0.9rem",
       padding: "0.6rem 1.5rem",
     },
-    "& .css-6hp17o-MuiList-root-MuiMenu-list": {
-      padding: "0% !important",
-    },
+
+    // "& .css-fvo6vx-MuiButtonBase-root-MuiMenuItem-root.Mui-selected": {
+    //   /* background-color: rgba(48, 111, 84, 0.08); */
+    //   backgroundColor: "blue !important",
+    // },
     [theme.breakpoints.down("lg")]: {
       width: "96%",
     },
@@ -23,12 +25,17 @@ namespace S {
     },
   }));
 
-  export const Option = styled(MenuItem)(({ theme }) => ({
-    backgroundColor: theme.palette.bg.main,
-    color: theme.palette.text.primary,
+  export const Option = styled(MenuItem)<{ selectfilter?: number }>(({ theme, selectfilter }) => ({
     textAlign: "center",
     padding: "0.5rem 1rem",
+    backgroundColor: selectfilter ? "red" : theme.palette.bg.main,
+    color: theme.palette.text.primary,
     borderBottom: `0.1rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
+
+    // "&.css-fvo6vx-MuiButtonBase-root-MuiMenuItem-root.Mui-selected": {
+    //   backgroundColor: "red",
+    //   // backgroundColor: "none !important",
+    // },
     "&:hover": {
       backgroundColor: theme.palette.bg.light,
       color: theme.palette.text.secondaryDark,

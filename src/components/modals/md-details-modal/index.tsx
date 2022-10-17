@@ -14,6 +14,7 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { fileValidation } from "../../../utils/constants";
+import { dateFormat } from "../../../utils/constants";
 
 interface CustomProps {
   openModal: boolean;
@@ -25,7 +26,10 @@ interface CustomProps {
 const schema = yup
   .object({
     name: yup.string().required("required"),
-    phoneNumber: yup.string().required("required"),
+    phoneNumber: yup
+      .string()
+      .required("required")
+      .matches(/^\d{10}$/, "10 digits expected"),
     qualification: yup.string().required("required"),
     dob: yup.string().required("required"),
     signature: yup
@@ -57,7 +61,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     reset,
     setError,
     clearErrors,
@@ -66,10 +70,24 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
     trigger,
     unregister,
     control: formControl,
+    watch,
   } = useForm<IAddMDDetailsFormInput>({
     resolver: yupResolver(schema),
-    mode: "onChange",
   });
+
+  // enabling submit button
+
+  let enableButton = true;
+  const nameEvent = watch("name");
+  const phoneNumberEvent = watch("phoneNumber");
+  const qualificationEvent = watch("qualification");
+  const dobEvent = watch("dob");
+  const signatureEvent = watch("signature");
+  const profileEvent = watch("profile");
+
+  if (nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && signatureEvent && profileEvent) {
+    enableButton = false;
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -78,9 +96,9 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
-        dob: userData?.dob as string,
-        signature: userData?.signature, // temporary, until sbucket integration
-        profile: userData?.profile, // temporary, wuntil sbucket integration
+        dob: dateFormat(userData?.dob) as string,
+        signature: "", // temporary, until sbucket integration
+        profile: "", // temporary, until sbucket integration
       });
     }
 
@@ -98,7 +116,15 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   // }, [editMode, id]);
 
   const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
-    cb({ ...data, id: editMode ? id : uuidv4() } as IAddMDDetailsFormInput & { id: string });
+    cb({
+      name: data.name,
+      phoneNumber: data.phoneNumber,
+      qualification: data.qualification,
+      dob: dateFormat(data.dob),
+      signature: data.signature,
+      profile: data.profile,
+      id: editMode ? id : uuidv4(),
+    } as IAddMDDetailsFormInput & { id: string });
     // handleClose();
     // reset();
   };
@@ -119,7 +145,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
           handleClose();
         }}
       >
-        Add MD Details
+        {editMode ? "Edit MD Details" : "Add MD Details"}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={4}>
@@ -145,7 +171,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         </Stack>
       </ModalBody>
       <ModalFooter>
-        <Button form="mdDetails" type="submit" disabled={!isValid}>
+        <Button form="mdDetails" type="submit" disabled={enableButton}>
           Submit
         </Button>
       </ModalFooter>

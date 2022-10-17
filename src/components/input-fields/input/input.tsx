@@ -3,6 +3,7 @@ import { FormHelperText, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup,
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
+import { dateFormat } from "../../../utils/constants";
 
 interface InputProps extends UseControllerProps {
   type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete";
@@ -36,7 +37,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               value={field.value}
               ref={field.ref}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                field.onChange(e.target.value);
+                field.onChange(dateFormat(e.target.value));
                 onChange && onChange(e);
               }}
               onBlur={field.onBlur}

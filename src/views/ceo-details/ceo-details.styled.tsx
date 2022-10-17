@@ -4,18 +4,15 @@ import { Box, Button, Typography } from "@mui/material";
 namespace S {
   export const CeoDetailsContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
-    maxHeight: "100%",
+    maxHeight: "fit-content",
     display: "flex",
     flexWrap: "wrap",
     gap: "1.5rem",
-    overflow: "auto",
     [theme.breakpoints.down("xl")]: {
-      justifyContent: "center",
       gap: "1rem",
     },
     [theme.breakpoints.down("lg")]: {
-      justifyContent: "flex-start",
-      gap: "1rem",
+      gap: "0.75rem",
     },
     [theme.breakpoints.down("md")]: {
       justifyContent: "center",
@@ -26,15 +23,18 @@ namespace S {
     display: "flex",
     gap: "1rem",
     backgroundColor: theme.palette.bg.main,
-    height: "19.375rem",
-    width: "46.85rem",
+    height: "fit-content",
+    minHeight: "17rem",
+    width: "37.5rem",
     borderRadius: "1.25rem",
     padding: "1.5rem 2rem",
     flexDirection: "column",
     justifyContent: "space-between",
     [theme.breakpoints.down("lg")]: {
-      height: "15rem",
-      width: "27rem",
+      gap: "0.75rem",
+      minHeight: "13.125rem",
+      width: "23.75rem",
+      minWidth: "20.625rem",
       padding: "1rem",
     },
   }));
@@ -42,9 +42,9 @@ namespace S {
   export const CeoDetailData = styled(Box)(({ theme }: any) => ({
     display: "flex",
     justifyContent: "space-between",
-    height: "35%",
+    height: "6rem",
     [theme.breakpoints.down("lg")]: {
-      height: "40%",
+      height: "5rem",
     },
   }));
 
@@ -57,7 +57,6 @@ namespace S {
   export const ProfilePictureBox = styled(Box)({
     borderRadius: "50%",
     height: "100%",
-    width: "5rem",
     position: "relative",
     cursor: "pointer",
     overflow: "hidden",
@@ -157,12 +156,13 @@ namespace S {
   export const CeoDetailDescription = styled(Box)(({ theme }: any) => ({
     flex: "1",
     fontSize: "1.125rem",
-    height: "35%",
-    overflow: "auto",
+    minHeight: "6rem",
+    overflow: "hidden",
     paddingRight: "0.3125rem",
     color: theme.palette.text.secondary,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.75rem",
+      minHeight: "4rem",
     },
   }));
 

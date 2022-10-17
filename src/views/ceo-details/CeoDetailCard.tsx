@@ -1,12 +1,14 @@
 import { useRef, useState } from "react";
 import ProfilePicture from "./../../assets/images/IdImage.png";
-import { fileValidation } from "../../utils/constants";
+import { fileValidation, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
+import { useAuthContext } from "../../utils/context/auth";
+import IdCardModal from "../../components/modals/id-download-modal";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -15,8 +17,10 @@ interface Props {
 
 const CeoDetailsCard = ({ user }: Props) => {
   const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
+  const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
+  const [idCard, setIdCard] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
   const [cardExpand, setCardExpand] = useState<boolean>(true);
@@ -43,14 +47,6 @@ const CeoDetailsCard = ({ user }: Props) => {
     return false;
   };
 
-  const getURL = (id: string) => {
-    let result = Object.values(ceoDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
-
   // this function is to clear the value of input field, so we can upload same file as many time has we want.
   const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     const element = event.target as HTMLInputElement;
@@ -74,6 +70,8 @@ const CeoDetailsCard = ({ user }: Props) => {
     setOpenConfirmationModal(data);
   };
 
+  const idCardModalHandler = () => setIdCard(!idCard);
+
   return (
     <>
       <S.CeoDetailCard>
@@ -90,7 +88,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           <S.CeoDetailData>
             <S.CeoDataLeft>
               <S.ProfilePictureBox>
-                <S.CeoProfilePicture src={getURL(user.id) ? getURL(user.id) : ProfilePicture} alt="profile picture" />
+                <S.CeoProfilePicture src={ceoDetailsById[user.id].profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
                 <S.EditBox
                   onClick={() => {
                     handleIconClick();
@@ -120,9 +118,15 @@ const CeoDetailsCard = ({ user }: Props) => {
             </S.CeoDataRight>
           </S.CeoDetailData>
         )}
-        <S.CeoDetailDescription>{user.description}</S.CeoDetailDescription>
+        {!cardExpand && <S.CeoDetailDescription>{user.description}...</S.CeoDetailDescription>}
+        {cardExpand && (
+          <S.CeoDetailDescription>
+            {user.description.split(" ").splice(0, 19).join(" ")}
+            {user.description.split(" ").length > 19 ? "..." : ""}
+          </S.CeoDetailDescription>
+        )}
         <S.ButtonContainer>
-          {cardExpand && (
+          {cardExpand && user.description.split(" ").length > 19 && (
             <S.SeeMore
               onClick={() => {
                 setCardExpand(false);
@@ -138,7 +142,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           >
             delete
           </S.CustomIconContainer>
-          <S.CustomIconContainer>id-card</S.CustomIconContainer>
+          <S.CustomIconContainer onClick={idCardModalHandler}>id-card</S.CustomIconContainer>
           <S.CustomIconContainer
             onClick={() => {
               addModalHandler();
@@ -148,6 +152,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           </S.CustomIconContainer>
         </S.ButtonContainer>
       </S.CeoDetailCard>
+      <IdCardModal cardData={user} openModal={idCard} handleClose={idCardModalHandler} />
       {addModal && <AddCeoDetailsModal openModal={true} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />}
       {openDeleteModal && (
         <DeleteModal
@@ -155,10 +160,11 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={() => {
             deleteCeoDetail(user.id);
+            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
           }}
           deleteMessage={
             <span>
-              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
+              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CEO Details?
             </span>
           }
         />
@@ -173,11 +179,6 @@ const CeoDetailsCard = ({ user }: Props) => {
             editCeoDetail(openConfirmationModal);
             setOpenConfirmationModal(null);
           }}
-          confirmMessage={
-            <span>
-              Do you want to remove <S.DeleteName>{user.name}</S.DeleteName> from CeoList?
-            </span>
-          }
         />
       )}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}

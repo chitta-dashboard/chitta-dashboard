@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
@@ -14,11 +14,33 @@ export type mdDetail = {
   id: string;
   name: string;
   phoneNumber: string;
-  qualification: string;
-  profile?: string;
+  qualification?: string;
+  profile: string;
   dob: string;
   signature?: string;
   farmerId?: string;
+
+  membershipId?: string;
+  isChecked?: boolean;
+  fatherName?: string;
+  sex?: string;
+  spouseName?: string;
+  group?: string;
+  addhaarNo?: string;
+  surveyNo?: { [key: string]: string };
+  acre?: { [key: string]: string };
+  border?: { [key: string]: string };
+  education?: string;
+  village?: string;
+  postalNo?: string;
+  address?: string;
+  taluk?: string;
+  district?: string;
+  landType?: string;
+  farmerType?: string;
+  waterType?: string;
+  animals?: string;
+  groupMember?: string;
 };
 
 export type selectedMdListData = number | string;
@@ -37,7 +59,7 @@ export interface mdDetailsContextType {
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
-  checkboxSelect: (id: object) => void;
+  checkboxSelect: (id: string | {}) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -48,9 +70,8 @@ const initialState: mdDetailsContextType = {
       name: "Aditha Karikalan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
-      dob: "1989-10-12",
+      dob: "12-10-1989",
       signature: "",
-      farmerId: "123",
     },
     "2": {
       id: "2",
@@ -58,9 +79,8 @@ const initialState: mdDetailsContextType = {
       name: "Arulmozhi Varman",
       phoneNumber: "8610010875",
       qualification: "BA",
-      dob: "1994-03-01",
+      dob: "01-03-1994",
       signature: "",
-      farmerId: "124",
     },
     "3": {
       id: "3",
@@ -68,9 +88,8 @@ const initialState: mdDetailsContextType = {
       name: "Nandini",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
-      dob: "1998-08-05",
+      dob: "05-08-1998",
       signature: "",
-      farmerId: "125",
     },
     "4": {
       id: "4",
@@ -78,9 +97,8 @@ const initialState: mdDetailsContextType = {
       name: "Vanthiyathevan ",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
-      dob: "1998-01-07",
+      dob: "07-01-1998",
       signature: "",
-      farmerId: "126",
     },
     "5": {
       id: "5",
@@ -88,9 +106,8 @@ const initialState: mdDetailsContextType = {
       name: "Kundavai",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
-      dob: "1994-01-01",
+      dob: "01-01-1994",
       signature: "",
-      farmerId: "127",
     },
     "6": {
       id: "6",
@@ -98,9 +115,8 @@ const initialState: mdDetailsContextType = {
       name: "Rajendran Cholan",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
-      dob: "1996-08-10",
+      dob: "10-08-1996",
       signature: "",
-      farmerId: "128",
     },
   },
   searchFilter: "",
@@ -166,8 +182,8 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
 
-  const checkboxSelect = (farmerData: object) => {
-    dispatch({ type: CHECKBOX_SELECT, payload: farmerData });
+  const checkboxSelect = (id: string | {}) => {
+    dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
   let data = {

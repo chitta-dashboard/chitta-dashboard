@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/profile.png";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
@@ -14,7 +14,7 @@ export type Founders = {
   name: string;
   phoneNumber: string;
   qualification: string;
-  profile?: string;
+  profile: string;
   dob: string;
   description?: string;
 };
@@ -42,7 +42,7 @@ const initialState: foundersContextType = {
       name: "Veera Raghavan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
-      dob: "1982-10-01",
+      dob: "01-10-1982",
       description: "",
     },
     "2": {
@@ -51,7 +51,7 @@ const initialState: foundersContextType = {
       name: "John Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
-      dob: "1990-01-27",
+      dob: "27-01-1990",
       description: "",
     },
     "3": {
@@ -60,7 +60,7 @@ const initialState: foundersContextType = {
       name: "Vijay Kumar",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
-      dob: "1989-11-09",
+      dob: "09-11-1989",
       description: "",
     },
     "4": {
@@ -69,7 +69,7 @@ const initialState: foundersContextType = {
       name: "Kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
-      dob: "1994-10-12",
+      dob: "12-10-1994",
       description: "",
     },
     "5": {
@@ -78,7 +78,7 @@ const initialState: foundersContextType = {
       name: "Jeevanandham",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
-      dob: "1992-08-02",
+      dob: "02-08-1992",
       description: "",
     },
     "6": {
@@ -87,7 +87,7 @@ const initialState: foundersContextType = {
       name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
-      dob: "1985-07-12",
+      dob: "12-07-1985",
       description: "",
     },
   },
