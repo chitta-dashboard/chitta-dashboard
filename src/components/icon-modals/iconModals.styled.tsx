@@ -54,10 +54,11 @@ namespace S {
     fontWeight: 500,
   }));
 
-  export const IconBox = styled(Stack)(({ theme }) => ({
+  export const IconBox = styled(Stack)<{ deleteicon?: number }>(({ theme, deleteicon }) => ({
     alignItems: "center",
     padding: "1.3rem",
     gap: "0.4rem",
+    display: deleteicon ? "none" : "block",
     "&:hover": {
       backgroundColor: theme.palette.bg.light,
       cursor: "pointer",

@@ -70,7 +70,7 @@ const MdDetails = () => {
 
   const handleYesAction = () => {
     let farmerData: { [id: string]: mdDetail } = {};
-    selectedKeys.map((item:string) => {
+    selectedKeys.map((item: string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: mdDetail = {} as mdDetail;
       let farmerKeys = Object.keys(farmersDetailsById[item]);

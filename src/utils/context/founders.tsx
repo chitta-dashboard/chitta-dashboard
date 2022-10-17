@@ -43,7 +43,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "01-10-1982",
-      description: "",
+      description: "Cultivates land",
     },
     "2": {
       id: "2",
@@ -52,7 +52,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "27-01-1990",
-      description: "",
+      description: "Cultivates land",
     },
     "3": {
       id: "3",
@@ -61,7 +61,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "09-11-1989",
-      description: "",
+      description: "Cultivates land",
     },
     "4": {
       id: "4",
@@ -70,7 +70,7 @@ const initialState: foundersContextType = {
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "12-10-1994",
-      description: "",
+      description: "Cultivates land",
     },
     "5": {
       id: "5",
@@ -79,7 +79,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "02-08-1992",
-      description: "",
+      description: "Cultivates land",
     },
     "6": {
       id: "6",
@@ -88,7 +88,7 @@ const initialState: foundersContextType = {
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "12-07-1985",
-      description: "",
+      description: "Cultivates land",
     },
   },
   searchFilter: "",
