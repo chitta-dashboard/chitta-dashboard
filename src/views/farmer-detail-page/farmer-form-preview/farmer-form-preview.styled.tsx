@@ -23,15 +23,15 @@ export namespace S {
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    overflowY: "scroll",
+    justifyContent: "flex-start",
     alignItems: "center",
     width: "50%",
     height: "100%",
     backgroundColor: "white",
     borderRadius: "1.25rem",
-    padding: "2.5rem 0.8rem",
+    padding: "2rem 0.8rem",
     textAlign: "center",
-    gap: "1.5rem",
+    gap: "1rem",
     [theme.breakpoints.down("lg")]: {
       width: "100%",
       height: "fit-content",
@@ -45,20 +45,20 @@ export namespace S {
   export const Text1 = styled(Typography)(({ theme }) => ({
     fontSize: "1.25rem",
     fontWeight: "600",
-    lineHeight: "2.0625rem",
+    lineHeight: "1.7rem",
     color: theme.palette.text.primary,
   }));
 
   export const Text2 = styled(Typography)(({ theme }) => ({
     fontSize: "1.125rem",
     fontWeight: "500",
-    lineHeight: "1.875rem",
+    lineHeight: "1.5rem",
     color: theme.palette.text.primary,
   }));
 
   export const FarmerImgContainer = styled(Box)({
-    width: "9.9375rem",
-    height: "11.25rem",
+    width: "8.9375rem",
+    height: "10.25rem",
     minWidth: "8.125rem",
     minHeight: "9.375rem",
     borderRadius: "1.25rem",
@@ -102,7 +102,7 @@ export namespace S {
     color: theme.palette.text.secondary,
     fontSize: "1rem",
     fontWeight: "500",
-    lineHeight: "1.6875rem",
+    lineHeight: "1.4rem",
   }));
 
   export const CustomBackIcon = styled("span")({
