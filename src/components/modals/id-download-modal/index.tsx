@@ -8,11 +8,12 @@ import ModalFooter from "../../custom-modal/footer";
 import IdCardBody from "../../id-card/id-card-body";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { mdDetail } from "../../../utils/context/mdDetails";
+import { Founders } from "../../../utils/context/founders";
 
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
-  cardData?: farmerDetail | mdDetail;
+  cardData?: mdDetail | Founders | farmerDetail;
 }
 
 const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {

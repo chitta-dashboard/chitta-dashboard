@@ -9,8 +9,6 @@ import FormField from "./body/formField";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { Message } from "../../../utils/constants";
-import { useAuthContext } from "../../../utils/context/auth";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => void;
@@ -35,7 +33,6 @@ interface CustomProps {
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
   const { farmersGroupById } = useFarmersGroupContext();
-  const { addNotification } = useAuthContext();
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
 
   // for enabling the submit button
@@ -77,7 +74,6 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
     cb({ ...data, id: editMode ? id : uuidv4(), members: members });
-    !editMode && addNotification({ id: data.id, message: Message(data.groupName).addFarmGroup });
     !editMode && reset();
     !editMode && handleClose();
   };
