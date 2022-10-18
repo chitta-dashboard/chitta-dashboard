@@ -17,6 +17,7 @@ export type Founders = {
   profile: string;
   dob: string;
   description?: string;
+  joinDate?: string;
 };
 
 type Props = {
@@ -44,6 +45,7 @@ const initialState: foundersContextType = {
       qualification: "BBA, MBA",
       dob: "01-10-1982",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
     "2": {
       id: "2",
@@ -53,6 +55,7 @@ const initialState: foundersContextType = {
       qualification: "BA",
       dob: "27-01-1990",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
     "3": {
       id: "3",
@@ -62,6 +65,7 @@ const initialState: foundersContextType = {
       qualification: "BCom CA",
       dob: "09-11-1989",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
     "4": {
       id: "4",
@@ -71,6 +75,7 @@ const initialState: foundersContextType = {
       qualification: "BSc, Computer Science",
       dob: "12-10-1994",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
     "5": {
       id: "5",
@@ -80,6 +85,7 @@ const initialState: foundersContextType = {
       qualification: "B.Tech, Information Technology",
       dob: "02-08-1992",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
     "6": {
       id: "6",
@@ -89,6 +95,7 @@ const initialState: foundersContextType = {
       qualification: "B.Tech, Computer Science",
       dob: "12-07-1985",
       description: "Cultivates land",
+      joinDate: "mar 16,2022",
     },
   },
   searchFilter: "",

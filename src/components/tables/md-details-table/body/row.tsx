@@ -106,11 +106,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
         }}
       >
         <S.IconBox>
-          <CS.Icon>id-card</CS.Icon>
+          <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
           <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
           <S.Toggle checked={!!user.id} onChange={confirmModalHandler} />
         </S.IconBox>
-        {/* </S.WebTableCell> */}
         <MdDetailsIconModal
           open={iconModal}
           handleClose={() => setIconModal(false)}
