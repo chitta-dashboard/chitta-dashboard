@@ -9,6 +9,7 @@ import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { fileValidation } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import { S } from "./farmer-form-preview.styled";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
@@ -21,6 +22,9 @@ const FarmerFormPreviewLeft = () => {
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddFarmersDetailsFormInput & { id: string; membershipId: string }) | null>(
+    null,
+  );
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
@@ -74,7 +78,7 @@ const FarmerFormPreviewLeft = () => {
 
   //Update FarmerDetail Handler
   const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
-    editFarmerDetail(data);
+    setOpenConfirmationModal(data);
   };
 
   return (
@@ -181,6 +185,19 @@ const FarmerFormPreviewLeft = () => {
                     Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from CeoList?
                   </span>
                 }
+              />
+            )}
+            {openConfirmationModal && (
+              <ConfirmationModal
+                openModal={true}
+                handleClose={() => {
+                  setOpenConfirmationModal(null);
+                }}
+                yesAction={() => {
+                  editFarmerDetail(openConfirmationModal);
+                  setOpenConfirmationModal(null);
+                  setOpenEditModal(false);
+                }}
               />
             )}
           </S.FarmerFormPreviewLeft>

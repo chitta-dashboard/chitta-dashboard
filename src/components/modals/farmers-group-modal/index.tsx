@@ -1,7 +1,5 @@
-import * as yup from "yup";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
@@ -23,36 +21,22 @@ interface CustomProps {
   members?: string[];
 }
 
-const schema = yup
-  .object()
-  .shape({
-    groupName: yup.string().required("required"),
-    explanation: yup.string().required("required"),
-    chairman: yup.string().required("required").nullable(),
-    treasurer: yup.string().required("required").nullable(),
-    secretary: yup.string().required("required").nullable(),
-  })
-  .required();
+// const schema = yup
+//   .object()
+//   .shape({
+//     groupName: yup.string().required("required"),
+//     explanation: yup.string().required("required"),
+//     chairman: yup.string().required("required").nullable(),
+//     treasurer: yup.string().required("required").nullable(),
+//     secretary: yup.string().required("required").nullable(),
+//   })
+//   .required();
 
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
   const { farmersGroupById } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    clearErrors,
-    reset,
-    setValue,
-    trigger,
-    unregister: formUnregister,
-    getValues: formGetValues,
-    control: formControl,
-    watch,
-  } = useForm<IAddFarmersGroupFormInput>({
-    resolver: yupResolver(schema),
-  });
+  const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
 
   // for enabling the submit button
   const groupNameEvent = watch("groupName");
@@ -118,15 +102,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
       </ModalHeader>
 
       <ModalBody id={"farmersGroup"} onSubmit={handleSubmit(onSubmit)}>
-        <FormField
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          trigger={trigger}
-          control={formControl as unknown as Control}
-          getValues={formGetValues}
-          unregister={formUnregister}
-        />
+        <FormField control={formControl as unknown as Control} />
       </ModalBody>
 
       <ModalFooter>
