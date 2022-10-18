@@ -1,14 +1,18 @@
 import { styled, Typography, Box, Stack, Button } from "@mui/material";
 
 namespace S {
-  export const MainContainer = styled(Box)({
+  export const MainContainer = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
     display: "grid",
     gridTemplateRows: "auto 1fr",
     gap: "1.2rem",
     minHeight: "7rem",
-  });
+    "& .Mui-disabled": {
+      // backgroundColor:theme.palette.custom.disabled
+      backgroundColor: "#b3b3b3",
+    },
+  }));
 
   export const AdminText = styled(Typography)(({ theme }) => ({
     textAlign: "center",

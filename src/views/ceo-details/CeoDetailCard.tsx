@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import ProfilePicture from "./../../assets/images/IdImage.png";
-import { fileValidation, Message } from "../../utils/constants";
+import { calculateAge, fileValidation, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -25,17 +25,6 @@ const CeoDetailsCard = ({ user }: Props) => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
   const [cardExpand, setCardExpand] = useState<boolean>(true);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-
-  const calculateAge = (dob1: string) => {
-    var today = new Date();
-    var birthDate = new Date(dob1);
-    var age_now = today.getFullYear() - birthDate.getFullYear();
-    var month = today.getMonth() - birthDate.getMonth();
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-      age_now--;
-    }
-    return age_now;
-  };
 
   const handleIconClick = () => {
     hiddenFileInput && hiddenFileInput.current.click();

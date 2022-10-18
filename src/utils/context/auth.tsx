@@ -1,5 +1,4 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //Action type
 const ADD_NOTIFICATION = "ADD_NOTIFICATION";
@@ -7,7 +6,7 @@ const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
 
 export type Notification = {
   id: string;
-  image: string | undefined;
+  image?: string | undefined;
   message: string;
 };
 
@@ -29,26 +28,15 @@ const initialState: IContextType = {
   logout: () => {},
   clearNotification: () => {},
   addNotification: () => {},
-  userNotification: [
-    { id: "100", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "101", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "102", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "103", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-    { id: "104", image: profileImg, message: `New MD "Arockiaraj" has been registered` },
-  ],
+  userNotification: [],
 };
+
 // Reducer function
 const reducer = (state: IContextType, action: any) => {
   switch (action.type) {
     case ADD_NOTIFICATION:
       return { ...state, userNotification: [action.payload, ...state.userNotification] };
-    // return {
-    //   ...state,
-    //   userNotification: [
-    //     ...state.userNotification,
-    //     { id: action.payload.id, image: profile, message: `New MD ${action.payload.message} has been registered` },
-    //   ],
-    // };
+
     case CLEAR_NOTIFICATION:
       return { ...state, userNotification: [] };
 

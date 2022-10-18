@@ -4,13 +4,14 @@ import { Button, Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { v4 as uuidv4 } from "uuid";
-import { fileValidation } from "../../../utils/constants";
+import { fileValidation, Message, createJoinDate } from "../../../utils/constants";
 import { useFounderContext } from "../../../utils/context/founders";
 import AddProfile from "../../input-fields/add-profile";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import { useAuthContext } from "../../../utils/context/auth";
 import { dateFormat } from "../../../utils/constants";
 import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
@@ -48,6 +49,7 @@ const schema = yup
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { foundersById } = useFounderContext();
+  const { addNotification } = useAuthContext();
 
   const {
     register,
@@ -90,6 +92,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
         profile: userData?.profile, // temporary, until sbucket integration
+        joinDate:userData?.joinDate
       });
     }
 
@@ -101,6 +104,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         dob: "",
         description: "",
         profile: "",
+        joinDate: "",
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
@@ -115,9 +119,11 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
       profile: data.profile,
       qualification: data.qualification,
       id: editMode ? id : uuidv4(),
+      joinDate: createJoinDate()
     } as IAddCEODetailsFormInput & { id: string });
-    handleClose();
-    reset();
+    !editMode && addNotification({ id: uuidv4(), image: data.profile, message: Message(data.name).addFoundersDetails });
+    !editMode && reset();
+    !editMode && handleClose();
   };
 
   return (

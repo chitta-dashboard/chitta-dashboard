@@ -40,10 +40,10 @@ export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, pl
   return <S.logoImage isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
-const AdminLogo = () => {
+const AdminLogo: FC= () => {
   const [file, setFile] = useState<File>();
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const fileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
       const file = event.target.files?.[0];
       if (file) {
@@ -63,7 +63,7 @@ const AdminLogo = () => {
         <Box>
           <Button component="label">
             Upload
-            <input onChange={onChange} hidden multiple type="file" />
+            <input onChange={fileHandler} hidden type="file" />
           </Button>
         </Box>
         <S.LogoStack>
