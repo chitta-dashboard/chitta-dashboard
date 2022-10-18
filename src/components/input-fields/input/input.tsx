@@ -297,7 +297,6 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 options={options.selectoptions}
                 renderInput={(params) => (
                   <TextField
-                    {...options}
                     {...params}
                     helperText={errors[name]?.message as string}
                     label={options.label}
