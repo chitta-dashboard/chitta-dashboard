@@ -2,16 +2,19 @@ import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../../utils/context/auth";
 import { fileValidation, Message } from "../../../../utils/constants";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
-import MdDetailsModal from "../../../modals/md-details-modal";
+import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+// import MdDetailsModal from "../../../modals/md-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
-import { useAuthContext } from "../../../../utils/context/auth";
 
 interface MdDetailsRowProps {
   user: mdDetail;
@@ -19,7 +22,10 @@ interface MdDetailsRowProps {
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { editFarmerDetail } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
+  const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -27,7 +33,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const navigate = useNavigate();
+  const AddNewMember = { id: editData?.id, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -66,6 +72,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     if (!image) return;
     user["profile"] = image;
     editMdDetail({ ...user });
+    editFarmerDetail({ ...user });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -118,7 +125,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           handleConfirm={() => setConfirmModal(true)}
           handleIdCard={() => setIdCard(true)}
         />
-        <MdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
         <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <ConfirmationModal
           openModal={confirmModal}
@@ -126,6 +133,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           yesAction={() => {
             !editMode && deleteMdDetail(user.id);
             editMode && editData && editMdDetail(editData);
+            editMode && editData && editFarmerDetail(editData);
+            editMode && removeGroupMember(user.id);
+            editMode && addGroupMember(AddNewMember);
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);

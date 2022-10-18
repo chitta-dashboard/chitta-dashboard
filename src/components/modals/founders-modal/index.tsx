@@ -4,14 +4,13 @@ import { Button, Stack } from "@mui/material";
 import { FC, useEffect } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { v4 as uuidv4 } from "uuid";
-import { fileValidation, Message, createJoinDate } from "../../../utils/constants";
+import { fileValidation, createJoinDate } from "../../../utils/constants";
 import { useFounderContext } from "../../../utils/context/founders";
 import AddProfile from "../../input-fields/add-profile";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { useAuthContext } from "../../../utils/context/auth";
 import { dateFormat } from "../../../utils/constants";
 import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
@@ -49,7 +48,6 @@ const schema = yup
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { foundersById } = useFounderContext();
-  const { addNotification } = useAuthContext();
 
   const {
     register,
@@ -92,7 +90,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
         profile: userData?.profile, // temporary, until sbucket integration
-        joinDate:userData?.joinDate
+        joinDate: userData?.joinDate,
       });
     }
 
@@ -119,9 +117,8 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
       profile: data.profile,
       qualification: data.qualification,
       id: editMode ? id : uuidv4(),
-      joinDate: createJoinDate()
+      joinDate: createJoinDate(),
     } as IAddCEODetailsFormInput & { id: string });
-    !editMode && addNotification({ id: uuidv4(), image: data.profile, message: Message(data.name).addFoundersDetails });
     !editMode && reset();
     !editMode && handleClose();
   };
@@ -163,7 +160,6 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
             unregister={unregister}
             gridArea="prf"
           />
-
           <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
         </Stack>
       </ModalBody>
