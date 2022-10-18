@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { fileValidation } from "../../../../utils/constants";
+import { calculateAge, fileValidation } from "../../../../utils/constants";
 import { useFounderContext } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -83,9 +83,9 @@ const DashboardFounder = () => {
                     <S.FounderCardHeaderDetails>
                       <Box>
                         <S.FounderName>{item.name}</S.FounderName>
-                        <S.FounderAge>Age: 22</S.FounderAge>
+                        <S.FounderAge>Age: {calculateAge(item.dob)}</S.FounderAge>
                       </Box>
-                      <S.FounderJoinDate>Joined 28th Jul 2022</S.FounderJoinDate>
+                      <S.FounderJoinDate>Joined {item.joinDate}</S.FounderJoinDate>
                     </S.FounderCardHeaderDetails>
                     <S.FounderCardBody>
                       <Box>
@@ -94,9 +94,9 @@ const DashboardFounder = () => {
                         <S.FounderCardBodyLeft>தகுதி: </S.FounderCardBodyLeft>
                       </Box>
                       <Box>
-                        <S.FounderCardBodyLeft>8940065783</S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>10/02/1969</S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>BBA, MBA</S.FounderCardBodyLeft>
+                        <S.FounderCardBodyLeft>{item.phoneNumber}</S.FounderCardBodyLeft>
+                        <S.FounderCardBodyLeft>{item.dob}</S.FounderCardBodyLeft>
+                        <S.FounderCardBodyLeft>{item.qualification}</S.FounderCardBodyLeft>
                       </Box>
                     </S.FounderCardBody>
                   </S.FounderCardHeaderRight>

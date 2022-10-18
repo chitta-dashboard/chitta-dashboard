@@ -1,7 +1,19 @@
 import { styled, Stack, Box } from "@mui/material";
 
 namespace S {
-  export const InputContainer = styled(Stack)({});
+  export const StaticBox = styled("div")({
+    display: "grid",
+    gridTemplateAreas: `
+      "prf prf"
+      "nme nme"
+      "dob phn"
+      "qfn qfn"
+      "dsc dsc"
+    `,
+    gridTemplateColumns: "50% 50%",
+    gridTemplateRows: "auto  auto auto auto 120px",
+    gap: "1rem",
+  });
 
   export const Title = styled("div")({
     display: "contents",
@@ -21,6 +33,10 @@ namespace S {
 
   export const ChipContainer = styled(Stack)({
     marginLeft: "1rem",
+  });
+
+  export const DateContainer = styled(Stack)({
+    width: "100%",
   });
 }
 

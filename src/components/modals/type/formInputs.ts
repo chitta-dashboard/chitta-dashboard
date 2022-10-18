@@ -66,4 +66,5 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
+  joinDate:string;
 }
