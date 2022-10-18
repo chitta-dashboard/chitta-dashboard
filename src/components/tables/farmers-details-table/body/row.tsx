@@ -4,6 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { fileValidation, Message } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
@@ -24,6 +25,7 @@ interface FarmersDetailsRowProps {
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -89,6 +91,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     if (!image) return;
     user["profile"] = image;
     editFarmerDetail({ ...user });
+    editMdDetail({ ...user });
   };
 
   return (
@@ -183,6 +186,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             handleClose={() => setDeleteModal(false)}
             handleDelete={() => {
               deleteFarmerDetail(user.id);
+              deleteMdDetail(user.id);
               setDeleteModal(false);
               setIconModal(false);
               addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -200,6 +204,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             yesAction={() => {
               !editMode && deleteFarmerDetail(user.id);
               editMode && editData && editFarmerDetail(editData);
+              editMode && editData && editMdDetail(editData);
               editMode && removeGroupMember(user.id);
               editMode && addGroupMember(AddNewMember);
               setEditMode(false);

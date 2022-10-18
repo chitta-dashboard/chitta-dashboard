@@ -10,7 +10,7 @@ interface CustomProps {
 const FormFieldPage2: FC<CustomProps> = ({ control }) => {
   return (
     <S.FieldsBox>
-      <Input name="education" type="text" control={control} rules={{ required: "required" }} options={{ label: "கல்வி *", gridArea: "edu" }} />
+      <Input name="qualification" type="text" control={control} rules={{ required: "required" }} options={{ label: "கல்வி *", gridArea: "edu" }} />
       <Input name="village" type="text" control={control} rules={{ required: "required" }} options={{ label: "கிராமம் *", gridArea: "vil" }} />
       <Input
         name="postalNo"

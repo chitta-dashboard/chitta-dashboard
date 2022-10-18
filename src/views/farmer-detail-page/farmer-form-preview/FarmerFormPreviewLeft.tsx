@@ -6,16 +6,20 @@ import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { fileValidation } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import { S } from "./farmer-form-preview.styled";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
+import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
   const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { editMdDetail } = useMdDetailsContext();
 
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -25,6 +29,7 @@ const FarmerFormPreviewLeft = () => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddFarmersDetailsFormInput & { id: string; membershipId: string }) | null>(
     null,
   );
+  const AddNewMember = { id: openConfirmationModal?.id, group: openConfirmationModal?.group };
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
@@ -195,6 +200,9 @@ const FarmerFormPreviewLeft = () => {
                 }}
                 yesAction={() => {
                   editFarmerDetail(openConfirmationModal);
+                  editMdDetail(openConfirmationModal);
+                  removeGroupMember(user.id);
+                  addGroupMember(AddNewMember);
                   setOpenConfirmationModal(null);
                   setOpenEditModal(false);
                 }}
