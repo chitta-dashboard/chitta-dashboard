@@ -14,11 +14,33 @@ export type mdDetail = {
   id: string;
   name: string;
   phoneNumber: string;
-  qualification: string;
+  qualification?: string;
   profile: string;
   dob: string;
   signature?: string;
   farmerId?: string;
+
+  membershipId?: string;
+  isChecked?: boolean;
+  fatherName?: string;
+  sex?: string;
+  spouseName?: string;
+  group?: string;
+  addhaarNo?: string;
+  surveyNo?: { [key: string]: string };
+  acre?: { [key: string]: string };
+  border?: { [key: string]: string };
+  education?: string;
+  village?: string;
+  postalNo?: string;
+  address?: string;
+  taluk?: string;
+  district?: string;
+  landType?: string;
+  farmerType?: string;
+  waterType?: string;
+  animals?: string;
+  groupMember?: string;
 };
 
 export type selectedMdListData = number | string;
@@ -49,7 +71,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
       dob: "12-10-1989",
-      signature: "",
+      signature: profileImg,
     },
     "2": {
       id: "2",
@@ -58,7 +80,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8610010875",
       qualification: "BA",
       dob: "01-03-1994",
-      signature: "",
+      signature: profileImg,
     },
     "3": {
       id: "3",
@@ -67,7 +89,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8968456734",
       qualification: "BCom CA",
       dob: "05-08-1998",
-      signature: "",
+      signature: profileImg,
     },
     "4": {
       id: "4",
@@ -76,7 +98,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
       dob: "07-01-1998",
-      signature: "",
+      signature: profileImg,
     },
     "5": {
       id: "5",
@@ -85,7 +107,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
       dob: "01-01-1994",
-      signature: "",
+      signature: profileImg,
     },
     "6": {
       id: "6",
@@ -94,7 +116,7 @@ const initialState: mdDetailsContextType = {
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
       dob: "10-08-1996",
-      signature: "",
+      signature: profileImg,
     },
   },
   searchFilter: "",

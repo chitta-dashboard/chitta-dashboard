@@ -14,6 +14,9 @@ const CHECKBOX_UNSELECT_ALL = "CHECKBOX_UNSELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const GROUP_FILTER = "GROUP_FILTER";
 
+//Group filter value
+export const DEFAULT_GROUP_FILTER = "all";
+
 export type farmerDetail = {
   membershipId?: string;
   profile?: string;
@@ -96,6 +99,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "2": {
       id: "2",
@@ -123,6 +127,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "3": {
       id: "3",
@@ -150,6 +155,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "4": {
       id: "4",
@@ -177,6 +183,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "5": {
       id: "5",
@@ -204,6 +211,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
     "6": {
       id: "6",
@@ -231,6 +239,7 @@ const initialState: farmerDetailsContextType = {
       waterType: "option-2",
       animals: "மாடு",
       groupMember: "yes",
+      qualification: "B.E, Mechanical",
     },
   },
   searchFilter: "",
@@ -245,7 +254,7 @@ const initialState: farmerDetailsContextType = {
   checkboxSelectAll: () => {},
   checkboxUnselectAll: () => {},
   checkboxSelect: () => {},
-  groupFilter: "all",
+  groupFilter: DEFAULT_GROUP_FILTER,
   setGroupFilter: () => {},
 };
 

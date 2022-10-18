@@ -4,6 +4,8 @@ import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../utils/context/auth";
+import { Message } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -12,9 +14,9 @@ import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
 import { dateFormat } from "../../../utils/constants";
-import S from "./farmersDetailsModal.styled";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
+import S from "./farmersDetailsModal.styled";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => void;
@@ -24,11 +26,13 @@ interface CustomProps {
   id?: string;
 }
 
-const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
+  const { openModal, handleClose, cb, editMode = false, id = "" } = props;
+  const { farmersDetailsById } = useFarmerDetailsContext();
+  const { addGroupMember } = useFarmersGroupContext();
+  const { addNotification } = useAuthContext();
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
-  const { farmersDetailsById } = useFarmerDetailsContext();
-  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -42,13 +46,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
       farmerData &&
         Object.keys(farmerData.acre).map((item, index) => {
           masterKey = uuidv4();
-          surveyName = Object.keys(farmerData.surveyNo)[index];
+          surveyName = farmerData && Object.keys(farmerData.surveyNo)[index];
           acreName = item;
-          borderName = Object.keys(farmerData.border)[index];
+          borderName = farmerData && Object.keys(farmerData.border)[index];
           temp = [...temp, { [masterKey]: [surveyName, acreName, borderName] }];
           return undefined;
         });
-      return temp;
+      return temp.reverse();
     }
     return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
   });
@@ -59,7 +63,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     const borderName = "border-" + uuidv4();
     const masterKey = uuidv4();
 
-    setDynamicInputs([...dynamicInputs, { [masterKey]: [surveyName, acreName, borderName] }]);
+    setDynamicInputs([{ [masterKey]: [surveyName, acreName, borderName] }, ...dynamicInputs]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dynamicInputs]);
 
@@ -78,20 +82,84 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     reset: form1Reset,
     unregister: form1Unregister,
     control: form1Control,
-    formState: { isValid: page1Validation },
-  } = useForm<IAddFarmersDetailsPage1Input>({
-    mode: "onChange",
-  });
+    watch: form1Watch,
+  } = useForm<IAddFarmersDetailsPage1Input>({});
 
   const {
     handleSubmit: form2HandleSubmit,
     reset: form2Reset,
     clearErrors: form2ClearErrors,
     control: form2Control,
-    formState: { isValid: page2Validation },
+    watch: form2Watch,
   } = useForm<IAddFarmersDetailsPage2Input>({
     mode: "onChange",
   });
+
+  // submit button enabling
+
+  let form1EnableButton = true;
+  const nameEvent = form1Watch("name");
+  const fatherNameEvent = form1Watch("fatherName");
+  const sexEvent = form1Watch("sex");
+  const spouseNameEvent = form1Watch("spouseName");
+  const dobEvent = form1Watch("dob");
+  const groupEvent = form1Watch("group");
+  const phoneNumberEvent = form1Watch("phoneNumber");
+  const addhaarNoEvent = form1Watch("addhaarNo");
+  const surveyNoEvent = form1Watch("surveyNo");
+  const acreEvent = form1Watch("acre");
+  const borderEvent = form1Watch("border");
+  const profileEvent = form1Watch("profile");
+
+  if (
+    nameEvent &&
+    fatherNameEvent &&
+    sexEvent &&
+    spouseNameEvent &&
+    dobEvent &&
+    groupEvent &&
+    phoneNumberEvent &&
+    addhaarNoEvent &&
+    surveyNoEvent &&
+    acreEvent &&
+    borderEvent &&
+    profileEvent &&
+    !Object.values(surveyNoEvent).includes("") &&
+    !Object.values(acreEvent).includes("") &&
+    !Object.values(borderEvent).includes("") &&
+    Object.values(surveyNoEvent).length === dynamicInputs.length &&
+    Object.values(acreEvent).length === dynamicInputs.length &&
+    Object.values(borderEvent).length === dynamicInputs.length
+  ) {
+    form1EnableButton = false;
+  }
+
+  let form2EnableButton = true;
+  const educationEvent = form2Watch("education");
+  const villageEvent = form2Watch("village");
+  const postalNoEvent = form2Watch("postalNo");
+  const addressEvent = form2Watch("address");
+  const talukEvent = form2Watch("taluk");
+  const districtEvent = form2Watch("district");
+  const landTypeEvent = form2Watch("landType");
+  const waterTypeEvent = form2Watch("waterType");
+  const farmerTypeEvent = form2Watch("farmerType");
+  const groupMemberEvent = form2Watch("groupMember");
+
+  if (
+    educationEvent &&
+    villageEvent &&
+    postalNoEvent &&
+    addressEvent &&
+    talukEvent &&
+    districtEvent &&
+    landTypeEvent &&
+    waterTypeEvent &&
+    farmerTypeEvent &&
+    groupMemberEvent
+  ) {
+    form2EnableButton = false;
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -136,6 +204,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
+      surveyNo: data.surveyNo,
       border: data.border,
       dob: dateFormat(data.dob),
       fatherName: data.fatherName,
@@ -157,9 +226,9 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
       membershipId: "NEF-FPC-2",
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    // const newMember = { id: params.id, group: params.group };
-    // editMode && removeGroupMember(newMember);
-    // addGroupMember(newMember);
+    const AddNewMember = { id: params.id, group: params.group };
+    !editMode && addGroupMember(AddNewMember);
+    !editMode && addNotification({ id: params.id, image: params.profile, message: Message(params.name).addFarmDetail });
     !editMode && handleClose();
   };
 
@@ -183,7 +252,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
               >
                 Back
               </Button>
-              <Button type="submit" form={"farmersDetailsForm2"} disabled={!page2Validation}>
+              <Button type="submit" form={"farmersDetailsForm2"} disabled={form2EnableButton}>
                 Submit
               </Button>
             </S.ButtonContainer>
@@ -201,11 +270,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
               getValues={form1GetValues}
               unregister={form1Unregister}
               editMode={editMode}
+              watch={form1Watch}
             />
           </ModalBody>
           <ModalFooter>
             <S.PageNumber alt="page number 1" src={page1} />
-            <Button type="submit" form={"farmersDetailsForm1"} disabled={!page1Validation}>
+            <Button type="submit" form={"farmersDetailsForm1"} disabled={form1EnableButton}>
               Next
             </Button>
           </ModalFooter>

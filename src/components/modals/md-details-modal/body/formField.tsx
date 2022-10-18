@@ -21,21 +21,21 @@ const FormField: FC<CustomProps> = ({ register, errors, setValue, trigger, setEr
   return (
     <S.InputContainer spacing={3}>
       <Stack direction={"row"} spacing={2}>
-        <TextInput<IAddMDDetailsFormInput> label="*பெயர்" register={register} inputName="name" helperText={errors.name?.message} />
+        <TextInput<IAddMDDetailsFormInput> label="பெயர் *" register={register} inputName="name" helperText={errors.name?.message} />
         <NumberInput<IAddMDDetailsFormInput>
-          label="*கைபேசி எண்"
+          label="கைபேசி எண் *"
           register={register}
           inputName="phoneNumber"
           helperText={errors.phoneNumber?.message}
         />
       </Stack>
       <Stack direction={"row"} spacing={2}>
-        <DateInput<IAddMDDetailsFormInput> label="*பிறந்த தேதி" register={register} inputName="dob" helperText={errors.dob?.message} />
-        <TextInput<IAddMDDetailsFormInput> label="*தகுதி" register={register} inputName="qualification" helperText={errors.qualification?.message} />
+        <DateInput<IAddMDDetailsFormInput> label="பிறந்த தேதி *" register={register} inputName="dob" helperText={errors.dob?.message} />
+        <TextInput<IAddMDDetailsFormInput> label="தகுதி *" register={register} inputName="qualification" helperText={errors.qualification?.message} />
       </Stack>
       <Stack>
         <FileInput<IAddMDDetailsFormInput>
-          label="*கையெழுத்து"
+          label="கையெழுத்து *"
           register={register}
           inputName="signature"
           helperText={errors.signature?.message}

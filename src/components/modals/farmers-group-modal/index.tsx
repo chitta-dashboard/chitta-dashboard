@@ -11,6 +11,8 @@ import FormField from "./body/formField";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import { Message } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => void;
@@ -35,6 +37,7 @@ const schema = yup
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
   const { farmersGroupById } = useFarmersGroupContext();
+  const { addNotification } = useAuthContext();
   const {
     register,
     handleSubmit,
@@ -46,11 +49,24 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
     unregister: formUnregister,
     getValues: formGetValues,
     control: formControl,
-    formState: { isValid },
+    watch,
   } = useForm<IAddFarmersGroupFormInput>({
     resolver: yupResolver(schema),
-    mode: "onChange",
   });
+
+  // for enabling the submit button
+  const groupNameEvent = watch("groupName");
+  const explanationEvent = watch("explanation");
+  const chairmanEvent = watch("chairman");
+  const treasurerEvent = watch("treasurer");
+  const secretaryEvent = watch("secretary");
+  let enableButton = true;
+
+  if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
+    enableButton = false;
+  } else {
+    enableButton = true;
+  }
 
   useEffect(() => {
     if (editMode) {
@@ -77,6 +93,8 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
     cb({ ...data, id: editMode ? id : uuidv4(), members: members });
+    !editMode && addNotification({ id: data.id, message: Message(data.groupName).addFarmGroup });
+    !editMode && reset();
     !editMode && handleClose();
   };
 
@@ -112,7 +130,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
       </ModalBody>
 
       <ModalFooter>
-        <Button form="farmersGroup" type="submit" disabled={!isValid}>
+        <Button form="farmersGroup" type="submit" disabled={enableButton}>
           Submit
         </Button>
       </ModalFooter>

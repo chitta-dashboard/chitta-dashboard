@@ -35,10 +35,10 @@ const initialState: ceoDetailsContextType = {
       profile: profileImg,
       name: "goku",
       phoneNumber: "8610010875",
-      dob: "10-08-1996",
+      dob: "10-08-1986",
       qualification: "B.E.agri",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
+        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
       joinedDate: "oct 20 1989",
     },
     "2": {
@@ -49,7 +49,7 @@ const initialState: ceoDetailsContextType = {
       dob: "10-08-1982",
       qualification: "B.E.agri",
       description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
+        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit consectetur adipisicing elit.  ",
       joinedDate: "oct 20 1989",
     },
   },

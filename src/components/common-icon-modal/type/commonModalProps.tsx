@@ -8,5 +8,7 @@ interface CommonModalProps {
   handleEdit?: () => void;
   generateFarmerDetailForm?: () => void;
   handleConfirm?: () => void;
+  handlePdfDownload?: () => void;
+  deleteicon?: number;
 }
 export default CommonModalProps;

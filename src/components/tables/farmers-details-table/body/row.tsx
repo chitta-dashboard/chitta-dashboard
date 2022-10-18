@@ -2,8 +2,10 @@ import { useState, useRef, FC } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { fileValidation } from "../../../../utils/constants";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { fileValidation, Message } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -21,6 +23,8 @@ interface FarmersDetailsRowProps {
 }
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -33,6 +37,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
   const [idCard, setIdCard] = useState(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const AddNewMember = { id: editData?.id, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -166,6 +171,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             handleDelete={() => setDeleteModal(true)}
             handleEdit={() => setEditMode(true)}
             handleIdCard={() => setIdCard(true)}
+            handlePdfDownload={async () => {
+              await setFarmerIdtoPrint(user.id);
+              generateFarmerDetailForm();
+            }}
           />
           <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={user.id} />
           <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
@@ -176,6 +185,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
               deleteFarmerDetail(user.id);
               setDeleteModal(false);
               setIconModal(false);
+              addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+              removeGroupMember(user.id);
             }}
             deleteMessage={
               <>
@@ -189,6 +200,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             yesAction={() => {
               !editMode && deleteFarmerDetail(user.id);
               editMode && editData && editFarmerDetail(editData);
+              editMode && removeGroupMember(user.id);
+              editMode && addGroupMember(AddNewMember);
               setEditMode(false);
               setConfirmModal(false);
               setIconModal(false);

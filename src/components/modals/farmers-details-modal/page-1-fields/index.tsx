@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useState } from "react";
-import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister } from "react-hook-form";
+import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister, UseFormWatch } from "react-hook-form";
 import { fileValidation } from "../../../../utils/constants";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import AddProfile from "../../../input-fields/add-profile";
@@ -16,13 +16,15 @@ interface CustomProps {
   getValues: UseFormGetValues<IAddFarmersDetailsPage1Input>;
   unregister: UseFormUnregister<IAddFarmersDetailsPage1Input>;
   editMode?: boolean;
+  watch: UseFormWatch<IAddFarmersDetailsPage1Input>;
 }
 
-const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode }) => {
+const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode, watch }) => {
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
   const { farmersGroupById } = useFarmersGroupContext();
+  let enableAddButton = true;
 
   useEffect(() => {
     setValue("surveyNo", surveyNo);
@@ -30,6 +32,22 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
     setValue("border", border);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surveyNo, acre, border]);
+
+  // button enabling
+
+  if (surveyNo && acre && border) {
+    if (
+      Object.values(surveyNo).length === dynamicInputs.length &&
+      Object.values(acre).length === dynamicInputs.length &&
+      Object.values(border).length === dynamicInputs.length
+    ) {
+      if (Object.values(surveyNo).includes("") !== true && Object.values(acre).includes("") !== true && Object.values(border).includes("") !== true) {
+        enableAddButton = false;
+      } else {
+        enableAddButton = true;
+      }
+    }
+  }
 
   return (
     <S.StaticBox>
@@ -50,14 +68,14 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         unregister={unregister}
         gridArea="prf"
       />
-      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "*பெயர்", gridArea: "nme" }} />
+      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "பெயர் *", gridArea: "nme" }} />
       <Input
         name="sex"
         type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
-          label: "*பாலினம்",
+          label: "பாலினம் *",
           gridArea: "sex",
           selectOptions: [
             ["male", "ஆண்"],
@@ -70,22 +88,22 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "*தந்தையின் பெயர்", gridArea: "fnm" }}
+        options={{ label: "தந்தையின் பெயர் *", gridArea: "fnm" }}
       />
       <Input
         name="spouseName"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "*கணவன்/மணைவி பெயர்", gridArea: "spo" }}
+        options={{ label: "கணவன்/மணைவி பெயர் *", gridArea: "spo" }}
       />
-      <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "*பிறந்த தேதி", gridArea: "dob" }} />
+      <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "பிறந்த தேதி *", gridArea: "dob" }} />
       <Input
         name="group"
         type="select"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "*குழு", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
+        options={{ label: "குழு *", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
       />
       <Input
         name="phoneNumber"
@@ -96,7 +114,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 10, message: "10 digits expected" },
           maxLength: { value: 10, message: "10 digits expected" },
         }}
-        options={{ label: "*கைபேசி எண்", gridArea: "phn" }}
+        options={{ label: "கைபேசி எண் *", gridArea: "phn" }}
       />
       <Input
         name="addhaarNo"
@@ -107,8 +125,14 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 12, message: "12 digits expected" },
           maxLength: { value: 12, message: "12 digits expected" },
         }}
-        options={{ label: "*ஆதார் எண்", gridArea: "adh" }}
+        options={{ label: "ஆதார் எண் *", gridArea: "adh" }}
       />
+      <S.DividerLine />
+      <S.AddLandDetailsContainer>
+        Land Details
+        <S.AddNewRowButton onClick={addInput} disabled={enableAddButton} />
+      </S.AddLandDetailsContainer>
+
       <S.DynamicInputsBox>
         {dynamicInputs.map((inp, ind) => {
           const [[key, [surveyName, acreName, borderName]]] = Object.entries(inp);
@@ -124,7 +148,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setSurveyNo({ ...surveyNo, [surveyName]: e.target.value });
                 }}
                 options={{
-                  label: "*கணக்கெடுப்பு எண்",
+                  label: "கணக்கெடுப்பு எண் *",
                   gridArea: "srv",
                 }}
               />
@@ -137,7 +161,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setAcre({ ...acre, [acreName]: e.target.value });
                 }}
                 options={{
-                  label: "*ஏக்கர்",
+                  label: "ஏக்கர் *",
                   gridArea: "acr",
                 }}
               />
@@ -150,37 +174,35 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                   setBorder({ ...border, [borderName]: e.target.value });
                 }}
                 options={{
-                  label: "*நில எல்லை",
+                  label: "நில எல்லை *",
                   gridArea: "bdr",
                 }}
               />
-              {ind === dynamicInputs.length - 1 ? (
-                <S.AddBtn onClick={addInput} />
-              ) : (
-                <S.RemoveBtn
-                  onClick={() => {
-                    removeInput(key);
-                    unregister(surveyName);
-                    unregister(acreName);
-                    unregister(borderName);
-                    setSurveyNo((d) => {
-                      const updated = { ...d };
-                      delete updated[surveyName];
-                      return updated;
-                    });
-                    setAcre((d) => {
-                      const updated = { ...d };
-                      delete updated[acreName];
-                      return updated;
-                    });
-                    setBorder((d) => {
-                      const updated = { ...d };
-                      delete updated[borderName];
-                      return updated;
-                    });
-                  }}
-                />
-              )}
+
+              <S.RemoveBtn
+                onClick={() => {
+                  removeInput(key);
+                  unregister(surveyName);
+                  unregister(acreName);
+                  unregister(borderName);
+                  setSurveyNo((d) => {
+                    const updated = { ...d };
+                    delete updated[surveyName];
+                    return updated;
+                  });
+                  setAcre((d) => {
+                    const updated = { ...d };
+                    delete updated[acreName];
+                    return updated;
+                  });
+                  setBorder((d) => {
+                    const updated = { ...d };
+                    delete updated[borderName];
+                    return updated;
+                  });
+                }}
+                disabled={dynamicInputs.length === 1 ? true : false}
+              />
             </S.DynamicInputs>
           );
         })}

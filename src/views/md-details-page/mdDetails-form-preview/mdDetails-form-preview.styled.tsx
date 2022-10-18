@@ -3,7 +3,7 @@ import { Box, styled } from "@mui/material";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 
 export namespace S {
-  export const FarmerFormPreviewMainContainer = styled(Box)(({ theme }) => ({
+  export const MdFormPreviewMainContainer = styled(Box)(({ theme }) => ({
     boxSizing: "border-box",
     display: "flex",
     gap: "1rem",
@@ -19,19 +19,19 @@ export namespace S {
     display: "none",
   });
 
-  export const FarmerFormPreviewLeft = styled(Box)(({ theme }) => ({
+  export const MdFormPreviewLeft = styled(Box)(({ theme }) => ({
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
+    overflowY: "scroll",
     alignItems: "center",
     width: "50%",
     height: "100%",
     backgroundColor: "white",
     borderRadius: "1.25rem",
-    padding: "2rem 0.8rem",
+    padding: "2.5rem 0.8rem",
     textAlign: "center",
-    gap: "1rem",
+    gap: "1.5rem",
     [theme.breakpoints.down("lg")]: {
       width: "100%",
       height: "fit-content",
@@ -45,20 +45,20 @@ export namespace S {
   export const Text1 = styled(Typography)(({ theme }) => ({
     fontSize: "1.25rem",
     fontWeight: "600",
-    lineHeight: "1.7rem",
+    lineHeight: "2.0625rem",
     color: theme.palette.text.primary,
   }));
 
   export const Text2 = styled(Typography)(({ theme }) => ({
     fontSize: "1.125rem",
     fontWeight: "500",
-    lineHeight: "1.5rem",
+    lineHeight: "1.875rem",
     color: theme.palette.text.primary,
   }));
 
-  export const FarmerImgContainer = styled(Box)({
-    width: "8.9375rem",
-    height: "10.25rem",
+  export const MdImgContainer = styled(Box)({
+    width: "9.9375rem",
+    height: "11.25rem",
     minWidth: "8.125rem",
     minHeight: "9.375rem",
     borderRadius: "1.25rem",
@@ -70,7 +70,7 @@ export namespace S {
     },
   });
 
-  export const FarmerImg = styled("img")({
+  export const MdImg = styled("img")({
     height: "100%",
     width: "100%",
   });
@@ -102,7 +102,7 @@ export namespace S {
     color: theme.palette.text.secondary,
     fontSize: "1rem",
     fontWeight: "500",
-    lineHeight: "1.4rem",
+    lineHeight: "1.6875rem",
   }));
 
   export const CustomBackIcon = styled("span")({
@@ -132,7 +132,7 @@ export namespace S {
     },
   }));
 
-  export const FarmerFormPreviewRight = styled(Box)(({ theme }) => ({
+  export const MdFormPreviewRight = styled(Box)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
     overflowY: "auto",

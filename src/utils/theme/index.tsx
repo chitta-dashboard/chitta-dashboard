@@ -35,6 +35,7 @@ export const LightTheme: Theme = createTheme({
     custom: {
       backdrop: "#deefe97c",
       shadow: "#000000",
+      disabled: "#B3B3B3",
       //shadow-shades => theme.palette.addAlpha(theme.palette.custom.shadow, <alpha-value>)
     },
     bg: {

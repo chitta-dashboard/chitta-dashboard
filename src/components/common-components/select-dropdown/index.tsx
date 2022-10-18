@@ -1,4 +1,4 @@
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { DEFAULT_GROUP_FILTER, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import S from "./selectDropdown.styled";
 
@@ -12,9 +12,9 @@ const SelectDropDown = () => {
 
   return (
     <S.SelectInput select value={groupFilter} onChange={selectHandler}>
-      <S.Option value="all">Farmer Groups</S.Option>
+      <S.Option value={DEFAULT_GROUP_FILTER}>Farmer Groups</S.Option>
       {Object.values(farmersGroupById).map((list) => (
-        <S.Option key={list.id} value={list.groupName} selectfilter={groupFilter === list.groupName ? 1 : 0}>
+        <S.Option key={list.id} value={list.groupName}>
           {list.groupName}
         </S.Option>
       ))}

@@ -2,32 +2,28 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import FarmerDetailsForm from "../FarmerDetailsForm";
+import MdDetailsForm from "../MdDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { fileValidation } from "../../../utils/constants";
-import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
-import ConfirmationModal from "../../../components/modals/confirmation-modal";
+import { IAddMDDetailsFormInput } from "../../../components/modals/type/formInputs";
+import AddMdsDetailsModal from "../../../components/modals/md-details-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import { S } from "./farmer-form-preview.styled";
+import { S } from "./mdDetails-form-preview.styled";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 
-const FarmerFormPreviewLeft = () => {
-  const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+const MdFormPreviewLeft = () => {
+  const {mdDetailsById,editMdDetail,deleteMdDetail} = useMdDetailsContext();
 
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddFarmersDetailsFormInput & { id: string; membershipId: string }) | null>(
-    null,
-  );
-  const farmerFormPdf = useRef<HTMLDivElement>();
+  const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const { farmerId } = useParams();
+  const { mdId } = useParams();
   const navigate = useNavigate();
 
   // popover open
@@ -44,11 +40,20 @@ const FarmerFormPreviewLeft = () => {
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
-  // to generate farmer detail form
-  const generateFarmerDetailsPDF = useReactToPrint({
-    documentTitle: `Nerkathir_FarmerForm${+new Date()}`,
-    content: () => farmerFormPdf.current as HTMLDivElement,
+  // to generate Md detail form
+  const generateMdDetailsPDF = useReactToPrint({
+    documentTitle: `Nerkathir_MdForm${+new Date()}`,
+    content: () => mdFormPdf.current as HTMLDivElement,
   });
+
+  // to change profile picture
+  const getURL = (id: string) => {
+    let result = Object.values(mdDetailsById).filter((item) => {
+      return item.id === id ? item.profile : null;
+    });
+    let data = result.length > 0 ? result[0]["profile"] : undefined;
+    return data;
+  };
 
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
@@ -69,27 +74,27 @@ const FarmerFormPreviewLeft = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = Object.values(farmersDetailsById).filter((item) => {
+    let result = Object.values(mdDetailsById).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editFarmerDetail({ ...result[0] });
+    editMdDetail({ ...result[0] });
   };
 
-  //Update FarmerDetail Handler
-  const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
-    setOpenConfirmationModal(data);
+  //Update MdDetail Handler
+  const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string; membershipId?: string }) => {
+    editMdDetail(data);
   };
 
   return (
     <>
       <S.InvisibleBox>
-        <FarmerDetailsForm ref={farmerFormPdf} />
+        <MdDetailsForm ref={mdFormPdf} />
       </S.InvisibleBox>
-      {Object.values(farmersDetailsById)
-        .filter((name) => [farmerId].includes(name.id))
+      {Object.values(mdDetailsById)
+        .filter((name) => [mdId].includes(name.id))
         .map((user) => (
-          <S.FarmerFormPreviewLeft key={user.id}>
+          <S.MdFormPreviewLeft key={user.id}>
             <S.CustomBackIcon onClick={() => navigate(-1)}>
               <IconWrapper>back</IconWrapper>
             </S.CustomBackIcon>
@@ -112,7 +117,7 @@ const FarmerFormPreviewLeft = () => {
             >
               <S.CustomPopoverList
                 onClick={() => {
-                  generateFarmerDetailsPDF();
+                  generateMdDetailsPDF();
                   handleClose();
                 }}
               >
@@ -143,8 +148,8 @@ const FarmerFormPreviewLeft = () => {
                 நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
               </S.Text2>
             </S.FormHeading>
-            <S.FarmerImgContainer>
-              <S.FarmerImg src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : NerkathirUser} alt="profie-picture" />
+            <S.MdImgContainer>
+              <S.MdImg src={getURL(user.id) ? getURL(user.id) : NerkathirUser} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
@@ -154,7 +159,7 @@ const FarmerFormPreviewLeft = () => {
                 <S.EditIcon>edit</S.EditIcon>
                 <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
-            </S.FarmerImgContainer>
+            </S.MdImgContainer>
             <S.HeaderText>
               உறுப்பினர் எண் : {user.membershipId} <br />
               நாள்: {current.getDate()}/{current.getMonth()}/{current.getFullYear()}
@@ -164,10 +169,10 @@ const FarmerFormPreviewLeft = () => {
               அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
             </S.HeaderText>
             {openEditModal && (
-              <AddFarmersDetailsModal
+              <AddMdsDetailsModal
                 openModal={true}
                 handleClose={() => setOpenEditModal(false)}
-                cb={updateFarmerDetail}
+                cb={updateMdDetail}
                 editMode={true}
                 id={user.id}
               />
@@ -177,34 +182,21 @@ const FarmerFormPreviewLeft = () => {
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
-                  deleteFarmerDetail(user.id);
+                  deleteMdDetail(user.id);
                   navigate(-1);
                 }}
                 deleteMessage={
                   <span>
-                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from CeoList?
+                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from CeoList?
                   </span>
                 }
               />
             )}
-            {openConfirmationModal && (
-              <ConfirmationModal
-                openModal={true}
-                handleClose={() => {
-                  setOpenConfirmationModal(null);
-                }}
-                yesAction={() => {
-                  editFarmerDetail(openConfirmationModal);
-                  setOpenConfirmationModal(null);
-                  setOpenEditModal(false);
-                }}
-              />
-            )}
-          </S.FarmerFormPreviewLeft>
+          </S.MdFormPreviewLeft>
         ))}
       {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };
 
-export default FarmerFormPreviewLeft;
+export default MdFormPreviewLeft;
