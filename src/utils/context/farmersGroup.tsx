@@ -61,7 +61,7 @@ const initialState: farmersGroupContextType = {
       chairman: "option-1",
       treasurer: "option-3",
       secretary: "option-2",
-      members: ["1", "4", "5"],
+      members: ["1", "4", "5", "7", "8"],
     },
     "2": {
       id: "2",
@@ -79,7 +79,7 @@ const initialState: farmersGroupContextType = {
       chairman: "option-3",
       treasurer: "option-3",
       secretary: "option-3",
-      members: ["2", "3", "6"],
+      members: ["2", "3", "6", "9", "10"],
     },
   },
   searchFilter: "",
