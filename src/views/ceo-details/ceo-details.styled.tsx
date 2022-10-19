@@ -153,16 +153,17 @@ namespace S {
     },
   }));
 
-  export const CeoDetailDescription = styled(Box)(({ theme }: any) => ({
-    flex: "1",
+  export const CeoDetailDescription = styled(Box)(({ theme, cardexpand }: any) => ({
     fontSize: "1.125rem",
     minHeight: "6rem",
+    height: cardexpand === "true" ? "6rem" : "fit-content",
     overflow: "hidden",
     paddingRight: "0.3125rem",
     color: theme.palette.text.secondary,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.75rem",
       minHeight: "4rem",
+      height: cardexpand === "true" ? "4rem" : "fit-content",
     },
   }));
 

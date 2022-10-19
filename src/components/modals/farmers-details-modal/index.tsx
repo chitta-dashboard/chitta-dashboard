@@ -3,7 +3,6 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-// import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -12,9 +11,9 @@ import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
 import { dateFormat } from "../../../utils/constants";
-import S from "./farmersDetailsModal.styled";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
+import S from "./farmersDetailsModal.styled";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => void;
@@ -24,11 +23,11 @@ interface CustomProps {
   id?: string;
 }
 
-const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
+  const { openModal, handleClose, cb, editMode = false, id = "" } = props;
+  const { farmersDetailsById } = useFarmerDetailsContext();
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
-  const { farmersDetailsById } = useFarmerDetailsContext();
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -131,7 +130,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   }
 
   let form2EnableButton = true;
-  const educationEvent = form2Watch("education");
+  const qualificationEvent = form2Watch("qualification");
   const villageEvent = form2Watch("village");
   const postalNoEvent = form2Watch("postalNo");
   const addressEvent = form2Watch("address");
@@ -143,7 +142,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
   const groupMemberEvent = form2Watch("groupMember");
 
   if (
-    educationEvent &&
+    qualificationEvent &&
     villageEvent &&
     postalNoEvent &&
     addressEvent &&
@@ -179,7 +178,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
       });
 
       form2Reset({
-        education: farmerData?.education,
+        qualification: farmerData?.qualification,
         village: farmerData?.village,
         postalNo: farmerData?.postalNo,
         address: farmerData?.address,
@@ -222,9 +221,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = ({ openModal, handleClose, c
       membershipId: "NEF-FPC-2",
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    // const newMember = { id: params.id, group: params.group };
-    // editMode && removeGroupMember(newMember);
-    // addGroupMember(newMember);
     !editMode && handleClose();
   };
 

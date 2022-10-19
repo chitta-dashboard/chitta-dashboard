@@ -31,7 +31,7 @@ const MdDetails = () => {
     });
     let filteredFarmerData: farmerDetail[] = [];
     farmerKeys.map((item) => {
-      filteredFarmerData.push(farmersDetailsById[item]);
+      return filteredFarmerData.push(farmersDetailsById[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
   }, [mdDetailsById, farmersDetailsById]);
@@ -51,9 +51,7 @@ const MdDetails = () => {
       setSelectedKeys([]);
     } else {
       let newFarmerKeys: string[] = [];
-      filteredFarmerDetails.map((item) => {
-        !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id);
-      });
+      filteredFarmerDetails.map((item) => !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id));
       setSelectedKeys([...selectedKeys, ...newFarmerKeys]);
     }
   };
@@ -70,7 +68,7 @@ const MdDetails = () => {
 
   const handleYesAction = () => {
     let farmerData: { [id: string]: mdDetail } = {};
-    selectedKeys.map((item:string) => {
+    selectedKeys.map((item: string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: mdDetail = {} as mdDetail;
       let farmerKeys = Object.keys(farmersDetailsById[item]);

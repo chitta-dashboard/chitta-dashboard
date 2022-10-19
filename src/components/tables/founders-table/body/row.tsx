@@ -1,7 +1,8 @@
 import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
-import { fileValidation } from "../../../../utils/constants";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { fileValidation, Message } from "../../../../utils/constants";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
@@ -18,6 +19,7 @@ interface FoundersRowProp {
 
 const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const { editFounder, deleteFounder } = useFounderContext();
+  const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -113,6 +115,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             deleteFounder(user.id);
             setDeleteModal(false);
             setIconModal(false);
+            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
           }}
           deleteMessage={
             <>

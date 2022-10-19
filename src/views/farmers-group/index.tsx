@@ -2,11 +2,14 @@ import { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
+import { Message } from "../../utils/constants";
+import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
 
 const FarmersGroup = () => {
   const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
@@ -34,6 +37,7 @@ const FarmersGroup = () => {
   // Add Farmergroup Handler
   const addDataHandler = (data: FarmersGroupType) => {
     addFarmersGroup(data);
+    addNotification({ id: data.id, message: Message(data.groupName).addFarmGroup });
   };
 
   return (

@@ -11,36 +11,61 @@ const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type mdDetail = {
+  // id: string;
+  // name: string;
+  // phoneNumber: string;
+  // qualification?: string;
+  // profile: string;
+  // dob: string;
+  // signature?: string;
+  // farmerId?: string;
+  // membershipId?: string;
+  // isChecked?: boolean;
+  // fatherName?: string;
+  // sex?: string;
+  // spouseName?: string;
+  // group?: string;
+  // addhaarNo?: string;
+  // surveyNo?: { [key: string]: string };
+  // acre?: { [key: string]: string };
+  // border?: { [key: string]: string };
+  // village?: string;
+  // postalNo?: string;
+  // address?: string;
+  // taluk?: string;
+  // district?: string;
+  // landType?: string;
+  // farmerType?: string;
+  // waterType?: string;
+  // animals?: string;
+  // groupMember?: string;
+  membershipId?: string;
+  profile: string;
+  // isChecked?: boolean;
   id: string;
   name: string;
-  phoneNumber: string;
-  qualification?: string;
-  profile: string;
+  fatherName: string;
+  sex: string;
+  spouseName: string;
   dob: string;
-  signature?: string;
+  group: string;
+  phoneNumber: string;
+  addhaarNo: string;
+  surveyNo: { [key: string]: string };
+  acre: { [key: string]: string };
+  border: { [key: string]: string };
+  village: string;
+  postalNo: string;
+  address: string;
+  taluk: string;
+  district: string;
+  landType: string;
+  farmerType: string;
+  waterType: string;
+  animals: string;
+  groupMember: string;
+  qualification: string;
   farmerId?: string;
-
-  membershipId?: string;
-  isChecked?: boolean;
-  fatherName?: string;
-  sex?: string;
-  spouseName?: string;
-  group?: string;
-  addhaarNo?: string;
-  surveyNo?: { [key: string]: string };
-  acre?: { [key: string]: string };
-  border?: { [key: string]: string };
-  education?: string;
-  village?: string;
-  postalNo?: string;
-  address?: string;
-  taluk?: string;
-  district?: string;
-  landType?: string;
-  farmerType?: string;
-  waterType?: string;
-  animals?: string;
-  groupMember?: string;
 };
 
 export type selectedMdListData = number | string;
@@ -66,57 +91,115 @@ const initialState: mdDetailsContextType = {
   mdDetailsById: {
     "1": {
       id: "1",
+      membershipId: "NER-FPC-2",
       profile: profileImg,
-      name: "Aditha Karikalan",
-      phoneNumber: "9945672156",
-      qualification: "BBA, MBA",
-      dob: "12-10-1989",
-      signature: "",
+      name: "Arokiya",
+      phoneNumber: "8610010875",
+      group: "விவசாயிகள் சங்கம்-1",
+      fatherName: "cholan",
+      sex: "male",
+      spouseName: "nil",
+      dob: "10-08-1996",
+      addhaarNo: "901290129012",
+      acre: { "acre-first": "1" },
+      border: { "border-first": "1" },
+      village: "cholanmaligai",
+      postalNo: "612010",
+      address: "thanjavur",
+      taluk: "thanjavur",
+      district: "thanjavur",
+      surveyNo: { "surveyNo-first": "1" },
+      landType: "option-1",
+      farmerType: "option-2",
+      waterType: "option-2",
+      animals: "மாடு",
+      groupMember: "yes",
+      qualification: "B.E, Mechanical",
+      farmerId: "1",
     },
     "2": {
       id: "2",
+      membershipId: "NER-FPC-2",
       profile: profileImg,
-      name: "Arulmozhi Varman",
-      phoneNumber: "8610010875",
-      qualification: "BA",
-      dob: "01-03-1994",
-      signature: "",
+      name: "Sethu Ravichandran",
+      phoneNumber: "8968456734",
+      group: "விவசாயிகள் சங்கம்-3",
+      fatherName: "cholan",
+      sex: "male",
+      spouseName: "nil",
+      dob: "01-01-1994",
+      addhaarNo: "901290129012",
+      acre: { "acre-first": "1" },
+      border: { "border-first": "1" },
+      village: "cholanmaligai",
+      postalNo: "612010",
+      address: "thanjavur",
+      taluk: "thanjavur",
+      district: "thanjavur",
+      surveyNo: { "surveyNo-first": "1" },
+      landType: "option-1",
+      farmerType: "option-2",
+      waterType: "option-2",
+      animals: "மாடு",
+      groupMember: "yes",
+      qualification: "B.E, ECE",
+      farmerId: "2",
     },
     "3": {
       id: "3",
+      membershipId: "NER-FPC-2",
       profile: profileImg,
-      name: "Nandini",
-      phoneNumber: "8968456734",
-      qualification: "BCom CA",
-      dob: "05-08-1998",
-      signature: "",
+      name: "Vijay",
+      phoneNumber: "9001237654",
+      group: "விவசாயிகள் சங்கம்-3",
+      fatherName: "cholan",
+      sex: "male",
+      spouseName: "nil",
+      dob: "07-01-1998",
+      addhaarNo: "901290129012",
+      acre: { "acre-first": "1" },
+      border: { "border-first": "1" },
+      village: "cholanmaligai",
+      postalNo: "612010",
+      address: "thanjavur",
+      taluk: "thanjavur",
+      district: "thanjavur",
+      surveyNo: { "surveyNo-first": "1" },
+      landType: "option-1",
+      farmerType: "option-2",
+      waterType: "option-2",
+      animals: "மாடு",
+      groupMember: "yes",
+      qualification: "B.Tech - IT",
+      farmerId: "3",
     },
     "4": {
       id: "4",
+      membershipId: "NER-FPC-2",
       profile: profileImg,
-      name: "Vanthiyathevan ",
-      phoneNumber: "8838461839",
-      qualification: "BSc, Computer Science",
-      dob: "07-01-1998",
-      signature: "",
-    },
-    "5": {
-      id: "5",
-      profile: profileImg,
-      name: "Kundavai",
-      phoneNumber: "9854367213",
-      qualification: "B.Tech, Information Technology",
-      dob: "01-01-1994",
-      signature: "",
-    },
-    "6": {
-      id: "6",
-      profile: profileImg,
-      name: "Rajendran Cholan",
-      phoneNumber: "9945672156",
-      qualification: "B.Tech, Computer Science",
-      dob: "10-08-1996",
-      signature: "",
+      name: "Raj",
+      phoneNumber: "7845673879",
+      group: "விவசாயிகள் சங்கம்-1",
+      fatherName: "cholan",
+      sex: "male",
+      spouseName: "nil",
+      dob: "05-08-1998",
+      addhaarNo: "901290129012",
+      acre: { "acre-first": "1" },
+      border: { "border-first": "1" },
+      village: "cholanmaligai",
+      postalNo: "612010",
+      address: "thanjavur",
+      taluk: "thanjavur",
+      district: "thanjavur",
+      surveyNo: { "surveyNo-first": "1" },
+      landType: "option-1",
+      farmerType: "option-2",
+      waterType: "option-2",
+      animals: "மாடு",
+      groupMember: "yes",
+      qualification: "MBBS",
+      farmerId: "4",
     },
   },
   searchFilter: "",

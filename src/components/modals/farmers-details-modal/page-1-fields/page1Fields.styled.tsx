@@ -16,11 +16,14 @@ namespace S {
     gap: "1rem",
   });
 
-  export const DynamicInputsBox = styled("div")({
+  export const DynamicInputsBox = styled("div")(({ theme }) => ({
     gridArea: "dyn",
     display: "grid",
     gap: "1.5rem 1.2rem",
-  });
+    "& .Mui-disabled": {
+      backgroundColor: theme.palette.custom.disabled,
+    },
+  }));
 
   export const DynamicInputs = styled("div")({
     display: "grid",
@@ -39,6 +42,9 @@ namespace S {
     justifyContent: "space-between",
     fontSize: ".8rem",
     color: theme.palette.text.secondary,
+    "& .Mui-disabled": {
+      backgroundColor: theme.palette.custom.disabled,
+    },
   }));
 
   AddLandDetailsContainer.defaultProps = {
@@ -57,7 +63,6 @@ namespace S {
   AddBtn.defaultProps = {
     children: <i>add</i>,
   };
-
 
   export const RemoveBtn = styled(Button)(({ theme }) => ({
     gridArea: "btn",
