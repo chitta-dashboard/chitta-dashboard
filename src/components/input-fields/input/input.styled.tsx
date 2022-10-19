@@ -146,8 +146,7 @@ namespace S {
     color: "transparent",
   }));
 
-  export const StyledAutocomplete = styled(Autocomplete)({
-    width: "18.75rem",
+  export const StyledAutocomplete = styled(Autocomplete, { shouldForwardProp: (prop) => prop !== "gridArea" })({
     "& .MuiOutlinedInput-root": {
       height: "2.5rem",
       fontSize: "0.9rem",

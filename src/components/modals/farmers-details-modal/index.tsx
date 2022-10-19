@@ -3,9 +3,6 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
-import { useAuthContext } from "../../../utils/context/auth";
-import { Message } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -29,8 +26,6 @@ interface CustomProps {
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "" } = props;
   const { farmersDetailsById } = useFarmerDetailsContext();
-  const { addGroupMember } = useFarmersGroupContext();
-  const { addNotification } = useAuthContext();
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
 
@@ -135,7 +130,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   }
 
   let form2EnableButton = true;
-  const educationEvent = form2Watch("education");
+  const qualificationEvent = form2Watch("qualification");
   const villageEvent = form2Watch("village");
   const postalNoEvent = form2Watch("postalNo");
   const addressEvent = form2Watch("address");
@@ -147,7 +142,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const groupMemberEvent = form2Watch("groupMember");
 
   if (
-    educationEvent &&
+    qualificationEvent &&
     villageEvent &&
     postalNoEvent &&
     addressEvent &&
@@ -183,7 +178,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       });
 
       form2Reset({
-        education: farmerData?.education,
+        qualification: farmerData?.qualification,
         village: farmerData?.village,
         postalNo: farmerData?.postalNo,
         address: farmerData?.address,
@@ -226,9 +221,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       membershipId: "NEF-FPC-2",
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
-    const AddNewMember = { id: params.id, group: params.group };
-    !editMode && addGroupMember(AddNewMember);
-    !editMode && addNotification({ id: params.id, image: params.profile, message: Message(params.name).addFarmDetail });
     !editMode && handleClose();
   };
 

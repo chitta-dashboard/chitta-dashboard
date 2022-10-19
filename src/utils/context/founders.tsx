@@ -37,8 +37,8 @@ export interface foundersContextType {
 
 const initialState: foundersContextType = {
   foundersById: {
-    "1": {
-      id: "1",
+    a: {
+      id: "a",
       profile: profileImg,
       name: "Veera Raghavan",
       phoneNumber: "9945672156",
@@ -47,8 +47,8 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "2": {
-      id: "2",
+    b: {
+      id: "b",
       profile: profileImg,
       name: "John Durairaj",
       phoneNumber: "8610010875",
@@ -57,8 +57,8 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "3": {
-      id: "3",
+    c: {
+      id: "c",
       profile: profileImg,
       name: "Vijay Kumar",
       phoneNumber: "8968456734",
@@ -67,8 +67,8 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "4": {
-      id: "4",
+    d: {
+      id: "d",
       profile: profileImg,
       name: "Kathiresan",
       phoneNumber: "8838461839",
@@ -77,8 +77,8 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "5": {
-      id: "5",
+    e: {
+      id: "e",
       profile: profileImg,
       name: "Jeevanandham",
       phoneNumber: "9854367213",
@@ -87,8 +87,8 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "6": {
-      id: "6",
+    f: {
+      id: "f",
       profile: profileImg,
       name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
@@ -110,7 +110,7 @@ const initialState: foundersContextType = {
 const reducer = (state: foundersContextType, action: any) => {
   switch (action.type) {
     case ADD_FOUNDERS:
-      return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };
+      return { ...state, foundersById: { [action.payload.id]: action.payload, ...state.foundersById } };
 
     case EDIT_FOUNDERS:
       return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };

@@ -5,22 +5,27 @@ import { useReactToPrint } from "react-to-print";
 import MdDetailsForm from "../MdDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { fileValidation } from "../../../utils/constants";
-import { IAddMDDetailsFormInput } from "../../../components/modals/type/formInputs";
-import AddMdsDetailsModal from "../../../components/modals/md-details-modal";
+import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import { S } from "./mdDetails-form-preview.styled";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { mdDetail, useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
-  const {mdDetailsById,editMdDetail,deleteMdDetail} = useMdDetailsContext();
-
+  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { editFarmerDetail } = useFarmerDetailsContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<mdDetail | null>(null);
+  const AddNewMember = { id: openConfirmationModal?.id, group: openConfirmationModal?.group };
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
@@ -79,11 +84,12 @@ const MdFormPreviewLeft = () => {
     });
     result[0]["profile"] = image;
     editMdDetail({ ...result[0] });
+    editFarmerDetail({ ...result[0] });
   };
 
   //Update MdDetail Handler
-  const updateMdDetail = (data: IAddMDDetailsFormInput & { id: string; membershipId?: string }) => {
-    editMdDetail(data);
+  const updateMdDetail = (data: mdDetail) => {
+    setOpenConfirmationModal(data);
   };
 
   return (
@@ -169,13 +175,7 @@ const MdFormPreviewLeft = () => {
               அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
             </S.HeaderText>
             {openEditModal && (
-              <AddMdsDetailsModal
-                openModal={true}
-                handleClose={() => setOpenEditModal(false)}
-                cb={updateMdDetail}
-                editMode={true}
-                id={user.id}
-              />
+              <FarmersDetailsModal openModal={true} handleClose={() => setOpenEditModal(false)} cb={updateMdDetail} editMode={true} id={user.id} />
             )}
             {openDeleteModal && (
               <DeleteModal
@@ -187,9 +187,25 @@ const MdFormPreviewLeft = () => {
                 }}
                 deleteMessage={
                   <span>
-                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from CeoList?
+                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from MD Details?
                   </span>
                 }
+              />
+            )}
+            {openConfirmationModal && (
+              <ConfirmationModal
+                openModal={true}
+                handleClose={() => {
+                  setOpenConfirmationModal(null);
+                }}
+                yesAction={() => {
+                  editMdDetail(openConfirmationModal);
+                  editFarmerDetail(openConfirmationModal);
+                  removeGroupMember(user.id);
+                  addGroupMember(AddNewMember);
+                  setOpenConfirmationModal(null);
+                  setOpenEditModal(false);
+                }}
               />
             )}
           </S.MdFormPreviewLeft>

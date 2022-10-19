@@ -54,17 +54,17 @@ interface farmersGroupContextType {
 
 const initialState: farmersGroupContextType = {
   farmersGroupById: {
-    "1": {
-      id: "1",
+    a: {
+      id: "a",
       groupName: "விவசாயிகள் சங்கம்-1",
       explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "option-1",
       treasurer: "option-3",
       secretary: "option-2",
-      members: ["1", "4", "5"],
+      members: ["a", "d", "e", "g", "h"],
     },
-    "2": {
-      id: "2",
+    b: {
+      id: "b",
       groupName: "விவசாயிகள் சங்கம்-2",
       explanation: "இந்த குழு சோழர் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "option-2",
@@ -72,14 +72,14 @@ const initialState: farmersGroupContextType = {
       secretary: "option-2",
       members: [],
     },
-    "3": {
-      id: "3",
+    c: {
+      id: "c",
       groupName: "விவசாயிகள் சங்கம்-3",
       explanation: "இந்த குழு பாண்டியன் என்பவரால் உருவாக்கப்பட்டது...",
       chairman: "option-3",
       treasurer: "option-3",
       secretary: "option-3",
-      members: ["2", "3", "6"],
+      members: ["b", "c", "f", "i", "j"],
     },
   },
   searchFilter: "",
@@ -98,7 +98,7 @@ const initialState: farmersGroupContextType = {
 const reducer = (state: farmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
-      return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
+      return { ...state, farmersGroupById: { [action.payload.id]: action.payload, ...state.farmersGroupById } };
 
     case EDIT_FARMERS_GROUP:
       return { ...state, farmersGroupById: { ...state.farmersGroupById, [action.payload.id]: action.payload } };
