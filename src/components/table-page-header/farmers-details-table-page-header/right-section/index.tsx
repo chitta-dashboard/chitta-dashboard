@@ -1,5 +1,6 @@
 import { FC } from "react";
 import SelectDropDown from "../../../common-components/select-dropdown";
+import ExportCSV from "../../../export-csv-data";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {
@@ -9,7 +10,7 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
-  const { selectedFarmers } = useFarmerDetailsContext();
+  const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
 
   return (
     <S.RightSectionContainer>
@@ -20,7 +21,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
-        <S.CustomButton>Export Farmers</S.CustomButton>
+        <ExportCSV name="Export Farmers" csvData={Object.values(farmersDetailsById)} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();
