@@ -29,7 +29,7 @@ export namespace S {
     height: "100%",
     backgroundColor: "white",
     borderRadius: "1.25rem",
-    padding: "2rem 0.8rem",
+    padding: "2rem 3vw",
     textAlign: "center",
     gap: "1rem",
     [theme.breakpoints.down("lg")]: {

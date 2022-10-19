@@ -68,7 +68,7 @@ const Header = () => {
           <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
           <S.TabIcon>account</S.TabIcon>
           <S.TabIcon onClick={logout}>logout</S.TabIcon>
-          {isMd ? <i onClick={() => setNavOpen(true)}>menu</i> : null}
+          {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
         </S.ActionsBox>
       </S.Header>
       <S.Pop
