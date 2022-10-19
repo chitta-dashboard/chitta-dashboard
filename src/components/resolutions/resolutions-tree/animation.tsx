@@ -1,5 +1,10 @@
 import { keyframes } from "@mui/material";
 
+export const STEM_DURATION = 0.2;
+export const BRANCH_DURATION = 0.2;
+export const LEAF_DURATION = 0.4;
+export const TOTAL_DURATION = STEM_DURATION + BRANCH_DURATION + LEAF_DURATION;
+
 export const growX = keyframes`
     0% {
         transform: scaleX(0);
@@ -51,8 +56,3 @@ export const slideUp = keyframes`
         transform: translateY(0px);
     }
 `;
-
-export const STEM_DURATION = 0.2;
-export const BRANCH_DURATION = 0.2;
-export const LEAF_DURATION = 0.4;
-export const TOTAL_DURATION = STEM_DURATION + BRANCH_DURATION + LEAF_DURATION;

@@ -40,8 +40,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         {leafCount >= 1 && (
           <S.L1 leafCount={leafCount}>
             <S.ResolutionsTimestamp placement="left">{resolutions[0].timestamp}</S.ResolutionsTimestamp>
-            <S.LeafContent leafCount={leafCount}>
-              <div className="content">
+            <S.LeafContentBox>
+              <S.LeafContent>
                 <S.ResolutionTitle>{resolutions[0].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[0].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
@@ -61,8 +61,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                     <i>download</i>
                   </S.DownloadBtn>
                 </S.ButtonsBar>
-              </div>
-            </S.LeafContent>
+              </S.LeafContent>
+            </S.LeafContentBox>
             <span className="stem"></span>
             <span className="branch"></span>
             <span className="leaf"></span>
@@ -71,8 +71,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         {leafCount >= 3 && (
           <S.L2 leafCount={leafCount}>
             <S.ResolutionsTimestamp placement="left">{resolutions[2].timestamp}</S.ResolutionsTimestamp>
-            <S.LeafContent leafCount={leafCount}>
-              <div className="content">
+            <S.LeafContentBox>
+              <S.LeafContent>
                 <S.ResolutionTitle>{resolutions[2].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[2].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
@@ -92,8 +92,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                     <i>download</i>
                   </S.DownloadBtn>
                 </S.ButtonsBar>
-              </div>
-            </S.LeafContent>
+              </S.LeafContent>
+            </S.LeafContentBox>
             <span className="stem"></span>
             <span className="branch"></span>
             <span className="leaf"></span>
@@ -102,8 +102,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         {leafCount >= 2 && (
           <S.R1 leafCount={leafCount}>
             <S.ResolutionsTimestamp placement="right">{resolutions[1].timestamp}</S.ResolutionsTimestamp>
-            <S.LeafContent leafCount={leafCount}>
-              <div className="content">
+            <S.LeafContentBox>
+              <S.LeafContent>
                 <S.ResolutionTitle>{resolutions[1].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[1].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
@@ -123,8 +123,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                     <i>download</i>
                   </S.DownloadBtn>
                 </S.ButtonsBar>
-              </div>
-            </S.LeafContent>
+              </S.LeafContent>
+            </S.LeafContentBox>
             <span className="stem"></span>
             <span className="branch"></span>
             <span className="leaf"></span>
@@ -133,8 +133,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
         {leafCount >= 4 && (
           <S.R2 leafCount={leafCount}>
             <S.ResolutionsTimestamp placement="right">{resolutions[3].timestamp}</S.ResolutionsTimestamp>
-            <S.LeafContent leafCount={leafCount}>
-              <div className="content">
+            <S.LeafContentBox>
+              <S.LeafContent>
                 <S.ResolutionTitle>{resolutions[3].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[3].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
@@ -154,14 +154,14 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                     <i>download</i>
                   </S.DownloadBtn>
                 </S.ButtonsBar>
-              </div>
-            </S.LeafContent>
+              </S.LeafContent>
+            </S.LeafContentBox>
             <span className="stem"></span>
             <span className="branch"></span>
             <span className="leaf"></span>
           </S.R2>
         )}
-        <S.Shadow leafCount={leafCount} />
+        <S.Shadow />
       </S.ResolutionsTreeBox>
       {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
