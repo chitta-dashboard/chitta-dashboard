@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import {useMdDetailsContext} from "../../../utils/context/mdDetails";
-import { MD_DATA} from "../constant";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { MD_DATA } from "../constant";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewRight = () => {
