@@ -27,7 +27,7 @@ export interface IAddFarmersDetailsPage1Input {
 }
 
 export interface IAddFarmersDetailsPage2Input {
-  education: string;
+  qualification: string;
   village: string;
   postalNo: string;
   address: string;
@@ -40,7 +40,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -66,4 +66,14 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
+  joinDate:string;
+}
+export interface IAddFounderDetailsFormInput {
+  name: string;
+  phoneNumber: string;
+  qualification: string;
+  dob: string;
+  profile: string;
+  description: string;
+  joinDate:string;
 }

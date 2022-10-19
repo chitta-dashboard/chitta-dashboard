@@ -98,7 +98,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         signature: "", // temporary, until sbucket integration
-        profile: "", // temporary, until sbucket integration
+        profile: userData?.profile, // temporary, until sbucket integration
       });
     }
 

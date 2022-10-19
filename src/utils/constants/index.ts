@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-      .trim()
-      .toLowerCase()
-      .search(
-        word
-          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-          .trim()
-          .toLowerCase(),
-      ) >= 0
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-      asDate: false,
-    },
+    asDate: false,
+  },
 ) => {
   const arrClone = [...arr];
 
@@ -131,17 +131,36 @@ export const Message = (name: string) => {
   return {
     addMd: `New Md "${name}" has been registered`,
     deleteMd: `Md "${name}" has been removed`,
-    addFarmGroup: `new farmer group "${name}" has been registered`,
-    deleteFarmGroup: `new farmer group "${name}" has been removed`,
-    addFarmDetail: `New farmer "${name}" has been registered`,
-    deleteFarmDetail: `farmer "${name}" has been removed`,
+    addFarmGroup: `New Farmer group "${name}" has been registered`,
+    deleteFarmGroup: `Farmer group "${name}" has been removed`,
+    addFarmDetail: `New Farmer "${name}" has been registered`,
+    deleteFarmDetail: `Farmer "${name}" has been removed`,
     addCeoDetails: `New ceo "${name}" has been registered`,
     deleteCeoDetails: `ceo "${name}" has been removed`,
-    addFoundersDetails: `New founder "${name}" has been registered`,
-    deleteFoundersDetails: `founder "${name}" has been removed`,
+    addFoundersDetails: `New Founder "${name}" has been registered`,
+    deleteFoundersDetails: `Founder "${name}" has been removed`,
   };
 };
 
 export const dateFormat = (mydate?: string) => {
   return mydate && mydate.split("-").reverse().join("-");
+};
+
+export const calculateAge = (dob: string) => {
+  let seperatedDate = dob.split("-");
+  let dob1 = [seperatedDate[1], seperatedDate[0], seperatedDate[2]].join("-");
+  var today = new Date();
+  var birthDate = new Date(dob1);
+  var age_now = today.getFullYear() - birthDate.getFullYear();
+  var month = today.getMonth() - birthDate.getMonth();
+  if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+    age_now--;
+  }
+  return age_now;
+};
+
+export const createJoinDate = () => {
+  const dateObj = new Date().toString().split(" ");
+  const date = dateObj.slice(1, 4).join(",").replace(",", " ");
+  return date
 };

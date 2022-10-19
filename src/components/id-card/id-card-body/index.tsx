@@ -5,9 +5,10 @@ import Signature from "../../../assets/images/Signature.png";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import S from "./idCardBody.styled";
+import { Founders } from "../../../utils/context/founders";
 
 interface Props {
-  data?: farmerDetail | mdDetail;
+  data?: farmerDetail | mdDetail | Founders;
 }
 
 type Ref = HTMLDivElement | undefined;

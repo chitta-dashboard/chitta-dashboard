@@ -37,10 +37,13 @@ namespace S {
     },
   }));
 
-  export const ButtonStack = styled(Stack)({
+  export const ButtonStack = styled(Stack)(({ theme }) => ({
     flexDirection: "row",
     alignItems: "center",
     gap: "1rem",
-  });
+    "& .Mui-disabled": {
+      backgroundColor: theme.palette.custom.disabled,
+    },
+  }));
 }
 export default S;

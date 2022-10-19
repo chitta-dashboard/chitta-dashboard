@@ -1,9 +1,10 @@
 import { styled } from "@mui/material";
 
 namespace S {
-  export const Icon = styled("i")<{ shade?: boolean }>(({ theme, shade }) => ({
+  export const Icon = styled("i")<{ shade?: boolean; deleteicon?: number }>(({ theme, shade, deleteicon }) => ({
     fontSize: "1.75rem",
     color: shade ? theme.palette.text.secondaryLight : theme.palette.text.primary,
+    visibility: deleteicon ? "hidden" : "visible",
     [theme.breakpoints.down("md")]: {
       fontSize: "1.25rem",
     },

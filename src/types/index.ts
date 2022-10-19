@@ -15,6 +15,7 @@ declare module "@mui/material" {
     custom: {
       backdrop: string;
       shadow: string;
+      disabled: string;
     };
     bg: {
       main: string;
@@ -46,6 +47,7 @@ declare module "@mui/material" {
     custom: {
       backdrop: string;
       shadow: string;
+      disabled: string;
     };
     bg: {
       main: string;

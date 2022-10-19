@@ -2,11 +2,14 @@ import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { fileValidation } from "../../../../utils/constants";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { fileValidation, Message } from "../../../../utils/constants";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
-import MdDetailsModal from "../../../modals/md-details-modal";
+import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+// import MdDetailsModal from "../../../modals/md-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
-import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
@@ -19,15 +22,18 @@ interface MdDetailsRowProps {
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { editFarmerDetail } = useFarmerDetailsContext();
+  const { addNotification } = useAuthContext();
+  const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<mdDetail>();
   const [idCard, setIdCard] = useState(false);
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const navigate = useNavigate();
+  const AddNewMember = { id: editData?.id, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -43,9 +49,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
 
   // ID Card Modal Handler
   const idCardhandler = () => setIdCard(!idCard);
-
-  // Delete ModalHandler
-  const deleteModalHandler = () => setDeleteModal(!deleteModal);
 
   // confirm Modal Handler
   const confirmModalHandler = () => setConfirmModal(!confirmModal);
@@ -69,6 +72,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
     if (!image) return;
     user["profile"] = image;
     editMdDetail({ ...user });
+    editFarmerDetail({ ...user });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -109,21 +113,19 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
         }}
       >
         <S.IconBox>
-          <CS.Icon>id-card</CS.Icon>
+          <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
           <CS.Icon onClick={editMdDetailHandler}>edit</CS.Icon>
           <S.Toggle checked={!!user.id} onChange={confirmModalHandler} />
         </S.IconBox>
-        {/* </S.WebTableCell> */}
         <MdDetailsIconModal
           open={iconModal}
           handleClose={() => setIconModal(false)}
-          handleDelete={() => setDeleteModal(true)}
           handleEdit={() => setEditMode(true)}
           check={user.id}
           handleConfirm={() => setConfirmModal(true)}
           handleIdCard={() => setIdCard(true)}
         />
-        <MdDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
         <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <ConfirmationModal
           openModal={confirmModal}
@@ -131,9 +133,13 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           yesAction={() => {
             !editMode && deleteMdDetail(user.id);
             editMode && editData && editMdDetail(editData);
+            editMode && editData && editFarmerDetail(editData);
+            editMode && removeGroupMember(user.id);
+            editMode && addGroupMember(AddNewMember);
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
+            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
           }}
           confirmMessage={
             !editMode && (

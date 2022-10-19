@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
     maxWidth: "100vw",
+    height: "4rem",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
@@ -18,13 +19,13 @@ namespace S {
   });
 
   export const Logo = styled("img")({
-    height: "5rem",
-    width: "5rem",
+    height: "3.2rem",
+    width: "3.2rem",
     cursor: "pointer",
   });
 
   export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
-    fontSize: "1rem",
+    fontSize: "0.8rem",
     fontWeight: "bold",
     textAlign: "center",
     letterSpacing: ".5px",
@@ -105,7 +106,7 @@ namespace S {
     whiteSpace: "nowrap",
     width: "max-content",
     position: "relative",
-    fontSize: ".9rem",
+    fontSize: ".77rem",
     zIndex: "1",
     "&::after": {
       content: "''",
