@@ -89,8 +89,8 @@ export interface mdDetailsContextType {
 
 const initialState: mdDetailsContextType = {
   mdDetailsById: {
-    "1": {
-      id: "1",
+    a: {
+      id: "a",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Arokiya",
@@ -115,10 +115,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, Mechanical",
-      farmerId: "1",
+      farmerId: "a",
     },
-    "2": {
-      id: "2",
+    b: {
+      id: "b",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Sethu Ravichandran",
@@ -143,10 +143,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, ECE",
-      farmerId: "2",
+      farmerId: "b",
     },
-    "3": {
-      id: "3",
+    c: {
+      id: "c",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Vijay",
@@ -171,10 +171,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.Tech - IT",
-      farmerId: "3",
+      farmerId: "c",
     },
-    "4": {
-      id: "4",
+    d: {
+      id: "d",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Raj",
@@ -199,7 +199,7 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "MBBS",
-      farmerId: "4",
+      farmerId: "d",
     },
   },
   searchFilter: "",
@@ -216,7 +216,7 @@ const initialState: mdDetailsContextType = {
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_MD_DETAIL:
-      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
+      return { ...state, mdDetailsById: { [action.payload.id]: action.payload }, ...state.mdDetailsById };
 
     case EDIT_MD_DETAIL:
       return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
