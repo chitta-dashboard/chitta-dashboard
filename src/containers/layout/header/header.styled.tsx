@@ -22,6 +22,8 @@ namespace S {
     height: "3.2rem",
     width: "3.2rem",
     cursor: "pointer",
+    borderRadius: "50%",
+    aspectRatio: "1/1",
   });
 
   export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
