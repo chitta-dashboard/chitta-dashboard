@@ -7,6 +7,7 @@ import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../utils/context/auth";
 import { fileValidation } from "../../../utils/constants";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -19,6 +20,7 @@ const MdFormPreviewLeft = () => {
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { editFarmerDetail } = useFarmerDetailsContext();
+  const { titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -148,10 +150,22 @@ const MdFormPreviewLeft = () => {
             </Popover>
             <S.FormHeading>
               <S.Text1>
-                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                {titleName ? (
+                  titleName
+                ) : (
+                  <>
+                    நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
+                )}
               </S.Text1>
               <S.Text2>
-                நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                {address ? (
+                  address
+                ) : (
+                  <>
+                    நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                  </>
+                )}
               </S.Text2>
             </S.FormHeading>
             <S.MdImgContainer>

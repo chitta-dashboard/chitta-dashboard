@@ -8,6 +8,7 @@ import IconWrapper from "../../../utils/iconWrapper";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { useAuthContext } from "../../../utils/context/auth";
 import { fileValidation } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
@@ -19,6 +20,7 @@ import { S } from "./farmer-form-preview.styled";
 const FarmerFormPreviewLeft = () => {
   const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  const { address, titleName } = useAuthContext();
   const { editMdDetail } = useMdDetailsContext();
 
   const [image, setImage] = useState("");
@@ -142,10 +144,22 @@ const FarmerFormPreviewLeft = () => {
             </Popover>
             <S.FormHeading>
               <S.Text1>
-                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                {titleName ? (
+                  titleName
+                ) : (
+                  <>
+                    நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
+                )}
               </S.Text1>
               <S.Text2>
-                நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                {address ? (
+                  address
+                ) : (
+                  <>
+                    நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                  </>
+                )}
               </S.Text2>
             </S.FormHeading>
             <S.FarmerImgContainer>
