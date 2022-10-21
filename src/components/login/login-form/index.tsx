@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -25,8 +25,9 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { login } = useAuthContext();
+  const { login, loginImage } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
+  const [loginLogo, setLoginLogo] = useState<string | null>();
 
   const {
     register,
@@ -60,14 +61,15 @@ const LoginForm: FC = () => {
   };
 
   const handleClickShowHidePassword = () => setShowPassword(!showPassword);
+  useEffect(() => {
+    setLoginLogo(localStorage.getItem("LoginLogo"));
+  }, []);
 
   return (
     <S.LoginMainContainer>
       <S.LoginContainer>
         <S.FormContainer>
-          <S.ImageBox>
-            <S.LogoImage src={logo} alt="Nerkathir" />
-          </S.ImageBox>
+          <S.ImageBox>{loginImage ? <S.LogoImage src={loginImage} alt="Nerkathir" /> : <S.LogoImage src={logo} alt="Nerkathir" />}</S.ImageBox>
 
           <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
             <S.InputBox>

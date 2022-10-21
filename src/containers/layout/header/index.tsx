@@ -9,7 +9,7 @@ import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
 
 const Header = () => {
-  const { userNotification, clearNotification, logout } = useAuthContext();
+  const { userNotification, clearNotification, logout, headerImage } = useAuthContext();
   const navigate = useNavigate();
   let { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
@@ -18,7 +18,6 @@ const Header = () => {
   pathname = pathname.split("/")[1];
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
-
   const clearNotifyHandler = () => {
     setnotification(null);
     clearNotification();
@@ -44,7 +43,11 @@ const Header = () => {
     <>
       <S.Header>
         <S.LogoBox>
-          <S.Logo src={Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+          {headerImage ? (
+            <S.Logo src={headerImage} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+          ) : (
+            <S.Logo src={Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+          )}
           <S.LogoText>
             நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
           </S.LogoText>
