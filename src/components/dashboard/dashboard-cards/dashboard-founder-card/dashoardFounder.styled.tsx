@@ -16,7 +16,7 @@ export namespace S {
       minHeight: "340px",
     },
     ".slick-prev": {
-      top: "98%",
+      top: "92%",
       left: "25%",
       zIndex: "3",
       width: "35px",
@@ -33,7 +33,7 @@ export namespace S {
       },
     },
     ".slick-next": {
-      top: "105%",
+      top: "97%",
       right: "25%",
       width: "35px",
       height: "35px",
@@ -53,7 +53,8 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
-      bottom: "-20px",
+      position:"relative",
+      bottom: "0",
       button: {
         "&:before": {
           fontSize: "10px",
