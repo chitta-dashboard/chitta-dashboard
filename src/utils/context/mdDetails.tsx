@@ -17,7 +17,7 @@ export type mdDetail = {
   // qualification?: string;
   // profile: string;
   // dob: string;
-  // signature?: string;
+  signature?: string;
   // farmerId?: string;
   // membershipId?: string;
   // isChecked?: boolean;
@@ -100,7 +100,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "10-08-1996",
-      addhaarNo: "901290129012",
+      addhaarNo: "503023001016",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -115,7 +115,6 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, Mechanical",
-      farmerId: "1",
     },
     "2": {
       id: "2",
@@ -128,7 +127,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "01-01-1994",
-      addhaarNo: "901290129012",
+      addhaarNo: "893245328967",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -143,7 +142,6 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, ECE",
-      farmerId: "2",
     },
     "3": {
       id: "3",
@@ -171,7 +169,6 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.Tech - IT",
-      farmerId: "3",
     },
     "4": {
       id: "4",
@@ -184,7 +181,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "05-08-1998",
-      addhaarNo: "901290129012",
+      addhaarNo: "908990897654",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -199,7 +196,6 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "MBBS",
-      farmerId: "4",
     },
   },
   searchFilter: "",
