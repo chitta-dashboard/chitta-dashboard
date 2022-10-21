@@ -22,6 +22,8 @@ namespace S {
     height: "3.2rem",
     width: "3.2rem",
     cursor: "pointer",
+    borderRadius: "50%",
+    aspectRatio: "1/1",
   });
 
   export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
@@ -135,15 +137,21 @@ namespace S {
   }));
 
   export const webIcon = styled("i")(({ theme }) => ({
+    fontSize: "1rem",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
   }));
 
   export const TabIcon = styled("i")(({ theme }) => ({
+    fontSize: "1rem",
     [theme.breakpoints.up("md")]: {
       display: "none",
     },
+  }));
+
+  export const MenuIcon = styled("i")(({ theme }) => ({
+    fontSize: "1rem",
   }));
 
   export const NavBarMenu = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -162,6 +170,7 @@ namespace S {
   }));
 
   export const NotificationBadge = styled(Badge)(({ theme }: { theme: Theme }) => ({
+    fontSize: "0.9rem",
     cursor: "pointer",
     "& .MuiBadge-badge": {
       right: 2,
@@ -170,6 +179,9 @@ namespace S {
       padding: "0 4px",
       backgroundColor: theme.palette.primary.light,
       color: theme.palette.text.white,
+    },
+    i: {
+      fontSize: "1rem",
     },
   }));
 

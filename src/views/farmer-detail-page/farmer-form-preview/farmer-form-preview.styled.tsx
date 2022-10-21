@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { alpha, Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 
@@ -29,7 +29,7 @@ export namespace S {
     height: "100%",
     backgroundColor: "white",
     borderRadius: "1.25rem",
-    padding: "2rem 0.8rem",
+    padding: "2rem 3vw",
     textAlign: "center",
     gap: "1rem",
     [theme.breakpoints.down("lg")]: {
@@ -142,10 +142,11 @@ export namespace S {
     backgroundColor: "white",
     borderRadius: "1.25rem",
     padding: "1.5rem 3vw",
-    backgroundSize: "85% 85%",
+    backgroundSize: "85%",
     backgroundImage: `url(${nerkathir_transparent_background})`,
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
+    filter: "alpha(opacity=0)",
     [theme.breakpoints.down("lg")]: {
       width: "100%",
       height: "fit-content",

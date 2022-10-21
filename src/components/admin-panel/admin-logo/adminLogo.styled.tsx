@@ -1,4 +1,4 @@
-import { styled, Stack, Box, Typography } from "@mui/material";
+import { styled, Stack, Box, Typography, FormHelperText } from "@mui/material";
 
 namespace S {
   export const ContainerStack = styled(Stack)({
@@ -6,6 +6,16 @@ namespace S {
     width: "100%",
     paddingTop: "1rem",
   });
+
+  export const ErrorText = styled(FormHelperText)(({ theme }) => ({
+    color: theme.palette.text.red,
+    textAlign: "left",
+    padding: "0.4rem 0rem",
+    margin: "0%",
+    fontSize: "0.75rem",
+    lineHeight: "1.125rem",
+    fontWeight: "400",
+  }));
 
   export const LogoText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
@@ -30,9 +40,9 @@ namespace S {
 
   export const logoImage = styled("img")<{ isColor: boolean }>(({ isColor }) => ({
     filter: isColor ? "grayscale(100%)" : "",
-    objectFit: "contain",
     width: "100%",
     height: "100%",
+    aspectRatio: "1/1",
   }));
 }
 

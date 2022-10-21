@@ -1,11 +1,14 @@
-import React, { useState, useRef, useEffect, FC } from "react";
+import { useState, useRef, useEffect, FC } from "react";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import S from "./adminLogo.styled";
+import { UseFormRegister } from "react-hook-form";
+import { FieldErrorsImpl } from "react-hook-form";
+import { adminFormInputs } from "../../../views/admin-panel";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
 import DummyLogo156 from "../../../assets/images/DummyLogo156.svg";
 import DummyLogo180 from "../../../assets/images/DummyLogo180.svg";
+import S from "./adminLogo.styled";
 
 interface CustomProps {
   file?: File;
@@ -13,6 +16,13 @@ interface CustomProps {
   height: number;
   placeholder: string;
   color?: boolean;
+}
+
+interface LogoProps {
+  register: UseFormRegister<adminFormInputs>;
+  errors: FieldErrorsImpl<{
+    profile: string;
+  }>;
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
@@ -40,21 +50,18 @@ export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, pl
   return <S.logoImage isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
-const AdminLogo: FC= () => {
-  const [file, setFile] = useState<File>();
-
-  const fileHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    try {
-      const file = event.target.files?.[0];
-      if (file) {
-        if (file.type === "image/png" || file.type === "image/jpeg") {
-          setFile(file);
-        }
+const AdminLogo: FC<LogoProps> = ({ register, errors }) => {
+  const [logo, setlogo] = useState<File>();
+  const [image, setImage] = useState<File>();
+  useEffect(() => {
+    if (image) {
+      if (image.type === "image/png" || image.type === "image/jpeg") {
+        setlogo(image);
+      } else {
+        setlogo(undefined);
       }
-    } catch (err) {
-      // console.log(err);
     }
-  };
+  }, [image]);
 
   return (
     <S.ContainerStack>
@@ -63,24 +70,33 @@ const AdminLogo: FC= () => {
         <Box>
           <Button component="label">
             Upload
-            <input onChange={fileHandler} hidden type="file" />
+            <input
+              {...register("profile", {
+                onChange: (e) => {
+                  setImage(e.target.files?.[0]);
+                },
+              })}
+              hidden
+              type="file"
+            />
           </Button>
         </Box>
         <S.LogoStack>
           <Box>
-            <ReactImageFileResizer placeholder={DummyLogo94} file={file} width={94} height={94} />
+            <ReactImageFileResizer placeholder={DummyLogo94} file={logo} width={94} height={94} />
           </Box>
           <Box>
-            <ReactImageFileResizer placeholder={DummyLogo156} file={file} width={156} height={156} />
+            <ReactImageFileResizer placeholder={DummyLogo156} file={logo} width={156} height={156} />
           </Box>
           <Box>
-            <ReactImageFileResizer color={true} placeholder={DummyLogo180} file={file} width={180} height={180} />
+            <ReactImageFileResizer color={true} placeholder={DummyLogo180} file={logo} width={180} height={180} />
           </Box>
           <Box>
-            <ReactImageFileResizer placeholder={DummyLogo180} file={file} width={180} height={180} />
+            <ReactImageFileResizer placeholder={DummyLogo180} file={logo} width={180} height={180} />
           </Box>
         </S.LogoStack>
       </S.UploadStack>
+      {errors.profile && <S.ErrorText>{errors.profile?.message}</S.ErrorText>}
     </S.ContainerStack>
   );
 };
