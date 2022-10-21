@@ -4,6 +4,7 @@ export namespace S {
   export const FounderWrapper = styled(Grid)(({ theme }) => ({
     display: "flex",
     flexDirection: "column",
+    height: "100%",
     padding: "1rem",
     backgroundColor: theme.palette.bg.main,
     boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
