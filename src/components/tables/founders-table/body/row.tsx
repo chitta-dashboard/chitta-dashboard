@@ -8,10 +8,10 @@ import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import userPic from "../../../../assets/images/user.png";
 
 interface FoundersRowProp {
   user: Founders;

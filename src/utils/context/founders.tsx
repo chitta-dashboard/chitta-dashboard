@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
