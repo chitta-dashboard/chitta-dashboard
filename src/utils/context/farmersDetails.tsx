@@ -1,6 +1,6 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
@@ -20,7 +20,6 @@ export const DEFAULT_GROUP_FILTER = "all";
 export type farmerDetail = {
   membershipId?: string;
   profile: string;
-  // isChecked?: boolean;
   id: string;
   name: string;
   fatherName: string;
@@ -362,10 +361,13 @@ const initialState: farmerDetailsContextType = {
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMER_DETAIL:
+      delete action.payload.farmerId;
       return { ...state, farmersDetailsById: { [action.payload.id]: action.payload, ...state.farmersDetailsById } };
 
     case EDIT_FARMER_DETAIL:
-      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [action.payload.id]: action.payload } };
+      const updateData = action.payload.farmerId ? { ...action.payload, id: action.payload.farmerId } : action.payload;
+      action.payload.farmerId ? delete updateData.farmerId : delete action.payload.farmerId;
+      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [updateData.id]: updateData } };
 
     case DELETE_FARMER_DETAIL:
       delete state.farmersDetailsById[action.payload];

@@ -48,7 +48,7 @@ interface farmersGroupContextType {
   editFarmersGroup: (data: FarmersGroup) => void;
   deleteFarmersGroup: (id: string) => void;
   addGroupMember: (data: IAddGroupMembers) => void;
-  removeGroupMember: (groupMemberId: string) => void;
+  removeGroupMember: (groupMemberId?: string) => void;
   setMemberFilter: (value: number) => void;
 }
 

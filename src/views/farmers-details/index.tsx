@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import { useAuthContext } from "../../utils/context/auth";
 import { Message } from "../../utils/constants";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
-import { IAddFarmersDetailsFormInput } from "../../components/modals/type/formInputs";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
 import S from "./farmersDetails.styled";
 
@@ -28,7 +27,7 @@ const FarmersDetails = () => {
   };
 
   // Add Farmerdetail Handler
-  const addDataHandler = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
+  const addDataHandler = (data: farmerDetail) => {
     const AddNewMember = { id: data.id, group: data.group };
     addGroupMember(AddNewMember);
     addFarmerDetail(data);

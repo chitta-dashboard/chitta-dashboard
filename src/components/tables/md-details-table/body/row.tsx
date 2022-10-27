@@ -8,13 +8,12 @@ import { useAuthContext } from "../../../../utils/context/auth";
 import { fileValidation, Message } from "../../../../utils/constants";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
-// import MdDetailsModal from "../../../modals/md-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import userPic from "../../../../assets/images/user.png";
 
 interface MdDetailsRowProps {
   user: mdDetail;
@@ -33,7 +32,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const AddNewMember = { id: editData?.id, group: editData?.group };
+  const AddNewMember = { id: editData?.farmerId, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -71,8 +70,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     user["profile"] = image;
-    editMdDetail({ ...user });
-    editFarmerDetail({ ...user });
+    editFarmerDetail(user);
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -126,16 +124,23 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           handleConfirm={() => setConfirmModal(true)}
           handleIdCard={() => setIdCard(true)}
         />
-        <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <FarmersDetailsModal
+          openModal={editMode}
+          handleClose={() => setEditMode(false)}
+          cb={updateMdDetail}
+          editMode={editMode}
+          id={user.farmerId}
+          mdId={user.id}
+        />
         <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
             !editMode && deleteMdDetail(user.id);
-            editMode && editData && editMdDetail(editData);
-            editMode && editData && editFarmerDetail(editData);
-            editMode && removeGroupMember(user.id);
+            editData && editMdDetail(editData);
+            editData && editFarmerDetail(editData);
+            editMode && user.farmerId && removeGroupMember(user.farmerId);
             editMode && addGroupMember(AddNewMember);
             setEditMode(false);
             setConfirmModal(false);
