@@ -10,7 +10,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<Layout />} />
       </Routes>
-      {/* <ModalLaunchButtons/> */}
+      {/* <ModalLaunchButtons /> */}
     </Provider>
   );
 };

@@ -11,6 +11,7 @@ import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFo
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { IResolution } from "../../utils/context/resolutions";
+import LoaderModal from "./loader-modal";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -20,7 +21,11 @@ const ModalLaunchButtons = () => {
   const [openAddFarmerDetails, setOpenAddFarmerDetails] = React.useState(false);
   const [openAddResolution, setOpenAddResolution] = React.useState(false);
   const [openShareAmount, setOpenShareAmount] = React.useState(false);
+  const [openLoader, setOpenLoader] = React.useState(false);
 
+  const loaderModalHandler = () => {
+    setOpenLoader(!openLoader);
+  };
   const deleteHandleClickOpen = () => {
     setOpenDelete(!openDelete);
   };
@@ -72,6 +77,9 @@ const ModalLaunchButtons = () => {
       <Button variant="outlined" onClick={addShareAmount}>
         Share Amount
       </Button>
+      <Button variant="outlined" onClick={loaderModalHandler}>
+        Loader
+      </Button>
       <DeleteModal
         openModal={openDelete}
         handleClose={deleteHandleClickOpen}
@@ -121,6 +129,7 @@ const ModalLaunchButtons = () => {
       </FarmersGroupContextProvider>
       <ResolutionModal openModal={openAddResolution} handleClose={addResolution} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
+      <LoaderModal openModal={openLoader} handleClose={loaderModalHandler} />
     </Fragment>
   );
 };
