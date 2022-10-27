@@ -19,6 +19,7 @@ namespace S {
       fontSize: ".9rem",
     },
   }));
+
   CommonInputStyled.defaultProps = {
     InputLabelProps: { shrink: true },
     inputProps: { noValidate: true },
@@ -48,7 +49,6 @@ namespace S {
   export const SelectInput = styled(CommonInputStyled)(() => ({}));
 
   export const MultiSelectInput = styled(CommonInputStyled)(({ theme }) => ({
-    width: "100% !important",
     "& .MuiOutlinedInput-root": {
       fontSize: ".9rem",
       height: "5rem ",
@@ -68,6 +68,7 @@ namespace S {
       justifyContent: "start",
       alignItems: "center",
     },
+    width: "100% !important",
   }));
 
   MultiSelectInput.defaultProps = {
@@ -135,11 +136,6 @@ namespace S {
         }
       : null),
     ".MuiOutlinedInput-root": {
-      ".MuiOutlinedInput-input": {
-        marginLeft: "3rem",
-      },
-      color: "transparent",
-      paddingLeft: "23.1rem",
       fontSize: "small",
       heigth: "2.5rem",
     },

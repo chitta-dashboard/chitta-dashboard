@@ -8,8 +8,8 @@ export namespace S {
   });
 
   export const LogoImage = styled("img")({
-    height: "4.5rem",
-    width: "5.5rem",
+    height: "5.3rem",
+    width: "5.3rem",
     borderRadius: "50%",
     alignSelf: "center",
   });

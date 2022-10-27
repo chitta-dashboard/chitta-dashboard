@@ -1,7 +1,8 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fileValidation } from "../../utils/constants";
-import {useMdDetailsContext} from "../../utils/context/mdDetails";
+import { useMdDetailsContext } from "../../utils/context/mdDetails";
+import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
@@ -14,10 +15,10 @@ interface Props {
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
   const { mdDetailsById, editMdDetail } = useMdDetailsContext();
+  const { headerImage, titleName, address } = useAuthContext();
   const { mdId } = useParams();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
@@ -62,15 +63,28 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
             <S.MdsDetailsHeader>
-              <S.NerkathirLogo src={NerkathirLogo} alt="nerkathir-logo" />
+              <S.NerkathirLogo src={headerImage ? headerImage : NerkathirLogo} alt="nerkathir-logo" />
               <S.HeaderTextContainer>
                 <S.HeaderText1>
-                  நெற்கதிர் உழவர் <br />
-                  உற்பத்தியாளர் நிறுவனம்
+                  {titleName ? (
+                    titleName
+                  ) : (
+                    <>
+                      நெற்கதிர் உழவர்
+                      <br />
+                      உற்பத்தியாளர் நிறுவனம்
+                    </>
+                  )}
                 </S.HeaderText1>
                 <S.HeaderText2>
-                  நபார்டு <br />
-                  கள்ளக்குறிச்சி மாவட்டம்
+                  {address ? (
+                    address
+                  ) : (
+                    <>
+                      நபார்டு <br />
+                      கள்ளக்குறிச்சி மாவட்டம்
+                    </>
+                  )}
                   <br />
                   உறுப்பினர் விண்ணப்பம்
                 </S.HeaderText2>
