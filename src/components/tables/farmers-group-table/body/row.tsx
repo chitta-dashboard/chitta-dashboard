@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
@@ -9,7 +9,6 @@ import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal
 import FarmersGroupModal from "../../../modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-// import
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 
@@ -38,7 +37,6 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const updateFarmerGroup = (data: FarmersGroup) => {
     setEditData(data);
     confirmModalHandler();
-    // editFarmersGroup({ ...data, id: editId });
   };
 
   // Delete Modal

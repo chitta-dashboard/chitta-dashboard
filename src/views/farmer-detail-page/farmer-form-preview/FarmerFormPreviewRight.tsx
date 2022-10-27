@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../../../utils/context/auth";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FARMER_DATA } from "../constant";
 import { S } from "./farmer-form-preview.styled";
@@ -7,6 +8,8 @@ import { S } from "./farmer-form-preview.styled";
 const FarmerFormPreviewRight = () => {
   const { farmersDetailsById } = useFarmerDetailsContext();
   const { farmerId } = useParams();
+  const { pdfImage } = useAuthContext();
+
   return (
     <>
       {Object.values(farmersDetailsById)

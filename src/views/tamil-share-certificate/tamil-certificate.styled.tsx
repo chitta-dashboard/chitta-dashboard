@@ -96,6 +96,9 @@ export namespace S {
   export const NerkathirLogo = styled("img")({
     width: "8.125rem",
     marginRight: "4.375rem",
+    borderRadius: "50%",
+    aspectRatio: "1/1",
+    filter: "grayscale(100%)",
   });
 
   export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({

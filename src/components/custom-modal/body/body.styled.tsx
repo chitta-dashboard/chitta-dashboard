@@ -7,7 +7,7 @@ namespace S {
     display: "block",
     justifyContent: "center",
     alignItems: "center",
-    overflowY: "auto",
+    overflowY: isPadding ? "auto" : "hidden",
     padding: isPadding ? "2rem 1.875rem 1.875rem 1.875rem" : 0,
   }));
 }
