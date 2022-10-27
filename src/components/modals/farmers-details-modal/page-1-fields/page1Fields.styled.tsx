@@ -30,10 +30,12 @@ namespace S {
     gridTemplateAreas: `"srv acr bdr btn"`,
     gap: "1.5rem 1.2rem",
   });
+
   export const DividerLine = styled(Divider)({
     gridArea: "div",
     width: "100%",
   });
+
   export const AddLandDetailsContainer = styled(Stack)(({ theme }) => ({
     gridArea: "con",
     width: "100%",
@@ -50,6 +52,7 @@ namespace S {
   AddLandDetailsContainer.defaultProps = {
     direction: "row",
   };
+
   export const AddBtn = styled(Button)({
     gridArea: "btn",
     padding: "0",
@@ -79,11 +82,12 @@ namespace S {
     children: <i>delete</i>,
   };
 
-  export const AddNewRowButton = styled(Button)(({ theme }) => ({
+  export const AddNewRowButton = styled(Button)({
     fontSize: ".7rem",
     padding: ".1rem .7rem",
     textTransform: "none",
-  }));
+  });
+
   AddNewRowButton.defaultProps = {
     children: (
       <>
