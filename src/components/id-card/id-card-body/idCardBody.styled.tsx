@@ -2,20 +2,17 @@ import { Box, styled, Typography } from "@mui/material";
 
 export namespace S {
   export const IdCardWrapper = styled(Box)(({ theme }) => ({
-    maxWidth: "34.5rem",
+    width: "33rem",
     backgroundColor: theme.palette.bg.main,
     borderRadius: "1.25rem",
     border: `1px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.3)}`,
-    maxHeight: "20.7rem",
+    height: "20.7rem",
     padding: "0rem 1rem",
-    width: "fit-content",
     boxSizing: "border-box",
     display: "flex",
     flexDirection: "column",
     alignItems: "start !important",
     boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
-    margin: "1rem ",
-    height: "20rem",
   }));
 
   export const IdImage = styled("img")({

@@ -8,11 +8,12 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "839.09px",
+    height: "839.05px",
     width: "74.375rem",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
+    overflow: "hidden",
   }));
 
   export const CertificateTopBorderImg = styled("img")({
