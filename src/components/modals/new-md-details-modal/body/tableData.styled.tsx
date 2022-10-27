@@ -8,7 +8,8 @@ namespace S {
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
-    alignItems: "flex-start !important",
+    alignItems: "center !important",
+    justifyContent:"center !important"
   });
 
   export const MdDetailsTableHeadContainer = styled(Grid)(({ theme }) => ({
@@ -17,7 +18,7 @@ namespace S {
     gridTemplateColumns: "1fr 3fr 2fr",
     alignItems: "center",
     backgroundColor: theme.palette.bg.light,
-    padding: "10px",
+    padding: "10px calc(10px + 0.8%)",
     p: {
       fontWeight: "600",
     },
@@ -32,6 +33,16 @@ namespace S {
       },
     },
   }));
+
+  export const MdDetailsTableBodyWrapper = styled(Box)({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start !important",
+    width: "98%",
+    height: "300px",
+    overflowY: "auto",
+  });
 
   export const MdDetailsTableBodyContainer = styled(Grid)(({ theme }) => ({
     width: "100%",

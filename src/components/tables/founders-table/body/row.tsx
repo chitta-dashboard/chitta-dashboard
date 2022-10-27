@@ -8,10 +8,10 @@ import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import userPic from "../../../../assets/images/user.png";
 
 interface FoundersRowProp {
   user: Founders;
@@ -80,6 +80,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
       </S.TabCell>
       <S.Cell title="பெயர்">
         <S.NameStack>
+          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
             <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
             <S.EditBox onClick={handleIconClick}>
@@ -134,7 +135,6 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             setIconModal(false);
           }}
         />
-        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
       </S.WebTableCell>
     </TableRow>
   );
