@@ -48,6 +48,7 @@ namespace S {
   });
 
   export const NerkathirLogo = styled("img")({
+    borderRadius: "50%",
     height: "7.1875rem",
   });
 

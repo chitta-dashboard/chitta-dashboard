@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
 import { useResolutionsProviderContext } from "../../utils/context/resolutions";
+import { useAuthContext } from "../../utils/context/auth";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import { S } from "./resolutionCertificate.styled";
 
@@ -10,6 +11,7 @@ interface Props {
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
   const { resolutions } = useResolutionsProviderContext();
+  const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
@@ -20,13 +22,20 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
         .map((user) => (
           <S.ResolutionCertificateContainer ref={ref} key={user.id}>
             <S.ResolutionCertificateHeader>
-              <S.NerkathirLogo src={NerkathirLogo} alt="NerkathirLogoGray" />
+              <S.NerkathirLogo src={headerImage ? headerImage : NerkathirLogo} alt="NerkathirLogoGray" />
               <S.HeaderText>
-                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                {titleName ? (
+                  titleName
+                ) : (
+                  <>
+                    நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
+                )}
               </S.HeaderText>
               <S.HeaderSubText>
-                REG No:139086 <br />
-                CIN:UO1409TN2020PTC139086
+                {regNo ? `REG No:${regNo}` : "REG No:139086"}
+                <br />
+                {cinNo ? `CIN :${cinNo}` : "CIN:UO1409TN2020PTC139086"}
               </S.HeaderSubText>
             </S.ResolutionCertificateHeader>
             <S.DateContainer>

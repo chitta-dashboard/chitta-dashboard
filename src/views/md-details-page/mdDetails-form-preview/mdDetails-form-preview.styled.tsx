@@ -1,6 +1,5 @@
 import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
-import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 
 export namespace S {
   export const MdFormPreviewMainContainer = styled(Box)(({ theme }) => ({
@@ -137,19 +136,33 @@ export namespace S {
     flexDirection: "column",
     overflowY: "auto",
     overflowX: "hidden",
+    position: "relative",
     width: "50%",
     minHeight: "100%",
     backgroundColor: "white",
     borderRadius: "1.25rem",
     padding: "1.5rem 3vw",
-    backgroundSize: "85% 85%",
-    backgroundImage: `url(${nerkathir_transparent_background})`,
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
     [theme.breakpoints.down("lg")]: {
       width: "100%",
       height: "fit-content",
       borderRadius: "0 0 1.25rem 1.25rem",
+    },
+  }));
+
+  export const AbsoluteBackgroundImage = styled(Box)(({ theme }) => ({
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    height: "60%",
+    width: "75%",
+    img: {
+      height: "100%",
+      width: "100%",
+      borderRadius: "50%",
+      opacity: "0.3",
+      filter: "grayscale(100%)",
+      aspectRatio: "1/1",
     },
   }));
 
@@ -160,6 +173,7 @@ export namespace S {
     fontWeight: "500",
     lineHeight: "1.875rem",
     color: theme.palette.text.secondary,
+    zIndex: "5",
   }));
 
   export const UserInfoData1 = styled(Box)({
