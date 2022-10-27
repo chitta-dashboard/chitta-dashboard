@@ -12,9 +12,9 @@ namespace S {
     },
   }));
 
-  export const Pop = styled(Popover)(({ theme }) => ({
+  export const Pop = styled(Popover)({
     margin: "0.5rem  -0.2rem",
-  }));
+  });
 
   export const Items = styled(Typography)<{ selectfilter: number }>(({ theme, selectfilter }) => ({
     cursor: "pointer",

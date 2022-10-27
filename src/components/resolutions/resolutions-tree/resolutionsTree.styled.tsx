@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Theme, Typography } from "@mui/material";
 import styled from "@emotion/styled/macro";
-import { BRANCH_DURATION, growX, growY, LEAF_DURATION, popIn, slideUp, STEM_DURATION, TOTAL_DURATION } from "./animation.styled";
+import { BRANCH_DURATION, growX, growY, LEAF_DURATION, popIn, slideUp, STEM_DURATION, TOTAL_DURATION } from "./animation";
 
 namespace S {
   export const ResolutionsTreeBox = styled(Box, {
@@ -15,23 +15,29 @@ namespace S {
     },
   }));
 
-  export const LeafContent = styled(Box)<{ theme?: Theme; leafCount: number }>(({ theme, leafCount }) => ({
-    backgroundColor: theme.palette.addAlpha(theme.palette.bg.main, 1),
+  export const LeafContentBox = styled(Box)<{ theme?: Theme }>(({ theme }) => ({
+    backgroundColor: theme.palette.bg.main,
     width: "100%",
     height: "100%",
 
-    ".content": {
-      position: "absolute",
-      height: "100%",
-      width: "100%",
-      top: "0",
-      left: "0",
-      padding: "6px", //10px to overlap border & 6px for actual padding
-      animation: `${popIn} ${LEAF_DURATION}s linear both`,
-    },
+    // "&:hover": {
+    //   backgroundColor: theme.palette.addAlpha(theme.palette.bg.main, 0.85),
+    // },
   }));
 
-  const LeafStyles = styled(Box)<{ theme?: Theme; leafCount: number }>(({ theme }) => ({
+  export const LeafContent = styled(Box)(() => ({
+    position: "absolute",
+    height: "100%",
+    width: "100%",
+    top: "0",
+    left: "0",
+    padding: "6px", //10px to overlap border & 6px for actual padding
+    animation: `${popIn} ${LEAF_DURATION}s linear both`,
+  }));
+
+  const LeafStyles = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "leafCount" && prop !== "theme",
+  })<{ theme?: Theme; leafCount: number }>(({ theme }) => ({
     width: "265px",
     height: "150px",
     position: "absolute",
@@ -94,11 +100,10 @@ namespace S {
     },
   }));
 
-  export const L1 = styled(LeafStyles)<{ theme?: Theme }>(({ theme, leafCount }) => ({
+  export const L1 = styled(LeafStyles)(({ theme, leafCount }) => ({
     top: "18px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    // borderColor: theme.palette.tree.l1,
     ".branch": {
       transform: "rotate(30deg)",
       transformOrigin: "left",
@@ -124,22 +129,18 @@ namespace S {
         animationDelay: `${(leafCount - 1) * TOTAL_DURATION + STEM_DURATION + BRANCH_DURATION}s`,
       },
     },
-    [`${LeafContent}`]: {
+    [`${LeafContentBox}`]: {
       borderRadius: "0 53px 10px 53px",
-      ".content": {
-        animationDelay: `${leafCount * TOTAL_DURATION}s`,
-      },
     },
-    [`${ResolutionsTimestamp}`]: {
+    [`${LeafContent}, ${ResolutionsTimestamp}`]: {
       animationDelay: `${leafCount * TOTAL_DURATION}s`,
     },
   }));
 
-  export const L2 = styled(LeafStyles)<{ theme?: Theme }>(({ theme, leafCount }) => ({
+  export const L2 = styled(LeafStyles)(({ theme, leafCount }) => ({
     top: "218px",
     left: "0",
     borderRadius: "0 63px 20px 63px",
-    // borderColor: theme.palette.tree.l2,
     ".branch": {
       transform: "rotate(30deg)",
       transformOrigin: "left",
@@ -165,22 +166,18 @@ namespace S {
         animationDelay: `${(leafCount - 3) * TOTAL_DURATION + STEM_DURATION + BRANCH_DURATION}s`,
       },
     },
-    [`${LeafContent}`]: {
+    [`${LeafContentBox}`]: {
       borderRadius: "0 53px 10px 53px",
-      ".content": {
-        animationDelay: `${(leafCount - 2) * TOTAL_DURATION}s`,
-      },
     },
-    [`${ResolutionsTimestamp}`]: {
+    [`${LeafContent}, ${ResolutionsTimestamp}`]: {
       animationDelay: `${(leafCount - 2) * TOTAL_DURATION}s`,
     },
   }));
 
-  export const R1 = styled(LeafStyles)<{ theme?: Theme }>(({ theme, leafCount }) => ({
+  export const R1 = styled(LeafStyles)(({ theme, leafCount }) => ({
     top: "118px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    // borderColor: theme.palette.tree.r1,
     ".branch": {
       transform: "rotate(-30deg)",
       transformOrigin: "right",
@@ -206,22 +203,18 @@ namespace S {
         animationDelay: `${(leafCount - 2) * TOTAL_DURATION + STEM_DURATION + BRANCH_DURATION}s`,
       },
     },
-    [`${LeafContent}`]: {
+    [`${LeafContentBox}`]: {
       borderRadius: "53px 0 53px 10px",
-      ".content": {
-        animationDelay: `${(leafCount - 1) * TOTAL_DURATION}s`,
-      },
     },
-    [`${ResolutionsTimestamp}`]: {
+    [`${LeafContent}, ${ResolutionsTimestamp}`]: {
       animationDelay: `${(leafCount - 1) * TOTAL_DURATION}s`,
     },
   }));
 
-  export const R2 = styled(LeafStyles)<{ theme?: Theme }>(({ theme, leafCount }) => ({
+  export const R2 = styled(LeafStyles)(({ theme, leafCount }) => ({
     top: "318px",
     right: "0",
     borderRadius: "63px 0 63px 20px",
-    // borderColor: theme.palette.tree.r2,
     ".branch": {
       transform: "rotate(-30deg)",
       transformOrigin: "right",
@@ -247,65 +240,63 @@ namespace S {
         animationDelay: `${(leafCount - 4) * TOTAL_DURATION + STEM_DURATION + BRANCH_DURATION}s`,
       },
     },
-    [`${LeafContent}`]: {
+    [`${LeafContentBox}`]: {
       borderRadius: "53px 0 53px 10px",
-      ".content": {
-        animationDelay: `${(leafCount - 3) * TOTAL_DURATION}s`,
-      },
     },
-    [`${ResolutionsTimestamp}`]: {
+    [`${LeafContent}, ${ResolutionsTimestamp}`]: {
       animationDelay: `${(leafCount - 3) * TOTAL_DURATION}s`,
     },
   }));
 
-  export const Bud = styled(Box)<{ theme?: Theme; leafCount: number }>(({ theme, leafCount }) => ({
-    // LEAF STYLING
-    position: "absolute",
-    top: "105px",
-    left: "390px",
-    width: "11px",
-    height: "100px",
-    backgroundColor: theme.palette.tree.bud,
-    borderRadius: "0 0 0 80px",
-    transformOrigin: "bottom",
-    animation: `${growY} ${STEM_DURATION}s linear ${leafCount * TOTAL_DURATION}s backwards`,
-
-    "&::before": {
-      content: "''",
+  export const Bud = styled(Box, { shouldForwardProp: (prop) => prop !== "leafCount" && prop !== "theme" })<{ theme?: Theme; leafCount: number }>(
+    ({ theme, leafCount }) => ({
+      // LEAF STYLING
       position: "absolute",
-      top: "-25px",
-      left: "-40px",
-      width: "44px",
-      height: "35px",
-      borderRadius: "0px 40px",
-      transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0)",
+      top: "105px",
+      left: "390px",
+      width: "11px",
+      height: "100px",
       backgroundColor: theme.palette.tree.bud,
-    },
-    "&::after": {
-      content: "''",
-      position: "absolute",
-      top: "-56px",
-      right: "-58px",
-      width: "64px",
-      height: "58px",
-      borderRadius: "0px 40px",
-      transform: "matrix(-1, 0, 0, 1, 0, 0)",
-      backgroundColor: theme.palette.tree.bud,
-    },
-    img: {
-      position: "absolute",
-      top: "-40px",
-      left: "-34px",
-      zIndex: 1,
-    },
-  }));
+      borderRadius: "0 0 0 80px",
+      transformOrigin: "bottom",
+      animation: `${growY} ${STEM_DURATION}s linear ${leafCount * TOTAL_DURATION}s backwards`,
 
-  export const Shadow = styled(Box, {
-    shouldForwardProp: (prop) => prop !== "leafCount",
-  })<{ theme?: Theme; leafCount: number }>(({ theme, leafCount }) => ({
+      "&::before": {
+        content: "''",
+        position: "absolute",
+        top: "-25px",
+        left: "-40px",
+        width: "44px",
+        height: "35px",
+        borderRadius: "0px 40px",
+        transform: "matrix(0.71, 0.71, 0.71, -0.71, 0, 0)",
+        backgroundColor: theme.palette.tree.bud,
+      },
+      "&::after": {
+        content: "''",
+        position: "absolute",
+        top: "-56px",
+        right: "-58px",
+        width: "64px",
+        height: "58px",
+        borderRadius: "0px 40px",
+        transform: "matrix(-1, 0, 0, 1, 0, 0)",
+        backgroundColor: theme.palette.tree.bud,
+      },
+      img: {
+        position: "absolute",
+        top: "-40px",
+        left: "-34px",
+        zIndex: 1,
+      },
+    }),
+  );
+
+  export const Shadow = styled(Box)<{ theme?: Theme }>(({ theme }) => ({
     position: "absolute",
     left: "260px",
-    top: `calc(210px + ${100 * leafCount}px)`,
+    // top: `calc(210px + ${100 * leafCount}px)`,
+    bottom: "5px",
     width: "276px",
     height: "15px",
     backgroundColor: theme.palette.addAlpha(theme.palette.tree.shadow, 0.3),

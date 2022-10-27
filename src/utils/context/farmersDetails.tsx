@@ -1,6 +1,6 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
@@ -20,7 +20,6 @@ export const DEFAULT_GROUP_FILTER = "all";
 export type farmerDetail = {
   membershipId?: string;
   profile: string;
-  // isChecked?: boolean;
   id: string;
   name: string;
   fatherName: string;
@@ -72,8 +71,8 @@ interface farmerDetailsContextType {
 
 const initialState: farmerDetailsContextType = {
   farmersDetailsById: {
-    "1": {
-      id: "1",
+    a: {
+      id: "a",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Arokiya",
@@ -99,8 +98,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.E, Mechanical",
     },
-    "2": {
-      id: "2",
+    b: {
+      id: "b",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Sethu Ravichandran",
@@ -126,8 +125,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.E, ECE",
     },
-    "3": {
-      id: "3",
+    c: {
+      id: "c",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Vijay",
@@ -153,8 +152,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.Tech - IT",
     },
-    "4": {
-      id: "4",
+    d: {
+      id: "d",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Raj",
@@ -180,8 +179,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "MBBS",
     },
-    "5": {
-      id: "5",
+    e: {
+      id: "e",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Praveen",
@@ -207,8 +206,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.Sc, Agri",
     },
-    "6": {
-      id: "6",
+    f: {
+      id: "f",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Karikalan",
@@ -234,8 +233,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.E, IT",
     },
-    "7": {
-      id: "7",
+    g: {
+      id: "g",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Thiru",
@@ -261,8 +260,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.Sc-Computer Science",
     },
-    "8": {
-      id: "8",
+    h: {
+      id: "h",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Vanthiyadevan",
@@ -288,8 +287,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.E, IT",
     },
-    "9": {
-      id: "9",
+    i: {
+      id: "i",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Nandhini",
@@ -315,8 +314,8 @@ const initialState: farmerDetailsContextType = {
       groupMember: "yes",
       qualification: "B.E, IT",
     },
-    "10": {
-      id: "10",
+    j: {
+      id: "j",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Kundavai",
@@ -362,10 +361,13 @@ const initialState: farmerDetailsContextType = {
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMER_DETAIL:
-      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [action.payload.id]: action.payload } };
+      delete action.payload.farmerId;
+      return { ...state, farmersDetailsById: { [action.payload.id]: action.payload, ...state.farmersDetailsById } };
 
     case EDIT_FARMER_DETAIL:
-      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [action.payload.id]: action.payload } };
+      const updateData = action.payload.farmerId ? { ...action.payload, id: action.payload.farmerId } : action.payload;
+      action.payload.farmerId ? delete updateData.farmerId : delete action.payload.farmerId;
+      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [updateData.id]: updateData } };
 
     case DELETE_FARMER_DETAIL:
       delete state.farmersDetailsById[action.payload];

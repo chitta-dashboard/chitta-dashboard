@@ -1,16 +1,24 @@
 import S from "./idCardHeader.styled";
 import IdLogo from "../../../assets/images/logo.svg";
+import { useAuthContext } from "../../../utils/context/auth";
 
 const IDCardHeader = () => {
+  const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   return (
     <S.IdHeaderWrapper>
-      <S.LogoImage src={IdLogo} alt="Id-logo" />
+      <S.LogoImage src={headerImage ? headerImage : IdLogo} alt="Id-logo" />
       <S.HeaderRight>
         <S.IdHeading>
-          நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+          {titleName ? (
+            titleName
+          ) : (
+            <>
+              நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+            </>
+          )}
         </S.IdHeading>
-        <S.IdSubHeading>139086</S.IdSubHeading>
-        <S.IdSubHeading>CIN:UO1409TN2020PTC139086</S.IdSubHeading>
+        <S.IdSubHeading>{regNo ? regNo : <>139086</>}</S.IdSubHeading>
+        <S.IdSubHeading>{cinNo ? `CIN :${cinNo}` : <>CIN : UO1409TN2020PTC139086</>}</S.IdSubHeading>
       </S.HeaderRight>
     </S.IdHeaderWrapper>
   );
