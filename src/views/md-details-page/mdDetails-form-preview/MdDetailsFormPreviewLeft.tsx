@@ -8,7 +8,7 @@ import IconWrapper from "../../../utils/iconWrapper";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { fileValidation } from "../../../utils/constants";
+import { fileValidation, Message } from "../../../utils/constants";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
@@ -20,28 +20,24 @@ const MdFormPreviewLeft = () => {
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { editFarmerDetail } = useFarmerDetailsContext();
-  const { titleName, address } = useAuthContext();
+  const { addNotification,titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<mdDetail | null>(null);
-  const AddNewMember = { id: openConfirmationModal?.id, group: openConfirmationModal?.group };
+  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
   const navigate = useNavigate();
 
   // popover open
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   // popover close
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  const handleClose = () => setAnchorEl(null);
 
   const current = new Date();
   const open = Boolean(anchorEl);
@@ -90,9 +86,7 @@ const MdFormPreviewLeft = () => {
   };
 
   //Update MdDetail Handler
-  const updateMdDetail = (data: mdDetail) => {
-    setOpenConfirmationModal(data);
-  };
+  const updateMdDetail = (data: mdDetail) => setOpenConfirmationModal(data);
 
   return (
     <>
@@ -189,7 +183,14 @@ const MdFormPreviewLeft = () => {
               அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
             </S.HeaderText>
             {openEditModal && (
-              <FarmersDetailsModal openModal={true} handleClose={() => setOpenEditModal(false)} cb={updateMdDetail} editMode={true} id={user.id} />
+              <FarmersDetailsModal
+                openModal={true}
+                handleClose={() => setOpenEditModal(false)}
+                cb={updateMdDetail}
+                editMode={true}
+                id={user.farmerId}
+                mdId={user.id}
+              />
             )}
             {openDeleteModal && (
               <DeleteModal
@@ -197,6 +198,7 @@ const MdFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
                   deleteMdDetail(user.id);
+                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
                   navigate(-1);
                 }}
                 deleteMessage={
@@ -215,7 +217,7 @@ const MdFormPreviewLeft = () => {
                 yesAction={() => {
                   editMdDetail(openConfirmationModal);
                   editFarmerDetail(openConfirmationModal);
-                  removeGroupMember(user.id);
+                  removeGroupMember(openConfirmationModal.farmerId);
                   addGroupMember(AddNewMember);
                   setOpenConfirmationModal(null);
                   setOpenEditModal(false);

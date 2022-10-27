@@ -16,15 +16,16 @@ import page2 from "../../../assets/images/page-2.svg";
 import S from "./farmersDetailsModal.styled";
 
 interface CustomProps {
-  cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => void;
+  cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
   openModal: boolean;
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
+  mdId?: string | undefined;
 }
 
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { openModal, handleClose, cb, editMode = false, id = "" } = props;
+  const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   const { farmersDetailsById } = useFarmerDetailsContext();
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
@@ -217,10 +218,11 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     let params = {
       ...form1Data,
       ...data,
-      id: editMode ? id : uuidv4(),
+      id: mdId ? mdId : editMode ? id : uuidv4(),
       membershipId: "NEF-FPC-2",
-    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string };
-    cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string });
+      farmerId: !!mdId && id,
+    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
+    cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };
 
