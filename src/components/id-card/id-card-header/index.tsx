@@ -6,7 +6,9 @@ const IDCardHeader = () => {
   const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   return (
     <S.IdHeaderWrapper>
-      <S.LogoImage src={headerImage ? headerImage : IdLogo} alt="Id-logo" />
+      <S.HeaderLeft>
+        <S.LogoImage src={headerImage ? headerImage : IdLogo} alt="Id-logo" />
+      </S.HeaderLeft>
       <S.HeaderRight>
         <S.IdHeading>
           {titleName ? (
