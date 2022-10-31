@@ -140,7 +140,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
                   handleIconClick();
                 }}
               >
-                {user.profile}
                 <S.EditIcon>edit</S.EditIcon>
                 <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
