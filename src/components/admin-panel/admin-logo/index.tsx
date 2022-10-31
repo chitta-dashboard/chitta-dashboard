@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, FC } from "react";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { UseFormRegister } from "react-hook-form";
+import {  UseFormRegister } from "react-hook-form";
 import { FieldErrorsImpl } from "react-hook-form";
 import { adminFormInputs } from "../../../views/admin-panel";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
@@ -20,7 +20,7 @@ interface CustomProps {
 
 interface LogoProps {
   register: UseFormRegister<adminFormInputs>;
-  errors: FieldErrorsImpl<{
+  errors?: FieldErrorsImpl<{
     profile: string;
   }>;
 }
@@ -96,7 +96,7 @@ const AdminLogo: FC<LogoProps> = ({ register, errors }) => {
           </Box>
         </S.LogoStack>
       </S.UploadStack>
-      {errors.profile && <S.ErrorText>{errors.profile?.message}</S.ErrorText>}
+      {errors && errors.profile && <S.ErrorText>{errors.profile?.message}</S.ErrorText>}
     </S.ContainerStack>
   );
 };
