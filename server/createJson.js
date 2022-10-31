@@ -4,10 +4,11 @@ const farmerDetails = require('./src/farmerDetails.json');
 const farmerGroup = require('./src/farmerGroup.json');
 const founders = require('./src/founders.json');
 const resolutions = require('./src/resolutions.json')
+const mdDetails = require('./src/mdDetails.json')
 
 const handleJSONFile = ()=>{
-    const key = ['ceo','farmerDetails','farmerGroup','founders','resolutions']
-    const values = [ceoFile,farmerDetails,farmerGroup,founders,resolutions];
+    const key = ['ceo','farmerDetails','mdDetails','farmerGroup','founders','resolutions']
+    const values = [ceoFile,farmerDetails,mdDetails,farmerGroup,founders,resolutions];
     
     const file = {};
 
