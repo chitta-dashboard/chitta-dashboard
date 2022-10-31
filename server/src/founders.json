@@ -1,0 +1,62 @@
+{
+    "1": {
+        "id": "1",
+        "profile": "",
+        "name": "Veera Raghavan",
+        "phoneNumber": "9945672156",
+        "qualification": "BBA, MBA",
+        "dob": "01-10-1982",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    },
+    "2": {
+        "id": "2",
+        "profile": "",
+        "name": "John Durairaj",
+        "phoneNumber": "8610010875",
+        "qualification": "BA",
+        "dob": "27-01-1990",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    },
+    "3": {
+        "id": "3",
+        "profile": "",
+        "name": "Vijay Kumar",
+        "phoneNumber": "8968456734",
+        "qualification": "BCom CA",
+        "dob": "09-11-1989",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    },
+    "4": {
+        "id": "4",
+        "profile": "",
+        "name": "Kathiresan",
+        "phoneNumber": "8838461839",
+        "qualification": "BSc, Computer Science",
+        "dob": "12-10-1994",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    },
+    "5": {
+        "id": "5",
+        "profile": "",
+        "name": "Jeevanandham",
+        "phoneNumber": "9854367213",
+        "qualification": "B.Tech, Information Technology",
+        "dob": "02-08-1992",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    },
+    "6": {
+        "id": "6",
+        "profile": "",
+        "name": "Arockiyaraj Reddy",
+        "phoneNumber": "9945672156",
+        "qualification": "B.Tech, Computer Science",
+        "dob": "12-07-1985",
+        "description": "Cultivates land",
+        "joinDate": "mar 16,2022"
+    }
+}
