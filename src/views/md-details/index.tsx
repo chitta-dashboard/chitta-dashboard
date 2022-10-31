@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../../utils/constants";
 import TablePageHeader from "../../components/common-table-page-header";
@@ -11,10 +11,10 @@ import { useAuthContext } from "../../utils/context/auth";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
-  const [addModal, setAddModal] = useState(false);
   const { mdDetailsById, setSearchFilter, sortFilter, setSortFilter, checkboxSelect } = useMdDetailsContext();
   const { farmersDetailsById } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
+  const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -94,18 +94,14 @@ const MdDetails = () => {
     addModalHandler();
   };
 
-  const handleNoAction = () => {
-    setIsConfirmModalOpen(false);
-  };
+  const handleNoAction = () => setIsConfirmModalOpen(false);
 
   const addModalHandler = () => {
     setAddModal(!addModal);
     setSelectedKeys([]);
   };
 
-  const addButtonHandler = () => {
-    setIsConfirmModalOpen(true);
-  };
+  const addButtonHandler = () => setIsConfirmModalOpen(true);
 
   return (
     <>

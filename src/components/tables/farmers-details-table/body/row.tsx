@@ -4,7 +4,7 @@ import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { fileValidation, Message } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
@@ -14,10 +14,10 @@ import ConfirmationModal from "../../../modals/confirmation-modal";
 import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
 import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import userPic from "../../../../assets/images/user.png";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail;
@@ -25,12 +25,12 @@ interface FarmersDetailsRowProps {
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [editData, setEditData] = useState<farmerDetail>();
+  const [editData, setEditData] = useState<mdDetail>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const idCardRef = useRef<HTMLDivElement>();
@@ -90,8 +90,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     user["profile"] = image;
-    editFarmerDetail({ ...user });
-    editMdDetail({ ...user });
+    let getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === user.id);
+    if (getMdData?.farmerId) {
+      getMdData["profile"] = image;
+    }
   };
 
   return (
@@ -117,17 +119,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
         </S.RowCheckCell>
         <S.WebTableCell>{user.membershipId}</S.WebTableCell>
         {/* for tablet view*/}
-        <S.TabCell
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          <Checkbox
-            onChange={(e) => {
-              checkboxSelect(user.id);
-            }}
-            checked={selectedFarmers.includes(user.id)}
-          />
+        <S.TabCell onClick={(e) => e.stopPropagation()}>
+          <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
           <Stack>
             <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
           </Stack>
@@ -147,7 +140,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
                   handleIconClick();
                 }}
               >
-                {user.profile}
                 <S.EditIcon>edit</S.EditIcon>
                 <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
@@ -184,14 +176,22 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
               generateFarmerDetailForm();
             }}
           />
-          <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateFarmerDetail} editMode={editMode} id={user.id} />
+          <FarmersDetailsModal
+            openModal={editMode}
+            handleClose={() => setEditMode(false)}
+            cb={updateFarmerDetail}
+            editMode={editMode}
+            id={user.id}
+            mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
+          />
           <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
           <DeleteModal
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={() => {
+              const isFarmerInMd = Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id;
               deleteFarmerDetail(user.id);
-              deleteMdDetail(user.id);
+              isFarmerInMd && deleteMdDetail(isFarmerInMd);
               setDeleteModal(false);
               setIconModal(false);
               addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -207,9 +207,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={() => {
-              !editMode && deleteFarmerDetail(user.id);
-              editMode && editData && editFarmerDetail(editData);
-              editMode && editData && editMdDetail(editData);
+              editData && editFarmerDetail(editData);
+              editData?.farmerId && editMdDetail(editData);
               editMode && removeGroupMember(user.id);
               editMode && addGroupMember(AddNewMember);
               setEditMode(false);

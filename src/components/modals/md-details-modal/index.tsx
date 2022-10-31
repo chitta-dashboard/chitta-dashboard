@@ -1,20 +1,15 @@
 import { Control, useForm } from "react-hook-form";
-import { Button, Stack } from "@mui/material";
+import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { v4 as uuidv4 } from "uuid";
-// import AddProfile from "../../buttons/add-profile-icon-and-button";
-import AddProfile from "../../input-fields/add-profile";
-import FormField from "./body/formField";
-import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
-import { IAddMDDetailsFormInput } from "../type/formInputs";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import ModalBody from "../../custom-modal/body";
-import ModalFooter from "../../custom-modal/footer";
-import { fileValidation } from "../../../utils/constants";
 import { dateFormat } from "../../../utils/constants";
+import ModalHeader from "../../custom-modal/header";
+import ModalFooter from "../../custom-modal/footer";
+import ModalBody from "../../custom-modal/body";
+import CustomModal from "../../custom-modal";
+import { IAddMDDetailsFormInput } from "../type/formInputs";
+import FormField from "./body/formField";
 
 interface CustomProps {
   openModal: boolean;
@@ -23,57 +18,11 @@ interface CustomProps {
   editMode?: boolean;
   id?: string;
 }
-const schema = yup
-  .object({
-    name: yup.string().required("required"),
-    phoneNumber: yup
-      .string()
-      .required("required")
-      .matches(/^\d{10}$/, "10 digits expected"),
-    qualification: yup.string().required("required"),
-    dob: yup.string().required("required"),
-    signature: yup
-      .mixed()
-      .test("signatureTest1", "required", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return file?.size > 0;
-      })
-      .test("signatureTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return fileValidation(file ? file?.name : "");
-      }),
-    profile: yup
-      .mixed()
-      .test("profileTest1", "required", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return file?.size > 0;
-      })
-      .test("profileTest2", "expected format: .jpg, .jpeg, .png", (file: File) => {
-        if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-        return fileValidation(file ? file?.name : "");
-      }),
-  })
-  .required();
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   let { mdDetailsById } = useMdDetailsContext();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-    setError,
-    clearErrors,
-    setValue,
-    getValues,
-    trigger,
-    unregister,
-    control: formControl,
-    watch,
-  } = useForm<IAddMDDetailsFormInput>({
-    resolver: yupResolver(schema),
-  });
+  const { handleSubmit, reset, clearErrors, setValue, getValues, unregister, control, watch } = useForm<IAddMDDetailsFormInput>();
 
   // enabling submit button
 
@@ -148,27 +97,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         {editMode ? "Edit MD Details" : "Add MD Details"}
       </ModalHeader>
       <ModalBody id="mdDetails" onSubmit={handleSubmit(onSubmit)}>
-        <Stack spacing={4}>
-          {/* <AddProfile setValue={setValue} trigger={trigger} inputName="profile" errors={errors} /> */}
-          <AddProfile<IAddMDDetailsFormInput>
-            inputName="profile"
-            control={formControl as unknown as Control}
-            rules={{
-              required: "required",
-              validate: {
-                fileFormat: (file: File) => {
-                  if (typeof file === "string" && (file as string).length > 0) return true; // passes cropped image url
-                  return fileValidation(file ? file?.name : "") || "expected format: .jpg, .jpeg, .png";
-                },
-              },
-            }}
-            setValue={setValue}
-            getValues={getValues}
-            unregister={unregister}
-            gridArea="prf"
-          />
-          <FormField register={register} errors={errors} setValue={setValue} trigger={trigger} setError={setError} clearErrors={clearErrors} />
-        </Stack>
+        <FormField setValue={setValue} control={control as unknown as Control} getValues={getValues} unregister={unregister} />
       </ModalBody>
       <ModalFooter>
         <Button form="mdDetails" type="submit" disabled={enableButton}>

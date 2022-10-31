@@ -1,6 +1,6 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
-import S from "./header.styled";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import S from "./header.styled";
 
 const Header = () => {
   const { farmersDetailsById, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();

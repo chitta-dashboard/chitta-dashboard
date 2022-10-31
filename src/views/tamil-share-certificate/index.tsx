@@ -6,6 +6,7 @@ import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-c
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import { useAuthContext } from "../../utils/context/auth";
 
 interface Props {
   shareAmount?: number | string;
@@ -13,6 +14,7 @@ interface Props {
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
   const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
+  const { certificateImage, titleName, regNo, cinNo } = useAuthContext();
   const newDate = new Date();
   return (
     <div className="print-container" ref={ref}>
@@ -30,15 +32,20 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
             <S.BottomRightIcon src={ShareHolderCertificateBottomCornerIcon} alt="corner-icon" />
             <S.CertificateHeadingContainer>
               <S.HeadingContainerLogo>
-                <S.NerkathirLogo src={NerkathirLogoGray} alt="NerkathirLogoGray" />
+                <S.NerkathirLogo src={certificateImage ? certificateImage : NerkathirLogoGray} alt="NerkathirLogoGray" />
               </S.HeadingContainerLogo>
               <S.HeadingContainerHeading>
-                நெற்கதிர் உழவர் <br />
-                உற்பத்தியாளர் நிறுவனம்
+                {titleName ? (
+                  titleName
+                ) : (
+                  <>
+                    நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
+                )}
               </S.HeadingContainerHeading>
               <S.HeadingContainerSignNo>
-                <S.RegNoCin>REG No:139086 </S.RegNoCin>
-                <S.RegNoCin>CIN:UO1409TN2020PTC139086 </S.RegNoCin>
+                <S.RegNoCin>{regNo ? `REG No:${regNo}` : "REG No:139086"}</S.RegNoCin>
+                <S.RegNoCin>{cinNo ? `CIN:${cinNo}` : "CIN:UO1409TN2020PTC139086"} </S.RegNoCin>
               </S.HeadingContainerSignNo>
             </S.CertificateHeadingContainer>
             <S.CertificateHeader>பங்குப்பத்திரம்</S.CertificateHeader>
