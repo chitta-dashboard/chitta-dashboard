@@ -127,7 +127,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
         </S.TabCell>
         <S.Cell title="பெயர்">
           <S.NameStack>
-            <S.AvatarBox>
+            <S.AvatarBox
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
               <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
               <S.EditBox
                 onClick={(e) => {
@@ -135,7 +140,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
                   handleIconClick();
                 }}
               >
-                {user.profile}
                 <S.EditIcon>edit</S.EditIcon>
                 <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
@@ -212,7 +216,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
               setIconModal(false);
             }}
           />
-          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
         </S.WebTableCell>
       </TableRow>
     </>

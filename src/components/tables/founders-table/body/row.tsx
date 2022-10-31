@@ -80,6 +80,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
       </S.TabCell>
       <S.Cell title="பெயர்">
         <S.NameStack>
+          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
             <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
             <S.EditBox onClick={handleIconClick}>
@@ -134,7 +135,6 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             setIconModal(false);
           }}
         />
-        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
       </S.WebTableCell>
     </TableRow>
   );

@@ -2,6 +2,7 @@ import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fileValidation } from "../../utils/constants";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
 import { S } from "./farmerDetailPage.styled";
@@ -14,6 +15,7 @@ interface Props {
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
   const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
+  const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -53,15 +55,27 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
         .map((user) => (
           <S.FarmersDetailsContent ref={ref} key={user.id}>
             <S.FarmersDetailsHeader>
-              <S.NerkathirLogo src={NerkathirLogo} alt="nerkathir-logo" />
+              <S.NerkathirLogo src={loginImage ? loginImage : NerkathirLogo} alt="nerkathir-logo" />
               <S.HeaderTextContainer>
                 <S.HeaderText1>
-                  நெற்கதிர் உழவர் <br />
-                  உற்பத்தியாளர் நிறுவனம்
+                  {titleName ? (
+                    titleName
+                  ) : (
+                    <>
+                      நெற்கதிர் உழவர் <br />
+                      உற்பத்தியாளர் நிறுவனம்
+                    </>
+                  )}
                 </S.HeaderText1>
                 <S.HeaderText2>
-                  நபார்டு <br />
-                  கள்ளக்குறிச்சி மாவட்டம்
+                  {address ? (
+                    address
+                  ) : (
+                    <>
+                      நபார்டு <br />
+                      கள்ளக்குறிச்சி மாவட்டம்
+                    </>
+                  )}
                   <br />
                   உறுப்பினர் விண்ணப்பம்
                 </S.HeaderText2>

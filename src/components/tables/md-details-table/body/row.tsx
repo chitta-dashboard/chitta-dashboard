@@ -92,6 +92,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             e.stopPropagation();
           }}
         >
+          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
             <S.AvatarImg alt="User-img" src={user.profile ? user.profile : userPic} />
             <S.EditBox onClick={handleIconClick}>
@@ -154,7 +155,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             )
           }
         />
-        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
       </S.WebTableCell>
     </TableRow>
   );

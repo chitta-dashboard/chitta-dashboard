@@ -9,7 +9,7 @@ import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
 
 const Header = () => {
-  const { userNotification, clearNotification, logout, headerImage } = useAuthContext();
+  const { userNotification, clearNotification, logout, headerImage, titleName } = useAuthContext();
   const navigate = useNavigate();
   let { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
@@ -43,13 +43,15 @@ const Header = () => {
     <>
       <S.Header>
         <S.LogoBox>
-          {headerImage ? (
-            <S.Logo src={headerImage} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
-          ) : (
-            <S.Logo src={Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
-          )}
+          <S.Logo src={headerImage ? headerImage : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
           <S.LogoText>
-            நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+            {titleName ? (
+              titleName
+            ) : (
+              <>
+                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+              </>
+            )}
           </S.LogoText>
         </S.LogoBox>
         <S.NavBar isOpen={navOpen}>

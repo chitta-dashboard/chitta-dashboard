@@ -25,6 +25,12 @@ const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {
     onAfterPrint() {
       handleClose();
     },
+    pageStyle: `@media print {
+      @page {
+        size: 25rem 15.71rem;
+        margin: 0;
+      }
+    }`,
   });
 
   return (

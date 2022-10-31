@@ -105,12 +105,16 @@ const AdminPanel = () => {
   }
 
   const onSubmit = (data: adminFormInputs) => {
+    localStorage.setItem("title", data.name);
+    localStorage.setItem("cinNo", data.cinNo);
+    localStorage.setItem("regNo", data.regNo);
+    localStorage.setItem("address", data.address);
+
     const imgObj = data.profile[0];
     fileChangedHandler(imgObj, 94, 94, "headerLogo");
     fileChangedHandler(imgObj, 156, 156, "loginLogo");
     fileChangedHandler(imgObj, 180, 180, "certificateLogo");
     fileChangedHandler(imgObj, 180, 180, "pdfLogo");
-
     addUpdate({
       id: "100",
       profile: data.profile,
@@ -131,7 +135,7 @@ const AdminPanel = () => {
       <S.ContainerBox>
         <S.Adminform id="adminForm" onSubmit={handleSubmit(onSubmit)}>
           <S.ContainerStack>
-            <AdminLogo register={register} errors={errors} />
+            <AdminLogo register={register}/>
             <ProfileInformation register={register} errors={errors} />
             <IdInformation register={register} errors={errors} />
             <S.ButtonBox>

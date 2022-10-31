@@ -30,6 +30,10 @@ interface IContextType {
   loginImage: string | null;
   certificateImage: string | null;
   pdfImage: string | null;
+  titleName: string | null;
+  cinNo: string | null;
+  regNo: string | null;
+  address: string | null;
 }
 
 const initialState: IContextType = {
@@ -46,7 +50,12 @@ const initialState: IContextType = {
   loginImage: localStorage.getItem("loginLogo"),
   certificateImage: localStorage.getItem("certificateLogo"),
   pdfImage: localStorage.getItem("pdfLogo"),
+  titleName: localStorage.getItem("title"),
+  cinNo: localStorage.getItem("cinNo"),
+  regNo: localStorage.getItem("regNo"),
+  address: localStorage.getItem("address"),
 };
+
 // Reducer function
 const reducer = (state: IContextType, action: any) => {
   switch (action.type) {
@@ -66,6 +75,10 @@ const reducer = (state: IContextType, action: any) => {
         loginImage: localStorage.getItem("loginLogo"),
         certificateImage: localStorage.getItem("certificateLogo"),
         pdfImage: localStorage.getItem("pdfLogo"),
+        titleName: localStorage.getItem("title"),
+        cinNo: localStorage.getItem("cinNo"),
+        regNo: localStorage.getItem("regNo"),
+        address: localStorage.getItem("address"),
       };
 
     default: {
@@ -79,9 +92,6 @@ const useAuthContext = () => useContext(authContext);
 
 const AuthContextProvider: FC<Props> = (props) => {
   const localAuth = window.localStorage.getItem("isAuthenticated");
-
-  // const test = localStorage.getItem("headerLogo");
-  // const [headerImage, setHeaderImage] = useState(test);
 
   const [isAuthenticated, setIsAuthenticated] = useState(!!localAuth);
 
@@ -116,7 +126,6 @@ const AuthContextProvider: FC<Props> = (props) => {
   const data = {
     ...state,
     isAuthenticated,
-    // headerImage,
     login,
     logout,
     clearNotification,
