@@ -31,6 +31,12 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     onAfterPrint() {
       checkboxUnselectAll();
     },
+    pageStyle: `@media print {
+      @page {
+        size: a5 landscape;
+        margin: 0;
+      }
+    }`,
   });
 
   return (

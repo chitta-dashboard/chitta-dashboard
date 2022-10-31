@@ -1,9 +1,9 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
-const ADD_MD_DETAIL = "ADD_MD_DETAIL";
+// const ADD_MD_DETAIL = "ADD_MD_DETAIL";
 const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
 const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
@@ -11,38 +11,10 @@ const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 
 export type mdDetail = {
-  // id: string;
-  // name: string;
-  // phoneNumber: string;
-  // qualification?: string;
-  // profile: string;
-  // dob: string;
-  // signature?: string;
-  // farmerId?: string;
-  // membershipId?: string;
-  // isChecked?: boolean;
-  // fatherName?: string;
-  // sex?: string;
-  // spouseName?: string;
-  // group?: string;
-  // addhaarNo?: string;
-  // surveyNo?: { [key: string]: string };
-  // acre?: { [key: string]: string };
-  // border?: { [key: string]: string };
-  // village?: string;
-  // postalNo?: string;
-  // address?: string;
-  // taluk?: string;
-  // district?: string;
-  // landType?: string;
-  // farmerType?: string;
-  // waterType?: string;
-  // animals?: string;
-  // groupMember?: string;
+  id: string;
+  farmerId?: string;
   membershipId?: string;
   profile: string;
-  // isChecked?: boolean;
-  id: string;
   name: string;
   fatherName: string;
   sex: string;
@@ -65,7 +37,6 @@ export type mdDetail = {
   animals: string;
   groupMember: string;
   qualification: string;
-  farmerId?: string;
 };
 
 export type selectedMdListData = number | string;
@@ -80,7 +51,6 @@ export interface mdDetailsContextType {
   sortFilter: SortOrder;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
-  addMdDetail: (data: mdDetail) => void;
   editMdDetail: (data: mdDetail) => void;
   deleteMdDetail: (id: string) => void;
   editTableIcon: (data: any) => void;
@@ -89,8 +59,9 @@ export interface mdDetailsContextType {
 
 const initialState: mdDetailsContextType = {
   mdDetailsById: {
-    "1": {
-      id: "1",
+    a: {
+      id: "a",
+      farmerId: "a",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Arokiya",
@@ -100,7 +71,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "10-08-1996",
-      addhaarNo: "901290129012",
+      addhaarNo: "503023001016",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -115,10 +86,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, Mechanical",
-      farmerId: "1",
     },
-    "2": {
-      id: "2",
+    b: {
+      id: "b",
+      farmerId: "b",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Sethu Ravichandran",
@@ -128,7 +99,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "01-01-1994",
-      addhaarNo: "901290129012",
+      addhaarNo: "893245328967",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -143,10 +114,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.E, ECE",
-      farmerId: "2",
     },
-    "3": {
-      id: "3",
+    c: {
+      id: "c",
+      farmerId: "c",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Vijay",
@@ -171,10 +142,10 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "B.Tech - IT",
-      farmerId: "3",
     },
-    "4": {
-      id: "4",
+    d: {
+      id: "d",
+      farmerId: "d",
       membershipId: "NER-FPC-2",
       profile: profileImg,
       name: "Raj",
@@ -184,7 +155,7 @@ const initialState: mdDetailsContextType = {
       sex: "male",
       spouseName: "nil",
       dob: "05-08-1998",
-      addhaarNo: "901290129012",
+      addhaarNo: "908990897654",
       acre: { "acre-first": "1" },
       border: { "border-first": "1" },
       village: "cholanmaligai",
@@ -199,14 +170,12 @@ const initialState: mdDetailsContextType = {
       animals: "மாடு",
       groupMember: "yes",
       qualification: "MBBS",
-      farmerId: "4",
     },
   },
   searchFilter: "",
   sortFilter: NORMAL,
   setSortFilter: () => {},
   setSearchFilter: () => {},
-  addMdDetail: () => {},
   editMdDetail: () => {},
   deleteMdDetail: () => {},
   editTableIcon: () => {},
@@ -215,9 +184,6 @@ const initialState: mdDetailsContextType = {
 
 const reducer = (state: mdDetailsContextType, action: any) => {
   switch (action.type) {
-    case ADD_MD_DETAIL:
-      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
-
     case EDIT_MD_DETAIL:
       return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
 
@@ -245,10 +211,6 @@ export const mdDetailsContext = createContext<mdDetailsContextType>(initialState
 const MdDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const addMdDetail = (data: mdDetail) => {
-    dispatch({ type: ADD_MD_DETAIL, payload: data });
-  };
-
   const editMdDetail = (data: mdDetail) => {
     dispatch({ type: EDIT_MD_DETAIL, payload: data });
   };
@@ -271,7 +233,6 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
 
   let data = {
     ...state,
-    addMdDetail,
     editMdDetail,
     deleteMdDetail,
     setSearchFilter,

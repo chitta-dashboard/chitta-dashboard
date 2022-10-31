@@ -5,7 +5,7 @@ namespace S {
   export const DashBoardContainer = styled(Box)(({ theme }: any) => ({
     width: "100%",
     height: "100%",
-    margin: "0 auto",
+    // margin: "0 auto",
     backgroundColor: theme.palette.bg.light,
     display: "flex",
     flexDirection: "column",
@@ -23,6 +23,7 @@ namespace S {
     justifyContent: "space-between",
     gap: "1rem",
     width: "100%",
+    height: "24rem",
     marginBottom: "1rem",
   });
 

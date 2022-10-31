@@ -3,18 +3,26 @@ import { Box, styled, Typography } from "@mui/material";
 export namespace S {
   export const IdHeaderWrapper = styled(Box)({
     display: "flex",
-    gap: "4rem",
-    justifyContent: "start",
+    width: "100%",
+    height: "108px",
+    justifyContent: "flex-start !important",
+  });
+
+  export const HeaderLeft = styled(Box)({
+    width: "30%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   });
 
   export const LogoImage = styled("img")({
-    height: "4.5rem",
-    width: "5.5rem",
+    height: "5.3rem",
+    width: "5.3rem",
     borderRadius: "50%",
-    alignSelf: "center",
   });
 
   export const HeaderRight = styled(Box)({
+    width: "47%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",

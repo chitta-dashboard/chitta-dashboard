@@ -68,3 +68,12 @@ export interface IAddCEODetailsFormInput {
   description: string;
   joinDate:string;
 }
+export interface IAddFounderDetailsFormInput {
+  name: string;
+  phoneNumber: string;
+  qualification: string;
+  dob: string;
+  profile: string;
+  description: string;
+  joinDate:string;
+}

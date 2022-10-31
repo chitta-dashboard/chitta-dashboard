@@ -5,10 +5,11 @@ import { useReactToPrint } from "react-to-print";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
-import { fileValidation } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { fileValidation, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -19,32 +20,25 @@ import { S } from "./farmer-form-preview.styled";
 const FarmerFormPreviewLeft = () => {
   const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { editMdDetail } = useMdDetailsContext();
-
+  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { addNotification, address, titleName  } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddFarmersDetailsFormInput & { id: string; membershipId: string }) | null>(
-    null,
-  );
-  const AddNewMember = { id: openConfirmationModal?.id, group: openConfirmationModal?.group };
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<(farmerDetail & { farmerId?: string }) | null>(null);
+  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
   const navigate = useNavigate();
 
   // popover open
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
   // popover close
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  const handleClose = () => setAnchorEl(null);
   const current = new Date();
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -79,10 +73,14 @@ const FarmerFormPreviewLeft = () => {
     });
     result[0]["profile"] = image;
     editFarmerDetail({ ...result[0] });
+    const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
+    if (getMdData?.farmerId) {
+      getMdData["profile"] = image;
+    }
   };
 
   //Update FarmerDetail Handler
-  const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string }) => {
+  const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => {
     setOpenConfirmationModal(data);
   };
 
@@ -142,10 +140,22 @@ const FarmerFormPreviewLeft = () => {
             </Popover>
             <S.FormHeading>
               <S.Text1>
-                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                {titleName ? (
+                  titleName
+                ) : (
+                  <>
+                    நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
+                )}
               </S.Text1>
               <S.Text2>
-                நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                {address ? (
+                  address
+                ) : (
+                  <>
+                    நபார்டு,கள்ளக்குறிச்சி மாவட்டம் <br /> உறுப்பினர் விண்ணப்பம்
+                  </>
+                )}
               </S.Text2>
             </S.FormHeading>
             <S.FarmerImgContainer>
@@ -175,6 +185,7 @@ const FarmerFormPreviewLeft = () => {
                 cb={updateFarmerDetail}
                 editMode={true}
                 id={user.id}
+                mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
               />
             )}
             {openDeleteModal && (
@@ -183,11 +194,14 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
                   deleteFarmerDetail(user.id);
+                  const isFarmerInMd = Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id;
+                  isFarmerInMd && deleteMdDetail(isFarmerInMd);
+                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
                   navigate(-1);
                 }}
                 deleteMessage={
                   <span>
-                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from CeoList?
+                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from Farmers Details?
                   </span>
                 }
               />
@@ -200,8 +214,8 @@ const FarmerFormPreviewLeft = () => {
                 }}
                 yesAction={() => {
                   editFarmerDetail(openConfirmationModal);
-                  editMdDetail(openConfirmationModal);
-                  removeGroupMember(user.id);
+                  openConfirmationModal.farmerId && editMdDetail(openConfirmationModal);
+                  removeGroupMember(openConfirmationModal.farmerId);
                   addGroupMember(AddNewMember);
                   setOpenConfirmationModal(null);
                   setOpenEditModal(false);

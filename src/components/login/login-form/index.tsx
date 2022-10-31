@@ -25,7 +25,7 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { login } = useAuthContext();
+  const { login, loginImage } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -66,7 +66,7 @@ const LoginForm: FC = () => {
       <S.LoginContainer>
         <S.FormContainer>
           <S.ImageBox>
-            <S.LogoImage src={logo} alt="Nerkathir" />
+            <S.LogoImage src={loginImage ? loginImage : logo} alt="Nerkathir" />{" "}
           </S.ImageBox>
 
           <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>

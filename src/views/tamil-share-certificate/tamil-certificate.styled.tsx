@@ -8,11 +8,12 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "839.09px",
+    height: "839.05px",
     width: "74.375rem",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
+    overflow: "hidden",
   }));
 
   export const CertificateTopBorderImg = styled("img")({
@@ -95,6 +96,9 @@ export namespace S {
   export const NerkathirLogo = styled("img")({
     width: "8.125rem",
     marginRight: "4.375rem",
+    borderRadius: "50%",
+    aspectRatio: "1/1",
+    filter: "grayscale(100%)",
   });
 
   export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
