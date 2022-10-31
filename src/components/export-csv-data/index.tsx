@@ -24,7 +24,7 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
       let newCSVData: any = {};
       let keys = Object.keys(item);
       Object.values(item).map((value, i) => {
-        newCSVData[keys[i]] = JSON.stringify(value).split("\"")[1];
+        newCSVData[keys[i]] = JSON.stringify(value).split('"').join("");
       });
       updatedCSVData.push(newCSVData);
     });
