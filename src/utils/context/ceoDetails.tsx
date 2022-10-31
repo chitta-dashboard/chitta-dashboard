@@ -1,7 +1,7 @@
 import React, { createContext, FC, useContext, useEffect, useReducer } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-// import profileImg from "../../assets/images/nerkathir-user.svg";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_CEO_DETAIL = "ADD_CEO_DETAIL";
