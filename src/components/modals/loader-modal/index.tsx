@@ -13,7 +13,9 @@ interface CustomProps {
 const LoaderModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   return (
     <CustomModal openModal={openModal}>
-      <ModalHeader handleClose={handleClose}>Loading</ModalHeader>
+      <ModalHeader handleClose={handleClose} alignment="center">
+        Loading
+      </ModalHeader>
       <ModalBody>
         <S.AnimationContainer>
           <S.LeafContainer>
