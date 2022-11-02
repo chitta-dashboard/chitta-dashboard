@@ -6,7 +6,7 @@ import { RootState } from "../../../utils/store";
 import S from "./resolutionsContent.styled";
 
 const ResolutionsContent: FC = () => {
-  const [resolutionId, setResolutionId] = useState<string>("");
+  const [resolutionId, setResolutionId] = useState<string | null>("");
   const tab = useSelector((state: RootState) => state.resolution.tab);
 
   return (

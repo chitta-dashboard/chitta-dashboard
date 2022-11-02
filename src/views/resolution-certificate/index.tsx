@@ -31,7 +31,7 @@ const ResolutionCertificatePage = () => {
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
+    documentTitle: `Board_Resolution_${+new Date()}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
