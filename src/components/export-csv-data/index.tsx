@@ -3,7 +3,8 @@ import * as FileSaver from "file-saver";
 import { FC } from "react";
 import * as XLSX from "xlsx";
 import { number } from "yup";
-import { farmerDetail } from "../../utils/context/farmersDetails";
+import { farmerDetail } from "../../utils/store/slice/farmerDetails";
+// import { farmerDetail } from "../../utils/context/farmersDetails";
 import S from "./exportData.styled";
 
 type ExportCSVType = {

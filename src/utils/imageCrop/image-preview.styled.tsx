@@ -16,16 +16,24 @@ namespace S {
 
   export const ImagePopUp = styled(Box)(({ theme }) => ({
     margin: "2%",
-    padding: "2% 3%",
+    padding: "1% 2%",
     boxShadow: `1px 1px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.2)}`,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "70%",
+    width: "60%",
     height: "70vh",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     borderRadius: "0.75rem",
+    [theme.breakpoints.down("lg")]: {
+      width: "95%",
+      height: "600px",
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "90%",
+      height: "400px",
+    },
   }));
 
   export const CloseIconContainer = styled(Box)(({ theme }) => ({
@@ -50,8 +58,12 @@ namespace S {
   export const MainImageContainer = styled(Box)({
     width: "80%",
     height: "100%",
+    // border: "1px solid #C1E1D6 !important",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     ".react-cropper": {
-      width: "100%",
+      width: "fit-content",
       height: "inherit",
       div: {
         width: "100%",
@@ -62,6 +74,7 @@ namespace S {
         img: {
           width: "100%",
           height: "100%",
+          // objectFit:"scale-down"
         },
       },
     },

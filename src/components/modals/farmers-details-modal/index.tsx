@@ -2,7 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useSelector } from "react-redux";
+import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { RootState } from "../../../utils/store";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -26,13 +28,14 @@ interface CustomProps {
 
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const { farmersDetailsById } = useFarmerDetailsContext();
+  // const { farmersDetailsById } = useFarmerDetailsContext();
+  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
       let masterKey = "";
       let surveyName = "";
       let acreName = "";
@@ -159,7 +162,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   useEffect(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersDetailsById).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,

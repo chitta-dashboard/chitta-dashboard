@@ -1,7 +1,10 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fileValidation } from "../../utils/constants";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { editFarmerDetail } from "../../utils/store/slice/farmerDetails";
+import { RootState } from "../../utils/store";
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
@@ -14,9 +17,11 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
-  const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
+  // const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
+  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
+  const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
 
@@ -45,7 +50,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
       return item.id === userId;
     });
     result[0]["profile"] = image;
-    editTableIcon({ ...result[0] });
+    dispatch(editFarmerDetail({ ...result[0] }));
   };
 
   return (

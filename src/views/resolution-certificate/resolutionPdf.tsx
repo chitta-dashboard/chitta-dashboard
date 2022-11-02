@@ -1,16 +1,18 @@
 import { forwardRef } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { useResolutionsProviderContext } from "../../utils/context/resolutions";
 import { useAuthContext } from "../../utils/context/auth";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import { IResolutions } from "../../utils/store/slice/resolution";
+import { RootState } from "../../utils/store";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
-  resolutionId?: string;
+  resolutionId?: string | null;
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
-  const { resolutions } = useResolutionsProviderContext();
+  const resolutions: IResolutions = useSelector((state: RootState) => state.resolution.resolutions);
   const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;

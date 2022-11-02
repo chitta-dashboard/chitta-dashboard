@@ -1,4 +1,4 @@
-// import { mdDetail } from "../context/mdDetails";
+import CryptoJS from "crypto-js";
 
 export const fileValidation = (file: string) => {
   var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -162,5 +162,42 @@ export const calculateAge = (dob: string) => {
 export const createJoinDate = () => {
   const dateObj = new Date().toString().split(" ");
   const date = dateObj.slice(1, 4).join(",").replace(",", " ");
-  return date
+  return date;
 };
+
+/**
+ * Encrypt a text.
+ * @param {string} text - The text to encrypt
+ * @param {string} secretPhrase - The encryption key (this should be used while decryption)
+ * @returns {string} The encrypted text.
+ */
+const encryptText = (text: string, secretPhrase: string = "123"): string => {
+  const encryptedText = CryptoJS.AES.encrypt(text, secretPhrase).toString();
+  return encryptedText;
+};
+
+/**
+ * Decrypt a text.
+ * @param {string} encryptedText - The text to decrypt
+ * @param {string} secretPhrase - The decryption key (the same key that is used for encryption)
+ * @returns {string} The decrypted text.
+ */
+export const decryptText = (encryptedText: string, secretPhrase: string = "123"): string => {
+  const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretPhrase).toString(CryptoJS.enc.Utf8);
+  return decryptedText;
+};
+
+/**
+ * Encrypt a file.
+ * @param {Blob | File} file - The file to encrypt
+ * @returns {string} Returns the specified file's encrypted Base64 text.
+ */
+export const encryptFile = (file: Blob | File): Promise<string> =>
+  new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      const encryptedBase64 = encryptText(reader?.result as string);
+      resolve(encryptedBase64);
+    };
+    reader.readAsDataURL(file);
+  });

@@ -20,14 +20,14 @@ const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {
   const idCardRef = useRef<HTMLDivElement>();
 
   const generateIdCard = useReactToPrint({
-    documentTitle: `Nerkathir_User_IDcard${+new Date()}`,
+    documentTitle: `CEO_${cardData && cardData.name}_IdCard`,
     content: () => idCardRef.current as HTMLDivElement,
     onAfterPrint() {
       handleClose();
     },
     pageStyle: `@media print {
       @page {
-        size: 25rem 15.71rem;
+        size: 33.3rem 21rem;
         margin: 0;
       }
     }`,
