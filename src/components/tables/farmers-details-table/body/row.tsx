@@ -84,7 +84,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const generateFarmerDetailForm = useReactToPrint({
-    documentTitle: `Nerkathir_User_Form_${+new Date()}`,
+    documentTitle: `${user.name}_FarmerDetail_form`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 

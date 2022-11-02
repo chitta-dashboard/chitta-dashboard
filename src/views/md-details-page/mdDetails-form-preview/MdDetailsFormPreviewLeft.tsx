@@ -48,7 +48,7 @@ const MdFormPreviewLeft = () => {
 
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({
-    documentTitle: `Nerkathir_MdForm${+new Date()}`,
+    documentTitle: `${mdId && mdDetailsById[mdId].name}_MD_Detail_form`,
     content: () => mdFormPdf.current as HTMLDivElement,
   });
 

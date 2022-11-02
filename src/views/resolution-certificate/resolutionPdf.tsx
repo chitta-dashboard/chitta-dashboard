@@ -8,7 +8,7 @@ import { RootState } from "../../utils/store";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
-  resolutionId?: string;
+  resolutionId?: string | null;
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
