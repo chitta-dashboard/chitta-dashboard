@@ -9,26 +9,31 @@ import { FoundersContextProvider } from "../../utils/context/founders";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { CeoDetailsContextProvider } from "../../utils/context/ceoDetails";
 import store from "../../utils/store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 type Props = {
   children: JSX.Element | JSX.Element[];
 };
 
+export const queryClient = new QueryClient();
+
 const Provider: FC<Props> = ({ children }) => {
   return (
     <Router>
       <ThemeProvider theme={LightTheme}>
-        <AuthContextProvider>
-          <MdDetailsContextProvider>
-            <FoundersContextProvider>
-              <FarmersGroupContextProvider>
-                <CeoDetailsContextProvider>
-                  <ReduxProvider store={store}>{children}</ReduxProvider>
-                </CeoDetailsContextProvider>
-              </FarmersGroupContextProvider>
-            </FoundersContextProvider>
-          </MdDetailsContextProvider>
-        </AuthContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthContextProvider>
+            <MdDetailsContextProvider>
+              <FoundersContextProvider>
+                <FarmersGroupContextProvider>
+                  <CeoDetailsContextProvider>
+                    <ReduxProvider store={store}>{children}</ReduxProvider>
+                  </CeoDetailsContextProvider>
+                </FarmersGroupContextProvider>
+              </FoundersContextProvider>
+            </MdDetailsContextProvider>
+          </AuthContextProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </Router>
   );
