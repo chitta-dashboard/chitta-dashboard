@@ -21,7 +21,7 @@ const FarmerFormPreviewLeft = () => {
   const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addNotification, address, titleName  } = useAuthContext();
+  const { addNotification, address, titleName } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const FarmerFormPreviewLeft = () => {
 
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
-    documentTitle: `Nerkathir_FarmerForm${+new Date()}`,
+    documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 

@@ -135,7 +135,7 @@ const AdminPanel = () => {
       <S.ContainerBox>
         <S.Adminform id="adminForm" onSubmit={handleSubmit(onSubmit)}>
           <S.ContainerStack>
-            <AdminLogo register={register}/>
+            <AdminLogo register={register} errors={errors} />
             <ProfileInformation register={register} errors={errors} />
             <IdInformation register={register} errors={errors} />
             <S.ButtonBox>

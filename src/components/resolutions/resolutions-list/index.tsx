@@ -1,4 +1,4 @@
-import { Dispatch, FC, Ref, useRef } from "react";
+import { Dispatch, FC, Ref, useEffect, useRef } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
@@ -10,8 +10,8 @@ import leftConnect from "../../../assets/images/leftDash.svg";
 import S from "./resolutionsList.styled";
 
 interface Props {
-  resolutionId: string;
-  setResolutionId: Dispatch<string>;
+  resolutionId: string | null;
+  setResolutionId: Dispatch<string | null>;
 }
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
@@ -29,9 +29,16 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
+    documentTitle: `Board_Resolution_${resolutionId && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
+
+  useEffect(() => {
+    if (resolutionId) {
+      generateResolutionPDF();
+    }
+    setResolutionId(null);
+  }, [resolutionId]);
 
   return (
     <S.MasterContainer>
@@ -52,9 +59,8 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
                   View
                 </S.ContentViewBtn>
                 <S.ContentDownloadBtn
-                  onClick={async () => {
-                    await setResolutionId(data.id);
-                    generateResolutionPDF();
+                  onClick={() => {
+                    setResolutionId(data.id);
                   }}
                 >
                   <i>download</i>
@@ -82,9 +88,8 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 View
               </S.ContentViewBtn>
               <S.ContentDownloadBtn
-                onClick={async () => {
-                  await setResolutionId(data.id);
-                  generateResolutionPDF();
+                onClick={() => {
+                  setResolutionId(data.id);
                 }}
               >
                 <i>download</i>

@@ -8,7 +8,7 @@ interface CustomProps {
 }
 
 const ResolutionsContent: FC<CustomProps> = ({ view }) => {
-  const [resolutionId, setResolutionId] = useState<string>("");
+  const [resolutionId, setResolutionId] = useState<string | null>("");
 
   return (
     <S.ResolutionsContentContainer>

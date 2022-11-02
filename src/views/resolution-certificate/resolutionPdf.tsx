@@ -6,7 +6,7 @@ import NerkathirLogo from "../../assets/images/logo.svg";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
-  resolutionId?: string;
+  resolutionId?: string | null;
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {

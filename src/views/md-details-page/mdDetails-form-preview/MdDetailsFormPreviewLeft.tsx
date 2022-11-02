@@ -20,7 +20,7 @@ const MdFormPreviewLeft = () => {
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { editFarmerDetail } = useFarmerDetailsContext();
-  const { addNotification,titleName, address } = useAuthContext();
+  const { addNotification, titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const MdFormPreviewLeft = () => {
 
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({
-    documentTitle: `Nerkathir_MdForm${+new Date()}`,
+    documentTitle: `${mdId && mdDetailsById[mdId].name}_MD_Detail_form`,
     content: () => mdFormPdf.current as HTMLDivElement,
   });
 
