@@ -1,4 +1,4 @@
-import { FC, Ref, useRef, Dispatch } from "react";
+import { Ref, useEffect, useRef, Dispatch, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
@@ -10,8 +10,8 @@ import leafLine from "../../../assets/images/leafLine.svg";
 import S from "./resolutionsTree.styled";
 
 interface Props {
-  resolutionId: string;
-  setResolutionId: Dispatch<string>;
+  resolutionId: string | null;
+  setResolutionId: Dispatch<string | null>;
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
@@ -23,9 +23,16 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
+    documentTitle: `Board_Resolution_${resolutionId && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
+
+  useEffect(() => {
+    if (resolutionId) {
+      generateResolutionPDF();
+    }
+    setResolutionId(null);
+  }, [resolutionId]);
 
   return (
     <>
@@ -46,9 +53,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ButtonsBar>
                   <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[0].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
-                    onClick={async () => {
-                      await setResolutionId(resolutions[0].id);
-                      generateResolutionPDF();
+                    onClick={() => {
+                      setResolutionId(resolutions[0].id);
                     }}
                   >
                     <i>download</i>
@@ -71,9 +77,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ButtonsBar>
                   <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[2].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
-                    onClick={async () => {
-                      await setResolutionId(resolutions[2].id);
-                      generateResolutionPDF();
+                    onClick={() => {
+                      setResolutionId(resolutions[2].id);
                     }}
                   >
                     <i>download</i>
@@ -96,9 +101,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ButtonsBar>
                   <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[1].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
-                    onClick={async () => {
-                      await setResolutionId(resolutions[1].id);
-                      generateResolutionPDF();
+                    onClick={() => {
+                      setResolutionId(resolutions[1].id);
                     }}
                   >
                     <i>download</i>
@@ -121,9 +125,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ButtonsBar>
                   <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[3].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
-                    onClick={async () => {
-                      await setResolutionId(resolutions[3].id);
-                      generateResolutionPDF();
+                    onClick={() => {
+                      setResolutionId(resolutions[3].id);
                     }}
                   >
                     <i>download</i>

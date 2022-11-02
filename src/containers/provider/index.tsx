@@ -7,7 +7,6 @@ import { LightTheme } from "../../utils/theme";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { FoundersContextProvider } from "../../utils/context/founders";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
-import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { CeoDetailsContextProvider } from "../../utils/context/ceoDetails";
 import store from "../../utils/store";
 
@@ -19,19 +18,17 @@ const Provider: FC<Props> = ({ children }) => {
   return (
     <Router>
       <ThemeProvider theme={LightTheme}>
-        <ReduxProvider store={store}>
-          <AuthContextProvider>
-            <MdDetailsContextProvider>
-              <FoundersContextProvider>
-                <FarmersGroupContextProvider>
-                  <FarmerDetailsContextProvider>
-                    <CeoDetailsContextProvider>{children}</CeoDetailsContextProvider>
-                  </FarmerDetailsContextProvider>
-                </FarmersGroupContextProvider>
-              </FoundersContextProvider>
-            </MdDetailsContextProvider>
-          </AuthContextProvider>
-        </ReduxProvider>
+        <AuthContextProvider>
+          <MdDetailsContextProvider>
+            <FoundersContextProvider>
+              <FarmersGroupContextProvider>
+                <CeoDetailsContextProvider>
+                  <ReduxProvider store={store}>{children}</ReduxProvider>
+                </CeoDetailsContextProvider>
+              </FarmersGroupContextProvider>
+            </FoundersContextProvider>
+          </MdDetailsContextProvider>
+        </AuthContextProvider>
       </ThemeProvider>
     </Router>
   );

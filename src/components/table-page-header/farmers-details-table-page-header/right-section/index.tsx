@@ -1,7 +1,9 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../utils/store";
 import SelectDropDown from "../../../common-components/select-dropdown";
 import ExportCSV from "../../../export-csv-data";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
@@ -10,7 +12,8 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
-  const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
+  // const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
+  const { selectedFarmers, farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
 
   return (
     <S.RightSectionContainer>

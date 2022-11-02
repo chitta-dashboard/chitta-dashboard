@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { resolutionReducer } from "./slice/resolution";
+import {farmerDetailsReducer} from "./slice/farmerDetails";
+import {resolutionReducer} from "./slice/resolution";
 
 const store = configureStore({
   reducer: {
+    farmerDetails: farmerDetailsReducer,
     resolution: resolutionReducer,
   },
   devTools: process.env.NODE_ENV !== "production",
