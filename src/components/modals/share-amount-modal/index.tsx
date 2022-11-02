@@ -1,7 +1,9 @@
 import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useDispatch } from "react-redux";
+import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -16,8 +18,8 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-  const { checkboxUnselectAll } = useFarmerDetailsContext();
-
+  // const { checkboxUnselectAll } = useFarmerDetailsContext();
+  const dispatch = useDispatch();
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
@@ -29,7 +31,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
       handleClose();
     },
     onAfterPrint() {
-      checkboxUnselectAll();
+      dispatch(checkBoxUnselectAll());
     },
     pageStyle: `@media print {
       @page {
