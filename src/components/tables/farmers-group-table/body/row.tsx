@@ -2,7 +2,10 @@ import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../../utils/store";
+import { setGroupFilter } from "../../../../utils/store/slice/farmerDetails";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
@@ -18,7 +21,9 @@ interface FarmersGroupRowProp {
 
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const { editFarmersGroup, deleteFarmersGroup } = useFarmersGroupContext();
-  const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  // const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  const { groupFilter } = useSelector((state: RootState) => state.farmerDetails);
+  const dispatch = useDispatch();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -47,7 +52,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
 
   //Redirect to Farmers Details Group Filter handler.
   const selectGroupHandler = (groupName: string) => {
-    setGroupFilter(groupName);
+    dispatch(setGroupFilter(groupName));
     navigate(`/farmers-details`, { replace: true });
   };
 

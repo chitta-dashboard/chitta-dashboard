@@ -1,8 +1,9 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { fileValidation, Message } from "../../../../utils/constants";
@@ -14,6 +15,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
+import { editFarmerDetail } from "../../../../utils/store/slice/farmerDetails";
 
 interface MdDetailsRowProps {
   user: mdDetail;
@@ -22,9 +24,10 @@ interface MdDetailsRowProps {
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { editFarmerDetail } = useFarmerDetailsContext();
+  // const { editFarmerDetail } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -70,7 +73,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     user["profile"] = image;
-    editFarmerDetail(user);
+    dispatch(editFarmerDetail(user));
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -139,7 +142,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           yesAction={() => {
             !editMode && deleteMdDetail(user.id);
             editData && editMdDetail(editData);
-            editData && editFarmerDetail(editData);
+            editData && dispatch(editFarmerDetail(editData));
             editMode && user.farmerId && removeGroupMember(user.farmerId);
             editMode && addGroupMember(AddNewMember);
             setEditMode(false);

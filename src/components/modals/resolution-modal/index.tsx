@@ -8,8 +8,8 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IResolutionFormInput } from "../type/formInputs";
-import { IResolution } from "../../../utils/context/resolutions";
 import { createTimeStamp, getCurrentTime } from "../../../utils/constants";
+import { IResolution } from "../../../utils/store/slice/resolution";
 
 interface CustomProps {
   cb: (data: IResolution) => void;

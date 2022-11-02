@@ -1,11 +1,13 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import MdDetailsForm from "../MdDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { editFarmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { fileValidation, Message } from "../../../utils/constants";
@@ -19,7 +21,8 @@ import { S } from "./mdDetails-form-preview.styled";
 const MdFormPreviewLeft = () => {
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { editFarmerDetail } = useFarmerDetailsContext();
+  // const { editFarmerDetail } = useFarmerDetailsContext();
+  const dispatch = useDispatch();
   const { addNotification,titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -45,7 +48,7 @@ const MdFormPreviewLeft = () => {
 
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({
-    documentTitle: `Nerkathir_MdForm${+new Date()}`,
+    documentTitle: `${mdId && mdDetailsById[mdId].name}_MD_Detail_form`,
     content: () => mdFormPdf.current as HTMLDivElement,
   });
 
@@ -82,7 +85,7 @@ const MdFormPreviewLeft = () => {
     });
     result[0]["profile"] = image;
     editMdDetail({ ...result[0] });
-    editFarmerDetail({ ...result[0] });
+    dispatch(editFarmerDetail({ ...result[0] }));
   };
 
   //Update MdDetail Handler
