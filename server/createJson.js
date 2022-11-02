@@ -12,7 +12,7 @@ const handleJSONFile = ()=>{
     
     const file = {};
 
-    key.map((item,index)=>{
+    key.forEach((item,index)=>{
         file[item] = values[index]
     });
     fs.writeFile('db.json',JSON.stringify(file),err=>{
