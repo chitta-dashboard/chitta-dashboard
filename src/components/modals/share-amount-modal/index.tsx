@@ -2,9 +2,9 @@ import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
 // import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
-import { RootState } from "../../utils/store";
+import { RootState } from "../../../utils/store";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -19,10 +19,9 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-
   // const { checkboxUnselectAll } = useFarmerDetailsContext();
   const dispatch = useDispatch();
-  const { selectedFarmers, farmersDetailsById  } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers, farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
