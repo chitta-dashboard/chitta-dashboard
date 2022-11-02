@@ -7,13 +7,16 @@ import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-ho
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 import { useAuthContext } from "../../utils/context/auth";
+import { useSelector } from "react-redux";
+import { RootState } from "../../utils/store";
 
 interface Props {
   shareAmount?: number | string;
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
-  const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
+  // const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
+  const { farmersDetailsById, selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
   const { certificateImage, titleName, regNo, cinNo } = useAuthContext();
   const newDate = new Date();
   return (

@@ -5,7 +5,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import TableData from "./body/tableData";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { searchWord } from "../../../utils/constants";
 import SearchBar from "../../common-components/search-bar";
 import S from "./index.styled";

@@ -2,7 +2,9 @@ import { useState, useRef, FC } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useDispatch,useSelector } from "react-redux";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { RootState } from "../../../../utils/store";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
@@ -18,16 +20,19 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
+import { farmerDetail,editFarmerDetail, deleteFarmerDetail,checkBoxSelect} from "../../../../utils/store/slice/farmerDetails";
 
 interface FarmersDetailsRowProps {
-  user: farmerDetail;
+  user: farmerDetail | any;
 }
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
-  const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+  // const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<mdDetail>();
@@ -79,7 +84,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const generateFarmerDetailForm = useReactToPrint({
-    documentTitle: `Nerkathir_User_Form_${+new Date()}`,
+    documentTitle: `${user.name}_FarmerDetail_form`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,
   });
 
@@ -89,8 +94,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    user["profile"] = image;
-    let getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === user.id);
+    let farmerData = {...user};
+    farmerData["profile"] = image;
+    user = {...farmerData}
+    dispatch(editFarmerDetail({...user}));
+    let getMdData = Object.values(mdDetailsById).find((data:mdDetail) => data.farmerId === user.id);
     if (getMdData?.farmerId) {
       getMdData["profile"] = image;
     }
@@ -112,7 +120,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
         >
           <Checkbox
             onChange={(e) => {
-              checkboxSelect(user.id);
+              dispatch(checkBoxSelect(user.id));
             }}
             checked={selectedFarmers.includes(user.id)}
           />
@@ -120,7 +128,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
         <S.WebTableCell>{user.membershipId}</S.WebTableCell>
         {/* for tablet view*/}
         <S.TabCell onClick={(e) => e.stopPropagation()}>
-          <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
+          <Checkbox onChange={() => dispatch(checkBoxSelect(user.id))} checked={selectedFarmers.includes(user.id)} />
           <Stack>
             <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
           </Stack>
@@ -189,8 +197,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={() => {
-              const isFarmerInMd = Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id;
-              deleteFarmerDetail(user.id);
+              const isFarmerInMd = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id)?.id;
+              dispatch(deleteFarmerDetail(user.id));
               isFarmerInMd && deleteMdDetail(isFarmerInMd);
               setDeleteModal(false);
               setIconModal(false);
@@ -207,7 +215,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={() => {
-              editData && editFarmerDetail(editData);
+              editData && dispatch(editFarmerDetail(editData));
               editData?.farmerId && editMdDetail(editData);
               editMode && removeGroupMember(user.id);
               editMode && addGroupMember(AddNewMember);

@@ -1,7 +1,10 @@
 import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+// import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useDispatch } from "react-redux";
+import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
+import { RootState } from "../../utils/store";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -16,20 +19,22 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-  const { checkboxUnselectAll } = useFarmerDetailsContext();
 
+  // const { checkboxUnselectAll } = useFarmerDetailsContext();
+  const dispatch = useDispatch();
+  const { selectedFarmers, farmersDetailsById  } = useSelector((state: RootState) => state.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
+    documentTitle: `Shareholder_certificate of_${selectedFarmers.map((id) => farmersDetailsById[id].name)}`,
     content: () => pdftamilcertificate.current as HTMLDivElement,
     onBeforePrint() {
       handleClose();
     },
     onAfterPrint() {
-      checkboxUnselectAll();
+      dispatch(checkBoxUnselectAll());
     },
     pageStyle: `@media print {
       @page {

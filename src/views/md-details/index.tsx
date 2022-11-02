@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Message } from "../../utils/constants";
+import { useSelector } from "react-redux";
+import { RootState } from "../../utils/store";
+import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
-import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+// import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const { mdDetailsById, setSearchFilter, sortFilter, setSortFilter, checkboxSelect } = useMdDetailsContext();
-  const { farmersDetailsById } = useFarmerDetailsContext();
+  // const { farmersDetailsById } = useFarmerDetailsContext();
+  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
