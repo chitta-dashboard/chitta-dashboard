@@ -201,3 +201,26 @@ export const encryptFile = (file: Blob | File): Promise<string> =>
     };
     reader.readAsDataURL(file);
   });
+
+export const groupBy = (arr: any[], property: string) => {
+  return arr.reduce((acc, obj) => {
+    const key = obj[property];
+    if (!acc[key]) {
+      acc[key] = [];
+    }
+    // Add object to list for given key's value
+    acc[key].push(obj);
+    return acc;
+  }, {});
+};
+
+export const ENDPOINTS = {
+  resolutions: "resolutions",
+  ceo: "ceo",
+  farmerDetails: "farmerDetails",
+  farmerGroup: "farmerGroup",
+  mdDetails: "mdDetails",
+  founders: "founders",
+};
+
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
