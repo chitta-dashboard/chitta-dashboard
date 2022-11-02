@@ -1,13 +1,16 @@
 import { Ref, RefObject, useCallback, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { IResolution, useResolutionsProviderContext } from "../../utils/context/resolutions";
 import { Popover } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
+import { IResolution } from "../../utils/store/slice/resolution";
+import { editResolution, deleteResolution as deleteResolutionInContext } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
+import { RootState } from "../../utils/store";
 import { useAuthContext } from "../../utils/context/auth";
 import profile from "../../assets/images/Founder.png";
 import { S } from "./resolutionCertificate.styled";
@@ -21,9 +24,10 @@ const ResolutionCertificatePage = () => {
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
-  const { resolutions, editResolution, deleteResolution: deleteResolutionInContext } = useResolutionsProviderContext();
+  const resolutions = useSelector((state: RootState) => state.resolution.resolutions);
   const threeDotRef = useRef<HTMLSpanElement>();
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const dispatch = useDispatch();
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
@@ -33,7 +37,7 @@ const ResolutionCertificatePage = () => {
 
   const deleteResolution = useCallback(() => {
     setDeletion(false);
-    resolutionId && deleteResolutionInContext(resolutionId);
+    resolutionId && dispatch(deleteResolutionInContext(resolutionId));
     navigate(-1);
     addNotification({
       id: "edit" + resolutionId,
@@ -126,7 +130,7 @@ const ResolutionCertificatePage = () => {
           openModal={true}
           handleClose={() => setConfirmation(false)}
           yesAction={() => {
-            editResolution(resolutionId || "", editedData.current as IResolution);
+            dispatch(editResolution({ resolutionId, resolution: editedData.current as IResolution }));
             setConfirmation(false);
             setEdition(false);
             addNotification({
