@@ -10,8 +10,8 @@ import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
-import { IResolution } from "../../utils/context/resolutions";
 import LoaderModal from "./loader-modal";
+import { IResolution } from "../../utils/store/slice/resolution";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);

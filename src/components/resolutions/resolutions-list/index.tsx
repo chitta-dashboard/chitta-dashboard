@@ -1,12 +1,14 @@
 import { Dispatch, FC, Ref, useEffect, useRef } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
-import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import { DESCENDING, sortObj } from "../../../utils/constants";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
+import { IResolution } from "../../../utils/store/slice/resolution";
+import { RootState } from "../../../utils/store";
 import S from "./resolutionsList.styled";
 
 interface Props {
@@ -16,16 +18,12 @@ interface Props {
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  const { resolutions: resolutionsObj } = useResolutionsProviderContext();
+  const resolutionsObj = useSelector((state: RootState) => state.resolution.resolutions);
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leftData = resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
   const rightData = isMd ? resolutions : resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
-
-  const NavigateResolutionGroup = (resolutionId: string) => {
-    navigate(`/board-resolution/${resolutionId}`);
-  };
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
@@ -51,13 +49,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
             <S.LContent key={data.id}>
               <S.ContentHeader>
                 <S.ContentTitle>{data.groupName}</S.ContentTitle>
-                <S.ContentViewBtn
-                  onClick={() => {
-                    NavigateResolutionGroup(data.id);
-                  }}
-                >
-                  View
-                </S.ContentViewBtn>
+                <S.ContentViewBtn onClick={() => navigate(`/board-resolution/${data.id}`)}>View</S.ContentViewBtn>
                 <S.ContentDownloadBtn
                   onClick={() => {
                     setResolutionId(data.id);
@@ -80,13 +72,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
           <S.RContent key={data.id}>
             <S.ContentHeader>
               <S.ContentTitle>{data.groupName}</S.ContentTitle>
-              <S.ContentViewBtn
-                onClick={() => {
-                  NavigateResolutionGroup(data.id);
-                }}
-              >
-                View
-              </S.ContentViewBtn>
+              <S.ContentViewBtn onClick={() => navigate(`/board-resolution/${data.id}`)}>View</S.ContentViewBtn>
               <S.ContentDownloadBtn
                 onClick={() => {
                   setResolutionId(data.id);

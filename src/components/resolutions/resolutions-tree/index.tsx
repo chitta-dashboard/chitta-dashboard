@@ -1,9 +1,11 @@
 import { Ref, useEffect, useRef, Dispatch, FC } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
 import { DESCENDING, sortObj } from "../../../utils/constants";
-import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
+import { IResolution } from "../../../utils/store/slice/resolution";
+import { RootState } from "../../../utils/store";
 import leafLine from "../../../assets/images/leafLine.svg";
 import S from "./resolutionsTree.styled";
 
@@ -13,14 +15,11 @@ interface Props {
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
-  const { resolutions: resolutionsObj } = useResolutionsProviderContext();
+  const resolutionsObj = useSelector((state: RootState) => state.resolution.resolutions);
   const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leafCount = resolutions.length <= 4 ? resolutions.length : 4;
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
-  const NavigateResolutionGroup = (resolutionId: string) => {
-    navigate(`/board-resolution/${resolutionId}`);
-  };
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
@@ -52,13 +51,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ResolutionTitle>{resolutions[0].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[0].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
-                  <S.ViewBtn
-                    onClick={() => {
-                      NavigateResolutionGroup(resolutions[0].id);
-                    }}
-                  >
-                    View
-                  </S.ViewBtn>
+                  <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[0].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
                     onClick={() => {
                       setResolutionId(resolutions[0].id);
@@ -82,13 +75,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ResolutionTitle>{resolutions[2].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[2].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
-                  <S.ViewBtn
-                    onClick={() => {
-                      NavigateResolutionGroup(resolutions[2].id);
-                    }}
-                  >
-                    View
-                  </S.ViewBtn>
+                  <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[2].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
                     onClick={() => {
                       setResolutionId(resolutions[2].id);
@@ -112,13 +99,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ResolutionTitle>{resolutions[1].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[1].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
-                  <S.ViewBtn
-                    onClick={() => {
-                      NavigateResolutionGroup(resolutions[1].id);
-                    }}
-                  >
-                    View
-                  </S.ViewBtn>
+                  <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[1].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
                     onClick={() => {
                       setResolutionId(resolutions[1].id);
@@ -142,13 +123,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
                 <S.ResolutionTitle>{resolutions[3].groupName}</S.ResolutionTitle>
                 <S.ResolutionDescription>{resolutions[3].groupTitle}</S.ResolutionDescription>
                 <S.ButtonsBar>
-                  <S.ViewBtn
-                    onClick={() => {
-                      NavigateResolutionGroup(resolutions[3].id);
-                    }}
-                  >
-                    View
-                  </S.ViewBtn>
+                  <S.ViewBtn onClick={() => navigate(`/board-resolution/${resolutions[3].id}`)}>View</S.ViewBtn>
                   <S.DownloadBtn
                     onClick={() => {
                       setResolutionId(resolutions[3].id);
