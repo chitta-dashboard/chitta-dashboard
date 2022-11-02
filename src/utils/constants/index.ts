@@ -213,3 +213,14 @@ export const groupBy = (arr: any[], property: string) => {
     return acc;
   }, {});
 };
+
+export const ENDPOINTS = {
+  resolutions: "resolutions",
+  ceo: "ceo",
+  farmerDetails: "farmerDetails",
+  farmerGroup: "farmerGroup",
+  mdDetails: "mdDetails",
+  founders: "founders",
+};
+
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
