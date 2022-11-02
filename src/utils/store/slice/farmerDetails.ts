@@ -1,6 +1,6 @@
 import { createSlice, CaseReducer } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
-// import profileImg from "../../assets/images/nerkathir-user.svg";
+import profileImg from "../../assets/images/nerkathir-user.svg";
 
 export type farmerDetail = {
   membershipId?: string;
@@ -123,6 +123,7 @@ export const {
   checkboxSelectAll,
   checkBoxUnselectAll,
   setGroupFilter,
+  checkBoxSelect
 } = farmerDetailsSlice.actions;
 
-export default farmerDetailsSlice.reducer;
+export const farmerDetailsReducer = farmerDetailsSlice.reducer;

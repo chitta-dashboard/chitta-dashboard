@@ -2,11 +2,12 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
+import { useDispatch, useSelector } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { fileValidation, Message } from "../../../utils/constants";
@@ -18,10 +19,12 @@ import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
-  const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+  const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addNotification, address, titleName  } = useAuthContext();
+  const { addNotification, address, titleName } = useAuthContext();
+  const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -33,6 +36,8 @@ const FarmerFormPreviewLeft = () => {
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
   const navigate = useNavigate();
+
+  console.log("Farmer Details : ", farmersDetailsById);
 
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
@@ -71,8 +76,8 @@ const FarmerFormPreviewLeft = () => {
     let result = Object.values(farmersDetailsById).filter((item) => {
       return item.id === userId;
     });
-    result[0]["profile"] = image;
-    editFarmerDetail({ ...result[0] });
+    result[0]["profile"] = image as any;
+    dispatch(editFarmerDetail({ ...result[0] }));
     const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
     if (getMdData?.farmerId) {
       getMdData["profile"] = image;
@@ -193,7 +198,7 @@ const FarmerFormPreviewLeft = () => {
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
-                  deleteFarmerDetail(user.id);
+                  dispatch(deleteFarmerDetail(user.id));
                   const isFarmerInMd = Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id;
                   isFarmerInMd && deleteMdDetail(isFarmerInMd);
                   addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -213,7 +218,7 @@ const FarmerFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={() => {
-                  editFarmerDetail(openConfirmationModal);
+                  dispatch(editFarmerDetail(openConfirmationModal));
                   openConfirmationModal.farmerId && editMdDetail(openConfirmationModal);
                   removeGroupMember(openConfirmationModal.farmerId);
                   addGroupMember(AddNewMember);
