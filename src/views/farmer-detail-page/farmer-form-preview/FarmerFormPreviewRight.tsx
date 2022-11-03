@@ -1,13 +1,14 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../utils/store";
 import { useAuthContext } from "../../../utils/context/auth";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FARMER_DATA } from "../constant";
 import { S } from "./farmer-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 
 const FarmerFormPreviewRight = () => {
-  const { farmersDetailsById } = useFarmerDetailsContext();
+  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const { farmerId } = useParams();
   const { pdfImage } = useAuthContext();
 
