@@ -12,10 +12,11 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS } from "../../../utils/constants";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import S from "./farmersDetailsModal.styled";
+import { useFetch } from "../../../utils/hooks/query";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -29,7 +30,9 @@ interface CustomProps {
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   // const { farmersDetailsById } = useFarmerDetailsContext();
-  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
+  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
+  const { data: farmersDetailsById } = result;
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
 
