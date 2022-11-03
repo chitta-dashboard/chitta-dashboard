@@ -2,7 +2,8 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
@@ -18,7 +19,7 @@ interface FoundersRowProp {
 }
 
 const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
-  const { editFounder, deleteFounder } = useFounderContext();
+  // const { editFounder, deleteFounder } = useFounderContext();
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
@@ -28,6 +29,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+
+  // hook for edit and delete mutation
+  const { mutate: founderMutateUpdate } = useEdit(ENDPOINTS.founders);
+  const { mutate: founderMutateDelete } = useDelete(ENDPOINTS.founders);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -70,7 +75,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     user["profile"] = image;
-    editFounder({ ...user });
+    // editFounder({ ...user });
+    founderMutateUpdate({ editedData: user });
   };
 
   return (
@@ -113,10 +119,15 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={() => {
-            deleteFounder(user.id);
+            // deleteFounder(user.id);
+            founderMutateDelete({
+              id: user.id,
+              successCb: () => {
+                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
+              },
+            });
             setDeleteModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
           }}
           deleteMessage={
             <>
@@ -128,8 +139,12 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            !editMode && deleteFounder(user.id);
-            editMode && editData && editFounder(editData);
+            // editMode && editData && editFounder(editData);
+            editMode &&
+              editData &&
+              founderMutateUpdate({
+                editedData: editData,
+              });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
