@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { farmerDetail } from "../../../../utils/context/farmersDetails";
+import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
 import S from "./tableData.styled";
 
 interface Props {

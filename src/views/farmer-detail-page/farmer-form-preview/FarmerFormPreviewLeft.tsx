@@ -37,8 +37,6 @@ const FarmerFormPreviewLeft = () => {
   const { farmerId } = useParams();
   const navigate = useNavigate();
 
-  console.log("Farmer Details : ", farmersDetailsById);
-
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 

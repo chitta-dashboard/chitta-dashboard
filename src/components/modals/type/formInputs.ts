@@ -40,7 +40,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -48,6 +48,8 @@ export interface IAddFarmersGroupFormInput {
   chairman: string;
   treasurer: string;
   secretary: string;
+  id?: string;
+  members?: string[];
 }
 
 export interface IAddMDDetailsFormInput {
@@ -66,7 +68,7 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
-  joinDate:string;
+  joinDate: string;
 }
 export interface IAddFounderDetailsFormInput {
   name: string;
@@ -75,5 +77,5 @@ export interface IAddFounderDetailsFormInput {
   dob: string;
   profile: string;
   description: string;
-  joinDate:string;
+  joinDate: string;
 }

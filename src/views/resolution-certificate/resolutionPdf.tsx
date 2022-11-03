@@ -1,10 +1,11 @@
 import { forwardRef } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useAuthContext } from "../../utils/context/auth";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import { useFetch } from "../../utils/hooks/query";
 import { IResolutions } from "../../utils/store/slice/resolution";
-import { RootState } from "../../utils/store";
+import Loader from "../../components/loader";
+import { ENDPOINTS } from "../../utils/constants";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
@@ -12,14 +13,17 @@ interface Props {
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
-  const resolutions: IResolutions = useSelector((state: RootState) => state.resolution.resolutions);
+  const {
+    formatChangeSuccess,
+    result: { data: resolutions },
+  } = useFetch(ENDPOINTS.resolutions);
   const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
-  return (
+  return formatChangeSuccess ? (
     <>
-      {Object.values(resolutions)
+      {Object.values(resolutions as IResolutions)
         .filter((name) => name.id === resolutionId)
         .map((user) => (
           <S.ResolutionCertificateContainer ref={ref} key={user.id}>
@@ -81,6 +85,8 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
           </S.ResolutionCertificateContainer>
         ))}
     </>
+  ) : (
+    <Loader />
   );
 });
 

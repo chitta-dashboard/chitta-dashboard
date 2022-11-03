@@ -1,13 +1,13 @@
 import { FC, useEffect, useRef } from "react";
 import { Control, useWatch } from "react-hook-form";
-import { useSelector } from "react-redux";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IResolutionFormInput } from "../../type/formInputs";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { RootState } from "../../../../utils/store";
 import Input from "../../../input-fields/input/input";
-import { getCurrentTime } from "../../../../utils/constants";
+import { useFetch } from "../../../../utils/hooks/query";
+import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
+import Loader from "../../../loader";
 import S from "./formField.styled";
 
 interface CustomProps {
@@ -21,8 +21,12 @@ interface CustomProps {
 const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id = "" }) => {
   const { farmersGroupById } = useFarmersGroupContext();
   const farmerGroupList = Object.values(farmersGroupById);
-  const resolutions = useSelector((state: RootState) => state.resolution.resolutions);
-  const { current: resolution } = useRef(resolutions[id]);
+  // const resolutions = useSelector((state: RootState) => state.resolution.resolutions);
+  const {
+    formatChangeSuccess,
+    result: { data: resolutions },
+  } = useFetch(ENDPOINTS.resolutions);
+  const { current: resolution } = useRef(formatChangeSuccess && resolutions[id]);
   const selectAllGroup = useWatch<IResolutionFormInput>({
     name: "selectAll",
     control,
@@ -35,7 +39,9 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectAllGroup]);
 
-  return (
+  return editMode && !formatChangeSuccess ? (
+    <Loader />
+  ) : (
     <>
       <S.Container selectAll={selectAllGroup === "yes"}>
         <Input
