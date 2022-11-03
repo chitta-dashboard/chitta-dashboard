@@ -2,6 +2,8 @@ import React, { createContext, FC, useContext, useReducer } from "react";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
+
+const FARMER_GROUP_DATA = "FARMER_GROUP_DATA";
 const ADD_FARMERS_GROUP = "ADD_FARMERS_GROUP";
 const EDIT_FARMERS_GROUP = "EDIT_FARMERS_GROUP";
 const DELETE_FARMERS_GROUP = "DELETE_FARMERS_GROUP";
@@ -42,6 +44,7 @@ interface farmersGroupContextType {
   searchFilter: string;
   memberFilter: number;
   sortFilter: SortOrder;
+  getFarmersGroupData: (data: FarmersGroup) => void;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFarmersGroup: (data: FarmersGroup) => void;
@@ -53,37 +56,39 @@ interface farmersGroupContextType {
 }
 
 const initialState: farmersGroupContextType = {
-  farmersGroupById: {
-    a: {
-      id: "a",
-      groupName: "விவசாயிகள் சங்கம்-1",
-      explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
-      chairman: "option-1",
-      treasurer: "option-3",
-      secretary: "option-2",
-      members: ["a", "d", "e", "g", "h"],
-    },
-    b: {
-      id: "b",
-      groupName: "விவசாயிகள் சங்கம்-2",
-      explanation: "இந்த குழு சோழர் என்பவரால் உருவாக்கப்பட்டது...",
-      chairman: "option-2",
-      treasurer: "option-3",
-      secretary: "option-2",
-      members: [],
-    },
-    c: {
-      id: "c",
-      groupName: "விவசாயிகள் சங்கம்-3",
-      explanation: "இந்த குழு பாண்டியன் என்பவரால் உருவாக்கப்பட்டது...",
-      chairman: "option-3",
-      treasurer: "option-3",
-      secretary: "option-3",
-      members: ["b", "c", "f", "i", "j"],
-    },
-  },
+  // farmersGroupById: {
+  //   a: {
+  //     id: "a",
+  //     groupName: "விவசாயிகள் சங்கம்-1",
+  //     explanation: "இந்த குழு சதீஷ் என்பவரால் உருவாக்கப்பட்டது...",
+  //     chairman: "option-1",
+  //     treasurer: "option-3",
+  //     secretary: "option-2",
+  //     members: ["a", "d", "e", "g", "h"],
+  //   },
+  //   b: {
+  //     id: "b",
+  //     groupName: "விவசாயிகள் சங்கம்-2",
+  //     explanation: "இந்த குழு சோழர் என்பவரால் உருவாக்கப்பட்டது...",
+  //     chairman: "option-2",
+  //     treasurer: "option-3",
+  //     secretary: "option-2",
+  //     members: [],
+  //   },
+  //   c: {
+  //     id: "c",
+  //     groupName: "விவசாயிகள் சங்கம்-3",
+  //     explanation: "இந்த குழு பாண்டியன் என்பவரால் உருவாக்கப்பட்டது...",
+  //     chairman: "option-3",
+  //     treasurer: "option-3",
+  //     secretary: "option-3",
+  //     members: ["b", "c", "f", "i", "j"],
+  //   },
+  // },
+  farmersGroupById: {},
   searchFilter: "",
   sortFilter: NORMAL,
+  getFarmersGroupData: () => {},
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFarmersGroup: () => {},
@@ -94,7 +99,6 @@ const initialState: farmersGroupContextType = {
   memberFilter: customMemberFilter.ALL,
   setMemberFilter: () => {},
 };
-
 const reducer = (state: farmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
@@ -141,6 +145,9 @@ const reducer = (state: farmersGroupContextType, action: any) => {
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
 
+    case FARMER_GROUP_DATA:
+      return { ...state, farmersGroupById: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -151,6 +158,10 @@ export const farmersGroupContext = createContext<farmersGroupContextType>(initia
 
 const FarmersGroupContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer<(reducer: any, initialState: any) => any>(reducer, initialState);
+
+  const getFarmersGroupData = (data: FarmersGroup) => {
+    dispatch({ type: FARMER_GROUP_DATA, payload: data });
+  };
 
   const addFarmersGroup = (data: FarmersGroup) => {
     dispatch({ type: ADD_FARMERS_GROUP, payload: data });
@@ -185,6 +196,7 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
 
   let data = {
     ...state,
+    getFarmersGroupData,
     addFarmersGroup,
     editFarmersGroup,
     deleteFarmersGroup,
