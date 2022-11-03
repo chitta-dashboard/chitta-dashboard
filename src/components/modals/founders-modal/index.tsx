@@ -2,14 +2,15 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate } from "../../../utils/constants";
-import { useFounderContext } from "../../../utils/context/founders";
+import { createJoinDate, ENDPOINTS } from "../../../utils/constants";
+// import { useFounderContext } from "../../../utils/context/founders";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { dateFormat } from "../../../utils/constants";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
+import { useFetch } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
 
 interface CustomProps {
@@ -21,7 +22,11 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { foundersById } = useFounderContext();
+  // let { foundersById } = useFounderContext();
+
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
+  const { data: foundersById } = result;
+
   const { handleSubmit, reset, clearErrors, setValue, getValues, control: formControl, unregister, watch } = useForm<IAddFounderDetailsFormInput>();
 
   // submit button enabling
@@ -39,8 +44,8 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   }
 
   useEffect(() => {
-    if (editMode) {
-      let userData = Object.values(foundersById).find((f) => String(f.id) === id);
+    if (editMode && isSuccess) {
+      let userData = id && foundersById[id];
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,

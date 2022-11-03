@@ -5,33 +5,47 @@ import FoundersTable from "../../components/tables/founders-table";
 import { useFounderContext } from "../../utils/context/founders";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import { useAuthContext } from "../../utils/context/auth";
-import { Message } from "../../utils/constants";
+import { ENDPOINTS, Message } from "../../utils/constants";
+import { useAdd, useFetch } from "../../utils/hooks/query";
 import S from "./founders.styled";
+import Loader from "../../components/loader";
 
 const Founders = () => {
-  const { addFounder, setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
+  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
+  const { setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
+
+  const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
   const addModalHandler = () => {
     setAddModal(!addModal);
   };
 
   const addDataHandler = (data: IAddCEODetailsFormInput & { id: string }) => {
-    addFounder(data);
-    addNotification({
-      id: data.id,
-      image: data.profile,
-      message: Message(data.name).addFoundersDetails,
+    // addFounder(data);
+    founderMutateAdd({
+      data,
+      successCb: () => {
+        addNotification({
+          id: data.id,
+          image: data.profile,
+          message: Message(data.name).addFoundersDetails,
+        });
+      },
     });
   };
 
   return (
     <>
-      <S.foundersContainer>
-        <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
-        <FoundersTable />
-      </S.foundersContainer>
+      {!isSuccess ? (
+        <Loader />
+      ) : (
+        <S.foundersContainer>
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <FoundersTable />
+        </S.foundersContainer>
+      )}
       <FoundersModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>
   );
