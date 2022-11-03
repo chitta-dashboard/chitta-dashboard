@@ -33,13 +33,25 @@ export const useAdd = (endpoint: Endpoints) => {
   let successCallback: () => void;
 
   return useMutation(
-    ({ data, successCb }: { data: object; successCb?: () => void }) => {
+    async ({ data, successCb }: { data: any; successCb?: () => void }) => {
       successCallback = successCb ? successCb : () => {};
-      return axios.post(`http://localhost:5001/${endpoint}/`, data);
+      if (Array.isArray(data)) {
+        for (let i = 0; i < data.length; i++) {
+          await axios.post(`http://localhost:5001/${endpoint}/`, data[i]);
+        }
+        return data;
+      } else {
+        return axios.post(`http://localhost:5001/${endpoint}/`, data).then(() => data);
+      }
     },
     {
       onSuccess: (data) => {
-        const updatedData = { ...result.data, [data.data.id]: data.data };
+        let updatedData;
+        if (Array.isArray(data)) {
+          updatedData = { ...result.data, ...groupBy(data, "id") };
+        } else {
+          updatedData = { ...result.data, [data.id]: data };
+        }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
