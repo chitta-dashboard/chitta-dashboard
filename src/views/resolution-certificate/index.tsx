@@ -1,19 +1,19 @@
 import { Ref, RefObject, useCallback, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
 import { IResolution } from "../../utils/store/slice/resolution";
-import { editResolution, deleteResolution as deleteResolutionInContext } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
-import { RootState } from "../../utils/store";
+import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
+import { ENDPOINTS } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import profile from "../../assets/images/Founder.png";
 import { S } from "./resolutionCertificate.styled";
+import Loader from "../../components/loader";
 
 const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
@@ -24,10 +24,14 @@ const ResolutionCertificatePage = () => {
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
-  const resolutions = useSelector((state: RootState) => state.resolution.resolutions);
+  const {
+    formatChangeSuccess,
+    result: { data: resolutions },
+  } = useFetch(ENDPOINTS.resolutions);
   const threeDotRef = useRef<HTMLSpanElement>();
   const [popoverOpen, setPopoverOpen] = useState(false);
-  const dispatch = useDispatch();
+  const { mutate: mutateEdition } = useEdit(ENDPOINTS.resolutions);
+  const { mutate: mutateDeletion } = useDelete(ENDPOINTS.resolutions);
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
@@ -37,17 +41,22 @@ const ResolutionCertificatePage = () => {
 
   const deleteResolution = useCallback(() => {
     setDeletion(false);
-    resolutionId && dispatch(deleteResolutionInContext(resolutionId));
-    navigate(-1);
-    addNotification({
-      id: "edit" + resolutionId,
-      image: profile,
-      message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been deleted.`,
-    });
+    resolutionId &&
+      mutateDeletion({
+        id: resolutionId,
+        successCb: () => {
+          navigate(-1);
+          addNotification({
+            id: "edit" + resolutionId,
+            image: profile,
+            message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been deleted.`,
+          });
+        },
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolutionId]);
+  }, [resolutionId, resolutions]);
 
-  return (
+  return formatChangeSuccess ? (
     <>
       <S.ResolutionCertificateMainContainer>
         <S.CustomBackIcon onClick={() => navigate(-1)}>
@@ -130,18 +139,24 @@ const ResolutionCertificatePage = () => {
           openModal={true}
           handleClose={() => setConfirmation(false)}
           yesAction={() => {
-            dispatch(editResolution({ resolutionId, resolution: editedData.current as IResolution }));
+            mutateEdition({
+              editedData: editedData.current,
+              successCb: () => {
+                addNotification({
+                  id: "edit" + resolutionId,
+                  image: profile,
+                  message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been edited.`,
+                });
+              },
+            });
             setConfirmation(false);
             setEdition(false);
-            addNotification({
-              id: "edit" + resolutionId,
-              image: profile,
-              message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been edited.`,
-            });
           }}
         />
       )}
     </>
+  ) : (
+    <Loader />
   );
 };
 
