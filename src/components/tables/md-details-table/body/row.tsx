@@ -157,7 +157,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             editData && editMdDetail({ editedData: editData });
             const farmerEditData = { ...editData } as mdDetail;
             delete farmerEditData.farmerId;
-            console.log("farmerEditData", farmerEditData);
+            // console.log("farmerEditData", farmerEditData);
             editData && farmerEditData && editFarmer({ editedData: farmerEditData });
             // editData && dispatch(editFarmerDetail(editData));
             // editMode && user.farmerId && removeGroupMember(user.farmerId);

@@ -98,7 +98,7 @@ const MdDetails = () => {
       };
       addNotification(notification);
     });
-    console.log("farmerData", farmerData);
+    // console.log("farmerData", farmerData);
     addMdDetail({ data: farmerData });
     setIsConfirmModalOpen(false);
     addModalHandler();
