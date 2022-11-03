@@ -227,8 +227,6 @@ export const encryptFile = (file: Blob | File): Promise<string> =>
 export const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, obj) => {
     const key = obj[property];
-    // Add object to list for given key's value
-
     acc[key] = { ...obj };
     return acc;
   }, {});
