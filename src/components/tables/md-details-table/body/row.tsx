@@ -2,11 +2,11 @@ import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { mdDetail } from "../../../../utils/context/mdDetails";
+// import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
@@ -22,9 +22,10 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
-  const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { editFarmerDetail } = useFarmerDetailsContext();
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,6 +47,11 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   //Update MdDetail Handler
   const updateMdDetail = (data: mdDetail) => {
     setEditData(data);
+    // const td = { ...data };
+    // delete td.farmerId;
+    // console.log("data", data);
+    // console.log("delete", td);
+    // data.farmerId && setFarmerEditData(delete data.farmerId);
     confirmModalHandler();
   };
 
@@ -140,15 +146,25 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            !editMode && deleteMdDetail(user.id);
-            editData && editMdDetail(editData);
-            editData && dispatch(editFarmerDetail(editData));
-            editMode && user.farmerId && removeGroupMember(user.farmerId);
-            editMode && addGroupMember(AddNewMember);
+            // editData && updateMdDetails(editData);
+            !editMode &&
+              deleteMdDetail({
+                id: user.id,
+                successCb: () => {
+                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
+                },
+              });
+            editData && editMdDetail({ editedData: editData });
+            const farmerEditData = { ...editData } as mdDetail;
+            delete farmerEditData.farmerId;
+            console.log("farmerEditData", farmerEditData);
+            editData && farmerEditData && editFarmer({ editedData: farmerEditData });
+            // editData && dispatch(editFarmerDetail(editData));
+            // editMode && user.farmerId && removeGroupMember(user.farmerId);
+            // editMode && addGroupMember(AddNewMember);
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
           }}
           confirmMessage={
             !editMode && (

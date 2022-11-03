@@ -1,32 +1,37 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Message } from "../../utils/constants";
-import { useSelector } from "react-redux";
-import { RootState } from "../../utils/store";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
+import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
+import { farmerDetail } from "../../utils/context/farmersDetails";
+import { useAuthContext } from "../../utils/context/auth";
+import { ENDPOINTS, Message } from "../../utils/constants";
+import { useAdd, useFetch } from "../../utils/hooks/query";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../utils/store";
+// import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
-// import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
-import { useAuthContext } from "../../utils/context/auth";
+import Loader from "../../components/loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
-  const { mdDetailsById, setSearchFilter, sortFilter, setSortFilter, checkboxSelect } = useMdDetailsContext();
-  // const { farmersDetailsById } = useFarmerDetailsContext();
-  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
+  const { data: mdData } = result;
+  const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
+  const { formatChangeSuccess: farmerIsSuccess, result: farmerResult } = useFetch(ENDPOINTS.farmerDetails);
+  const { data: farmersData } = farmerResult;
+
+  const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-
-  let farmerKeys = Object.keys(farmersDetailsById);
+  let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
   useEffect(() => {
-    Object.values(mdDetailsById).map((item): mdDetail | null => {
+    Object.values(farmerIsSuccess && (mdData as mdDetail[])).map((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
         let index = farmerKeys.indexOf(item.farmerId as string);
         farmerKeys.splice(index, 1);
@@ -35,17 +40,17 @@ const MdDetails = () => {
     });
     let filteredFarmerData: farmerDetail[] = [];
     farmerKeys.map((item) => {
-      return filteredFarmerData.push(farmersDetailsById[item]);
+      return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
-  }, [mdDetailsById, farmersDetailsById]);
+  }, [mdData, farmersData, isSuccess, farmerIsSuccess]);
 
   const CustomMessage = () => {
     return (
       <S.CustomMessageDetails>
         Do you want to add{" "}
-        {<S.CustomMessage>{selectedKeys.length === 1 ? farmersDetailsById[selectedKeys[0]].name : `${selectedKeys.length} farmers`}</S.CustomMessage>}{" "}
-        on MD Details?
+        {<S.CustomMessage>{selectedKeys.length === 1 ? farmersData[selectedKeys[0]].name : `${selectedKeys.length} farmers`}</S.CustomMessage>} on MD
+        Details?
       </S.CustomMessageDetails>
     );
   };
@@ -71,29 +76,30 @@ const MdDetails = () => {
   };
 
   const handleYesAction = () => {
-    let farmerData: { [id: string]: mdDetail } = {};
+    let farmerData: mdDetail[] = [];
     selectedKeys.map((item: string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: mdDetail = {} as mdDetail;
-      let farmerKeys = Object.keys(farmersDetailsById[item]);
+      let farmerKeys = Object.keys(farmersData[item]);
       farmerDetailsResult.id = generatedId;
-      farmerDetailsResult.farmerId = farmersDetailsById[item].id;
+      farmerDetailsResult.farmerId = farmersData[item].id;
       farmerKeys.map((key) => {
         if (key !== "id") {
-          farmerDetailsResult[key as keyof mdDetail] = farmersDetailsById[item][key as keyof farmerDetail] as never;
+          farmerDetailsResult[key as keyof mdDetail] = farmersData[item][key as keyof farmerDetail] as never;
         }
       });
-      farmerData[generatedId] = farmerDetailsResult;
+      farmerData.push(farmerDetailsResult);
 
       //Notification
       let notification = {
         id: generatedId,
-        image: farmersDetailsById[item].profile,
-        message: Message(farmersDetailsById[item].name).addMd,
+        image: farmersData[item].profile,
+        message: Message(farmersData[item].name).addMd,
       };
       addNotification(notification);
     });
-    checkboxSelect(farmerData);
+    console.log("farmerData", farmerData);
+    addMdDetail({ data: farmerData });
     setIsConfirmModalOpen(false);
     addModalHandler();
   };
@@ -109,10 +115,14 @@ const MdDetails = () => {
 
   return (
     <>
-      <S.MdDetailsContainer>
-        <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
-        <MdDetailsTable />
-      </S.MdDetailsContainer>
+      {!farmerIsSuccess ? (
+        <Loader />
+      ) : (
+        <S.MdDetailsContainer>
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <MdDetailsTable />
+        </S.MdDetailsContainer>
+      )}
       <AddMdDetailsModal
         openModal={addModal}
         handleClose={addModalHandler}
