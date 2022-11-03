@@ -1,12 +1,12 @@
 import { Ref, useEffect, useRef, Dispatch, FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useReactToPrint } from "react-to-print";
-import { DESCENDING, sortObj } from "../../../utils/constants";
+import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import { IResolution } from "../../../utils/store/slice/resolution";
-import { RootState } from "../../../utils/store";
 import leafLine from "../../../assets/images/leafLine.svg";
+import { useFetch } from "../../../utils/hooks/query";
+import Loader from "../../loader";
 import S from "./resolutionsTree.styled";
 
 interface Props {
@@ -15,15 +15,19 @@ interface Props {
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
-  const resolutionsObj = useSelector((state: RootState) => state.resolution.resolutions);
-  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
-  const leafCount = resolutions.length <= 4 ? resolutions.length : 4;
+  const {
+    formatChangeSuccess,
+    result: { data: resolutionsObj },
+  } = useFetch(ENDPOINTS.resolutions);
+
+  const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
+  const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Board_Resolution_${resolutionId && resolutionsObj[resolutionId].groupName}`,
+    documentTitle: `Board_Resolution_${resolutionId && formatChangeSuccess && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
@@ -34,7 +38,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
     setResolutionId(null);
   }, [resolutionId]);
 
-  return (
+  return formatChangeSuccess ? (
     <>
       <S.InvisibleBox>
         <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} resolutionId={resolutionId} />
@@ -143,6 +147,8 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
       </S.ResolutionsTreeBox>
       {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
+  ) : (
+    <Loader />
   );
 };
 

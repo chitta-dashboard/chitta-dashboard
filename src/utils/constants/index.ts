@@ -205,16 +205,21 @@ export const encryptFile = (file: Blob | File): Promise<string> =>
 export const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, obj) => {
     const key = obj[property];
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    // Add object to list for given key's value
-    acc[key].push(obj);
+    acc[key] = { ...obj };
     return acc;
   }, {});
 };
 
-export const ENDPOINTS = {
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
+
+export const ENDPOINTS: {
+  resolutions: Endpoints;
+  ceo: Endpoints;
+  farmerDetails: Endpoints;
+  farmerGroup: Endpoints;
+  mdDetails: Endpoints;
+  founders: Endpoints;
+} = {
   resolutions: "resolutions",
   ceo: "ceo",
   farmerDetails: "farmerDetails",
@@ -222,5 +227,3 @@ export const ENDPOINTS = {
   mdDetails: "mdDetails",
   founders: "founders",
 };
-
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
