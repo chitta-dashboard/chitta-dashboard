@@ -71,7 +71,7 @@ const CeoDetailsCard = ({ user }: Props) => {
         <S.CeoDetailData>
           <S.CeoDataLeft>
             <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={results.result.data[user.id].profile || ProfilePicture} alt="profile picture" />
+              <S.CeoProfilePicture src={ceoDetailsById.profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
               <S.EditBox
                 onClick={() => {
                   handleIconClick();

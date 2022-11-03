@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../utils/store";
 import { setGroupFilter } from "../../../../utils/store/slice/farmerDetails";
 // import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { Message } from "../../../../utils/constants";
+import { Message, ENDPOINTS } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
 import FarmersGroupModal from "../../../modals/farmers-group-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -20,7 +21,7 @@ interface FarmersGroupRowProp {
 }
 
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
-  const { editFarmersGroup, deleteFarmersGroup } = useFarmersGroupContext();
+  const { deleteFarmersGroup } = useFarmersGroupContext();
   // const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { groupFilter } = useSelector((state: RootState) => state.farmerDetails);
   const dispatch = useDispatch();
@@ -32,6 +33,8 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
+  const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
+  const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -96,7 +99,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={() => {
-            deleteFarmersGroup(user.id);
+            farmerGroupDelete({ id: user.id });
             setDeleteModal(false);
             setIconModal(false);
             addNotification({ id: user.id, message: Message(user.groupName).deleteFarmGroup });
@@ -120,7 +123,9 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
             !editMode && deleteFarmersGroup(user.id);
-            editMode && editData && editFarmersGroup(editData);
+            // editMode && editData && editFarmersGroup(editData);
+            // editMode && editData && farmerGroupUpdate(editData);
+            editMode && farmerGroupEdit({ editedData: editData });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
