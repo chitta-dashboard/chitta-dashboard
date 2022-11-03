@@ -1,14 +1,13 @@
-import { useState, useRef, FC } from "react";
+import { useState, useRef, FC, useEffect } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { useDispatch,useSelector } from "react-redux";
-// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../utils/store";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -20,19 +19,32 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
-import { farmerDetail,editFarmerDetail, deleteFarmerDetail,checkBoxSelect} from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, editFarmerDetail, deleteFarmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
+import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
 }
+
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   // const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
   const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+  const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: mutateDeleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<mdDetail>();
@@ -41,10 +53,17 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const [image, setImage] = useState("");
-  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string>();
+  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string | null>(null);
   const [idCard, setIdCard] = useState(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const AddNewMember = { id: editData?.id, group: editData?.group };
+
+  useEffect(() => {
+    if (farmerIdtoPrint !== null || undefined) {
+      generateFarmerDetailForm();
+    }
+    setFarmerIdtoPrint(null);
+  }, [farmerIdtoPrint]);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -94,11 +113,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let farmerData = {...user};
+    let farmerData = { ...user };
     farmerData["profile"] = image;
-    user = {...farmerData}
-    dispatch(editFarmerDetail({...user}));
-    let getMdData = Object.values(mdDetailsById).find((data:mdDetail) => data.farmerId === user.id);
+    user = { ...farmerData };
+    dispatch(editFarmerDetail({ ...user }));
+    // let getMdData = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id);
+    let getMdData = mdDetailsById[user.id];
     if (getMdData?.farmerId) {
       getMdData["profile"] = image;
     }
@@ -165,9 +185,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             <CS.Icon onClick={idCardhandler}>id-card</CS.Icon>
             <CS.Icon onClick={editFarmerDetailHandler}>edit</CS.Icon>
             <CS.Icon
-              onClick={async () => {
-                await setFarmerIdtoPrint(user.id);
-                generateFarmerDetailForm();
+              onClick={() => {
+                setFarmerIdtoPrint(user.id);
               }}
             >
               download
@@ -179,9 +198,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             handleDelete={() => setDeleteModal(true)}
             handleEdit={() => setEditMode(true)}
             handleIdCard={() => setIdCard(true)}
-            handlePdfDownload={async () => {
-              await setFarmerIdtoPrint(user.id);
-              generateFarmerDetailForm();
+            handlePdfDownload={() => {
+              setFarmerIdtoPrint(user.id);
             }}
           />
           <FarmersDetailsModal
@@ -190,16 +208,17 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             cb={updateFarmerDetail}
             editMode={editMode}
             id={user.id}
-            mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
+            mdId={isSuccess ? (Object.values(mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id : ""}
           />
           <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
           <DeleteModal
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={() => {
-              const isFarmerInMd = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id)?.id;
-              dispatch(deleteFarmerDetail(user.id));
-              isFarmerInMd && deleteMdDetail(isFarmerInMd);
+              const isFarmerInMd = isSuccess ? (Object.values(mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id : "";
+              // dispatch(deleteFarmerDetail(user.id));
+              mutateDelete({ id: user.id });
+              isFarmerInMd && mutateDeleteMdDetail({ id: isFarmerInMd });
               setDeleteModal(false);
               setIconModal(false);
               addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -215,8 +234,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={() => {
-              editData && dispatch(editFarmerDetail(editData));
-              editData?.farmerId && editMdDetail(editData);
+              // editData && dispatch(editFarmerDetail(editData));
+              editData?.farmerId && mutateEdit({ editedData: editData });
               editMode && removeGroupMember(user.id);
               editMode && addGroupMember(AddNewMember);
               setEditMode(false);

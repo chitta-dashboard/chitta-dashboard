@@ -6,7 +6,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import IdCardBody from "../../id-card/id-card-body";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { Founders } from "../../../utils/context/founders";
 
