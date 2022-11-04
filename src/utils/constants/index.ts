@@ -241,7 +241,7 @@ export const groupBy = (arr: any[], property: string) => {
   }, {});
 };
 
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -250,6 +250,7 @@ export const ENDPOINTS: {
   farmerGroup: Endpoints;
   mdDetails: Endpoints;
   founders: Endpoints;
+  notification: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -257,6 +258,7 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
+  notification:"notification",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {

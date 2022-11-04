@@ -1,5 +1,7 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
 import { adminFormInputs } from "../../views/admin-panel";
+import { useAdd, useFetch, useDelete } from "../hooks/query";
+import { ENDPOINTS } from "../constants";
 
 //Action type
 const ADD_NOTIFICATION = "ADD_NOTIFICATION";
@@ -22,7 +24,6 @@ interface IContextType {
   logout: () => void;
   clearNotification: () => void;
   addNotification: (data: Notification) => void;
-  addUpdate: (data: adminFormInputs) => void;
   addLogo: () => void;
   userNotification: Notification[];
   AdminUpdate: { [id: string]: adminFormInputs };
@@ -42,7 +43,6 @@ const initialState: IContextType = {
   logout: () => {},
   clearNotification: () => {},
   addNotification: () => {},
-  addUpdate: () => {},
   addLogo: () => {},
   userNotification: [],
   AdminUpdate: {},
@@ -59,14 +59,12 @@ const initialState: IContextType = {
 // Reducer function
 const reducer = (state: IContextType, action: any) => {
   switch (action.type) {
-    case ADD_NOTIFICATION:
-      return { ...state, userNotification: [action.payload, ...state.userNotification] };
+    // case ADD_NOTIFICATION:
+    // return mutate({ data: action.payload });
+    // return { ...state, userNotification: [action.payload, ...state.userNotification] };
 
-    case CLEAR_NOTIFICATION:
-      return { ...state, userNotification: [] };
-
-    case ADD_UPDATE:
-      return { ...state, AdminUpdate: { ...state.AdminUpdate, [action.payload.id]: action.payload } };
+    // case CLEAR_NOTIFICATION:
+    //   return { ...state, userNotification: [] };
 
     case ADD_LOGO:
       return {
@@ -92,6 +90,12 @@ const useAuthContext = () => useContext(authContext);
 
 const AuthContextProvider: FC<Props> = (props) => {
   const localAuth = window.localStorage.getItem("isAuthenticated");
+  const { mutate: addNotify } = useAdd(ENDPOINTS.notification);
+  const {
+    result: { data: NotificationData },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.notification);
+  const { mutate: deleteNotification } = useDelete(ENDPOINTS.notification);
 
   const [isAuthenticated, setIsAuthenticated] = useState(!!localAuth);
 
@@ -108,15 +112,16 @@ const AuthContextProvider: FC<Props> = (props) => {
   };
 
   const addNotification = (data: Notification) => {
-    dispatch({ type: ADD_NOTIFICATION, payload: data });
+    return addNotify({ data: data });
+
+    // dispatch({ type: ADD_NOTIFICATION, payload: data });
   };
 
   const clearNotification = () => {
-    dispatch({ type: CLEAR_NOTIFICATION });
-  };
-
-  const addUpdate = (data: adminFormInputs) => {
-    dispatch({ type: ADD_UPDATE, payload: data });
+    // dispatch({ type: CLEAR_NOTIFICATION });
+    if (isSuccess) {
+      Object.values(NotificationData).map((item: any) => deleteNotification({ id: item.id }));
+    }
   };
 
   const addLogo = () => {
@@ -130,7 +135,7 @@ const AuthContextProvider: FC<Props> = (props) => {
     logout,
     clearNotification,
     addNotification,
-    addUpdate,
+    // addUpdate,
     addLogo,
   };
 
