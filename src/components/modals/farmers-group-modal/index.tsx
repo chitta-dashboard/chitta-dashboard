@@ -2,7 +2,8 @@ import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -32,9 +33,10 @@ interface CustomProps {
 
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
-  const { farmersGroupById } = useFarmersGroupContext();
-  const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
 
+  const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
+  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const { data: farmerGroupData } = result;
   // for enabling the submit button
   const groupNameEvent = watch("groupName");
   const explanationEvent = watch("explanation");
@@ -51,7 +53,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   useEffect(() => {
     if (editMode) {
-      let groupData = Object.values(farmersGroupById).find((f) => String(f.id) === id);
+      let groupData = Object.values(isSuccess && (farmerGroupData as CustomProps)).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,

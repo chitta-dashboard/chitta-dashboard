@@ -54,7 +54,7 @@ const FarmersDetails = () => {
         <FarmersDetailsTable />
       </S.FarmersDetailsContainer>
       <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
-      <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={(data)=>mutate({data:data})} />
+      <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={(data) => mutate({ data: data })} />
     </>
   );
 };

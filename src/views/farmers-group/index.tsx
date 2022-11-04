@@ -3,12 +3,18 @@ import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
 import { Message } from "../../utils/constants";
+import { ENDPOINTS } from "../../utils/constants";
+import { useFetch, useAdd } from "../../utils/hooks/query";
 import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
+import Loader from "../../components/loader";
 
 const FarmersGroup = () => {
-  const { addFarmersGroup, setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+
+  const { setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
@@ -35,23 +41,27 @@ const FarmersGroup = () => {
   };
 
   // Add Farmergroup Handler
-  const addDataHandler = (data: FarmersGroupType) => {
-    addFarmersGroup(data);
-    addNotification({ id: data.id, message: Message(data.groupName).addFarmGroup });
+  const addDataHandler = (newFarmerGroup: FarmersGroupType) => {
+    addFarmerGroup({ data: newFarmerGroup });
+    addNotification({ id: newFarmerGroup.id, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 
   return (
     <>
-      <S.FarmersGroupContainer>
-        <TablePageHeader
-          addModalHandler={addModalHandler}
-          searchHandler={setSearchFilter}
-          sortHandler={setSortFilter}
-          sortFilter={sortFilter}
-          popOverHandler={popOverHandler}
-        />
-        <FarmersGroupTable />
-      </S.FarmersGroupContainer>
+      {!isSuccess ? (
+        <Loader />
+      ) : (
+        <S.FarmersGroupContainer>
+          <TablePageHeader
+            addModalHandler={addModalHandler}
+            searchHandler={setSearchFilter}
+            sortHandler={setSortFilter}
+            sortFilter={sortFilter}
+            popOverHandler={popOverHandler}
+          />
+          <FarmersGroupTable />
+        </S.FarmersGroupContainer>
+      )}
       <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
 
       <S.Pop

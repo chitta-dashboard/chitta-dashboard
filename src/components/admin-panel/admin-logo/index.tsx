@@ -20,9 +20,7 @@ interface CustomProps {
 
 interface LogoProps {
   register: UseFormRegister<adminFormInputs>;
-  errors?: FieldErrorsImpl<{
-    profile: string;
-  }>;
+  errors?: FieldErrorsImpl<adminFormInputs>;
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
@@ -96,7 +94,7 @@ const AdminLogo: FC<LogoProps> = ({ register, errors }) => {
           </Box>
         </S.LogoStack>
       </S.UploadStack>
-      {errors && errors.profile && <S.ErrorText>{errors.profile?.message}</S.ErrorText>}
+      {errors && errors.profile && <S.ErrorText>{errors.profile?.message as string}</S.ErrorText>}
     </S.ContainerStack>
   );
 };
