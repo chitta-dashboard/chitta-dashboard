@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
@@ -10,8 +10,9 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { fileValidation, Message } from "../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
+import { useDelete, useFetch } from "../../../utils/hooks/query";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
@@ -20,7 +21,13 @@ import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
+  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+  const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
+
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification, address, titleName } = useAuthContext();
@@ -48,7 +55,7 @@ const FarmerFormPreviewLeft = () => {
 
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
-    documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
+    // documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 
@@ -71,7 +78,7 @@ const FarmerFormPreviewLeft = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = Object.values(farmersDetailsById).filter((item) => {
+    let result = Object.values(farmersDetailsById as farmerDetail[]).filter((item) => {
       return item.id === userId;
     });
     result[0]["profile"] = image as any;
@@ -92,9 +99,12 @@ const FarmerFormPreviewLeft = () => {
       <S.InvisibleBox>
         <FarmerDetailsForm ref={farmerFormPdf} />
       </S.InvisibleBox>
-      {Object.values(farmersDetailsById)
-        .filter((name) => [farmerId].includes(name.id))
-        .map((user) => (
+      {isSuccess &&
+        farmerId &&
+        // Object.values(farmersDetailsById as farmerDetail[])
+        //   .filter((name) => [farmerId].includes(name.id))
+        //   .map((user) => (
+        [farmersDetailsById[farmerId]].map((user) => (
           <S.FarmerFormPreviewLeft key={user.id}>
             <S.CustomBackIcon onClick={() => navigate(-1)}>
               <IconWrapper>back</IconWrapper>
@@ -197,9 +207,14 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
                   dispatch(deleteFarmerDetail(user.id));
+                  mutateDelete({
+                    id: user.id,
+                    successCb: () => {
+                      addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                    },
+                  });
                   const isFarmerInMd = Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id;
                   isFarmerInMd && deleteMdDetail(isFarmerInMd);
-                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
                   navigate(-1);
                 }}
                 deleteMessage={

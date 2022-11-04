@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-      .trim()
-      .toLowerCase()
-      .search(
-        word
-          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-          .trim()
-          .toLowerCase(),
-      ) >= 0
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-      asDate: false,
-    },
+    asDate: false,
+  },
 ) => {
   const arrClone = [...arr];
 
@@ -193,7 +193,7 @@ export const createJoinDate = () => {
  * @param {string} secretPhrase - The encryption key (this should be used while decryption)
  * @returns {string} The encrypted text.
  */
-const encryptText = (text: string, secretPhrase: string = "123"): string => {
+export const encryptText = (text: string, secretPhrase: string = "123"): string => {
   const encryptedText = CryptoJS.AES.encrypt(text, secretPhrase).toString();
   return encryptedText;
 };
@@ -205,8 +205,13 @@ const encryptText = (text: string, secretPhrase: string = "123"): string => {
  * @returns {string} The decrypted text.
  */
 export const decryptText = (encryptedText: string, secretPhrase: string = "123"): string => {
-  const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretPhrase).toString(CryptoJS.enc.Utf8);
-  return decryptedText;
+  try {
+    const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretPhrase).toString(CryptoJS.enc.Utf8);
+    return decryptedText;
+  } catch (err) {
+    // console.log("the passed string was not a encrypted string");
+    return encryptedText;
+  }
 };
 
 /**
@@ -214,14 +219,17 @@ export const decryptText = (encryptedText: string, secretPhrase: string = "123")
  * @param {Blob | File} file - The file to encrypt
  * @returns {string} Returns the specified file's encrypted Base64 text.
  */
-export const encryptFile = (file: Blob | File): Promise<string> =>
-  new Promise((resolve) => {
+export const encryptFile = (file: Blob | File | string, isPath = false): Promise<string> =>
+  new Promise(async (resolve) => {
     const reader = new FileReader();
-    reader.onloadend = function () {
+    reader.onload = function () {
       const encryptedBase64 = encryptText(reader?.result as string);
       resolve(encryptedBase64);
     };
-    reader.readAsDataURL(file);
+    if (isPath && typeof file === "string") {
+      file = await fetch(file).then((r) => r.blob());
+    }
+    reader.readAsDataURL(file as Blob | File);
   });
 
 export const groupBy = (arr: any[], property: string) => {
@@ -233,7 +241,7 @@ export const groupBy = (arr: any[], property: string) => {
   }, {});
 };
 
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders";
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -242,6 +250,7 @@ export const ENDPOINTS: {
   farmerGroup: Endpoints;
   mdDetails: Endpoints;
   founders: Endpoints;
+  notification: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -249,5 +258,17 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
+  notification:"notification",
+};
 
+export const handleDataByPage = (farmerData: any, page: number) => {
+  let updatedData: any = {};
+  let values = Object.values(farmerData);
+  let i = (page - 1) * 25;
+  let end = values.length < 25 * page ? values.length : 25 * page;
+  while (i < end) {
+    updatedData[i + 1] = values[i];
+    i++;
+  }
+  return updatedData;
 };

@@ -5,8 +5,8 @@ import SearchModal from "../../icon-modals/searchModal.tsx";
 import { fileValidation } from "../../../utils/constants";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./dashboardHeader.styled";
-import profilePic from "../../../assets/images/profile.png";
 
 const DashboardHeader = () => {
   const [openSearch, setOpenSearch] = useState(false);
@@ -46,7 +46,7 @@ const DashboardHeader = () => {
       <S.DashboardHeaderWrapper>
         <S.ProfileBox>
           <S.ImgContainer>
-            <S.DshboardImg src={imagePic ? imagePic : profilePic} alt="user-profile" />
+            <S.DshboardImg src={imagePic ? imagePic : placeHolderImg} alt="user-profile" />
             <S.EditBox
               onClick={() => {
                 handleIconClick();

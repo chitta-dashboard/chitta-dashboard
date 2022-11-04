@@ -1,8 +1,8 @@
 import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
-import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
@@ -12,7 +12,7 @@ import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 
 interface FoundersRowProp {
   user: Founders;
@@ -72,9 +72,9 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
 
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    user["profile"] = image;
+    user["profile"] = await encryptFile(image, true);
     // editFounder({ ...user });
     founderMutateUpdate({ editedData: user });
   };
@@ -88,7 +88,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <S.NameStack>
           {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
+            <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
