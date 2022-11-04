@@ -40,7 +40,7 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
-  const { addUpdate, addLogo } = useAuthContext();
+  const { addLogo } = useAuthContext();
 
   const {
     register,
@@ -115,17 +115,6 @@ const AdminPanel = () => {
     fileChangedHandler(imgObj, 156, 156, "loginLogo");
     fileChangedHandler(imgObj, 180, 180, "certificateLogo");
     fileChangedHandler(imgObj, 180, 180, "pdfLogo");
-    addUpdate({
-      id: "100",
-      profile: data.profile,
-      address: data.address,
-      cinNo: data.cinNo,
-      coordinatorAddress: data.coordinatorAddress,
-      folioPrefix: data.coordinatorAddress,
-      membershipPrefix: data.membershipPrefix,
-      name: data.name,
-      regNo: data.regNo,
-    } as adminFormInputs & { id: string });
     reset();
   };
 

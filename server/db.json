@@ -15103,5 +15103,6 @@
       "presenter": ["person 1", "person 2", "person 3"],
       "participator": ["person 1", "person 2", "person 3"]
     }
-  ]
+  ],
+  "notification": []
 }
