@@ -28,7 +28,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -47,11 +47,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   //Update MdDetail Handler
   const updateMdDetail = (data: mdDetail) => {
     setEditData(data);
-    // const td = { ...data };
-    // delete td.farmerId;
-    // console.log("data", data);
-    // console.log("delete", td);
-    // data.farmerId && setFarmerEditData(delete data.farmerId);
     confirmModalHandler();
   };
 
@@ -79,7 +74,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = (image: string) => {
     if (!image) return;
     user["profile"] = image;
-    dispatch(editFarmerDetail(user));
+    editMdDetail({ editedData: user });
+    const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
+    delete farmerEditData.farmerId;
+    editFarmer({ editedData: farmerEditData });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -146,7 +144,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            // editData && updateMdDetails(editData);
             !editMode &&
               deleteMdDetail({
                 id: user.id,
@@ -155,11 +152,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
                 },
               });
             editData && editMdDetail({ editedData: editData });
-            const farmerEditData = { ...editData } as mdDetail;
+            const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            // console.log("farmerEditData", farmerEditData);
             editData && farmerEditData && editFarmer({ editedData: farmerEditData });
-            // editData && dispatch(editFarmerDetail(editData));
             // editMode && user.farmerId && removeGroupMember(user.farmerId);
             // editMode && addGroupMember(AddNewMember);
             setEditMode(false);

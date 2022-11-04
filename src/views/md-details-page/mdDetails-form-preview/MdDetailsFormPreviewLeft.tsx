@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import MdDetailsForm from "../MdDetailsForm";
@@ -8,21 +8,27 @@ import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 // import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { editFarmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+// import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { fileValidation, Message } from "../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
+import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
-import { mdDetail, useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { mdDetail } from "../../../utils/context/mdDetails";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
-  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { editFarmerDetail } = useFarmerDetailsContext();
-  const dispatch = useDispatch();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { addNotification, titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -30,7 +36,7 @@ const MdFormPreviewLeft = () => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<mdDetail | null>(null);
-  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
+  // const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
@@ -48,18 +54,9 @@ const MdFormPreviewLeft = () => {
 
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({
-    documentTitle: `${mdId && mdDetailsById[mdId].name}_MD_Detail_form`,
+    // documentTitle: `${isSuccess && mdId && mdDetailsById[mdId].name}_MD_Detail_form`,
     content: () => mdFormPdf.current as HTMLDivElement,
   });
-
-  // to change profile picture
-  const getURL = (id: string) => {
-    let result = Object.values(mdDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
 
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
@@ -80,12 +77,12 @@ const MdFormPreviewLeft = () => {
 
   const handleCroppedImage = (image: string) => {
     if (!image) return;
-    let result = Object.values(mdDetailsById).filter((item) => {
-      return item.id === userId;
-    });
-    result[0]["profile"] = image;
-    editMdDetail({ ...result[0] });
-    dispatch(editFarmerDetail({ ...result[0] }));
+    let result = mdDetailsById[userId];
+    result.profile = image;
+    editMdDetail({ editedData: result });
+    const farmerEditData = { ...result, id: result.farmerId } as mdDetail;
+    delete farmerEditData.farmerId;
+    editFarmer({ editedData: farmerEditData });
   };
 
   //Update MdDetail Handler
@@ -96,7 +93,7 @@ const MdFormPreviewLeft = () => {
       <S.InvisibleBox>
         <MdDetailsForm ref={mdFormPdf} />
       </S.InvisibleBox>
-      {Object.values(mdDetailsById)
+      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewLeft key={user.id}>
@@ -134,7 +131,7 @@ const MdFormPreviewLeft = () => {
                   handleClose();
                 }}
               >
-                Edit{" "}
+                Edit
               </S.CustomPopoverList>
               <S.CustomPopoverList
                 onClick={() => {
@@ -142,7 +139,7 @@ const MdFormPreviewLeft = () => {
                   handleClose();
                 }}
               >
-                Delete{" "}
+                Delete
               </S.CustomPopoverList>
             </Popover>
             <S.FormHeading>
@@ -166,7 +163,7 @@ const MdFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.MdImgContainer>
-              <S.MdImg src={getURL(user.id) ? getURL(user.id) : NerkathirUser} alt="profie-picture" />
+              <S.MdImg src={user.profile ? user.profile : NerkathirUser} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
@@ -200,9 +197,13 @@ const MdFormPreviewLeft = () => {
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={() => {
-                  deleteMdDetail(user.id);
-                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                  navigate(-1);
+                  deleteMdDetail({
+                    id: user.id,
+                    successCb: () => {
+                      addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                      navigate(-1);
+                    },
+                  });
                 }}
                 deleteMessage={
                   <span>
@@ -218,10 +219,13 @@ const MdFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={() => {
-                  editMdDetail(openConfirmationModal);
+                  editMdDetail({ editedData: openConfirmationModal });
+                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as mdDetail;
+                  delete farmerEditData.farmerId;
+                  editFarmer({ editedData: farmerEditData });
                   editFarmerDetail(openConfirmationModal);
-                  removeGroupMember(openConfirmationModal.farmerId);
-                  addGroupMember(AddNewMember);
+                  // removeGroupMember(openConfirmationModal.farmerId);
+                  // addGroupMember(AddNewMember);
                   setOpenConfirmationModal(null);
                   setOpenEditModal(false);
                 }}
