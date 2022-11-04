@@ -2,19 +2,25 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { calculateAge, fileValidation } from "../../../../utils/constants";
-import { useFounderContext } from "../../../../utils/context/founders";
+import { calculateAge, decryptText, encryptFile, ENDPOINTS, fileValidation } from "../../../../utils/constants";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardHeader } from "../common-styles/commonStyles.styled";
-import S from "./dashoardFounder.styled";
-import FounderImg from "../../../../assets/images/Founder.png";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import { useEdit, useFetch } from "../../../../utils/hooks/query";
+import Loader from "../../../loader";
+import { IFounders } from "../../../../utils/store/slice/founders";
+import S from "./dashoardFounder.styled";
 
 const DashboardFounder = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
-  const { foundersById, editFounder } = useFounderContext();
+  const {
+    formatChangeSuccess,
+    result: { data: foundersById },
+  } = useFetch(ENDPOINTS.founders);
+  const { mutate: editFounder } = useEdit(ENDPOINTS.founders);
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
   var settings = {
@@ -49,13 +55,11 @@ const DashboardFounder = () => {
     setUserId(id);
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    let result = Object.values(foundersById).filter((item) => {
-      return item.id === userId;
-    });
-    result[0]["profile"] = image;
-    editFounder({ ...result[0] });
+    let result = foundersById[userId];
+    const encryptedBase64 = await encryptFile(image, true);
+    editFounder({ editedData: { ...result, profile: encryptedBase64 } });
   };
 
   return (
@@ -67,50 +71,56 @@ const DashboardFounder = () => {
             <i>expand-right</i>
           </Link>
         </CardHeader>
-        <Slider {...settings}>
-          {Object.values(foundersById).map((item) => (
-            <S.FounderCard key={item.id}>
-              <S.FounderImgContainer>
-                <S.FounderImg src={foundersById[item.id].profile ? foundersById[item.id].profile : FounderImg} alt="Founder-image" />
-                <S.EditBox onClick={() => handleIconClick(item.id)}>
-                  <S.EditIcon>edit</S.EditIcon>
-                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-                </S.EditBox>
-              </S.FounderImgContainer>
-              <S.FounderCardContainer>
-                <S.FounderCardHeader>
-                  <S.FounderCardHeaderRight>
-                    <S.FounderCardHeaderDetails>
-                      <Box>
-                        <S.FounderName>{item.name}</S.FounderName>
-                        <S.FounderAge>Age: {calculateAge(item.dob)}</S.FounderAge>
-                      </Box>
-                      <S.FounderJoinDate>Joined {item.joinDate}</S.FounderJoinDate>
-                    </S.FounderCardHeaderDetails>
-                    <S.FounderCardBody>
-                      <Box>
-                        <S.FounderCardBodyLeft>கைபேசி எண்: </S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>பிறந்த தேதி:</S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>தகுதி: </S.FounderCardBodyLeft>
-                      </Box>
-                      <Box>
-                        <S.FounderCardBodyLeft>{item.phoneNumber}</S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>{item.dob}</S.FounderCardBodyLeft>
-                        <S.FounderCardBodyLeft>{item.qualification}</S.FounderCardBodyLeft>
-                      </Box>
-                    </S.FounderCardBody>
-                  </S.FounderCardHeaderRight>
-                </S.FounderCardHeader>
-              </S.FounderCardContainer>
-              <S.FounderCardDescContainer>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi, quo, minus dolorem molestiae alias ex sed impedit magnam voluptate
-                  sapiente rem! Commodi harum excepturi soluta repudiandae eos quis cumque ab.
-                </p>
-              </S.FounderCardDescContainer>
-            </S.FounderCard>
-          ))}
-        </Slider>
+        {formatChangeSuccess ? (
+          <Slider {...settings}>
+            {Object.values(foundersById as { [key: string]: IFounders }).map((item) => {
+              return (
+                <S.FounderCard key={item.id}>
+                  <S.FounderImgContainer>
+                    <S.FounderImg src={item.profile ? decryptText(item.profile) : placeHolderImg} alt="Founder-image" />
+                    <S.EditBox onClick={() => handleIconClick(item.id)}>
+                      <S.EditIcon>edit</S.EditIcon>
+                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                    </S.EditBox>
+                  </S.FounderImgContainer>
+                  <S.FounderCardContainer>
+                    <S.FounderCardHeader>
+                      <S.FounderCardHeaderRight>
+                        <S.FounderCardHeaderDetails>
+                          <Box>
+                            <S.FounderName>{item.name}</S.FounderName>
+                            <S.FounderAge>Age: {calculateAge(item.dob)}</S.FounderAge>
+                          </Box>
+                          <S.FounderJoinDate>Joined {item.joinDate}</S.FounderJoinDate>
+                        </S.FounderCardHeaderDetails>
+                        <S.FounderCardBody>
+                          <Box>
+                            <S.FounderCardBodyLeft>கைபேசி எண்: </S.FounderCardBodyLeft>
+                            <S.FounderCardBodyLeft>பிறந்த தேதி:</S.FounderCardBodyLeft>
+                            <S.FounderCardBodyLeft>தகுதி: </S.FounderCardBodyLeft>
+                          </Box>
+                          <Box>
+                            <S.FounderCardBodyLeft>{item.phoneNumber}</S.FounderCardBodyLeft>
+                            <S.FounderCardBodyLeft>{item.dob}</S.FounderCardBodyLeft>
+                            <S.FounderCardBodyLeft>{item.qualification}</S.FounderCardBodyLeft>
+                          </Box>
+                        </S.FounderCardBody>
+                      </S.FounderCardHeaderRight>
+                    </S.FounderCardHeader>
+                  </S.FounderCardContainer>
+                  <S.FounderCardDescContainer>
+                    <p>
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quasi, quo, minus dolorem molestiae alias ex sed impedit magnam
+                      voluptate sapiente rem! Commodi harum excepturi soluta repudiandae eos quis cumque ab.
+                    </p>
+                  </S.FounderCardDescContainer>
+                </S.FounderCard>
+              );
+            })}
+          </Slider>
+        ) : (
+          <Loader />
+        )}
       </S.FounderWrapper>
 
       {image && (

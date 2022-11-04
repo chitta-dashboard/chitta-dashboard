@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
-import ProfilePicture from "./../../assets/images/IdImage.png";
-import { calculateAge, Endpoints, ENDPOINTS, fileValidation, Message } from "../../utils/constants";
+import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
+import { calculateAge, decryptText, encryptFile, Endpoints, ENDPOINTS, fileValidation, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
-import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
+import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
@@ -10,6 +10,7 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
+import Loader from "../../components/loader";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -19,8 +20,11 @@ interface Props {
 const CeoDetailsCard = ({ user }: Props) => {
   const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo as Endpoints);
   const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo as Endpoints);
-  const results = useFetch(ENDPOINTS.ceo as Endpoints);
-  const { ceoDetailsById, editCeoDetail } = useCeoDetailsContext();
+  const {
+    formatChangeSuccess,
+    result: { data: ceoDetailsById },
+  } = useFetch(ENDPOINTS.ceo as Endpoints);
+  const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
@@ -46,13 +50,11 @@ const CeoDetailsCard = ({ user }: Props) => {
     element.value = "";
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    let result = Object.values(ceoDetailsById).filter((item) => {
-      return item.id === user.id;
-    });
-    result[0]["profile"] = image;
-    editCeoDetail({ ...result[0] });
+    let result = ceoDetailsById[user.id];
+    const encryptedBase64 = await encryptFile(image, true);
+    editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
   };
 
   const addModalHandler = () => {
@@ -68,74 +70,83 @@ const CeoDetailsCard = ({ user }: Props) => {
   return (
     <>
       <S.CeoDetailCard>
-        <S.CeoDetailData>
-          <S.CeoDataLeft>
-            <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={ceoDetailsById.profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
-              <S.EditBox
+        {formatChangeSuccess ? (
+          <>
+            <S.CeoDetailData>
+              <S.CeoDataLeft>
+                <S.ProfilePictureBox>
+                  <S.CeoProfilePicture
+                    src={ceoDetailsById[user.id].profile ? decryptText(ceoDetailsById[user.id].profile) : placeHolderImg}
+                    alt="profile picture"
+                  />
+                  <S.EditBox
+                    onClick={() => {
+                      handleIconClick();
+                    }}
+                  >
+                    <S.EditIcon>edit</S.EditIcon>
+                    <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                  </S.EditBox>
+                </S.ProfilePictureBox>
+                <S.CeoData>
+                  <S.CeoName>{user.name}</S.CeoName>
+                  <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
+                  <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
+                </S.CeoData>
+              </S.CeoDataLeft>
+              <S.CeoDataRight>
+                <S.CeoData>
+                  <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
+                  <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
+                  <S.CeoInfo>தகுதி:</S.CeoInfo>
+                </S.CeoData>
+                <S.CeoData>
+                  <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
+                  <S.CeoInfo>{user.dob}</S.CeoInfo>
+                  <S.CeoInfo>{user.qualification}</S.CeoInfo>
+                </S.CeoData>
+              </S.CeoDataRight>
+            </S.CeoDetailData>
+            <S.CeoDetailDescription cardexpand={cardExpand.toString()}>
+              {cardExpand ? (
+                <>
+                  {user.description.split(" ").splice(0, 19).join(" ")}
+                  {user.description.split(" ").length > 19 ? "..." : ""}
+                </>
+              ) : (
+                user.description
+              )}
+            </S.CeoDetailDescription>
+            <S.ButtonContainer>
+              {user.description.split(" ").length > 19 && (
+                <S.SeeMore
+                  onClick={() => {
+                    setCardExpand(!cardExpand);
+                  }}
+                >
+                  {cardExpand ? "See More..." : "See Less..."}
+                </S.SeeMore>
+              )}
+              <S.CustomIconContainer
                 onClick={() => {
-                  handleIconClick();
+                  setOpenDeleteModal(true);
                 }}
               >
-                <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-              </S.EditBox>
-            </S.ProfilePictureBox>
-            <S.CeoData>
-              <S.CeoName>{user.name}</S.CeoName>
-              <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
-              <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
-            </S.CeoData>
-          </S.CeoDataLeft>
-          <S.CeoDataRight>
-            <S.CeoData>
-              <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-              <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-              <S.CeoInfo>தகுதி:</S.CeoInfo>
-            </S.CeoData>
-            <S.CeoData>
-              <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
-              <S.CeoInfo>{user.dob}</S.CeoInfo>
-              <S.CeoInfo>{user.qualification}</S.CeoInfo>
-            </S.CeoData>
-          </S.CeoDataRight>
-        </S.CeoDetailData>
-        <S.CeoDetailDescription cardexpand={cardExpand.toString()}>
-          {cardExpand ? (
-            <>
-              {user.description.split(" ").splice(0, 19).join(" ")}
-              {user.description.split(" ").length > 19 ? "..." : ""}
-            </>
-          ) : (
-            user.description
-          )}
-        </S.CeoDetailDescription>
-        <S.ButtonContainer>
-          {user.description.split(" ").length > 19 && (
-            <S.SeeMore
-              onClick={() => {
-                setCardExpand(!cardExpand);
-              }}
-            >
-              {cardExpand ? "See More..." : "See Less..."}
-            </S.SeeMore>
-          )}
-          <S.CustomIconContainer
-            onClick={() => {
-              setOpenDeleteModal(true);
-            }}
-          >
-            delete
-          </S.CustomIconContainer>
-          <S.CustomIconContainer onClick={idCardModalHandler}>id-card</S.CustomIconContainer>
-          <S.CustomIconContainer
-            onClick={() => {
-              addModalHandler();
-            }}
-          >
-            edit
-          </S.CustomIconContainer>
-        </S.ButtonContainer>
+                delete
+              </S.CustomIconContainer>
+              <S.CustomIconContainer onClick={idCardModalHandler}>id-card</S.CustomIconContainer>
+              <S.CustomIconContainer
+                onClick={() => {
+                  addModalHandler();
+                }}
+              >
+                edit
+              </S.CustomIconContainer>
+            </S.ButtonContainer>
+          </>
+        ) : (
+          <Loader />
+        )}
       </S.CeoDetailCard>
       <IdCardModal cardData={user} openModal={idCard} handleClose={idCardModalHandler} />
       {addModal && <AddCeoDetailsModal openModal={true} handleClose={addModalHandler} cb={updateMdDetail} editMode={true} id={user.id} />}

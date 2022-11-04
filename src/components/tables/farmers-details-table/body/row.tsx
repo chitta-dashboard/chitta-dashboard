@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../utils/store";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { mdDetail } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, decryptText, encryptFile, fileValidation, Message } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -16,13 +16,13 @@ import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetail
 import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
-import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
-import { farmerDetail, editFarmerDetail, deleteFarmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
+import { useQueryClient } from "@tanstack/react-query";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
+import S from "./body.styled";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
@@ -110,12 +110,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     navigate(`/farmers-details/${farmerId}`);
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    let farmerData = { ...user };
-    farmerData["profile"] = image;
-    user = { ...farmerData };
-    dispatch(editFarmerDetail({ ...user }));
+    const encryptedBase64 = await encryptFile(image, true);
+    mutateEdit({ editedData: { ...user, profile: encryptedBase64 } });
     // let getMdData = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id);
     let getMdData = mdDetailsById[user.id];
     if (getMdData?.farmerId) {
@@ -160,7 +158,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
               }}
             >
               {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
-              <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
+              <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();

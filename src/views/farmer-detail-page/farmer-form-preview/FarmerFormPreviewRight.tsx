@@ -1,14 +1,13 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../../utils/store";
 import { useAuthContext } from "../../../utils/context/auth";
 import { FARMER_DATA } from "../constant";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import { S } from "./farmer-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { decryptText } from "../../../utils/constants";
+import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewRight = () => {
   // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
@@ -30,7 +29,7 @@ const FarmerFormPreviewRight = () => {
                 return (
                   <Fragment key={data.id}>
                     <S.AbsoluteBackgroundImage>
-                      <img src={pdfImage ? pdfImage : nerkathir_transparent_background} alt="backgroundimage" />
+                      <img src={pdfImage ? decryptText(pdfImage) : nerkathir_transparent_background} alt="backgroundimage" />
                     </S.AbsoluteBackgroundImage>
                     <S.UserInfoRow>
                       <S.UserInfoData1>பெயர்</S.UserInfoData1>
