@@ -5,7 +5,7 @@ import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
 import { IResolutions } from "../../utils/store/slice/resolution";
 import Loader from "../../components/loader";
-import { ENDPOINTS } from "../../utils/constants";
+import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
@@ -28,7 +28,7 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
         .map((user) => (
           <S.ResolutionCertificateContainer ref={ref} key={user.id}>
             <S.ResolutionCertificateHeader>
-              <S.NerkathirLogo src={headerImage ? headerImage : NerkathirLogo} alt="NerkathirLogoGray" />
+              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="NerkathirLogoGray" />
               <S.HeaderText>
                 {titleName ? (
                   titleName

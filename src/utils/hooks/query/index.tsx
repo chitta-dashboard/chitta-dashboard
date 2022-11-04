@@ -1,8 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
+// import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
 import { Endpoints, groupBy } from "../../constants";
+import { useAuthContext } from "../../context/auth";
 
 export const useFetch = (endpoint: Endpoints) => {
   const result = useQuery({
@@ -28,12 +30,14 @@ export const useFetch = (endpoint: Endpoints) => {
 };
 
 export const useAdd = (endpoint: Endpoints) => {
+  const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
   let successCallback: () => void;
 
   return useMutation(
     async ({ data, successCb }: { data: any; successCb?: () => void }) => {
       successCallback = successCb ? successCb : () => {};
+      loader({ openLoader: true, loaderText: "Creating" });
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
           await axios.post(`http://localhost:5001/${endpoint}/`, data[i]);
@@ -54,16 +58,22 @@ export const useAdd = (endpoint: Endpoints) => {
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
     },
   );
 };
 
 export const useEdit = (endpoint: Endpoints) => {
+  const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
   let successCallback: () => void;
 
   return useMutation(
     ({ editedData, successCb }: { editedData: any; successCb?: () => void }) => {
+      loader({ openLoader: true, loaderText: "Updating" });
+
       successCallback = successCb ? successCb : () => {};
       return axios.patch(`http://localhost:5001/${endpoint}/${editedData?.id}`, editedData);
     },
@@ -73,17 +83,23 @@ export const useEdit = (endpoint: Endpoints) => {
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
     },
   );
 };
 
 export const useDelete = (endpoint: Endpoints) => {
+  const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
   let deleteId: string;
   let successCallback: () => void;
 
   return useMutation(
     ({ id, successCb }: { id: string; successCb?: () => void }) => {
+      loader({ openLoader: true, loaderText: "Deleting" });
+
       deleteId = id;
       successCallback = successCb ? successCb : () => {};
       return axios.delete(`http://localhost:5001/${endpoint}/${id}`);
@@ -95,6 +111,37 @@ export const useDelete = (endpoint: Endpoints) => {
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
     },
   );
+};
+
+export const useFetchByPage = (endpoint: Endpoints, page: number) => {
+  const result = useQuery({
+    queryKey: [`${endpoint}-fetch-${page}`],
+    queryFn: () => {
+      return axios
+        .get(`http://localhost:5001/${endpoint}`, {
+          params: {
+            _page: page,
+            _limit: 10,
+          },
+        })
+        .then((res) => res.data);
+    },
+    cacheTime: Infinity, // do not change!
+    staleTime: Infinity, // do not change!
+  });
+
+  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+  useEffect(() => {
+    if (Array.isArray(result.data)) {
+      queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
+      setformatChangeSucess(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isFetched]);
+  return { formatChangeSuccess, result };
 };
