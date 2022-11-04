@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { dateFormat } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptFile } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";
 import ModalBody from "../../custom-modal/body";
@@ -46,8 +46,8 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
-        signature: "", // temporary, until sbucket integration
-        profile: userData?.profile, // temporary, until sbucket integration
+        signature: "",
+        profile: decryptText(userData?.profile as string),
       });
     }
 
@@ -64,14 +64,16 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   }, [editMode]);
   // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddMDDetailsFormInput & { id: string }) => {
+  const onSubmit: any = async (data: IAddMDDetailsFormInput & { id: string }) => {
+    const encryptedBase64 = await encryptFile(data.profile, true);
+
     cb({
       name: data.name,
       phoneNumber: data.phoneNumber,
       qualification: data.qualification,
       dob: dateFormat(data.dob),
       signature: data.signature,
-      profile: data.profile,
+      profile: encryptedBase64,
       id: editMode ? id : uuidv4(),
     } as IAddMDDetailsFormInput & { id: string });
     // handleClose();

@@ -7,7 +7,7 @@ import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
-import { useAuthContext } from "../../utils/context/auth";
+import { useAuthContext,loader } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
@@ -22,6 +22,7 @@ const CeoDetailsCard = ({ user }: Props) => {
   const results = useFetch(ENDPOINTS.ceo as Endpoints);
   const { ceoDetailsById, editCeoDetail } = useCeoDetailsContext();
   const { addNotification } = useAuthContext();
+  const { openLoader } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
   const [idCard, setIdCard] = useState(false);
@@ -131,6 +132,7 @@ const CeoDetailsCard = ({ user }: Props) => {
           <S.CustomIconContainer
             onClick={() => {
               addModalHandler();
+              
             }}
           >
             edit

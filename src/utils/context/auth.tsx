@@ -8,11 +8,16 @@ const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
 const ADD_UPDATE = "ADD_UPDATE";
 const ADD_LOGO = "ADD_LOGO";
+const LOADER = "LOADER";
 
 export type Notification = {
   id: string;
   image?: string | undefined;
   message: string;
+};
+export type loader = {
+  openLoader: boolean;
+  loaderText?: string;
 };
 
 type Props = {
@@ -25,6 +30,7 @@ interface IContextType {
   clearNotification: () => void;
   addNotification: (data: Notification) => void;
   addLogo: () => void;
+  loader: (data: loader) => void;
   userNotification: Notification[];
   AdminUpdate: { [id: string]: adminFormInputs };
   headerImage: string | null;
@@ -35,6 +41,8 @@ interface IContextType {
   cinNo: string | null;
   regNo: string | null;
   address: string | null;
+  openLoader: boolean;
+  loaderText: string;
 }
 
 const initialState: IContextType = {
@@ -44,6 +52,7 @@ const initialState: IContextType = {
   clearNotification: () => {},
   addNotification: () => {},
   addLogo: () => {},
+  loader: () => {},
   userNotification: [],
   AdminUpdate: {},
   headerImage: localStorage.getItem("headerLogo"),
@@ -54,6 +63,8 @@ const initialState: IContextType = {
   cinNo: localStorage.getItem("cinNo"),
   regNo: localStorage.getItem("regNo"),
   address: localStorage.getItem("address"),
+  openLoader: false,
+  loaderText: "",
 };
 
 // Reducer function
@@ -77,6 +88,12 @@ const reducer = (state: IContextType, action: any) => {
         cinNo: localStorage.getItem("cinNo"),
         regNo: localStorage.getItem("regNo"),
         address: localStorage.getItem("address"),
+      };
+    case LOADER:
+      return {
+        ...state,
+        openLoader: action.payload.openLoader,
+        loaderText: action.payload.loaderText,
       };
 
     default: {
@@ -128,6 +145,10 @@ const AuthContextProvider: FC<Props> = (props) => {
     dispatch({ type: ADD_LOGO });
   };
 
+  const loader = (data: loader) => {
+    dispatch({ type: LOADER, payload: data });
+  };
+
   const data = {
     ...state,
     isAuthenticated,
@@ -137,6 +158,7 @@ const AuthContextProvider: FC<Props> = (props) => {
     addNotification,
     // addUpdate,
     addLogo,
+    loader,
   };
 
   return <authContext.Provider value={data}>{props.children}</authContext.Provider>;

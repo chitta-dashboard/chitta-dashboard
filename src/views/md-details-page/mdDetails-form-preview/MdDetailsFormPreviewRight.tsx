@@ -4,9 +4,10 @@ import { useAuthContext } from "../../../utils/context/auth";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { useFetch } from "../../../utils/hooks/query";
 import { MD_DATA } from "../constant";
-import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
 import { ENDPOINTS } from "../../../utils/constants";
+import { decryptText } from "../../../utils/constants";
+import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewRight = () => {
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
@@ -23,7 +24,7 @@ const MdFormPreviewRight = () => {
               return (
                 <Fragment key={data.id}>
                   <S.AbsoluteBackgroundImage>
-                    <img src={pdfImage ? pdfImage : nerkathir_transparent_background} alt="backgroundimage" />
+                    <img src={pdfImage ? decryptText(pdfImage) : nerkathir_transparent_background} alt="backgroundimage" />
                   </S.AbsoluteBackgroundImage>
                   <S.UserInfoRow>
                     <S.UserInfoData1>பெயர்</S.UserInfoData1>

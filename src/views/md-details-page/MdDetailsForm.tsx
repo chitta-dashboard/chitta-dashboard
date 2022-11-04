@@ -1,14 +1,14 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
 import { mdDetail } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { MD_DATA } from "./constant";
-import S from "./md-details-page.styled";
 import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import S from "./md-details-page.styled";
 
 interface Props {
   MdIdtoPrint?: number | string;
@@ -72,7 +72,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
             <S.MdsDetailsHeader>
-              <S.NerkathirLogo src={headerImage ? headerImage : NerkathirLogo} alt="nerkathir-logo" />
+              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="nerkathir-logo" />
               <S.HeaderTextContainer>
                 <S.HeaderText1>
                   {titleName ? (

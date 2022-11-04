@@ -1,6 +1,5 @@
 import { createContext, FC, useContext, useReducer } from "react";
 import { NORMAL, SortOrder } from "../constants";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_FOUNDERS = "ADD_FOUNDERS";
@@ -39,7 +38,7 @@ const initialState: foundersContextType = {
   foundersById: {
     a: {
       id: "a",
-      profile: profileImg,
+      profile: "",
       name: "Veera Raghavan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
@@ -49,7 +48,7 @@ const initialState: foundersContextType = {
     },
     b: {
       id: "b",
-      profile: profileImg,
+      profile: "",
       name: "John Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
@@ -59,7 +58,7 @@ const initialState: foundersContextType = {
     },
     c: {
       id: "c",
-      profile: profileImg,
+      profile: "",
       name: "Vijay Kumar",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
@@ -69,7 +68,7 @@ const initialState: foundersContextType = {
     },
     d: {
       id: "d",
-      profile: profileImg,
+      profile: "",
       name: "Kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
@@ -79,7 +78,7 @@ const initialState: foundersContextType = {
     },
     e: {
       id: "e",
-      profile: profileImg,
+      profile: "",
       name: "Jeevanandham",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
@@ -89,7 +88,7 @@ const initialState: foundersContextType = {
     },
     f: {
       id: "f",
-      profile: profileImg,
+      profile: "",
       name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
