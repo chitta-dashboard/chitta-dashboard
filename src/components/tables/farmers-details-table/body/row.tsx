@@ -21,7 +21,6 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import userPic from "../../../../assets/images/user.png";
 import { farmerDetail, editFarmerDetail, deleteFarmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
 
