@@ -1,4 +1,4 @@
-import { styled, keyframes, Stack } from  "@mui/material";
+import { styled, keyframes, Stack } from "@mui/material";
 import { LightTheme } from "../../utils/theme";
 
 namespace S {

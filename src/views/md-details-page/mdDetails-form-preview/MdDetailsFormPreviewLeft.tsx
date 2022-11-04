@@ -23,7 +23,7 @@ const MdFormPreviewLeft = () => {
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   // const { editFarmerDetail } = useFarmerDetailsContext();
   const dispatch = useDispatch();
-  const { addNotification,titleName, address } = useAuthContext();
+  const { addNotification, titleName, address } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
