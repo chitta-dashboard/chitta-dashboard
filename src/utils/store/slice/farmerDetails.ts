@@ -45,6 +45,7 @@ interface farmerDetailsContextType {
   searchFilter: string;
   isFarmerDetailsDataSet: boolean;
   sortFilter: SortOrder;
+  farmerId: selectedFarmer[];
   selectedFarmers: selectedFarmer[];
   groupFilter: string;
 }
@@ -54,6 +55,7 @@ const initialState: farmerDetailsContextType = {
   searchFilter: "",
   isFarmerDetailsDataSet: false,
   sortFilter: NORMAL,
+  farmerId: [],
   selectedFarmers: [],
   groupFilter: DEFAULT_GROUP_FILTER,
 };
@@ -62,6 +64,10 @@ const farmerDetailsSlice = createSlice({
   name: "farmerDetails",
   initialState,
   reducers: {
+    addFarmerId: (state, action) => {
+      state.farmerId = [...action.payload];
+    },
+
     addFarmerDetails: (state, action) => {
       delete action.payload.farmerId;
       state.farmersDetailsById = { ...action.payload, ...state.farmersDetailsById };
@@ -84,10 +90,10 @@ const farmerDetailsSlice = createSlice({
     },
 
     checkboxSelectAll: (state) => {
-      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersDetailsById).length) {
+      if (state.selectedFarmers.length === state.farmerId.length) {
         state.selectedFarmers = [];
       } else {
-        state.selectedFarmers = [...Object.keys(state.farmersDetailsById)];
+        state.selectedFarmers = state.farmerId
       }
     },
 
@@ -123,7 +129,8 @@ export const {
   checkboxSelectAll,
   checkBoxUnselectAll,
   setGroupFilter,
-  checkBoxSelect
+  checkBoxSelect,
+  addFarmerId,
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;
