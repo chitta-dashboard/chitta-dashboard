@@ -16,11 +16,15 @@ import Loader from "../../components/loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
-  const { data: mdData } = result;
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: mdData },
+  } = useFetch(ENDPOINTS.mdDetails);
+  const {
+    formatChangeSuccess: farmerIsSuccess,
+    result: { data: farmersData },
+  } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
-  const { formatChangeSuccess: farmerIsSuccess, result: farmerResult } = useFetch(ENDPOINTS.farmerDetails);
-  const { data: farmersData } = farmerResult;
 
   const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
   const { addNotification } = useAuthContext();

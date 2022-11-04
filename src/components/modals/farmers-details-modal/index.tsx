@@ -12,7 +12,7 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS, encryptFile, decryptText } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
@@ -34,7 +34,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   // const { farmersDetailsById } = useFarmerDetailsContext();
   // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [next, setNext] = useState(false);
-  const [form1Data, setForm1Data] = useState({});
+  const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -181,7 +181,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
-        profile: farmerData?.profile, //temporary, until sbucket integration
+        profile: decryptText(farmerData?.profile),
       });
 
       form2Reset({
@@ -208,7 +208,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       addhaarNo: data.addhaarNo,
       surveyNo: data.surveyNo,
       border: data.border,
-      dob: dateFormat(data.dob),
+      dob: dateFormat(data.dob) as string,
       fatherName: data.fatherName,
       group: data.group,
       name: data.name,
@@ -220,10 +220,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     setNext(true);
   };
 
-  const form2Submit: any = (data: IAddFarmersDetailsPage2Input) => {
+  const form2Submit: any = async (data: IAddFarmersDetailsPage2Input) => {
+    const encryptedBase64 = await encryptFile(form1Data?.profile as string, true);
+
     let params = {
       ...form1Data,
       ...data,
+      profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : uuidv4(),
       membershipId: "NEF-FPC-2",
       farmerId: !!mdId && id,
