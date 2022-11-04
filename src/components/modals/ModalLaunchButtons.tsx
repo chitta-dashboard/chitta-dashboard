@@ -10,7 +10,6 @@ import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
 // import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
-import LoaderModal from "./loader-modal";
 import { IResolution } from "../../utils/store/slice/resolution";
 
 const ModalLaunchButtons = () => {
@@ -127,7 +126,6 @@ const ModalLaunchButtons = () => {
       </FarmersGroupContextProvider>
       <ResolutionModal openModal={openAddResolution} handleClose={addResolution} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
-      <LoaderModal openModal={openLoader} handleClose={loaderModalHandler} />
     </Fragment>
   );
 };

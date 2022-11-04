@@ -1,8 +1,8 @@
 import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
-import { useDispatch, useSelector } from "react-redux";
 import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../utils/store";
 import { useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";

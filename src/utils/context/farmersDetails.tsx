@@ -1,8 +1,9 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
 import { NORMAL, SortOrder } from "../constants";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
+const GET_FARMERS_DETAILS = "GET_FARMERS_DETAILS";
+const SET_LOADER = "SET_LOADER";
 const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
 const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
 const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
@@ -60,6 +61,9 @@ interface farmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   sortFilter: SortOrder;
+  isLoader: boolean;
+  getFarmersDetailsData: (data: farmerDetail) => void;
+  setLoader: (loading: boolean) => void;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
@@ -75,64 +79,12 @@ interface farmerDetailsContextType {
 }
 
 const initialState: farmerDetailsContextType = {
-  farmersDetailsById: {
-    a: {
-      id: "a",
-      membershipId: "NER-FPC-2",
-      profile: profileImg,
-      name: "Arokiya",
-      phoneNumber: "8610010875",
-      group: "விவசாயிகள் சங்கம்-1",
-      fatherName: "cholan",
-      sex: "male",
-      spouseName: "nil",
-      dob: "10-08-1996",
-      addhaarNo: "503023001016",
-      acre: { "acre-first": "1" },
-      border: { "border-first": "1" },
-      village: "cholanmaligai",
-      postalNo: "612010",
-      address: "thanjavur",
-      taluk: "thanjavur",
-      district: "thanjavur",
-      surveyNo: { "surveyNo-first": "1" },
-      landType: "option-1",
-      farmerType: "option-2",
-      waterType: "option-2",
-      animals: "மாடு",
-      groupMember: "yes",
-      qualification: "B.E, Mechanical",
-    },
-    b: {
-      id: "b",
-      membershipId: "NER-FPC-2",
-      profile: profileImg,
-      name: "Sethu Ravichandran",
-      phoneNumber: "8968456734",
-      group: "விவசாயிகள் சங்கம்-3",
-      fatherName: "cholan",
-      sex: "male",
-      spouseName: "nil",
-      dob: "01-01-1994",
-      addhaarNo: "893245328967",
-      acre: { "acre-first": "1" },
-      border: { "border-first": "1" },
-      village: "cholanmaligai",
-      postalNo: "612010",
-      address: "thanjavur",
-      taluk: "thanjavur",
-      district: "thanjavur",
-      surveyNo: { "surveyNo-first": "1" },
-      landType: "option-1",
-      farmerType: "option-2",
-      waterType: "option-2",
-      animals: "மாடு",
-      groupMember: "yes",
-      qualification: "B.E, ECE",
-    }
-  },
+  farmersDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
+  isLoader: true,
+  getFarmersDetailsData: () => {},
+  setLoader: () => {},
   setSortFilter: () => {},
   setSearchFilter: () => {},
   selectedFarmers: [],
@@ -149,6 +101,12 @@ const initialState: farmerDetailsContextType = {
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
+    case GET_FARMERS_DETAILS:
+      return { ...state, farmersDetailsById: action.payload };
+
+    case SET_LOADER:
+      return { ...state, isLoader: action.payload };
+
     case ADD_FARMER_DETAIL:
       delete action.payload.farmerId;
       return { ...state, farmersDetailsById: { [action.payload.id]: action.payload, ...state.farmersDetailsById } };
@@ -214,6 +172,14 @@ export const farmerDetailsContext = createContext<farmerDetailsContextType>(init
 const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const getFarmersDetailsData = (data: farmerDetail) => {
+    dispatch({ type: GET_FARMERS_DETAILS, payload: data });
+  };
+
+  const setLoader = (loading: boolean) => {
+    dispatch({ type: SET_LOADER, payload: loading });
+  };
+
   const addFarmerDetail = (data: farmerDetail) => {
     dispatch({ type: ADD_FARMER_DETAIL, payload: data });
   };
@@ -256,6 +222,8 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
 
   let data = {
     ...state,
+    getFarmersDetailsData,
+    setLoader,
     addFarmerDetail,
     editFarmerDetail,
     deleteFarmerDetail,

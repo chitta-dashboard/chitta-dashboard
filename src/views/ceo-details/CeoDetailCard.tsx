@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import ProfilePicture from "./../../assets/images/IdImage.png";
-import { calculateAge, fileValidation, Message } from "../../utils/constants";
+import { calculateAge, Endpoints, ENDPOINTS, fileValidation, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail, useCeoDetailsContext } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -9,6 +9,7 @@ import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
+import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
 
 interface Props {
@@ -16,7 +17,10 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
-  const { ceoDetailsById, editCeoDetail, deleteCeoDetail } = useCeoDetailsContext();
+  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo as Endpoints);
+  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo as Endpoints);
+  const results = useFetch(ENDPOINTS.ceo as Endpoints);
+  const { ceoDetailsById, editCeoDetail } = useCeoDetailsContext();
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
@@ -67,7 +71,7 @@ const CeoDetailsCard = ({ user }: Props) => {
         <S.CeoDetailData>
           <S.CeoDataLeft>
             <S.ProfilePictureBox>
-              <S.CeoProfilePicture src={ceoDetailsById[user.id].profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
+              <S.CeoProfilePicture src={ceoDetailsById.profile ? ceoDetailsById[user.id].profile : ProfilePicture} alt="profile picture" />
               <S.EditBox
                 onClick={() => {
                   handleIconClick();
@@ -140,8 +144,12 @@ const CeoDetailsCard = ({ user }: Props) => {
           openModal={true}
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={() => {
-            deleteCeoDetail(user.id);
-            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+            ceoDelete({
+              id: user.id,
+              successCb: () => {
+                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+              },
+            });
           }}
           deleteMessage={
             <span>
@@ -157,7 +165,7 @@ const CeoDetailsCard = ({ user }: Props) => {
             setOpenConfirmationModal(null);
           }}
           yesAction={() => {
-            editCeoDetail(openConfirmationModal);
+            ceoEdit({ editedData: openConfirmationModal });
             setOpenConfirmationModal(null);
           }}
         />

@@ -10,7 +10,7 @@ import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
-const fetchFarmerDetails = (farmerData: any) => {
+const handleFarmerDetails = (farmerData: any) => {
   let updatedData: any = {};
   let values = Object.values(farmerData);
   let i = 0;
@@ -33,12 +33,12 @@ const Body = () => {
   const dispatch = useDispatch();
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
   const { data: farmersDetailsById } = result;
-  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
-  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
-  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
-
-  // const { isSuccess } = useQuery(["farmerDetails"], fetchFarmerDetails, {
+  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(handleFarmerDetails(farmersDetailsById)) : []);
+  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(handleFarmerDetails(farmersDetailsById)) : []);
+  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(handleFarmerDetails(farmersDetailsById)) : []);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleFarmerDetails(farmersDetailsById)) : []);
+  const [isLoading, setIsLoading] = useState(false);
+  // const { isSuccess } = useQuery(["farmerDetails"], handleFarmerDetails, {
   //   onSuccess: (data) => {
   //     dispatch(addFarmerDetails(data));
   //   },
@@ -54,11 +54,17 @@ const Body = () => {
   }, [isSuccess, farmersDetailsById]);
 
   useEffect(() => {
+    if (isSuccess && farmersList.length > 0) {
+      setIsLoading(true);
+    }
+  }, [farmersList, isSuccess]);
+
+  useEffect(() => {
     if (isSuccess) {
       setFarmersListGroup(
         groupFilter === "all"
-          ? Object.values(fetchFarmerDetails(farmersDetailsById) as farmerDetail[])
-          : Object.values(fetchFarmerDetails(farmersDetailsById) as farmerDetail[]).filter((list) => list.group === groupFilter),
+          ? Object.values(handleFarmerDetails(farmersDetailsById) as farmerDetail[])
+          : Object.values(handleFarmerDetails(farmersDetailsById) as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
   }, [groupFilter, farmersDetailsById, isSuccess]);
@@ -77,7 +83,7 @@ const Body = () => {
 
   return (
     <>
-      {isSuccess ? (
+      {isLoading ? (
         <>
           {farmersList.length > 0 ? (
             <BodyWrapper>
