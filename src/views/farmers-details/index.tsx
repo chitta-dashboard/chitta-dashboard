@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
-import { addFarmerDetails, setSearchFilter, setSortFilter, farmerDetail } from "../../utils/store/slice/farmerDetails";
+import { addFarmerDetails, setSearchFilter, setSortFilter, farmerDetail, setCurrentPage } from "../../utils/store/slice/farmerDetails";
 import { RootState } from "../../utils/store";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
@@ -41,12 +41,17 @@ const FarmersDetails = () => {
     addNotification({ id: data.id, image: data.profile, message: Message(data.name).addFarmDetail });
   };
 
+  const handleSearchInput = (searchText: string) => {
+    dispatch(setCurrentPage(1));
+    dispatch(setSearchFilter(searchText));
+  };
+
   return (
     <>
       <S.FarmersDetailsContainer>
         <FarmersDetailsTablePageHeader
           addModalHandler={addModalHandler}
-          searchHandler={(searchText) => dispatch(setSearchFilter(searchText))}
+          searchHandler={handleSearchInput}
           sortFilter={sortFilter}
           sortHandler={(sortValue) => dispatch(setSortFilter(sortValue))}
           shareAmountModalHandler={shareAmountModalHandler}
