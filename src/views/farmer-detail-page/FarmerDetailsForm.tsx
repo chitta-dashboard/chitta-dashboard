@@ -92,7 +92,10 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                   </S.HeaderText2>
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
-                  <img src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : NerkathirUser} alt="nerkathir-user" />
+                  <img
+                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                    alt="nerkathir-user"
+                  />
                   <S.EditBox
                     onClick={(e) => {
                       e.stopPropagation();
