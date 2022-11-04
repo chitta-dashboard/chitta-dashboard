@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -227,6 +227,7 @@ export const encryptFile = (file: Blob | File): Promise<string> =>
 export const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, obj) => {
     const key = obj[property];
+    // Add object to list for given key's value
     acc[key] = { ...obj };
     return acc;
   }, {});
@@ -248,4 +249,5 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
+
 };
