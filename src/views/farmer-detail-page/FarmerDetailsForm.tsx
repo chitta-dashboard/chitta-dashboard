@@ -1,10 +1,9 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
 // import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
-// import { RootState } from "../../utils/store";
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
@@ -67,7 +66,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
           .map((user) => (
             <S.FarmersDetailsContent ref={ref} key={user.id}>
               <S.FarmersDetailsHeader>
-                <S.NerkathirLogo src={loginImage ? loginImage : NerkathirLogo} alt="nerkathir-logo" />
+                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : NerkathirLogo} alt="nerkathir-logo" />
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (

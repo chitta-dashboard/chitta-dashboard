@@ -7,9 +7,12 @@ import Content from "./content";
 import Footer from "./footer";
 import { useAuthContext } from "../../utils/context/auth";
 import S from "./Layout.styled";
+import APIloader from "../../components/api-loader";
 
 const Layout: FC = () => {
-  const { isAuthenticated } = useAuthContext();
+  const { openLoader, loaderText, isAuthenticated } = useAuthContext();
+
+
 
   return (
     <S.Layout>
@@ -41,6 +44,9 @@ const Layout: FC = () => {
           },
         })}
       />
+
+      {openLoader ? <APIloader loaderText={loaderText} /> : <></>}
+
       {isAuthenticated ? (
         <>
           <Header />

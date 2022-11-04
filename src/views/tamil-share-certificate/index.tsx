@@ -1,17 +1,17 @@
 import { forwardRef } from "react";
 import { useSelector } from "react-redux";
-// import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { RootState } from "../../utils/store";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
-import { S } from "./tamil-certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import { decryptText } from "../../utils/constants";
+import { S } from "./tamil-certificate.styled";
 
 interface Props {
   shareAmount?: number | string;
@@ -45,7 +45,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
               <S.BottomRightIcon src={ShareHolderCertificateBottomCornerIcon} alt="corner-icon" />
               <S.CertificateHeadingContainer>
                 <S.HeadingContainerLogo>
-                  <S.NerkathirLogo src={certificateImage ? certificateImage : NerkathirLogoGray} alt="NerkathirLogoGray" />
+                  <S.NerkathirLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogoGray} alt="NerkathirLogoGray" />
                 </S.HeadingContainerLogo>
                 <S.HeadingContainerHeading>
                   {titleName ? (

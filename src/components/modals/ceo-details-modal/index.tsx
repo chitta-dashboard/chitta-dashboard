@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { dateFormat, Endpoints, ENDPOINTS } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptFile, Endpoints, ENDPOINTS } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -47,7 +47,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: userData?.profile, // temporary, until sbucket integration
+        profile: decryptText(userData?.profile),
       });
     }
 
@@ -64,13 +64,15 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   }, [editMode]);
   // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
+  const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
+    const encryptedBase64 = await encryptFile(data.profile, true);
+
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       phoneNumber: data.phoneNumber,
-      profile: data.profile,
+      profile: encryptedBase64,
       qualification: data.qualification,
       id: editMode ? id : uuidv4(),
     } as IAddCEODetailsFormInput & { id: string });

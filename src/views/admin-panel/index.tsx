@@ -5,7 +5,7 @@ import Resizer from "react-image-file-resizer";
 import AdminLogo from "../../components/admin-panel/admin-logo";
 import IdInformation from "../../components/admin-panel/id-information";
 import ProfileInformation from "../../components/admin-panel/profile-information";
-import { fileValidation } from "../../utils/constants";
+import { encryptText, fileValidation } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import S from "./adminPanel.styled";
 
@@ -40,7 +40,7 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
-  const { addUpdate, addLogo } = useAuthContext();
+  const { addLogo } = useAuthContext();
 
   const {
     register,
@@ -53,11 +53,7 @@ const AdminPanel = () => {
   });
 
   const fileChangedHandler = (file: File, width: number, height: number, name: string) => {
-    var fileInput = false;
     if (file) {
-      fileInput = true;
-    }
-    if (fileInput) {
       try {
         Resizer.imageFileResizer(
           file,
@@ -67,7 +63,7 @@ const AdminPanel = () => {
           100,
           0,
           (uri) => {
-            localStorage.setItem(name, uri as string);
+            localStorage.setItem(name, encryptText(uri as string));
             addLogo();
           },
           "base64",
@@ -115,17 +111,6 @@ const AdminPanel = () => {
     fileChangedHandler(imgObj, 156, 156, "loginLogo");
     fileChangedHandler(imgObj, 180, 180, "certificateLogo");
     fileChangedHandler(imgObj, 180, 180, "pdfLogo");
-    addUpdate({
-      id: "100",
-      profile: data.profile,
-      address: data.address,
-      cinNo: data.cinNo,
-      coordinatorAddress: data.coordinatorAddress,
-      folioPrefix: data.coordinatorAddress,
-      membershipPrefix: data.membershipPrefix,
-      name: data.name,
-      regNo: data.regNo,
-    } as adminFormInputs & { id: string });
     reset();
   };
 
