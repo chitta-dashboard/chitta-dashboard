@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-      .trim()
-      .toLowerCase()
-      .search(
-        word
-          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-          .trim()
-          .toLowerCase(),
-      ) >= 0
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-      asDate: false,
-    },
+    asDate: false,
+  },
 ) => {
   const arrClone = [...arr];
 
@@ -249,5 +249,16 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
+};
 
+export const handleDataByPage = (farmerData: any, page: number) => {
+  let updatedData: any = {};
+  let values = Object.values(farmerData);
+  let i = (page - 1) * 25;
+  let end = values.length < 25 * page ? values.length : 25 * page;
+  while (i < end) {
+    updatedData[i + 1] = values[i];
+    i++;
+  }
+  return updatedData;
 };
