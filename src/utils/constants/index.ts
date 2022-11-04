@@ -12,14 +12,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -34,8 +34,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -142,6 +142,28 @@ export const Message = (name: string) => {
   };
 };
 
+export const MessageStructured = (name: string, endPoint: string, action: "edit" | "add" | "delete") => {
+  const key: {
+    [key: string]: string;
+  } = {
+    ceo: "ceo",
+    resolution: "Resolution",
+    farmerDetails: "Farmer",
+    farmerGroup: "Farmer Group",
+    mdDetails: "Md",
+    founders: "Founder",
+  };
+
+  switch (action) {
+    case "edit":
+      return `${key[endPoint]} "${name}" has been edited`;
+    case "delete":
+      return `${key[endPoint] as string} "${name}" has been removed`;
+    case "add":
+      return `New ${key[endPoint] as string} "${name}" has been registered`;
+  }
+};
+
 export const dateFormat = (mydate?: string) => {
   return mydate && mydate.split("-").reverse().join("-");
 };
@@ -205,6 +227,7 @@ export const encryptFile = (file: Blob | File): Promise<string> =>
 export const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, obj) => {
     const key = obj[property];
+    // Add object to list for given key's value
     acc[key] = { ...obj };
     return acc;
   }, {});
@@ -226,4 +249,5 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
+
 };

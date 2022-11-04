@@ -8,7 +8,6 @@ export const useFetch = (endpoint: Endpoints) => {
   const result = useQuery({
     queryKey: [`${endpoint}-fetch`],
     queryFn: () => {
-      console.log(`[${endpoint}-fetch] request executed`);
       return fetch(`http://localhost:5001/${endpoint}`).then((res) => res.json());
     },
     cacheTime: Infinity, // do not change!

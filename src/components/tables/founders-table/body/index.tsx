@@ -1,19 +1,22 @@
 import { useState, useEffect } from "react";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
-import { searchWord, sortObj } from "../../../../utils/constants";
+import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
+import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FoundersRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { foundersById: listData, searchFilter, sortFilter } = useFounderContext();
-  const [founderSearch, setFounderSearch] = useState<Founders[]>(Object.values(listData));
-  const [founderSort, setFounderSort] = useState<Founders[]>(Object.values(listData));
-  const [founder, setFounder] = useState<Founders[]>(Object.values(listData));
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
+  const { data: foundersData } = result;
+  const { searchFilter, sortFilter } = useFounderContext();
+  const [founderSearch, setFounderSearch] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
+  const [founderSort, setFounderSort] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
+  const [founder, setFounder] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
 
   useEffect(() => {
-    setFounderSearch(Object.values(listData).filter((list) => searchWord(list.name, searchFilter)));
-  }, [listData, searchFilter]);
+    isSuccess && setFounderSearch(Object.values(foundersData as Founders[]).filter((list) => searchWord(list.name, searchFilter)));
+  }, [isSuccess, foundersData, searchFilter]);
 
   useEffect(() => {
     setFounderSort(sortObj<Founders>(founderSearch, sortFilter, "name"));

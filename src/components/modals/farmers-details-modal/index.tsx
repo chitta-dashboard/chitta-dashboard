@@ -2,9 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { RootState } from "../../../utils/store";
+// import { RootState } from "../../../utils/store";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -12,7 +12,8 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import S from "./farmersDetailsModal.styled";
@@ -28,14 +29,16 @@ interface CustomProps {
 
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
+  const { data: farmersDetailsById } = result;
   // const { farmersDetailsById } = useFarmerDetailsContext();
-  const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
+  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState({});
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = Object.values(isSuccess && (farmersDetailsById as farmerDetail)).find((f) => String(f.id) === id) as farmerDetail;
       let masterKey = "";
       let surveyName = "";
       let acreName = "";
