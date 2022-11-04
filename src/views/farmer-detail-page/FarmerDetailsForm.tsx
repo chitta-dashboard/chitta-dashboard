@@ -4,7 +4,7 @@ import { ENDPOINTS, fileValidation } from "../../utils/constants";
 // import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { RootState } from "../../utils/store";
+// import { RootState } from "../../utils/store";
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
@@ -24,6 +24,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+
   const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
   const dispatch = useDispatch();

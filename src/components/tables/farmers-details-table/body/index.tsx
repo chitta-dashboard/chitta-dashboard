@@ -3,12 +3,12 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { addFarmerDetails, farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import { addFarmerDetails, farmerDetail, addFarmerId } from "../../../../utils/store/slice/farmerDetails";
+import Loader from "../../../loader";
+import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
-import Loader from "../../../loader";
-import { useFetch } from "../../../../utils/hooks/query";
 
 const handleFarmerDetails = (farmerData: any) => {
   let updatedData: any = {};
@@ -44,6 +44,14 @@ const Body = () => {
   //   },
   //   cacheTime:Infinity
   // });
+  //Object.values(fetchFarmerDetails(farmersDetailsById))
+
+  useEffect(() => {
+    if (isSuccess) {
+      const farmerId = Object.values(isSuccess && farmersDetailsById).map((item: any) => item.id);
+      isSuccess && dispatch(addFarmerId(farmerId));
+    }
+  }, [isSuccess, farmersDetailsById]);
 
   useEffect(() => {
     if (isSuccess && farmersList.length > 0) {
