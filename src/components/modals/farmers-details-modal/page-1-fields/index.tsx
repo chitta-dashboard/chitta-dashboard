@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister, UseFormWatch } from "react-hook-form";
-import { fileValidation } from "../../../../utils/constants";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { ENDPOINTS, fileValidation } from "../../../../utils/constants";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { useFetch } from "../../../../utils/hooks/query";
 import AddProfile from "../../../input-fields/add-profile";
 import Input from "../../../input-fields/input/input";
 import { IAddFarmersDetailsPage1Input } from "../../type/formInputs";
@@ -23,7 +24,8 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
-  const { farmersGroupById } = useFarmersGroupContext();
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
+  const { data: farmersGroupById } = result;
   let enableAddButton = true;
 
   useEffect(() => {
@@ -103,7 +105,11 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="select"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "குழு *", gridArea: "grp", selectOptions: Object.values(farmersGroupById).map((g) => [g.groupName, g.groupName]) }}
+        options={{
+          label: "குழு *",
+          gridArea: "grp",
+          selectOptions: Object.values(isSuccess && (farmersGroupById as FarmersGroup[])).map((g) => [g.groupName, g.groupName]),
+        }}
       />
       <Input
         name="phoneNumber"

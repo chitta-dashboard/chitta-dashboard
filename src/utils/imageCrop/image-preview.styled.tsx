@@ -11,7 +11,7 @@ namespace S {
     alignItems: "center",
     justifyContent: "center",
     background: theme.palette.custom.backdrop,
-    zIndex: "5",
+    zIndex: "50",
   }));
 
   export const ImagePopUp = styled(Box)(({ theme }) => ({

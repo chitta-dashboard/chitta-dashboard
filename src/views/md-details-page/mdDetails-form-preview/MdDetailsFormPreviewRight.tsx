@@ -1,18 +1,21 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../utils/context/auth";
+import { mdDetail } from "../../../utils/context/mdDetails";
+import { useFetch } from "../../../utils/hooks/query";
 import { MD_DATA } from "../constant";
 import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
+import { ENDPOINTS } from "../../../utils/constants";
 
 const MdFormPreviewRight = () => {
-  const { mdDetailsById } = useMdDetailsContext();
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
+  const { data: mdDetailsById } = result;
   const { pdfImage } = useAuthContext();
   const { mdId } = useParams();
   return (
     <>
-      {Object.values(mdDetailsById)
+      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>
