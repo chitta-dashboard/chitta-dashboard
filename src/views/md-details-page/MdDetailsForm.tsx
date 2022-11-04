@@ -99,7 +99,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
                 </S.HeaderText2>
               </S.HeaderTextContainer>
               <S.UserImgContainer>
-                <img src={user.profile ? user.profile : NerkathirUser} alt="nerkathir-user" />
+                <img src={user.profile ? decryptText(user.profile) : NerkathirUser} alt="nerkathir-user" />
                 <S.EditBox
                   onClick={(e) => {
                     e.stopPropagation();
