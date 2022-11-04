@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate, ENDPOINTS } from "../../../utils/constants";
+import { createJoinDate, decryptText, encryptFile, ENDPOINTS } from "../../../utils/constants";
 // import { useFounderContext } from "../../../utils/context/founders";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -52,7 +52,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: userData?.profile, // temporary, until sbucket integration
+        profile: decryptText(userData?.profile), // temporary, until sbucket integration
         joinDate: userData?.joinDate,
       });
     }
@@ -71,13 +71,15 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   }, [editMode]);
   // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddFounderDetailsFormInput & { id: string }) => {
+  const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
+    const encryptedImage = await encryptFile(data.profile, true);
+
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       phoneNumber: data.phoneNumber,
-      profile: data.profile,
+      profile: encryptedImage,
       qualification: data.qualification,
       id: editMode ? id : uuidv4(),
       joinDate: createJoinDate(),

@@ -9,7 +9,10 @@ import { useFetch, useAdd } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
 
 const CeoDetails = () => {
-  const results = useFetch(ENDPOINTS.ceo as Endpoints);
+  const {
+    formatChangeSuccess,
+    result: { data: ceoDetails },
+  } = useFetch(ENDPOINTS.ceo as Endpoints);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo as Endpoints);
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
@@ -25,34 +28,28 @@ const CeoDetails = () => {
 
   return (
     <>
-      {results.result.isLoading ? (
-        <>
-          <Loader />
-        </>
-      ) : (
+      {formatChangeSuccess ? (
         <S.CeoDetailsContainer>
-          <>
-            <>
-              {Object.values(results.formatChangeSuccess && results.result.data).map((user: any) => {
-                return (
-                  <Fragment key={user.id}>
-                    <CeoDetailsCard user={user} />
-                  </Fragment>
-                );
-              })}
-            </>
-            <S.CeoDetailAdd>
-              <S.CustomButton
-                onClick={() => {
-                  addModalHandler();
-                }}
-              >
-                +
-              </S.CustomButton>
-            </S.CeoDetailAdd>
-            <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
-          </>
+          {Object.values(ceoDetails).map((user: any) => {
+            return (
+              <Fragment key={user.id}>
+                <CeoDetailsCard user={user} />
+              </Fragment>
+            );
+          })}
+          <S.CeoDetailAdd>
+            <S.CustomButton
+              onClick={() => {
+                addModalHandler();
+              }}
+            >
+              +
+            </S.CustomButton>
+          </S.CeoDetailAdd>
+          <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </S.CeoDetailsContainer>
+      ) : (
+        <Loader />
       )}
     </>
   );

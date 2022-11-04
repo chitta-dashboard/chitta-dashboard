@@ -1,13 +1,14 @@
-import S from "./idCardHeader.styled";
 import IdLogo from "../../../assets/images/logo.svg";
 import { useAuthContext } from "../../../utils/context/auth";
+import { decryptText } from "../../../utils/constants";
+import S from "./idCardHeader.styled";
 
 const IDCardHeader = () => {
   const { headerImage, titleName, regNo, cinNo } = useAuthContext();
   return (
     <S.IdHeaderWrapper>
       <S.HeaderLeft>
-        <S.LogoImage src={headerImage ? headerImage : IdLogo} alt="Id-logo" />
+        <S.LogoImage src={headerImage ? decryptText(headerImage) : IdLogo} alt="Id-logo" />
       </S.HeaderLeft>
       <S.HeaderRight>
         <S.IdHeading>

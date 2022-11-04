@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
-import { ROUTES } from "../../../utils/constants";
+import { decryptText, ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import NotificationModal from "../../../components/modals/notification-modal";
-import S from "./header.styled";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
+import S from "./header.styled";
 
 const Header = () => {
   const { userNotification, clearNotification, logout, headerImage, titleName } = useAuthContext();
@@ -43,7 +43,7 @@ const Header = () => {
     <>
       <S.Header>
         <S.LogoBox>
-          <S.Logo src={headerImage ? headerImage : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+          <S.Logo src={headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
           <S.LogoText>
             {titleName ? (
               titleName
