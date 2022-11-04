@@ -45,8 +45,10 @@ interface farmerDetailsContextType {
   searchFilter: string;
   isFarmerDetailsDataSet: boolean;
   sortFilter: SortOrder;
+  farmerId: selectedFarmer[];
   selectedFarmers: selectedFarmer[];
   groupFilter: string;
+  pageCount: number;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -54,14 +56,20 @@ const initialState: farmerDetailsContextType = {
   searchFilter: "",
   isFarmerDetailsDataSet: false,
   sortFilter: NORMAL,
+  farmerId: [],
   selectedFarmers: [],
   groupFilter: DEFAULT_GROUP_FILTER,
+  pageCount: 0,
 };
 
 const farmerDetailsSlice = createSlice({
   name: "farmerDetails",
   initialState,
   reducers: {
+    addFarmerId: (state, action) => {
+      state.farmerId = [...action.payload];
+    },
+
     addFarmerDetails: (state, action) => {
       delete action.payload.farmerId;
       state.farmersDetailsById = { ...action.payload, ...state.farmersDetailsById };
@@ -84,10 +92,10 @@ const farmerDetailsSlice = createSlice({
     },
 
     checkboxSelectAll: (state) => {
-      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersDetailsById).length) {
+      if (state.selectedFarmers.length === state.farmerId.length) {
         state.selectedFarmers = [];
       } else {
-        state.selectedFarmers = [...Object.keys(state.farmersDetailsById)];
+        state.selectedFarmers = state.farmerId;
       }
     },
 
@@ -111,6 +119,10 @@ const farmerDetailsSlice = createSlice({
     setGroupFilter: (state, action) => {
       state.groupFilter = action.payload;
     },
+
+    setPageCount: (state, action) => {
+      state.pageCount = action.payload;
+    },
   },
 });
 
@@ -123,7 +135,9 @@ export const {
   checkboxSelectAll,
   checkBoxUnselectAll,
   setGroupFilter,
-  checkBoxSelect
+  checkBoxSelect,
+  addFarmerId,
+  setPageCount,
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;
