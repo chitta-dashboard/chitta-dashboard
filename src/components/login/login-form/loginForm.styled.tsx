@@ -17,7 +17,8 @@ namespace S {
   export const LogoImage = styled("img")({
     width: "100%",
     height: "100%",
-    objectFit: "contain",
+    borderRadius: "50%",
+    aspectRatio: "1/1",
   });
 
   export const LoginMainContainer = styled(Box)(({ theme }) => ({

@@ -1,39 +1,49 @@
-import { Dispatch, FC, Ref, useRef } from "react";
+import { Dispatch, FC, Ref, useEffect, useRef } from "react";
 import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-import { IResolution, useResolutionsProviderContext } from "../../../utils/context/resolutions";
-import { DESCENDING, sortObj } from "../../../utils/constants";
+import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
+import { IResolution } from "../../../utils/store/slice/resolution";
+import { useFetch } from "../../../utils/hooks/query";
+import Loader from "../../loader";
 import S from "./resolutionsList.styled";
 
 interface Props {
-  resolutionId: string;
-  setResolutionId: Dispatch<string>;
+  resolutionId: string | null;
+  setResolutionId: Dispatch<string | null>;
 }
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  const { resolutions: resolutionsObj } = useResolutionsProviderContext();
+  // const resolutionsObj = useSelector((state: RootState) => state.resolution.resolutions);
+  const {
+    formatChangeSuccess,
+    result: { data: resolutionsObj },
+  } = useFetch(ENDPOINTS.resolutions);
+
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
-  const resolutions = sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
-  const leftData = resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2));
-  const rightData = isMd ? resolutions : resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
-
-  const NavigateResolutionGroup = (resolutionId: string) => {
-    navigate(`/board-resolution/${resolutionId}`);
-  };
+  const resolutions = formatChangeSuccess && sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
+  const leftData = resolutions ? resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2)) : [];
+  const rightData = resolutions ? (isMd ? resolutions : resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2))) : [];
 
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Nerkathir_${+new Date()}`,
+    documentTitle: `Board_Resolution_${resolutionId && formatChangeSuccess && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
-  return (
+  useEffect(() => {
+    if (resolutionId) {
+      generateResolutionPDF();
+    }
+    setResolutionId(null);
+  }, [resolutionId]);
+
+  return formatChangeSuccess ? (
     <S.MasterContainer>
       <S.InvisibleBox>
         <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} resolutionId={resolutionId} />
@@ -44,17 +54,10 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
             <S.LContent key={data.id}>
               <S.ContentHeader>
                 <S.ContentTitle>{data.groupName}</S.ContentTitle>
-                <S.ContentViewBtn
-                  onClick={() => {
-                    NavigateResolutionGroup(data.id);
-                  }}
-                >
-                  View
-                </S.ContentViewBtn>
+                <S.ContentViewBtn onClick={() => navigate(`/board-resolution/${data.id}`)}>View</S.ContentViewBtn>
                 <S.ContentDownloadBtn
-                  onClick={async () => {
-                    await setResolutionId(data.id);
-                    generateResolutionPDF();
+                  onClick={() => {
+                    setResolutionId(data.id);
                   }}
                 >
                   <i>download</i>
@@ -74,17 +77,10 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
           <S.RContent key={data.id}>
             <S.ContentHeader>
               <S.ContentTitle>{data.groupName}</S.ContentTitle>
-              <S.ContentViewBtn
-                onClick={() => {
-                  NavigateResolutionGroup(data.id);
-                }}
-              >
-                View
-              </S.ContentViewBtn>
+              <S.ContentViewBtn onClick={() => navigate(`/board-resolution/${data.id}`)}>View</S.ContentViewBtn>
               <S.ContentDownloadBtn
-                onClick={async () => {
-                  await setResolutionId(data.id);
-                  generateResolutionPDF();
+                onClick={() => {
+                  setResolutionId(data.id);
                 }}
               >
                 <i>download</i>
@@ -98,6 +94,8 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
         ))}
       </S.RightContainer>
     </S.MasterContainer>
+  ) : (
+    <Loader />
   );
 };
 

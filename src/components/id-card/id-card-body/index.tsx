@@ -2,10 +2,12 @@ import { forwardRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import IDCardHeader from "../id-card-header";
 import Signature from "../../../assets/images/Signature.png";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+// import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { mdDetail } from "../../../utils/context/mdDetails";
-import S from "./idCardBody.styled";
 import { Founders } from "../../../utils/context/founders";
+import { decryptText } from "../../../utils/constants";
+import S from "./idCardBody.styled";
 
 interface Props {
   data?: farmerDetail | mdDetail | Founders;
@@ -19,7 +21,7 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />
       <S.IdCardBodyWrapper>
-        <S.IdImage src={data?.profile} alt="id-photo" />
+        <S.IdImage src={decryptText(data?.profile as string)} alt="id-photo" />
         <S.MiddleBox>
           <S.IdDetailsWrapper>
             <S.DescriptionBox>

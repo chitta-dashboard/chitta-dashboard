@@ -1,21 +1,31 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { useAuthContext } from "../../../utils/context/auth";
+import { mdDetail } from "../../../utils/context/mdDetails";
+import { useFetch } from "../../../utils/hooks/query";
 import { MD_DATA } from "../constant";
+import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
+import { ENDPOINTS } from "../../../utils/constants";
+import { decryptText } from "../../../utils/constants";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewRight = () => {
-  const { mdDetailsById } = useMdDetailsContext();
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
+  const { data: mdDetailsById } = result;
+  const { pdfImage } = useAuthContext();
   const { mdId } = useParams();
   return (
     <>
-      {Object.values(mdDetailsById)
+      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>
             {MD_DATA.map((data) => {
               return (
                 <Fragment key={data.id}>
+                  <S.AbsoluteBackgroundImage>
+                    <img src={pdfImage ? decryptText(pdfImage) : nerkathir_transparent_background} alt="backgroundimage" />
+                  </S.AbsoluteBackgroundImage>
                   <S.UserInfoRow>
                     <S.UserInfoData1>பெயர்</S.UserInfoData1>
                     <S.UserInfoData2>{user.name}</S.UserInfoData2>

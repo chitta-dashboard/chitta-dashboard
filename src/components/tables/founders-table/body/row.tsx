@@ -1,24 +1,25 @@
 import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
-import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 
 interface FoundersRowProp {
   user: Founders;
 }
 
 const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
-  const { editFounder, deleteFounder } = useFounderContext();
+  // const { editFounder, deleteFounder } = useFounderContext();
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
@@ -28,6 +29,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+
+  // hook for edit and delete mutation
+  const { mutate: founderMutateUpdate } = useEdit(ENDPOINTS.founders);
+  const { mutate: founderMutateDelete } = useDelete(ENDPOINTS.founders);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -67,10 +72,11 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
 
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    user["profile"] = image;
-    editFounder({ ...user });
+    user["profile"] = await encryptFile(image, true);
+    // editFounder({ ...user });
+    founderMutateUpdate({ editedData: user });
   };
 
   return (
@@ -80,8 +86,9 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
       </S.TabCell>
       <S.Cell title="பெயர்">
         <S.NameStack>
+          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : userPic} />
+            <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
@@ -112,10 +119,15 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={() => {
-            deleteFounder(user.id);
+            // deleteFounder(user.id);
+            founderMutateDelete({
+              id: user.id,
+              successCb: () => {
+                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
+              },
+            });
             setDeleteModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
           }}
           deleteMessage={
             <>
@@ -127,14 +139,17 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            !editMode && deleteFounder(user.id);
-            editMode && editData && editFounder(editData);
+            // editMode && editData && editFounder(editData);
+            editMode &&
+              editData &&
+              founderMutateUpdate({
+                editedData: editData,
+              });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
           }}
         />
-        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
       </S.WebTableCell>
     </TableRow>
   );

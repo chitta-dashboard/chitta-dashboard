@@ -1,47 +1,90 @@
-import { useState, useEffect } from "react";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { searchWord, sortObj } from "../../../../utils/constants";
+import { useState, useEffect, FC, ReactElement } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { ENDPOINTS, handleDataByPage, searchWord, sortObj } from "../../../../utils/constants";
+import { addFarmerDetails, farmerDetail, addFarmerId, setPageCount } from "../../../../utils/store/slice/farmerDetails";
+import Loader from "../../../loader";
+import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { farmersDetailsById: listData, searchFilter, sortFilter, groupFilter } = useFarmerDetailsContext();
-  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(Object.values(listData));
-  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(Object.values(listData));
-  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(Object.values(listData));
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>(Object.values(listData));
+  // const { farmersDetailsById: farmersDetailsById, searchFilter, sortFilter, groupFilter } = useFarmerDetailsContext();
+  const { searchFilter, sortFilter, groupFilter, currentPage } = useSelector((state: any) => state.farmerDetails);
+  const dispatch = useDispatch();
+  const { formatChangeSuccess: isSuccess, result }: any = useFetch(ENDPOINTS.farmerDetails);
+  const { data: farmersDetailsById } = result;
+  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
+  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
+  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleDataByPage(farmersDetailsById, currentPage)) : []);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setFarmersListGroup(groupFilter === "all" ? Object.values(listData) : Object.values(listData).filter((list) => list.group === groupFilter));
-  }, [groupFilter, listData]);
+    if (isSuccess) {
+      const farmerId = Object.values(isSuccess && farmersDetailsById).map((item: any) => item.id);
+      isSuccess && dispatch(addFarmerId(farmerId));
+    }
+  }, [isSuccess, farmersDetailsById]);
 
   useEffect(() => {
-    setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
-  }, [searchFilter, farmersListGroup]);
+    if (isSuccess && farmersList.length > 0) {
+      setIsLoading(true);
+    }
+  }, [farmersList, isSuccess]);
 
   useEffect(() => {
-    setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
-  }, [farmersListSearch, sortFilter]);
+    if (isSuccess) {
+      setFarmersListGroup(
+        groupFilter === "all"
+          ? Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[])
+          : Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[]).filter((list) => list.group === groupFilter),
+      );
+    }
+  }, [groupFilter, farmersDetailsById, isSuccess, currentPage]);
 
   useEffect(() => {
-    setFarmersList(farmersListSort);
-  }, [farmersListSort]);
+    // isSuccess && setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
+    let result = isSuccess && Object.values(farmersDetailsById as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let updatedData = isSuccess && [...result];
+    isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
+    dispatch(setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length }));
+  }, [searchFilter, farmersListGroup, isSuccess]);
+
+  useEffect(() => {
+    isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
+  }, [farmersListSearch, sortFilter, isSuccess]);
+
+  useEffect(() => {
+    isSuccess && setFarmersList(farmersListSort);
+  }, [farmersListSort, isSuccess]);
 
   return (
     <>
-      {farmersList.length > 0 ? (
-        <BodyWrapper>
-          {farmersList.map((user) => (
-            <FarmersDetailsRow {...{ user }} key={user.id} />
-          ))}
-        </BodyWrapper>
+      {isLoading ? (
+        <>
+          {farmersList.length > 0 ? (
+            <BodyWrapper>
+              {farmersList.map((user: farmerDetail) => (
+                <FarmersDetailsRow {...{ user }} key={user.id} />
+              ))}
+            </BodyWrapper>
+          ) : (
+            <S.EmptyMsg>
+              <tr>
+                <td>No Farmers Details..</td>
+              </tr>
+            </S.EmptyMsg>
+          )}
+        </>
       ) : (
-        <S.EmptyMsg>
+        <tbody>
           <tr>
-            <td>No Farmers Details..</td>
+            <td>
+              <Loader />
+            </td>
           </tr>
-        </S.EmptyMsg>
+        </tbody>
       )}
     </>
   );

@@ -5,6 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
+import { decryptText } from "../../../utils/constants";
 import S from "./loginForm.styled";
 
 interface LoginFormInputs {
@@ -25,7 +26,7 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { login } = useAuthContext();
+  const { login, loginImage } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -66,7 +67,7 @@ const LoginForm: FC = () => {
       <S.LoginContainer>
         <S.FormContainer>
           <S.ImageBox>
-            <S.LogoImage src={logo} alt="Nerkathir" />
+            <S.LogoImage src={loginImage ? decryptText(loginImage) : logo} alt="Nerkathir" />{" "}
           </S.ImageBox>
 
           <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>

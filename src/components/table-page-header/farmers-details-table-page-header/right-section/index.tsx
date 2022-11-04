@@ -1,6 +1,12 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { ENDPOINTS } from "../../../../utils/constants";
+import { useFetch } from "../../../../utils/hooks/query";
+import { RootState } from "../../../../utils/store";
+import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
 import SelectDropDown from "../../../common-components/select-dropdown";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import ExportCSV from "../../../export-csv-data";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
@@ -9,8 +15,12 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
-  const { selectedFarmers } = useFarmerDetailsContext();
-
+  // const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
+  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
   return (
     <S.RightSectionContainer>
       <S.DropdownStack>
@@ -20,7 +30,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
-        <S.CustomButton>Export Farmers</S.CustomButton>
+        <ExportCSV name="Export Farmers" csvData={isSuccess ? Object.values(farmersDetailsById) : [] as farmerDetail[]} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();

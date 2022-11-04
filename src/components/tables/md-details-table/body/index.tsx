@@ -1,29 +1,53 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { searchWord, sortObj } from "../../../../utils/constants";
+import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import MdDetailsRow from "./row";
 import S from "./body.styled";
-//
+import { useFetch } from "../../../../utils/hooks/query";
 
 const Body = () => {
-  const { mdDetailsById: listData, searchFilter, sortFilter } = useMdDetailsContext();
+  const {
+    result: { data: mdDetailsById },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.mdDetails);
+  // const {
+  //   result: { data: farmerGroupById },
+  //   formatChangeSuccess: isFarmerGroupSuccess,
+  // } = useFetch(ENDPOINTS.farmerGroup);
 
-  const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(Object.values(listData));
-  const [mdListSort, setMdListSort] = useState<mdDetail[]>(Object.values(listData));
-  const [mdList, setMdList] = useState<mdDetail[]>(Object.values(listData));
+  const { searchFilter, sortFilter } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
+  const [mdListSort, setMdListSort] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
+  const [mdList, setMdList] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
 
   useEffect(() => {
-    setMdListSearch(Object.values(listData).filter((md) => searchWord(md.name, searchFilter)));
-  }, [listData, searchFilter]);
+    isSuccess && setMdListSearch(Object.values(mdDetailsById as mdDetail[]).filter((md) => searchWord(md.name, searchFilter)));
+  }, [mdDetailsById, searchFilter, isSuccess]);
 
   useEffect(() => {
-    setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
-  }, [mdListSearch, sortFilter]);
+    isSuccess && setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
+  }, [mdListSearch, sortFilter, isSuccess]);
 
   useEffect(() => {
-    setMdList(mdListSort);
-  }, [mdListSort]);
+    isSuccess && setMdList(mdListSort);
+  }, [mdListSort, isSuccess]);
+
+  // const removeMemberIndex = Object.values(state.farmersGroupById)
+  //   .map((farmersGroup) => farmersGroup.members)
+  //   .findIndex((arr) => arr.includes(action.payload));
+  // if (removeMemberIndex !== -1) {
+  //   const updatedMember = Object.values(state.farmersGroupById)[removeMemberIndex]["members"].filter((member) => member !== action.payload);
+  //   return {
+  //     ...state,
+  //     farmersGroupById: {
+  //       ...(Object.values(state.farmersGroupById)[removeMemberIndex].members = updatedMember),
+  //     },
+  //   };
+  // }
+  // return { ...state };
+
+  // const removeFarmerFromGroup = ;
 
   return (
     <>

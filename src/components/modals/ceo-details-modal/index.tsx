@@ -2,14 +2,14 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { dateFormat } from "../../../utils/constants";
-import { useCeoDetailsContext } from "../../../utils/context/ceoDetails";
+import { dateFormat, decryptText, encryptFile, Endpoints, ENDPOINTS } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
+import { useFetch } from "../../../utils/hooks/query";
 
 interface CustomProps {
   openModal: boolean;
@@ -20,7 +20,8 @@ interface CustomProps {
 }
 
 const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { ceoDetailsById } = useCeoDetailsContext();
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo as Endpoints);
+  const { data: ceoDetailsById } = result;
   const { handleSubmit, reset, clearErrors, unregister, setValue, getValues, watch, control: formControl } = useForm<IAddCEODetailsFormInput>({});
 
   // enabling submit button
@@ -38,15 +39,15 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   }
 
   useEffect(() => {
-    if (editMode) {
-      let userData = Object.values(ceoDetailsById).find((ceo) => String(ceo.id) === id);
+    if (editMode && isSuccess) {
+      let userData = id && ceoDetailsById[id];
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: userData?.profile, // temporary, until sbucket integration
+        profile: decryptText(userData?.profile),
       });
     }
 
@@ -63,13 +64,15 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   }, [editMode]);
   // }, [editMode, id]);
 
-  const onSubmit: any = (data: IAddCEODetailsFormInput & { id: string }) => {
+  const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
+    const encryptedBase64 = await encryptFile(data.profile, true);
+
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       phoneNumber: data.phoneNumber,
-      profile: data.profile,
+      profile: encryptedBase64,
       qualification: data.qualification,
       id: editMode ? id : uuidv4(),
     } as IAddCEODetailsFormInput & { id: string });

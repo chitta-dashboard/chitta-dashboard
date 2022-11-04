@@ -1,3 +1,4 @@
+import { useState } from "react";
 import TableWrapper from "../../custom-tables/table";
 import Header from "./header";
 import Body from "./body";
@@ -7,7 +8,7 @@ const FarmersDetailsTable = () => {
   return (
     <TableWrapper>
       <Header />
-      <Body />
+      <Body  />
       <Footer />
     </TableWrapper>
   );

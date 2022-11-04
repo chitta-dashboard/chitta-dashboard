@@ -1,5 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
+// import profileImg from "../../assets/images/nerkathir-user.svg";
 
 //ACTION TYPES
 const ADD_CEO_DETAIL = "ADD_CEO_DETAIL";
@@ -29,30 +29,7 @@ interface ceoDetailsContextType {
 }
 
 const initialState: ceoDetailsContextType = {
-  ceoDetailsById: {
-    "1": {
-      id: "1",
-      profile: profileImg,
-      name: "goku",
-      phoneNumber: "8610010875",
-      dob: "10-08-1986",
-      qualification: "B.E.agri",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. ",
-      joinedDate: "oct 20 1989",
-    },
-    "2": {
-      id: "2",
-      profile: profileImg,
-      name: "vegeta",
-      phoneNumber: "8610010875",
-      dob: "10-08-1982",
-      qualification: "B.E.agri",
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit consectetur adipisicing elit.  ",
-      joinedDate: "oct 20 1989",
-    },
-  },
+  ceoDetailsById: {},
   addCeoDetail: () => {},
   editCeoDetail: () => {},
   deleteCeoDetail: () => {},

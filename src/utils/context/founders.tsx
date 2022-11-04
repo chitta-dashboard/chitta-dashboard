@@ -1,5 +1,4 @@
 import { createContext, FC, useContext, useReducer } from "react";
-import profileImg from "../../assets/images/nerkathir-user.svg";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
@@ -37,9 +36,9 @@ export interface foundersContextType {
 
 const initialState: foundersContextType = {
   foundersById: {
-    "1": {
-      id: "1",
-      profile: profileImg,
+    a: {
+      id: "a",
+      profile: "",
       name: "Veera Raghavan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
@@ -47,9 +46,9 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "2": {
-      id: "2",
-      profile: profileImg,
+    b: {
+      id: "b",
+      profile: "",
       name: "John Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
@@ -57,9 +56,9 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "3": {
-      id: "3",
-      profile: profileImg,
+    c: {
+      id: "c",
+      profile: "",
       name: "Vijay Kumar",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
@@ -67,9 +66,9 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "4": {
-      id: "4",
-      profile: profileImg,
+    d: {
+      id: "d",
+      profile: "",
       name: "Kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
@@ -77,9 +76,9 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "5": {
-      id: "5",
-      profile: profileImg,
+    e: {
+      id: "e",
+      profile: "",
       name: "Jeevanandham",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
@@ -87,9 +86,9 @@ const initialState: foundersContextType = {
       description: "Cultivates land",
       joinDate: "mar 16,2022",
     },
-    "6": {
-      id: "6",
-      profile: profileImg,
+    f: {
+      id: "f",
+      profile: "",
       name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",
@@ -110,7 +109,7 @@ const initialState: foundersContextType = {
 const reducer = (state: foundersContextType, action: any) => {
   switch (action.type) {
     case ADD_FOUNDERS:
-      return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };
+      return { ...state, foundersById: { [action.payload.id]: action.payload, ...state.foundersById } };
 
     case EDIT_FOUNDERS:
       return { ...state, foundersById: { ...state.foundersById, [action.payload.id]: action.payload } };

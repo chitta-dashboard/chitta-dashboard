@@ -1,33 +1,40 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fileValidation } from "../../utils/constants";
-import {useMdDetailsContext} from "../../utils/context/mdDetails";
+import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
+import { mdDetail } from "../../utils/context/mdDetails";
+import { useAuthContext } from "../../utils/context/auth";
+import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { MD_DATA } from "./constant";
-import S from "./md-details-page.styled";
 import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import S from "./md-details-page.styled";
 
 interface Props {
   MdIdtoPrint?: number | string;
 }
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
-  const { mdDetailsById, editMdDetail } = useMdDetailsContext();
+  const {
+    result: { data: mdDetailsById },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { headerImage, titleName, address } = useAuthContext();
   const { mdId } = useParams();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
 
-
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  const getURL = (id: string) => {
-    let result = Object.values(mdDetailsById).filter((item) => {
-      return item.id === id ? item.profile : null;
-    });
-    let data = result.length > 0 ? result[0]["profile"] : undefined;
-    return data;
-  };
+  // const getURL = (id: string) => {
+  //   let result = Object.values(isSuccess && (mdDetailsById as mdDetail[])).filter((item) => {
+  //     return item.id === id ? item.profile : null;
+  //   });
+  //   let data = result.length > 0 ? result[0]["profile"] : undefined;
+  //   return data;
+  // };
 
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
@@ -47,36 +54,52 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
   };
 
   const handleCroppedImage = (image: string) => {
-    if (!image) return;
-    let result = Object.values(mdDetailsById).filter((item) => {
-      return item.id === userId;
-    });
-    result[0]["profile"] = image;
-    editMdDetail({ ...result[0] });
+    if (isSuccess) {
+      if (!image) return;
+      let user = mdDetailsById[userId];
+      user["profile"] = image;
+      editMdDetail({ editedData: user });
+      const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
+      delete farmerEditData.farmerId;
+      editFarmer({ editedData: farmerEditData });
+    }
   };
 
   return (
     <>
-      {Object.values(mdDetailsById)
+      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId, MdIdtoPrint].includes(name.id))
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
             <S.MdsDetailsHeader>
-              <S.NerkathirLogo src={NerkathirLogo} alt="nerkathir-logo" />
+              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="nerkathir-logo" />
               <S.HeaderTextContainer>
                 <S.HeaderText1>
-                  நெற்கதிர் உழவர் <br />
-                  உற்பத்தியாளர் நிறுவனம்
+                  {titleName ? (
+                    titleName
+                  ) : (
+                    <>
+                      நெற்கதிர் உழவர்
+                      <br />
+                      உற்பத்தியாளர் நிறுவனம்
+                    </>
+                  )}
                 </S.HeaderText1>
                 <S.HeaderText2>
-                  நபார்டு <br />
-                  கள்ளக்குறிச்சி மாவட்டம்
+                  {address ? (
+                    address
+                  ) : (
+                    <>
+                      நபார்டு <br />
+                      கள்ளக்குறிச்சி மாவட்டம்
+                    </>
+                  )}
                   <br />
                   உறுப்பினர் விண்ணப்பம்
                 </S.HeaderText2>
               </S.HeaderTextContainer>
               <S.UserImgContainer>
-                <img src={getURL(user.id) ? getURL(user.id) : NerkathirUser} alt="nerkathir-user" />
+                <img src={user.profile ? decryptText(user.profile) : NerkathirUser} alt="nerkathir-user" />
                 <S.EditBox
                   onClick={(e) => {
                     e.stopPropagation();

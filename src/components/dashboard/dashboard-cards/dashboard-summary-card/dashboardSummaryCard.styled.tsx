@@ -4,6 +4,7 @@ import { Box, Grid } from "@mui/material";
 export namespace S {
   export const SummaryCardWrapper = styled(Grid)(({ theme }: any) => ({
     display: "flex",
+    height: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",

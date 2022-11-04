@@ -1,19 +1,22 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { checkboxSelectAll } from "../../../../utils/store/slice/farmerDetails";
+// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./header.styled";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 const Header = () => {
-  const { farmersDetailsById, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
-
+  // const { farmersDetailsById, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
+  const dispatch = useDispatch();
+  const { selectedFarmers, farmerId } = useSelector((state: any) => state.farmerDetails);
   return (
     <TableHead>
       <TableRow>
         <S.ColCheckCell>
           <Checkbox
             onChange={() => {
-              checkboxSelectAll();
+              dispatch(checkboxSelectAll());
             }}
-            checked={Object.values(selectedFarmers).length === Object.values(farmersDetailsById).length}
+            checked={selectedFarmers.length === farmerId.length}
           />
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
@@ -26,9 +29,9 @@ const Header = () => {
           <Stack>
             <Checkbox
               onChange={() => {
-                checkboxSelectAll();
+                dispatch(checkboxSelectAll());
               }}
-              checked={Object.values(selectedFarmers).length === Object.values(farmersDetailsById).length}
+              // checked={Object.values(selectedFarmers).length === Object.values(farmersDetailsById).length}
             />
           </Stack>
           <Stack>Farmers Details</Stack>

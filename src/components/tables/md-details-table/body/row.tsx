@@ -1,19 +1,19 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { mdDetail, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useDispatch } from "react-redux";
+import { mdDetail } from "../../../../utils/context/mdDetails";
+// import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
-// import MdDetailsModal from "../../../modals/md-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import userPic from "../../../../assets/images/user.png";
 import CS from "../../../common-styles/commonStyles.styled";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
 
 interface MdDetailsRowProps {
@@ -21,9 +21,10 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
-  const { editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { editFarmerDetail } = useFarmerDetailsContext();
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
@@ -33,7 +34,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const AddNewMember = { id: editData?.id, group: editData?.group };
+  // const AddNewMember = { id: editData?.farmerId, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -68,11 +69,13 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
 
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    user["profile"] = image;
-    editMdDetail({ ...user });
-    editFarmerDetail({ ...user });
+    user["profile"] = await encryptFile(image, true);
+    editMdDetail({ editedData: user });
+    const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
+    delete farmerEditData.farmerId;
+    editFarmer({ editedData: farmerEditData });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -94,8 +97,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             e.stopPropagation();
           }}
         >
+          {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={user.profile ? user.profile : userPic} />
+            <S.AvatarImg alt="User-img" src={user.profile ? decryptText(user.profile) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
@@ -125,21 +129,35 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
           handleConfirm={() => setConfirmModal(true)}
           handleIdCard={() => setIdCard(true)}
         />
-        <FarmersDetailsModal openModal={editMode} handleClose={() => setEditMode(false)} cb={updateMdDetail} editMode={editMode} id={user.id} />
+        <FarmersDetailsModal
+          openModal={editMode}
+          handleClose={() => setEditMode(false)}
+          cb={updateMdDetail}
+          editMode={editMode}
+          id={user.farmerId}
+          mdId={user.id}
+        />
         <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            !editMode && deleteMdDetail(user.id);
-            editMode && editData && editMdDetail(editData);
-            editMode && editData && editFarmerDetail(editData);
-            editMode && removeGroupMember(user.id);
-            editMode && addGroupMember(AddNewMember);
+            !editMode &&
+              deleteMdDetail({
+                id: user.id,
+                successCb: () => {
+                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
+                },
+              });
+            editData && editMdDetail({ editedData: editData });
+            const farmerEditData = { ...editData, id: editData?.farmerId };
+            delete farmerEditData.farmerId;
+            editData && farmerEditData && editFarmer({ editedData: farmerEditData });
+            // editMode && user.farmerId && removeGroupMember(user.farmerId);
+            // editMode && addGroupMember(AddNewMember);
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
           }}
           confirmMessage={
             !editMode && (
@@ -149,7 +167,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
             )
           }
         />
-        {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
       </S.WebTableCell>
     </TableRow>
   );
