@@ -48,6 +48,7 @@ interface farmerDetailsContextType {
   farmerId: selectedFarmer[];
   selectedFarmers: selectedFarmer[];
   groupFilter: string;
+  pageCount: number;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -58,6 +59,7 @@ const initialState: farmerDetailsContextType = {
   farmerId: [],
   selectedFarmers: [],
   groupFilter: DEFAULT_GROUP_FILTER,
+  pageCount: 0,
 };
 
 const farmerDetailsSlice = createSlice({
@@ -93,7 +95,7 @@ const farmerDetailsSlice = createSlice({
       if (state.selectedFarmers.length === state.farmerId.length) {
         state.selectedFarmers = [];
       } else {
-        state.selectedFarmers = state.farmerId
+        state.selectedFarmers = state.farmerId;
       }
     },
 
@@ -117,6 +119,10 @@ const farmerDetailsSlice = createSlice({
     setGroupFilter: (state, action) => {
       state.groupFilter = action.payload;
     },
+
+    setPageCount: (state, action) => {
+      state.pageCount = action.payload;
+    },
   },
 });
 
@@ -131,6 +137,7 @@ export const {
   setGroupFilter,
   checkBoxSelect,
   addFarmerId,
+  setPageCount,
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;
