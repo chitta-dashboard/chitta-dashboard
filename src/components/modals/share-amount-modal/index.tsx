@@ -4,6 +4,8 @@ import CustomModal from "../../custom-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
 import { RootState } from "../../../utils/store";
+import { useFetch } from "../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -19,7 +21,10 @@ interface CustomProps {
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   const dispatch = useDispatch();
-  const { selectedFarmers, farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const {
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 

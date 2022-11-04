@@ -3,19 +3,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { addFarmerDetails, farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import { addFarmerDetails, farmerDetail, addFarmerId } from "../../../../utils/store/slice/farmerDetails";
+import Loader from "../../../loader";
+import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
-import Loader from "../../../loader";
-import { useFetch } from "../../../../utils/hooks/query";
 
-const fetchFarmerDetails = async () => {
-  let farmerData = await axios.get("http://localhost:5001/farmerDetails");
+const fetchFarmerDetails = (farmerData: any) => {
   let updatedData: any = {};
-  let values = Object.values(farmerData.data);
+  let values = Object.values(farmerData);
   let i = 0;
-  while (i < 50) {
+  while (i < 25) {
     updatedData[i + 1] = values[i];
     i++;
   }
@@ -34,11 +33,10 @@ const Body = () => {
   const dispatch = useDispatch();
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
   const { data: farmersDetailsById } = result;
-
-  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
+  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
+  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
+  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(fetchFarmerDetails(farmersDetailsById)) : []);
 
   // const { isSuccess } = useQuery(["farmerDetails"], fetchFarmerDetails, {
   //   onSuccess: (data) => {
@@ -46,13 +44,21 @@ const Body = () => {
   //   },
   //   cacheTime:Infinity
   // });
+  //Object.values(fetchFarmerDetails(farmersDetailsById))
+
+  useEffect(() => {
+    if (isSuccess) {
+      const farmerId = Object.values(isSuccess && farmersDetailsById).map((item: any) => item.id);
+      isSuccess && dispatch(addFarmerId(farmerId));
+    }
+  }, [isSuccess, farmersDetailsById]);
 
   useEffect(() => {
     if (isSuccess) {
       setFarmersListGroup(
         groupFilter === "all"
-          ? Object.values(farmersDetailsById as farmerDetail[])
-          : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
+          ? Object.values(fetchFarmerDetails(farmersDetailsById) as farmerDetail[])
+          : Object.values(fetchFarmerDetails(farmersDetailsById) as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
   }, [groupFilter, farmersDetailsById, isSuccess]);
