@@ -98,3 +98,31 @@ export const useDelete = (endpoint: Endpoints) => {
     },
   );
 };
+
+export const useFetchByPage = (endpoint: Endpoints, page: number) => {
+  const result = useQuery({
+    queryKey: [`${endpoint}-fetch-${page}`],
+    queryFn: () => {
+      return axios
+        .get(`http://localhost:5001/${endpoint}`, {
+          params: {
+            _page: page,
+            _limit: 10,
+          },
+        })
+        .then((res) => res.data);
+    },
+    cacheTime: Infinity, // do not change!
+    staleTime: Infinity, // do not change!
+  });
+
+  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+  useEffect(() => {
+    if (Array.isArray(result.data)) {
+      queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
+      setformatChangeSucess(true);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [result.isFetched]);
+  return { formatChangeSuccess, result };
+};
