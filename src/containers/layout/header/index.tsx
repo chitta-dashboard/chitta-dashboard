@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Theme, useMediaQuery } from "@mui/material";
 import { decryptText, ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
+import { useFetch } from "../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../utils/constants";
 import NotificationModal from "../../../components/modals/notification-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
@@ -18,13 +20,15 @@ const Header = () => {
   pathname = pathname.split("/")[1];
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
+  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
+  const { data: NotificationData } = result;
   const clearNotifyHandler = () => {
     setnotification(null);
     clearNotification();
   };
 
   const notificationClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    Object.values(userNotification).length > 0 ? setnotification(event.currentTarget) : setnotification(null);
+    Object.values(NotificationData).length > 0 ? setnotification(event.currentTarget) : setnotification(null);
   };
 
   const notificationHandler = () => {
@@ -67,7 +71,7 @@ const Header = () => {
           ))}
         </S.NavBar>
         <S.ActionsBox>
-          <S.NotificationBadge onClick={notificationClick} badgeContent={userNotification.length}>
+          <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
             <Icon color={true} iconName={"notification1"} />
           </S.NotificationBadge>
           <S.webIcon onClick={popHandler}>three-dots</S.webIcon>

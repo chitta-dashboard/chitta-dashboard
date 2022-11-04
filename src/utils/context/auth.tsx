@@ -1,16 +1,23 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
 import { adminFormInputs } from "../../views/admin-panel";
+import { useAdd, useFetch, useDelete } from "../hooks/query";
+import { ENDPOINTS } from "../constants";
 
 //Action type
 const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
 const ADD_UPDATE = "ADD_UPDATE";
 const ADD_LOGO = "ADD_LOGO";
+const LOADER = "LOADER";
 
 export type Notification = {
   id: string;
   image?: string | undefined;
   message: string;
+};
+export type loader = {
+  openLoader: boolean;
+  loaderText?: string;
 };
 
 type Props = {
@@ -22,8 +29,8 @@ interface IContextType {
   logout: () => void;
   clearNotification: () => void;
   addNotification: (data: Notification) => void;
-  addUpdate: (data: adminFormInputs) => void;
   addLogo: () => void;
+  loader: (data: loader) => void;
   userNotification: Notification[];
   AdminUpdate: { [id: string]: adminFormInputs };
   headerImage: string | null;
@@ -34,6 +41,8 @@ interface IContextType {
   cinNo: string | null;
   regNo: string | null;
   address: string | null;
+  openLoader: boolean;
+  loaderText: string;
 }
 
 const initialState: IContextType = {
@@ -42,8 +51,8 @@ const initialState: IContextType = {
   logout: () => {},
   clearNotification: () => {},
   addNotification: () => {},
-  addUpdate: () => {},
   addLogo: () => {},
+  loader: () => {},
   userNotification: [],
   AdminUpdate: {},
   headerImage: localStorage.getItem("headerLogo"),
@@ -54,19 +63,19 @@ const initialState: IContextType = {
   cinNo: localStorage.getItem("cinNo"),
   regNo: localStorage.getItem("regNo"),
   address: localStorage.getItem("address"),
+  openLoader: false,
+  loaderText: "",
 };
 
 // Reducer function
 const reducer = (state: IContextType, action: any) => {
   switch (action.type) {
-    case ADD_NOTIFICATION:
-      return { ...state, userNotification: [action.payload, ...state.userNotification] };
+    // case ADD_NOTIFICATION:
+    // return mutate({ data: action.payload });
+    // return { ...state, userNotification: [action.payload, ...state.userNotification] };
 
-    case CLEAR_NOTIFICATION:
-      return { ...state, userNotification: [] };
-
-    case ADD_UPDATE:
-      return { ...state, AdminUpdate: { ...state.AdminUpdate, [action.payload.id]: action.payload } };
+    // case CLEAR_NOTIFICATION:
+    //   return { ...state, userNotification: [] };
 
     case ADD_LOGO:
       return {
@@ -80,6 +89,12 @@ const reducer = (state: IContextType, action: any) => {
         regNo: localStorage.getItem("regNo"),
         address: localStorage.getItem("address"),
       };
+    case LOADER:
+      return {
+        ...state,
+        openLoader: action.payload.openLoader,
+        loaderText: action.payload.loaderText,
+      };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -92,6 +107,12 @@ const useAuthContext = () => useContext(authContext);
 
 const AuthContextProvider: FC<Props> = (props) => {
   const localAuth = window.localStorage.getItem("isAuthenticated");
+  const { mutate: addNotify } = useAdd(ENDPOINTS.notification);
+  const {
+    result: { data: NotificationData },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.notification);
+  const { mutate: deleteNotification } = useDelete(ENDPOINTS.notification);
 
   const [isAuthenticated, setIsAuthenticated] = useState(!!localAuth);
 
@@ -108,19 +129,24 @@ const AuthContextProvider: FC<Props> = (props) => {
   };
 
   const addNotification = (data: Notification) => {
-    dispatch({ type: ADD_NOTIFICATION, payload: data });
+    return addNotify({ data: data });
+
+    // dispatch({ type: ADD_NOTIFICATION, payload: data });
   };
 
   const clearNotification = () => {
-    dispatch({ type: CLEAR_NOTIFICATION });
-  };
-
-  const addUpdate = (data: adminFormInputs) => {
-    dispatch({ type: ADD_UPDATE, payload: data });
+    // dispatch({ type: CLEAR_NOTIFICATION });
+    if (isSuccess) {
+      Object.values(NotificationData).map((item: any) => deleteNotification({ id: item.id }));
+    }
   };
 
   const addLogo = () => {
     dispatch({ type: ADD_LOGO });
+  };
+
+  const loader = (data: loader) => {
+    dispatch({ type: LOADER, payload: data });
   };
 
   const data = {
@@ -130,8 +156,9 @@ const AuthContextProvider: FC<Props> = (props) => {
     logout,
     clearNotification,
     addNotification,
-    addUpdate,
+    // addUpdate,
     addLogo,
+    loader,
   };
 
   return <authContext.Provider value={data}>{props.children}</authContext.Provider>;
