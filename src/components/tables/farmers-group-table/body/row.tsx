@@ -102,7 +102,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
             farmerGroupDelete({ id: user.id });
             setDeleteModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, message: Message(user.groupName).deleteFarmGroup });
+            addNotification({ id: `delete${user.id}`, message: Message(user.groupName).deleteFarmGroup });
           }}
           deleteMessage={
             <>

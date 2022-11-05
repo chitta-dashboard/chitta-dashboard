@@ -1,4 +1,4 @@
-import { FC, useState, useRef } from "react";
+import { FC, useState, useRef} from "react";
 import Icon from "../../icons";
 import { useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
@@ -55,11 +55,13 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
           </S.BodyBox>
         ))}
       </S.BodyContainer>
-      <S.FooterBox>
-        <S.FooterText onClick={styleHandler} variant="subtitle1">
-          {seeMore ? "See Less" : "See More"}
-        </S.FooterText>
-      </S.FooterBox>
+      {isSuccess && Object.values(NotificationData).length > 3 && (
+        <S.FooterBox>
+          <S.FooterText onClick={styleHandler} variant="subtitle1">
+            {seeMore ? "See Less" : "See More"}
+          </S.FooterText>{" "}
+        </S.FooterBox>
+      )}
     </S.ModalContainer>
   );
 };
