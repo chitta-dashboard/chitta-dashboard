@@ -1,7 +1,7 @@
-import { useState, useEffect, FC, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, handleDataByPage, searchWord, sortObj } from "../../../../utils/constants";
-import { addFarmerDetails, farmerDetail, addFarmerId, setPageCount } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
 import Loader from "../../../loader";
 import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
@@ -19,13 +19,6 @@ const Body = () => {
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleDataByPage(farmersDetailsById, currentPage)) : []);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isSuccess) {
-      const farmerId = Object.values(isSuccess && farmersDetailsById).map((item: any) => item.id);
-      isSuccess && dispatch(addFarmerId(farmerId));
-    }
-  }, [isSuccess, farmersDetailsById]);
 
   useEffect(() => {
     if (isSuccess && farmersList.length > 0) {
@@ -58,6 +51,14 @@ const Body = () => {
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
   }, [farmersListSort, isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(checkBoxUnselectAll());
+      const farmerId = Object.values(isSuccess && farmersList).map((item: any) => item.id);
+      isSuccess && dispatch(addFarmerId(farmerId));
+    }
+  }, [isSuccess, farmersList]);
 
   return (
     <>
