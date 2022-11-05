@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
-import profileImg from "../../assets/images/nerkathir-user.svg";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 export interface IFounders {
   id: string;
@@ -23,7 +23,7 @@ const initialState: IFoundersSlice = {
   foundersById: {
     a: {
       id: "a",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Veera Raghavan",
       phoneNumber: "9945672156",
       qualification: "BBA, MBA",
@@ -33,7 +33,7 @@ const initialState: IFoundersSlice = {
     },
     b: {
       id: "b",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "John Durairaj",
       phoneNumber: "8610010875",
       qualification: "BA",
@@ -43,7 +43,7 @@ const initialState: IFoundersSlice = {
     },
     c: {
       id: "c",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Vijay Kumar",
       phoneNumber: "8968456734",
       qualification: "BCom CA",
@@ -53,7 +53,7 @@ const initialState: IFoundersSlice = {
     },
     d: {
       id: "d",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Kathiresan",
       phoneNumber: "8838461839",
       qualification: "BSc, Computer Science",
@@ -63,7 +63,7 @@ const initialState: IFoundersSlice = {
     },
     e: {
       id: "e",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Jeevanandham",
       phoneNumber: "9854367213",
       qualification: "B.Tech, Information Technology",
@@ -73,7 +73,7 @@ const initialState: IFoundersSlice = {
     },
     f: {
       id: "f",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Arockiyaraj Reddy",
       phoneNumber: "9945672156",
       qualification: "B.Tech, Computer Science",

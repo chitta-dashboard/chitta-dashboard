@@ -16,11 +16,19 @@ interface RightSectionProps {
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
   // const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+  const handleExportData = () => {
+    if (isSuccess) {
+      let resultData: farmerDetail[] = [];
+      farmersIdToExport.forEach((item) => resultData.push(farmersDetailsById[item]));
+      return resultData;
+    }
+  };
+  handleExportData();
   return (
     <S.RightSectionContainer>
       <S.DropdownStack>
@@ -30,7 +38,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
-        <ExportCSV name="Export Farmers" csvData={isSuccess ? Object.values(farmersDetailsById) : [] as farmerDetail[]} fileName="Farmers" />
+        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();

@@ -1,14 +1,14 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, encryptFile, ENDPOINTS, fileValidation } from "../../utils/constants";
 import { mdDetail } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { MD_DATA } from "./constant";
+import S from "./md-details-page.styled";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 import NerkathirLogo from "../../assets/images/logo.svg";
-import S from "./md-details-page.styled";
 
 interface Props {
   MdIdtoPrint?: number | string;
@@ -28,14 +28,6 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
-  // const getURL = (id: string) => {
-  //   let result = Object.values(isSuccess && (mdDetailsById as mdDetail[])).filter((item) => {
-  //     return item.id === id ? item.profile : null;
-  //   });
-  //   let data = result.length > 0 ? result[0]["profile"] : undefined;
-  //   return data;
-  // };
-
   const handleIconClick = (id: string) => {
     hiddenFileInput && hiddenFileInput.current.click();
     setUserId(id);
@@ -53,15 +45,14 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     element.value = "";
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (isSuccess) {
       if (!image) return;
       let user = mdDetailsById[userId];
-      user["profile"] = image;
-      editMdDetail({ editedData: user });
+      user["profile"] = await encryptFile(image, true);
       const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
       delete farmerEditData.farmerId;
-      editFarmer({ editedData: farmerEditData });
+      editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: user }) });
     }
   };
 

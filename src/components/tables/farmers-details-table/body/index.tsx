@@ -1,7 +1,7 @@
-import { useState, useEffect, FC, ReactElement } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, handleDataByPage, searchWord, sortObj } from "../../../../utils/constants";
-import { addFarmerDetails, farmerDetail, addFarmerId, setPageCount } from "../../../../utils/store/slice/farmerDetails";
+import { addFarmerDetails, farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll,setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import Loader from "../../../loader";
 import { useFetch } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
@@ -14,19 +14,11 @@ const Body = () => {
   const dispatch = useDispatch();
   const { formatChangeSuccess: isSuccess, result }: any = useFetch(ENDPOINTS.farmerDetails);
   const { data: farmersDetailsById } = result;
-  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleDataByPage(farmersDetailsById, currentPage)) : []);
+  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
+  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
+  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (isSuccess) {
-      const farmerId = Object.values(isSuccess && farmersDetailsById).map((item: any) => item.id);
-      isSuccess && dispatch(addFarmerId(farmerId));
-    }
-  }, [isSuccess, farmersDetailsById]);
-
   useEffect(() => {
     if (isSuccess && farmersList.length > 0) {
       setIsLoading(true);
@@ -37,15 +29,16 @@ const Body = () => {
     if (isSuccess) {
       setFarmersListGroup(
         groupFilter === "all"
-          ? Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[])
-          : Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[]).filter((list) => list.group === groupFilter),
+          ? Object.values(farmersDetailsById as farmerDetail[])
+          : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
-  }, [groupFilter, farmersDetailsById, isSuccess, currentPage]);
+  }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
+  //, farmersDetailsById, isSuccess, currentPage
 
   useEffect(() => {
     // isSuccess && setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
-    let result = isSuccess && Object.values(farmersDetailsById as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
     let updatedData = isSuccess && [...result];
     isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
     dispatch(setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length }));
@@ -57,7 +50,17 @@ const Body = () => {
 
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
+    let farmersId = farmersListSort.map((item) => item.id);
+    dispatch(setFarmersIdToExport(farmersId));
   }, [farmersListSort, isSuccess]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(checkBoxUnselectAll());
+      const farmerId = Object.values(isSuccess && farmersList).map((item: any) => item.id);
+      isSuccess && dispatch(addFarmerId(farmerId));
+    }
+  }, [isSuccess, farmersList]);
 
   return (
     <>

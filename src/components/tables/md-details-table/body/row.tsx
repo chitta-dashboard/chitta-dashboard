@@ -1,9 +1,7 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { mdDetail } from "../../../../utils/context/mdDetails";
-// import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
@@ -11,16 +9,19 @@ import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
+import { IAddMember } from ".";
 import CS from "../../../common-styles/commonStyles.styled";
+import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
-import S from "./body.styled";
 
 interface MdDetailsRowProps {
   user: mdDetail;
+  removeGroupMember: (id: string) => void;
+  addGroupMember: (data: IAddMember) => void;
 }
 
-const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
+const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, addGroupMember }) => {
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
@@ -72,10 +73,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     user["profile"] = await encryptFile(image, true);
-    editMdDetail({ editedData: user });
     const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
     delete farmerEditData.farmerId;
-    editFarmer({ editedData: farmerEditData });
+    editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: user }) });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -149,12 +149,12 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
                   addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
                 },
               });
-            editData && editMdDetail({ editedData: editData });
+            // editData && editMdDetail({ editedData: editData });
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editData && farmerEditData && editFarmer({ editedData: farmerEditData });
-            // editMode && user.farmerId && removeGroupMember(user.farmerId);
-            // editMode && addGroupMember(AddNewMember);
+            // editData && user.farmerId && removeGroupMember(user.farmerId);
+            // editData && addGroupMember({ id: editData?.farmerId, group: editData?.group });
+            editData && editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: editData }) });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);
