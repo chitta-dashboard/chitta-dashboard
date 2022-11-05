@@ -147,7 +147,7 @@ export const MessageStructured = (name: string, endPoint: string, action: "edit"
     [key: string]: string;
   } = {
     ceo: "ceo",
-    resolution: "Resolution",
+    resolutions: "Resolution",
     farmerDetails: "Farmer",
     farmerGroup: "Farmer Group",
     mdDetails: "Md",
@@ -258,7 +258,7 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
-  notification:"notification",
+  notification: "notification",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {
