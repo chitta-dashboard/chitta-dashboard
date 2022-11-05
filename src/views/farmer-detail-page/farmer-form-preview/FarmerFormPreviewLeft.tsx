@@ -10,7 +10,7 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
+import { decryptText, ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { useDelete, useFetch } from "../../../utils/hooks/query";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
@@ -172,7 +172,10 @@ const FarmerFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.FarmerImgContainer>
-              <S.FarmerImg src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : NerkathirUser} alt="profie-picture" />
+              <S.FarmerImg
+                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                alt="profie-picture"
+              />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
