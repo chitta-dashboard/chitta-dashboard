@@ -10,13 +10,13 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
+import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useFetch } from "../../../utils/hooks/query";
+import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
@@ -27,6 +27,7 @@ const FarmerFormPreviewLeft = () => {
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
 
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
@@ -76,16 +77,13 @@ const FarmerFormPreviewLeft = () => {
     element.value = "";
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    let result = Object.values(farmersDetailsById as farmerDetail[]).filter((item) => {
-      return item.id === userId;
-    });
-    result[0]["profile"] = image as any;
-    dispatch(editFarmerDetail({ ...result[0] }));
+    const encryptedBase64 = await encryptFile(image, true);
+    mutateEdit({ editedData: { ...farmersDetailsById[userId], profile: encryptedBase64 } });
     const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
     if (getMdData?.farmerId) {
-      getMdData["profile"] = image;
+      // getMdData["profile"] = encryptedBase64;
     }
   };
 
@@ -173,7 +171,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FormHeading>
             <S.FarmerImgContainer>
               <S.FarmerImg
-                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : placeHolderImg}
                 alt="profie-picture"
               />
               <S.EditBox
