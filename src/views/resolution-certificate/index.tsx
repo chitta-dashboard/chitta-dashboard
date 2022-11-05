@@ -45,7 +45,6 @@ const ResolutionCertificatePage = () => {
         id: resolutionId,
         successCb: () => {
           navigate(-1);
-          console.log("deleted");
           addNotification({
             id: "delete" + resolutionId,
             message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
