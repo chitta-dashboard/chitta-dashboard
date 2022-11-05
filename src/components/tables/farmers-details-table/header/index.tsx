@@ -16,7 +16,7 @@ const Header = () => {
             onChange={() => {
               dispatch(checkboxSelectAll());
             }}
-            checked={selectedFarmers.length === farmerId.length}
+            checked={selectedFarmers.length === farmerId.length && selectedFarmers.length !== 0}
           />
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
@@ -31,7 +31,7 @@ const Header = () => {
               onChange={() => {
                 dispatch(checkboxSelectAll());
               }}
-              // checked={Object.values(selectedFarmers).length === Object.values(farmersDetailsById).length}
+              checked={selectedFarmers.length === farmerId.length && selectedFarmers.length !== 0}
             />
           </Stack>
           <Stack>Farmers Details</Stack>

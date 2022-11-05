@@ -33,7 +33,7 @@ namespace S {
     width: ".3rem",
     height: "1rem",
     marginLeft: ".5rem",
-    borderRadius: "50%",
+    // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
     animation: `${load} 0.5s ease-in-out infinite`,
   }));
@@ -42,7 +42,7 @@ namespace S {
     width: ".3rem",
     height: "1rem",
     margin: "0 .5rem 0 .5rem",
-    borderRadius: "50%",
+    // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
     animation: `${load} 0.5s ease-in-out 0.25s infinite`,
   }));
@@ -50,7 +50,7 @@ namespace S {
   export const LoaderParticle3 = styled("span")(({ theme }) => ({
     width: ".3rem",
     height: "1rem",
-    borderRadius: "50%",
+    // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
     animation: `${load} 0.5s ease-in-out infinite`,
   }));
