@@ -7,10 +7,10 @@ import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDe
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
-import { S } from "./farmerDetailPage.styled";
-import NerkathirUser from "../../assets/images/nerkathir-user.svg";
+import placeHolderImg from "../../assets/images/profile-placeholder.jpg";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
+import { S } from "./farmerDetailPage.styled";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;
@@ -93,7 +93,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
                   <img
-                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : placeHolderImg}
                     alt="nerkathir-user"
                   />
                   <S.EditBox
