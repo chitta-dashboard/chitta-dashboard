@@ -8,8 +8,9 @@ import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
 import { useFetch } from "../../utils/hooks/query";
 import { S } from "./farmerDetailPage.styled";
-import placeHolderImg from "../../assets/images/profile-placeholder.jpg";
+import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import NerkathirLogo from "../../assets/images/logo.svg";
+import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;
@@ -65,7 +66,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
           .map((user) => (
             <S.FarmersDetailsContent ref={ref} key={user.id}>
               <S.FarmersDetailsHeader>
-                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : NerkathirLogo} alt="nerkathir-logo" />
+                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : profilePlaceholder} alt="nerkathir-logo" />
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (
@@ -92,7 +93,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
                   <img
-                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : placeHolderImg}
+                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
                     alt="nerkathir-user"
                   />
                   <S.EditBox
