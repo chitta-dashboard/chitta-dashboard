@@ -7,6 +7,7 @@ import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { Founders } from "../../../utils/context/founders";
 import { decryptText } from "../../../utils/constants";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./idCardBody.styled";
 
 interface Props {
@@ -21,7 +22,7 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />
       <S.IdCardBodyWrapper>
-        <S.IdImage src={decryptText(data?.profile as string)} alt="id-photo" />
+        <S.IdImage src={data?.profile ? decryptText(data?.profile as string) : placeHolderImg} alt="id-photo" />
         <S.MiddleBox>
           <S.IdDetailsWrapper>
             <S.DescriptionBox>

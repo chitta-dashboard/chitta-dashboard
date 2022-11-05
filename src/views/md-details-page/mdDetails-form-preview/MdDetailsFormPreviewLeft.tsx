@@ -15,9 +15,9 @@ import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
+import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { S } from "./mdDetails-form-preview.styled";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 const MdFormPreviewLeft = () => {
   const {
@@ -163,7 +163,7 @@ const MdFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.MdImgContainer>
-              <S.MdImg src={user.profile ? decryptText(user.profile) : placeHolderImg} alt="profie-picture" />
+              <S.MdImg src={user.profile ? decryptText(user.profile) : profilePlaceholder} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
