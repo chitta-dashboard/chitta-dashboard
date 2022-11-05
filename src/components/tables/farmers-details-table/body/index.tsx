@@ -8,20 +8,16 @@ import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
-type BodyPropsType = {
-  page: number;
-};
-
-const Body: FC<BodyPropsType> = ({ page }) => {
+const Body = () => {
   // const { farmersDetailsById: farmersDetailsById, searchFilter, sortFilter, groupFilter } = useFarmerDetailsContext();
-  const { searchFilter, sortFilter, groupFilter } = useSelector((state: any) => state.farmerDetails);
+  const { searchFilter, sortFilter, groupFilter, currentPage } = useSelector((state: any) => state.farmerDetails);
   const dispatch = useDispatch();
   const { formatChangeSuccess: isSuccess, result }: any = useFetch(ENDPOINTS.farmerDetails);
   const { data: farmersDetailsById } = result;
   const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
   const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>(isSuccess ? Object.values(farmersDetailsById) : []);
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleDataByPage(farmersDetailsById, page)) : []);
+  const [farmersList, setFarmersList] = useState<farmerDetail[]>(isSuccess ? Object.values(handleDataByPage(farmersDetailsById, currentPage)) : []);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -41,17 +37,18 @@ const Body: FC<BodyPropsType> = ({ page }) => {
     if (isSuccess) {
       setFarmersListGroup(
         groupFilter === "all"
-          ? Object.values(handleDataByPage(farmersDetailsById, page) as farmerDetail[])
-          : Object.values(handleDataByPage(farmersDetailsById, page) as farmerDetail[]).filter((list) => list.group === groupFilter),
+          ? Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[])
+          : Object.values(handleDataByPage(farmersDetailsById, currentPage) as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
-  }, [groupFilter, farmersDetailsById, isSuccess, page]);
+  }, [groupFilter, farmersDetailsById, isSuccess, currentPage]);
 
   useEffect(() => {
     // isSuccess && setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
     let result = isSuccess && Object.values(farmersDetailsById as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
-    isSuccess && setFarmersListSearch(result.splice((page - 1) * 25, 25));
-    dispatch(setPageCount(Math.ceil(result.length / 25)+1));
+    let updatedData = isSuccess && [...result];
+    isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
+    dispatch(setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length }));
   }, [searchFilter, farmersListGroup, isSuccess]);
 
   useEffect(() => {
