@@ -4,7 +4,7 @@ import { useAuthContext } from "../../../utils/context/auth";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { useFetch } from "../../../utils/hooks/query";
 import { MD_DATA } from "../constant";
-import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
+import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { ENDPOINTS } from "../../../utils/constants";
 import { decryptText } from "../../../utils/constants";
 import { S } from "./mdDetails-form-preview.styled";

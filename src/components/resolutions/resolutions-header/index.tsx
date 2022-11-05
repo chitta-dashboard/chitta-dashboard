@@ -4,8 +4,9 @@ import IconWrapper from "../../../utils/iconWrapper";
 import ResolutionModal from "../../modals/resolution-modal";
 import { changeTab } from "../../../utils/store/slice/resolution";
 import { RootState } from "../../../utils/store";
-import { ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
 import { useAdd, useFetch } from "../../../utils/hooks/query";
+import { useAuthContext } from "../../../utils/context/auth";
 import S from "./resolutionsHeader.styled";
 
 const ResolutionsHeader: FC = () => {
@@ -17,6 +18,7 @@ const ResolutionsHeader: FC = () => {
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const { mutate } = useAdd(ENDPOINTS.resolutions);
+  const { addNotification } = useAuthContext();
 
   return (
     <>
@@ -32,7 +34,23 @@ const ResolutionsHeader: FC = () => {
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>
       </S.Header>
-      {modalOpen && <ResolutionModal openModal={true} handleClose={() => setModalOpen(false)} cb={(data) => mutate({ data: data })} />}
+      {modalOpen && (
+        <ResolutionModal
+          openModal={true}
+          handleClose={() => setModalOpen(false)}
+          cb={(data) =>
+            mutate({
+              data: data,
+              successCb: () => {
+                addNotification({
+                  id: "add" + data.id,
+                  message: MessageStructured(data.groupTitle, ENDPOINTS.resolutions, "add"),
+                });
+              },
+            })
+          }
+        />
+      )}
     </>
   );
 };

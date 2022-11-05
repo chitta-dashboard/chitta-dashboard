@@ -32,7 +32,7 @@ namespace S {
     justifyContent: "space-between",
     [theme.breakpoints.down("lg")]: {
       gap: "0.75rem",
-      minHeight: "13.125rem",
+      minHeight: "13.925rem",
       width: "23.75rem",
       minWidth: "20.625rem",
       padding: "1rem",
