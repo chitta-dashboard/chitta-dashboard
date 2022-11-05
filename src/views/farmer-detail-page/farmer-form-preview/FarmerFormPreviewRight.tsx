@@ -4,7 +4,7 @@ import { useAuthContext } from "../../../utils/context/auth";
 import { FARMER_DATA } from "../constant";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import nerkathir_transparent_background from "../../../assets/images/nerkathir-background-transparent.svg";
+import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { decryptText } from "../../../utils/constants";
 import { S } from "./farmer-form-preview.styled";

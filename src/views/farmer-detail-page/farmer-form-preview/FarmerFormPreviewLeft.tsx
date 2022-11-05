@@ -16,8 +16,8 @@ import { useDelete, useFetch } from "../../../utils/hooks/query";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import NerkathirUser from "../../../assets/images/nerkathir-user.svg";
 import { S } from "./farmer-form-preview.styled";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
@@ -173,7 +173,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FormHeading>
             <S.FarmerImgContainer>
               <S.FarmerImg
-                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : placeHolderImg}
                 alt="profie-picture"
               />
               <S.EditBox
