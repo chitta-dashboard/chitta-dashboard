@@ -6,7 +6,7 @@ import { useAuthContext } from "../../utils/context/auth";
 import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { MD_DATA } from "./constant";
-import NerkathirUser from "../../assets/images/nerkathir-user.svg";
+import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import S from "./md-details-page.styled";
 
@@ -99,7 +99,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
                 </S.HeaderText2>
               </S.HeaderTextContainer>
               <S.UserImgContainer>
-                <img src={user.profile ? decryptText(user.profile) : NerkathirUser} alt="nerkathir-user" />
+                <img src={user.profile ? decryptText(user.profile) : profilePlaceholder} alt="nerkathir-user" />
                 <S.EditBox
                   onClick={(e) => {
                     e.stopPropagation();
