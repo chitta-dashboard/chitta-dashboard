@@ -9,9 +9,8 @@ import { IResolution } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
-import { ENDPOINTS } from "../../utils/constants";
+import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import profile from "../../assets/images/Founder.png";
 import { S } from "./resolutionCertificate.styled";
 import Loader from "../../components/loader";
 
@@ -46,10 +45,10 @@ const ResolutionCertificatePage = () => {
         id: resolutionId,
         successCb: () => {
           navigate(-1);
+          console.log("deleted");
           addNotification({
-            id: "edit" + resolutionId,
-            image: profile,
-            message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been deleted.`,
+            id: "delete" + resolutionId,
+            message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
         },
       });
@@ -144,8 +143,7 @@ const ResolutionCertificatePage = () => {
               successCb: () => {
                 addNotification({
                   id: "edit" + resolutionId,
-                  image: profile,
-                  message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been edited.`,
+                  message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
                 });
               },
             });
