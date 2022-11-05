@@ -50,6 +50,7 @@ export namespace S {
   export const NerkathirLogo = styled("img")({
     borderRadius: "50%",
     height: "7.1875rem",
+    maxWidth: "7.1875rem",
   });
 
   export const HeaderTextContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -74,9 +75,10 @@ export namespace S {
 
   export const UserImgContainer = styled(Box)({
     height: "10rem",
+    width: "9rem",
     borderRadius: "1.25rem",
     overflow: "hidden",
-    marginRight: "1.875rem",
+    marginRight: "1.5625rem",
     position: "relative",
     cursor: "pointer",
     img: {
