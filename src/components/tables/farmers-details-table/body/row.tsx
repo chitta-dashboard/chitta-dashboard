@@ -38,6 +38,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
   const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: mutateEditMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mutateDeleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
@@ -113,12 +114,16 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const encryptedBase64 = await encryptFile(image, true);
-    mutateEdit({ editedData: { ...user, profile: encryptedBase64 } });
-    // let getMdData = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id);
-    let getMdData = mdDetailsById[user.id];
-    if (getMdData?.farmerId) {
-      getMdData["profile"] = image;
-    }
+    mutateEdit({
+      editedData: { ...user, profile: encryptedBase64 },
+      successCb: () => {
+        let getMdData = mdDetailsById[user.id];
+        if (getMdData?.farmerId) {
+          getMdData["profile"] = encryptedBase64;
+          mutateEditMdDetail({ editedData: { ...getMdData } });
+        }
+      },
+    });
   };
 
   return (
