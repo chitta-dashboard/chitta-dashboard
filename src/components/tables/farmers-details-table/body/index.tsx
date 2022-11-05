@@ -19,7 +19,6 @@ const Body = () => {
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     if (isSuccess && farmersList.length > 0) {
       setIsLoading(true);
@@ -34,7 +33,7 @@ const Body = () => {
           : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
-  }, [groupFilter, isSuccess, currentPage]);
+  }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
   //, farmersDetailsById, isSuccess, currentPage
 
   useEffect(() => {

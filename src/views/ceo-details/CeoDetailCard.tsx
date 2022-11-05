@@ -76,7 +76,7 @@ const CeoDetailsCard = ({ user }: Props) => {
               <S.CeoDataLeft>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
-                    src={ceoDetailsById[user.id].profile ? decryptText(ceoDetailsById[user.id].profile) : placeHolderImg}
+                    src={ceoDetailsById[user.id]?.profile ? decryptText(ceoDetailsById[user.id]?.profile) : placeHolderImg}
                     alt="profile picture"
                   />
                   <S.EditBox
