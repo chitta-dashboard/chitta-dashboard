@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
-import profileImg from "../../assets/images/nerkathir-user.svg";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 export interface IMdDetails {
   id: string;
@@ -45,7 +45,7 @@ const initialState: IMdDetailsSlice = {
       id: "a",
       farmerId: "a",
       membershipId: "NER-FPC-2",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Arokiya",
       phoneNumber: "8610010875",
       group: "விவசாயிகள் சங்கம்-1",
@@ -73,7 +73,7 @@ const initialState: IMdDetailsSlice = {
       id: "b",
       farmerId: "b",
       membershipId: "NER-FPC-2",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Sethu Ravichandran",
       phoneNumber: "8968456734",
       group: "விவசாயிகள் சங்கம்-3",
@@ -101,7 +101,7 @@ const initialState: IMdDetailsSlice = {
       id: "c",
       farmerId: "c",
       membershipId: "NER-FPC-2",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Vijay",
       phoneNumber: "9001237654",
       group: "விவசாயிகள் சங்கம்-3",
@@ -129,7 +129,7 @@ const initialState: IMdDetailsSlice = {
       id: "d",
       farmerId: "d",
       membershipId: "NER-FPC-2",
-      profile: profileImg,
+      profile: placeHolderImg,
       name: "Raj",
       phoneNumber: "7845673879",
       group: "விவசாயிகள் சங்கம்-1",
