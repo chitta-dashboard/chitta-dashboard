@@ -16,8 +16,8 @@ import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
+import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
@@ -28,6 +28,7 @@ const FarmerFormPreviewLeft = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: mutateEditMdDetail } = useEdit(ENDPOINTS.mdDetails);
 
   const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
@@ -80,11 +81,16 @@ const FarmerFormPreviewLeft = () => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const encryptedBase64 = await encryptFile(image, true);
-    mutateEdit({ editedData: { ...farmersDetailsById[userId], profile: encryptedBase64 } });
-    const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
-    if (getMdData?.farmerId) {
-      // getMdData["profile"] = encryptedBase64;
-    }
+    mutateEdit({
+      editedData: { ...farmersDetailsById[userId], profile: encryptedBase64 },
+      successCb: () => {
+        const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
+        if (getMdData?.farmerId) {
+          getMdData["profile"] = encryptedBase64;
+          mutateEditMdDetail({ editedData: { ...getMdData } });
+        }
+      },
+    });
   };
 
   //Update FarmerDetail Handler
@@ -171,7 +177,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FormHeading>
             <S.FarmerImgContainer>
               <S.FarmerImg
-                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : placeHolderImg}
+                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
                 alt="profie-picture"
               />
               <S.EditBox
