@@ -93,23 +93,33 @@ export const useEdit = (endpoint: Endpoints) => {
 export const useDelete = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
-  let deleteId: string;
-  let successCallback: () => void;
 
   return useMutation(
-    ({ id, successCb }: { id: string; successCb?: () => void }) => {
+    async ({ id, successCb }: { id: string | Array<string>; successCb?: () => void }) => {
       loader({ openLoader: true, loaderText: "Deleting" });
 
-      deleteId = id;
-      successCallback = successCb ? successCb : () => {};
-      return axios.delete(`http://localhost:5001/${endpoint}/${id}`);
+      if (Array.isArray(id)) {
+        for (let i = 0; i < id.length; i++) {
+          await axios.delete(`http://localhost:5001/${endpoint}/${id[i]}`);
+        }
+        return { deleteId: id, successCb };
+      } else {
+        return axios.delete(`http://localhost:5001/${endpoint}/${id}`).then((res) => ({ deleteId: id, successCb }));
+      }
     },
     {
-      onSuccess: (data) => {
+      onSuccess: ({ deleteId, successCb }) => {
         let updatedData = { ...result.data };
-        delete updatedData[deleteId];
+        delete updatedData[deleteId as string];
+
+        if (Array.isArray(deleteId)) {
+          deleteId.forEach((id) => delete updatedData[id]);
+        } else {
+          delete updatedData[deleteId];
+        }
+
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCallback();
+        successCb && successCb();
       },
       onSettled: () => {
         loader({ openLoader: false });

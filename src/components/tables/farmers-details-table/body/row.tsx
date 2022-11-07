@@ -37,7 +37,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: editMdDetails } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmerDetails } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mutateDeleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
@@ -113,12 +114,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const encryptedBase64 = await encryptFile(image, true);
-    mutateEdit({ editedData: { ...user, profile: encryptedBase64 } });
-    // let getMdData = Object.values(mdDetailsById).find((data: mdDetail) => data.farmerId === user.id);
-    let getMdData = mdDetailsById[user.id];
-    if (getMdData?.farmerId) {
-      getMdData["profile"] = image;
-    }
+    editFarmerDetails({ editedData: { ...user, profile: encryptedBase64 } });
+    editMdDetails({ editedData: { ...user, profile: encryptedBase64, farmerId: user.id } });
   };
 
   return (
@@ -232,7 +229,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             handleClose={() => setConfirmModal(false)}
             yesAction={() => {
               // editData && dispatch(editFarmerDetail(editData));
-              editData?.farmerId && mutateEdit({ editedData: editData });
+              editData?.farmerId && editFarmerDetails({ editedData: editData });
               editMode && removeGroupMember(user.id);
               editMode && addGroupMember(AddNewMember);
               setEditMode(false);

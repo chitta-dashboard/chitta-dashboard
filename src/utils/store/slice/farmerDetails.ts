@@ -47,7 +47,10 @@ interface farmerDetailsContextType {
   farmerId: selectedFarmer[];
   selectedFarmers: selectedFarmer[];
   groupFilter: string;
+  currentPage: number;
   pageCount: number;
+  totalPageCount: number;
+  farmersIdToExport: [];
 }
 
 const initialState: farmerDetailsContextType = {
@@ -58,7 +61,10 @@ const initialState: farmerDetailsContextType = {
   farmerId: [],
   selectedFarmers: [],
   groupFilter: DEFAULT_GROUP_FILTER,
+  currentPage: 1,
   pageCount: 0,
+  totalPageCount: 0,
+  farmersIdToExport: [],
 };
 
 const farmerDetailsSlice = createSlice({
@@ -119,8 +125,15 @@ const farmerDetailsSlice = createSlice({
       state.groupFilter = action.payload;
     },
 
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
     setPageCount: (state, action) => {
-      state.pageCount = action.payload;
+      state.pageCount = action.payload.pageCount;
+      state.totalPageCount = action.payload.totalPageCount;
+    },
+    setFarmersIdToExport: (state, action) => {
+      state.farmersIdToExport = action.payload;
     },
   },
 });
@@ -136,7 +149,9 @@ export const {
   setGroupFilter,
   checkBoxSelect,
   addFarmerId,
+  setCurrentPage,
   setPageCount,
+  setFarmersIdToExport,
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;

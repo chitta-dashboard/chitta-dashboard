@@ -36,13 +36,14 @@ namespace S {
   });
 
   export const BodyContainer = styled(Box)<{ isheight: number }>(({ isheight }) => ({
-    maxHeight: isheight ? "31rem" : "18.5rem",
+    maxHeight: isheight ? "496px" : "276px",
     overflowY: "auto",
     transition: "max-height 0.2s ease-in",
   }));
 
   export const BodyBox = styled(Box)(({ theme }) => ({
     display: "flex",
+    height: "92px",
     gap: "2rem",
     padding: "1rem 2rem",
     alignItems: "center",
