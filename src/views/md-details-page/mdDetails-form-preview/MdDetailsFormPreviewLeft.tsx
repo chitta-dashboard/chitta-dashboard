@@ -80,10 +80,9 @@ const MdFormPreviewLeft = () => {
     const encryptedBase64 = await encryptFile(image, true);
     let result = mdDetailsById[userId];
     result.profile = encryptedBase64;
-    editMdDetail({ editedData: result });
     const farmerEditData = { ...result, id: result.farmerId } as mdDetail;
     delete farmerEditData.farmerId;
-    editFarmer({ editedData: farmerEditData });
+    editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: result }) });
   };
 
   //Update MdDetail Handler

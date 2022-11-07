@@ -14979,13 +14979,7 @@
       "chairman": "option-1",
       "treasurer": "option-3",
       "secretary": "option-2",
-      "members": [
-        "1",
-        "4",
-        "5",
-        "7",
-        "8"
-      ]
+      "members": ["1", "4", "5", "7", "8"]
     },
     {
       "id": "2",
@@ -15003,13 +14997,7 @@
       "chairman": "option-3",
       "treasurer": "option-3",
       "secretary": "option-3",
-      "members": [
-        "2",
-        "3",
-        "6",
-        "9",
-        "10"
-      ]
+      "members": ["2", "3", "6", "9", "10"]
     }
   ],
   "founders": [
@@ -15082,16 +15070,8 @@
       "groupDescription": "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       "timestamp": "Mar 16,2022, 10:30 AM",
       "creationTime": "2022-03-16T10:30",
-      "presenter": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ],
-      "participator": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ]
+      "presenter": ["person 1", "person 2", "person 3"],
+      "participator": ["person 1", "person 2", "person 3"]
     },
     {
       "id": "3c0bc080-4e1c-40e5-86d2-9f1225287124",
@@ -15100,16 +15080,8 @@
       "groupDescription": "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent",
       "timestamp": "Mar 16,2022, 10:30 AM",
       "creationTime": "2022-03-16T10:29",
-      "presenter": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ],
-      "participator": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ]
+      "presenter": ["person 1", "person 2", "person 3"],
+      "participator": ["person 1", "person 2", "person 3"]
     },
     {
       "id": "05ee8b0c-cbcb-45a9-bb3b-0866077b8374",
@@ -15118,16 +15090,8 @@
       "groupDescription": "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet ingilla urna porttitor rhoncus dolor purus non enim praesent",
       "timestamp": "Mar 16,2022, 10:30 AM",
       "creationTime": "2022-03-16T10:28",
-      "presenter": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ],
-      "participator": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ]
+      "presenter": ["person 1", "person 2", "person 3"],
+      "participator": ["person 1", "person 2", "person 3"]
     },
     {
       "id": "2f81d92f-daa4-47bc-a937-65009ef33c78",
@@ -15136,16 +15100,8 @@
       "groupDescription": "Certified true copy of the resolution passed at the meeeting of the board of directors of nerkathir farmer producer company limited held on 16/03/22 at chennai, elit ut aliquam purus sit amet luctus venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non enim praesent elementum facilisi",
       "timestamp": "Mar 16,2022, 10:30 AM",
       "creationTime": "2022-03-16T10:27",
-      "presenter": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ],
-      "participator": [
-        "person 1",
-        "person 2",
-        "person 3"
-      ]
+      "presenter": ["person 1", "person 2", "person 3"],
+      "participator": ["person 1", "person 2", "person 3"]
     }
   ],
   "notification": []
