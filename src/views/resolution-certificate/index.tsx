@@ -11,8 +11,8 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import { S } from "./resolutionCertificate.styled";
 import Loader from "../../components/loader";
+import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);

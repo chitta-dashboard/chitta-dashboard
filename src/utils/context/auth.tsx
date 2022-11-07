@@ -2,6 +2,7 @@ import { createContext, FC, useContext, useState, useReducer } from "react";
 import { adminFormInputs } from "../../views/admin-panel";
 import { useAdd, useFetch, useDelete } from "../hooks/query";
 import { ENDPOINTS } from "../constants";
+import Toast from "../toast";
 
 //Action type
 const ADD_NOTIFICATION = "ADD_NOTIFICATION";
@@ -121,11 +122,19 @@ const AuthContextProvider: FC<Props> = (props) => {
   const login = () => {
     window.localStorage.setItem("isAuthenticated", "true");
     setIsAuthenticated(true);
+    Toast({
+      message: "Login successfull.",
+      type: "success",
+    });
   };
 
   const logout = () => {
     window.localStorage.removeItem("isAuthenticated");
     setIsAuthenticated(false);
+    Toast({
+      message: "Logout successfull.",
+      type: "success",
+    });
   };
 
   const addNotification = (data: Notification) => {
