@@ -12,6 +12,7 @@ import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../components/loader";
 import S from "./ceo-details.styled";
+import Toast from "../../utils/toast";
 
 interface Props {
   user: ceoDetail;
@@ -159,6 +160,10 @@ const CeoDetailsCard = ({ user }: Props) => {
               id: user.id,
               successCb: () => {
                 addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                Toast({ message: "CEO deleted successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             });
           }}
@@ -176,7 +181,15 @@ const CeoDetailsCard = ({ user }: Props) => {
             setOpenConfirmationModal(null);
           }}
           yesAction={() => {
-            ceoEdit({ editedData: openConfirmationModal });
+            ceoEdit({
+              editedData: openConfirmationModal,
+              successCb: () => {
+                Toast({ message: "CEO updated successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+              },
+            });
             setOpenConfirmationModal(null);
           }}
         />

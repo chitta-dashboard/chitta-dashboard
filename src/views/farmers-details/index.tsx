@@ -10,12 +10,14 @@ import FarmersDetailsTablePageHeader from "../../components/table-page-header/fa
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
+import Loader from "../../components/loader";
+import { useAdd, useFetch } from "../../utils/hooks/query";
 import S from "./farmersDetails.styled";
-import { useAdd } from "../../utils/hooks/query";
 
 const FarmersDetails = () => {
   // const { addFarmerDetail, setSearchFilter, sortFilter, setSortFilter } = useFarmerDetailsContext();
   const { sortFilter } = useSelector((state: RootState) => state.farmerDetails);
+  const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
   const { addGroupMember } = useFarmersGroupContext();
   const dispatch = useDispatch();
@@ -48,18 +50,26 @@ const FarmersDetails = () => {
 
   return (
     <>
-      <S.FarmersDetailsContainer>
-        <FarmersDetailsTablePageHeader
-          addModalHandler={addModalHandler}
-          searchHandler={handleSearchInput}
-          sortFilter={sortFilter}
-          sortHandler={(sortValue) => dispatch(setSortFilter(sortValue))}
-          shareAmountModalHandler={shareAmountModalHandler}
-        />
-        <FarmersDetailsTable />
-      </S.FarmersDetailsContainer>
-      <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
-      <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={(data) => mutate({ data: data })} />
+      {result.isFetching ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <>
+          <S.FarmersDetailsContainer>
+            <FarmersDetailsTablePageHeader
+              addModalHandler={addModalHandler}
+              searchHandler={handleSearchInput}
+              sortFilter={sortFilter}
+              sortHandler={(sortValue) => dispatch(setSortFilter(sortValue))}
+              shareAmountModalHandler={shareAmountModalHandler}
+            />
+            <FarmersDetailsTable />
+          </S.FarmersDetailsContainer>
+          <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
+          <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={(data) => mutate({ data: data })} />
+        </>
+      )}
     </>
   );
 };
