@@ -3,9 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
+import { Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
-import Toast from "../../toast";
 
 interface IOptionalCallback {
   successCb?: (data?: any) => void;
@@ -75,11 +74,9 @@ export const useAdd = (endpoint: Endpoints) => {
           updatedData = { ...result.data, [data.id]: data };
         }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request successful.", type: "success" });
         successCallback();
       },
       onError: () => {
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request failed, please try again.", type: "error" });
         errorCallback();
       },
       onSettled: () => {
@@ -107,11 +104,9 @@ export const useEdit = (endpoint: Endpoints) => {
       onSuccess: (data) => {
         const updatedData = { ...result.data, [data.id]: data };
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request successful.", type: "success" });
         successCallback();
       },
       onError: () => {
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request failed, please try again.", type: "error" });
         errorCallback();
       },
       onSettled: () => {
@@ -154,11 +149,9 @@ export const useDelete = (endpoint: Endpoints) => {
         }
 
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request successful.", type: "success" });
         successCallback();
       },
       onError: () => {
-        if (endpoint !== ENDPOINTS.notification) Toast({ message: "Request failed, please try again.", type: "error" });
         errorCallback();
       },
       onSettled: () => {
