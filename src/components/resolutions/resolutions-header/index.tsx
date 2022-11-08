@@ -7,6 +7,7 @@ import { RootState } from "../../../utils/store";
 import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
 import { useAdd, useFetch } from "../../../utils/hooks/query";
 import { useAuthContext } from "../../../utils/context/auth";
+import Toast from "../../../utils/toast";
 import S from "./resolutionsHeader.styled";
 
 const ResolutionsHeader: FC = () => {
@@ -46,6 +47,10 @@ const ResolutionsHeader: FC = () => {
                   id: "add" + data.id,
                   message: MessageStructured(data.groupTitle, ENDPOINTS.resolutions, "add"),
                 });
+                Toast({ message: "Resolution added successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             })
           }

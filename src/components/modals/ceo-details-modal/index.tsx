@@ -10,6 +10,7 @@ import ModalFooter from "../../custom-modal/footer";
 import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
 import { useFetch } from "../../../utils/hooks/query";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -47,7 +48,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: decryptText(userData?.profile),
+        profile: decryptText(userData?.profile) || placeHolderImg,
       });
     }
 
