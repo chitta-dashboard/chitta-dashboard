@@ -1,22 +1,14 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ENDPOINTS, handleDataByPage, searchWord, sortObj } from "../../../../utils/constants";
-import {
-  addFarmerDetails,
-  farmerDetail,
-  addFarmerId,
-  setPageCount,
-  checkBoxUnselectAll,
-  setFarmersIdToExport,
-} from "../../../../utils/store/slice/farmerDetails";
-import Loader from "../../../loader";
+import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
+import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { useFetch } from "../../../../utils/hooks/query";
+import Loader from "../../../loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  // const { farmersDetailsById: farmersDetailsById, searchFilter, sortFilter, groupFilter } = useFarmerDetailsContext();
   const { searchFilter, sortFilter, groupFilter, currentPage } = useSelector((state: any) => state.farmerDetails);
   const dispatch = useDispatch();
   const {
@@ -29,6 +21,7 @@ const Body = () => {
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
 
+
   // farmer group filter for farmer detail table
   useEffect(() => {
     if (isSuccess) {
@@ -39,10 +32,8 @@ const Body = () => {
       );
     }
   }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
-  //, farmersDetailsById, isSuccess, currentPage
 
   useEffect(() => {
-    // isSuccess && setFarmersListSearch(farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter)));
     let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
