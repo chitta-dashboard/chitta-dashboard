@@ -7,6 +7,7 @@ import { IResolution } from "../../../utils/store/slice/resolution";
 import leafLine from "../../../assets/images/leafLine.svg";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../loader";
+import Toast from "../../../utils/toast";
 import S from "./resolutionsTree.styled";
 
 interface Props {
@@ -17,8 +18,8 @@ interface Props {
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const {
     formatChangeSuccess,
-    result: { data: resolutionsObj },
-  } = useFetch(ENDPOINTS.resolutions);
+    result: { data: resolutionsObj, isError },
+  } = useFetch(ENDPOINTS.resolutions, { errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error" }) });
 
   const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
   const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;
@@ -147,8 +148,10 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
       </S.ResolutionsTreeBox>
       {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
-  ) : (
+  ) : !isError ? (
     <Loader />
+  ) : (
+    <S.NodataMessage>Something wrong, cannot reach the server.</S.NodataMessage>
   );
 };
 

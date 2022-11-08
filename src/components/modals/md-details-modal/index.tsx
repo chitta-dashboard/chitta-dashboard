@@ -10,6 +10,7 @@ import ModalBody from "../../custom-modal/body";
 import CustomModal from "../../custom-modal";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -47,7 +48,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         signature: "",
-        profile: decryptText(userData?.profile as string),
+        profile: decryptText(userData?.profile as string) || placeHolderImg,
       });
     }
 
