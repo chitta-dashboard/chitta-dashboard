@@ -16,6 +16,7 @@ import { dateFormat, ENDPOINTS, encryptFile, decryptText } from "../../../utils/
 import { useFetch } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
 
 interface CustomProps {
@@ -181,7 +182,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
-        profile: decryptText(farmerData?.profile),
+        profile: decryptText(farmerData?.profile) || placeHolderImg,
       });
 
       form2Reset({

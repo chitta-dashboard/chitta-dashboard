@@ -1,18 +1,17 @@
 import { FC } from "react";
 import { GlobalStyles } from "@mui/material";
+import "react-toastify/dist/ReactToastify.min.css";
 import { Navigate } from "react-router-dom";
 import Header from "./header";
 import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
 import { useAuthContext } from "../../utils/context/auth";
-import S from "./Layout.styled";
 import APIloader from "../../components/api-loader";
+import S from "./Layout.styled";
 
 const Layout: FC = () => {
   const { openLoader, loaderText, isAuthenticated } = useAuthContext();
-
-
 
   return (
     <S.Layout>
@@ -44,9 +43,7 @@ const Layout: FC = () => {
           },
         })}
       />
-
       {openLoader ? <APIloader loaderText={loaderText} /> : <></>}
-
       {isAuthenticated ? (
         <>
           <Header />
