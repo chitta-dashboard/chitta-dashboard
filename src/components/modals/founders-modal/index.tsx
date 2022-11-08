@@ -12,6 +12,7 @@ import { dateFormat } from "../../../utils/constants";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
 import { useFetch } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -52,7 +53,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: decryptText(userData?.profile), // temporary, until sbucket integration
+        profile: decryptText(userData?.profile) || placeHolderImg,
         joinDate: userData?.joinDate,
       });
     }

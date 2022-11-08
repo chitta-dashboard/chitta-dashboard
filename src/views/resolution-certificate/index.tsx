@@ -11,8 +11,9 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import { S } from "./resolutionCertificate.styled";
 import Loader from "../../components/loader";
+import Toast from "../../utils/toast";
+import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
@@ -49,6 +50,10 @@ const ResolutionCertificatePage = () => {
             id: "delete" + resolutionId,
             message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
+          Toast({ message: "Resolution deleted successfully.", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed, please try again.", type: "error" });
         },
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -144,6 +149,10 @@ const ResolutionCertificatePage = () => {
                   id: "edit" + resolutionId,
                   message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
                 });
+                Toast({ message: "Resolution edited successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             });
             setConfirmation(false);
