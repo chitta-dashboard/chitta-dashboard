@@ -2,7 +2,7 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
@@ -73,8 +73,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptFile(image, true);
+    user["profile"] = await encryptText(compressedBase64);
     // editFounder({ ...user });
     founderMutateUpdate({ editedData: user });
   };

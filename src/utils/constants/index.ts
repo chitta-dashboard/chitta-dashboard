@@ -1,5 +1,7 @@
-import {lazy } from "react";
+import { lazy } from "react";
 import CryptoJS from "crypto-js";
+import Compress from "react-image-file-resizer";
+
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));
 const MDDetails = lazy(() => import("../../views/md-details"));
@@ -336,3 +338,18 @@ export const RouterDefaults = [
     component: NotFound,
   },
 ];
+export const imageCompressor = (file: any) =>
+  new Promise<string>((resolve) => {
+    Compress.imageFileResizer(
+      file,
+      300,
+      300,
+      "jpeg",
+      80,
+      0,
+      (uri) => {
+        resolve(uri as string);
+      },
+      "base64",
+    );
+  });
