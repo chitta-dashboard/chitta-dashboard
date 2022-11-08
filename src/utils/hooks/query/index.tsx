@@ -15,7 +15,7 @@ export const useFetch = (endpoint: Endpoints, cb?: IOptionalCallback) => {
   const result = useQuery({
     queryKey: [`${endpoint}-fetch`],
     queryFn: async () => {
-      const res = await fetch(`http://localhost:5001/${endpoint}`);
+      const res = await fetch(`${process.env.REACT_APP_API_KEY}/${endpoint}`);
       if (res.status >= 200 && res.status < 400) {
         return res.json();
       }
@@ -58,11 +58,11 @@ export const useAdd = (endpoint: Endpoints) => {
 
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
-          await axios.post(`http://localhost:5001/${endpoint}/`, data[i]);
+          await axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data[i]);
         }
         return data;
       } else {
-        return axios.post(`http://localhost:5001/${endpoint}/`, data).then(() => data);
+        return axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data).then(() => data);
       }
     },
     {
@@ -98,7 +98,7 @@ export const useEdit = (endpoint: Endpoints) => {
       errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: "Updating" });
 
-      return axios.patch(`http://localhost:5001/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
     },
     {
       onSuccess: (data) => {
@@ -130,11 +130,11 @@ export const useDelete = (endpoint: Endpoints) => {
 
       if (Array.isArray(id)) {
         for (let i = 0; i < id.length; i++) {
-          await axios.delete(`http://localhost:5001/${endpoint}/${id[i]}`);
+          await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
         }
         return id;
       } else {
-        return axios.delete(`http://localhost:5001/${endpoint}/${id}`).then(() => id);
+        return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id}`).then(() => id);
       }
     },
     {
@@ -166,7 +166,7 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
     queryKey: [`${endpoint}-fetch-${page}`],
     queryFn: () => {
       return axios
-        .get(`http://localhost:5001/${endpoint}`, {
+        .get(`${process.env.REACT_APP_API_KEY}/${endpoint}`, {
           params: {
             _page: page,
             _limit: 10,
