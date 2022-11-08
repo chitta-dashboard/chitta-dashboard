@@ -20,6 +20,18 @@ namespace S {
       },
     },
   }));
+
+  export const DropdownStack = styled(Stack)(({ theme }) => ({
+    "& MuiInputBase-root": {
+      width: "100%",
+    },
+    [theme.breakpoints.down("lg")]: {
+      width: "52%",
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+    },
+  }));
 }
 
 export default S;
