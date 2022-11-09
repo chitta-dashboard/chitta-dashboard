@@ -235,7 +235,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
             yesAction={async () => {
               // editData && dispatch(editFarmerDetail(editData));
 
-              editData?.farmerId && editFarmerDetails({ editedData: editData });
+              editData && editFarmerDetails({ editedData: editData });
               // editMode && removeGroupMember(user.id);
               // editMode && addGroupMember(AddNewMember);
               setEditMode(false);
