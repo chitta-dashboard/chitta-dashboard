@@ -7,6 +7,7 @@ import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
 import { IResolution } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
+import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
@@ -61,58 +62,62 @@ const ResolutionCertificatePage = () => {
 
   return formatChangeSuccess ? (
     <>
-      <S.ResolutionCertificateMainContainer>
-        <S.CustomBackIcon onClick={() => navigate(-1)}>
-          <IconWrapper>back</IconWrapper>
-        </S.CustomBackIcon>
-        <S.CustomThreeDotsIcon
-          aria-describedby={"resolution-certificate-popover"}
-          ref={threeDotRef as RefObject<HTMLSpanElement>}
-          onClick={() => setPopoverOpen(true)}
-        >
-          <IconWrapper>three-dots</IconWrapper>
-        </S.CustomThreeDotsIcon>
-        <Popover
-          id={"resolution-certificate-popover"}
-          open={popoverOpen}
-          anchorEl={threeDotRef.current}
-          onClose={() => setPopoverOpen(false)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <S.CustomPopoverList
-            onClick={() => {
-              generateResolutionPDF();
-              setPopoverOpen(false);
+      {Object.keys(resolutions).includes(resolutionId as string) ? (
+        <S.ResolutionCertificateMainContainer>
+          <S.CustomBackIcon onClick={() => navigate(-1)}>
+            <IconWrapper>back</IconWrapper>
+          </S.CustomBackIcon>
+          <S.CustomThreeDotsIcon
+            aria-describedby={"resolution-certificate-popover"}
+            ref={threeDotRef as RefObject<HTMLSpanElement>}
+            onClick={() => setPopoverOpen(true)}
+          >
+            <IconWrapper>three-dots</IconWrapper>
+          </S.CustomThreeDotsIcon>
+          <Popover
+            id={"resolution-certificate-popover"}
+            open={popoverOpen}
+            anchorEl={threeDotRef.current}
+            onClose={() => setPopoverOpen(false)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
             }}
           >
-            Download
-          </S.CustomPopoverList>
-          <S.CustomPopoverList
-            onClick={() => {
-              setEdition(true);
-              setPopoverOpen(false);
-            }}
-          >
-            Edit
-          </S.CustomPopoverList>
-          <S.CustomPopoverList
-            onClick={() => {
-              setDeletion(true);
-              setPopoverOpen(false);
-            }}
-          >
-            Delete
-          </S.CustomPopoverList>
-        </Popover>
-        <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
-      </S.ResolutionCertificateMainContainer>
+            <S.CustomPopoverList
+              onClick={() => {
+                generateResolutionPDF();
+                setPopoverOpen(false);
+              }}
+            >
+              Download
+            </S.CustomPopoverList>
+            <S.CustomPopoverList
+              onClick={() => {
+                setEdition(true);
+                setPopoverOpen(false);
+              }}
+            >
+              Edit
+            </S.CustomPopoverList>
+            <S.CustomPopoverList
+              onClick={() => {
+                setDeletion(true);
+                setPopoverOpen(false);
+              }}
+            >
+              Delete
+            </S.CustomPopoverList>
+          </Popover>
+          <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
+        </S.ResolutionCertificateMainContainer>
+      ) : (
+        <ErrorPage />
+      )}
       {deletion && (
         <DeleteModal
           openModal={true}
