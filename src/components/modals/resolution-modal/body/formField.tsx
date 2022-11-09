@@ -3,12 +3,12 @@ import { Control, useWatch } from "react-hook-form";
 import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IResolutionFormInput } from "../../type/formInputs";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import Input from "../../../input-fields/input/input";
 import { useFetch } from "../../../../utils/hooks/query";
 import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
 import Loader from "../../../loader";
 import S from "./formField.styled";
+import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
 
 interface CustomProps {
   setValue: UseFormSetValue<IResolutionFormInput>;
@@ -19,9 +19,10 @@ interface CustomProps {
 }
 
 const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id = "" }) => {
-  const { farmersGroupById } = useFarmersGroupContext();
-  const farmerGroupList = Object.values(farmersGroupById);
-  // const resolutions = useSelector((state: RootState) => state.resolution.resolutions);
+  const {
+    formatChangeSuccess: farmerGroupDataLoaded,
+    result: { data: farmersGroupById },
+  } = useFetch(ENDPOINTS.farmerGroup);
   const {
     formatChangeSuccess,
     result: { data: resolutions },
@@ -39,7 +40,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectAllGroup]);
 
-  return editMode && !formatChangeSuccess ? (
+  return editMode && !formatChangeSuccess && farmerGroupDataLoaded ? (
     <Loader />
   ) : (
     <>
@@ -91,7 +92,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             options={{
               label: "குழு *",
               gridArea: "grp",
-              selectOptions: farmerGroupList.map((g) => [g.groupName, g.groupName]),
+              selectOptions: Object.values(farmersGroupById as { [key: string]: IFarmersGroup }).map((g) => [g.groupName, g.groupName]),
               specialOptions: ["~All Groups~"],
             }}
           />
