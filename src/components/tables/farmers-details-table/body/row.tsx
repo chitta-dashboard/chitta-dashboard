@@ -7,7 +7,7 @@ import { RootState } from "../../../../utils/store";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { mdDetail } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, decryptText, encryptFile, fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -112,8 +112,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   };
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptFile(image, true);
+    const encryptedBase64 = encryptText(compressedBase64);
     editFarmerDetails({ editedData: { ...user, profile: encryptedBase64 } });
     editMdDetails({ editedData: { ...user, profile: encryptedBase64, farmerId: user.id } });
   };

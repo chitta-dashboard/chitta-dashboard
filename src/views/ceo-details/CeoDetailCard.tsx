@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptFile, Endpoints, ENDPOINTS, fileValidation, Message } from "../../utils/constants";
+import { calculateAge, decryptText, encryptText, Endpoints, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -12,6 +12,7 @@ import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../components/loader";
 import S from "./ceo-details.styled";
+import Toast from "../../utils/toast";
 
 interface Props {
   user: ceoDetail;
@@ -51,9 +52,11 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     let result = ceoDetailsById[user.id];
-    const encryptedBase64 = await encryptFile(image, true);
+    const encryptedBase64 = encryptText(compressedBase64);
     editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
   };
 
@@ -159,6 +162,10 @@ const CeoDetailsCard = ({ user }: Props) => {
               id: user.id,
               successCb: () => {
                 addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                Toast({ message: "CEO deleted successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             });
           }}
@@ -176,7 +183,15 @@ const CeoDetailsCard = ({ user }: Props) => {
             setOpenConfirmationModal(null);
           }}
           yesAction={() => {
-            ceoEdit({ editedData: openConfirmationModal });
+            ceoEdit({
+              editedData: openConfirmationModal,
+              successCb: () => {
+                Toast({ message: "CEO updated successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+              },
+            });
             setOpenConfirmationModal(null);
           }}
         />

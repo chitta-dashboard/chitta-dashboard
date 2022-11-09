@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { calculateAge, decryptText, encryptFile, ENDPOINTS, fileValidation } from "../../../../utils/constants";
+import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardHeader } from "../common-styles/commonStyles.styled";
@@ -38,7 +38,7 @@ const DashboardFounder = () => {
     ),
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
@@ -56,9 +56,12 @@ const DashboardFounder = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
+    console.log(image);
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     let result = foundersById[userId];
-    const encryptedBase64 = await encryptFile(image, true);
+    const encryptedBase64 = encryptText(compressedBase64);
     editFounder({ editedData: { ...result, profile: encryptedBase64 } });
   };
 

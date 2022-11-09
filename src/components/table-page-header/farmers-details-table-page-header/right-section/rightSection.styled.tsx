@@ -18,18 +18,6 @@ namespace S {
     },
   }));
 
-  export const DropdownStack = styled(Stack)(({ theme }) => ({
-    "& MuiInputBase-root": {
-      width: "100%",
-    },
-    [theme.breakpoints.down("lg")]: {
-      width: "52%",
-    },
-    [theme.breakpoints.down("md")]: {
-      width: "100%",
-    },
-  }));
-
   export const CustomButton = styled(Button)(({ theme }) => ({
     minWidth: "10%",
     [theme.breakpoints.down("md")]: {
@@ -44,6 +32,10 @@ namespace S {
     "& .Mui-disabled": {
       backgroundColor: theme.palette.custom.disabled,
     },
+  }));
+
+  export const HiddenInput = styled("input")(() => ({
+    display: "none",
   }));
 }
 export default S;
