@@ -5,6 +5,7 @@ import { mdDetail } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
+import Toast from "../../utils/toast";
 import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -54,7 +55,16 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
       user["profile"] = encryptText(compressedBase64);
       const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
       delete farmerEditData.farmerId;
-      editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: user }) });
+      editFarmer({
+        editedData: farmerEditData,
+        successCb: () => {
+          editMdDetail({ editedData: user });
+          Toast({ message: "MD Edited Successfully", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+        },
+      });
     }
   };
 

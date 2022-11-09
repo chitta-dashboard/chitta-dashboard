@@ -5,6 +5,7 @@ import { farmerDetail } from "../../utils/context/farmersDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
+import Toast from "../../utils/toast";
 // import { useSelector } from "react-redux";
 // import { RootState } from "../../utils/store";
 // import { farmerDetail } from "../../utils/store/slice/farmerDetails";
@@ -102,8 +103,15 @@ const MdDetails = () => {
       };
       addNotification(notification);
     });
-    // console.log("farmerData", farmerData);
-    addMdDetail({ data: farmerData });
+    addMdDetail({
+      data: farmerData,
+      successCb: () => {
+        Toast({ message: "MD Added successfully.", type: "success" });
+      },
+      errorCb: () => {
+        Toast({ message: "Request failed! Please try again.", type: "error" });
+      },
+    });
     setIsConfirmModalOpen(false);
     addModalHandler();
   };

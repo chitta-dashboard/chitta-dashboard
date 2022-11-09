@@ -4,6 +4,7 @@ import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
 import IdCardModal from "../../../modals/id-download-modal";
@@ -126,6 +127,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
               id: user.id,
               successCb: () => {
                 addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
+                Toast({ message: "Founder Deleted Successfully", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed! Please try again", type: "error" });
               },
             });
             setDeleteModal(false);
@@ -146,6 +151,12 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
               editData &&
               founderMutateUpdate({
                 editedData: editData,
+                successCb: () => {
+                  Toast({ message: "Founder Edited Successfully", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
+                },
               });
             setEditMode(false);
             setConfirmModal(false);

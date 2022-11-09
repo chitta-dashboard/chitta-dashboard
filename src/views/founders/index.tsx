@@ -7,6 +7,7 @@ import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
+import Toast from "../../utils/toast";
 import S from "./founders.styled";
 import Loader from "../../components/loader";
 
@@ -32,6 +33,10 @@ const Founders = () => {
           image: data.profile,
           message: Message(data.name).addFoundersDetails,
         });
+        Toast({ message: "Founder Added Successfully", type: "success" });
+      },
+      errorCb: () => {
+        Toast({ message: "Request failed! Please try again", type: "error" });
       },
     });
   };

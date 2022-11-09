@@ -57,11 +57,17 @@ const RightSection: FC<RightSectionProps> = (props) => {
         </S.CustomButton>
       </S.ButtonStack>
       <ConfirmationModal
-        openModal={importedData !== null}
+        openModal={Number(importedData?.length) > 0}
         yesAction={() => {
           mutate({ data: importedData });
           setImportedData(null);
         }}
+        confirmMessage={
+          <p>
+            Do you want to register <S.HightlightText>{importedData?.length}</S.HightlightText> new farmer
+            {(importedData?.length as number) > 1 ? "s" : ""}?
+          </p>
+        }
         handleClose={() => setImportedData(null)}
       />
     </S.RightSectionContainer>

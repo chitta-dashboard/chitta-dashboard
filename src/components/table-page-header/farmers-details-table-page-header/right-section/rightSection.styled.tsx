@@ -37,5 +37,9 @@ namespace S {
   export const HiddenInput = styled("input")(() => ({
     display: "none",
   }));
+
+  export const HightlightText = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+  }));
 }
 export default S;
