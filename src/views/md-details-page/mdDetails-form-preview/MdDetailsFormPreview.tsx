@@ -1,8 +1,9 @@
+import { useParams } from "react-router-dom";
 import MdFormPreviewLeft from "./MdDetailsFormPreviewLeft";
 import MdFormPreviewRight from "./MdDetailsFormPreviewRight";
 import { useFetch } from "../../../utils/hooks/query";
+import ErrorPage from "../../../components/error-page";
 import { ENDPOINTS } from "../../../utils/constants";
-import { useNavigate, useParams } from "react-router-dom";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreview = () => {
@@ -10,7 +11,6 @@ const MdFormPreview = () => {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  const navigate = useNavigate();
   const { mdId } = useParams();
 
   return (
@@ -21,12 +21,7 @@ const MdFormPreview = () => {
           <MdFormPreviewRight />
         </S.MdFormPreviewMainContainer>
       ) : (
-        <S.CertificateNodataContainer>
-          <S.NoDataErrorText>404 Page Not Found</S.NoDataErrorText>
-          <S.NoDataErrorText2 onClick={() => navigate(-1)}>
-            <i>back</i> Go Back
-          </S.NoDataErrorText2>
-        </S.CertificateNodataContainer>
+        <ErrorPage />
       )}
     </>
   );

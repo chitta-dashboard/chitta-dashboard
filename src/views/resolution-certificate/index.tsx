@@ -7,6 +7,7 @@ import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
 import { IResolution } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
+import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
@@ -115,12 +116,7 @@ const ResolutionCertificatePage = () => {
           <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
         </S.ResolutionCertificateMainContainer>
       ) : (
-        <S.ResolutionCertificateNodataContainer>
-          <S.NoDataErrorText>404 Page Not Found</S.NoDataErrorText>
-          <S.NoDataErrorText2 onClick={() => navigate(-1)}>
-            <i>back</i> Go Back
-          </S.NoDataErrorText2>
-        </S.ResolutionCertificateNodataContainer>
+        <ErrorPage />
       )}
       {deletion && (
         <DeleteModal
