@@ -9,6 +9,7 @@ import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
 import Loader from "../../components/loader";
+import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
@@ -42,7 +43,15 @@ const FarmersGroup = () => {
 
   // Add Farmergroup Handler
   const addDataHandler = (newFarmerGroup: FarmersGroupType) => {
-    addFarmerGroup({ data: newFarmerGroup });
+    addFarmerGroup({
+      data: newFarmerGroup,
+      successCb: () => {
+        Toast({ message: "Farmer Group added successfully.", type: "success" });
+      },
+      errorCb: () => {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+      },
+    });
     addNotification({ id: newFarmerGroup.id, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 
