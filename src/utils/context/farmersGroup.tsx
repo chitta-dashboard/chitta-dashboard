@@ -111,30 +111,30 @@ const reducer = (state: farmersGroupContextType, action: any) => {
       delete state.farmersGroupById[action.payload];
       return { ...state, farmersGroupById: { ...state.farmersGroupById } };
 
-    case ADD_GROUP_MEMBER:
-      const farmersGroupList = Object.values(state.farmersGroupById);
-      const groupIndex = farmersGroupList.findIndex((list) => list.groupName === action.payload.group);
-      if (groupIndex >= 0) {
-        // This condition is to avoid one more extra count in the members groups.
-        !farmersGroupList[groupIndex].members.includes(action.payload.id) && farmersGroupList[groupIndex].members.push(action.payload.id);
-        return { ...state };
-      }
-      return { ...state };
+    // case ADD_GROUP_MEMBER:
+    //   const farmersGroupList = Object.values(state.farmersGroupById);
+    //   const groupIndex = farmersGroupList.findIndex((list) => list.groupName === action.payload.group);
+    //   if (groupIndex >= 0) {
+    //     // This condition is to avoid one more extra count in the members groups.
+    //     !farmersGroupList[groupIndex].members.includes(action.payload.id) && farmersGroupList[groupIndex].members.push(action.payload.id);
+    //     return { ...state };
+    //   }
+    //   return { ...state };
 
-    case REMOVE_GROUP_MEMBER:
-      const removeMemberIndex = Object.values(state.farmersGroupById)
-        .map((farmersGroup) => farmersGroup.members)
-        .findIndex((arr) => arr.includes(action.payload));
-      if (removeMemberIndex !== -1) {
-        const updatedMember = Object.values(state.farmersGroupById)[removeMemberIndex]["members"].filter((member) => member !== action.payload);
-        return {
-          ...state,
-          farmersGroupById: {
-            ...(Object.values(state.farmersGroupById)[removeMemberIndex].members = updatedMember),
-          },
-        };
-      }
-      return { ...state };
+    // case REMOVE_GROUP_MEMBER:
+    //   const removeMemberIndex = Object.values(state.farmersGroupById)
+    //     .map((farmersGroup) => farmersGroup.members)
+    //     .findIndex((arr) => arr.includes(action.payload));
+    //   if (removeMemberIndex !== -1) {
+    //     const updatedMember = Object.values(state.farmersGroupById)[removeMemberIndex]["members"].filter((member) => member !== action.payload);
+    //     return {
+    //       ...state,
+    //       farmersGroupById: {
+    //         ...(Object.values(state.farmersGroupById)[removeMemberIndex].members = updatedMember),
+    //       },
+    //     };
+    //   }
+    //   return { ...state };
 
     case MEMBER_FILTER:
       return { ...state, memberFilter: action.payload };
