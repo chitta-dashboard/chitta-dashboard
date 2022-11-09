@@ -1,16 +1,16 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
-// import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useDispatch } from "react-redux";
 import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { FARMER_DATA } from "./constant";
+import { useEdit, useFetch } from "../../utils/hooks/query";
 import { S } from "./farmerDetailPage.styled";
 import NerkathirUser from "../../assets/images/nerkathir-user.svg";
 import NerkathirLogo from "../../assets/images/logo.svg";
-import { useFetch } from "../../utils/hooks/query";
+import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;
@@ -23,6 +23,8 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+  const { mutate: mutateEditFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: mutateEditMdDetail } = useEdit(ENDPOINTS.mdDetails);
 
   const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
@@ -66,7 +68,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
           .map((user) => (
             <S.FarmersDetailsContent ref={ref} key={user.id}>
               <S.FarmersDetailsHeader>
-                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : NerkathirLogo} alt="nerkathir-logo" />
+                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : profilePlaceholder} alt="nerkathir-logo" />
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (
@@ -93,7 +95,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
                   <img
-                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : NerkathirUser}
+                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
                     alt="nerkathir-user"
                   />
                   <S.EditBox

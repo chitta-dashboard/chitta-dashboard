@@ -9,11 +9,11 @@ import { IResolution } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
-import { ENDPOINTS } from "../../utils/constants";
+import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import profile from "../../assets/images/Founder.png";
-import { S } from "./resolutionCertificate.styled";
 import Loader from "../../components/loader";
+import Toast from "../../utils/toast";
+import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
@@ -47,10 +47,13 @@ const ResolutionCertificatePage = () => {
         successCb: () => {
           navigate(-1);
           addNotification({
-            id: "edit" + resolutionId,
-            image: profile,
-            message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been deleted.`,
+            id: "delete" + resolutionId,
+            message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
+          Toast({ message: "Resolution deleted successfully.", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed, please try again.", type: "error" });
         },
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -144,9 +147,12 @@ const ResolutionCertificatePage = () => {
               successCb: () => {
                 addNotification({
                   id: "edit" + resolutionId,
-                  image: profile,
-                  message: `Resolution "${resolutions[resolutionId as string].groupTitle}" has been edited.`,
+                  message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
                 });
+                Toast({ message: "Resolution edited successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             });
             setConfirmation(false);

@@ -1,30 +1,29 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { mdDetail } from "../../../../utils/context/mdDetails";
-// import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import Toast from "../../../../utils/toast";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
+import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
-import S from "./body.styled";
 
 interface MdDetailsRowProps {
   user: mdDetail;
+  removeGroupMember: (id: string, group: string) => void;
 }
 
-const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
+const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
@@ -34,7 +33,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  // const AddNewMember = { id: editData?.farmerId, group: editData?.group };
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -70,12 +68,22 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptFile(image, true);
-    editMdDetail({ editedData: user });
+    user["profile"] = await encryptText(compressedBase64);
     const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
     delete farmerEditData.farmerId;
-    editFarmer({ editedData: farmerEditData });
+    editFarmer({
+      editedData: farmerEditData,
+      successCb: () => {
+        editMdDetail({ editedData: user });
+        Toast({ message: "MD Edited Successfully.", type: "success" });
+      },
+      errorCb: () => {
+        Toast({ message: "Request failed! Please try again.", type: "error" });
+      },
+    });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
@@ -141,20 +149,32 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={() => {
+          yesAction={async () => {
             !editMode &&
               deleteMdDetail({
                 id: user.id,
                 successCb: () => {
                   addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
+                  Toast({ message: "MD Deleted Successfully", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
                 },
               });
-            editData && editMdDetail({ editedData: editData });
+            editData && user.farmerId && (await removeGroupMember(user.farmerId, editData.group));
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editData && farmerEditData && editFarmer({ editedData: farmerEditData });
-            // editMode && user.farmerId && removeGroupMember(user.farmerId);
-            // editMode && addGroupMember(AddNewMember);
+            editData &&
+              editFarmer({
+                editedData: farmerEditData,
+                successCb: () => {
+                  editMdDetail({ editedData: editData });
+                  Toast({ message: "MD Edited Successfully", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
+                },
+              });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);

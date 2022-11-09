@@ -15,6 +15,7 @@ import DeleteModal from "../../../modals/delete-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
+import Toast from "../../../../utils/toast";
 
 interface FarmersGroupRowProp {
   user: FarmersGroup;
@@ -99,10 +100,18 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={() => {
-            farmerGroupDelete({ id: user.id });
+            farmerGroupDelete({
+              id: user.id,
+              successCb: () => {
+                Toast({ message: "Farmer group removed successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+              },
+            });
             setDeleteModal(false);
             setIconModal(false);
-            addNotification({ id: user.id, message: Message(user.groupName).deleteFarmGroup });
+            addNotification({ id: `delete${user.id}`, message: Message(user.groupName).deleteFarmGroup });
           }}
           deleteMessage={
             <>
@@ -125,7 +134,16 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
             !editMode && deleteFarmersGroup(user.id);
             // editMode && editData && editFarmersGroup(editData);
             // editMode && editData && farmerGroupUpdate(editData);
-            editMode && farmerGroupEdit({ editedData: editData });
+            editMode &&
+              farmerGroupEdit({
+                editedData: editData,
+                successCb: () => {
+                  Toast({ message: "Farmer group updated successfully.", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed, please try again.", type: "error" });
+                },
+              });
             setEditMode(false);
             setConfirmModal(false);
             setIconModal(false);

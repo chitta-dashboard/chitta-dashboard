@@ -7,6 +7,7 @@ import { Endpoints, ENDPOINTS, Message } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFetch, useAdd } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
+import Toast from "../../utils/toast";
 
 const CeoDetails = () => {
   const {
@@ -22,10 +23,17 @@ const CeoDetails = () => {
   };
 
   const addDataHandler = (data: IAddCEODetailsFormInput & { id: string }) => {
-    ceoAdd({ data: data });
+    ceoAdd({
+      data: data,
+      successCb: () => {
+        Toast({ message: "CEO added successfully.", type: "success" });
+      },
+      errorCb: () => {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+      },
+    });
     addNotification({ id: data.id, image: data.profile, message: Message(data.name).addCeoDetails });
   };
-
   return (
     <>
       {formatChangeSuccess ? (

@@ -1,4 +1,19 @@
+import { lazy } from "react";
 import CryptoJS from "crypto-js";
+import Compress from "react-image-file-resizer";
+
+const Dashboard = lazy(() => import("../../views/dashboard"));
+const CEODetails = lazy(() => import("../../views/ceo-details"));
+const MDDetails = lazy(() => import("../../views/md-details"));
+const FarmersGroup = lazy(() => import("../../views/farmers-group"));
+const FarmersDetails = lazy(() => import("../../views/farmers-details"));
+const Founders = lazy(() => import("../../views/founders"));
+const AdminPanel = lazy(() => import("../../views/admin-panel"));
+const Resolutions = lazy(() => import("../../views/resolution"));
+const NotFound = lazy(() => import("../../views/not-found"));
+const FarmerFormPreview = lazy(() => import("../../views/farmer-detail-page/farmer-form-preview/FarmerFormPreview"));
+const ResolutionCertificatePage = lazy(() => import("../../views/resolution-certificate"));
+const MDDetailsFormPreview = lazy(() => import("../../views/md-details-page/mdDetails-form-preview/MdDetailsFormPreview"));
 
 export const fileValidation = (file: string) => {
   var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
@@ -147,7 +162,7 @@ export const MessageStructured = (name: string, endPoint: string, action: "edit"
     [key: string]: string;
   } = {
     ceo: "ceo",
-    resolution: "Resolution",
+    resolutions: "Resolution",
     farmerDetails: "Farmer",
     farmerGroup: "Farmer Group",
     mdDetails: "Md",
@@ -258,7 +273,7 @@ export const ENDPOINTS: {
   farmerGroup: "farmerGroup",
   mdDetails: "mdDetails",
   founders: "founders",
-  notification:"notification",
+  notification: "notification",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {
@@ -272,3 +287,69 @@ export const handleDataByPage = (farmerData: any, page: number) => {
   }
   return updatedData;
 };
+
+export const RouterDefaults = [
+  {
+    path: "/dashboard",
+    component: Dashboard,
+  },
+  {
+    path: "/ceo-details",
+    component: CEODetails,
+  },
+  {
+    path: "/md-details",
+    component: MDDetails,
+  },
+  {
+    path: "/md-details/:mdId",
+    component: MDDetailsFormPreview,
+  },
+  {
+    path: "/farmers-group",
+    component: FarmersGroup,
+  },
+  {
+    path: "/farmers-details",
+    component: FarmersDetails,
+  },
+  {
+    path: "/farmers-details/:farmerId",
+    component: FarmerFormPreview,
+  },
+  {
+    path: "/founders",
+    component: Founders,
+  },
+  {
+    path: "/admin-panel",
+    component: AdminPanel,
+  },
+  {
+    path: "/board-resolution",
+    component: Resolutions,
+  },
+  {
+    path: "/board-resolution/:resolutionId",
+    component: ResolutionCertificatePage,
+  },
+  {
+    path: "/*",
+    component: NotFound,
+  },
+];
+export const imageCompressor = (file: any) =>
+  new Promise<string>((resolve) => {
+    Compress.imageFileResizer(
+      file,
+      300,
+      300,
+      "jpeg",
+      80,
+      0,
+      (uri) => {
+        resolve(uri as string);
+      },
+      "base64",
+    );
+  });
