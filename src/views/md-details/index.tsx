@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
 import { farmerDetail } from "../../utils/context/farmersDetails";
-import { useAuthContext } from "../../utils/context/auth";
+import { Notification } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
@@ -28,7 +28,7 @@ const MdDetails = () => {
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
   const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
-  const { addNotification } = useAuthContext();
+  const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
@@ -82,6 +82,7 @@ const MdDetails = () => {
 
   const handleYesAction = () => {
     let farmerData: mdDetail[] = [];
+    const notifications: Notification[] = [];
     selectedKeys.map((item: string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: mdDetail = {} as mdDetail;
@@ -101,12 +102,14 @@ const MdDetails = () => {
         image: farmersData[item].profile,
         message: Message(farmersData[item].name).addMd,
       };
-      addNotification(notification);
+
+      notifications.push(notification);
     });
     addMdDetail({
       data: farmerData,
       successCb: () => {
         Toast({ message: "MD Added successfully.", type: "success" });
+        addMdNotification({ data: notifications });
       },
       errorCb: () => {
         Toast({ message: "Request failed! Please try again.", type: "error" });

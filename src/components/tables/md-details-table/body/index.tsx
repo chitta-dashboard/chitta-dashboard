@@ -6,8 +6,12 @@ import BodyWrapper from "../../../custom-tables/body";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import MdDetailsRow from "./row";
 import S from "./body.styled";
+import { useDispatch, useSelector } from "react-redux";
+import { mdDetailActions } from "../../../../utils/store/slice/mdDetails";
 
 const Body = () => {
+  const { currentPage } = useSelector((state: any) => state.mdDetails);
+  const dispatch = useDispatch();
   const {
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,
@@ -17,14 +21,20 @@ const Body = () => {
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
+
   const { searchFilter, sortFilter } = useMdDetailsContext();
   const [mdListSearch, setMdListSearch] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
   const [mdListSort, setMdListSort] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
   const [mdList, setMdList] = useState<mdDetail[]>(isSuccess ? Object.values(mdDetailsById) : []);
 
   useEffect(() => {
-    isSuccess && setMdListSearch(Object.values(mdDetailsById as mdDetail[]).filter((md) => searchWord(md.name, searchFilter)));
-  }, [mdDetailsById, searchFilter, isSuccess]);
+    let result = isSuccess && Object.values(mdDetailsById as mdDetail[]).filter((md) => searchWord(md.name, searchFilter));
+    let updatedData = isSuccess && result && [...result];
+    isSuccess && result && setMdListSearch(result.splice((currentPage - 1) * 6, 6));
+    result &&
+      updatedData &&
+      dispatch(mdDetailActions.setPageCount({ pageCount: Math.ceil(result.length / 6) + 1, totalPageCount: updatedData.length }));
+  }, [mdDetailsById, searchFilter, isSuccess, currentPage]);
 
   useEffect(() => {
     isSuccess && setMdListSort(sortObj<mdDetail>(mdListSearch, sortFilter, "name"));
