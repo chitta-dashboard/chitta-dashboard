@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate, decryptText, encryptFile, ENDPOINTS } from "../../../utils/constants";
+import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 // import { useFounderContext } from "../../../utils/context/founders";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -73,7 +73,9 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
-    const encryptedImage = await encryptFile(data.profile, true);
+    const profileBlob = await fetch(data.profile).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedImage = encryptText(compressedBase64);
 
     cb({
       description: data.description,

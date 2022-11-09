@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge, FormHelperText } from "@mui/material";
 import { Control, Controller, FieldValues, Path, PathValue, UseFormGetValues, UseFormSetValue, UseFormUnregister } from "react-hook-form";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import { fileValidation } from "../../../utils/constants";
+import { fileValidation, imageCompressor } from "../../../utils/constants";
 import S from "./body/addProfile.styled";
 
 interface AddProfileProps<FormInputTypes extends FieldValues> {
@@ -22,11 +22,13 @@ function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridA
   // latest cropped image
   const [croppedImage, setCroppedImage] = useState<string | undefined>(getValues(inputName as Path<FormInputTypes & FieldValues>));
 
-  const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let chosenImage = (event.target.files as FileList)[0];
     if (fileValidation(chosenImage.name)) {
       // if correct file chosen, replace the cropped image with latest file
       setImageToCrop(window.URL.createObjectURL(chosenImage));
+      // const image = await imageCompressor(chosenImage);
+      // setImageToCrop(image as string);
     } else {
       // if wrong file chosen, reset the previously croped image.
       setCroppedImage("");
