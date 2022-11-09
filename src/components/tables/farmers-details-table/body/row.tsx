@@ -7,7 +7,8 @@ import { RootState } from "../../../../utils/store";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { mdDetail } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, decryptText, encryptFile, fileValidation, Message } from "../../../../utils/constants";
+import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
+import { useQueryClient } from "@tanstack/react-query";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -18,8 +19,8 @@ import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
-import { useQueryClient } from "@tanstack/react-query";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
+import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
@@ -112,8 +113,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
   };
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptFile(image, true);
+    const encryptedBase64 = await encryptText(compressedBase64);
+    // editFarmerDetails({ editedData: { ...user, profile: encryptedBase64 } });
+    // editMdDetails({ editedData: { ...user, profile: encryptedBase64, farmerId: user.id } });
     editFarmerDetails({ editedData: { ...user, profile: encryptedBase64 } });
     editMdDetails({ editedData: { ...user, profile: encryptedBase64, farmerId: user.id } });
   };
@@ -216,7 +221,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
               setDeleteModal(false);
               setIconModal(false);
               addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
-              removeGroupMember(user.id);
+              // removeGroupMember(user.id); //we have to updated the count while removing farmers
             }}
             deleteMessage={
               <>
@@ -227,11 +232,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user }) => {
           <ConfirmationModal
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
-            yesAction={() => {
+            yesAction={async () => {
               // editData && dispatch(editFarmerDetail(editData));
+
               editData?.farmerId && editFarmerDetails({ editedData: editData });
-              editMode && removeGroupMember(user.id);
-              editMode && addGroupMember(AddNewMember);
+              // editMode && removeGroupMember(user.id);
+              // editMode && addGroupMember(AddNewMember);
               setEditMode(false);
               setConfirmModal(false);
               setIconModal(false);

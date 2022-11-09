@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptFile, Endpoints, ENDPOINTS, fileValidation, Message } from "../../utils/constants";
+import { calculateAge, decryptText, encryptText, Endpoints, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -52,9 +52,11 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     let result = ceoDetailsById[user.id];
-    const encryptedBase64 = await encryptFile(image, true);
+    const encryptedBase64 = encryptText(compressedBase64);
     editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
   };
 

@@ -1,6 +1,6 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useAuthContext } from "../../utils/context/auth";

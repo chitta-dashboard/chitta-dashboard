@@ -12,7 +12,7 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, encryptFile, decryptText } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
@@ -222,7 +222,9 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   };
 
   const form2Submit: any = async (data: IAddFarmersDetailsPage2Input) => {
-    const encryptedBase64 = await encryptFile(form1Data?.profile as string, true);
+    const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedBase64 = encryptText(compressedBase64);
 
     let params = {
       ...form1Data,

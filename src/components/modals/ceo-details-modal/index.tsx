@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { dateFormat, decryptText, encryptFile, Endpoints, ENDPOINTS } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptText, Endpoints, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -66,8 +66,9 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
-    const encryptedBase64 = await encryptFile(data.profile, true);
-
+    const profileBlob = await fetch(data.profile).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedBase64 = encryptText(compressedBase64);
     cb({
       description: data.description,
       dob: dateFormat(data.dob),

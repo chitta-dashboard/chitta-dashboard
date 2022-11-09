@@ -1,10 +1,11 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../utils/constants";
 import { mdDetail } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useEdit, useFetch } from "../../utils/hooks/query";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
+import Toast from "../../utils/toast";
 import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -46,13 +47,24 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
   };
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (isSuccess) {
       if (!image) return;
       let user = mdDetailsById[userId];
-      user["profile"] = await encryptFile(image, true);
+      user["profile"] = encryptText(compressedBase64);
       const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
       delete farmerEditData.farmerId;
-      editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: user }) });
+      editFarmer({
+        editedData: farmerEditData,
+        successCb: () => {
+          editMdDetail({ editedData: user });
+          Toast({ message: "MD Edited Successfully", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+        },
+      });
     }
   };
 
