@@ -58,16 +58,18 @@ export const handleImportData = (e: ChangeEvent<HTMLInputElement>, setImportedDa
   reader.addEventListener("loadend", () => {
     const rawData = read(reader.result, { type: "binary" });
     let farmerData: { [key: string]: string }[] = [];
+    let dataSkipped = false;
     rawData.SheetNames.forEach((sheet) => {
       const farmer: { [key: string]: string }[] = utils.sheet_to_json(rawData.Sheets[sheet], { defval: "", raw: true });
       // adds sheet data data only if the sheet contains all required fields.
       if (isValidFarmerData(farmer[0])) {
         farmerData.push(...farmer);
-      }
+      } else dataSkipped = true;
     });
 
+    if (dataSkipped) Toast({ message: "Some data are skipped due to incorrect format.", type: "error" });
     farmerData = farmerData.map((farmer) => ({ ...farmer, id: uuidv4() }));
-    setImportedData(farmerData as unknown as farmerDetail[]);
+    farmerData?.length > 0 && setImportedData(farmerData as unknown as farmerDetail[]);
     e.target.value = "";
   });
   reader.readAsBinaryString(e.target.files![0]);
