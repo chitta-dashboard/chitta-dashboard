@@ -3,7 +3,7 @@ import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { mdDetail } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
@@ -71,8 +71,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, addGroup
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptFile(image, true);
+    user["profile"] = await encryptText(compressedBase64);
     const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
     delete farmerEditData.farmerId;
     editFarmer({ editedData: farmerEditData, successCb: () => editMdDetail({ editedData: user }) });

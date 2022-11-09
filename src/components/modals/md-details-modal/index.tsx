@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { dateFormat, decryptText, encryptFile } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptText, imageCompressor } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";
 import ModalBody from "../../custom-modal/body";
@@ -66,7 +66,9 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddMDDetailsFormInput & { id: string }) => {
-    const encryptedBase64 = await encryptFile(data.profile, true);
+    const profileBlob = await fetch(data.profile).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedBase64 = encryptText(compressedBase64);
 
     cb({
       name: data.name,
