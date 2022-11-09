@@ -18,20 +18,23 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
   const fileExtension = ".xlsx";
 
   const exportToCSV = (csvData: farmerDetail[], fileName: string) => {
-
-    let updatedCSVData:farmerDetail[] = [];
+    let updatedCSVData: farmerDetail[] = [];
 
     csvData.map((item) => {
       let newCSVData: any = {};
       let keys = Object.keys(item);
       Object.values(item).map((value, i) => {
-        newCSVData[keys[i]] = JSON.stringify(value).split('"').join("");
+        let updatedValue = JSON.stringify(value);
+        newCSVData[keys[i]] =
+          updatedValue.includes("border-first") || updatedValue.includes("acre-first") || updatedValue.includes("surveyNo-first")
+            ? JSON.stringify(value)
+            : JSON.stringify(value).split('"').join("");
       });
       updatedCSVData.push(newCSVData);
     });
 
     const ws = XLSX.utils.json_to_sheet(updatedCSVData);
-    
+
     let increment: number = 5;
     const colLengths = Object.values(ws).map((k) => k?.v?.toString().length);
 
