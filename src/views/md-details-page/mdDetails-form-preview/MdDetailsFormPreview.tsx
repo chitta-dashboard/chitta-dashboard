@@ -21,7 +21,7 @@ const MdFormPreview = () => {
           <MdFormPreviewRight />
         </S.MdFormPreviewMainContainer>
       ) : (
-        <ErrorPage />
+        <>{isSuccess && <ErrorPage />}</>
       )}
     </>
   );
