@@ -1,15 +1,13 @@
-import React, { forwardRef, Fragment, useRef, useState } from "react";
+import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../utils/constants";
+import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { mdDetail } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
-import { useEdit, useFetch } from "../../utils/hooks/query";
-import ImagePreview from "../../utils/imageCrop/imagePreview";
-import Toast from "../../utils/toast";
+import { useFetch } from "../../utils/hooks/query";
 import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
+import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
-import NerkathirLogo from "../../assets/images/logo.svg";
 
 interface Props {
   MdIdtoPrint?: number | string;
@@ -20,53 +18,8 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.mdDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { headerImage, titleName, address } = useAuthContext();
   const { mdId } = useParams();
-  const [image, setImage] = useState("");
-  const [userId, setUserId] = useState<string>("");
-
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-
-  const handleIconClick = (id: string) => {
-    hiddenFileInput && hiddenFileInput.current.click();
-    setUserId(id);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
-    e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
-    return false;
-  };
-
-  // this function is to clear the value of input field, so we can upload same file as many time has we want.
-  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    const element = event.target as HTMLInputElement;
-    element.value = "";
-  };
-
-  const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    if (isSuccess) {
-      if (!image) return;
-      let user = mdDetailsById[userId];
-      user["profile"] = encryptText(compressedBase64);
-      const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
-      delete farmerEditData.farmerId;
-      editFarmer({
-        editedData: farmerEditData,
-        successCb: () => {
-          editMdDetail({ editedData: user });
-          Toast({ message: "MD Edited Successfully", type: "success" });
-        },
-        errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
-        },
-      });
-    }
-  };
 
   return (
     <>
@@ -75,7 +28,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
             <S.MdsDetailsHeader>
-              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="nerkathir-logo" />
+              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : nerkathirDefaultLogo} alt="nerkathir-logo" />
               <S.HeaderTextContainer>
                 <S.HeaderText1>
                   {titleName ? (
@@ -103,15 +56,6 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
               </S.HeaderTextContainer>
               <S.UserImgContainer>
                 <img src={user.profile ? decryptText(user.profile) : profilePlaceholder} alt="nerkathir-user" />
-                <S.EditBox
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleIconClick(user.id);
-                  }}
-                >
-                  <S.EditIcon>edit</S.EditIcon>
-                  <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-                </S.EditBox>
               </S.UserImgContainer>
             </S.MdsDetailsHeader>
             <S.HeaderTextBox>
@@ -228,7 +172,6 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
             </S.UserInfoContainer>
           </S.MdsDetailsContent>
         ))}
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 });

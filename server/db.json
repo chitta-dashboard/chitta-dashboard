@@ -17748,30 +17748,6 @@
       "participator": ["person 1", "person 2", "person 3"]
     }
   ],
-  "notification": [
-    {
-      "id": "b1a36af3-de23-45ee-ada5-43527fc19702",
-      "message": "New Farmer group \"vivasayigal sangam 10\" has been registered"
-    },
-    {
-      "id": "deleteb1a36af3-de23-45ee-ada5-43527fc19702",
-      "message": "Farmer group \"vivasayigal sangam 10\" has been removed"
-    },
-    {
-      "id": "99e977c6-edd5-4d0b-92fd-fcc7541e0193",
-      "message": "New Farmer group \"fcfgc\" has been registered"
-    },
-    {
-      "id": "delete99e977c6-edd5-4d0b-92fd-fcc7541e0193",
-      "message": "Farmer group \"fcfgc\" has been removed"
-    },
-    {
-      "id": "c62f77a5-86db-4fce-9d79-c2d4b9017aae",
-      "message": "New Farmer group \"vivasayigal sangam 10\" has been registered"
-    },
-    {
-      "id": "deletec62f77a5-86db-4fce-9d79-c2d4b9017aae",
-      "message": "Farmer group \"vivasayigal sangam 15\" has been removed"
-    }
-  ]
+  "notification": []
 }
+

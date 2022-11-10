@@ -21,7 +21,7 @@ const FarmerFormPreview = () => {
           <FarmerFormPreviewRight />
         </S.FarmerFormPreviewMainContainer>
       ) : (
-        <ErrorPage />
+        <>{isSuccess && <ErrorPage />}</>
       )}
     </>
   );

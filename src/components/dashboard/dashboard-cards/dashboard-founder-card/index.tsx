@@ -56,7 +56,6 @@ const DashboardFounder = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    console.log(image);
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;

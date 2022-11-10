@@ -1,4 +1,4 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled, Typography, Button } from "@mui/material";
 
 export namespace S {
   export const CertificateNodataContainer = styled(Box)(({ theme }) => ({
@@ -14,6 +14,7 @@ export namespace S {
     width: "100%",
     borderRadius: "0.5rem",
   }));
+
   export const NoDataErrorText = styled(Typography)(({ theme }) => ({
     fontSize: "1.375rem",
     fontWeight: "600",
@@ -21,8 +22,21 @@ export namespace S {
     textAlign: "center",
     lineHeight: "1.25",
   }));
-  export const NoDataErrorText2 = styled(NoDataErrorText)(({ theme }) => ({
+
+  export const NoDataErrorText2 = styled(NoDataErrorText)({
     cursor: "pointer",
+  });
+
+  export const CustomButton = styled(Button)(({ theme }) => ({
+    backgroundColor: theme.palette.primary.light,
+    padding: "0.4rem ",
+    width: "6rem",
+    borderRadius: "1.3rem",
+    fontSize: "1rem",
+    fontWeight: "500",
+    "&:hover": {
+      transform: "scale(1.1)",
+    },
   }));
 }
 
