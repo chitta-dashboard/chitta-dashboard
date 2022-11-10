@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
 import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
-import { useFetch } from "../../../../utils/hooks/query";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
@@ -15,12 +16,16 @@ const Body = () => {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   }: any = useFetch(ENDPOINTS.farmerDetails);
+  const {
+    result: { data: farmersGroupById },
+    formatChangeSuccess: isFarmerGroupSuccess,
+  } = useFetch(ENDPOINTS.farmerGroup);
+  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
   const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
-
 
   // farmer group filter for farmer detail table
   useEffect(() => {
@@ -61,12 +66,34 @@ const Body = () => {
     }
   }, [isSuccess, farmersList, exportFarmerId]);
 
+  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
+    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
+    farmersGroupData[noCountUpdate].members.includes(id);
+    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
+    if (farmerDelete) {
+      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+      const updatedMember = farmersGroupData[removeMemberIndex]["members"].filter((member: string) => member !== id);
+      const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+      updatedFarmerGroup.members = updatedMember;
+      isAdd && (await addGroupMember(id, group));
+      await editFarmerGroup({ editedData: updatedFarmerGroup });
+    }
+  };
+
+  const addGroupMember = async (id: string, group: string) => {
+    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
+    const newGroupMember = farmersGroupData[groupIndex];
+    newGroupMember.members.push(id);
+    await editFarmerGroup({ editedData: newGroupMember });
+  };
+
   return (
     <>
       {farmersList.length > 0 ? (
         <BodyWrapper>
           {farmersList.map((user: farmerDetail) => (
-            <FarmersDetailsRow {...{ user }} key={user.id} />
+            <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} />
           ))}
         </BodyWrapper>
       ) : (

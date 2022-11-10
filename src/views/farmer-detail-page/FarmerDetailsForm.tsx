@@ -1,15 +1,15 @@
 import React, { forwardRef, Fragment, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
-import { FARMER_DATA } from "./constant";
+import { IMdDetails } from "../../utils/store/slice/mdDetails";
 import { useEdit, useFetch } from "../../utils/hooks/query";
+import Toast from "../../utils/toast";
+import { FARMER_DATA } from "./constant";
 import { S } from "./farmerDetailPage.styled";
-import NerkathirUser from "../../assets/images/nerkathir-user.svg";
-import NerkathirLogo from "../../assets/images/logo.svg";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 
 interface Props {
@@ -20,11 +20,15 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
   // const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
   // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const {
+    formatChangeSuccess: isMdSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+  const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
-  const { mutate: mutateEditFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: mutateEditMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
 
   const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
@@ -51,13 +55,38 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
     element.value = "";
   };
 
-  const handleCroppedImage = (image: string) => {
-    if (isSuccess) {
-      if (!image) return;
-      let result = farmersDetailsById[userId];
-      result["profile"] = image;
-      dispatch(editFarmerDetail({ ...result }));
-    }
+  const handleCroppedImage = async (image: string) => {
+    const user = farmersDetailsById[userId];
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    if (!image) return;
+    const encryptedBase64 = await encryptText(compressedBase64);
+    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+    !isFarmerInMd &&
+      editFarmer({
+        editedData: { ...user, profile: encryptedBase64 },
+        successCb: async () => {
+          Toast({ message: "Farmer Edited Successfully", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+        },
+      });
+    isFarmerInMd &&
+      editFarmer({
+        editedData: { ...user, profile: encryptedBase64 },
+        successCb: async () => {
+          await editMdDetail({
+            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
+            successCb: () => {
+              Toast({ message: "Farmer Edited Successfully", type: "success" });
+            },
+            errorCb: () => {
+              Toast({ message: "Request failed! Please try again", type: "error" });
+            },
+          });
+        },
+      });
   };
 
   return (
