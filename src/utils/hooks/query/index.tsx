@@ -6,14 +6,29 @@ import { queryClient } from "../../../containers/provider";
 import { Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 
-export const useFetch = (endpoint: Endpoints) => {
+interface IOptionalCallback {
+  successCb?: (data?: any) => void;
+  errorCb?: (err?: unknown) => void;
+}
+
+export const useFetch = (endpoint: Endpoints, cb?: IOptionalCallback) => {
   const result = useQuery({
     queryKey: [`${endpoint}-fetch`],
-    queryFn: () => {
-      return fetch(`http://localhost:5001/${endpoint}`).then((res) => res.json());
+    queryFn: async () => {
+      const res = await fetch(`${process.env.REACT_APP_API_KEY}/${endpoint}`);
+      if (res.status >= 200 && res.status < 400) {
+        return res.json();
+      }
+      throw new Error(`${res.status}: ${res.statusText}`);
     },
     cacheTime: Infinity, // do not change!
     staleTime: Infinity, // do not change!
+    onSuccess: (data) => {
+      cb?.successCb && cb.successCb(data);
+    },
+    onError: (err) => {
+      cb?.errorCb && cb.errorCb(err);
+    },
   });
 
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
@@ -33,18 +48,21 @@ export const useAdd = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
   let successCallback: () => void;
+  let errorCallback: () => void;
 
   return useMutation(
-    async ({ data, successCb }: { data: any; successCb?: () => void }) => {
+    async ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: "Creating" });
+
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
-          await axios.post(`http://localhost:5001/${endpoint}/`, data[i]);
+          await axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data[i]);
         }
         return data;
       } else {
-        return axios.post(`http://localhost:5001/${endpoint}/`, data).then(() => data);
+        return axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data).then(() => data);
       }
     },
     {
@@ -58,6 +76,9 @@ export const useAdd = (endpoint: Endpoints) => {
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
+      onError: () => {
+        errorCallback();
+      },
       onSettled: () => {
         loader({ openLoader: false });
       },
@@ -69,19 +90,24 @@ export const useEdit = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
   let successCallback: () => void;
+  let errorCallback: () => void;
 
   return useMutation(
-    ({ editedData, successCb }: { editedData: any; successCb?: () => void }) => {
+    ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
+      successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: "Updating" });
 
-      successCallback = successCb ? successCb : () => {};
-      return axios.patch(`http://localhost:5001/${endpoint}/${editedData?.id}`, editedData);
+      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
     },
     {
       onSuccess: (data) => {
-        const updatedData = { ...result.data, [data.data.id]: data.data };
+        const updatedData = { ...result.data, [data.id]: data };
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
+      },
+      onError: () => {
+        errorCallback();
       },
       onSettled: () => {
         loader({ openLoader: false });
@@ -93,22 +119,26 @@ export const useEdit = (endpoint: Endpoints) => {
 export const useDelete = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
+  let successCallback: () => void;
+  let errorCallback: () => void;
 
   return useMutation(
-    async ({ id, successCb }: { id: string | Array<string>; successCb?: () => void }) => {
+    async ({ id, successCb, errorCb }: { id: string | Array<string> } & IOptionalCallback) => {
+      successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: "Deleting" });
 
       if (Array.isArray(id)) {
         for (let i = 0; i < id.length; i++) {
-          await axios.delete(`http://localhost:5001/${endpoint}/${id[i]}`);
+          await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
         }
-        return { deleteId: id, successCb };
+        return id;
       } else {
-        return axios.delete(`http://localhost:5001/${endpoint}/${id}`).then((res) => ({ deleteId: id, successCb }));
+        return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id}`).then(() => id);
       }
     },
     {
-      onSuccess: ({ deleteId, successCb }) => {
+      onSuccess: (deleteId) => {
         let updatedData = { ...result.data };
         delete updatedData[deleteId as string];
 
@@ -119,7 +149,10 @@ export const useDelete = (endpoint: Endpoints) => {
         }
 
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCb && successCb();
+        successCallback();
+      },
+      onError: () => {
+        errorCallback();
       },
       onSettled: () => {
         loader({ openLoader: false });
@@ -133,7 +166,7 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
     queryKey: [`${endpoint}-fetch-${page}`],
     queryFn: () => {
       return axios
-        .get(`http://localhost:5001/${endpoint}`, {
+        .get(`${process.env.REACT_APP_API_KEY}/${endpoint}`, {
           params: {
             _page: page,
             _limit: 10,

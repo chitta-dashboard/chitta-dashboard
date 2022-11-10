@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate, decryptText, encryptFile, ENDPOINTS } from "../../../utils/constants";
+import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 // import { useFounderContext } from "../../../utils/context/founders";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -12,6 +12,7 @@ import { dateFormat } from "../../../utils/constants";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
 import { useFetch } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -52,7 +53,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: decryptText(userData?.profile), // temporary, until sbucket integration
+        profile: decryptText(userData?.profile) || placeHolderImg,
         joinDate: userData?.joinDate,
       });
     }
@@ -72,7 +73,9 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
-    const encryptedImage = await encryptFile(data.profile, true);
+    const profileBlob = await fetch(data.profile).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedImage = encryptText(compressedBase64);
 
     cb({
       description: data.description,

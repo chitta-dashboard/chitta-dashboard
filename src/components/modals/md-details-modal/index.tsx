@@ -3,13 +3,14 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { dateFormat, decryptText, encryptFile } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptText, imageCompressor } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";
 import ModalBody from "../../custom-modal/body";
 import CustomModal from "../../custom-modal";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -47,7 +48,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         signature: "",
-        profile: decryptText(userData?.profile as string),
+        profile: decryptText(userData?.profile as string) || placeHolderImg,
       });
     }
 
@@ -65,7 +66,9 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddMDDetailsFormInput & { id: string }) => {
-    const encryptedBase64 = await encryptFile(data.profile, true);
+    const profileBlob = await fetch(data.profile).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
+    const encryptedBase64 = encryptText(compressedBase64);
 
     cb({
       name: data.name,

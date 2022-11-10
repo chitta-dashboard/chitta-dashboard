@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import { ENDPOINTS } from "../../../../utils/constants";
-import { useFetch } from "../../../../utils/hooks/query";
+import { useAdd, useFetch } from "../../../../utils/hooks/query";
 import { RootState } from "../../../../utils/store";
 import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
-import SelectDropDown from "../../../common-components/select-dropdown";
 import ExportCSV from "../../../export-csv-data";
-// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import ConfirmationModal from "../../../modals/confirmation-modal";
+import { handleImportData } from "./helper";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
@@ -28,17 +28,26 @@ const RightSection: FC<RightSectionProps> = (props) => {
       return resultData;
     }
   };
+  const { mutate } = useAdd(ENDPOINTS.farmerDetails);
+  const [importedData, setImportedData] = useState<farmerDetail[] | null>(null);
+
   handleExportData();
   return (
     <S.RightSectionContainer>
-      <S.DropdownStack>
-        <SelectDropDown />
-      </S.DropdownStack>
       <S.ButtonStack>
         <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
-        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
+        <S.CustomButton
+          onClick={(e) => {
+            const fileInput = (e.currentTarget as HTMLButtonElement).querySelector("input") as HTMLInputElement;
+            fileInput.click();
+          }}
+        >
+          <p>Import Farmers</p>
+          <S.HiddenInput onChange={(e) => handleImportData(e, setImportedData)} type={"file"} accept={".xlsx,.xls"} />
+        </S.CustomButton>
+        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]).slice(0, 10) : ([] as farmerDetail[])} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();
@@ -47,6 +56,20 @@ const RightSection: FC<RightSectionProps> = (props) => {
           Add
         </S.CustomButton>
       </S.ButtonStack>
+      <ConfirmationModal
+        openModal={Number(importedData?.length) > 0}
+        yesAction={() => {
+          mutate({ data: importedData });
+          setImportedData(null);
+        }}
+        confirmMessage={
+          <p>
+            Do you want to register <S.HightlightText>{importedData?.length}</S.HightlightText> new farmer
+            {(importedData?.length as number) > 1 ? "s" : ""}?
+          </p>
+        }
+        handleClose={() => setImportedData(null)}
+      />
     </S.RightSectionContainer>
   );
 };

@@ -8,30 +8,41 @@ import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { FarmersGroup, useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptFile, ENDPOINTS, fileValidation, Message } from "../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
+import Toast from "../../../utils/toast";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
+import { IMdDetails } from "../../../utils/store/slice/mdDetails";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
   const {
+    formatChangeSuccess: isMdSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+  const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
-  const { mutate: mutateDelete } = useDelete(ENDPOINTS.farmerDetails);
-  const { mutate: mutateEdit } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: mutateEditMdDetail } = useEdit(ENDPOINTS.mdDetails);
-
-  const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const {
+    result: { data: farmersGroupById },
+    formatChangeSuccess: isFarmerGroupSuccess,
+  } = useFetch(ENDPOINTS.farmerGroup);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
+  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
+  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
+  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification, address, titleName } = useAuthContext();
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
@@ -78,24 +89,81 @@ const FarmerFormPreviewLeft = () => {
     element.value = "";
   };
 
+  // const handleCroppedImage = async (image: string) => {
+  //   const profileBlob = await fetch(image).then((res) => res.blob());
+  //   const compressedBase64 = await imageCompressor(profileBlob);
+  //   if (!image) return;
+  //   const encryptedBase64 = encryptText(compressedBase64);
+  //   mutateEdit({
+  //     editedData: { ...farmersDetailsById[userId], profile: encryptedBase64 },
+  //     successCb: () => {
+  //       const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
+  //       if (getMdData?.farmerId) {
+  //         getMdData["profile"] = encryptedBase64;
+  //         mutateEditMdDetail({ editedData: { ...getMdData } });
+  //       }
+  //     },
+  //   });
+  // };
   const handleCroppedImage = async (image: string) => {
+    const user = farmersDetailsById[userId];
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptFile(image, true);
-    mutateEdit({
-      editedData: { ...farmersDetailsById[userId], profile: encryptedBase64 },
-      successCb: () => {
-        const getMdData = Object.values(mdDetailsById).find((data) => data.farmerId === userId);
-        if (getMdData?.farmerId) {
-          getMdData["profile"] = encryptedBase64;
-          mutateEditMdDetail({ editedData: { ...getMdData } });
-        }
-      },
-    });
+    const encryptedBase64 = await encryptText(compressedBase64);
+    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+    !isFarmerInMd &&
+      editFarmer({
+        editedData: { ...user, profile: encryptedBase64 },
+        successCb: async () => {
+          Toast({ message: "Farmer Edited Successfully", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+        },
+      });
+    isFarmerInMd &&
+      editFarmer({
+        editedData: { ...user, profile: encryptedBase64 },
+        successCb: async () => {
+          await editMdDetail({
+            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
+            successCb: () => {
+              Toast({ message: "Farmer Edited Successfully", type: "success" });
+            },
+            errorCb: () => {
+              Toast({ message: "Request failed! Please try again", type: "error" });
+            },
+          });
+        },
+      });
   };
 
   //Update FarmerDetail Handler
   const updateFarmerDetail = (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => {
     setOpenConfirmationModal(data);
+  };
+
+  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
+    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
+    farmersGroupData[noCountUpdate].members.includes(id);
+    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
+    if (farmerDelete) {
+      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+      const updatedMember = farmersGroupData[removeMemberIndex]["members"].filter((member: string) => member !== id);
+      const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+      updatedFarmerGroup.members = updatedMember;
+      isAdd && (await addGroupMember(id, group));
+      await editFarmerGroup({ editedData: updatedFarmerGroup });
+    }
+  };
+
+  const addGroupMember = async (id: string, group: string) => {
+    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
+    const newGroupMember = farmersGroupData[groupIndex];
+    newGroupMember.members.push(id);
+    await editFarmerGroup({ editedData: newGroupMember });
   };
 
   return (
@@ -205,10 +273,53 @@ const FarmerFormPreviewLeft = () => {
                 cb={updateFarmerDetail}
                 editMode={true}
                 id={user.id}
-                mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
+                // mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
+                mdId={(Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id}
               />
             )}
             {openDeleteModal && (
+              <DeleteModal
+                openModal={true}
+                handleClose={() => setOpenDeleteModal(false)}
+                handleDelete={async () => {
+                  await removeGroupMember(user.id, user.group, false);
+                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  !isFarmerInMd &&
+                    farmerDelete({
+                      id: user.id,
+                      successCb: () => {
+                        Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  isFarmerInMd &&
+                    farmerDelete({
+                      id: user.id,
+                      successCb: async () => {
+                        await mdDelete({
+                          id: isFarmerInMd,
+                          successCb: () => {
+                            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                            Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                          },
+                          errorCb: () => {
+                            Toast({ message: "Request failed! Please try again", type: "error" });
+                          },
+                        });
+                      },
+                    });
+                  navigate(-1);
+                }}
+                deleteMessage={
+                  <span>
+                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from Farmers Details?
+                  </span>
+                }
+              />
+            )}
+            {/* {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
@@ -230,18 +341,47 @@ const FarmerFormPreviewLeft = () => {
                   </span>
                 }
               />
-            )}
+            )} */}
             {openConfirmationModal && (
               <ConfirmationModal
                 openModal={true}
                 handleClose={() => {
                   setOpenConfirmationModal(null);
                 }}
-                yesAction={() => {
-                  dispatch(editFarmerDetail(openConfirmationModal));
-                  openConfirmationModal.farmerId && editMdDetail(openConfirmationModal);
-                  removeGroupMember(openConfirmationModal.farmerId);
-                  addGroupMember(AddNewMember);
+                // yesAction={() => {
+                //   dispatch(editFarmerDetail(openConfirmationModal));
+                //   openConfirmationModal.farmerId && editMdDetail(openConfirmationModal);
+                //   removeGroupMember(openConfirmationModal.farmerId);
+                //   addGroupMember(AddNewMember);
+                //   setOpenConfirmationModal(null);
+                //   setOpenEditModal(false);
+                // }}
+                yesAction={async () => {
+                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  openConfirmationModal && (await removeGroupMember(user.id, openConfirmationModal.group, true));
+                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
+                  delete farmerEditData.farmerId;
+                  !isFarmerInMd &&
+                    editFarmer({
+                      editedData: farmerEditData,
+                      successCb: () => {
+                        Toast({ message: "MD Edited Successfully", type: "success" });
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  isFarmerInMd &&
+                    editFarmer({
+                      editedData: farmerEditData,
+                      successCb: () => {
+                        editMdDetail({ editedData: openConfirmationModal });
+                        Toast({ message: "MD Edited Successfully", type: "success" });
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
                   setOpenConfirmationModal(null);
                   setOpenEditModal(false);
                 }}

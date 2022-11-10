@@ -1,8 +1,9 @@
 import { styled, Box } from "@mui/material";
-import { Theme } from "@mui/material";
+import { ToastContainer } from "react-toastify";
+import { LightTheme } from "../../utils/theme";
 
 namespace S {
-  export const Layout = styled(Box)(({ theme }: { theme: Theme }) => ({
+  export const Layout = styled(Box)(({ theme }) => ({
     display: "grid",
     gridAutoRows: "auto 1fr auto",
     backgroundColor: theme.palette.bg.light,

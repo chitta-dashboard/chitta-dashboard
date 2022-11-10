@@ -7,12 +7,14 @@ import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
 import { IResolution } from "../../utils/store/slice/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
+import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import { S } from "./resolutionCertificate.styled";
 import Loader from "../../components/loader";
+import Toast from "../../utils/toast";
+import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
   const [deletion, setDeletion] = useState(false);
@@ -24,7 +26,7 @@ const ResolutionCertificatePage = () => {
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: isSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const threeDotRef = useRef<HTMLSpanElement>();
@@ -45,70 +47,77 @@ const ResolutionCertificatePage = () => {
         id: resolutionId,
         successCb: () => {
           navigate(-1);
-          console.log("deleted");
           addNotification({
             id: "delete" + resolutionId,
             message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
+          Toast({ message: "Resolution deleted successfully.", type: "success" });
+        },
+        errorCb: () => {
+          Toast({ message: "Request failed, please try again.", type: "error" });
         },
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolutionId, resolutions]);
 
-  return formatChangeSuccess ? (
+  return isSuccess ? (
     <>
-      <S.ResolutionCertificateMainContainer>
-        <S.CustomBackIcon onClick={() => navigate(-1)}>
-          <IconWrapper>back</IconWrapper>
-        </S.CustomBackIcon>
-        <S.CustomThreeDotsIcon
-          aria-describedby={"resolution-certificate-popover"}
-          ref={threeDotRef as RefObject<HTMLSpanElement>}
-          onClick={() => setPopoverOpen(true)}
-        >
-          <IconWrapper>three-dots</IconWrapper>
-        </S.CustomThreeDotsIcon>
-        <Popover
-          id={"resolution-certificate-popover"}
-          open={popoverOpen}
-          anchorEl={threeDotRef.current}
-          onClose={() => setPopoverOpen(false)}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-        >
-          <S.CustomPopoverList
-            onClick={() => {
-              generateResolutionPDF();
-              setPopoverOpen(false);
+      {Object.keys(resolutions).includes(resolutionId as string) ? (
+        <S.ResolutionCertificateMainContainer>
+          <S.CustomBackIcon onClick={() => navigate(-1)}>
+            <IconWrapper>back</IconWrapper>
+          </S.CustomBackIcon>
+          <S.CustomThreeDotsIcon
+            aria-describedby={"resolution-certificate-popover"}
+            ref={threeDotRef as RefObject<HTMLSpanElement>}
+            onClick={() => setPopoverOpen(true)}
+          >
+            <IconWrapper>three-dots</IconWrapper>
+          </S.CustomThreeDotsIcon>
+          <Popover
+            id={"resolution-certificate-popover"}
+            open={popoverOpen}
+            anchorEl={threeDotRef.current}
+            onClose={() => setPopoverOpen(false)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
             }}
           >
-            Download
-          </S.CustomPopoverList>
-          <S.CustomPopoverList
-            onClick={() => {
-              setEdition(true);
-              setPopoverOpen(false);
-            }}
-          >
-            Edit
-          </S.CustomPopoverList>
-          <S.CustomPopoverList
-            onClick={() => {
-              setDeletion(true);
-              setPopoverOpen(false);
-            }}
-          >
-            Delete
-          </S.CustomPopoverList>
-        </Popover>
-        <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
-      </S.ResolutionCertificateMainContainer>
+            <S.CustomPopoverList
+              onClick={() => {
+                generateResolutionPDF();
+                setPopoverOpen(false);
+              }}
+            >
+              Download
+            </S.CustomPopoverList>
+            <S.CustomPopoverList
+              onClick={() => {
+                setEdition(true);
+                setPopoverOpen(false);
+              }}
+            >
+              Edit
+            </S.CustomPopoverList>
+            <S.CustomPopoverList
+              onClick={() => {
+                setDeletion(true);
+                setPopoverOpen(false);
+              }}
+            >
+              Delete
+            </S.CustomPopoverList>
+          </Popover>
+          <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
+        </S.ResolutionCertificateMainContainer>
+      ) : (
+        <>{isSuccess && <ErrorPage />}</>
+      )}
       {deletion && (
         <DeleteModal
           openModal={true}
@@ -145,6 +154,10 @@ const ResolutionCertificatePage = () => {
                   id: "edit" + resolutionId,
                   message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
                 });
+                Toast({ message: "Resolution edited successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
               },
             });
             setConfirmation(false);

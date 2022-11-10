@@ -155,3 +155,4 @@ export const {
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;
+
