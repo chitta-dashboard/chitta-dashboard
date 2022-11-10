@@ -91,11 +91,15 @@ const MdFormPreviewLeft = () => {
     editFarmer({
       editedData: farmerEditData,
       successCb: () => {
-        editMdDetail({ editedData: result });
-        Toast({ message: "MD Edited Successfully.", type: "success" });
-      },
-      errorCb: () => {
-        Toast({ message: "Request failed! Please try again.", type: "error" });
+        editMdDetail({
+          editedData: result,
+          successCb: () => {
+            Toast({ message: "MD Edited Successfully.", type: "success" });
+          },
+          errorCb: () => {
+            Toast({ message: "Request failed! Please try again.", type: "error" });
+          },
+        });
       },
     });
   };
@@ -259,11 +263,7 @@ const MdFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={async () => {
-                  // const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
-                  // await memberCountHandler(user.farmerId, AddNewMember);
                   await removeGroupMember(user.farmerId, openConfirmationModal.group);
-                  // const farmerEditData = { ...editData, id: editData?.farmerId };
-                  // delete farmerEditData.farmerId;
                   const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as mdDetail;
                   delete farmerEditData.farmerId;
                   editFarmer({
