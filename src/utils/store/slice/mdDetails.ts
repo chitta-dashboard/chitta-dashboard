@@ -37,6 +37,9 @@ export interface IMdDetailsSlice {
   mdDetailsById: { [id: string]: IMdDetails };
   searchFilter: string;
   sortFilter: SortOrder;
+  currentPage: number;
+  pageCount: number;
+  totalPageCount: number;
 }
 
 const initialState: IMdDetailsSlice = {
@@ -156,13 +159,24 @@ const initialState: IMdDetailsSlice = {
   },
   searchFilter: "",
   sortFilter: NORMAL,
+  currentPage: 1,
+  pageCount: 0,
+  totalPageCount: 0,
 };
 
 const mdDetailsSlice = createSlice({
   name: "mdDetails",
   initialState,
-  reducers: {},
+  reducers: {
+    setCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
+    setPageCount: (state, action) => {
+      state.pageCount = action.payload.pageCount;
+      state.totalPageCount = action.payload.totalPageCount;
+    },
+  },
 });
 
-// export const { } = mdDetailsSlice.actions;
+export const mdDetailActions = mdDetailsSlice.actions;
 export const mdDetailsReducer = mdDetailsSlice.reducer;
