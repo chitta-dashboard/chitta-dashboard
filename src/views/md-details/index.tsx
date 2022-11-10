@@ -80,7 +80,7 @@ const MdDetails = () => {
     }
   };
 
-  const handleYesAction = () => {
+  const handleYesAction = async () => {
     let farmerData: mdDetail[] = [];
     const notifications: Notification[] = [];
     selectedKeys.map((item: string) => {
@@ -105,7 +105,7 @@ const MdDetails = () => {
 
       notifications.push(notification);
     });
-    addMdDetail({
+    await addMdDetail({
       data: farmerData,
       successCb: () => {
         Toast({ message: "MD Added successfully.", type: "success" });
