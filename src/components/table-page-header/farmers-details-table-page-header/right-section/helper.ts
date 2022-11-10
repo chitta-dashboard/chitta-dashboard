@@ -68,7 +68,13 @@ export const handleImportData = (e: ChangeEvent<HTMLInputElement>, setImportedDa
     });
 
     if (dataSkipped) Toast({ message: "Some data are skipped due to incorrect format.", type: "error" });
-    farmerData = farmerData.map((farmer) => ({ ...farmer, id: uuidv4() }));
+    farmerData = farmerData.map((farmer) => ({
+      ...farmer,
+      id: uuidv4(),
+      border: JSON.parse(farmer.border),
+      acre: JSON.parse(farmer.acre),
+      surveyNo: JSON.parse(farmer.surveyNo),
+    }));
     farmerData?.length > 0 && setImportedData(farmerData as unknown as farmerDetail[]);
     e.target.value = "";
   });
