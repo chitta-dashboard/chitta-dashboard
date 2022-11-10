@@ -8,8 +8,9 @@ const ErrorPage = () => {
     <S.CertificateNodataContainer>
       <S.NoDataErrorText>404 Page Not Found</S.NoDataErrorText>
       <S.NoDataErrorText2 onClick={() => navigate(-1)}>
-        <i>back</i> Go Back
+        <i>back</i> &nbsp;Go Back
       </S.NoDataErrorText2>
+      <S.CustomButton onClick={() => navigate("/dashboard")}>Home</S.CustomButton>
     </S.CertificateNodataContainer>
   );
 };
