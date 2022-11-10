@@ -1,15 +1,12 @@
-import React, { forwardRef, Fragment, useRef, useState } from "react";
+import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../utils/constants";
-import { useDispatch } from "react-redux";
-import { editFarmerDetail, farmerDetail } from "../../utils/store/slice/farmerDetails";
+import { decryptText, ENDPOINTS } from "../../utils/constants";
+import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useAuthContext } from "../../utils/context/auth";
-import ImagePreview from "../../utils/imageCrop/imagePreview";
-import { IMdDetails } from "../../utils/store/slice/mdDetails";
-import { useEdit, useFetch } from "../../utils/hooks/query";
-import Toast from "../../utils/toast";
+import { useFetch } from "../../utils/hooks/query";
 import { FARMER_DATA } from "./constant";
 import { S } from "./farmerDetailPage.styled";
+import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 
 interface Props {
@@ -17,77 +14,12 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
-  // const { farmersDetailsById, editTableIcon } = useFarmerDetailsContext();
-  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
-  const {
-    formatChangeSuccess: isMdSuccess,
-    result: { data: mdDetailsById },
-  } = useFetch(ENDPOINTS.mdDetails);
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-
   const { titleName, loginImage, address } = useAuthContext();
   const { farmerId } = useParams();
-  const dispatch = useDispatch();
-  const [image, setImage] = useState("");
-  const [userId, setUserId] = useState<string>("");
-
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-
-  const handleIconClick = (id: string) => {
-    hiddenFileInput && hiddenFileInput.current.click();
-    setUserId(id);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
-    e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
-    return false;
-  };
-
-  // this function is to clear the value of input field, so we can upload same file as many time has we want.
-  const onInputClick = (event: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    const element = event.target as HTMLInputElement;
-    element.value = "";
-  };
-
-  const handleCroppedImage = async (image: string) => {
-    const user = farmersDetailsById[userId];
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    if (!image) return;
-    const encryptedBase64 = await encryptText(compressedBase64);
-    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
-    !isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: async () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
-        },
-        errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
-        },
-      });
-    isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: async () => {
-          await editMdDetail({
-            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
-            successCb: () => {
-              Toast({ message: "Farmer Edited Successfully", type: "success" });
-            },
-            errorCb: () => {
-              Toast({ message: "Request failed! Please try again", type: "error" });
-            },
-          });
-        },
-      });
-  };
 
   return (
     <>
@@ -97,7 +29,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
           .map((user) => (
             <S.FarmersDetailsContent ref={ref} key={user.id}>
               <S.FarmersDetailsHeader>
-                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : profilePlaceholder} alt="nerkathir-logo" />
+                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : nerkathirDefaultLogo} alt="nerkathir-logo" />
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (
@@ -127,15 +59,6 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                     src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
                     alt="nerkathir-user"
                   />
-                  <S.EditBox
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleIconClick(user.id);
-                    }}
-                  >
-                    <S.EditIcon>edit</S.EditIcon>
-                    <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
-                  </S.EditBox>
                 </S.UserImgContainer>
               </S.FarmersDetailsHeader>
               <S.HeaderTextBox>
@@ -252,7 +175,6 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
               </S.UserInfoContainer>
             </S.FarmersDetailsContent>
           ))}
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 });

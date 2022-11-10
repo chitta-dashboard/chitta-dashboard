@@ -282,7 +282,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                 editFarmer({
                   editedData: farmerEditData,
                   successCb: () => {
-                    Toast({ message: "MD Edited Successfully", type: "success" });
+                    Toast({ message: "Farmer Edited Successfully", type: "success" });
                   },
                   errorCb: () => {
                     Toast({ message: "Request failed! Please try again", type: "error" });
@@ -293,7 +293,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   editedData: farmerEditData,
                   successCb: () => {
                     editMdDetail({ editedData: editData });
-                    Toast({ message: "MD Edited Successfully", type: "success" });
+                    Toast({ message: "Farmer Edited Successfully", type: "success" });
                   },
                   errorCb: () => {
                     Toast({ message: "Request failed! Please try again", type: "error" });

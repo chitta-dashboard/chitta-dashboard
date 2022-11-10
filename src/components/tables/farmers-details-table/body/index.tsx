@@ -90,7 +90,15 @@ const Body = () => {
 
   return (
     <>
-      {farmersList.length > 0 ? (
+      {!isFarmerGroupSuccess ? (
+        <tbody>
+          <tr>
+            <td>
+              <Loader />
+            </td>
+          </tr>
+        </tbody>
+      ) : farmersList.length > 0 ? (
         <BodyWrapper>
           {farmersList.map((user: farmerDetail) => (
             <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} />
@@ -99,9 +107,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>
-              <Loader />
-            </td>
+            <td>No Farmer Details..</td>
           </tr>
         </S.EmptyMsg>
       )}
