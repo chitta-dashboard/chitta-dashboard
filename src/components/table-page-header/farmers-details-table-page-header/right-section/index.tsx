@@ -47,7 +47,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
           <p>Import Farmers</p>
           <S.HiddenInput onChange={(e) => handleImportData(e, setImportedData)} type={"file"} accept={".xlsx,.xls"} />
         </S.CustomButton>
-        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
+        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]).slice(0, 10) : ([] as farmerDetail[])} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();
