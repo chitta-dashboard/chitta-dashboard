@@ -26,12 +26,18 @@
     "fatherName": "ANTHONY",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": ""
+    },
     "qualification": "",
     "farmerId": "1"
   },
@@ -62,12 +68,18 @@
     "fatherName": "NAYAGAM",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": ""
+    },
     "qualification": "",
     "farmerId": "2"
   },
@@ -100,12 +112,22 @@
     "fatherName": "CHINNAPPAN",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": "",
+      "border-third": "",
+      "border-fourth": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": "",
+      "acre-third": "",
+      "acre-fourth": ""
+    },
     "qualification": "",
     "farmerId": "3"
   },
@@ -136,12 +158,18 @@
     "fatherName": "KRISHNAMOORTHI",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": ""
+    },
     "qualification": "",
     "farmerId": "4"
   },
@@ -172,12 +200,18 @@
     "fatherName": "CHINNAPPAN",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": ""
+    },
     "qualification": "",
     "farmerId": "5"
   },
@@ -209,12 +243,20 @@
     "fatherName": "MARIYANATHAN",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": "",
+      "border-third": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": "",
+      "acre-third": ""
+    },
     "qualification": "",
     "farmerId": "6"
   },
@@ -246,12 +288,20 @@
     "fatherName": "GNANATHIKKAM",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": "",
+      "border-third": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": "",
+      "acre-third": ""
+    },
     "qualification": "",
     "farmerId": "7"
   },
@@ -282,12 +332,18 @@
     "fatherName": "BARNABASS",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": "",
+      "border-second": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": "",
+      "acre-second": ""
+    },
     "qualification": "",
     "farmerId": "8"
   },
@@ -317,12 +373,16 @@
     "fatherName": "MARIYASAMY",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": ""
+    },
     "qualification": "",
     "farmerId": "9"
   },
@@ -352,12 +412,16 @@
     "fatherName": "JOSEPH",
     "profile": "",
     "group": "",
-    "border": {},
+    "border": {
+      "border-first": ""
+    },
     "farmerType": "",
     "waterType": "",
     "animals": "",
     "groupMember": "",
-    "acre": {},
+    "acre": {
+      "acre-first": ""
+    },
     "qualification": "",
     "farmerId": "10"
   }
