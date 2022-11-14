@@ -1,12 +1,13 @@
-import { FC, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 import { ENDPOINTS } from "../../../../utils/constants";
 import { useAdd, useFetch } from "../../../../utils/hooks/query";
 import { RootState } from "../../../../utils/store";
 import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import Toast from "../../../../utils/toast";
 import ExportCSV from "../../../export-csv-data";
 import ConfirmationModal from "../../../modals/confirmation-modal";
-import { handleImportData } from "./helper";
+import ImportFarmersModal from "../../../modals/import-farmers-modal";
 import S from "./rightSection.styled";
 interface RightSectionProps {
   addModalHandler?: () => void;
@@ -15,7 +16,6 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
-  // const { selectedFarmers,farmersDetailsById } = useFarmerDetailsContext();
   const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
   const {
     formatChangeSuccess: isSuccess,
@@ -29,25 +29,48 @@ const RightSection: FC<RightSectionProps> = (props) => {
     }
   };
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
+  const { mutate: addNotification } = useAdd(ENDPOINTS.notification);
   const [importedData, setImportedData] = useState<farmerDetail[] | null>(null);
+  const [importModalOpen, setImportModalOpen] = useState(false);
 
   handleExportData();
+
+  const handleImport = useCallback(() => {
+    mutate({
+      data: importedData,
+      successCb: () => {
+        Toast({
+          message: `${importedData?.length} new farmer${Number(importedData?.length) > 1 ? "s have" : " has"} been registered.`,
+          type: "success",
+        });
+        addNotification({
+          data: {
+            message: `${importedData?.length} new farmer${Number(importedData?.length) > 1 ? "s have" : " has"} been registered.`,
+            id: "add" + importedData![0]?.id,
+          },
+        });
+        setImportedData(null);
+        setImportModalOpen(false);
+      },
+      errorCb: () => {
+        Toast({
+          message: `Something went wrong, sorry for the inconvenience.`,
+          type: "error",
+        });
+        setImportedData(null);
+        setImportModalOpen(false);
+      },
+    });
+  }, [importedData, mutate]);
+
   return (
     <S.RightSectionContainer>
       <S.ButtonStack>
         <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
           Share Holder
         </S.CustomButton>
-        <S.CustomButton
-          onClick={(e) => {
-            const fileInput = (e.currentTarget as HTMLButtonElement).querySelector("input") as HTMLInputElement;
-            fileInput.click();
-          }}
-        >
-          <p>Import Farmers</p>
-          <S.HiddenInput onChange={(e) => handleImportData(e, setImportedData)} type={"file"} accept={".xlsx,.xls"} />
-        </S.CustomButton>
-        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]).slice(0, 10) : ([] as farmerDetail[])} fileName="Farmers" />
+        <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
+        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();
@@ -58,18 +81,18 @@ const RightSection: FC<RightSectionProps> = (props) => {
       </S.ButtonStack>
       <ConfirmationModal
         openModal={Number(importedData?.length) > 0}
-        yesAction={() => {
-          mutate({ data: importedData });
-          setImportedData(null);
-        }}
+        yesAction={handleImport}
         confirmMessage={
-          <p>
+          <span>
             Do you want to register <S.HightlightText>{importedData?.length}</S.HightlightText> new farmer
             {(importedData?.length as number) > 1 ? "s" : ""}?
-          </p>
+          </span>
         }
         handleClose={() => setImportedData(null)}
       />
+      {importModalOpen && (
+        <ImportFarmersModal isOpen={true} handleClose={() => setImportModalOpen(false)} cb={(data: farmerDetail[]) => setImportedData(data)} />
+      )}
     </S.RightSectionContainer>
   );
 };

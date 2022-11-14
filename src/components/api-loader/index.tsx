@@ -2,18 +2,24 @@ import { FC } from "react";
 import S from "./apiLoader.styled";
 
 interface CustomProps {
-  loaderText?:string
+  loaderText?: string;
 }
 
-const APIloader:FC<CustomProps> = ({loaderText}) => {
+export const BufferLoader: FC<CustomProps> = ({ loaderText }) => {
+  return (
+    <S.LoaderContainer>
+      <h4>{loaderText}</h4>
+      <S.LoaderParticle1></S.LoaderParticle1>
+      <S.LoaderParticle2></S.LoaderParticle2>
+      <S.LoaderParticle3></S.LoaderParticle3>
+    </S.LoaderContainer>
+  );
+};
+
+const APIloader: FC<CustomProps> = ({ loaderText }) => {
   return (
     <S.Container open={true}>
-      <S.LoaderContainer>
-        <h4>{loaderText}</h4>
-        <S.LoaderParticle1></S.LoaderParticle1>
-        <S.LoaderParticle2></S.LoaderParticle2>
-        <S.LoaderParticle3></S.LoaderParticle3>
-      </S.LoaderContainer>
+      <BufferLoader loaderText={loaderText} />
     </S.Container>
   );
 };

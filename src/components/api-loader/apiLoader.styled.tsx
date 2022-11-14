@@ -26,7 +26,7 @@ namespace S {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    margin: " 10rem auto",
+    height: "3rem",
   });
 
   export const LoaderParticle1 = styled("span")(({ theme }) => ({
