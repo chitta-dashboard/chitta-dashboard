@@ -170,7 +170,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,
-        sex: farmerData?.sex,
+        sex: farmerData?.sex.toLowerCase(),
         spouseName: farmerData?.spouseName,
         dob: dateFormat(farmerData?.dob),
         group: farmerData?.group,
