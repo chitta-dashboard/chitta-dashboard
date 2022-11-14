@@ -118,7 +118,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     !isFarmerInMd &&
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
-        successCb: async () => {
+        successCb: () => {
           Toast({ message: "Farmer Edited Successfully", type: "success" });
         },
         errorCb: () => {
