@@ -69,15 +69,14 @@ const Body = () => {
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
     const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    farmersGroupData[noCountUpdate].members.includes(id);
     const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
     if (farmerDelete) {
       const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
-      const updatedMember = farmersGroupData[removeMemberIndex]["members"].filter((member: string) => member !== id);
+      const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       isAdd && (await addGroupMember(id, group));
-      await editFarmerGroup({ editedData: updatedFarmerGroup });
+      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
     }
   };
 
