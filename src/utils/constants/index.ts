@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import CryptoJS from "crypto-js";
 import Compress from "react-image-file-resizer";
+import { read, utils } from "xlsx";
 
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));
@@ -254,6 +255,30 @@ export const groupBy = (arr: any[], property: string) => {
     acc[key] = { ...obj };
     return acc;
   }, {});
+};
+
+/**
+ * Converts excel sheet data to JSON data
+ * @param {File} file
+ * @returns Returns a promise which resolves with the parsed JSON data.
+ */
+export const getJSONfromExcel = (file: File) => {
+  const reader = new FileReader();
+  const readerPromise = new Promise((resolve) => {
+    reader.addEventListener("loadend", () => {
+      const rawData = read(reader.result, { type: "binary" });
+      let JSONData: { [key: string]: string }[] = [];
+      rawData.SheetNames.forEach((sheet) => {
+        const currentData: { [key: string]: string }[] = utils.sheet_to_json(rawData.Sheets[sheet], { defval: "", raw: true });
+        JSONData.push(...currentData);
+      });
+
+      resolve(JSONData);
+    });
+  });
+  reader.readAsBinaryString(file);
+
+  return readerPromise as Promise<{ [key: string]: string }[]>;
 };
 
 export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
