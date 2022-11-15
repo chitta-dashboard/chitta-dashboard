@@ -126,13 +126,9 @@ const DashboardFounder = () => {
       </S.FounderWrapper>
 
       {image && (
-        <tbody>
-          <tr>
-            <td>
-              <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
-            </td>
-          </tr>
-        </tbody>
+        <div>
+          <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />
+        </div>
       )}
     </>
   );
