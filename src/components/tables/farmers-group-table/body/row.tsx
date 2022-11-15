@@ -57,7 +57,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   //Redirect to Farmers Details Group Filter handler.
   const selectGroupHandler = (groupName: string) => {
     dispatch(setGroupFilter(groupName));
-    navigate(`/farmers-details`, { replace: true });
+    navigate(`/farmers-details`);
   };
 
   return (
