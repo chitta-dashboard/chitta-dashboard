@@ -24,7 +24,7 @@ namespace S {
     gap: "1rem",
     backgroundColor: theme.palette.bg.main,
     height: "fit-content",
-    minHeight: "17rem",
+    minHeight: "18.85rem",
     width: "37.5rem",
     borderRadius: "1.25rem",
     padding: "1.5rem 2rem",

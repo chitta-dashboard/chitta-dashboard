@@ -80,8 +80,8 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           label: "பாலினம் *",
           gridArea: "sex",
           selectOptions: [
-            ["male", "ஆண்"],
-            ["female", "பெண்"],
+            ["MALE", "ஆண்"],
+            ["FEMALE", "பெண்"],
           ],
         }}
       />
