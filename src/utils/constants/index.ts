@@ -194,6 +194,9 @@ export const calculateAge = (dob: string) => {
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
     age_now--;
   }
+  if (age_now <= 0) {
+    return "Invalid Age"
+  }
   return age_now;
 };
 
