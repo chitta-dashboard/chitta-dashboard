@@ -33,6 +33,11 @@ namespace S {
     flexDirection: "row",
     gap: "1rem",
   });
+
+  export const SkeletonContainer = styled(Grid)({
+    width: "100%",
+    height: "100%",
+  });
 }
 
 export default S;
