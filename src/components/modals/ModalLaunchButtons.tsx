@@ -7,10 +7,11 @@ import FarmersDetailsModal from "./farmers-details-modal";
 import MdDetailsModal from "./md-details-modal";
 import ResolutionModal from "./resolution-modal";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
-import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput } from "./type/formInputs";
+import { IAddFarmersDetailsFormInput, IAddFarmersGroupFormInput, IAddMDDetailsFormInput, IAddProductsFormInput } from "./type/formInputs";
 // import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
 import { IResolution } from "../../utils/store/slice/resolution";
+import ProductsModal from "./products-modal";
 
 const ModalLaunchButtons = () => {
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -21,6 +22,7 @@ const ModalLaunchButtons = () => {
   const [openAddResolution, setOpenAddResolution] = React.useState(false);
   const [openShareAmount, setOpenShareAmount] = React.useState(false);
   const [openLoader, setOpenLoader] = React.useState(false);
+  const [products, setProducts] = React.useState(false);
 
   const loaderModalHandler = () => {
     setOpenLoader(!openLoader);
@@ -52,6 +54,9 @@ const ModalLaunchButtons = () => {
   const addShareAmount = () => {
     setOpenShareAmount(!openShareAmount);
   };
+  const addProducts = () => {
+    setProducts(!products);
+  };
 
   return (
     <Fragment>
@@ -78,6 +83,9 @@ const ModalLaunchButtons = () => {
       </Button>
       <Button variant="outlined" onClick={loaderModalHandler}>
         Loader
+      </Button>
+      <Button variant="outlined" onClick={addProducts}>
+        Products
       </Button>
       <DeleteModal
         openModal={openDelete}
@@ -126,6 +134,8 @@ const ModalLaunchButtons = () => {
       </FarmersGroupContextProvider>
       <ResolutionModal openModal={openAddResolution} handleClose={addResolution} cb={(data: IResolution): void => {}} />
       {/* <ShareAmountModal openModal={openShareAmount} handleClose={addShareAmount} /> */}
+
+      <ProductsModal openModal={products} handleClose={addProducts} cb={(data: IAddProductsFormInput): void => {}} />
     </Fragment>
   );
 };
