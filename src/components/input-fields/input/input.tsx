@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
-import { dateFormat } from "../../../utils/constants";
+import { dateFormat, Products } from "../../../utils/constants";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
@@ -349,14 +349,15 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           render={({ field, formState: { errors } }) => {
             return (
               <S.StyledAutocomplete
-                options={options.productOptions}
+                options={Products}
                 PopperComponent={PopperWidth}
                 fullWidth={true}
+                getOptionLabel={(option: any) => option?.name || field.value}
                 renderOption={(props, option: any) => {
                   return (
                     <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
-                      <img loading="lazy" width="40" src={option.image} srcSet={`${option.image} 2x`} alt="" />
-                      {option.label}
+                      <img loading="lazy" width="40" src={option?.image} srcSet={`${option?.image} 2x`} alt="" />
+                      {option?.name} ({option?.tamilName})
                     </Box>
                   );
                 }}
@@ -368,7 +369,6 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                       ...params.InputProps,
-
                       endAdornment: (
                         <InputAdornment position="end">
                           <img loading="lazy" width="30" src={image} srcSet={`${image} 2x`} alt="" />
@@ -377,13 +377,12 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     }}
                   />
                 )}
-                value={autocomplete}
+                value={field.value ? field.value : autocomplete}
                 ref={field.ref}
                 onChange={(event: any, newValue: any) => {
-                  console.log('newValue', newValue)
-                  setAutocomplete(newValue.label);
+                  setAutocomplete(newValue.name);
                   onChange && onChange(event);
-                  field.onChange(newValue?.label?.split(" ")[0]);
+                  field.onChange(newValue.name);
                   setImage(newValue ? newValue.image : "");
                 }}
               />

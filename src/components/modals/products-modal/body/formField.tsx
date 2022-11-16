@@ -1,10 +1,8 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
+import { Products } from "../../../../utils/constants";
 import S from "./productsModal.styled";
-import riceSeeds from "../../../../assets/images/rice_seeds.png";
-import groundnuts from "../../../../assets/images/groundnuts.png";
-
 interface CustomProps {
   control?: Control;
 }
@@ -20,16 +18,17 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          productOptions: [
-            {
-              label: "Rice-seeds (அரிசி விதைகள்)",
-              image: riceSeeds,
-            },
-            {
-              label: "Groundnuts (நிலக்கடலை)",
-              image: groundnuts,
-            },
-          ],
+          // productOptions: [
+          //   {
+          //     label: "Rice-seeds (அரிசி விதைகள்)",
+          //     image: riceSeeds,
+          //   },
+          //   {
+          //     label: "Groundnuts (நிலக்கடலை)",
+          //     image: groundnuts,
+          //   },
+          // ],
+          productOptions: Products,
         }}
       />
       <Input
