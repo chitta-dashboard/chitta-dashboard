@@ -240,6 +240,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   id: user.id,
                   successCb: () => {
                     Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                    addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                   },
                   errorCb: () => {
                     Toast({ message: "Request failed! Please try again", type: "error" });
@@ -253,7 +254,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                       id: isFarmerInMd,
                       successCb: () => {
                         Toast({ message: "Farmer Deleted Successfully", type: "success" });
-                        addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                        addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                       },
                       errorCb: () => {
                         Toast({ message: "Request failed! Please try again", type: "error" });

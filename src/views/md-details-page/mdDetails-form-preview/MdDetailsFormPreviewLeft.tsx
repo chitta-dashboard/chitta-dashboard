@@ -110,14 +110,13 @@ const MdFormPreviewLeft = () => {
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = async (id: string, group: string) => {
     const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    farmersGroupData[noCountUpdate].members.includes(id);
-    if (!farmersGroupData[noCountUpdate].members.includes(id)) {
+    if (!farmersGroupData[noCountUpdate]?.members.includes(id)) {
       const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
-      const updatedMember = farmersGroupData[removeMemberIndex]["members"].filter((member: string) => member !== id);
+      const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       await addGroupMember(id, group);
-      await editFarmerGroup({ editedData: updatedFarmerGroup });
+      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
     }
   };
 
