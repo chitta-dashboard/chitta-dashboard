@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
@@ -11,6 +11,7 @@ export interface IDropValidationResult {
 }
 interface IDropFile {
   fileFormat?: string[];
+  fileExtension?: string[];
   cb: (file: File) => void;
   validate?: (file: File) => Promise<IDropValidationResult>;
 }
@@ -24,6 +25,7 @@ function stopDefaultBehaviour(e: React.DragEvent<HTMLDivElement>) {
 
 const DropFile: React.FC<IDropFile> = function ({
   fileFormat = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"],
+  fileExtension = [".xlsx", "xls"],
   validate,
   cb,
 }) {
@@ -77,6 +79,33 @@ const DropFile: React.FC<IDropFile> = function ({
     [targetState, validate, cb],
   );
 
+  const handleClick = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      if (targetState === "noDrag") e.currentTarget.querySelector("input")!.click();
+    },
+    [targetState],
+  );
+
+  const validateAndSet = useCallback(
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files![0];
+      if (file) {
+        setProcessingFile(true);
+        const validation = validate ? await validate(file) : { status: true, message: "" };
+        setProcessingFile(false);
+        if (validation.status) {
+          setTargetState("completedDrag");
+          setSelectedFile(file);
+          cb(file);
+        } else {
+          Toast({ message: validation.message, type: "error" });
+        }
+        e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.
+      }
+    },
+    [validate, cb],
+  );
+
   return (
     <S.DropBox
       state={targetState}
@@ -87,8 +116,9 @@ const DropFile: React.FC<IDropFile> = function ({
       onDragEnter={handleDragEnter}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
+      onClick={handleClick}
     >
-      <S.HiddenInput />
+      <S.HiddenInput accept={fileExtension.join(",")} onChange={validateAndSet} />
       <S.Message>
         {(() => {
           if (processingFile) return <BufferLoader loaderText="Processing" />;
@@ -96,7 +126,7 @@ const DropFile: React.FC<IDropFile> = function ({
             return (
               <>
                 <FileDownload sx={{ fontSize: "2rem", opacity: ".5" }} />
-                <Typography>Drag and drop file from your system.</Typography>
+                <Typography>Click or Drag and drop to add 'Excel' file.</Typography>
               </>
             );
           else if (targetState === "inValidDrag") return <Typography>Invalid File Format!</Typography>;

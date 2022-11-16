@@ -52,6 +52,15 @@ export interface IAddFarmersGroupFormInput {
   members?: string[];
 }
 
+export interface IAddProductsFormInput {
+  productName: string;
+  variant: string;
+  startDate: string;
+  endDate: string;
+  availableAmount: string;
+  qualityGrade: string;
+}
+
 export interface IAddMDDetailsFormInput {
   name: string;
   phoneNumber: string;
