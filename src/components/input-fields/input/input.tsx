@@ -1,12 +1,24 @@
 import { useState } from "react";
-import { FormHelperText, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import {
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  Radio,
+  RadioGroup,
+  Select,
+  TextField,
+  Box,
+  InputAdornment,
+  Popper,
+} from "@mui/material";
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
-import S from "./input.styled";
 import { dateFormat } from "../../../utils/constants";
+import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
-  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete";
+  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete" | "autocomplete-with-imagelist";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options?: {
     [key: string]: any;
@@ -16,6 +28,21 @@ interface InputProps extends UseControllerProps {
 function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {} }: InputProps) {
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
+  const [image, setImage] = useState<string>("");
+
+  const PopperWidth = function (props: any) {
+    return (
+      <Popper
+        {...props}
+        style={{
+          popper: {
+            width: "fit-content",
+          },
+        }}
+        placement="bottom-end"
+      />
+    );
+  };
 
   switch (type) {
     case "text":
@@ -295,13 +322,8 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
             return (
               <S.StyledAutocomplete
                 options={options.selectoptions}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    helperText={errors[name]?.message as string}
-                    label={options.label}
-                    InputLabelProps={{ shrink: true }}
-                  />
+                renderInput={(params: any) => (
+                  <TextField {...params} helperText={errors[name]?.message as string} label={options.label} InputLabelProps={{ shrink: true }} />
                 )}
                 value={field.value ? field.value : autocomplete}
                 ref={field.ref}
@@ -309,6 +331,60 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                   setAutocomplete(newValue);
                   onChange && onChange(event);
                   field.onChange(newValue);
+                }}
+              />
+            );
+          }}
+        />
+      );
+
+    case "autocomplete-with-imagelist":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue=""
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => {
+            return (
+              <S.StyledAutocomplete
+                options={options.productOptions}
+                PopperComponent={PopperWidth}
+                fullWidth={true}
+                renderOption={(props, option: any) => {
+                  return (
+                    <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
+                      <img loading="lazy" width="40" src={option.image} srcSet={`${option.image} 2x`} alt="" />
+                      {option.label}
+                    </Box>
+                  );
+                }}
+                renderInput={(params: any) => (
+                  <TextField
+                    {...params}
+                    helperText={errors[name]?.message as string}
+                    label={options.label}
+                    InputLabelProps={{ shrink: true }}
+                    InputProps={{
+                      ...params.InputProps,
+
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <img loading="lazy" width="30" src={image} srcSet={`${image} 2x`} alt="" />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                )}
+                value={autocomplete}
+                ref={field.ref}
+                onChange={(event: any, newValue: any) => {
+                  console.log('newValue', newValue)
+                  setAutocomplete(newValue.label);
+                  onChange && onChange(event);
+                  field.onChange(newValue?.label?.split(" ")[0]);
+                  setImage(newValue ? newValue.image : "");
                 }}
               />
             );
