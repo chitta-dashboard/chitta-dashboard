@@ -204,6 +204,23 @@ export const createJoinDate = () => {
 };
 
 /**
+ * Returns the base64 encoding of a file.
+ * @param {Blob | File} file - The file to encode
+ * @returns {string} Returns the specified file's Base64 encoding.
+ */
+export const fileToBase64 = (file: Blob | File | string, isPath = false): Promise<string> =>
+  new Promise(async (resolve) => {
+    const reader = new FileReader();
+    reader.onload = function () {
+      resolve(reader.result as string);
+    };
+    if (isPath && typeof file === "string") {
+      file = await fetch(file).then((r) => r.blob());
+    }
+    reader.readAsDataURL(file as Blob | File);
+  });
+
+/**
  * Encrypt a text.
  * @param {string} text - The text to encrypt
  * @param {string} secretPhrase - The encryption key (this should be used while decryption)
@@ -235,18 +252,10 @@ export const decryptText = (encryptedText: string, secretPhrase: string = "123")
  * @param {Blob | File} file - The file to encrypt
  * @returns {string} Returns the specified file's encrypted Base64 text.
  */
-export const encryptFile = (file: Blob | File | string, isPath = false): Promise<string> =>
-  new Promise(async (resolve) => {
-    const reader = new FileReader();
-    reader.onload = function () {
-      const encryptedBase64 = encryptText(reader?.result as string);
-      resolve(encryptedBase64);
-    };
-    if (isPath && typeof file === "string") {
-      file = await fetch(file).then((r) => r.blob());
-    }
-    reader.readAsDataURL(file as Blob | File);
-  });
+export const encryptFile = async (file: Blob | File | string, isPath = false): Promise<string> => {
+  const base64 = await fileToBase64(file, isPath);
+  return encryptText(base64);
+};
 
 export const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, obj) => {
