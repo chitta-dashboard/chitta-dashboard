@@ -19,6 +19,7 @@ const FarmersDetails = lazy(() => import("../../views/farmers-details"));
 const Founders = lazy(() => import("../../views/founders"));
 const AdminPanel = lazy(() => import("../../views/admin-panel"));
 const Resolutions = lazy(() => import("../../views/resolution"));
+const Portfolio = lazy(() => import("../../views/portfolio"));
 const NotFound = lazy(() => import("../../views/not-found"));
 const FarmerFormPreview = lazy(() => import("../../views/farmer-detail-page/farmer-form-preview/FarmerFormPreview"));
 const ResolutionCertificatePage = lazy(() => import("../../views/resolution-certificate"));
@@ -148,6 +149,10 @@ export const ROUTES = [
   {
     route: "admin-panel",
     name: "Admin Panel",
+  },
+  {
+    route: "portfolio",
+    name: "Portfolio",
   },
 ];
 
@@ -334,7 +339,18 @@ export const getJSONfromExcel = (file: File) => {
   return readerPromise as Promise<{ [key: string]: string }[]>;
 };
 
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
+export type Endpoints =
+  | "resolutions"
+  | "ceo"
+  | "farmerDetails"
+  | "farmerGroup"
+  | "mdDetails"
+  | "founders"
+  | "notification"
+  | "portfolio-raw"
+  | "portfolio-processed"
+  | "portfolio-animal"
+  |"admin";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -344,6 +360,10 @@ export const ENDPOINTS: {
   mdDetails: Endpoints;
   founders: Endpoints;
   notification: Endpoints;
+  portfolioRaw: Endpoints;
+  portfolioProcessed: Endpoints;
+  portfolioAnimal: Endpoints;
+  admin: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -352,6 +372,10 @@ export const ENDPOINTS: {
   mdDetails: "mdDetails",
   founders: "founders",
   notification: "notification",
+  portfolioRaw: "portfolio-raw",
+  portfolioProcessed: "portfolio-processed",
+  portfolioAnimal: "portfolio-animal",
+  admin: "admin",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {
@@ -412,10 +436,15 @@ export const RouterDefaults = [
     component: ResolutionCertificatePage,
   },
   {
+    path: "/portfolio",
+    component: Portfolio,
+  },
+  {
     path: "/*",
     component: NotFound,
   },
 ];
+
 export const imageCompressor = (file: any) =>
   new Promise<string>((resolve) => {
     Compress.imageFileResizer(
@@ -431,3 +460,30 @@ export const imageCompressor = (file: any) =>
       "base64",
     );
   });
+
+export const variantStructure = {
+  101: {
+    "e2fbf9be-101b-46d8-98d9-0ce106e25b26": "Basmati",
+  },
+  102: {
+    "a7e8d3fb-b318-481f-8913-a802323d0002": "Paiyur-1",
+  },
+  103: {
+    "88ee2e31-3abe-448f-a439-2dc087aa9573": "Basmati",
+  },
+  104: {
+    "88618d44-a095-4217-b09e-30b1b341022f": "Basmati",
+  },
+  105: {
+    "38a003fd-af1a-4d68-98c9-3e5d4096a5c5": "Basmati",
+  },
+  106: {
+    "177977f1-861e-4b3d-b54a-1cacfbaa116c": "Basmati",
+  },
+  107: {
+    "c717ca08-1c0d-47a2-a184-7b3a4760752f": "Basmati",
+  },
+  108: {
+    "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7": "Basmati",
+  },
+};

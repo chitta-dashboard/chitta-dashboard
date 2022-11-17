@@ -2,7 +2,7 @@ import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { mdDetail } from "../../utils/context/mdDetails";
-import { useAuthContext } from "../../utils/context/auth";
+import { adminFormInputs } from "../admin-panel";
 import { useFetch } from "../../utils/hooks/query";
 import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
@@ -18,12 +18,18 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.mdDetails);
-  const { headerImage, titleName, address } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { headerLogo: headerImage, name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const { mdId } = useParams();
 
   return (
     <>
-      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId, MdIdtoPrint].includes(name.id))
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
@@ -32,7 +38,10 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
               <S.HeaderTextContainer>
                 <S.HeaderText1>
                   {titleName ? (
-                    titleName
+                    <>
+                      {titleName} உழவர் <br />
+                      உற்பத்தியாளர் நிறுவனம்
+                    </>
                   ) : (
                     <>
                       நெற்கதிர் உழவர்
