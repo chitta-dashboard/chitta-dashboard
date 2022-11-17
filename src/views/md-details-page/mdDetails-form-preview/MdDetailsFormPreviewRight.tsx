@@ -1,22 +1,30 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { useAuthContext } from "../../../utils/context/auth";
 import { mdDetail } from "../../../utils/context/mdDetails";
 import { useFetch } from "../../../utils/hooks/query";
 import { MD_DATA } from "../constant";
-import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { ENDPOINTS } from "../../../utils/constants";
+import { adminFormInputs } from "../../admin-panel";
 import { decryptText } from "../../../utils/constants";
 import { S } from "./mdDetails-form-preview.styled";
+import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 
 const MdFormPreviewRight = () => {
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.mdDetails);
-  const { data: mdDetailsById } = result;
-  const { pdfImage } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const { mdId } = useParams();
   return (
     <>
-      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>

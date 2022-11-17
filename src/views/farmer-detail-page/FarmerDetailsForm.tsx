@@ -2,9 +2,9 @@ import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { useAuthContext } from "../../utils/context/auth";
 import { useFetch } from "../../utils/hooks/query";
 import { FARMER_DATA } from "./constant";
+import { adminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -18,12 +18,19 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
-  const { titleName, loginImage, address } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { loginLogo: loginImage, name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const { farmerId } = useParams();
 
   return (
     <>
       {isSuccess &&
+        isSuccessAdmin &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId, farmerIdtoPrint].includes(name.id))
           .map((user) => (
@@ -33,7 +40,10 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (
-                      titleName
+                      <>
+                        {titleName} உழவர் <br />
+                        உற்பத்தியாளர் நிறுவனம்
+                      </>
                     ) : (
                       <>
                         நெற்கதிர் உழவர் <br />
@@ -46,12 +56,11 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                       address
                     ) : (
                       <>
-                        நபார்டு <br />
-                        கள்ளக்குறிச்சி மாவட்டம்
+                        நபார்டு கள்ளக்குறிச்சி மாவட்டம்
+                        <br />
+                        உறுப்பினர் விண்ணப்பம்
                       </>
                     )}
-                    <br />
-                    உறுப்பினர் விண்ணப்பம்
                   </S.HeaderText2>
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
