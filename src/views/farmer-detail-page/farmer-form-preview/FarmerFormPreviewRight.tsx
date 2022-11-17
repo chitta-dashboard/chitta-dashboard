@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { useAuthContext } from "../../../utils/context/auth";
 import { FARMER_DATA } from "../constant";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { decryptText } from "../../../utils/constants";
+import { adminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewRight = () => {
@@ -16,11 +16,17 @@ const FarmerFormPreviewRight = () => {
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
   const { farmerId } = useParams();
-  const { pdfImage } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
 
   return (
     <>
       {isSuccess &&
+        isSuccessAdmin &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId].includes(name.id))
           .map((user) => (

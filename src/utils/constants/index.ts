@@ -349,7 +349,8 @@ export type Endpoints =
   | "notification"
   | "portfolio-raw"
   | "portfolio-processed"
-  | "portfolio-animal";
+  | "portfolio-animal"
+  |"admin";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -362,6 +363,7 @@ export const ENDPOINTS: {
   portfolioRaw: Endpoints;
   portfolioProcessed: Endpoints;
   portfolioAnimal: Endpoints;
+  admin: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -373,6 +375,7 @@ export const ENDPOINTS: {
   portfolioRaw: "portfolio-raw",
   portfolioProcessed: "portfolio-processed",
   portfolioAnimal: "portfolio-animal",
+  admin: "admin",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {

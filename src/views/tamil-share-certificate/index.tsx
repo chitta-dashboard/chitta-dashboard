@@ -1,17 +1,18 @@
 import { forwardRef } from "react";
 import { useSelector } from "react-redux";
 import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { useAuthContext } from "../../utils/context/auth";
+// import { useAuthContext } from "../../utils/context/auth";
 import { RootState } from "../../utils/store";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
+import { decryptText } from "../../utils/constants";
+import { adminFormInputs } from "../admin-panel";
+import { S } from "./tamil-certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
 import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
 import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
-import { decryptText } from "../../utils/constants";
-import { S } from "./tamil-certificate.styled";
 
 interface Props {
   shareAmount?: number | string;
@@ -25,12 +26,19 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
-  const { certificateImage, titleName, regNo, cinNo } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { certificateLogo: certificateImage, name: titleName, regNo, cinNo } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const newDate = new Date();
 
   return (
     <div className="print-container" ref={ref}>
       {isSuccess &&
+        isSuccessAdmin &&
         selectedFarmers.map((id: any) =>
           Object.values(farmersDetailsById as farmerDetail[])
             .filter((user) => user.id === id)
@@ -50,7 +58,10 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                   </S.HeadingContainerLogo>
                   <S.HeadingContainerHeading>
                     {titleName ? (
-                      titleName
+                      <>
+                        {titleName} உழவர் <br />
+                        உற்பத்தியாளர் நிறுவனம்
+                      </>
                     ) : (
                       <>
                         நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்

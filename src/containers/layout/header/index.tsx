@@ -12,9 +12,17 @@ import Icon from "../../../components/icons";
 import S from "./header.styled";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { adminFormInputs } from "../../../views/admin-panel";
 
 const Header = () => {
-  const { userNotification, clearNotification, logout, headerImage, titleName } = useAuthContext();
+  const { clearNotification, logout } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const navigate = useNavigate();
   let { pathname } = useLocation();
   const [navOpen, setNavOpen] = useState(false);
@@ -60,75 +68,82 @@ const Header = () => {
 
   return (
     <>
-      <S.Header>
-        <S.LogoBox>
-          <S.Logo src={headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
-          <S.LogoText>
-            {titleName ? (
-              titleName
-            ) : (
+      {isSuccessAdmin && (
+        <>
+          <S.Header>
+            <S.LogoBox>
+              <S.Logo src={headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+              <S.LogoText>
+                {titleName ? (
+                  <>
+                    {titleName} உழவர் <br />
+                    உற்பத்தியாளர் நிறுவனம்
+                  </>
+                ) : (
+                  <>நெற்கதிர் உழவர் உற்பத்தியாளர் நிறுவனம்</>
+                )}
+              </S.LogoText>
+            </S.LogoBox>
+            <S.NavBar isOpen={navOpen}>
               <>
-                நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                {isMd && (
+                  <>
+                    {isMd ? (
+                      <S.NavBarMenu>
+                        Menu <i onClick={() => setNavOpen(false)}>close</i>
+                      </S.NavBarMenu>
+                    ) : null}
+                    {ROUTES.map((route) => (
+                      <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
+                        <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
+                      </S.NavLink>
+                    ))}
+                  </>
+                )}
               </>
-            )}
-          </S.LogoText>
-        </S.LogoBox>
-        <S.NavBar isOpen={navOpen}>
-          <>
-            {isMd && (
-              <>
-                {isMd ? (
-                  <S.NavBarMenu>
-                    Menu <i onClick={() => setNavOpen(false)}>close</i>
-                  </S.NavBarMenu>
-                ) : null}
-                {ROUTES.map((route) => (
-                  <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
-                    <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
-                  </S.NavLink>
-                ))}
-              </>
-            )}
-          </>
-          {!isMd && (
-            <S.NavbarSlickContainer>
-              <Slider {...settings}>
-                {ROUTES.map((route) => (
-                  <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
-                    <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
-                  </S.NavLink>
-                ))}
-              </Slider>
-            </S.NavbarSlickContainer>
+              {!isMd && (
+                <S.NavbarSlickContainer>
+                  <Slider {...settings}>
+                    {ROUTES.map((route) => (
+                      <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
+                        <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
+                      </S.NavLink>
+                    ))}
+                  </Slider>
+                </S.NavbarSlickContainer>
+              )}
+            </S.NavBar>
+            <S.ActionsBox>
+              <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
+                <Icon color={true} iconName={"notification1"} />
+              </S.NotificationBadge>
+              <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
+              <S.TabIcon>account</S.TabIcon>
+              <S.TabIcon onClick={logout}>logout</S.TabIcon>
+              {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
+            </S.ActionsBox>
+          </S.Header>
+          <S.Pop
+            open={!!anchorEl}
+            anchorEl={anchorEl}
+            onClose={popCloseHandler}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+          >
+            <S.Items>Account</S.Items>
+            <S.Items onClick={logout}>Logout</S.Items>
+          </S.Pop>
+          {open && (
+            <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />
           )}
-        </S.NavBar>
-        <S.ActionsBox>
-          <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
-            <Icon color={true} iconName={"notification1"} />
-          </S.NotificationBadge>
-          <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
-          <S.TabIcon>account</S.TabIcon>
-          <S.TabIcon onClick={logout}>logout</S.TabIcon>
-          {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
-        </S.ActionsBox>
-      </S.Header>
-      <S.Pop
-        open={!!anchorEl}
-        anchorEl={anchorEl}
-        onClose={popCloseHandler}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <S.Items>Account</S.Items>
-        <S.Items onClick={logout}>Logout</S.Items>
-      </S.Pop>
-      {open && <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />}
+        </>
+      )}
     </>
   );
 };
