@@ -17813,94 +17813,126 @@
       "participator": ["person 1", "person 2", "person 3"]
     }
   ],
-  "portfolio": [
+  "portfolio-raw": [
     {
-      "id": "1",
+      "id": "eed0024e-9788-4f74-8ef0-ad9d9671b41e",
       "productId": "101",
       "productName": "Paddy Seeds",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["e2fbf9be-101b-46d8-98d9-0ce106e25b26"],
+      "e2fbf9be-101b-46d8-98d9-0ce106e25b26": {
+        "variantId": "e2fbf9be-101b-46d8-98d9-0ce106e25b26",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "2000",
+        "qualityGrade": "C+"
+      }
     },
     {
-      "id": "2",
+      "id": "ae276ede-06fd-4044-920e-a3c63c149639",
       "productId": "102",
-      "productName": "Millets Seeds",
-      "variant": "Paiyur-1",
-      "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "productName": "Millet Seeds",
+      "variants": ["a7e8d3fb-b318-481f-8913-a802323d0002"],
+      "a7e8d3fb-b318-481f-8913-a802323d0002": {
+        "variantId": "a7e8d3fb-b318-481f-8913-a802323d0002",
+        "variantName": "Paiyur-1",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "2000",
+        "qualityGrade": "B+"
+      }
     },
     {
-      "id": "3",
+      "id": "b1644f14-fd5a-45dd-84be-a403d20ee0ef",
       "productId": "103",
       "productName": "Groundnut",
-      "variant": "Basmati",
-      "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["88ee2e31-3abe-448f-a439-2dc087aa9573"],
+      "88ee2e31-3abe-448f-a439-2dc087aa9573": {
+        "variantId": "88ee2e31-3abe-448f-a439-2dc087aa9573",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "200",
+        "qualityGrade": "A+"
+      }
     },
     {
-      "id": "4",
+      "id": "79253524-3110-48f7-8769-b9adbd2a26a0",
       "productId": "104",
       "productName": "Maize",
-      "variant": "Basmati",
-      "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "C",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["88618d44-a095-4217-b09e-30b1b341022f"],
+      "88618d44-a095-4217-b09e-30b1b341022f": {
+        "variantId": "88618d44-a095-4217-b09e-30b1b341022f",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "200",
+        "qualityGrade": "B+"
+      }
     },
     {
-      "id": "5",
+      "id": "ed07c5c6-dce2-48ae-9ef0-8385774e3703",
       "productId": "105",
       "productName": "Ragi Seeds",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["38a003fd-af1a-4d68-98c9-3e5d4096a5c5"],
+      "38a003fd-af1a-4d68-98c9-3e5d4096a5c5": {
+        "variantId": "38a003fd-af1a-4d68-98c9-3e5d4096a5c5",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "350",
+        "qualityGrade": "C+"
+      }
     },
     {
-      "id": "6",
+      "id": "6831d66b-b090-469e-a1be-dda258c3b3eb",
       "productId": "106",
       "productName": "Black Gram",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["177977f1-861e-4b3d-b54a-1cacfbaa116c"],
+      "177977f1-861e-4b3d-b54a-1cacfbaa116c": {
+        "variantId": "177977f1-861e-4b3d-b54a-1cacfbaa116c",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "350",
+        "qualityGrade": "A+"
+      }
     },
     {
-      "id": "7",
+      "id": "2f085dc7-3c65-4fb2-bc41-17d07223a613",
       "productId": "107",
       "productName": "Sugarcane",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "C",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["c717ca08-1c0d-47a2-a184-7b3a4760752f"],
+      "c717ca08-1c0d-47a2-a184-7b3a4760752f": {
+        "variantId": "c717ca08-1c0d-47a2-a184-7b3a4760752f",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "750",
+        "qualityGrade": "B+"
+      }
     },
     {
-      "id": "8",
+      "id": "456ea261-efad-492f-a067-ed2284c186c9",
       "productId": "108",
       "productName": "Cotton Seeds",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "variants": ["bf61e4b1-c9bb-4627-a64e-b6c6cec586a7"],
+      "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7": {
+        "variantId": "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7",
+        "variantName": "Basmati",
+        "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+        "startDate": "21-01-2022",
+        "endDate": "02-05-2022",
+        "availableAmount": "750",
+        "qualityGrade": "B+"
+      }
     }
   ],
   "notification": []
