@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
-import { dateFormat, Products } from "../../../utils/constants";
+import { dateFormat } from "../../../utils/constants";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
@@ -63,6 +63,14 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               name={field.name}
               value={field.value}
               ref={field.ref}
+              InputProps={{
+                ...options.InputProps,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <p>{options?.unit}</p>
+                  </InputAdornment>
+                ),
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(dateFormat(e.target.value));
                 onChange && onChange(e);
@@ -166,7 +174,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 helperText={errors[name]?.message as string}
                 {...options}
                 name={field.name}
-                value={field.value}
+                value={options.defaultValue ? options.defaultValue : field.value}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   field.onChange(e.target.value);
@@ -349,10 +357,11 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           render={({ field, formState: { errors } }) => {
             return (
               <S.StyledAutocomplete
-                options={Products}
+                options={options.selectoptions}
                 PopperComponent={PopperWidth}
                 fullWidth={true}
                 getOptionLabel={(option: any) => option?.name || field.value}
+                // isOptionEqualToValue={(option: any, value: any) => option.iso === value.iso}
                 renderOption={(props, option: any) => {
                   return (
                     <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>

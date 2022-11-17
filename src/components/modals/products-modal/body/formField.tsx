@@ -11,6 +11,22 @@ const FormField: FC<CustomProps> = ({ control }) => {
   return (
     <S.StaticBox>
       <Input
+        name="foodType"
+        type="select"
+        control={control}
+        rules={{ required: "required" }}
+        options={{
+          label: "உணவு வகை *",
+          gridArea: "ftp",
+          selectOptions: [
+            ["Raw", "Raw"],
+            ["Processed", "Processed"],
+            ["Animal", "Animal"],
+          ],
+          defaultValue: "Raw",
+        }}
+      />
+      <Input
         name="productName"
         type="autocomplete-with-imagelist"
         control={control}
@@ -18,27 +34,24 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          // productOptions: [
-          //   {
-          //     label: "Rice-seeds (அரிசி விதைகள்)",
-          //     image: riceSeeds,
-          //   },
-          //   {
-          //     label: "Groundnuts (நிலக்கடலை)",
-          //     image: groundnuts,
-          //   },
-          // ],
-          productOptions: Products,
+          selectoptions: Products,
         }}
       />
       <Input
         name="variant"
-        type="text"
+        type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
           label: "வகை *",
           gridArea: "var",
+          selectOptions: [
+            ["Basmati", "Basmati"],
+            ["Payur-1", "Payur-1"],
+            ["Variant-1", "Variant-1"],
+            ["Vriant-2", "Variant-2"],
+            ["Variant-3", "Variant-3"],
+          ],
         }}
       />
       <Input
@@ -69,6 +82,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "கையிருப்பு தொகை *",
           gridArea: "ava",
+          unit: "kg",
         }}
       />
       <Input
@@ -81,12 +95,21 @@ const FormField: FC<CustomProps> = ({ control }) => {
           gridArea: "qty",
           selectOptions: [
             ["A+", "A+"],
-            ["A", "A"],
             ["B+", "B+"],
-            ["B", "B"],
             ["C+", "C+"],
-            ["C", "C"],
           ],
+          defaultValue: "A+",
+        }}
+      />
+      <Input
+        name="description"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{
+          label: "விளக்கம் *",
+          gridArea: "des",
+          fullHeight: true,
         }}
       />
     </S.StaticBox>
