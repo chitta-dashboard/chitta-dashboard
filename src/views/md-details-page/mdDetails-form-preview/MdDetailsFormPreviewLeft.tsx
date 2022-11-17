@@ -19,6 +19,7 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { mdDetail } from "../../../utils/context/mdDetails";
+import { adminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
@@ -30,11 +31,18 @@ const MdFormPreviewLeft = () => {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { addNotification, titleName, address } = useAuthContext();
+  const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
@@ -132,7 +140,7 @@ const MdFormPreviewLeft = () => {
       <S.InvisibleBox>
         <MdDetailsForm ref={mdFormPdf} />
       </S.InvisibleBox>
-      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewLeft key={user.id}>
@@ -184,7 +192,10 @@ const MdFormPreviewLeft = () => {
             <S.FormHeading>
               <S.Text1>
                 {titleName ? (
-                  titleName
+                  <>
+                    {titleName} உழவர் <br />
+                    உற்பத்தியாளர் நிறுவனம்
+                  </>
                 ) : (
                   <>
                     நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்

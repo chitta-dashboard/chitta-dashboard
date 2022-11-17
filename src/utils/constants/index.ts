@@ -293,7 +293,7 @@ export const getJSONfromExcel = (file: File) => {
   return readerPromise as Promise<{ [key: string]: string }[]>;
 };
 
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
+export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification" |"portfolio"|"admin";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -303,6 +303,8 @@ export const ENDPOINTS: {
   mdDetails: Endpoints;
   founders: Endpoints;
   notification: Endpoints;
+  portfolio: Endpoints;
+  admin: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -311,6 +313,8 @@ export const ENDPOINTS: {
   mdDetails: "mdDetails",
   founders: "founders",
   notification: "notification",
+  portfolio: "portfolio",
+  admin: "admin",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {
