@@ -17818,7 +17818,7 @@
       "id": "eed0024e-9788-4f74-8ef0-ad9d9671b41e",
       "productId": "101",
       "productName": "Paddy Seeds",
-      "variants": ["e2fbf9be-101b-46d8-98d9-0ce106e25b26", "test1", "test2"],
+      "variants": ["e2fbf9be-101b-46d8-98d9-0ce106e25b26", "test1", "test2", "test3"],
       "e2fbf9be-101b-46d8-98d9-0ce106e25b26": {
         "variantId": "e2fbf9be-101b-46d8-98d9-0ce106e25b26",
         "variantName": "Basmati",
@@ -17845,13 +17845,14 @@
         "endDate": "02-05-2022",
         "availableAmount": "4000",
         "qualityGrade": "B+"
-      }
+      },
+      "test3": null
     },
     {
       "id": "ae276ede-06fd-4044-920e-a3c63c149639",
       "productId": "102",
       "productName": "Millet Seeds",
-      "variants": ["a7e8d3fb-b318-481f-8913-a802323d0002", "test1", "test2"],
+      "variants": ["a7e8d3fb-b318-481f-8913-a802323d0002", "test1", "test2", "test3"],
       "a7e8d3fb-b318-481f-8913-a802323d0002": {
         "variantId": "a7e8d3fb-b318-481f-8913-a802323d0002",
         "variantName": "Paiyur-1",
@@ -17878,13 +17879,14 @@
         "endDate": "02-05-2022",
         "availableAmount": "4000",
         "qualityGrade": "B+"
-      }
+      },
+      "test3": null
     },
     {
       "id": "b1644f14-fd5a-45dd-84be-a403d20ee0ef",
       "productId": "103",
       "productName": "Groundnut",
-      "variants": ["88ee2e31-3abe-448f-a439-2dc087aa9573", "test1", "test2"],
+      "variants": ["88ee2e31-3abe-448f-a439-2dc087aa9573", "test1", "test2", "test3"],
       "88ee2e31-3abe-448f-a439-2dc087aa9573": {
         "variantId": "88ee2e31-3abe-448f-a439-2dc087aa9573",
         "variantName": "Basmati",
@@ -17911,7 +17913,8 @@
         "endDate": "02-05-2022",
         "availableAmount": "4000",
         "qualityGrade": "B+"
-      }
+      },
+      "test3": null
     },
     {
       "id": "79253524-3110-48f7-8769-b9adbd2a26a0",

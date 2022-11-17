@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IPortfolioProduct } from "../../../components/portfolio/item-card";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { Endpoints, groupBy } from "../../constants";
+import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 
 interface IOptionalCallback {
@@ -187,4 +188,44 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [result.isFetched]);
   return { formatChangeSuccess, result };
+};
+
+export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
+  const { loader } = useAuthContext();
+  let successCallback: () => void;
+  let errorCallback: () => void;
+
+  return useMutation(
+    ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
+      successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
+      loader({ openLoader: true, loaderText: data === null ? "Deleting" : "Loading" });
+      console.log(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`);
+      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => data);
+    },
+    {
+      onSuccess: (data) => {
+        // do other stuff
+        const oldData = queryClient.getQueryData([`${ENDPOINTS.portfolioRaw}-fetch`]) as { [key: string]: IPortfolioProduct };
+        console.log("updatedData", oldData);
+        const updatedData = {
+          ...oldData,
+          [productId]: {
+            ...oldData[productId],
+            ...data,
+          },
+        };
+        console.log("oldData", updatedData);
+        successCallback();
+      },
+      onError: () => {
+        // do other stuff
+        console.log("mutation failed");
+        errorCallback();
+      },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
+    },
+  );
 };

@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { Popover } from "@mui/material";
+import { Popover, Typography } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import paddy from "../../../assets/images/paddy.png";
@@ -12,6 +12,7 @@ import sugarcane from "../../../assets/images/sugarcane.png";
 import cotton from "../../../assets/images/cotton.png";
 import { handleDateDifference } from "../../../utils/helpers";
 import S from "./itemCard.styled";
+import DeleteModal from "../../modals/delete-modal";
 
 export interface IPortfolioVariant {
   variantId: string;
@@ -38,6 +39,7 @@ export interface IPortfolio {
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
   const [variantData, setVariantdata] = useState(data[data.variants[0]] as IPortfolioVariant);
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
   const image = useMemo(() => {
     switch (data.productName) {
@@ -81,7 +83,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
       </S.VarValue>
       <S.StockLabel>Available:</S.StockLabel>
       <S.StockValue>{variantData.availableAmount}</S.StockValue>
-      <S.DeleteIcon />
+      <S.DeleteIcon onClick={() => setDeleteModalOpen(true)} />
       <S.EditIcon />
       <Popover
         id={"resolution-certificate-popover"}
@@ -97,19 +99,38 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
           horizontal: "left",
         }}
       >
-        {data.variants.map((id) => (
-          <S.PopoverItem
-            key={id}
-            onClick={() => {
-              setPopoverOpen(false);
-              if (id !== variantData.variantId) setVariantdata(data[id] as IPortfolioVariant);
-            }}
-            selected={id === variantData.variantId}
-          >
-            {(data[id] as IPortfolioVariant).variantName}
-          </S.PopoverItem>
-        ))}
+        {data.variants.map((id) => {
+          if (data[id] === null) return null;
+          return (
+            <S.PopoverItem
+              key={id}
+              onClick={() => {
+                setPopoverOpen(false);
+                if (id !== variantData.variantId) setVariantdata(data[id] as IPortfolioVariant);
+              }}
+              selected={id === variantData.variantId}
+            >
+              {(data[id] as IPortfolioVariant).variantName}
+            </S.PopoverItem>
+          );
+        })}
       </Popover>
+      {deleteModalOpen && (
+        <DeleteModal
+          deleteMessage={
+            <span>
+              Do you want to delete{" "}
+              <S.HighlightText>
+                {data.productName} - {variantData.variantName}
+              </S.HighlightText>{" "}
+              data?
+            </span>
+          }
+          openModal={true}
+          handleDelete={() => {}}
+          handleClose={() => setDeleteModalOpen(false)}
+        />
+      )}
     </S.ItemCard>
   );
 };
