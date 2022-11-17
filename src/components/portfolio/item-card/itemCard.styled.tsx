@@ -160,6 +160,10 @@ namespace S {
 
     return style;
   });
+
+  export const HighlightText = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+  }));
 }
 
 export default S;
