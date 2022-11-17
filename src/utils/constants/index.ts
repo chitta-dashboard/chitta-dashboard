@@ -2,6 +2,14 @@ import { lazy } from "react";
 import CryptoJS from "crypto-js";
 import Compress from "react-image-file-resizer";
 import { read, utils } from "xlsx";
+import Paddy from "../../assets/images/rice.png";
+import Millet from "../../assets/images/millet.png";
+import Groundnut from "../../assets/images/groundnut.png";
+import Maize from "../../assets/images/maize.png";
+import Ragi from "../../assets/images/ragi.png";
+import Blackgram from "../../assets/images/blackgram.png";
+import Sugarcane from "../../assets/images/sugarcane.png";
+import Cotton from "../../assets/images/cotton.png";
 
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));
@@ -195,7 +203,7 @@ export const calculateAge = (dob: string) => {
     age_now--;
   }
   if (age_now <= 0) {
-    return "Invalid Age"
+    return "Invalid Age";
   }
   return age_now;
 };
@@ -222,6 +230,39 @@ export const fileToBase64 = (file: Blob | File | string, isPath = false): Promis
     }
     reader.readAsDataURL(file as Blob | File);
   });
+
+// product details
+export const Products = [
+  { productId: 101, name: "Paddy Seeds", tamilName: "நெல் விதைகள்", image: "" },
+  { productId: 102, name: "Millet Seeds", tamilName: "தினை விதைகள்", image: "" },
+  { productId: 103, name: "Groundnut", tamilName: "நிலக்கடலை", image: "" },
+  { productId: 104, name: "Maize", tamilName: "சோளம்", image: "" },
+  { productId: 105, name: "Ragi Seeds", tamilName: "ராகி விதைகள்", image: "" },
+  { productId: 106, name: "Black Gram", tamilName: "உளுந்து", image: "" },
+  { productId: 107, name: "Sugarcane", tamilName: "கரும்பு", image: "" },
+  { productId: 108, name: "Cotton Seeds", tamilName: "பருத்தி விதைகள்", image: "" },
+];
+
+// converting image to base64 and saving into Products details
+(async () => {
+  const PaddyImage = await fileToBase64(Paddy, true);
+  const MilletSeedsImage = await fileToBase64(Millet, true);
+  const GroundnutImage = await fileToBase64(Groundnut, true);
+  const MaizeImage = await fileToBase64(Maize, true);
+  const RagiSeedsImage = await fileToBase64(Ragi, true);
+  const BlackgramImage = await fileToBase64(Blackgram, true);
+  const SugarcaneImage = await fileToBase64(Sugarcane, true);
+  const CottonSeedsImage = await fileToBase64(Cotton, true);
+
+  Products[0].image = PaddyImage;
+  Products[1].image = MilletSeedsImage;
+  Products[2].image = GroundnutImage;
+  Products[3].image = MaizeImage;
+  Products[4].image = RagiSeedsImage;
+  Products[5].image = BlackgramImage;
+  Products[6].image = SugarcaneImage;
+  Products[7].image = CottonSeedsImage;
+})();
 
 /**
  * Encrypt a text.
