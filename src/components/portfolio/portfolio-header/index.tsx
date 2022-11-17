@@ -28,7 +28,7 @@ const PortfolioHeader: FC = () => {
           </Button>
         </S.Action>
       </S.Header>
-      {addModalOpen && <ProductsModal openModal={true} handleClose={() => {}} cb={(data) => {}} />}
+      {addModalOpen && <ProductsModal openModal={true} handleClose={() => setAddModalOpen(false)} cb={(data) => {}} />}
     </>
   );
 };
