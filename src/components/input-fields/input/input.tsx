@@ -63,6 +63,14 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               name={field.name}
               value={field.value}
               ref={field.ref}
+              InputProps={{
+                ...options.InputProps,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <p>{options?.unit}</p>
+                  </InputAdornment>
+                ),
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(dateFormat(e.target.value));
                 onChange && onChange(e);
@@ -166,7 +174,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 helperText={errors[name]?.message as string}
                 {...options}
                 name={field.name}
-                value={field.value}
+                value={options.defaultValue ? options.defaultValue : field.value}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   field.onChange(e.target.value);
@@ -349,14 +357,16 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           render={({ field, formState: { errors } }) => {
             return (
               <S.StyledAutocomplete
-                options={options.productOptions}
+                options={options.selectoptions}
                 PopperComponent={PopperWidth}
                 fullWidth={true}
+                getOptionLabel={(option: any) => option?.name || field.value}
+                // isOptionEqualToValue={(option: any, value: any) => option.iso === value.iso}
                 renderOption={(props, option: any) => {
                   return (
                     <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
-                      <img loading="lazy" width="40" src={option.image} srcSet={`${option.image} 2x`} alt="" />
-                      {option.label}
+                      <img loading="lazy" width="40" src={option?.image} srcSet={`${option?.image} 2x`} alt="" />
+                      {option?.name} ({option?.tamilName})
                     </Box>
                   );
                 }}
@@ -368,7 +378,6 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     InputLabelProps={{ shrink: true }}
                     InputProps={{
                       ...params.InputProps,
-
                       endAdornment: (
                         <InputAdornment position="end">
                           <img loading="lazy" width="30" src={image} srcSet={`${image} 2x`} alt="" />
@@ -377,13 +386,12 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     }}
                   />
                 )}
-                value={autocomplete}
+                value={field.value ? field.value : autocomplete}
                 ref={field.ref}
                 onChange={(event: any, newValue: any) => {
-                  console.log('newValue', newValue)
-                  setAutocomplete(newValue.label);
+                  setAutocomplete(newValue.name);
                   onChange && onChange(event);
-                  field.onChange(newValue?.label?.split(" ")[0]);
+                  field.onChange(newValue.name);
                   setImage(newValue ? newValue.image : "");
                 }}
               />
