@@ -24,6 +24,7 @@ const PortfolioItems = () => {
 
   return (
     <S.PortfolioItems>
+      {portfolioData?.length === 0 && <S.NoDataMessage>No Raw Products</S.NoDataMessage>}
       {portfolioData?.map((data) => (
         <ItemCard key={data.id} data={data}></ItemCard>
       ))}
