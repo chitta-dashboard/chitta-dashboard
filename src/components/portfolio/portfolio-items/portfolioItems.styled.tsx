@@ -1,4 +1,4 @@
-import { styled } from "@mui/material";
+import { styled, Typography } from "@mui/material";
 
 namespace S {
   export const PortfolioItems = styled("div")(({ theme }) => ({
@@ -6,8 +6,9 @@ namespace S {
     gridTemplateColumns: "repeat(auto-fit, 27rem)",
     gap: "2rem",
     width: "100%",
-    padding: "3rem 1rem 0 1rem",
+    padding: "3rem 1rem",
     justifyContent: "center",
+    overflowY: "scroll",
     alignContent: "start",
   }));
 
@@ -20,6 +21,16 @@ namespace S {
   export const BottomMarginPlaceholder = styled("span")({
     color: "red",
   });
+
+  export const NoDataMessage = styled(Typography)(({ theme }) => ({
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    fontSize: "1.2rem",
+    color: theme.palette.text.secondaryLight,
+    fontWeight: "500",
+  }));
 }
 
 export default S;

@@ -1,10 +1,10 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { IPortfolioProduct } from "../../../components/portfolio/item-card";
+import { getProductStructure } from "../../../components/portfolio/helper";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
+import { Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 
 interface IOptionalCallback {
@@ -192,34 +192,82 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
 
 export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
   const { loader } = useAuthContext();
+  const {
+    result: { data: oldData },
+  } = useFetch(endpoint);
   let successCallback: () => void;
   let errorCallback: () => void;
+  let action: "changeVariantData" | "addProductData" | "deleteProductData" = "changeVariantData";
 
   return useMutation(
     ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
+      // initializing vars + setting loader
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: data === null ? "Deleting" : "Loading" });
-      console.log(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`);
-      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => data);
+
+      // deciding action based on data
+      if (oldData) {
+        // will be true when trying to add variant to a product that does not exist on db,
+        const isFirstVariant = oldData[productId] === undefined;
+        // will be true when trying to delete the last variant,
+        const isFinalVariant =
+          Object.values(data)[0] === null && oldData[productId].variants.filter((id: string) => oldData[productId][id] !== null).length === 1;
+        if (isFirstVariant) action = "addProductData";
+        else if (isFinalVariant) action = "deleteProductData";
+      }
+
+      switch (action) {
+        // if there is no product, add it using post
+        case "addProductData":
+          return axios
+            .post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, {
+              ...getProductStructure(productId),
+              ...data,
+            })
+            .then(() => data);
+        // if this is the last variant, delete the entire product data
+        case "deleteProductData":
+          return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`);
+        // if product is already present, just change the variant data using patch
+        case "changeVariantData":
+          return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => data);
+      }
     },
     {
       onSuccess: (data) => {
-        // do other stuff
-        const oldData = queryClient.getQueryData([`${ENDPOINTS.portfolioRaw}-fetch`]) as { [key: string]: IPortfolioProduct };
-        console.log("updatedData", oldData);
-        const updatedData = {
-          ...oldData,
-          [productId]: {
-            ...oldData[productId],
-            ...data,
-          },
-        };
-        console.log("oldData", updatedData);
+        let updatedData: any;
+        switch (action) {
+          case "addProductData":
+            updatedData = {
+              ...oldData,
+              [productId]: {
+                ...getProductStructure(productId),
+                ...data,
+              },
+            };
+            break;
+          case "deleteProductData":
+            updatedData = {
+              ...oldData,
+            };
+            delete updatedData[productId];
+            break;
+          case "changeVariantData":
+            updatedData = {
+              ...oldData,
+              [productId]: {
+                ...oldData[productId],
+                ...data,
+              },
+            };
+            break;
+        }
+
+        queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },
       onError: () => {
-        // do other stuff
         console.log("mutation failed");
         errorCallback();
       },

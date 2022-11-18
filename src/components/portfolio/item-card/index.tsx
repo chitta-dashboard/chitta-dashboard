@@ -1,5 +1,5 @@
-import { useMemo, useRef, useState } from "react";
-import { Popover, Typography } from "@mui/material";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Popover } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import paddy from "../../../assets/images/paddy.png";
@@ -11,8 +11,12 @@ import blackgram from "../../../assets/images/blackgram.png";
 import sugarcane from "../../../assets/images/sugarcane.png";
 import cotton from "../../../assets/images/cotton.png";
 import { handleDateDifference } from "../../../utils/helpers";
-import S from "./itemCard.styled";
 import DeleteModal from "../../modals/delete-modal";
+import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
+import { useEditPortfolio } from "../../../utils/hooks/query";
+import { useAuthContext } from "../../../utils/context/auth";
+import Toast from "../../../utils/toast";
+import S from "./itemCard.styled";
 
 export interface IPortfolioVariant {
   variantId: string;
@@ -37,9 +41,16 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
-  const [variantData, setVariantdata] = useState(data[data.variants[0]] as IPortfolioVariant);
+  const [variantData, setVariantdata] = useState((): IPortfolioVariant => {
+    for (let id of data.variants) {
+      if (data[id] !== null) return data[id] as IPortfolioVariant;
+    }
+    return {} as unknown as IPortfolioVariant; // a hack to satisfy typescript.
+  });
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const { mutate } = useEditPortfolio(ENDPOINTS.portfolioRaw, data.id);
+  const { addNotification } = useAuthContext();
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
   const image = useMemo(() => {
     switch (data.productName) {
@@ -63,6 +74,12 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
         return paddy;
     }
   }, [data.productName]);
+
+  useEffect(() => {
+    for (let id of data.variants) {
+      if (data[id] !== null) return setVariantdata(data[id] as IPortfolioVariant);
+    }
+  }, [data]);
 
   return (
     <S.ItemCard>
@@ -127,7 +144,23 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
             </span>
           }
           openModal={true}
-          handleDelete={() => {}}
+          handleDelete={() => {
+            mutate({
+              data: {
+                [variantData.variantId]: null,
+              },
+              successCb: async () => {
+                const base64Image = await fileToBase64(image, true);
+                addNotification({
+                  message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`,
+                  id: "delete_" + variantData.variantId,
+                  image: base64Image,
+                });
+                Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success" });
+              },
+            });
+            setDeleteModalOpen(false);
+          }}
           handleClose={() => setDeleteModalOpen(false)}
         />
       )}
