@@ -183,11 +183,13 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 onBlur={field.onBlur}
               >
                 <MenuItem value="" style={{ display: "none" }}></MenuItem>
+
                 {options?.selectOptions?.map(([actualValue, displayValue]: [string, string]) => (
-                  <MenuItem key={actualValue} value={actualValue}>
+                  <MenuItem key={actualValue} value={actualValue} disabled={options?.result && !options?.result.includes(actualValue)}>
                     {displayValue}
                   </MenuItem>
                 ))}
+
                 {/* special options are something that user cannot select, but you can set explicitly (programatically) ex: ~All Groups~ */}
                 {/* inorder to set a select field value, it must be in the menu items, we here we're adding it without showing to user */}
                 {options?.specialOptions?.map((value: string) => (
@@ -386,6 +388,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     }}
                   />
                 )}
+                // value={field.value ? field.value : autocomplete}
                 value={field.value ? field.value : autocomplete}
                 ref={field.ref}
                 onChange={(event: any, newValue: any) => {
