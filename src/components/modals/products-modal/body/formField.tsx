@@ -5,9 +5,11 @@ import { PRODUCT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
 interface CustomProps {
   control?: Control;
+  variantList?: unknown[];
+  result?: string[] | undefined;
 }
 
-const FormField: FC<CustomProps> = ({ control }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
   return (
     <S.StaticBox>
       <Input
@@ -23,7 +25,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          defaultValue: "Raw",
+          // defaultValue: "Raw",
         }}
       />
       <Input
@@ -34,7 +36,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          selectoptions: PRODUCT_DATA,
+          selectoptions: PRODUCT_DATA.raw,
         }}
       />
       <Input
@@ -45,13 +47,8 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "வகை *",
           gridArea: "var",
-          selectOptions: [
-            ["Basmati", "Basmati"],
-            ["Payur-1", "Payur-1"],
-            ["Variant-1", "Variant-1"],
-            ["Vriant-2", "Variant-2"],
-            ["Variant-3", "Variant-3"],
-          ],
+          selectOptions: variantList,
+          result: result,
         }}
       />
       <Input
@@ -98,7 +95,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          defaultValue: "A+",
+          // defaultValue: "A+",
         }}
       />
       <Input
