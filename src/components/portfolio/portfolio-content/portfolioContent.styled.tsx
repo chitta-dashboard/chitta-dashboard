@@ -5,8 +5,7 @@ namespace S {
     backgroundColor: theme.palette.bg.main,
     borderRadius: theme.shape.containerRadius,
     height: "100%",
-    overflowX: "hidden",
-    overflowY: "auto",
+    overflow: "hidden",
     display: "flex",
     justifyContent: "center",
   }));

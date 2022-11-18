@@ -9,7 +9,9 @@ namespace S {
     justifyContent: "space-between",
   });
 
-  export const Description = styled("div")({});
+  export const Description = styled("div")({
+    whiteSpace: "nowrap",
+  });
 
   export const DescriptionHeader = styled(Typography)(({ theme }) => ({
     fontSize: "1.125rem",

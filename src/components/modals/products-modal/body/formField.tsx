@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
-import { Products } from "../../../../utils/constants";
+import { PRODUCT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
 interface CustomProps {
   control?: Control;
@@ -34,7 +34,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          selectoptions: Products,
+          selectoptions: PRODUCT_DATA,
         }}
       />
       <Input

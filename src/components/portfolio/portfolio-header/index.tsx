@@ -19,13 +19,7 @@ const PortfolioHeader: FC = () => {
         <ToggleButton selectedMode={tab} setSelectedMode={setTab} options={["Raw", "Processed", "Animal"]} />
         <S.Action>
           <SearchBar />
-          <Button
-            onClick={() => {
-              setAddModalOpen(true);
-            }}
-          >
-            Add
-          </Button>
+          <Button onClick={() => {}}>Add</Button>
         </S.Action>
       </S.Header>
       {addModalOpen && <ProductsModal openModal={true} handleClose={() => setAddModalOpen(false)} cb={(data) => {}} />}
