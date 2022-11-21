@@ -1,8 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
-import { fileValidation } from "../../../utils/constants";
+import { fileToBase64, fileValidation } from "../../../utils/constants";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
@@ -10,8 +10,10 @@ import { S } from "./dashboardHeader.styled";
 
 const DashboardHeader = () => {
   const [openSearch, setOpenSearch] = useState(false);
-  const [image, setImage] = useState("");
-  const [imagePic, setImagePic] = useState("");
+  const [image, setImage] = useState<string>("");
+  const [imagePic, setImagePic] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));
+
+  useEffect(() => {}, [image, imagePic]);
 
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
@@ -35,9 +37,12 @@ const DashboardHeader = () => {
     element.value = "";
   };
 
-  const handleCroppedImage = (image: string) => {
+  const handleCroppedImage = async (image: string) => {
     if (!image) return;
     setImagePic(image);
+    const LocalUserImage = await fileToBase64(image, true);
+    localStorage.setItem("local user", JSON.stringify(LocalUserImage));
+    setImagePic(JSON.parse(localStorage.getItem("local user") as string));
   };
 
   return (
