@@ -168,6 +168,7 @@ export const Message = (name: string) => {
     deleteCeoDetails: `ceo "${name}" has been removed`,
     addFoundersDetails: `New Founder "${name}" has been registered`,
     deleteFoundersDetails: `Founder "${name}" has been removed`,
+    addProduct: `Product "${name}" has been added`,         
   };
 };
 

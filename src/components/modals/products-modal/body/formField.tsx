@@ -5,11 +5,12 @@ import { PRODUCT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
 interface CustomProps {
   control?: Control;
-  variantList?: unknown[];
-  result?: string[] | undefined;
+  variantList?: string[][] | null;
+  availableList?: string[] | null;
+  setProductName?: (name: string) => void;
 }
 
-const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName }) => {
   return (
     <S.StaticBox>
       <Input
@@ -25,7 +26,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          // defaultValue: "Raw",
+          initialvalue: "Raw",
         }}
       />
       <Input
@@ -37,6 +38,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
           selectoptions: PRODUCT_DATA.raw,
+          setproductname: setProductName,
         }}
       />
       <Input
@@ -48,7 +50,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
           label: "வகை *",
           gridArea: "var",
           selectOptions: variantList,
-          result: result,
+          availablelist: availableList,
         }}
       />
       <Input
@@ -73,7 +75,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
       />
       <Input
         name="availableAmount"
-        type="text"
+        type="number"
         control={control}
         rules={{ required: "required" }}
         options={{
@@ -95,7 +97,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, result }) => {
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          // defaultValue: "A+",
+          initialvalue: "A+",
         }}
       />
       <Input

@@ -59,6 +59,11 @@ export interface IAddProductsFormInput {
   endDate: string;
   availableAmount: string;
   qualityGrade: string;
+  products: string[];
+  foodType: string;
+  description: string;
+  profile :string
+  name :string
 }
 
 export interface IAddMDDetailsFormInput {
