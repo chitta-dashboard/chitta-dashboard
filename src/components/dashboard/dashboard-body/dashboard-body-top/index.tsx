@@ -6,15 +6,18 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFetch } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
 import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
+import APIloader from "../../../api-loader";
 import S from "../dashboardBodyTop.styled";
 
 const DashboardBodyTop = () => {
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const {
+    formatChangeSuccess: isFarmerDetailsLoading,
     result: { data: farmerDetails },
   } = useFetch(ENDPOINTS.farmerDetails as Endpoints);
   const {
+    formatChangeSuccess: isFarmerGroupLoading,
     result: { data: farmerGroup },
   } = useFetch(ENDPOINTS.farmerGroup as Endpoints);
   const FarmerCount = farmerDetails && Object.values(farmerDetails).length;
@@ -85,31 +88,39 @@ const DashboardBodyTop = () => {
   };
 
   return (
-    <S.StasticsCardContainer>
-      <Slider {...settings}>
-        {StatisticsItems.map((card) => {
-          return (
-            <S.StasticsCard key={card.id}>
-              <S.StatCardHeader>
-                <S.StatCardHeaderLeft>
-                  <S.StatCardIcon>
-                    <Icon iconName={card.icon} />
-                  </S.StatCardIcon>
-                  <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
-                </S.StatCardHeaderLeft>
-                <S.StatCardHeaderRight>
-                  <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
-                </S.StatCardHeaderRight>
-              </S.StatCardHeader>
-              <S.StatCardFooter>
-                {card.footerName}
-                <Icon iconName="three-dots" />
-              </S.StatCardFooter>
-            </S.StasticsCard>
-          );
-        })}
-      </Slider>
-    </S.StasticsCardContainer>
+    <>
+      {isFarmerDetailsLoading && isFarmerGroupLoading ? (
+        <S.StasticsCardContainer>
+          <Slider {...settings}>
+            {StatisticsItems.map((card) => {
+              return (
+                <S.StasticsCard key={card.id}>
+                  <S.StatCardHeader>
+                    <S.StatCardHeaderLeft>
+                      <S.StatCardIcon>
+                        <Icon iconName={card.icon} />
+                      </S.StatCardIcon>
+                      <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
+                    </S.StatCardHeaderLeft>
+                    <S.StatCardHeaderRight>
+                      <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
+                    </S.StatCardHeaderRight>
+                  </S.StatCardHeader>
+                  <S.StatCardFooter>
+                    {card.footerName}
+                    <Icon iconName="three-dots" />
+                  </S.StatCardFooter>
+                </S.StasticsCard>
+              );
+            })}
+          </Slider>
+        </S.StasticsCardContainer>
+      ) : (
+        <>
+          <APIloader />
+        </>
+      )}
+    </>
   );
 };
 
