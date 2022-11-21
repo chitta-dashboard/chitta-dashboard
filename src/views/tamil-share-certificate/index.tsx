@@ -94,7 +94,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
                     <S.BlankSpace3>
-                      {user.address}, {user.village}, {user.postalNo}
+                      {user.address}, {user.village}, {user.district}, {user.postalNo}
                     </S.BlankSpace3>
                     <S.CertificateText>என்பவருக்கு</S.CertificateText>
                   </S.CertificateTextLine>
