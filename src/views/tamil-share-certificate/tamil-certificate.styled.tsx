@@ -209,5 +209,6 @@ export namespace S {
   export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
     width: "85%",
     color: theme.palette.text.red,
+    textAlign: "left",
   }));
 }

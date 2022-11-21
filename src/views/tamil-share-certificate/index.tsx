@@ -19,6 +19,7 @@ interface Props {
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
   const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -75,7 +76,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 <S.DateContainer>
                   <S.ShareCountInnerContainer>
                     <S.DateText>உறுப்பினர் எண் :</S.DateText>
-                    <S.DateBox>{user.id}</S.DateBox>
+                    <S.DateBox>{user.membershipId}</S.DateBox>
                   </S.ShareCountInnerContainer>
                   <S.ShareCountInnerContainer>
                     <S.DateText>நாள் : </S.DateText>
@@ -89,12 +90,12 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                     <S.CertificateText>இந்தப்பங்குப் பத்திரமானது</S.CertificateText>
                     <S.BlankSpace1>{user.name}</S.BlankSpace1>
                     <S.CertificateText>த/க</S.CertificateText>
-                    <S.BlankSpace2>
-                      {user.fatherName}, &nbsp;&nbsp;{user.address.split(" ").splice(0, 3).join(" ")}
-                    </S.BlankSpace2>
+                    <S.BlankSpace2>{user.fatherName},</S.BlankSpace2>
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
-                    <S.BlankSpace3>{user.address.split(" ").splice(3).join(" ")}</S.BlankSpace3>
+                    <S.BlankSpace3>
+                      {user.address}, {user.village}, {user.postalNo}
+                    </S.BlankSpace3>
                     <S.CertificateText>என்பவருக்கு</S.CertificateText>
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
