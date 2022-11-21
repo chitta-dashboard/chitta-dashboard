@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
@@ -12,7 +12,7 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 
 interface CustomProps {
-  cb: (data: IAddProductsFormInput & { id: string; members: string[] }) => void;
+  cb: (data: IAddProductsFormInput & { id: string; products: string[] }) => void;
   openModal: boolean;
   handleClose: () => void;
   editMode?: boolean;
@@ -25,9 +25,13 @@ const ProductsModal: FC<CustomProps> = (props) => {
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddProductsFormInput>();
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmerGroupData } = result;
-  const [results, setResults] = useState<string[] | null>(null);
+  const [availableList, setAvailableList] = useState<string[] | null>(null);
+  const [variantList, setVariantList] = useState<string[][] | null>(null);
+  const [productName, setProductName] = useState<string>("");
+  const productNameHandler = (name: string) => {
+    setProductName(name);
+  };
   const {
-    formatChangeSuccess: isSuccessPortfolio,
     result: { data: productDetails },
   } = useFetch(ENDPOINTS.portfolioRaw as Endpoints);
 
@@ -38,25 +42,34 @@ const ProductsModal: FC<CustomProps> = (props) => {
   const endDateEvent = watch("endDate");
   const availableAmountEvent = watch("availableAmount");
   const qualityGradeEvent = watch("qualityGrade");
+  const foodTypeEvent = watch("foodType");
+  const descriptionEvent = watch("description");
   let enableButton = true;
 
   // for disabling the variant options
-  const variantList = useMemo(() => {
-    if (productNameEvent && productDetails) {
-      const productId: any = PRODUCT_DATA.raw.filter((i) => i.name === productNameEvent).map((i) => i.id);
-      //@ts-ignore
-      const variants = Object.values(VARIANT_DATA[productId]);
+  useEffect(() => {
+    if (productName && productDetails) {
+      const productId: any = PRODUCT_DATA.raw.filter((i) => i.name === productName).map((i) => i.id);
       const variantsId = Object.keys(VARIANT_DATA[productId]);
-      //@ts-ignore
-      const dbVariants = productDetails[productId].variants;
-      setResults(variantsId.filter((item) => !dbVariants.includes(item)));
-      const filteredList = results && results.map((item: string) => [item, VARIANT_DATA[productId][item]]);
+      const dbVariantsTemp = productDetails[productId].variants;
+      const temp = Object.keys(Object.fromEntries(Object.entries(productDetails[productId]).filter(([_, v]) => v === null)));
+      const dbVariants = dbVariantsTemp.filter((item: any) => !temp.includes(item));
+      setAvailableList(variantsId.filter((item) => !dbVariants.includes(item)));
       const final = Object.keys(VARIANT_DATA[productId]).map((item: string) => [item, VARIANT_DATA[productId][item]]);
-      return final;
+      setVariantList(final);
     }
-  }, [productNameEvent, productDetails]);
+  }, [productName, productDetails]);
 
-  if (productNameEvent && variantEvent && startDateEvent && endDateEvent && availableAmountEvent && qualityGradeEvent) {
+  if (
+    productNameEvent &&
+    variantEvent &&
+    startDateEvent &&
+    endDateEvent &&
+    availableAmountEvent &&
+    qualityGradeEvent &&
+    foodTypeEvent &&
+    descriptionEvent
+  ) {
     enableButton = false;
   } else {
     enableButton = true;
@@ -66,6 +79,8 @@ const ProductsModal: FC<CustomProps> = (props) => {
     if (editMode) {
       let productData = Object.values(isSuccess && (farmerGroupData as CustomProps)).find((f) => String(f.id) === id);
       reset({
+        foodType: productData?.foodType as string,
+        description: productData?.description as string,
         productName: productData?.productName as string,
         variant: productData?.variant as string,
         startDate: productData?.startDate as string,
@@ -88,9 +103,10 @@ const ProductsModal: FC<CustomProps> = (props) => {
   }, [editMode, id]);
 
   const onSubmit: any = (data: IAddProductsFormInput & { id: string; products: string[] }) => {
-    cb({ ...data, id: editMode ? id : uuidv4(), members: products });
+    cb({ ...data, id: editMode ? id : uuidv4(), products: products });
     !editMode && reset();
     !editMode && handleClose();
+    reset();
   };
 
   return (
@@ -112,7 +128,12 @@ const ProductsModal: FC<CustomProps> = (props) => {
       </ModalHeader>
 
       <ModalBody id={"products"} onSubmit={handleSubmit(onSubmit)}>
-        <FormField control={formControl as unknown as Control} variantList={variantList} result={results as any} />
+        <FormField
+          control={formControl as unknown as Control}
+          variantList={variantList}
+          availableList={availableList}
+          setProductName={productNameHandler}
+        />
       </ModalBody>
 
       <ModalFooter>
