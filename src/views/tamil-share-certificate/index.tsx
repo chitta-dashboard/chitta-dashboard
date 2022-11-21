@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import { useSelector } from "react-redux";
 import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-// import { useAuthContext } from "../../utils/context/auth";
 import { RootState } from "../../utils/store";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
@@ -19,7 +18,6 @@ interface Props {
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
-  // const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
   const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
   const {
     formatChangeSuccess: isSuccess,
@@ -92,8 +90,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                     <S.BlankSpace1>{user.name}</S.BlankSpace1>
                     <S.CertificateText>த/க</S.CertificateText>
                     <S.BlankSpace2>
-                      {" "}
-                      {user.fatherName} &nbsp;&nbsp;{user.address.split(" ").splice(0, 3).join(" ")}
+                      {user.fatherName}, &nbsp;&nbsp;{user.address.split(" ").splice(0, 3).join(" ")}
                     </S.BlankSpace2>
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
@@ -102,7 +99,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
                     <S.CertificateText2>
-                      நெற்கதிர் &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp;&nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp;
+                      {titleName} &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp;&nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp;
                       உட்பட்டு வழங்கப்படுகிறது.
                     </S.CertificateText2>
                   </S.CertificateTextLine>
