@@ -57,7 +57,7 @@ const DashboardHeader = () => {
             </S.EditBox>
           </S.ImgContainer>
           <Box>
-            <S.ProfileHeading>Hi, Arockia!</S.ProfileHeading>
+            <S.ProfileHeading>Hi, Admin!</S.ProfileHeading>
             <S.ProfileSubHeading>Welcome Back.</S.ProfileSubHeading>
           </Box>
         </S.ProfileBox>
