@@ -1,9 +1,8 @@
-import { FileDownload } from "@mui/icons-material";
+import { Typography } from "@mui/material";
 import { useState } from "react";
 import DropFile from "../../common-components/drop-file";
 import CustomModal from "../../custom-modal";
 import ModalBody from "../../custom-modal/body";
-import ModalFooter from "../../custom-modal/footer";
 import ModalHeader from "../../custom-modal/header";
 import { validateFarmerData, processFarmerData, exportSampleFormat } from "./helper";
 import { getJSONfromExcel } from "../../../utils/constants";
@@ -23,14 +22,13 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
     <CustomModal openModal={isOpen}>
       <ModalHeader handleClose={handleClose}>Import Farmers</ModalHeader>
       <ModalBody>
-        <DropFile cb={(file: File) => setImportedFile(file)} validate={validateFarmerData} />
-      </ModalBody>
-      <ModalFooter>
-        <S.ButtonBox>
-          <S.DownloadBtn title="Download Format Sample Sheet" onClick={exportSampleFormat}>
-            <FileDownload />
-          </S.DownloadBtn>
-          <S.ImportBtn
+        <S.Body>
+          <Typography>Click the below button to download the sample format structure of import farmers excel sheet.</Typography>
+          <S.Button title="Download Format Sample Sheet" onClick={exportSampleFormat}>
+            Download Sample
+          </S.Button>
+          <DropFile cb={(file: File) => setImportedFile(file)} validate={validateFarmerData} />
+          <S.Button
             disabled={importedFile === null}
             onClick={async () => {
               const farmers = await getJSONfromExcel(importedFile!);
@@ -38,9 +36,9 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
             }}
           >
             Import
-          </S.ImportBtn>
-        </S.ButtonBox>
-      </ModalFooter>
+          </S.Button>
+        </S.Body>
+      </ModalBody>
     </CustomModal>
   );
 };

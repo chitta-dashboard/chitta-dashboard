@@ -250,7 +250,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FarmerImgContainer>
             <S.HeaderText>
               உறுப்பினர் எண் : {user.membershipId} <br />
-              நாள்: {current.getDate()}/{current.getMonth()}/{current.getFullYear()}
+              நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
             </S.HeaderText>
             <S.HeaderText>
               ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
