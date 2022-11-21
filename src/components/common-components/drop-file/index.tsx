@@ -126,7 +126,7 @@ const DropFile: React.FC<IDropFile> = function ({
             return (
               <>
                 <FileDownload sx={{ fontSize: "2rem", opacity: ".5" }} />
-                <Typography>Click or Drag and drop to add 'Excel' file.</Typography>
+                <Typography>Click or Drag and drop to add 'Excel' file. (The file should have the same format as the sample file)</Typography>
               </>
             );
           else if (targetState === "inValidDrag") return <Typography>Invalid File Format!</Typography>;
