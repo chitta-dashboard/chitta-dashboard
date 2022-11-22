@@ -119,6 +119,7 @@ export namespace S {
   export const CertificateHeader = styled(Typography)({
     fontSize: "1.75rem",
     fontWeight: "600",
+    margin: "-1.5625rem 0 -1.25rem 0",
   });
 
   export const DateContainer = styled(Box)({
@@ -178,7 +179,7 @@ export namespace S {
 
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
-    marginTop: "90px",
+    marginTop: "5rem",
   });
   export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
