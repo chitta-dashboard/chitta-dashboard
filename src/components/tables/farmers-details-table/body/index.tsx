@@ -26,6 +26,15 @@ const Body = () => {
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
+  const [loader, setLoader] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoader(false);
+
+    setTimeout(() => {
+      setLoader(true);
+    }, 300);
+  }, [farmersDetailsById]);
 
   // farmer group filter for farmer detail table
   useEffect(() => {
@@ -89,7 +98,7 @@ const Body = () => {
 
   return (
     <>
-      {!isFarmerGroupSuccess ? (
+      {!loader ? (
         <tbody>
           <tr>
             <td>
