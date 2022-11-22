@@ -107,11 +107,15 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 </S.CertificateContent>
                 <S.ShareCountContainer>
                   <S.ShareCountInnerContainer>
-                    <S.CertificateText>பங்குகளின் எண்ணிக்கை</S.CertificateText>
+                    <S.CertificateText>ஒரு பங்கின் விலை :</S.CertificateText>
+                    <S.ShareCount>ரூ.10/-</S.ShareCount>
+                  </S.ShareCountInnerContainer>
+                  <S.ShareCountInnerContainer>
+                    <S.CertificateText>பங்குகளின் எண்ணிக்கை :</S.CertificateText>
                     <S.ShareCount>100</S.ShareCount>
                   </S.ShareCountInnerContainer>
                   <S.ShareCountInnerContainer>
-                    <S.CertificateText>பங்குத்தொகை</S.CertificateText>
+                    <S.CertificateText>மொத்த பங்குத்தொகை :</S.CertificateText>
                     <S.ShareCount>ரூ.{shareAmount}/-</S.ShareCount>
                   </S.ShareCountInnerContainer>
                 </S.ShareCountContainer>

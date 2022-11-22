@@ -169,12 +169,12 @@ export namespace S {
   });
 
   export const ShareCountContainer = styled(DateContainer)({
-    width: "80%",
+    width: "100%",
   });
 
   export const ShareCountInnerContainer = styled(DateContainer)({
     width: "fit-content",
-    gap: "1rem",
+    gap: "0.1rem !important",
   });
 
   export const SignatureLine = styled(DateContainer)({
