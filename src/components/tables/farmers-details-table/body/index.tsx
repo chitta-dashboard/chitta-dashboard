@@ -106,7 +106,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Farmer Details..</td>
+            <td>No Farmer Details.</td>
           </tr>
         </S.EmptyMsg>
       )}
