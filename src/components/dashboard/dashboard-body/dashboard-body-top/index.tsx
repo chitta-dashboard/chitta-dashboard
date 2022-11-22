@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFetch } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
 import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
-import APIloader from "../../../api-loader";
+import { BufferLoader } from "../../../api-loader";
 import S from "../dashboardBodyTop.styled";
 
 const DashboardBodyTop = () => {
@@ -88,39 +88,31 @@ const DashboardBodyTop = () => {
   };
 
   return (
-    <>
-      {isFarmerDetailsLoading && isFarmerGroupLoading ? (
-        <S.StasticsCardContainer>
-          <Slider {...settings}>
-            {StatisticsItems.map((card) => {
-              return (
-                <S.StasticsCard key={card.id}>
-                  <S.StatCardHeader>
-                    <S.StatCardHeaderLeft>
-                      <S.StatCardIcon>
-                        <Icon iconName={card.icon} />
-                      </S.StatCardIcon>
-                      <S.StatCardBody>{card.bodyCount}</S.StatCardBody>
-                    </S.StatCardHeaderLeft>
-                    <S.StatCardHeaderRight>
-                      <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
-                    </S.StatCardHeaderRight>
-                  </S.StatCardHeader>
-                  <S.StatCardFooter>
-                    {card.footerName}
-                    <Icon iconName="three-dots" />
-                  </S.StatCardFooter>
-                </S.StasticsCard>
-              );
-            })}
-          </Slider>
-        </S.StasticsCardContainer>
-      ) : (
-        <>
-          <APIloader />
-        </>
-      )}
-    </>
+    <S.StasticsCardContainer>
+      <Slider {...settings}>
+        {StatisticsItems.map((card) => {
+          return (
+            <S.StasticsCard key={card.id}>
+              <S.StatCardHeader>
+                <S.StatCardHeaderLeft>
+                  <S.StatCardIcon>
+                    <Icon iconName={card.icon} />
+                  </S.StatCardIcon>
+                  <S.StatCardBody>{isFarmerDetailsLoading && isFarmerGroupLoading ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                </S.StatCardHeaderLeft>
+                <S.StatCardHeaderRight>
+                  <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
+                </S.StatCardHeaderRight>
+              </S.StatCardHeader>
+              <S.StatCardFooter>
+                {card.footerName}
+                <Icon iconName="three-dots" />
+              </S.StatCardFooter>
+            </S.StasticsCard>
+          );
+        })}
+      </Slider>
+    </S.StasticsCardContainer>
   );
 };
 
