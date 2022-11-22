@@ -3,9 +3,9 @@ import SearchBar from "../../common-components/search-bar";
 import { Button } from "@mui/material";
 import ToggleButton from "../../../utils/ToggleButton";
 import ProductsModal from "../../modals/products-modal";
-import { IAddProductsFormInput } from "../../modals/type/formInputs";
-import { useAdd } from "../../../utils/hooks/query";
-import { ENDPOINTS, Endpoints, Message } from "../../../utils/constants";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
+import { useEditPortfolio } from "../../../utils/hooks/query";
+import { ENDPOINTS, Message } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import S from "./portfolioHeader.styled";
 import Toast from "../../../utils/toast";
@@ -13,21 +13,25 @@ import Toast from "../../../utils/toast";
 const PortfolioHeader: FC = () => {
   const [tab, setTab] = useState("Raw");
   const [addModalOpen, setAddModalOpen] = useState(false);
+  const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
-  const { mutate: porfolioAdd } = useAdd(ENDPOINTS.portfolioRaw as Endpoints);
   const { addNotification } = useAuthContext();
 
   const addDataHandler = (data: IAddProductsFormInput & { id: string }) => {
-    porfolioAdd({
-      data: data,
+    const { foodType, id, productName, products, ...addData } = data;
+    const addVarient = {} as { [key: string]: IProductVarient };
+    addVarient[addData.variantId] = addData;
+    addPortfolio({
+      data: addVarient,
+      productId: id,
       successCb: () => {
         Toast({ message: "Product added successfully.", type: "success" });
+        addNotification({ id: data.id, image: data.profile, message: Message(data.name).addProduct });
       },
       errorCb: () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
-    addNotification({ id: data.id, image: data.profile, message: Message(data.name).addProduct });
   };
 
   return (

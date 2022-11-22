@@ -37,14 +37,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -59,8 +59,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -168,7 +168,7 @@ export const Message = (name: string) => {
     deleteCeoDetails: `ceo "${name}" has been removed`,
     addFoundersDetails: `New Founder "${name}" has been registered`,
     deleteFoundersDetails: `Founder "${name}" has been removed`,
-    addProduct: `Product "${name}" has been added`,         
+    addProduct: `Product "${name}" has been added`,
   };
 };
 
