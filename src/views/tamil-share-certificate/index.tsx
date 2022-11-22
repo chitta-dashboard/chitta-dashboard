@@ -1,7 +1,6 @@
 import { forwardRef } from "react";
 import { useSelector } from "react-redux";
 import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-// import { useAuthContext } from "../../utils/context/auth";
 import { RootState } from "../../utils/store";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
@@ -19,8 +18,8 @@ interface Props {
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
-  // const { farmersDetailsById, selectedFarmers } = useFarmerDetailsContext();
   const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -77,7 +76,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 <S.DateContainer>
                   <S.ShareCountInnerContainer>
                     <S.DateText>உறுப்பினர் எண் :</S.DateText>
-                    <S.DateBox>{user.id}</S.DateBox>
+                    <S.DateBox>{user.membershipId}</S.DateBox>
                   </S.ShareCountInnerContainer>
                   <S.ShareCountInnerContainer>
                     <S.DateText>நாள் : </S.DateText>
@@ -91,18 +90,17 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                     <S.CertificateText>இந்தப்பங்குப் பத்திரமானது</S.CertificateText>
                     <S.BlankSpace1>{user.name}</S.BlankSpace1>
                     <S.CertificateText>த/க</S.CertificateText>
-                    <S.BlankSpace2>
-                      {" "}
-                      {user.fatherName} &nbsp;&nbsp;{user.address.split(" ").splice(0, 3).join(" ")}
-                    </S.BlankSpace2>
+                    <S.BlankSpace2>{user.fatherName},</S.BlankSpace2>
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
-                    <S.BlankSpace3>{user.address.split(" ").splice(3).join(" ")}</S.BlankSpace3>
+                    <S.BlankSpace3>
+                      {user.address}, {user.village}, {user.district}, {user.postalNo}
+                    </S.BlankSpace3>
                     <S.CertificateText>என்பவருக்கு</S.CertificateText>
                   </S.CertificateTextLine>
                   <S.CertificateTextLine>
                     <S.CertificateText2>
-                      நெற்கதிர் &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp;&nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp;
+                      {titleName} &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp;&nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp;
                       உட்பட்டு வழங்கப்படுகிறது.
                     </S.CertificateText2>
                   </S.CertificateTextLine>
@@ -110,7 +108,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 <S.ShareCountContainer>
                   <S.ShareCountInnerContainer>
                     <S.CertificateText>பங்குகளின் எண்ணிக்கை</S.CertificateText>
-                    <S.ShareCount>1</S.ShareCount>
+                    <S.ShareCount>100</S.ShareCount>
                   </S.ShareCountInnerContainer>
                   <S.ShareCountInnerContainer>
                     <S.CertificateText>பங்குத்தொகை</S.CertificateText>

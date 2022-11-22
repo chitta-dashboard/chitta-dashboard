@@ -23,6 +23,8 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
+  const current = new Date();
+
   const { headerLogo: headerImage, name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
 
   const { mdId } = useParams();
@@ -55,12 +57,10 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
                     address
                   ) : (
                     <>
-                      நபார்டு <br />
-                      கள்ளக்குறிச்சி மாவட்டம்
+                      நபார்டு கள்ளக்குறிச்சி மாவட்டம் <br />
+                      உறுப்பினர் விண்ணப்பம்
                     </>
                   )}
-                  <br />
-                  உறுப்பினர் விண்ணப்பம்
                 </S.HeaderText2>
               </S.HeaderTextContainer>
               <S.UserImgContainer>
@@ -73,111 +73,127 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
             </S.HeaderTextBox>
             <S.HeaderDateBox>
               <S.HeaderDateText>உறுப்பினர் எண் : NER-FPC-2</S.HeaderDateText>
-              <S.HeaderDateText>நாள்: 22/08/22</S.HeaderDateText>
+              <S.HeaderDateText>
+                நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
+              </S.HeaderDateText>
             </S.HeaderDateBox>
             <S.UserInfoContainer>
-              {MD_DATA.map((data) => {
-                return (
-                  <Fragment key={data.id}>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>பெயர்</S.UserInfoData1>
-                      <S.UserInfoData2>{user.name}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>தந்தை பெயர்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.fatherName}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>பாலினம்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.gender}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>கணவர் / மனைவி பெயர்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.husbandName}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>பிறந்த தேதி</S.UserInfoData1>
-                      <S.UserInfoData2>{data.DOB}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>குழு</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>கைபேசி எண்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.phoneNumber}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>ஆதார் எண்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.aadharNumber}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>வாக்காளர் அட்டை எண்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.voterIdNumber}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>சர்வே எண்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.surveyNo}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>ஏக்கர்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.acre}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>கல்வி</S.UserInfoData1>
-                      <S.UserInfoData2>{data.education}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>கிராமம்</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>அஞ்சல் குறியீடு</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>முகவரி</S.UserInfoData1>
-                      <S.UserInfoData2>{data.address}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>தாலுக்கா</S.UserInfoData1>
-                      <S.UserInfoData2>{data.circle}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>மாவட்டம்</S.UserInfoData1>
-                      <S.UserInfoData2>{data.district}</S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>கணக்கெடுப்பு எண்</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>நில வகை</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>நீர் வகை</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>புல வகை</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>விதை வகை</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>விலங்குகள்</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                    <S.UserInfoRow>
-                      <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
-                      <S.UserInfoData2></S.UserInfoData2>
-                    </S.UserInfoRow>
-                  </Fragment>
-                );
-              })}
+              <S.UserInfoRow>
+                <S.UserInfoData1>பெயர்</S.UserInfoData1>
+                <S.UserInfoData2>{user.name}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>தந்தை பெயர்</S.UserInfoData1>
+                <S.UserInfoData2>{user.fatherName}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>பாலினம்</S.UserInfoData1>
+                <S.UserInfoData2>{user.sex}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>கணவர் / மனைவி பெயர்</S.UserInfoData1>
+                <S.UserInfoData2>{user.spouseName}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>பிறந்த தேதி</S.UserInfoData1>
+                <S.UserInfoData2>{user.dob}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>குழு</S.UserInfoData1>
+                <S.UserInfoData2>{user.group}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>கைபேசி எண்</S.UserInfoData1>
+                <S.UserInfoData2>{user.phoneNumber}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>ஆதார் எண்</S.UserInfoData1>
+                <S.UserInfoData2>{user.addhaarNo}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>வாக்காளர் அட்டை எண்</S.UserInfoData1>
+                <S.UserInfoData2>{user.membershipId}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>சர்வே எண்</S.UserInfoData1>
+                <S.UserInfoData2>
+                  {Object.values(user.surveyNo).map((item: unknown, i) => {
+                    return (
+                      <>
+                        {item}
+                        {Object.values(user.surveyNo).length === 1 || Object.values(user.surveyNo).length - 1 === i || item === "" ? " " : ","}
+                        &nbsp;
+                      </>
+                    );
+                  })}
+                </S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>ஏக்கர்</S.UserInfoData1>
+                <S.UserInfoData2>
+                  {Object.values(user.acre).map((item: unknown, i) => {
+                    return (
+                      <>
+                        {item}
+                        {Object.values(user.acre).length === 1 || Object.values(user.acre).length - 1 === i || item === "" ? " " : ","}
+                        &nbsp;
+                      </>
+                    );
+                  })}
+                </S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>கல்வி</S.UserInfoData1>
+                <S.UserInfoData2>{user.qualification}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>கிராமம்</S.UserInfoData1>
+                <S.UserInfoData2>{user.village}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>அஞ்சல் குறியீடு</S.UserInfoData1>
+                <S.UserInfoData2>{user.postalNo}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>முகவரி</S.UserInfoData1>
+                <S.UserInfoData2>{user.address}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>தாலுக்கா</S.UserInfoData1>
+                <S.UserInfoData2>{user.taluk}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>மாவட்டம்</S.UserInfoData1>
+                <S.UserInfoData2>{user.district}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>கணக்கெடுப்பு எண்</S.UserInfoData1>
+                <S.UserInfoData2>{user.membershipId}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>நில வகை</S.UserInfoData1>
+                <S.UserInfoData2>{user.landType}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>நீர் வகை</S.UserInfoData1>
+                <S.UserInfoData2>{user.waterType}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>புல வகை</S.UserInfoData1>
+                <S.UserInfoData2>{user.farmerType}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>விதை வகை</S.UserInfoData1>
+                <S.UserInfoData2>{user.cropsType}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>விலங்குகள்</S.UserInfoData1>
+                <S.UserInfoData2>{user.animals}</S.UserInfoData2>
+              </S.UserInfoRow>
+              <S.UserInfoRow>
+                <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
+                <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
+              </S.UserInfoRow>
             </S.UserInfoContainer>
           </S.MdsDetailsContent>
         ))}

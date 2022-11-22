@@ -6,10 +6,6 @@ interface Props {
   options: string[];
 }
 
-//how to use it (example)
-// const [selectedMode, setSelectedMode] = useState<string>("Raw")
-// <ToggleButton selectedMode={selectedMode} setSelectedMode={setSelectedMode} options={["Raw", "Processed", "Animal"]} />
-
 const ToggleButton = ({ selectedMode, setSelectedMode, options }: Props) => {
   return (
     <S.ToggleButtonContainer>

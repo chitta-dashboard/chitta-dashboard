@@ -1,13 +1,16 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
-import { Products } from "../../../../utils/constants";
+import { PRODUCT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
 interface CustomProps {
   control?: Control;
+  variantList?: string[][] | null;
+  availableList?: string[] | null;
+  setProductName?: (name: string) => void;
 }
 
-const FormField: FC<CustomProps> = ({ control }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName }) => {
   return (
     <S.StaticBox>
       <Input
@@ -23,7 +26,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          defaultValue: "Raw",
+          initialvalue: "Raw",
         }}
       />
       <Input
@@ -34,7 +37,8 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          selectoptions: Products,
+          selectoptions: PRODUCT_DATA.raw,
+          setproductname: setProductName,
         }}
       />
       <Input
@@ -45,13 +49,8 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "வகை *",
           gridArea: "var",
-          selectOptions: [
-            ["Basmati", "Basmati"],
-            ["Payur-1", "Payur-1"],
-            ["Variant-1", "Variant-1"],
-            ["Vriant-2", "Variant-2"],
-            ["Variant-3", "Variant-3"],
-          ],
+          selectOptions: variantList,
+          availablelist: availableList,
         }}
       />
       <Input
@@ -76,7 +75,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
       />
       <Input
         name="availableAmount"
-        type="text"
+        type="number"
         control={control}
         rules={{ required: "required" }}
         options={{
@@ -98,7 +97,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          defaultValue: "A+",
+          initialvalue: "A+",
         }}
       />
       <Input

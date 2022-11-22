@@ -63,14 +63,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               name={field.name}
               value={field.value}
               ref={field.ref}
-              InputProps={{
-                ...options.InputProps,
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <p>{options?.unit}</p>
-                  </InputAdornment>
-                ),
-              }}
+             
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(dateFormat(e.target.value));
                 onChange && onChange(e);
@@ -97,6 +90,14 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               name={field.name}
               value={field.value}
               ref={field.ref}
+              InputProps={{
+                ...options.InputProps,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <p>{options?.unit}</p>
+                  </InputAdornment>
+                ),
+              }}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 field.onChange(e.target.value);
                 onChange && onChange(e);
@@ -164,7 +165,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
         <Controller
           name={name}
           control={control}
-          defaultValue={defaultValue || ""}
+          defaultValue={options.initialvalue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => {
@@ -183,11 +184,14 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 onBlur={field.onBlur}
               >
                 <MenuItem value="" style={{ display: "none" }}></MenuItem>
+
                 {options?.selectOptions?.map(([actualValue, displayValue]: [string, string]) => (
-                  <MenuItem key={actualValue} value={actualValue}>
+                  <MenuItem key={actualValue} value={actualValue} disabled={options?.availablelist && !options?.availablelist.includes(actualValue)}>
                     {displayValue}
+                    {options?.availablelist && !options?.availablelist.includes(actualValue) ? "  (already selected)" : ""}
                   </MenuItem>
                 ))}
+
                 {/* special options are something that user cannot select, but you can set explicitly (programatically) ex: ~All Groups~ */}
                 {/* inorder to set a select field value, it must be in the menu items, we here we're adding it without showing to user */}
                 {options?.specialOptions?.map((value: string) => (
@@ -360,11 +364,11 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 options={options.selectoptions}
                 PopperComponent={PopperWidth}
                 fullWidth={true}
-                getOptionLabel={(option: any) => option?.name || field.value}
-                // isOptionEqualToValue={(option: any, value: any) => option.iso === value.iso}
+                getOptionLabel={(option: any) => option?.name || field.value || ""}
+                isOptionEqualToValue={(option: any) => option.name === field.value}
                 renderOption={(props, option: any) => {
                   return (
-                    <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
+                    <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props} key={option?.id}>
                       <img loading="lazy" width="40" src={option?.image} srcSet={`${option?.image} 2x`} alt="" />
                       {option?.name} ({option?.tamilName})
                     </Box>
@@ -392,6 +396,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                   setAutocomplete(newValue.name);
                   onChange && onChange(event);
                   field.onChange(newValue.name);
+                  options.setproductname(newValue.name);
                   setImage(newValue ? newValue.image : "");
                 }}
               />
