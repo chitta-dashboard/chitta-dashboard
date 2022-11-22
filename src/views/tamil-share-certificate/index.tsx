@@ -108,7 +108,7 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 <S.ShareCountContainer>
                   <S.ShareCountInnerContainer>
                     <S.CertificateText>பங்குகளின் எண்ணிக்கை</S.CertificateText>
-                    <S.ShareCount>1</S.ShareCount>
+                    <S.ShareCount>100</S.ShareCount>
                   </S.ShareCountInnerContainer>
                   <S.ShareCountInnerContainer>
                     <S.CertificateText>பங்குத்தொகை</S.CertificateText>

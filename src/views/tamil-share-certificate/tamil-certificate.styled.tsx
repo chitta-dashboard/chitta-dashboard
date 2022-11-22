@@ -98,7 +98,7 @@ export namespace S {
     marginRight: "4.375rem",
     borderRadius: "50%",
     aspectRatio: "1/1",
-    filter: "grayscale(100%)",
+    // filter: "grayscale(100%)",
   });
 
   export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
@@ -190,7 +190,7 @@ export namespace S {
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: theme.palette.text.red,
+    color: theme.palette.text.black,
   }));
   export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
@@ -200,15 +200,13 @@ export namespace S {
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: theme.palette.text.red,
+    color: theme.palette.text.black,
   }));
   export const BlankSpace2 = styled(BlankSpace1)(({ theme }) => ({
     width: "23.75rem",
-    color: theme.palette.text.red,
   }));
   export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
     width: "85%",
-    color: theme.palette.text.red,
     textAlign: "left",
   }));
 }
