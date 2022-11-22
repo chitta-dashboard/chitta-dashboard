@@ -178,7 +178,7 @@ export namespace S {
 
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
-    marginTop: "3.125rem",
+    marginTop: "90px",
   });
   export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
