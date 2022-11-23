@@ -164,7 +164,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
         <Controller
           name={name}
           control={control}
-          defaultValue={options.initialvalue || ""}
+          // defaultValue={options.initialvalue ||""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => {
@@ -175,7 +175,8 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 helperText={errors[name]?.message as string}
                 {...options}
                 name={field.name}
-                value={options.defaultValue ? options.defaultValue : field.value}
+                value={field.value}
+                defaultValue={options?.initialvalue}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   field.onChange(e.target.value);
@@ -186,9 +187,17 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 <MenuItem value="" style={{ display: "none" }}></MenuItem>
 
                 {options?.selectOptions?.map(([actualValue, displayValue]: [string, string]) => (
-                  <MenuItem key={actualValue} value={actualValue} disabled={options?.availablelist && !options?.availablelist.includes(actualValue)}>
+                  <MenuItem
+                    key={actualValue}
+                    value={actualValue}
+                    disabled={
+                      (options?.availablelist && !options?.availablelist.includes(actualValue)) ||
+                      actualValue === "Processed" ||
+                      actualValue === "Animal"
+                    }
+                  >
                     {displayValue}
-                    {options?.availablelist && !options?.availablelist.includes(actualValue) ? "  (already selected)" : ""}
+                    {options?.availablelist && !options?.availablelist.includes(actualValue) ? "  (This variant already exists)" : ""}
                   </MenuItem>
                 ))}
 

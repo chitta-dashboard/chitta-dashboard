@@ -6,7 +6,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useFetch } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
 import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
-import { BufferLoader } from "../../../api-loader";
+import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
 
 const DashboardBodyTop = () => {

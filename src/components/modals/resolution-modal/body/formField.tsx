@@ -6,7 +6,7 @@ import { IResolutionFormInput } from "../../type/formInputs";
 import Input from "../../../input-fields/input/input";
 import { useFetch } from "../../../../utils/hooks/query";
 import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
-import Loader from "../../../loader";
+import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./formField.styled";
 import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
 

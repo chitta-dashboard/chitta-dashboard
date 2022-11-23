@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import Loader from "../../loader";
+import Loader from "../../../utils/loaders/tree-loader";
 import ItemCard, { IPortfolioProduct } from "../item-card";
 import S from "./portfolioItems.styled";
 

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { ENDPOINTS, Endpoints, VARIANT_DATA, PRODUCT_DATA, dateFormat } from "../../../utils/constants";
+import { ENDPOINTS, Endpoints, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { IAddProductsFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
@@ -80,9 +80,13 @@ const ProductsModal: FC<CustomProps> = (props) => {
   } else {
     enableButton = true;
   }
+ 
+
   useEffect(() => {
     if (editMode) {
       let productData = Object.values(isSuccess && (productDetails as CustomProps)).find((f) => String(f.id) === id);
+      // console.log("onedit variants ", productData.variants);
+      // console.log("onedit variantIds ", productData);
       setProductName(productData?.productName);
       reset({
         foodType: productData?.foodType as string,

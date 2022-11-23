@@ -1,7 +1,7 @@
 import S from "./loader.styled";
-import LeafLine from "../../assets/images/leafLine.svg";
+import LeafLine from "../../../assets/images/leafLine.svg";
 
-const Loader = () => {
+const TreeLoader = () => {
   return (
     <S.container>
       <S.AnimationContainer>
@@ -20,4 +20,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default TreeLoader;
