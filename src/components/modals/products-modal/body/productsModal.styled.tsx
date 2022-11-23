@@ -20,6 +20,9 @@ namespace S {
     "& .MuiAutocomplete-popper": {
       backgroundColor: "red",
     },
+    "& .Mui-disabled": {
+      backgroundColor: "transparent",
+    },
   });
 }
 
