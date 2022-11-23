@@ -17823,8 +17823,8 @@
         "variantId": "e2fbf9be-101b-46d8-98d9-0ce106e25b26",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit1 sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "2000",
         "qualityGrade": "C+"
       },
@@ -17832,8 +17832,8 @@
         "variantId": "test1",
         "variantName": "Test Variant 1",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
-        "startDate": "01-01-2022",
-        "endDate": "03-06-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "3000",
         "qualityGrade": "A+"
       },
@@ -17841,8 +17841,8 @@
         "variantId": "test2",
         "variantName": "Test Variant 2",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "4000",
         "qualityGrade": "B+"
       },
@@ -17857,8 +17857,8 @@
         "variantId": "a7e8d3fb-b318-481f-8913-a802323d0002",
         "variantName": "Paiyur-1",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "2000",
         "qualityGrade": "B+"
       },
@@ -17866,8 +17866,8 @@
         "variantId": "test1",
         "variantName": "Test Variant 1",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "3000",
         "qualityGrade": "A+"
       },
@@ -17875,8 +17875,8 @@
         "variantId": "test2",
         "variantName": "Test Variant 2",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "4000",
         "qualityGrade": "B+"
       },
@@ -17891,8 +17891,8 @@
         "variantId": "88ee2e31-3abe-448f-a439-2dc087aa9573",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "200",
         "qualityGrade": "A+"
       },
@@ -17900,8 +17900,8 @@
         "variantId": "test1",
         "variantName": "Test Variant 1",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "3000",
         "qualityGrade": "A+"
       },
@@ -17909,8 +17909,8 @@
         "variantId": "test2",
         "variantName": "Test Variant 2",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "4000",
         "qualityGrade": "B+"
       },
@@ -17925,8 +17925,8 @@
         "variantId": "88618d44-a095-4217-b09e-30b1b341022f",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "200",
         "qualityGrade": "B+"
       }
@@ -17940,8 +17940,8 @@
         "variantId": "38a003fd-af1a-4d68-98c9-3e5d4096a5c5",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "350",
         "qualityGrade": "C+"
       }
@@ -17955,8 +17955,8 @@
         "variantId": "177977f1-861e-4b3d-b54a-1cacfbaa116c",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "350",
         "qualityGrade": "A+"
       }
@@ -17970,8 +17970,8 @@
         "variantId": "c717ca08-1c0d-47a2-a184-7b3a4760752f",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "750",
         "qualityGrade": "B+"
       }
@@ -17985,8 +17985,8 @@
         "variantId": "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7",
         "variantName": "Basmati",
         "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
-        "startDate": "01-01-2022",
-        "endDate": "02-05-2022",
+        "startDate": "2022-01-01",
+        "endDate": "2022-05-02",
         "availableAmount": "750",
         "qualityGrade": "B+"
       }

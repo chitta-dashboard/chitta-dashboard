@@ -8,9 +8,12 @@ interface CustomProps {
   variantList?: string[][] | null;
   availableList?: string[] | null;
   setProductName?: (name: string) => void;
+  setProductId?: (name: string) => void;
+  productImage?: string;
+  disableOnEdit?: number;
 }
 
-const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit }) => {
   return (
     <S.StaticBox>
       <Input
@@ -27,6 +30,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["Animal", "Animal"],
           ],
           initialvalue: "Raw",
+          disable: disableOnEdit,
         }}
       />
       <Input
@@ -39,18 +43,23 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           gridArea: "prn",
           selectoptions: PRODUCT_DATA.raw,
           setproductname: setProductName,
+          setproductid: setProductId,
+          productimage: productImage,
+          disable: disableOnEdit,
         }}
       />
       <Input
-        name="variant"
+        name="variantId"
         type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
           label: "வகை *",
           gridArea: "var",
+
           selectOptions: variantList,
           availablelist: availableList,
+          disable: disableOnEdit,
         }}
       />
       <Input
@@ -101,7 +110,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
         }}
       />
       <Input
-        name="description"
+        name="productDescription"
         type="text"
         control={control}
         rules={{ required: "required" }}

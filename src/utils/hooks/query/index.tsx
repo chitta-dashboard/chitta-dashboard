@@ -190,7 +190,8 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
   return { formatChangeSuccess, result };
 };
 
-export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
+// export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
+export const useEditPortfolio = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const {
     result: { data: oldData },
@@ -200,7 +201,7 @@ export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
   let action: "changeVariantData" | "addProductData" | "deleteProductData" = "changeVariantData";
 
   return useMutation(
-    ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
+    ({ data, productId, successCb, errorCb }: { data: any; productId: string } & IOptionalCallback) => {
       // initializing vars + setting loader
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
@@ -225,17 +226,17 @@ export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
               ...getProductStructure(productId),
               ...data,
             })
-            .then(() => data);
+            .then(() => ({ data, productId }));
         // if this is the last variant, delete the entire product data
         case "deleteProductData":
-          return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`);
+          return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`).then(() => ({ data: null, productId }));
         // if product is already present, just change the variant data using patch
         case "changeVariantData":
-          return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => data);
+          return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => ({ data, productId }));
       }
     },
     {
-      onSuccess: (data) => {
+      onSuccess: ({ data, productId }) => {
         let updatedData: any;
         switch (action) {
           case "addProductData":
@@ -268,7 +269,7 @@ export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
         successCallback();
       },
       onError: () => {
-        console.log("mutation failed");
+        // console.log("mutation failed");
         errorCallback();
       },
       onSettled: () => {

@@ -16,6 +16,10 @@ import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
 import { useEditPortfolio } from "../../../utils/hooks/query";
 import { useAuthContext } from "../../../utils/context/auth";
 import Toast from "../../../utils/toast";
+import ProductsModal from "../../modals/products-modal";
+import ConfirmationModal from "../../modals/confirmation-modal";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
+import CS from "../../../components/common-styles/commonStyles.styled";
 import S from "./itemCard.styled";
 
 export interface IPortfolioVariant {
@@ -41,17 +45,21 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
+  const { mutate } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  const { addNotification } = useAuthContext();
   const [variantData, setVariantdata] = useState((): IPortfolioVariant => {
     for (let id of data.variants) {
       if (data[id] !== null) return data[id] as IPortfolioVariant;
     }
     return {} as unknown as IPortfolioVariant; // a hack to satisfy typescript.
   });
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const { mutate } = useEditPortfolio(ENDPOINTS.portfolioRaw, data.id);
-  const { addNotification } = useAuthContext();
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState<(IAddProductsFormInput & { id: string }) | null>(null);
+  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+
   const image = useMemo(() => {
     switch (data.productName) {
       case "Paddy Seeds":
@@ -81,6 +89,10 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
     }
   }, [data]);
 
+  const editDataHandler = (data: IAddProductsFormInput & { id: string }) => {
+    setConfirmationModal(data);
+  };
+
   return (
     <S.ItemCard>
       <S.SeedImage src={image} />
@@ -99,9 +111,9 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
         <ExpandMoreIcon />
       </S.VarValue>
       <S.StockLabel>Available:</S.StockLabel>
-      <S.StockValue>{variantData.availableAmount}</S.StockValue>
-      <S.DeleteIcon onClick={() => setDeleteModalOpen(true)} />
-      <S.EditIcon />
+      <S.StockValue>{variantData.availableAmount} kg</S.StockValue>
+      <S.DeleteIcon onClick={() => setDeleteModal(true)} />
+      <S.EditIcon onClick={() => setEditModal(true)} />
       <Popover
         id={"resolution-certificate-popover"}
         open={popoverOpen}
@@ -132,16 +144,16 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
           );
         })}
       </Popover>
-      {deleteModalOpen && (
+      {deleteModal && (
         <DeleteModal
           deleteMessage={
-            <span>
-              Do you want to delete{" "}
-              <S.HighlightText>
+            <>
+              Do you want to remove{" "}
+              <CS.Bold>
                 {data.productName} - {variantData.variantName}
-              </S.HighlightText>{" "}
+              </CS.Bold>{" "}
               data?
-            </span>
+            </>
           }
           openModal={true}
           handleDelete={() => {
@@ -149,6 +161,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
               data: {
                 [variantData.variantId]: null,
               },
+              productId: data.id,
               successCb: async () => {
                 const base64Image = await fileToBase64(image, true);
                 addNotification({
@@ -159,9 +172,42 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
                 Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success" });
               },
             });
-            setDeleteModalOpen(false);
+            setDeleteModal(false);
           }}
-          handleClose={() => setDeleteModalOpen(false)}
+          handleClose={() => setDeleteModal(false)}
+        />
+      )}
+      {editModal && (
+        <ProductsModal
+          openModal={true}
+          handleClose={() => setEditModal(false)}
+          cb={editDataHandler}
+          editMode={editModal}
+          id={data.id}
+          variantData={variantData}
+        />
+      )}
+      {confirmationModal && (
+        <ConfirmationModal
+          openModal={true}
+          handleClose={() => setConfirmationModal(null)}
+          yesAction={() => {
+            const { foodType, id, productName, products, ...editData } = confirmationModal;
+            const editVarient = {} as { [key: string]: IProductVarient };
+            editVarient[editData.variantId] = editData;
+            editPortfolio({
+              data: editVarient,
+              productId: id,
+              successCb: () => {
+                Toast({ message: "Product Edited successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+              },
+            });
+            setEditModal(false);
+            setConfirmationModal(null);
+          }}
         />
       )}
     </S.ItemCard>
