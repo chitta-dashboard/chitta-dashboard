@@ -74,11 +74,11 @@ const FarmerFormPreviewRight = () => {
                 <S.UserInfoData2>
                   {Object.values(user.surveyNo).map((item: string, i) => {
                     return (
-                      <>
+                      <Fragment key={i}>
                         {item}
                         {Object.values(user.surveyNo).length === 1 || Object.values(user.surveyNo).length - 1 === i || item === "" ? " " : ","}
                         &nbsp;
-                      </>
+                      </Fragment>
                     );
                   })}
                 </S.UserInfoData2>
@@ -88,11 +88,11 @@ const FarmerFormPreviewRight = () => {
                 <S.UserInfoData2>
                   {Object.values(user.acre).map((item: string, i) => {
                     return (
-                      <>
+                      <Fragment key={i}>
                         {item}
                         {Object.values(user.acre).length === 1 || Object.values(user.acre).length - 1 === i || item === "" ? " " : ","}
                         &nbsp;
-                      </>
+                      </Fragment>
                     );
                   })}
                 </S.UserInfoData2>
