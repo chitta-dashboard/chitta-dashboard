@@ -10,7 +10,7 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
 

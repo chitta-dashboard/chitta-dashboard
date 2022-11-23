@@ -12,7 +12,7 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 import { S } from "./resolutionCertificate.styled";
 
