@@ -190,7 +190,6 @@ export const useFetchByPage = (endpoint: Endpoints, page: number) => {
   return { formatChangeSuccess, result };
 };
 
-// export const useEditPortfolio = (endpoint: Endpoints, productId: string) => {
 export const useEditPortfolio = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const {
@@ -205,7 +204,6 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
       // initializing vars + setting loader
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: data === null ? "Deleting" : "Loading" });
 
       // deciding action based on data
       if (oldData) {
@@ -218,9 +216,27 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
         else if (isFinalVariant) action = "deleteProductData";
       }
 
+      // Loader Function for variant CRUD operations
+      const variantLoader = () => {
+        const getOldProductData = oldData[productId];
+        const getDataVariantId = Object.keys(data)[0];
+        switch (
+          ((getOldProductData[getDataVariantId] === null || getOldProductData[getDataVariantId]) !== null && data[getDataVariantId] !== null) ||
+          data[getDataVariantId] === null
+        ) {
+          case getOldProductData[getDataVariantId] === null:
+            return loader({ openLoader: true, loaderText: "Creating" });
+          case getOldProductData[getDataVariantId] !== null && data[getDataVariantId] !== null:
+            return loader({ openLoader: true, loaderText: "Updating" });
+          case data[getDataVariantId] === null:
+            return loader({ openLoader: true, loaderText: "Deleting" });
+        }
+      };
+
       switch (action) {
         // if there is no product, add it using post
         case "addProductData":
+          loader({ openLoader: true, loaderText: "Creating" });
           return axios
             .post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, {
               ...getProductStructure(productId),
@@ -229,9 +245,11 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
             .then(() => ({ data, productId }));
         // if this is the last variant, delete the entire product data
         case "deleteProductData":
+          loader({ openLoader: true, loaderText: "Deleting" });
           return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`).then(() => ({ data: null, productId }));
         // if product is already present, just change the variant data using patch
         case "changeVariantData":
+          variantLoader();
           return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${productId}`, data).then(() => ({ data, productId }));
       }
     },
@@ -269,7 +287,6 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
         successCallback();
       },
       onError: () => {
-        // console.log("mutation failed");
         errorCallback();
       },
       onSettled: () => {

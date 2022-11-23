@@ -1,7 +1,7 @@
 import { styled, Typography } from "@mui/material";
 
 namespace S {
-  export const PortfolioItems = styled("div")(({ theme }) => ({
+  export const PortfolioRaw = styled("div")(({ theme }) => ({
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, 27rem)",
     gap: "2rem",
