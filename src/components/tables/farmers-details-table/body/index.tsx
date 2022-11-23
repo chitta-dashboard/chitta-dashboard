@@ -34,7 +34,7 @@ const Body = () => {
     setTimeout(() => {
       setLoader(true);
     }, 300);
-  }, [farmersDetailsById]);
+  }, []);
 
   // farmer group filter for farmer detail table
   useEffect(() => {
