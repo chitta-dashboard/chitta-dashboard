@@ -4,7 +4,7 @@ import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
 import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
-import Loader from "../../../loader";
+import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
@@ -34,7 +34,7 @@ const Body = () => {
     setTimeout(() => {
       setLoader(true);
     }, 300);
-  }, [farmersDetailsById]);
+  }, []);
 
   // farmer group filter for farmer detail table
   useEffect(() => {

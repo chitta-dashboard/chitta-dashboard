@@ -82,6 +82,14 @@ export namespace S {
     width: "10rem",
   });
 
+  export const CertificateHeadingMainContainer = styled(Box)(({ theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    gap: "1.2rem",
+  }));
+
   export const CertificateHeadingContainer = styled(Box)({
     width: "100%",
     display: "flex",
@@ -119,7 +127,6 @@ export namespace S {
   export const CertificateHeader = styled(Typography)({
     fontSize: "1.75rem",
     fontWeight: "600",
-    margin: "-1.5625rem 0 -1.25rem 0",
   });
 
   export const DateContainer = styled(Box)({

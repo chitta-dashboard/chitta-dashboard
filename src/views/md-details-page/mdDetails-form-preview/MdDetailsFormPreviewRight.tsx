@@ -71,11 +71,13 @@ const MdFormPreviewRight = () => {
               <S.UserInfoData2>
                 {Object.values(user.surveyNo).map((item: unknown, i) => {
                   return (
-                    <>
-                      {item}
-                      {Object.values(user.surveyNo).length === 1 || Object.values(user.surveyNo).length - 1 === i || item === "" ? " " : ","}
-                      &nbsp;
-                    </>
+                    <Fragment key={i}>
+                      <>
+                        {item}
+                        {Object.values(user.surveyNo).length === 1 || Object.values(user.surveyNo).length - 1 === i || item === "" ? " " : ","}
+                        &nbsp;
+                      </>
+                    </Fragment>
                   );
                 })}
               </S.UserInfoData2>
@@ -85,11 +87,13 @@ const MdFormPreviewRight = () => {
               <S.UserInfoData2>
                 {Object.values(user.acre).map((item: unknown, i) => {
                   return (
-                    <>
-                      {item}
-                      {Object.values(user.acre).length === 1 || Object.values(user.acre).length - 1 === i || item === "" ? " " : ","}
-                      &nbsp;
-                    </>
+                    <Fragment key={i}>
+                      <>
+                        {item}
+                        {Object.values(user.acre).length === 1 || Object.values(user.acre).length - 1 === i || item === "" ? " " : ","}
+                        &nbsp;
+                      </>
+                    </Fragment>
                   );
                 })}
               </S.UserInfoData2>

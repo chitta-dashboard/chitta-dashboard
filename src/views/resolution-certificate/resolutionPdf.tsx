@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
 import { IResolutions } from "../../utils/store/slice/resolution";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { adminFormInputs } from "../admin-panel";
 import { S } from "./resolutionCertificate.styled";

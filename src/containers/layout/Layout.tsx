@@ -7,7 +7,7 @@ import AppRouters from "../../routes/AppRoutes";
 import Content from "./content";
 import Footer from "./footer";
 import { useAuthContext } from "../../utils/context/auth";
-import APIloader from "../../components/api-loader";
+import APIloader from "../../utils/loaders/api-loader";
 import S from "./Layout.styled";
 
 const Layout: FC = () => {

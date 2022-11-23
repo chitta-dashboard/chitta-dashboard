@@ -8,7 +8,7 @@ import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
 import { IResolution } from "../../../utils/store/slice/resolution";
 import { useFetch } from "../../../utils/hooks/query";
-import Loader from "../../loader";
+import Loader from "../../../utils/loaders/tree-loader";
 import S from "./resolutionsList.styled";
 
 interface Props {

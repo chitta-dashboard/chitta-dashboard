@@ -56,7 +56,6 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
         options={{
           label: "வகை *",
           gridArea: "var",
-
           selectOptions: variantList,
           availablelist: availableList,
           disable: disableOnEdit,
