@@ -1,4 +1,4 @@
-import { Button, styled } from "@mui/material";
+import { Button as MuiButton, styled } from "@mui/material";
 
 namespace S {
   export const ButtonBox = styled("div")(() => ({
@@ -8,20 +8,20 @@ namespace S {
     columnGap: ".5rem",
   }));
 
-  export const DownloadBtn = styled(Button)(() => ({
-    width: "auto !important",
-    minWidth: "unset",
-    padding: ".4rem",
-  }));
-
-  export const ImportBtn = styled(Button)(() => ({
+  export const Button = styled(MuiButton)(() => ({
     width: "100% !important",
-    minWidth: "unset",
   }));
 
   export const HighlightText = styled("span")(({ theme }) => ({
     color: theme.palette.text.primary,
   }));
+
+  export const Body = styled("div")({
+    display: "grid",
+    rowGap: "1.2rem",
+    justifyItems: "center",
+    textAlign: "center",
+  });
 }
 
 export default S;

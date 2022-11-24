@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import CeoDetailsCard from "./CeoDetailCard";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import { Endpoints, ENDPOINTS, Message } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFetch, useAdd } from "../../utils/hooks/query";

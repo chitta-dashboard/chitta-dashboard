@@ -4,7 +4,7 @@ import { DropTargetState } from "./index";
 namespace S {
   export const DropBox = styled("div")<{ state: DropTargetState }>(({ theme, state }) => {
     const style: CSSInterpolation = {
-      width: "250px",
+      width: "100%",
       height: "250px",
       borderRadius: "3px",
       border: `3px solid ${theme.palette.addAlpha(theme.palette.border.primary, 0.9)}`,

@@ -36,6 +36,13 @@ const FarmerFormPreviewLeft = () => {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { name: titleName, address } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
+
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
@@ -43,7 +50,7 @@ const FarmerFormPreviewLeft = () => {
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
-  const { addNotification, address, titleName } = useAuthContext();
+  const { addNotification } = useAuthContext();
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -155,6 +162,7 @@ const FarmerFormPreviewLeft = () => {
         <FarmerDetailsForm ref={farmerFormPdf} />
       </S.InvisibleBox>
       {isSuccess &&
+        isSuccessAdmin &&
         farmerId &&
         [farmersDetailsById[farmerId]].map((user) => (
           <S.FarmerFormPreviewLeft key={user.id}>
@@ -206,7 +214,9 @@ const FarmerFormPreviewLeft = () => {
             <S.FormHeading>
               <S.Text1>
                 {titleName ? (
-                  titleName
+                  <>
+                    {titleName} உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  </>
                 ) : (
                   <>
                     நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
@@ -240,7 +250,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FarmerImgContainer>
             <S.HeaderText>
               உறுப்பினர் எண் : {user.membershipId} <br />
-              நாள்: {current.getDate()}/{current.getMonth()}/{current.getFullYear()}
+              நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
             </S.HeaderText>
             <S.HeaderText>
               ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
@@ -268,6 +278,7 @@ const FarmerFormPreviewLeft = () => {
                     farmerDelete({
                       id: user.id,
                       successCb: () => {
+                        addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                         Toast({ message: "Farmer Deleted Successfully", type: "success" });
                       },
                       errorCb: () => {
@@ -281,7 +292,7 @@ const FarmerFormPreviewLeft = () => {
                         await mdDelete({
                           id: isFarmerInMd,
                           successCb: () => {
-                            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                            addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                             Toast({ message: "Farmer Deleted Successfully", type: "success" });
                           },
                           errorCb: () => {

@@ -9,7 +9,7 @@ import { CardHeader } from "../common-styles/commonStyles.styled";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
-import Loader from "../../../loader";
+import Loader from "../../../../utils/loaders/tree-loader";
 import { IFounders } from "../../../../utils/store/slice/founders";
 import S from "./dashoardFounder.styled";
 

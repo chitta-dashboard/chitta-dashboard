@@ -1,8 +1,9 @@
-type datePropsType = string | number
+import moment from "moment/moment";
 
-export const handleDateDifference = (start:datePropsType, end:datePropsType) => {
+type datePropsType = string | number;
 
-  let updatedStart:number =  new Date(start).getTime();
+export const handleDateDifference = (start: datePropsType, end: datePropsType) => {
+  let updatedStart: number = new Date(start).getTime();
   let updatedEnd: number = new Date(end).getTime();
 
   let time = Math.abs(updatedEnd - updatedStart);
@@ -25,5 +26,23 @@ export const handleDateDifference = (start:datePropsType, end:datePropsType) => 
     return result;
   }
 
-  return `${days} days`;
+  return `${days} ${days > 1 ? "days" : "day"}`;
+};
+
+export const handleDateDifference2 = (start: datePropsType, end: datePropsType) => {
+  var date1 = moment(start, "MMDDYYYY");
+  var date2 = moment(end, "MMDDYYYY");
+
+  var days = date2.diff(date1, "days");
+  if (days > 5) {
+    let week = Math.ceil(days / 7);
+    let month = Math.ceil(week / 4.34524);
+
+    let weekResult = `${week} ${week > 1 ? "weeks" : "week"}`;
+    let monthResult = `${month} ${month > 1 ? "months" : "month"}`;
+
+    let result = month > 1 ? monthResult : weekResult;
+    return result;
+  }
+  return `${days} ${days > 1 ? "days" : "day"}`;
 };

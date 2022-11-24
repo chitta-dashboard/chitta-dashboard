@@ -27,13 +27,16 @@ namespace S {
     aspectRatio: "1/1",
   });
 
-  export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  export const LogoText = styled(Box)(({ theme }: { theme: Theme }) => ({
+    width: "152px",
+    height: "100%",
+    lineHeight: "1.5",
     fontSize: "0.8rem",
     fontWeight: "bold",
     textAlign: "center",
     letterSpacing: ".5px",
     color: theme.palette.text.primary,
-    whiteSpace: "nowrap",
+    // whiteSpace: "nowrap",
   }));
 
   export const NavBar = styled("nav", {

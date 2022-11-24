@@ -8,7 +8,7 @@ import { useFetch, useAdd } from "../../utils/hooks/query";
 import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {

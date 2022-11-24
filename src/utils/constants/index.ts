@@ -19,6 +19,7 @@ const FarmersDetails = lazy(() => import("../../views/farmers-details"));
 const Founders = lazy(() => import("../../views/founders"));
 const AdminPanel = lazy(() => import("../../views/admin-panel"));
 const Resolutions = lazy(() => import("../../views/resolution"));
+const Portfolio = lazy(() => import("../../views/portfolio"));
 const NotFound = lazy(() => import("../../views/not-found"));
 const FarmerFormPreview = lazy(() => import("../../views/farmer-detail-page/farmer-form-preview/FarmerFormPreview"));
 const ResolutionCertificatePage = lazy(() => import("../../views/resolution-certificate"));
@@ -36,14 +37,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: String, word: String) =>
   text
     ? text
-        .trim()
-        .toLowerCase()
-        .search(
-          word
-            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-            .trim()
-            .toLowerCase(),
-        ) >= 0
+      .trim()
+      .toLowerCase()
+      .search(
+        word
+          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+          .trim()
+          .toLowerCase(),
+      ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -58,8 +59,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-    asDate: false,
-  },
+      asDate: false,
+    },
 ) => {
   const arrClone = [...arr];
 
@@ -149,6 +150,10 @@ export const ROUTES = [
     route: "admin-panel",
     name: "Admin Panel",
   },
+  {
+    route: "portfolio",
+    name: "Portfolio",
+  },
 ];
 
 export const Message = (name: string) => {
@@ -163,6 +168,7 @@ export const Message = (name: string) => {
     deleteCeoDetails: `ceo "${name}" has been removed`,
     addFoundersDetails: `New Founder "${name}" has been registered`,
     deleteFoundersDetails: `Founder "${name}" has been removed`,
+    addProduct: `Product "${name}" has been added`,
   };
 };
 
@@ -230,39 +236,6 @@ export const fileToBase64 = (file: Blob | File | string, isPath = false): Promis
     }
     reader.readAsDataURL(file as Blob | File);
   });
-
-// product details
-export const Products = [
-  { productId: 101, name: "Paddy Seeds", tamilName: "நெல் விதைகள்", image: "" },
-  { productId: 102, name: "Millet Seeds", tamilName: "தினை விதைகள்", image: "" },
-  { productId: 103, name: "Groundnut", tamilName: "நிலக்கடலை", image: "" },
-  { productId: 104, name: "Maize", tamilName: "சோளம்", image: "" },
-  { productId: 105, name: "Ragi Seeds", tamilName: "ராகி விதைகள்", image: "" },
-  { productId: 106, name: "Black Gram", tamilName: "உளுந்து", image: "" },
-  { productId: 107, name: "Sugarcane", tamilName: "கரும்பு", image: "" },
-  { productId: 108, name: "Cotton Seeds", tamilName: "பருத்தி விதைகள்", image: "" },
-];
-
-// converting image to base64 and saving into Products details
-(async () => {
-  const PaddyImage = await fileToBase64(Paddy, true);
-  const MilletSeedsImage = await fileToBase64(Millet, true);
-  const GroundnutImage = await fileToBase64(Groundnut, true);
-  const MaizeImage = await fileToBase64(Maize, true);
-  const RagiSeedsImage = await fileToBase64(Ragi, true);
-  const BlackgramImage = await fileToBase64(Blackgram, true);
-  const SugarcaneImage = await fileToBase64(Sugarcane, true);
-  const CottonSeedsImage = await fileToBase64(Cotton, true);
-
-  Products[0].image = PaddyImage;
-  Products[1].image = MilletSeedsImage;
-  Products[2].image = GroundnutImage;
-  Products[3].image = MaizeImage;
-  Products[4].image = RagiSeedsImage;
-  Products[5].image = BlackgramImage;
-  Products[6].image = SugarcaneImage;
-  Products[7].image = CottonSeedsImage;
-})();
 
 /**
  * Encrypt a text.
@@ -334,7 +307,18 @@ export const getJSONfromExcel = (file: File) => {
   return readerPromise as Promise<{ [key: string]: string }[]>;
 };
 
-export type Endpoints = "resolutions" | "ceo" | "farmerDetails" | "farmerGroup" | "mdDetails" | "founders" | "notification";
+export type Endpoints =
+  | "resolutions"
+  | "ceo"
+  | "farmerDetails"
+  | "farmerGroup"
+  | "mdDetails"
+  | "founders"
+  | "notification"
+  | "portfolio-raw"
+  | "portfolio-processed"
+  | "portfolio-animal"
+  | "admin";
 
 export const ENDPOINTS: {
   resolutions: Endpoints;
@@ -344,6 +328,10 @@ export const ENDPOINTS: {
   mdDetails: Endpoints;
   founders: Endpoints;
   notification: Endpoints;
+  portfolioRaw: Endpoints;
+  portfolioProcessed: Endpoints;
+  portfolioAnimal: Endpoints;
+  admin: Endpoints;
 } = {
   resolutions: "resolutions",
   ceo: "ceo",
@@ -352,6 +340,10 @@ export const ENDPOINTS: {
   mdDetails: "mdDetails",
   founders: "founders",
   notification: "notification",
+  portfolioRaw: "portfolio-raw",
+  portfolioProcessed: "portfolio-processed",
+  portfolioAnimal: "portfolio-animal",
+  admin: "admin",
 };
 
 export const handleDataByPage = (farmerData: any, page: number) => {
@@ -412,10 +404,15 @@ export const RouterDefaults = [
     component: ResolutionCertificatePage,
   },
   {
+    path: "/portfolio",
+    component: Portfolio,
+  },
+  {
     path: "/*",
     component: NotFound,
   },
 ];
+
 export const imageCompressor = (file: any) =>
   new Promise<string>((resolve) => {
     Compress.imageFileResizer(
@@ -431,3 +428,70 @@ export const imageCompressor = (file: any) =>
       "base64",
     );
   });
+
+export const VARIANT_DATA: {
+  [key: string]: {
+    [key: string]: string;
+  };
+} = {
+  "eed0024e-9788-4f74-8ef0-ad9d9671b41e": {
+    "e2fbf9be-101b-46d8-98d9-0ce106e25b26": "Basmati",
+    test1: "Test Variant 1",
+    test2: "Test Variant 2",
+    test3: "Test Variant 3",
+  },
+  "ae276ede-06fd-4044-920e-a3c63c149639": {
+    "a7e8d3fb-b318-481f-8913-a802323d0002": "Paiyur-1",
+    test1: "Test Variant 1",
+    test2: "Test Variant 2",
+    test3: "Test Variant 3",
+  },
+  "b1644f14-fd5a-45dd-84be-a403d20ee0ef": {
+    "88ee2e31-3abe-448f-a439-2dc087aa9573": "Basmati",
+    test1: "Test Variant 1",
+    test2: "Test Variant 2",
+    test3: "Test Variant 3",
+  },
+  "79253524-3110-48f7-8769-b9adbd2a26a0": {
+    "88618d44-a095-4217-b09e-30b1b341022f": "Basmati",
+  },
+  "ed07c5c6-dce2-48ae-9ef0-8385774e3703": {
+    "38a003fd-af1a-4d68-98c9-3e5d4096a5c5": "Basmati",
+  },
+  "6831d66b-b090-469e-a1be-dda258c3b3eb": {
+    "177977f1-861e-4b3d-b54a-1cacfbaa116c": "Basmati",
+  },
+  "2f085dc7-3c65-4fb2-bc41-17d07223a613": {
+    "c717ca08-1c0d-47a2-a184-7b3a4760752f": "Basmati",
+  },
+  "456ea261-efad-492f-a067-ed2284c186c9": {
+    "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7": "Basmati",
+  },
+};
+
+export const PRODUCT_DATA = {
+  raw: [
+    { id: "eed0024e-9788-4f74-8ef0-ad9d9671b41e", productId: 101, name: "Paddy Seeds", tamilName: "நெல் விதைகள்", image: "" },
+    { id: "ae276ede-06fd-4044-920e-a3c63c149639", productId: 102, name: "Millet Seeds", tamilName: "தினை விதைகள்", image: "" },
+    { id: "b1644f14-fd5a-45dd-84be-a403d20ee0ef", productId: 103, name: "Groundnut", tamilName: "நிலக்கடலை", image: "" },
+    { id: "79253524-3110-48f7-8769-b9adbd2a26a0", productId: 104, name: "Maize", tamilName: "சோளம்", image: "" },
+    { id: "ed07c5c6-dce2-48ae-9ef0-8385774e3703", productId: 105, name: "Ragi Seeds", tamilName: "ராகி விதைகள்", image: "" },
+    { id: "6831d66b-b090-469e-a1be-dda258c3b3eb", productId: 106, name: "Black Gram", tamilName: "உளுந்து", image: "" },
+    { id: "2f085dc7-3c65-4fb2-bc41-17d07223a613", productId: 107, name: "Sugarcane", tamilName: "கரும்பு", image: "" },
+    { id: "456ea261-efad-492f-a067-ed2284c186c9", productId: 108, name: "Cotton Seeds", tamilName: "பருத்தி விதைகள்", image: "" },
+  ],
+  processed: [],
+  animal: [],
+};
+
+// converting image to base64 and saving into Products details
+(async () => {
+  PRODUCT_DATA.raw[0].image = await fileToBase64(Paddy, true);
+  PRODUCT_DATA.raw[1].image = await fileToBase64(Millet, true);
+  PRODUCT_DATA.raw[2].image = await fileToBase64(Groundnut, true);
+  PRODUCT_DATA.raw[3].image = await fileToBase64(Maize, true);
+  PRODUCT_DATA.raw[4].image = await fileToBase64(Ragi, true);
+  PRODUCT_DATA.raw[5].image = await fileToBase64(Blackgram, true);
+  PRODUCT_DATA.raw[6].image = await fileToBase64(Sugarcane, true);
+  PRODUCT_DATA.raw[7].image = await fileToBase64(Cotton, true);
+})();

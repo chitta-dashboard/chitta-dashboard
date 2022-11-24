@@ -6,7 +6,7 @@ import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import { IResolution } from "../../../utils/store/slice/resolution";
 import leafLine from "../../../assets/images/leafLine.svg";
 import { useFetch } from "../../../utils/hooks/query";
-import Loader from "../../loader";
+import Loader from "../../../utils/loaders/tree-loader";
 import Toast from "../../../utils/toast";
 import S from "./resolutionsTree.styled";
 

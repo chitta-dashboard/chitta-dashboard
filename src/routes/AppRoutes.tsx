@@ -1,6 +1,6 @@
 import { FC, Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Loader from "../components/loader";
+import Loader from "../utils/loaders/tree-loader";
 import { RouterDefaults } from "../utils/constants";
 
 const AppRouters: FC = () => {
