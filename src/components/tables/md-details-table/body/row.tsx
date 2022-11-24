@@ -158,7 +158,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
               deleteMdDetail({
                 id: user.id,
                 successCb: () => {
-                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
+                  addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteMd });
                   Toast({ message: "MD Deleted Successfully", type: "success" });
                 },
                 errorCb: () => {

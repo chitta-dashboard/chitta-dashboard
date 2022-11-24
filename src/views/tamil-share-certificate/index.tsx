@@ -51,28 +51,30 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
                 <S.TopRightIcon src={ShareHolderCertificateTopCornerIcon} alt="corner-icon" />
                 <S.BottomLeftIcon src={ShareHolderCertificateBottomCornerIcon} alt="corner-icon" />
                 <S.BottomRightIcon src={ShareHolderCertificateBottomCornerIcon} alt="corner-icon" />
-                <S.CertificateHeadingContainer>
-                  <S.HeadingContainerLogo>
-                    <S.NerkathirLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogoGray} alt="NerkathirLogoGray" />
-                  </S.HeadingContainerLogo>
-                  <S.HeadingContainerHeading>
-                    {titleName ? (
-                      <>
-                        {titleName} உழவர் <br />
-                        உற்பத்தியாளர் நிறுவனம்
-                      </>
-                    ) : (
-                      <>
-                        நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
-                      </>
-                    )}
-                  </S.HeadingContainerHeading>
-                  <S.HeadingContainerSignNo>
-                    <S.RegNoCin>{regNo ? `REG No:${regNo}` : "REG No:139086"}</S.RegNoCin>
-                    <S.RegNoCin>{cinNo ? `CIN:${cinNo}` : "CIN:UO1409TN2020PTC139086"} </S.RegNoCin>
-                  </S.HeadingContainerSignNo>
-                </S.CertificateHeadingContainer>
-                <S.CertificateHeader>பங்குப்பத்திரம்</S.CertificateHeader>
+                <S.CertificateHeadingMainContainer>
+                  <S.CertificateHeadingContainer>
+                    <S.HeadingContainerLogo>
+                      <S.NerkathirLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogoGray} alt="NerkathirLogoGray" />
+                    </S.HeadingContainerLogo>
+                    <S.HeadingContainerHeading>
+                      {titleName ? (
+                        <>
+                          {titleName} உழவர் <br />
+                          உற்பத்தியாளர் நிறுவனம்
+                        </>
+                      ) : (
+                        <>
+                          நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                        </>
+                      )}
+                    </S.HeadingContainerHeading>
+                    <S.HeadingContainerSignNo>
+                      <S.RegNoCin>{regNo ? `REG No:${regNo}` : "REG No:139086"}</S.RegNoCin>
+                      <S.RegNoCin>{cinNo ? `CIN:${cinNo}` : "CIN:UO1409TN2020PTC139086"} </S.RegNoCin>
+                    </S.HeadingContainerSignNo>
+                  </S.CertificateHeadingContainer>
+                  <S.CertificateHeader>பங்குப்பத்திரம்</S.CertificateHeader>
+                </S.CertificateHeadingMainContainer>
                 <S.DateContainer>
                   <S.ShareCountInnerContainer>
                     <S.DateText>உறுப்பினர் எண் :</S.DateText>

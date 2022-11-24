@@ -278,6 +278,7 @@ const FarmerFormPreviewLeft = () => {
                     farmerDelete({
                       id: user.id,
                       successCb: () => {
+                        addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                         Toast({ message: "Farmer Deleted Successfully", type: "success" });
                       },
                       errorCb: () => {
@@ -291,7 +292,7 @@ const FarmerFormPreviewLeft = () => {
                         await mdDelete({
                           id: isFarmerInMd,
                           successCb: () => {
-                            addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                            addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                             Toast({ message: "Farmer Deleted Successfully", type: "success" });
                           },
                           errorCb: () => {

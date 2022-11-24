@@ -252,7 +252,7 @@ const MdFormPreviewLeft = () => {
                   deleteMdDetail({
                     id: user.id,
                     successCb: () => {
-                      addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                      addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                       Toast({ message: "MD Deleted Successfully", type: "success" });
                       navigate(-1);
                     },
