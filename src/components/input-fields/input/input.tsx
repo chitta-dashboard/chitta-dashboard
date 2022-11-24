@@ -164,7 +164,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
         <Controller
           name={name}
           control={control}
-          // defaultValue={options.initialvalue ||""}
+          defaultValue={options.initialvalue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => {
@@ -175,8 +175,8 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 helperText={errors[name]?.message as string}
                 {...options}
                 name={field.name}
-                value={field.value}
-                defaultValue={options?.initialvalue}
+                value={field.value || ""}
+                // defaultValue={options?.initialvalue}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   field.onChange(e.target.value);
