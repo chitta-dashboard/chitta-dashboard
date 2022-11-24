@@ -4,7 +4,7 @@ import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
 import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
-import Loader from "../../../loader";
+import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
@@ -26,6 +26,15 @@ const Body = () => {
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
+  const [loader, setLoader] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoader(false);
+
+    setTimeout(() => {
+      setLoader(true);
+    }, 300);
+  }, []);
 
   // farmer group filter for farmer detail table
   useEffect(() => {
@@ -89,7 +98,7 @@ const Body = () => {
 
   return (
     <>
-      {!isFarmerGroupSuccess ? (
+      {!loader ? (
         <tbody>
           <tr>
             <td>
@@ -106,7 +115,7 @@ const Body = () => {
       ) : (
         <S.EmptyMsg>
           <tr>
-            <td>No Farmer Details..</td>
+            <td>No Farmer Details.</td>
           </tr>
         </S.EmptyMsg>
       )}

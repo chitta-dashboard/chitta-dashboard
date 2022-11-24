@@ -1,5 +1,5 @@
 import { styled, keyframes, Stack } from "@mui/material";
-import { LightTheme } from "../../utils/theme";
+import { LightTheme } from "../../theme";
 
 namespace S {
   export const growY = keyframes`

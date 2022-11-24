@@ -9,7 +9,7 @@ import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import S from "./founders.styled";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 
 const Founders = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);

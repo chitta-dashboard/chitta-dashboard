@@ -12,7 +12,7 @@ import FarmersDetailsTablePageHeader from "../../components/table-page-header/fa
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {

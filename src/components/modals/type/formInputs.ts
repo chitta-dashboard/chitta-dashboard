@@ -40,7 +40,7 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -51,14 +51,21 @@ export interface IAddFarmersGroupFormInput {
   id?: string;
   members?: string[];
 }
-
-export interface IAddProductsFormInput {
-  productName: string;
-  variant: string;
+export interface IProductVarient {
+  variantId: string;
+  productDescription: string;
   startDate: string;
   endDate: string;
   availableAmount: string;
   qualityGrade: string;
+}
+
+export interface IAddProductsFormInput extends IProductVarient {
+  productName: string;
+  products: string[];
+  foodType: string;
+  profile: string
+  name: string
 }
 
 export interface IAddMDDetailsFormInput {
