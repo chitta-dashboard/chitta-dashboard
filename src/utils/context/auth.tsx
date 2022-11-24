@@ -153,10 +153,7 @@ const AuthContextProvider: FC<Props> = (props) => {
 
   const clearNotification = () => {
     // dispatch({ type: CLEAR_NOTIFICATION });
-
-    if (isSuccess) {
-      deleteNotification({ id: Object.keys(NotificationData) });
-    }
+    deleteNotification({ id: Object.keys(NotificationData) });
   };
 
   const addLogo = (data: {}) => {
