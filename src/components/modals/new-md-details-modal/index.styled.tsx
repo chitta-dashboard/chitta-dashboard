@@ -7,7 +7,8 @@ namespace S {
   export const TableBodyContainer = styled(Box, {
     shouldForwardProp: (prop) => prop !== "isDataAvailable",
   })(({ isDataAvailable }: TableBodyContainerType) => ({
-    minHeight:"300px",
+    minHeight: "500px",
+    minWidth: "600px",
     // justifyContent:isDataAvailable ? "space-between !important" : "center",
     alignItems: isDataAvailable ? "flex-start !important" : "center !important",
   }));
