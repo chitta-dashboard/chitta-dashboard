@@ -51,7 +51,6 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
         {Object.values(isSuccess && (NotificationData as notificationProps)).map((user, i) => (
           <S.BodyBox key={user.id + i}>
             <S.UserImage alt="userImage" src={user.image ? decryptText(user.image) : ""} />
-            {/* {user.image && <S.UserImage alt="userImage" src={user.image} />} */}
             <S.UserText variant="subtitle1">{user.message}</S.UserText>
           </S.BodyBox>
         ))}

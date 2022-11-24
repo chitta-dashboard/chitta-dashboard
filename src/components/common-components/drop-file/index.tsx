@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
-import { BufferLoader } from "../../api-loader";
+import { BufferLoader } from "../../../utils/loaders/api-loader";
 import S from "./dropFile.styled";
 
 export interface IDropValidationResult {

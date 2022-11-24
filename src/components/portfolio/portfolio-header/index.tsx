@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import SearchBar from "../../common-components/search-bar";
 import { Button } from "@mui/material";
 import ToggleButton from "../../../utils/ToggleButton";
@@ -10,8 +10,13 @@ import { useAuthContext } from "../../../utils/context/auth";
 import S from "./portfolioHeader.styled";
 import Toast from "../../../utils/toast";
 
-const PortfolioHeader: FC = () => {
-  const [tab, setTab] = useState("Raw");
+interface Props {
+  tab: string;
+  setTab: Dispatch<SetStateAction<string>>;
+}
+
+const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
+  // const [tab, setTab] = useState("Raw");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 

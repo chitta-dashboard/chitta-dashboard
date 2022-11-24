@@ -166,7 +166,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
                 const base64Image = await fileToBase64(image, true);
                 addNotification({
                   message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`,
-                  id: "delete_" + variantData.variantId,
+                  id: "delete_" + variantData.variantId + data.productName,
                   image: base64Image,
                 });
                 Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success" });

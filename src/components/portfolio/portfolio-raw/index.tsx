@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import Loader from "../../loader";
+import Loader from "../../../utils/loaders/tree-loader";
 import ItemCard, { IPortfolioProduct } from "../item-card";
-import S from "./portfolioItems.styled";
+import S from "./portfolioRaw.styled";
 
-const PortfolioItems = () => {
+const PortfolioRaw = () => {
   const {
     formatChangeSuccess,
     result: { data },
@@ -23,13 +23,13 @@ const PortfolioItems = () => {
     );
 
   return (
-    <S.PortfolioItems>
+    <S.PortfolioRaw>
       {portfolioData?.length === 0 && <S.NoDataMessage>No Raw Products</S.NoDataMessage>}
       {portfolioData?.map((data) => (
         <ItemCard key={data.id} data={data}></ItemCard>
       ))}
-    </S.PortfolioItems>
+    </S.PortfolioRaw>
   );
 };
 
-export default PortfolioItems;
+export default PortfolioRaw;
