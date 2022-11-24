@@ -186,7 +186,6 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoEdit({
               editedData: openConfirmationModal,
               successCb: () => {
-                addNotification({ id: "edit" + openConfirmationModal.id, message: `CEO  ${openConfirmationModal.name} has been edited.` });
                 Toast({ message: "CEO updated successfully.", type: "success" });
               },
               errorCb: () => {
