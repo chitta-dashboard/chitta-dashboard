@@ -56,6 +56,7 @@ namespace S {
   export const HeaderTextContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
     color: theme.palette.text.primary,
     textAlign: "center",
+    width: "55%",
   }));
 
   export const HeaderText1 = styled(Typography)({

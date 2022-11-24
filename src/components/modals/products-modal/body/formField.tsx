@@ -1,13 +1,22 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
-import { Products } from "../../../../utils/constants";
+import { PRODUCT_DATA, VARIANT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
 interface CustomProps {
   control?: Control;
+  variantList?: string[][] | null;
+  availableList?: string[] | null;
+  setProductName?: (name: string) => void;
+  setProductId?: (name: string) => void;
+  productImage?: string;
+  disableOnEdit?: number;
 }
 
-const FormField: FC<CustomProps> = ({ control }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit }) => {
+  let temp: any = [];
+  Object.values(VARIANT_DATA).map((i) => (temp = [...temp, Object.entries(i)]));
+  const tempVariantsList = temp.flat(1);
   return (
     <S.StaticBox>
       <Input
@@ -23,7 +32,8 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          defaultValue: "Raw",
+          initialvalue: "Raw",
+          disable: disableOnEdit,
         }}
       />
       <Input
@@ -34,24 +44,24 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "பொருளின் பெயர் *",
           gridArea: "prn",
-          selectoptions: Products,
+          selectoptions: PRODUCT_DATA.raw,
+          setproductname: setProductName,
+          setproductid: setProductId,
+          productimage: productImage,
+          disable: disableOnEdit,
         }}
       />
       <Input
-        name="variant"
+        name="variantId"
         type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
           label: "வகை *",
           gridArea: "var",
-          selectOptions: [
-            ["Basmati", "Basmati"],
-            ["Payur-1", "Payur-1"],
-            ["Variant-1", "Variant-1"],
-            ["Vriant-2", "Variant-2"],
-            ["Variant-3", "Variant-3"],
-          ],
+          selectOptions: variantList === null ? tempVariantsList : variantList,
+          availablelist: availableList,
+          disable: disableOnEdit,
         }}
       />
       <Input
@@ -76,7 +86,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
       />
       <Input
         name="availableAmount"
-        type="text"
+        type="number"
         control={control}
         rules={{ required: "required" }}
         options={{
@@ -98,11 +108,11 @@ const FormField: FC<CustomProps> = ({ control }) => {
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          defaultValue: "A+",
+          initialvalue: "A+",
         }}
       />
       <Input
-        name="description"
+        name="productDescription"
         type="text"
         control={control}
         rules={{ required: "required" }}

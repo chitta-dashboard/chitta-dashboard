@@ -2,7 +2,7 @@ import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
 import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
-import { BufferLoader } from "../../api-loader";
+import { BufferLoader } from "../../../utils/loaders/api-loader";
 import S from "./dropFile.styled";
 
 export interface IDropValidationResult {
@@ -126,7 +126,7 @@ const DropFile: React.FC<IDropFile> = function ({
             return (
               <>
                 <FileDownload sx={{ fontSize: "2rem", opacity: ".5" }} />
-                <Typography>Click or Drag and drop to add 'Excel' file.</Typography>
+                <Typography>Click or Drag and drop to add 'Excel' file. (The file should have the same format as the sample file)</Typography>
               </>
             );
           else if (targetState === "inValidDrag") return <Typography>Invalid File Format!</Typography>;

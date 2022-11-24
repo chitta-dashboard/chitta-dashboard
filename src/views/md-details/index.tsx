@@ -13,12 +13,12 @@ import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: mdIsSuccess,
     result: { data: mdData },
   } = useFetch(ENDPOINTS.mdDetails);
   const {
@@ -36,7 +36,7 @@ const MdDetails = () => {
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
   useEffect(() => {
-    Object.values(farmerIsSuccess && (mdData as mdDetail[])).map((item) => {
+    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as mdDetail[])).map((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
         let index = farmerKeys.indexOf(item.farmerId as string);
         farmerKeys.splice(index, 1);
@@ -48,7 +48,7 @@ const MdDetails = () => {
       return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
-  }, [mdData, farmersData, isSuccess, farmerIsSuccess]);
+  }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
 
   const CustomMessage = () => {
     return (
