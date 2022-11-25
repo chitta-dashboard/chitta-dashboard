@@ -150,10 +150,6 @@ const ResolutionCertificatePage = () => {
             mutateEdition({
               editedData: editedData.current,
               successCb: () => {
-                addNotification({
-                  id: "edit" + resolutionId,
-                  message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
-                });
                 Toast({ message: "Resolution edited successfully.", type: "success" });
               },
               errorCb: () => {
