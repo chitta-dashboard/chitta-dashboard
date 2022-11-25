@@ -29,7 +29,7 @@ const Founders = () => {
       data,
       successCb: () => {
         addNotification({
-          id: data.id,
+          id: `add_${data.id}`,
           image: data.profile,
           message: Message(data.name).addFoundersDetails,
         });
