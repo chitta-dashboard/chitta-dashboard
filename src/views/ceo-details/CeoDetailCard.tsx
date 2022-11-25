@@ -99,14 +99,17 @@ const CeoDetailsCard = ({ user }: Props) => {
               </S.CeoDataLeft>
               <S.CeoDataRight>
                 <S.CeoData>
-                  <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-                  <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-                  <S.CeoInfo>தகுதி:</S.CeoInfo>
+                  <S.CeoInfoLeft>கைபேசி எண்: </S.CeoInfoLeft>
+                  <S.CeoInfoLeft>பிறந்த தேதி:</S.CeoInfoLeft>
+                  <S.CeoInfoLeft>தகுதி:</S.CeoInfoLeft>
                 </S.CeoData>
                 <S.CeoData>
                   <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
                   <S.CeoInfo>{user.dob}</S.CeoInfo>
-                  <S.CeoInfo>{user.qualification}</S.CeoInfo>
+                  <S.CeoInfo>
+                    {user.qualification.split("").splice(0, 14).join("")}
+                    {user.qualification.length > 14 ? "..." : ""}
+                  </S.CeoInfo>
                 </S.CeoData>
               </S.CeoDataRight>
             </S.CeoDetailData>

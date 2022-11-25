@@ -152,7 +152,6 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
               founderMutateUpdate({
                 editedData: editData,
                 successCb: () => {
-                  addNotification({ id: "edit" + editData.id, message: `Founder  ${editData.name} has been edited.` });
                   Toast({ message: "Founder Edited Successfully", type: "success" });
                 },
                 errorCb: () => {
