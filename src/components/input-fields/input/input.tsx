@@ -53,7 +53,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
-            render={({ field, formState: { errors } }) => (
+          render={({ field, formState: { errors } }) => (
             <S.TextInput
               helperText={errors[name]?.message as string}
               type="text"
@@ -64,7 +64,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               value={field.value}
               ref={field.ref}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                field.onChange(dateFormat(e.target.value));
+                field.onChange(e.target.value);
                 onChange && onChange(e);
               }}
               onBlur={field.onBlur}
