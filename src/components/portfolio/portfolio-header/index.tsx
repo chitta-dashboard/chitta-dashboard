@@ -52,7 +52,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
           <Button onClick={() => setAddModalOpen(true)}>Add</Button>
         </S.Action>
       </S.Header>
-      {addModalOpen && <ProductsModal openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
+      {addModalOpen && <ProductsModal tab={tab} openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
     </>
   );
 };

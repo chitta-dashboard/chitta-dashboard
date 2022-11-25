@@ -56,7 +56,7 @@ const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "சுயவிவரம் *", gridArea: "dsc", fullHeight: true, multiline: true, maxRows: 3 }}
+        options={{ label: "சுயவிவரம் *", gridArea: "dsc", fullHeight: true, multiline: true, maxRows: 4 ,textarea:true}}
       />
     </S.StaticBox>
   );

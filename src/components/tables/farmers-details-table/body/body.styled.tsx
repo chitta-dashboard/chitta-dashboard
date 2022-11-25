@@ -142,6 +142,17 @@ namespace S {
       translate: "transform(-50%, -50%)",
     },
   }));
+
+  export const LoaderContainer = styled("tbody")({
+    minHeight: "calc(100vh - 20.75rem)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  });
+
+  export const Customtr = styled("tr")({
+    height: "100%",
+  });
 }
 
 export default S;

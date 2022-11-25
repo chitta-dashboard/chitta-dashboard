@@ -53,21 +53,21 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           defaultValue={defaultValue || ""}
           rules={rules}
           shouldUnregister={shouldUnregister}
-          render={({ field: { onChange, value }, field, formState: { errors } }) => (
+            render={({ field, formState: { errors } }) => (
             <S.TextInput
               helperText={errors[name]?.message as string}
               type="text"
-              multiline
-              maxRows={3}
+              multiline={options?.multiline}
+              maxRows={options?.maxRows}
               {...options}
-              name={value.name}
+              name={field.name}
               value={field.value}
-              ref={value.ref}
+              ref={field.ref}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onChange(dateFormat(e.target.value));
+                field.onChange(dateFormat(e.target.value));
                 onChange && onChange(e);
               }}
-              onBlur={value.onBlur}
+              onBlur={field.onBlur}
             />
           )}
         />
@@ -192,12 +192,13 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                     value={actualValue}
                     disabled={
                       (options?.availablelist && !options?.availablelist.includes(actualValue)) ||
-                      actualValue === "Processed" ||
-                      actualValue === "Animal"
+                      (options?.initialvalue && actualValue !== options?.initialvalue)
                     }
                   >
                     {displayValue}
-                    {options?.availablelist && !options?.availablelist.includes(actualValue) ? "  (This variant already exists)" : ""}
+                    {!options?.disable && options?.availablelist && !options?.availablelist.includes(actualValue)
+                      ? "  (This variant already exists)"
+                      : ""}
                   </MenuItem>
                 ))}
 

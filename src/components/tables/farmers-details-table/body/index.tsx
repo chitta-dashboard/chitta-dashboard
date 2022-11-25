@@ -98,13 +98,13 @@ const Body = () => {
   return (
     <>
       {!loader ? (
-        <tbody>
-          <tr>
+        <S.LoaderContainer>
+          <S.Customtr>
             <td>
               <Loader />
             </td>
-          </tr>
-        </tbody>
+          </S.Customtr>
+        </S.LoaderContainer>
       ) : farmersList.length > 0 ? (
         <BodyWrapper>
           {farmersList.map((user: farmerDetail) => (
