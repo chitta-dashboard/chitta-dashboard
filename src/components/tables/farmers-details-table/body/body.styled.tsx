@@ -142,6 +142,10 @@ namespace S {
       translate: "transform(-50%, -50%)",
     },
   }));
+
+  export const LoaderContainer = styled(Box)({
+    minHeight: "calc(100vh - 20.75rem)",
+  });
 }
 
 export default S;
