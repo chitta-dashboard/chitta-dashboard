@@ -84,7 +84,7 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
-  joinDate: string;
+  joinedDate: string;
 }
 export interface IAddFounderDetailsFormInput {
   name: string;

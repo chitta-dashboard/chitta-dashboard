@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { farmerDetail, addFarmerId, setPageCount, checkBoxUnselectAll, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, addFarmerId, setPageCount, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
@@ -69,7 +69,6 @@ const Body = () => {
   // For tamil share holder certificate
   useEffect(() => {
     if (isSuccess) {
-      dispatch(checkBoxUnselectAll());
       const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
       isSuccess && dispatch(addFarmerId(farmerId));
     }

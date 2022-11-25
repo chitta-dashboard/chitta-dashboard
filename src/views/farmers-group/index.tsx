@@ -52,7 +52,7 @@ const FarmersGroup = () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
-    addNotification({ id: newFarmerGroup.id, message: Message(newFarmerGroup.groupName).addFarmGroup });
+    addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 
   return (
