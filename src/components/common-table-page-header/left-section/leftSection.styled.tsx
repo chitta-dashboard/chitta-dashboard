@@ -5,6 +5,7 @@ namespace S {
     width: "100%",
     "& .MuiPaper-root": {
       minWidth: "12rem",
+      width: "70%",
       [theme.breakpoints.down("md")]: {
         width: "100%",
       },
