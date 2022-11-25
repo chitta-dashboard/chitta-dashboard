@@ -152,6 +152,7 @@ namespace S {
 
   export const Customtr = styled("tr")({
     height: "100%",
+
   });
 }
 
