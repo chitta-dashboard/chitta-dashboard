@@ -32,7 +32,7 @@ const CeoDetails = () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
-    addNotification({ id: data.id, image: data.profile, message: Message(data.name).addCeoDetails });
+    addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addCeoDetails });
   };
   return (
     <>
