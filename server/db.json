@@ -41,6 +41,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL ",
@@ -54,7 +55,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -83,6 +84,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "TRIP IRRIGATION",
+      "waterType": "TRIP IRRIGATION",
       "cropsType": "SUGAR CANE",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -96,7 +98,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -126,6 +128,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -141,7 +144,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -171,6 +174,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -184,7 +188,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -212,6 +216,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -225,7 +230,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -254,6 +259,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -268,7 +274,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -298,6 +304,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -312,7 +319,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -341,6 +348,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -354,7 +362,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -381,6 +389,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -393,7 +402,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -419,6 +428,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -431,7 +441,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -459,6 +469,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -473,7 +484,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -501,6 +512,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -513,7 +525,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -539,6 +551,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -551,7 +564,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -577,6 +590,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -589,7 +603,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -615,6 +629,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -628,7 +643,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -657,6 +672,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -670,7 +686,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -698,6 +714,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -711,7 +728,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -738,6 +755,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -750,7 +768,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -778,6 +796,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -792,7 +811,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -821,6 +840,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -834,7 +854,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -862,6 +882,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -875,7 +896,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -903,8 +924,9 @@
         "surveyNo-third": "36/10",
         "surveyNo-fourth": "36/8B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "MLLETS",
       "cattle": "3",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -920,7 +942,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -950,6 +972,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -963,7 +986,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -992,6 +1015,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1006,7 +1030,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1035,6 +1059,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "COTTON",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1048,7 +1073,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1076,6 +1101,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "COTTON",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1089,7 +1115,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1118,6 +1144,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1132,7 +1159,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1161,6 +1188,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1174,7 +1202,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1201,6 +1229,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1213,7 +1242,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1240,6 +1269,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1253,7 +1283,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1281,6 +1311,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1294,7 +1325,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1322,6 +1353,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -1335,7 +1367,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1364,6 +1396,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "SMALL",
@@ -1378,7 +1411,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1410,6 +1443,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -1426,7 +1460,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1458,6 +1492,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -1472,7 +1507,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1499,8 +1534,9 @@
         "surveyNo-first": "99/13",
         "surveyNo-second": "99/14A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -1514,7 +1550,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1541,8 +1577,9 @@
         "surveyNo-second": "88/7",
         "surveyNo-third": "7/1"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -1557,7 +1594,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1585,8 +1622,9 @@
         "surveyNo-second": "9/11",
         "surveyNo-third": ""
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -1601,7 +1639,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1629,8 +1667,9 @@
         "surveyNo-second": "118/4",
         "surveyNo-third": "118/8"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1645,7 +1684,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1673,6 +1712,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -1685,7 +1725,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1711,6 +1751,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -1723,7 +1764,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1752,6 +1793,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -1767,7 +1809,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1797,6 +1839,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1810,7 +1853,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1839,6 +1882,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1853,7 +1897,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1882,6 +1926,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACGRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -1895,7 +1940,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1926,6 +1971,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -1942,7 +1988,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -1973,6 +2019,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -1986,7 +2033,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2014,6 +2061,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACGRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2027,7 +2075,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2055,6 +2103,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2068,7 +2117,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2096,6 +2145,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2109,7 +2159,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2137,6 +2187,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2150,7 +2201,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2179,6 +2230,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2193,7 +2245,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2222,7 +2274,8 @@
         "surveyNo-third": "6/10"
       },
       "landType": "WET LAND",
-      "irrigationType": "WELLL",
+      "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -2237,7 +2290,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2266,6 +2319,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -2279,7 +2333,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2308,6 +2362,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2322,7 +2377,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2353,7 +2408,8 @@
         "surveyNo-fifth": "6/6"
       },
       "landType": "WET LAND",
-      "irrigationType": "WEL",
+      "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2370,7 +2426,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2402,6 +2458,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2416,7 +2473,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2445,6 +2502,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2458,7 +2516,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2486,6 +2544,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2499,7 +2558,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2527,6 +2586,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2540,7 +2600,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2569,6 +2629,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -2583,7 +2644,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2612,6 +2673,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -2625,7 +2687,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2652,6 +2714,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -2664,7 +2727,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2690,6 +2753,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -2702,7 +2766,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2728,6 +2792,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL ",
@@ -2740,7 +2805,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2766,6 +2831,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2778,7 +2844,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2804,6 +2870,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2816,7 +2883,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2843,6 +2910,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2856,7 +2924,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2882,6 +2950,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2894,7 +2963,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2921,6 +2990,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -2933,7 +3003,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -2962,6 +3032,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -2977,7 +3048,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3005,6 +3076,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3017,7 +3089,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3046,6 +3118,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3060,7 +3133,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3088,6 +3161,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3100,7 +3174,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3126,6 +3200,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3139,7 +3214,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3167,6 +3242,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3179,7 +3255,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3205,6 +3281,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3217,7 +3294,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3244,6 +3321,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3257,7 +3335,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3284,6 +3362,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3296,7 +3375,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3322,6 +3401,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -3334,7 +3414,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3363,6 +3443,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -3378,7 +3459,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3409,6 +3490,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3423,7 +3505,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3453,6 +3535,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3467,7 +3550,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3497,6 +3580,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3511,7 +3595,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3540,6 +3624,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLAC GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3553,7 +3638,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3581,6 +3666,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3594,7 +3680,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3622,6 +3708,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3635,7 +3722,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3663,6 +3750,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3676,7 +3764,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3704,6 +3792,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3717,7 +3806,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3747,6 +3836,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3762,7 +3852,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3791,6 +3881,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3803,7 +3894,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3832,6 +3923,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLAC GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -3847,7 +3939,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3880,6 +3972,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLAC GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3896,7 +3989,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3928,6 +4021,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3942,7 +4036,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -3971,6 +4065,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -3984,7 +4079,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4012,6 +4107,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4025,7 +4121,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4053,6 +4149,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLAC GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4066,7 +4163,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4094,6 +4191,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4107,7 +4205,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4138,6 +4236,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4154,7 +4253,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4185,6 +4284,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4198,7 +4298,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4227,6 +4327,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4241,7 +4342,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4271,6 +4372,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL ",
@@ -4285,7 +4387,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4314,6 +4416,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4327,7 +4430,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4355,6 +4458,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4368,7 +4472,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4397,6 +4501,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4411,7 +4516,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4440,6 +4545,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4453,7 +4559,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4482,6 +4588,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4496,7 +4603,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4526,6 +4633,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4541,7 +4649,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4572,6 +4680,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4585,7 +4694,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4612,6 +4721,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4624,7 +4734,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4650,6 +4760,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4662,7 +4773,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4689,6 +4800,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4702,7 +4814,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4730,6 +4842,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4743,7 +4856,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4770,6 +4883,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4782,7 +4896,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4808,6 +4922,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAIN",
+      "waterType": "RAIN",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4820,7 +4935,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4847,6 +4962,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4860,7 +4976,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4888,6 +5004,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -4901,7 +5018,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4929,6 +5046,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4942,7 +5060,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -4970,6 +5088,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -4983,7 +5102,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5011,6 +5130,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5024,7 +5144,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5053,6 +5173,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -5067,7 +5188,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5096,6 +5217,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5109,7 +5231,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5138,6 +5260,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5153,7 +5276,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5183,6 +5306,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5195,7 +5319,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5223,6 +5347,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5237,7 +5362,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5266,6 +5391,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5279,7 +5405,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5307,6 +5433,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5320,7 +5447,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5348,6 +5475,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5361,7 +5489,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5388,6 +5516,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5400,7 +5529,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5425,8 +5554,9 @@
         "surveyNo-first": "57/1B",
         "surveyNo-second": "57/1C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5440,7 +5570,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5469,6 +5599,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5483,7 +5614,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5512,6 +5643,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -5525,7 +5657,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5550,8 +5682,9 @@
       "surveyNo": {
         "surveyNo-first": "33/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5564,7 +5697,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5588,8 +5721,9 @@
       "surveyNo": {
         "surveyNo-first": "97/1B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5602,7 +5736,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5627,8 +5761,9 @@
         "surveyNo-first": "181/1",
         "surveyNo-second": "181/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5642,7 +5777,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5667,8 +5802,9 @@
       "surveyNo": {
         "surveyNo-first": "91/6"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5681,7 +5817,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5707,8 +5843,9 @@
         "surveyNo-second": "56/11A",
         "surveyNo-third": "56/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -5723,7 +5860,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5750,8 +5887,9 @@
         "surveyNo-first": "97/1B",
         "surveyNo-second": "33/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5765,7 +5903,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5791,8 +5929,9 @@
         "surveyNo-first": "54/8",
         "surveyNo-second": "54/7"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5806,7 +5945,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5834,8 +5973,9 @@
         "surveyNo-third": "101/1C",
         "surveyNo-fourth": "29/15"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5851,7 +5991,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5880,8 +6020,9 @@
         "surveyNo-second": "87/2A",
         "surveyNo-third": "87/3C"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -5896,7 +6037,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5924,8 +6065,9 @@
         "surveyNo-second": "89/7",
         "surveyNo-third": "89/9"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5940,7 +6082,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -5968,8 +6110,9 @@
         "surveyNo-second": "99/12K",
         "surveyNo-third": "99/12A2"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -5984,7 +6127,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6012,8 +6155,9 @@
         "surveyNo-third": "95/5A",
         "surveyNo-fourth": "95/5C"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6029,7 +6173,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6062,6 +6206,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6077,7 +6222,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6105,8 +6250,9 @@
         "surveyNo-first": "91/8",
         "surveyNo-second": "91/9A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6120,7 +6266,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6147,8 +6293,9 @@
         "surveyNo-second": "91/23",
         "surveyNo-third": "91/7"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6163,7 +6310,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6191,8 +6338,9 @@
         "surveyNo-second": "90/7",
         "surveyNo-third": ""
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6207,7 +6355,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6238,6 +6386,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6253,7 +6402,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6283,6 +6432,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6296,7 +6446,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6322,8 +6472,9 @@
         "surveyNo-first": "57/1A",
         "surveyNo-second": ""
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6337,7 +6488,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6366,6 +6517,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6380,7 +6532,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6407,8 +6559,9 @@
         "surveyNo-first": "87/3A",
         "surveyNo-second": "87/1"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6422,7 +6575,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6448,8 +6601,9 @@
         "surveyNo-first": "99/14B",
         "surveyNo-second": "99/14C"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6463,7 +6617,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6491,6 +6645,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6504,7 +6659,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6532,8 +6687,9 @@
         "surveyNo-third": "99/14E",
         "surveyNo-fourth": "88/1B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6549,7 +6705,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6579,6 +6735,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6592,7 +6749,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6617,8 +6774,9 @@
       "surveyNo": {
         "surveyNo-first": "3/11."
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6631,7 +6789,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6659,6 +6817,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6673,7 +6832,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6699,8 +6858,9 @@
       "surveyNo": {
         "surveyNo-first": "125/6A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6713,7 +6873,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6740,6 +6900,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6753,7 +6914,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6781,6 +6942,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6794,7 +6956,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6823,6 +6985,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6837,7 +7000,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6866,6 +7029,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -6879,7 +7043,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6907,6 +7071,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -6920,7 +7085,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6948,6 +7113,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -6961,7 +7127,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -6989,6 +7155,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7002,7 +7169,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7031,6 +7198,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7045,7 +7213,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7074,6 +7242,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7087,7 +7256,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7118,6 +7287,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7135,7 +7305,7 @@
         "border-undefined": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7170,6 +7340,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7185,7 +7356,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7214,6 +7385,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7226,7 +7398,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7252,6 +7424,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7264,7 +7437,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7290,6 +7463,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7302,7 +7476,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7332,6 +7506,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7348,7 +7523,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7379,6 +7554,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7392,7 +7568,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7418,6 +7594,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7430,7 +7607,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7458,6 +7635,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7471,7 +7649,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7498,6 +7676,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7510,7 +7689,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7538,6 +7717,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7552,7 +7732,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7580,6 +7760,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -7592,7 +7773,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7619,6 +7800,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7632,7 +7814,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7661,6 +7843,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7675,7 +7858,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7705,6 +7888,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7719,7 +7903,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7748,6 +7932,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7761,7 +7946,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7789,6 +7974,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -7802,7 +7988,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7830,6 +8016,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7843,7 +8030,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7871,6 +8058,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7884,7 +8072,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7914,6 +8102,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7929,7 +8118,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7958,6 +8147,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -7970,7 +8160,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -7998,6 +8188,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8012,7 +8203,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8041,6 +8232,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8054,7 +8246,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8084,6 +8276,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8099,7 +8292,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8130,6 +8323,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8144,7 +8338,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8175,6 +8369,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8190,7 +8385,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8220,6 +8415,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8233,7 +8429,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8261,6 +8457,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8274,7 +8471,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8302,6 +8499,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8315,7 +8513,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8343,6 +8541,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8356,7 +8555,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8383,6 +8582,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8395,7 +8595,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8422,6 +8622,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -8435,7 +8636,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8462,6 +8663,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8474,7 +8676,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8500,6 +8702,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -8512,7 +8715,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8539,6 +8742,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8552,7 +8756,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8579,6 +8783,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8591,7 +8796,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8618,6 +8823,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8631,7 +8837,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8659,6 +8865,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8672,7 +8879,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8700,6 +8907,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8713,7 +8921,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8742,6 +8950,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8756,7 +8965,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8786,6 +8995,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8800,7 +9010,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8830,6 +9040,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8844,7 +9055,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8874,6 +9085,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8888,7 +9100,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8915,8 +9127,9 @@
         "surveyNo-first": "109/4",
         "surveyNo-second": "109/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8930,7 +9143,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -8957,8 +9170,9 @@
         "surveyNo-second": "12/8",
         "surveyNo-third": "12/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -8973,7 +9187,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9000,8 +9214,9 @@
         "surveyNo-first": "123/4",
         "surveyNo-second": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9015,7 +9230,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9042,6 +9257,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9055,7 +9271,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9083,6 +9299,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9095,7 +9312,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9121,6 +9338,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9133,7 +9351,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9160,6 +9378,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9173,7 +9392,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9201,6 +9420,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9214,7 +9434,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9240,8 +9460,9 @@
         "surveyNo-first": "36/22A",
         "surveyNo-second": "4/3B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "GROUNDNET",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -9255,7 +9476,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9283,6 +9504,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9296,7 +9518,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9324,6 +9546,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -9337,7 +9560,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9364,6 +9587,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9376,7 +9600,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9402,6 +9626,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9414,7 +9639,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9440,6 +9665,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -9452,7 +9678,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9478,6 +9704,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9490,7 +9717,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9516,6 +9743,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9529,7 +9757,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9558,6 +9786,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9571,7 +9800,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9598,6 +9827,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9611,7 +9841,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9641,6 +9871,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -9655,7 +9886,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9688,6 +9919,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -9705,7 +9937,7 @@
         "border-undefined": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9735,8 +9967,9 @@
         "surveyNo-first": "2/6B",
         "surveyNo-second": "80/11B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9750,7 +9983,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9775,8 +10008,9 @@
       "surveyNo": {
         "surveyNo-first": "55/17"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9789,7 +10023,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9817,6 +10051,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9831,7 +10066,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9863,6 +10098,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -9879,7 +10115,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9911,6 +10147,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -9925,7 +10162,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9954,6 +10191,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -9967,7 +10205,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -9995,6 +10233,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10008,7 +10247,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10035,6 +10274,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10047,7 +10287,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10072,8 +10312,9 @@
         "surveyNo-first": "59/2A",
         "surveyNo-second": "59/2B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -10087,7 +10328,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10112,8 +10353,9 @@
       "surveyNo": {
         "surveyNo-first": "28/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10126,7 +10368,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10151,8 +10393,9 @@
         "surveyNo-first": "52/1",
         "surveyNo-second": "52/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -10166,7 +10409,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10193,8 +10436,9 @@
         "surveyNo-second": "43/3B",
         "surveyNo-third": "45/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -10209,7 +10453,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10238,8 +10482,9 @@
         "surveyNo-third": "44/11C",
         "surveyNo-fourth": "44/11E"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -10255,7 +10500,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10282,8 +10527,9 @@
       "surveyNo": {
         "surveyNo-first": "107/2D"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -10296,7 +10542,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10319,8 +10565,9 @@
       "surveyNo": {
         "surveyNo-first": "45/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10333,7 +10580,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10358,8 +10605,9 @@
       "surveyNo": {
         "surveyNo-first": "59/3A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10372,7 +10620,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10396,8 +10644,9 @@
       "surveyNo": {
         "surveyNo-first": "63/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10410,7 +10659,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10435,8 +10684,9 @@
         "surveyNo-first": "52/1",
         "surveyNo-second": "51/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -10450,7 +10700,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10476,8 +10726,9 @@
         "surveyNo-first": "13/5",
         "surveyNo-second": "7/1A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10491,7 +10742,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10516,8 +10767,9 @@
       "surveyNo": {
         "surveyNo-first": "54/7"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10530,7 +10782,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10556,8 +10808,9 @@
         "surveyNo-second": "6/2A",
         "surveyNo-third": "6/5B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10572,7 +10825,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10599,8 +10852,9 @@
         "surveyNo-first": "16/3B",
         "surveyNo-second": "16/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10614,7 +10868,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10640,8 +10894,9 @@
         "surveyNo-first": "16/2A",
         "surveyNo-second": "16/2B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10655,7 +10910,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10681,8 +10936,9 @@
         "surveyNo-first": "13/19",
         "surveyNo-second": "13/20"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10696,7 +10952,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10724,6 +10980,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -10737,7 +10994,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10767,6 +11024,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10782,7 +11040,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10815,6 +11073,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10831,7 +11090,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10861,8 +11120,9 @@
         "surveyNo-second": "63/2E",
         "surveyNo-third": "63/4B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -10877,7 +11137,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10908,6 +11168,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -10923,7 +11184,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10949,6 +11210,7 @@
       "landAreaInCent": "182",
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -10964,7 +11226,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -10991,6 +11253,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11004,7 +11267,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11033,6 +11296,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11047,7 +11311,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11076,6 +11340,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11089,7 +11354,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11116,6 +11381,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11128,7 +11394,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11159,6 +11425,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11176,7 +11443,7 @@
         "border-undefined": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11207,6 +11474,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11219,7 +11487,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11249,6 +11517,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11265,7 +11534,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11295,6 +11564,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11307,7 +11577,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11338,6 +11608,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -11355,7 +11626,7 @@
         "border-undefined": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11388,6 +11659,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11403,7 +11675,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11433,6 +11705,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11446,7 +11719,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11475,6 +11748,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -11488,7 +11762,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11519,6 +11793,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11535,7 +11810,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11566,6 +11841,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11579,7 +11855,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11608,6 +11884,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11622,7 +11899,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11652,6 +11929,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11666,7 +11944,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11695,6 +11973,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11708,7 +11987,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11737,6 +12016,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11751,7 +12031,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11779,8 +12059,9 @@
         "surveyNo-second": "55/4C",
         "surveyNo-third": "55/4D"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -11795,7 +12076,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11822,8 +12103,9 @@
         "surveyNo-first": "80/3",
         "surveyNo-second": "79/11"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11837,7 +12119,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11863,8 +12145,9 @@
         "surveyNo-first": "100/2C",
         "surveyNo-second": ""
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11878,7 +12161,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11906,8 +12189,9 @@
         "surveyNo-third": "50/6",
         "surveyNo-fourth": "50/7"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -11923,7 +12207,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11951,8 +12235,9 @@
         "surveyNo-first": "73/1",
         "surveyNo-second": "73/2"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -11966,7 +12251,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -11991,8 +12276,9 @@
       "surveyNo": {
         "surveyNo-first": "55/2D"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12005,7 +12291,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12031,8 +12317,9 @@
         "surveyNo-second": "44/4D",
         "surveyNo-third": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12047,7 +12334,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12073,8 +12360,9 @@
       "surveyNo": {
         "surveyNo-first": "105/3C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12087,7 +12375,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12112,8 +12400,9 @@
         "surveyNo-first": "55/2C",
         "surveyNo-second": "55/2E"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12127,7 +12416,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12153,8 +12442,9 @@
         "surveyNo-first": "222/1C",
         "surveyNo-second": "222/1D"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -12168,7 +12458,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12194,8 +12484,9 @@
         "surveyNo-first": "31/3A",
         "surveyNo-second": "31/3B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12209,7 +12500,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12237,8 +12528,9 @@
         "surveyNo-third": "11/2B",
         "surveyNo-fourth": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12254,7 +12546,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12281,8 +12573,9 @@
       "surveyNo": {
         "surveyNo-first": "45/1A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12295,7 +12588,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12322,8 +12615,9 @@
         "surveyNo-third": "55/2D",
         "surveyNo-fourth": "55/4A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12339,7 +12633,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12371,8 +12665,9 @@
         "surveyNo-fifth": "38/A1",
         "surveyNo-undefined": "21/11B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12390,7 +12685,7 @@
         "border-undefined": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12421,8 +12716,9 @@
         "surveyNo-second": "82/7A",
         "surveyNo-third": "51/1"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12437,7 +12733,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12464,8 +12760,9 @@
         "surveyNo-second": "82/6E",
         "surveyNo-third": "82/6C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12480,7 +12777,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12508,8 +12805,9 @@
         "surveyNo-first": "126/6",
         "surveyNo-second": "126/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12523,7 +12821,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12550,8 +12848,9 @@
         "surveyNo-second": "126/7",
         "surveyNo-third": "126/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12566,7 +12865,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12593,8 +12892,9 @@
         "surveyNo-first": "1/10B",
         "surveyNo-second": "1/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12608,7 +12908,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12637,6 +12937,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -12651,7 +12952,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12680,6 +12981,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12693,7 +12995,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12724,6 +13026,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12740,7 +13043,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12770,6 +13073,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12782,7 +13086,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12808,6 +13112,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -12820,7 +13125,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12848,6 +13153,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RYE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12862,7 +13168,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12890,8 +13196,9 @@
         "surveyNo-second": "33/10",
         "surveyNo-third": "33/1"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -12906,7 +13213,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12933,8 +13240,9 @@
         "surveyNo-first": "106/1",
         "surveyNo-second": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12948,7 +13256,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -12975,8 +13283,9 @@
         "surveyNo-second": "51/7",
         "surveyNo-third": "51/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -12991,7 +13300,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13021,8 +13330,9 @@
         "surveyNo-fourth": "122/6",
         "surveyNo-fifth": "122/7"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13039,7 +13349,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13067,8 +13377,9 @@
       "surveyNo": {
         "surveyNo-first": "111/3B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13081,7 +13392,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13108,8 +13419,9 @@
         "surveyNo-third": "24/9A",
         "surveyNo-fourth": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -13125,7 +13437,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13154,8 +13466,9 @@
         "surveyNo-second": "50/24",
         "surveyNo-third": "50/25"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "3",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -13170,7 +13483,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13197,8 +13510,9 @@
         "surveyNo-first": "55/10",
         "surveyNo-second": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13212,7 +13526,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13239,8 +13553,9 @@
         "surveyNo-second": "96/2",
         "surveyNo-third": "124/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -13255,7 +13570,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13282,8 +13597,9 @@
         "surveyNo-second": "24/10",
         "surveyNo-third": "24/11"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13298,7 +13614,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13329,8 +13645,9 @@
         "surveyNo-fourth": "24/8A",
         "surveyNo-fifth": "24/8B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13347,7 +13664,7 @@
         "border-fifth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13375,8 +13692,9 @@
       "surveyNo": {
         "surveyNo-first": "43/11"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13389,7 +13707,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13414,8 +13732,9 @@
         "surveyNo-first": "185/1",
         "surveyNo-second": "285/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -13429,7 +13748,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13454,8 +13773,9 @@
       "surveyNo": {
         "surveyNo-first": "27/10"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13468,7 +13788,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13494,8 +13814,9 @@
         "surveyNo-second": "11/12",
         "surveyNo-third": ""
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -13510,7 +13831,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13537,8 +13858,9 @@
         "surveyNo-first": "11/13",
         "surveyNo-second": "11/14"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13552,7 +13874,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13577,8 +13899,9 @@
       "surveyNo": {
         "surveyNo-first": "103/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13591,7 +13914,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13616,8 +13939,9 @@
         "surveyNo-first": "89/10",
         "surveyNo-second": "89/1B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13631,7 +13955,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13657,8 +13981,9 @@
         "surveyNo-first": "124/10",
         "surveyNo-second": "125/12"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13672,7 +13997,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13698,8 +14023,9 @@
         "surveyNo-first": "12/1B",
         "surveyNo-second": "13/4B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13713,7 +14039,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13739,8 +14065,9 @@
         "surveyNo-first": "114/5A",
         "surveyNo-second": "125/10A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13754,7 +14081,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13780,8 +14107,9 @@
         "surveyNo-first": "110/1B",
         "surveyNo-second": "112/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -13795,7 +14123,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13821,8 +14149,9 @@
         "surveyNo-first": "18/1B",
         "surveyNo-second": "18/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13836,7 +14165,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13862,8 +14191,9 @@
         "surveyNo-first": "104/4",
         "surveyNo-second": "103/9B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13877,7 +14207,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13903,8 +14233,9 @@
         "surveyNo-first": "7/3/",
         "surveyNo-second": "7/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13918,7 +14249,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13944,8 +14275,9 @@
         "surveyNo-first": "9/4",
         "surveyNo-second": "9/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -13959,7 +14291,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -13985,8 +14317,9 @@
         "surveyNo-first": "114/1",
         "surveyNo-second": "99/2A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14000,7 +14333,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14025,8 +14358,9 @@
       "surveyNo": {
         "surveyNo-first": "106/5A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14039,7 +14373,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14063,8 +14397,9 @@
       "surveyNo": {
         "surveyNo-first": "12/1C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14077,7 +14412,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14102,8 +14437,9 @@
         "surveyNo-first": "124/6A",
         "surveyNo-second": "224/4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14117,7 +14453,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14142,8 +14478,9 @@
       "surveyNo": {
         "surveyNo-first": "276/1"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14156,7 +14493,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14181,8 +14518,9 @@
         "surveyNo-first": "84/1B",
         "surveyNo-second": "84/1C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14196,7 +14534,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14222,8 +14560,9 @@
         "surveyNo-first": "8/7A",
         "surveyNo-second": "8/1A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14237,7 +14576,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14262,8 +14601,9 @@
       "surveyNo": {
         "surveyNo-first": "27/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14276,7 +14616,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14302,8 +14642,9 @@
         "surveyNo-second": "10/12",
         "surveyNo-third": "12/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL ",
@@ -14318,7 +14659,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14347,8 +14688,9 @@
         "surveyNo-third": "24/8B",
         "surveyNo-fourth": "24/8G"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14364,7 +14706,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14392,8 +14734,9 @@
         "surveyNo-first": "6/7",
         "surveyNo-second": "6/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14407,7 +14750,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14433,8 +14776,9 @@
         "surveyNo-first": "101/8",
         "surveyNo-second": "101/8A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14448,7 +14792,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14473,8 +14817,9 @@
       "surveyNo": {
         "surveyNo-first": "63/1"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14487,7 +14832,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14514,8 +14859,9 @@
         "surveyNo-third": "19/8",
         "surveyNo-fourth": "23/9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14531,7 +14877,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14559,8 +14905,9 @@
         "surveyNo-first": "11/8B",
         "surveyNo-second": "11/4B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14574,7 +14921,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14600,8 +14947,9 @@
         "surveyNo-first": "101/4",
         "surveyNo-second": "101/4B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14615,7 +14963,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14641,8 +14989,9 @@
         "surveyNo-first": "7/4B",
         "surveyNo-second": "7/5A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14656,7 +15005,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14682,8 +15031,9 @@
         "surveyNo-first": "59/1",
         "surveyNo-second": "63/2E"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14697,7 +15047,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14723,8 +15073,9 @@
         "surveyNo-first": "37/13",
         "surveyNo-second": "37/8"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14738,7 +15089,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14764,8 +15115,9 @@
         "surveyNo-first": "33/1",
         "surveyNo-second": "33/1A"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14779,7 +15131,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14805,8 +15157,9 @@
         "surveyNo-first": "57/1",
         "surveyNo-second": "57/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -14820,7 +15173,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14846,8 +15199,9 @@
         "surveyNo-first": "36/6",
         "surveyNo-second": "37/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -14861,7 +15215,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14886,8 +15240,9 @@
       "surveyNo": {
         "surveyNo-first": "79/10D"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -14900,7 +15255,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14925,8 +15280,9 @@
         "surveyNo-first": "83/1C",
         "surveyNo-second": "57/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -14940,7 +15296,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -14968,8 +15324,9 @@
         "surveyNo-third": "3/5",
         "surveyNo-fourth": "133/9B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -14985,7 +15342,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15013,8 +15370,9 @@
         "surveyNo-first": "87/1D",
         "surveyNo-second": "87/3B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15028,7 +15386,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15054,8 +15412,9 @@
         "surveyNo-first": "11/12A",
         "surveyNo-second": "11/10B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15069,7 +15428,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15095,8 +15454,9 @@
         "surveyNo-first": "57/2A",
         "surveyNo-second": "57/2B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15110,7 +15470,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15137,6 +15497,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "BLACKGRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -15149,7 +15510,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15175,6 +15536,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "BLACKGRAM",
       "cattle": 0,
       "smallOrMarginalFarmer": "SMALL",
@@ -15187,7 +15549,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15213,6 +15575,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15225,7 +15588,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15249,8 +15612,9 @@
       "surveyNo": {
         "surveyNo-first": "98/4,98/5"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15263,7 +15627,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15287,8 +15651,9 @@
       "surveyNo": {
         "surveyNo-first": "13/7,9"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15301,7 +15666,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15325,8 +15690,9 @@
       "surveyNo": {
         "surveyNo-first": "12/13A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACKGRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15339,7 +15705,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15363,8 +15729,9 @@
       "surveyNo": {
         "surveyNo-first": "65/8A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "MAIZE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15377,7 +15744,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15401,8 +15768,9 @@
       "surveyNo": {
         "surveyNo-first": "6/3,3B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15415,7 +15783,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15439,8 +15807,9 @@
       "surveyNo": {
         "surveyNo-first": "79/14B,1A,1C"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15453,7 +15822,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15477,8 +15846,9 @@
       "surveyNo": {
         "surveyNo-first": "91/10B,11B,14B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "MAIZE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15491,7 +15861,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15515,8 +15885,9 @@
       "surveyNo": {
         "surveyNo-first": "104/10"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "MAIZE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15529,7 +15900,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15553,8 +15924,9 @@
       "surveyNo": {
         "surveyNo-first": "99/2H"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15567,7 +15939,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15591,8 +15963,9 @@
       "surveyNo": {
         "surveyNo-first": "104/2C6,3B,2C4"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15605,7 +15978,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15629,8 +16002,9 @@
       "surveyNo": {
         "surveyNo-first": "36/14,4/8,9,10"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15643,7 +16017,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15667,8 +16041,9 @@
       "surveyNo": {
         "surveyNo-first": "92/4,92/6"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": 0,
       "smallOrMarginalFarmer": "SMALL",
@@ -15681,7 +16056,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15705,8 +16080,9 @@
       "surveyNo": {
         "surveyNo-first": "140/2A,4B"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "MAIZE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15719,7 +16095,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15743,8 +16119,9 @@
       "surveyNo": {
         "surveyNo-first": "55/2D,3"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15757,7 +16134,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15781,8 +16158,9 @@
       "surveyNo": {
         "surveyNo-first": "79/16A"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15795,7 +16173,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15819,8 +16197,9 @@
       "surveyNo": {
         "surveyNo-first": "77/7A,7B"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "MAIZE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15833,7 +16212,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15857,8 +16236,9 @@
       "surveyNo": {
         "surveyNo-first": "79/16B,93/1A2"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "BOREWELL",
+      "waterType": "BOREWELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -15871,7 +16251,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15897,6 +16277,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -15909,7 +16290,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15936,6 +16317,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -15949,7 +16331,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -15978,6 +16360,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -15992,7 +16375,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16020,6 +16403,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "4",
       "smallOrMarginalFarmer": "SMALL",
@@ -16032,7 +16416,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16058,6 +16442,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16070,7 +16455,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16096,6 +16481,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16108,7 +16494,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16134,6 +16520,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16146,7 +16533,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16172,6 +16559,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16184,7 +16572,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16209,7 +16597,8 @@
         "surveyNo-first": "32/8,10,4"
       },
       "landType": "WET LAND",
-      "irrigationType": "WETLAND",
+      "irrigationType": "WET LAND",
+      "waterType": "WET LAND",
       "cropsType": "RAGI",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16222,7 +16611,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16248,6 +16637,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16260,7 +16650,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16286,6 +16676,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL",
@@ -16298,7 +16689,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16324,6 +16715,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16336,7 +16728,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16362,6 +16754,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "8",
       "smallOrMarginalFarmer": "SMALL",
@@ -16374,7 +16767,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16400,6 +16793,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -16412,7 +16806,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16438,6 +16832,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "4",
       "smallOrMarginalFarmer": "SMALL",
@@ -16450,7 +16845,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16476,6 +16871,7 @@
       },
       "landType": "WELL",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": 0,
       "smallOrMarginalFarmer": "SMALL",
@@ -16488,7 +16884,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16514,6 +16910,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "RAGI",
       "cattle": "10",
       "smallOrMarginalFarmer": "SMALL",
@@ -16526,7 +16923,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16552,6 +16949,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16564,7 +16962,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16590,6 +16988,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16602,7 +17001,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16626,8 +17025,9 @@
       "surveyNo": {
         "surveyNo-first": "95/8"
       },
-      "landType": "DRYLAND",
+      "landType": "DRY LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16640,7 +17040,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16667,6 +17067,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL ",
@@ -16680,7 +17081,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16708,6 +17109,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADY",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -16721,7 +17123,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16749,6 +17151,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16762,7 +17165,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16790,6 +17193,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16803,7 +17207,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16831,6 +17235,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16844,7 +17249,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16872,6 +17277,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -16885,7 +17291,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16912,6 +17318,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "MILLETS",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -16924,7 +17331,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16951,6 +17358,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "MILLETS",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -16964,7 +17372,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -16991,6 +17399,7 @@
       },
       "landType": "DRY LAND",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "MILLETS",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -17003,7 +17412,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17032,6 +17441,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "7",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -17047,7 +17457,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17076,8 +17486,9 @@
         "surveyNo-second": "88/5",
         "surveyNo-third": "99/2"
       },
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "5",
       "smallOrMarginalFarmer": "SMALL",
@@ -17092,7 +17503,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17115,8 +17526,9 @@
       "district": "KALLAKURICHI",
       "postalNo": "606402",
       "landAreaInCent": "98",
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "4",
       "smallOrMarginalFarmer": "SMALL",
@@ -17132,7 +17544,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17153,6 +17565,7 @@
       "postalNo": "606402",
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17168,7 +17581,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17191,6 +17604,7 @@
       "postalNo": "606402",
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGARCANE",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17206,7 +17620,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17226,8 +17640,9 @@
       "taluk": "SANKARAPURAM",
       "district": "KALLAKURICHI",
       "postalNo": "606402",
-      "landType": "WETLAND",
+      "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "SMALL",
@@ -17243,7 +17658,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17272,6 +17687,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "SUGAR CANE",
       "cattle": "1",
       "smallOrMarginalFarmer": "SMALL ",
@@ -17285,7 +17701,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17314,6 +17730,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "TRIP IRRIGATION",
+      "waterType": "TRIP IRRIGATION",
       "cropsType": "SUGAR CANE",
       "cattle": "NIL",
       "smallOrMarginalFarmer": "SMALL",
@@ -17327,7 +17744,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17358,6 +17775,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17373,7 +17791,7 @@
         "border-fourth": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17404,6 +17822,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17417,7 +17836,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17446,6 +17865,7 @@
       },
       "landType": "RAINFED",
       "irrigationType": "RAINFED",
+      "waterType": "RAINFED",
       "cropsType": "BLACK GRAM",
       "cattle": "3",
       "smallOrMarginalFarmer": "SMALL",
@@ -17459,7 +17879,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17489,6 +17909,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -17503,7 +17924,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17534,6 +17955,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "4",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -17548,7 +17970,7 @@
         "border-third": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17578,6 +18000,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17591,7 +18014,7 @@
         "border-second": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17619,6 +18042,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "SMALL",
@@ -17631,7 +18055,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {
@@ -17658,6 +18082,7 @@
       },
       "landType": "WET LAND",
       "irrigationType": "WELL",
+      "waterType": "WELL",
       "cropsType": "PADDY",
       "cattle": "2",
       "smallOrMarginalFarmer": "MARGINAL",
@@ -17670,7 +18095,7 @@
         "border-first": ""
       },
       "farmerType": "",
-      "waterType": "",
+
       "animals": "",
       "groupMember": "",
       "acre": {

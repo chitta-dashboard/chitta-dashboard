@@ -11,9 +11,10 @@ interface CustomProps {
   setProductId?: (name: string) => void;
   productImage?: string;
   disableOnEdit?: number;
+  tab?: string;
 }
 
-const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit, tab }) => {
   let temp: any = [];
   Object.values(VARIANT_DATA).map((i) => (temp = [...temp, Object.entries(i)]));
   const tempVariantsList = temp.flat(1);
@@ -32,7 +33,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          initialvalue: "Raw",
+          initialvalue: tab,
           disable: disableOnEdit,
         }}
       />
@@ -120,6 +121,9 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           label: "விளக்கம் *",
           gridArea: "des",
           fullHeight: true,
+          textarea: true,
+          multiline: true,
+          maxRows: 4,
         }}
       />
     </S.StaticBox>

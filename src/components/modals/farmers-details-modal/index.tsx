@@ -113,7 +113,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const acreEvent = form1Watch("acre");
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
-
   if (
     nameEvent &&
     fatherNameEvent &&
@@ -148,7 +147,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const waterTypeEvent = form2Watch("waterType");
   const farmerTypeEvent = form2Watch("farmerType");
   const groupMemberEvent = form2Watch("groupMember");
-
   if (
     qualificationEvent &&
     villageEvent &&

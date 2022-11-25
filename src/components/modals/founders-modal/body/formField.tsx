@@ -3,20 +3,20 @@ import { Control, UseFormSetValue, UseFormGetValues, UseFormUnregister } from "r
 import { fileValidation } from "../../../../utils/constants";
 import AddProfile from "../../../input-fields/add-profile";
 import Input from "../../../input-fields/input/input";
-import { IAddCEODetailsFormInput } from "../../type/formInputs";
+import { IAddFounderDetailsFormInput } from "../../type/formInputs";
 import S from "./foundersModal.styled";
 
 interface CustomProps {
   control: Control;
-  setValue: UseFormSetValue<IAddCEODetailsFormInput>;
-  getValues: UseFormGetValues<IAddCEODetailsFormInput>;
-  unregister: UseFormUnregister<IAddCEODetailsFormInput>;
+  setValue: UseFormSetValue<IAddFounderDetailsFormInput>;
+  getValues: UseFormGetValues<IAddFounderDetailsFormInput>;
+  unregister: UseFormUnregister<IAddFounderDetailsFormInput>;
 }
 
 const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }) => {
   return (
     <S.StaticBox>
-      <AddProfile<IAddCEODetailsFormInput>
+      <AddProfile<IAddFounderDetailsFormInput>
         inputName="profile"
         control={control}
         rules={{
@@ -56,7 +56,7 @@ const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "சுயவிவரம் *", gridArea: "dsc", fullHeight: true, multiline: true, maxRows: 3 }}
+        options={{ label: "சுயவிவரம் *", gridArea: "dsc", fullHeight: true, multiline: true, maxRows: 4 ,textarea:true}}
       />
     </S.StaticBox>
   );

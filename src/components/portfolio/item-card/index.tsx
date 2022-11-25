@@ -45,7 +45,7 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
-  const { mutate } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
   const { addNotification } = useAuthContext();
   const [variantData, setVariantdata] = useState((): IPortfolioVariant => {
     for (let id of data.variants) {
@@ -58,7 +58,6 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState<(IAddProductsFormInput & { id: string }) | null>(null);
-  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
   const image = useMemo(() => {
     switch (data.productName) {
@@ -157,7 +156,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
           }
           openModal={true}
           handleDelete={() => {
-            mutate({
+            editPortfolio({
               data: {
                 [variantData.variantId]: null,
               },

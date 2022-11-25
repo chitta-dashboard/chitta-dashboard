@@ -3,6 +3,7 @@ import { styled, Stack, TextField, Typography } from "@mui/material";
 namespace S {
   export const IconStack = styled(Stack)({
     alignItems: "center",
+    height: "5.38rem",
   });
 
   export const Icon = styled("i")(({ theme }) => ({
@@ -59,6 +60,7 @@ namespace S {
     padding: "1.3rem",
     gap: "0.4rem",
     display: deleteicon ? "none" : "block",
+    height: "100%",
     "&:hover": {
       backgroundColor: theme.palette.bg.light,
       cursor: "pointer",

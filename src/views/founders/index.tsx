@@ -3,7 +3,7 @@ import TablePageHeader from "../../components/common-table-page-header";
 import FoundersModal from "../../components/modals/founders-modal";
 import FoundersTable from "../../components/tables/founders-table";
 import { useFounderContext } from "../../utils/context/founders";
-import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
+import { IAddFounderDetailsFormInput } from "../../components/modals/type/formInputs";
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
@@ -23,13 +23,13 @@ const Founders = () => {
     setAddModal(!addModal);
   };
 
-  const addDataHandler = (data: IAddCEODetailsFormInput & { id: string }) => {
+  const addDataHandler = (data: IAddFounderDetailsFormInput & { id: string }) => {
     // addFounder(data);
     founderMutateAdd({
       data,
       successCb: () => {
         addNotification({
-          id: data.id,
+          id: `add_${data.id}`,
           image: data.profile,
           message: Message(data.name).addFoundersDetails,
         });

@@ -31,7 +31,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
       productId: id,
       successCb: () => {
         Toast({ message: "Product added successfully.", type: "success" });
-        addNotification({ id: data.id, image: data.profile, message: Message(data.name).addProduct });
+        addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addProduct });
       },
       errorCb: () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
@@ -52,7 +52,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
           <Button onClick={() => setAddModalOpen(true)}>Add</Button>
         </S.Action>
       </S.Header>
-      {addModalOpen && <ProductsModal openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
+      {addModalOpen && <ProductsModal tab={tab} openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
     </>
   );
 };

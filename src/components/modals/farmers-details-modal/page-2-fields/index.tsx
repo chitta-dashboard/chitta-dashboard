@@ -24,7 +24,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "முகவரி *", gridArea: "adr", fullHeight: true, multiline: true, maxRows: 3 }}
+        options={{ label: "முகவரி *", gridArea: "adr", fullHeight: true, multiline: true, maxRows: 4, textarea: true }}
       />
       <Input name="taluk" type="text" control={control} rules={{ required: "required" }} options={{ label: "தாலுக்கா *", gridArea: "tlk" }} />
       <Input name="district" type="text" control={control} rules={{ required: "required" }} options={{ label: "மாவட்டம் *", gridArea: "sta" }} />
@@ -37,8 +37,10 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
           label: "நில வகை *",
           gridArea: "lty",
           selectOptions: [
-            ["option-1", "option-1"],
-            ["option-2", "option-2"],
+            ["WET LAND", "WET LAND"],
+            ["RAINFED", "RAINFED"],
+            ["DRY LAND", "DRY LAND"],
+            ["WELL", "WELL"],
           ],
         }}
       />
@@ -51,8 +53,12 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
           label: "நீர் வகை *",
           gridArea: "wty",
           selectOptions: [
-            ["option-1", "option-1"],
-            ["option-2", "option-2"],
+            ["WELL", "WELL"],
+            ["TRIP IRRIGATION", "TRIP IRRIGATION"],
+            ["RAINFED", "RAINFED"],
+            ["RAIN", "RAIN"],
+            ["BOREWELL", "BOREWELL"],
+            ["WET LAND", "WET LAND"],
           ],
         }}
       />
