@@ -11,11 +11,11 @@ const PortfolioContent: FC<Props> = ({ tab }) => {
   const tabHandler = () => {
     switch (tab) {
       case "Raw":
-        return <PortfolioRaw />;
+        return <PortfolioRaw tab={tab} />;
       case "Processed":
-        return <PortfolioProcessed />;
+        return <PortfolioProcessed tab={tab} />;
       case "Animal":
-        return <PortfolioAnimal />;
+        return <PortfolioAnimal tab={tab} />;
     }
   };
   return <S.PortfolioContentContainer>{tabHandler()}</S.PortfolioContentContainer>;

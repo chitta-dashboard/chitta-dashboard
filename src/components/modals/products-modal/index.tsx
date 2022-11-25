@@ -18,6 +18,7 @@ interface CustomProps {
   products?: string[];
   id?: string;
   variantData?: any;
+  tab?: string;
 }
 
 const ProductsModal: FC<CustomProps> = (props) => {
@@ -80,7 +81,6 @@ const ProductsModal: FC<CustomProps> = (props) => {
   } else {
     enableButton = true;
   }
- 
 
   useEffect(() => {
     if (editMode) {
@@ -146,6 +146,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
           setProductId={productIdHandler}
           productImage={productImage as string}
           disableOnEdit={editMode ? 1 : 0}
+          tab={props.tab}
         />
       </ModalBody>
 

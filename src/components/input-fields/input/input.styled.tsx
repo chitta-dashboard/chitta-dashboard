@@ -3,7 +3,7 @@ import { styled, TextField, Autocomplete, FormControl, FormLabel, FormControlLab
 namespace S {
   export const CommonInputStyled = styled(TextField, {
     shouldForwardProp: (prop) =>
-      prop !== "gridArea" && prop !== "fullHeight" && prop !== "hide" && prop !== "selectOptions" && prop !== "specialOptions",
+      prop !== "gridArea" && prop !== "fullHeight" && prop !== "hide" && prop !== "selectOptions" && prop !== "specialOptions" && prop !== "textarea",
   })<{
     gridArea?: string;
     fullHeight?: boolean;
@@ -25,7 +25,7 @@ namespace S {
     inputProps: { noValidate: true },
   };
 
-  export const TextInput = styled(CommonInputStyled)<{ hide?: boolean }>(({ hide }) => ({
+  export const TextInput = styled(CommonInputStyled)<{ hide?: boolean; textarea?: boolean }>(({ hide, textarea }) => ({
     ...(hide
       ? {
           padding: "0 !important",
@@ -37,6 +37,15 @@ namespace S {
             border: "0 !important",
             width: "0 !important",
             height: "0 !important",
+          },
+        }
+      : null),
+    ...(textarea
+      ? {
+          ".css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input": {
+            top: 10,
+            position: "absolute",
+            width: "95% !important",
           },
         }
       : null),

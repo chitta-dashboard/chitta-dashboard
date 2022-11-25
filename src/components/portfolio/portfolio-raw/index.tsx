@@ -1,11 +1,13 @@
-import { useMemo } from "react";
+import { FC, useMemo } from "react";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";
 import ItemCard, { IPortfolioProduct } from "../item-card";
 import S from "./portfolioRaw.styled";
-
-const PortfolioRaw = () => {
+interface Props {
+  tab: string;
+}
+const PortfolioRaw: FC<Props> = ({ tab }) => {
   const {
     formatChangeSuccess,
     result: { data },
