@@ -6,6 +6,7 @@ namespace S {
     borderRadius: "2rem",
     overflow: "hidden",
     boxShadow: `0px 4px 10px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
+    height: "auto",
   }));
 
   export const TableBox = styled(Table)(({ theme }) => ({
