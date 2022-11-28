@@ -5,7 +5,7 @@ import ToggleButton from "../../../utils/ToggleButton";
 import ProductsModal from "../../modals/products-modal";
 import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
 import { useEditPortfolio } from "../../../utils/hooks/query";
-import { ENDPOINTS, Message } from "../../../utils/constants";
+import { ENDPOINTS, Message, PRODUCT_DATA } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import S from "./portfolioHeader.styled";
 import Toast from "../../../utils/toast";
@@ -13,9 +13,10 @@ import Toast from "../../../utils/toast";
 interface Props {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
+  searchHandler?: (searchText: string) => void;
 }
 
-const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
+const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler }) => {
   // const [tab, setTab] = useState("Raw");
   const [addModalOpen, setAddModalOpen] = useState(false);
   const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
@@ -26,12 +27,17 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
     const { foodType, id, productName, products, ...addData } = data;
     const addVarient = {} as { [key: string]: IProductVarient };
     addVarient[addData.variantId] = addData;
+    const getProductImage = PRODUCT_DATA.raw.filter((product) => product.id === id);
     addPortfolio({
       data: addVarient,
       productId: id,
       successCb: () => {
         Toast({ message: "Product added successfully.", type: "success" });
-        addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addProduct });
+        addNotification({
+          id: `Add${data.id}${addData.availableAmount}${addData.variantName}`,
+          image: getProductImage[0].image,
+          message: Message(addData.variantName).addProduct,
+        });
       },
       errorCb: () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
@@ -48,11 +54,21 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab }) => {
         </S.Description>
         <ToggleButton selectedMode={tab} setSelectedMode={setTab} options={["Raw", "Processed", "Animal"]} />
         <S.Action>
-          <SearchBar />
-          <Button onClick={() => setAddModalOpen(true)}>Add</Button>
+          <SearchBar searchHandler={searchHandler} />
+          <S.ToolTip title={tab !== "Raw" ? "Temporary Unavailable" : ""} placement="bottom-start">
+            <span>
+              <Button
+                onClick={() => setAddModalOpen(true)}
+                disabled={tab !== "Raw" ? true : false}
+                title={tab !== "Raw" ? "Temporary Unavailable" : ""}
+              >
+                Add
+              </Button>
+            </span>
+          </S.ToolTip>
         </S.Action>
       </S.Header>
-      {addModalOpen && <ProductsModal openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
+      {addModalOpen && <ProductsModal tab={tab} openModal={true} handleClose={() => setAddModalOpen(false)} cb={addDataHandler} />}
     </>
   );
 };
