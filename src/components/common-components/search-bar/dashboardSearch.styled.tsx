@@ -4,7 +4,6 @@ export namespace S {
   export const SearchBarPaper = styled(Paper)(({ theme }) => ({
     borderRadius: "1.2rem",
     width: "100%",
-    maxWidth: "29rem",
     height: "2.5rem",
     display: "flex",
     justifyContent: "center",

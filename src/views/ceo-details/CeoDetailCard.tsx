@@ -164,7 +164,7 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoDelete({
               id: user.id,
               successCb: () => {
-                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
                 Toast({ message: "CEO deleted successfully.", type: "success" });
               },
               errorCb: () => {

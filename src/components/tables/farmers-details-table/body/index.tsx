@@ -99,7 +99,11 @@ const Body = () => {
     <>
       {!loader ? (
         <S.LoaderContainer>
-          <Loader />
+          <S.Customtr>
+            <td>
+              <Loader />
+            </td>
+          </S.Customtr>
         </S.LoaderContainer>
       ) : farmersList.length > 0 ? (
         <BodyWrapper>

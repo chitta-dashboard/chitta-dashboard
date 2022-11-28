@@ -143,8 +143,16 @@ namespace S {
     },
   }));
 
-  export const LoaderContainer = styled(Box)({
+  export const LoaderContainer = styled("tbody")({
     minHeight: "calc(100vh - 20.75rem)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  });
+
+  export const Customtr = styled("tr")({
+    height: "100%",
+
   });
 }
 
