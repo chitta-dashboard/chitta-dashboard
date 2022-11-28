@@ -65,7 +65,7 @@ export interface IAddProductsFormInput extends IProductVarient {
   products: string[];
   foodType: string;
   profile: string
-  name: string
+  variantName: string
 }
 
 export interface IAddMDDetailsFormInput {
