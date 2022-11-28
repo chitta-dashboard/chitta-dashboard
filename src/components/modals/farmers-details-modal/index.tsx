@@ -229,8 +229,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...data,
       profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : uuidv4(),
-      membershipId: "NEF-FPC-2",
-      farmerId: !!mdId && id,
+      membershipId: farmersDetailsById[id].membershipId,
+      farmerId: id,
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
