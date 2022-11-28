@@ -65,7 +65,7 @@ export interface IAddProductsFormInput extends IProductVarient {
   products: string[];
   foodType: string;
   profile: string
-  name: string
+  variantName: string
 }
 
 export interface IAddMDDetailsFormInput {
@@ -84,7 +84,7 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
-  joinDate: string;
+  joinedDate: string;
 }
 export interface IAddFounderDetailsFormInput {
   name: string;

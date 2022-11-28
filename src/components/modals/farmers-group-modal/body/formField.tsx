@@ -29,6 +29,9 @@ const FormField: FC<CustomProps> = ({ control }) => {
           label: "விளக்கம் *",
           gridArea: "exn",
           fullHeight: true,
+          multiline: true,
+          maxRows: 4,
+          textarea: true,
         }}
       />
       <Input

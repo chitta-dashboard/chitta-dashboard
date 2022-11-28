@@ -113,7 +113,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const acreEvent = form1Watch("acre");
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
-
   if (
     nameEvent &&
     fatherNameEvent &&
@@ -148,7 +147,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const waterTypeEvent = form2Watch("waterType");
   const farmerTypeEvent = form2Watch("farmerType");
   const groupMemberEvent = form2Watch("groupMember");
-
   if (
     qualificationEvent &&
     villageEvent &&
@@ -231,8 +229,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...data,
       profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : uuidv4(),
-      membershipId: "NEF-FPC-2",
-      farmerId: !!mdId && id,
+      membershipId: farmersDetailsById[id].membershipId,
+      farmerId: id,
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();

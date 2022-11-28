@@ -55,7 +55,7 @@ const FarmersDetails = () => {
       (await mutate({
         data: newFarmer,
         successCb: () => {
-          addNotification({ id: newFarmer.id, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
+          addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
         },
         errorCb: () => {
