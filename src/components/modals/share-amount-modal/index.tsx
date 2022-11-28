@@ -27,7 +27,6 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
   const pdftamilcertificate = useRef<HTMLDivElement>();
-
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
     documentTitle: `Shareholder_certificate of_${selectedFarmers.map((id) => farmersDetailsById[id].name)}`,
