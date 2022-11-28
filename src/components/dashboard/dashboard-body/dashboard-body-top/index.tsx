@@ -3,11 +3,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useFetch } from "../../../../utils/hooks/query";
+import { useGetFarmersCount, useFetch } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
 import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
+import { useEffect } from "react";
 
 const DashboardBodyTop = () => {
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
@@ -20,43 +21,40 @@ const DashboardBodyTop = () => {
     formatChangeSuccess: isFarmerGroupLoading,
     result: { data: farmerGroup },
   } = useFetch(ENDPOINTS.farmerGroup as Endpoints);
-  const FarmerCount = farmerDetails && Object.values(farmerDetails).length;
   const FarmerGroupCount = farmerGroup && Object.values(farmerGroup).length;
-  const MaleFarmerCount = farmerDetails && Object.values(farmerDetails).filter((item: any) => ["MALE"].includes(item.sex)).length;
-  const FemaleFarmerCount = farmerDetails && Object.values(farmerDetails).filter((item: any) => ["FEMALE"].includes(item.sex)).length;
   const acreFieldValue =
     farmerDetails &&
     Object.values(farmerDetails)
       .filter((item: any) => item.landAreaInCent)
       .map((i: any) => i.landAreaInCent)
       .reduce((a: string, b: string) => parseInt(a) + parseInt(b)) / 100.021;
-
+  const {totalFarmerCount,maleFarmerCount,femaleFarmerCount,farmerGroupCount} = useGetFarmersCount();
   const StatisticsItems = [
     {
       id: 1,
       headCount: "+87",
-      bodyCount: `${FarmerCount}`,
+      bodyCount: `${totalFarmerCount}`,
       footerName: "Total Farmers",
       icon: "farmer-count",
     },
     {
       id: 2,
       headCount: "+23",
-      bodyCount: `${FarmerGroupCount}`,
+      bodyCount: `${farmerGroupCount}`,
       footerName: "Group",
       icon: "groups",
     },
     {
       id: 3,
       headCount: "+59",
-      bodyCount: `${MaleFarmerCount}`,
+      bodyCount: `${maleFarmerCount}`,
       footerName: "Farmer",
       icon: "male-farmer",
     },
     {
       id: 4,
       headCount: "+28",
-      bodyCount: `${FemaleFarmerCount}`,
+      bodyCount: `${femaleFarmerCount}`,
       footerName: "Farmerette",
       icon: "female-farmer",
     },

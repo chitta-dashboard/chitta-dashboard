@@ -37,6 +37,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+ 
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);

@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
@@ -162,32 +162,31 @@ export const useDelete = (endpoint: Endpoints) => {
   );
 };
 
-export const useFetchByPage = (endpoint: Endpoints, page: number) => {
+export const useFetchByPage = (endpoint: Endpoints, page: number,params?:string) => {
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${params ? `${params}&_page=${page}&_limit=${25}` : `?_page=${page}&_limit=${25}`}`;
+  console.log("Query : ",query)
+  const [pageCount,setPageCount] = useState(1);
   const result = useQuery({
     queryKey: [`${endpoint}-fetch-${page}`],
     queryFn: () => {
-      return axios
-        .get(`${process.env.REACT_APP_API_KEY}/${endpoint}`, {
-          params: {
-            _page: page,
-            _limit: 10,
-          },
-        })
-        .then((res) => res.data);
+      return axios.get(query).then((res:any) => {
+         setPageCount(res.headers.get("X-total-count"));
+         return res.data;
+      });
     },
-    cacheTime: Infinity, // do not change!
-    staleTime: Infinity, // do not change!
+    cacheTime: 0, // do not change!
+    staleTime: 0, // do not change!
   });
-
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+  
   useEffect(() => {
     if (Array.isArray(result.data)) {
       queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
-      setformatChangeSucess(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    setformatChangeSucess(result.isFetched);
   }, [result.isFetched]);
-  return { formatChangeSuccess, result };
+  return { formatChangeSuccess, result,pageCount };
 };
 
 export const useEditPortfolio = (endpoint: Endpoints) => {
@@ -294,4 +293,28 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
       },
     },
   );
+};
+
+export const useGetFarmersCount = () => {
+  const [count, setCount] = useState<string | null[]>([]);
+  useEffect(() => {
+    const getDataCount = async () => {
+      let totalResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails/?_start=0&_end=0`)).headers.get("X-total-count");
+      let maleResult = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=ஆன்&_start=0&_end=0`)
+      ).headers.get("X-total-count");
+      let femaleResult = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=பெண்&_start=0&_end=0`)
+      ).headers.get("X-total-count");
+      let farmerGroupResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
+      return [totalResult, maleResult, femaleResult, farmerGroupResult];
+    };
+    getDataCount().then((res) => setCount(res as SetStateAction<string | null[]>));
+  }, []);
+  return {
+    totalFarmerCount: count[0],
+    maleFarmerCount: count[1],
+    femaleFarmerCount: count[2],
+    farmerGroupCount: count[3],
+  };
 };
