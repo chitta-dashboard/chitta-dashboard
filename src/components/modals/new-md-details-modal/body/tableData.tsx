@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import MdDetailsTableBody from "./tableBody";
-import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import S from "./tableData.styled";
 
 type TableDataPropsType = {

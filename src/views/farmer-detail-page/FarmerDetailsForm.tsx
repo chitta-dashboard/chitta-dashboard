@@ -1,7 +1,7 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../utils/context/farmersDetails";
 import { useFetch } from "../../utils/hooks/query";
 import { adminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
