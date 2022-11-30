@@ -1,10 +1,9 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { mdDetail } from "../../utils/context/mdDetails";
+import { IMdDetails } from "../../utils/context/mdDetails";
 import { adminFormInputs } from "../admin-panel";
 import { useFetch } from "../../utils/hooks/query";
-import { MD_DATA } from "./constant";
 import S from "./md-details-page.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -31,7 +30,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
 
   return (
     <>
-      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
         .filter((name) => [mdId, MdIdtoPrint].includes(name.id))
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>

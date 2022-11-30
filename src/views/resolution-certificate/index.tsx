@@ -5,7 +5,7 @@ import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
-import { IResolution } from "../../utils/store/slice/resolution";
+import { IResolution } from "../../utils/context/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
