@@ -1,13 +1,16 @@
-import { ChangeEvent, MouseEvent, useCallback, useState } from "react";
+import { ChangeEvent, MouseEvent, SetStateAction, useCallback, useState } from "react";
 import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
 import S from "./dropFile.styled";
+import ImportFarmerGroupModal from "../../modals/import-farmerGroup-modal";
 
 export interface IDropValidationResult {
   status: boolean;
-  message: string;
+  message?: string | undefined;
+  groups?: string[];
+  phValidation?: SetStateAction<boolean> | undefined;
 }
 interface IDropFile {
   fileFormat?: string[];
@@ -32,6 +35,8 @@ const DropFile: React.FC<IDropFile> = function ({
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [groupNames, setGroupNames] = useState<string[] | undefined>(undefined);
 
   const handleDragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
@@ -62,17 +67,19 @@ const DropFile: React.FC<IDropFile> = function ({
       } else if (targetState === "validDrag") {
         setProcessingFile(true);
         const file = e.dataTransfer.files[0];
-        const validation = validate ? await validate(file) : { status: true, message: "" };
+        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], phValidation: false };
         setProcessingFile(false);
+        setOpenModal(validation?.status);
         if (validation.status) {
           // if validation passed
           setTargetState("completedDrag");
           setSelectedFile(file);
+          validation && setGroupNames(validation.groups);
           cb(file);
         } else {
           // if validation failed
           setTargetState("noDrag");
-          Toast({ message: validation.message, type: "error" });
+          Toast({ message: validation.message as string, type: "error" });
         }
       }
     },
@@ -91,14 +98,16 @@ const DropFile: React.FC<IDropFile> = function ({
       const file = e.target.files![0];
       if (file) {
         setProcessingFile(true);
-        const validation = validate ? await validate(file) : { status: true, message: "" };
+        const validation = validate ? await validate(file) : { status: true, message: "", groups: [] };
         setProcessingFile(false);
+        setOpenModal(validation?.status);
         if (validation.status) {
           setTargetState("completedDrag");
           setSelectedFile(file);
+          validation && setGroupNames(validation.groups);
           cb(file);
         } else {
-          Toast({ message: validation.message, type: "error" });
+          Toast({ message: validation.message as string, type: "error" });
         }
         e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.
       }
@@ -107,33 +116,38 @@ const DropFile: React.FC<IDropFile> = function ({
   );
 
   return (
-    <S.DropBox
-      state={targetState}
-      onDrag={stopDefaultBehaviour}
-      onDragStart={stopDefaultBehaviour}
-      onDragEnd={stopDefaultBehaviour}
-      onDragOver={stopDefaultBehaviour}
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDrop={handleDrop}
-      onClick={handleClick}
-    >
-      <S.HiddenInput accept={fileExtension.join(",")} onChange={validateAndSet} />
-      <S.Message>
-        {(() => {
-          if (processingFile) return <BufferLoader loaderText="Processing" />;
-          else if (targetState === "noDrag" || targetState === "validDrag")
-            return (
-              <>
-                <FileDownload sx={{ fontSize: "2rem", opacity: ".5" }} />
-                <Typography>Click or Drag and drop to add 'Excel' file. (The file should have the same format as the sample file)</Typography>
-              </>
-            );
-          else if (targetState === "inValidDrag") return <Typography>Invalid File Format!</Typography>;
-          else return <Typography>{selectedFile?.name}</Typography>;
-        })()}
-      </S.Message>
-    </S.DropBox>
+    <>
+      <S.DropBox
+        state={targetState}
+        onDrag={stopDefaultBehaviour}
+        onDragStart={stopDefaultBehaviour}
+        onDragEnd={stopDefaultBehaviour}
+        onDragOver={stopDefaultBehaviour}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        onClick={handleClick}
+      >
+        <S.HiddenInput accept={fileExtension.join(",")} onChange={validateAndSet} />
+        <S.Message>
+          {(() => {
+            if (processingFile) return <BufferLoader loaderText="Processing" />;
+            else if (targetState === "noDrag" || targetState === "validDrag")
+              return (
+                <>
+                  <FileDownload sx={{ fontSize: "2rem", opacity: ".5" }} />
+                  <Typography>Click or Drag and drop to add 'Excel' file. (The file should have the same format as the sample file)</Typography>
+                </>
+              );
+            else if (targetState === "inValidDrag") return <Typography>Invalid File Format!</Typography>;
+            else {
+              return <Typography>{selectedFile?.name}</Typography>;
+            }
+          })()}
+        </S.Message>
+      </S.DropBox>
+      <ImportFarmerGroupModal openModal={openModal} handleClose={() => setOpenModal(!openModal)} groups={groupNames && groupNames} />
+    </>
   );
 };
 
