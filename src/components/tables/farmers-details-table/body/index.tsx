@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { farmerDetail, addFarmerId, setPageCount, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
@@ -10,8 +9,8 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { searchFilter, sortFilter, groupFilter, currentPage } = useSelector((state: any) => state.farmerDetails);
-  const dispatch = useDispatch();
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -52,7 +51,7 @@ const Body = () => {
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
     isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
-    dispatch(setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length }));
+    setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length });
   }, [searchFilter, farmersListGroup, isSuccess, sortFilter]);
 
   useEffect(() => {
@@ -63,14 +62,14 @@ const Body = () => {
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
-    dispatch(setFarmersIdToExport(farmersId));
+    setFarmersIdToExport(farmersId);
   }, [farmersListSort, isSuccess, exportFarmerId]);
 
   // For tamil share holder certificate
   useEffect(() => {
     if (isSuccess) {
       const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
-      isSuccess && dispatch(addFarmerId(farmerId));
+      isSuccess && addFarmerId(farmerId);
     }
   }, [isSuccess, farmersList, exportFarmerId]);
 
