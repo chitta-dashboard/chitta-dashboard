@@ -55,7 +55,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) =
         <ToggleButton selectedMode={tab} setSelectedMode={setTab} options={["Raw", "Processed", "Animal"]} />
         <S.Action>
           <SearchBar searchHandler={searchHandler} ref={searchRef} />
-          <S.ToolTip title={tab !== "Raw" ? "Temporary Unavailable" : ""} placement="bottom-start">
+          <S.ToolTip title={tab !== "Raw" ? "Temporarily unavailable" : ""} placement="bottom-start">
             <span>
               <Button
                 onClick={() => setAddModalOpen(true)}

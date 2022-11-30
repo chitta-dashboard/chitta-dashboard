@@ -63,6 +63,22 @@ const Header = () => {
     speed: 500,
     slidesToShow: isLg ? 5 : isXl ? 7 : 8,
     slidesToScroll: 1,
+    initialSlide:
+      pathname.includes("portfolio") && !isXl && !isLg && !isLg
+        ? 1
+        : pathname.includes("admin-panel") && isXl && !isLg
+        ? 1
+        : pathname.includes("portfolio") && isXl && !isLg
+        ? 2
+        : pathname.includes("farmers-details") && isXl && isLg
+        ? 3
+        : pathname.includes("board-resolution") && isXl && isLg
+        ? 3
+        : pathname.includes("admin-panel") && isXl && isLg
+        ? 4
+        : pathname.includes("portfolio") && isXl && isLg
+        ? 4
+        : 0,
     centerPadding: "1rem",
   };
 
