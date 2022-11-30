@@ -112,7 +112,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
 
   const onSubmit: any = (data: IAddProductsFormInput & { id: string; products: string[] }) => {
     const variantName = editMode ? variantData?.variantName : VARIANT_DATA[productId][data.variantId];
-    cb({ ...data, id: editMode ? id : productId, products: products, variantName: variantName });
+    cb({ ...data, id: editMode ? id : productId, products: products, variantName: variantName, timestamp: new Date().getTime() });
     !editMode && reset();
     !editMode && handleClose();
   };
