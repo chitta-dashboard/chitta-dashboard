@@ -1,17 +1,14 @@
 import { Dispatch, FC, SetStateAction } from "react";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./share-amount-modal.styled";
 import peopleIcon from "../../../../assets/images/People-icon.svg";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../utils/store";
-// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 interface CustomProps {
   setShareAmount: Dispatch<SetStateAction<number>>;
 }
 
 const ShareDetailBody: FC<CustomProps> = ({ setShareAmount }) => {
-  // const { selectedFarmers } = useFarmerDetailsContext();
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers } = useFarmerDetailsContext();
 
   const shareAmountHandler = (e: any) => {
     setShareAmount(e.target.value);

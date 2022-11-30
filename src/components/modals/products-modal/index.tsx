@@ -85,8 +85,6 @@ const ProductsModal: FC<CustomProps> = (props) => {
   useEffect(() => {
     if (editMode) {
       let productData = Object.values(isSuccess && (productDetails as CustomProps)).find((f) => String(f.id) === id);
-      // console.log("onedit variants ", productData.variants);
-      // console.log("onedit variantIds ", productData);
       setProductName(productData?.productName);
       reset({
         foodType: productData?.foodType as string,

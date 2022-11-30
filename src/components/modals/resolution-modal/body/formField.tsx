@@ -8,7 +8,7 @@ import { useFetch } from "../../../../utils/hooks/query";
 import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
 import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./formField.styled";
-import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 
 interface CustomProps {
   setValue: UseFormSetValue<IResolutionFormInput>;
@@ -92,7 +92,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             options={{
               label: "குழு *",
               gridArea: "grp",
-              selectOptions: Object.values(farmersGroupById as { [key: string]: IFarmersGroup }).map((g) => [g.groupName, g.groupName]),
+              selectOptions: Object.values(farmersGroupById as { [key: string]: FarmersGroup }).map((g) => [g.groupName, g.groupName]),
               specialOptions: ["~All Groups~"],
             }}
           />

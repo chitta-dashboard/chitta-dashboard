@@ -1,9 +1,7 @@
 import { FC, useCallback, useState } from "react";
-import { useSelector } from "react-redux";
 import { ENDPOINTS } from "../../../../utils/constants";
 import { useAdd, useFetch } from "../../../../utils/hooks/query";
-import { RootState } from "../../../../utils/store";
-import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
 import ExportCSV from "../../../export-csv-data";
 import ConfirmationModal from "../../../modals/confirmation-modal";
@@ -16,7 +14,7 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   const { shareAmountModalHandler, addModalHandler } = props;
-  const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers, farmersIdToExport } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
