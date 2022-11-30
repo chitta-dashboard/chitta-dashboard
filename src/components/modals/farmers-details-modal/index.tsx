@@ -2,9 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-// import { useSelector } from "react-redux";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-// import { RootState } from "../../../utils/store";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -32,8 +30,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
   const { data: farmersDetailsById } = result;
-  // const { farmersDetailsById } = useFarmerDetailsContext();
-  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 

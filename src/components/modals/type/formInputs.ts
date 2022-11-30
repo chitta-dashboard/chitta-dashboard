@@ -58,6 +58,7 @@ export interface IProductVarient {
   endDate: string;
   availableAmount: string;
   qualityGrade: string;
+  timestamp: number
 }
 
 export interface IAddProductsFormInput extends IProductVarient {

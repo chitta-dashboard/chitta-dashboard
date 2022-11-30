@@ -30,12 +30,14 @@ export interface IPortfolioVariant {
   endDate: string;
   availableAmount: number;
   qualityGrade: string;
+  timestamp: number;
 }
 
 export interface IPortfolioProduct {
   id: string;
   productId: string;
   productName: string;
+  foodType: string;
   variants: string[];
   [key: string]: IPortfolioVariant | string | string[];
 }
@@ -47,11 +49,17 @@ export interface IPortfolio {
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
   const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
   const { addNotification } = useAuthContext();
-  const [variantData, setVariantdata] = useState((): IPortfolioVariant => {
+  const [variantData, setVariantdata] = useState<IPortfolioVariant>(() => {
+    let latestVariantId = "";
+    let LatestVariantTime = 0;
     for (let id of data.variants) {
-      if (data[id] !== null) return data[id] as IPortfolioVariant;
+      if (data[id] !== null && (data[id] as IPortfolioVariant).timestamp > LatestVariantTime) {
+        LatestVariantTime = (data[id] as IPortfolioVariant).timestamp;
+        latestVariantId = id;
+      }
     }
-    return {} as unknown as IPortfolioVariant; // a hack to satisfy typescript.
+    // console.log("final", data[latestVariantId]);
+    return data[latestVariantId] as IPortfolioVariant;
   });
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
@@ -83,9 +91,15 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
   }, [data.productName]);
 
   useEffect(() => {
+    let latestVariantId = "";
+    let LatestVariantTime = 0;
     for (let id of data.variants) {
-      if (data[id] !== null) return setVariantdata(data[id] as IPortfolioVariant);
+      if (data[id] !== null && (data[id] as IPortfolioVariant).timestamp > LatestVariantTime) {
+        LatestVariantTime = (data[id] as IPortfolioVariant).timestamp;
+        latestVariantId = id;
+      }
     }
+    return setVariantdata(data[latestVariantId] as IPortfolioVariant);
   }, [data]);
 
   const editDataHandler = (data: IAddProductsFormInput & { id: string }) => {

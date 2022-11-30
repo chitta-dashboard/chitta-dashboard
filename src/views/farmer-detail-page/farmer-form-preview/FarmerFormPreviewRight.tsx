@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
 import { adminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";

@@ -1,13 +1,14 @@
 import { FC, useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
-import { RootState } from "../../../../utils/store";
-import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
+// import { RootState } from "../../../../utils/store";
+// import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
 import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
 import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
 import ExportCSV from "../../../export-csv-data";
 import ConfirmationModal from "../../../modals/confirmation-modal";
@@ -20,13 +21,13 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { shareAmountModalHandler, addModalHandler } = props;
-  const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
+  // const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
-  const { loader, addNotification } = useAuthContext();
-
+  const { addNotification } = useAuthContext();
+  const { selectedFarmers, farmersIdToExport, checkboxUnselectAll } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -307,17 +308,17 @@ const RightSection: FC<RightSectionProps> = (props) => {
           }
           handleClose={() => {
             setOpenConfirmationModal(null);
-            dispatch(checkBoxUnselectAll());
+            checkboxUnselectAll();
           }}
           yesAction={() => {
             if (typeof openConfirmationModal === "string") {
               farmerGroupChange(openConfirmationModal);
               setOpenConfirmationModal(null);
-              dispatch(checkBoxUnselectAll());
+              checkboxUnselectAll();
             } else {
               farmerGroupAddDataHandler(openConfirmationModal);
               setOpenConfirmationModal(null);
-              dispatch(checkBoxUnselectAll());
+              checkboxUnselectAll();
             }
           }}
         />

@@ -40,7 +40,7 @@ namespace S {
     alignItems: "center",
     justifyContent: "flex-start !important",
     width: "98%",
-    height: "300px",
+    height: "400px",
     overflowY: "auto",
   });
 

@@ -1,20 +1,20 @@
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { ENDPOINTS, searchWord } from "../../../utils/constants";
+import { usePortfolioContext } from "../../../utils/context/portfolio";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";
 import ItemCard, { IPortfolioProduct } from "../item-card";
 import S from "./portfolioRaw.styled";
 interface Props {
   tab: string;
+  clearSearchHandler: () => void;
 }
-const PortfolioRaw: FC<Props> = ({ tab }) => {
+const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
   const {
     formatChangeSuccess: isRawSuccess,
     result: { data: rawProducts },
   } = useFetch(ENDPOINTS.portfolioRaw);
-
-  const { searchFilter } = useSelector((state: any) => state.portfolio);
+  const { searchFilter, setSearchFilter } = usePortfolioContext();
   const [rawProductSearch, setRawProductSearchSearch] = useState<IPortfolioProduct[]>(isRawSuccess ? Object.values(rawProducts) : []);
 
   useEffect(() => {
@@ -23,6 +23,13 @@ const PortfolioRaw: FC<Props> = ({ tab }) => {
     );
     isRawSuccess && setRawProductSearchSearch(result);
   }, [searchFilter, isRawSuccess, rawProducts]);
+
+  useEffect(() => {
+    clearSearchHandler();
+    setSearchFilter("");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
