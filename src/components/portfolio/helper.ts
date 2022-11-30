@@ -10,6 +10,7 @@ export const getProductStructure = (id: string) => {
     id: id,
     productId: data.productId as unknown as string,
     productName: data.name,
+    foodType: "Raw",
     variants: Object.keys(VARIANT_DATA[id]),
   };
 
