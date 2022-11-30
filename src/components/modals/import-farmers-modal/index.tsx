@@ -6,7 +6,7 @@ import ModalBody from "../../custom-modal/body";
 import ModalHeader from "../../custom-modal/header";
 import { validateFarmerData, processFarmerData, exportSampleFormat } from "./helper";
 import { getJSONfromExcel } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import S from "./importFarmersModal.styled";
 
 interface IImportFarmersModal {

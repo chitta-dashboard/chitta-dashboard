@@ -1,7 +1,7 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { mdDetail } from "../../../../utils/context/mdDetails";
+import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
@@ -16,7 +16,7 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 
 interface MdDetailsRowProps {
-  user: mdDetail;
+  user: IMdDetails;
   removeGroupMember: (id: string, group: string) => void;
 }
 
@@ -29,7 +29,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [editData, setEditData] = useState<mdDetail>();
+  const [editData, setEditData] = useState<IMdDetails>();
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -41,7 +41,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const editMdDetailHandler = () => setEditMode(!editMode);
 
   //Update MdDetail Handler
-  const updateMdDetail = (data: mdDetail) => {
+  const updateMdDetail = (data: IMdDetails) => {
     setEditData(data);
     confirmModalHandler();
   };
@@ -72,7 +72,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     user["profile"] = await encryptText(compressedBase64);
-    const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
+    const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
       editedData: farmerEditData,

@@ -2,8 +2,8 @@ import { read, utils, write, writeFile } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
 import FileSaver from "file-saver";
 import Toast from "../../../utils/toast";
@@ -118,14 +118,14 @@ export const validateFarmerData = function (file: File) {
 export const processFarmerData = (farmers: { [key: string]: string }[]) => {
   return farmers.map(
     (farmer) =>
-      ({
-        ...farmer,
-        id: uuidv4(),
-        border: JSON.parse(farmer.border),
-        acre: JSON.parse(farmer.acre),
-        surveyNo: JSON.parse(farmer.surveyNo),
-        profile: "", // placeholder will be shown incase of no image
-      } as farmerDetail),
+    ({
+      ...farmer,
+      id: uuidv4(),
+      border: JSON.parse(farmer.border),
+      acre: JSON.parse(farmer.acre),
+      surveyNo: JSON.parse(farmer.surveyNo),
+      profile: "", // placeholder will be shown incase of no image
+    } as farmerDetail),
   );
 };
 

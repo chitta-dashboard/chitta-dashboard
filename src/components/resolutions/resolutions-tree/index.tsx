@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
-import { IResolution } from "../../../utils/store/slice/resolution";
+import { IResolution } from "../../../utils/context/resolution";
 import leafLine from "../../../assets/images/leafLine.svg";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";

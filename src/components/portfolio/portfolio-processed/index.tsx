@@ -1,9 +1,19 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { usePortfolioContext } from "../../../utils/context/portfolio";
 import S from "./portfolioProcessed.styled";
 interface Props {
-  tab: string;
+  clearSearchHandler: () => void;
 }
-const PortfolioProcessed:FC <Props> = ({ tab }) => {
+const PortfolioProcessed: FC<Props> = ({ clearSearchHandler }) => {
+  const { setSearchFilter } = usePortfolioContext();
+
+  useEffect(() => {
+    clearSearchHandler();
+    setSearchFilter("");
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return <S.PortfolioProcessed>No processed products added yet, add some.</S.PortfolioProcessed>;
 };
 export default PortfolioProcessed;

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { mdDetail } from "../../../utils/context/mdDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import { adminFormInputs } from "../../admin-panel";
@@ -23,7 +23,7 @@ const MdFormPreviewRight = () => {
   const { mdId } = useParams();
   return (
     <>
-      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>

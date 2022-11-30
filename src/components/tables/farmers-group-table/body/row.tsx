@@ -1,11 +1,8 @@
 import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../utils/store";
-import { setGroupFilter } from "../../../../utils/store/slice/farmerDetails";
-// import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
@@ -22,10 +19,7 @@ interface FarmersGroupRowProp {
 }
 
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
-  const { deleteFarmersGroup } = useFarmersGroupContext();
-  // const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
-  const { groupFilter } = useSelector((state: RootState) => state.farmerDetails);
-  const dispatch = useDispatch();
+  const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -33,9 +27,9 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const [editData, setEditData] = useState<FarmersGroup>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
-
   const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
   const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
+
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -56,7 +50,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
 
   //Redirect to Farmers Details Group Filter handler.
   const selectGroupHandler = (groupName: string) => {
-    dispatch(setGroupFilter(groupName));
+    setGroupFilter(groupName);
     navigate(`/farmers-details`);
   };
 
@@ -131,9 +125,6 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            !editMode && deleteFarmersGroup(user.id);
-            // editMode && editData && editFarmersGroup(editData);
-            // editMode && editData && farmerGroupUpdate(editData);
             editMode &&
               farmerGroupEdit({
                 editedData: editData,
