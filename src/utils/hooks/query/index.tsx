@@ -55,7 +55,7 @@ export const useAdd = (endpoint: Endpoints) => {
     async ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Creating" });
+      loader({ openLoader: true, loaderText: `Creating ${endpoint}` });
 
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
@@ -97,7 +97,7 @@ export const useEdit = (endpoint: Endpoints) => {
     ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Updating" });
+      loader({ openLoader: true, loaderText: `Updating ${endpoint}` });
 
       return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
     },
@@ -127,7 +127,7 @@ export const useDelete = (endpoint: Endpoints) => {
     async ({ id, successCb, errorCb }: { id: string | Array<string> } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Deleting" });
+      loader({ openLoader: true, loaderText: `Deleting ${endpoint}` });
 
       if (Array.isArray(id)) {
         for (let i = 0; i < id.length; i++) {
