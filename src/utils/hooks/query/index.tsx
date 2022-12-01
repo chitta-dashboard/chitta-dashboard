@@ -94,16 +94,28 @@ export const useEdit = (endpoint: Endpoints) => {
   let errorCallback: () => void;
 
   return useMutation(
-    ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
+    async ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
       loader({ openLoader: true, loaderText: `Updating ${endpoint}` });
 
-      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+      if (Array.isArray(editedData)) {
+        for (let i = 0; i < editedData.length; i++) {
+          await axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData[i]?.id}`, editedData[i]);
+        }
+        return editedData;
+      } else {
+        return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+      }
     },
     {
       onSuccess: (data) => {
-        const updatedData = { ...result.data, [data.id]: data };
+        let updatedData;
+        if (Array.isArray(data)) {
+          updatedData = { ...result.data, ...groupBy(data, "id") };
+        } else {
+          updatedData = { ...result.data, [data.id]: data };
+        }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
         successCallback();
       },

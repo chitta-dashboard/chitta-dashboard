@@ -1,7 +1,7 @@
 import { MenuItem, styled, TextField } from "@mui/material";
 namespace S {
   export const SelectInput = styled(TextField)(({ theme }) => ({
-    width: "18rem",
+    width: "15rem",
     borderRadius: "3.5rem",
     backgroundColor: theme.palette.bg.main,
     color: theme.palette.text.primary,
