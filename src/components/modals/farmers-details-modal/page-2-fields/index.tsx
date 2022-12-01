@@ -10,24 +10,56 @@ interface CustomProps {
 const FormFieldPage2: FC<CustomProps> = ({ control }) => {
   return (
     <S.FieldsBox>
-      <Input name="qualification" type="text" control={control} rules={{ required: "required" }} options={{ label: "கல்வி *", gridArea: "edu" }} />
-      <Input name="village" type="text" control={control} rules={{ required: "required" }} options={{ label: "கிராமம் *", gridArea: "vil" }} />
+      <Input
+        name="qualification"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "கல்வி *", gridArea: "edu", placeholder: "கல்வி தகுதி" }}
+      />
+      <Input
+        name="village"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "கிராமம் *", gridArea: "vil", placeholder: "கிராம பெயரை உள்ளிடுக " }}
+      />
       <Input
         name="postalNo"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "அஞ்சல் குறியீடு *", gridArea: "pst" }}
+        options={{ label: "அஞ்சல் குறியீடு *", gridArea: "pst", placeholder: "அஞ்சல் குறியீட்டை  உள்ளிடுக" }}
       />
       <Input
         name="address"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "முகவரி *", gridArea: "adr", fullHeight: true, multiline: true, maxRows: 4, textarea: true }}
+        options={{
+          label: "முகவரி *",
+          gridArea: "adr",
+          fullHeight: true,
+          multiline: true,
+          maxRows: 4,
+          textarea: true,
+          placeholder: "முகவரியை உள்ளிடுக",
+        }}
       />
-      <Input name="taluk" type="text" control={control} rules={{ required: "required" }} options={{ label: "தாலுக்கா *", gridArea: "tlk" }} />
-      <Input name="district" type="text" control={control} rules={{ required: "required" }} options={{ label: "மாவட்டம் *", gridArea: "sta" }} />
+      <Input
+        name="taluk"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "தாலுக்கா *", gridArea: "tlk", placeholder: "தாலுகாவை உள்ளிடுக" }}
+      />
+      <Input
+        name="district"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "மாவட்டம் *", gridArea: "sta", placeholder: "மாவட்டத்தை உள்ளிடுக " }}
+      />
       <Input
         name="landType"
         type="select"
@@ -42,6 +74,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
             ["DRY LAND", "DRY LAND"],
             ["WELL", "WELL"],
           ],
+          placeholder: "--நில வகை--",
         }}
       />
       <Input
@@ -60,6 +93,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
             ["BOREWELL", "BOREWELL"],
             ["WET LAND", "WET LAND"],
           ],
+          placeholder: "--நீர் வகை--",
         }}
       />
       <Input
@@ -74,6 +108,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
             ["option-1", "option-1"],
             ["option-2", "option-2"],
           ],
+          placeholder: "--விவசாயி வகை--",
         }}
       />
       {/* animals is optional */}
@@ -84,6 +119,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
         options={{
           label: "விலங்குகள்",
           gridArea: "ani",
+          placeholder: "விலங்குகள் வகையை உள்ளிடுக ",
         }}
       />
       <Input
@@ -98,6 +134,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
             ["yes", "ஆம்"],
             ["no", "இல்லை"],
           ],
+          placeholder: "குழு உறுப்பினராக உள்ளீர்களா ?",
         }}
       />
     </S.FieldsBox>

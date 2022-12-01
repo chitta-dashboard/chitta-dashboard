@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
-import { dateFormat } from "../../../utils/constants";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
@@ -170,12 +169,13 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           render={({ field, formState: { errors } }) => {
             return (
               <S.SelectInput
+                isColor={field.value ? 1 : 0}
                 select
                 disabled={options.disable ? true : false}
                 helperText={errors[name]?.message as string}
                 {...options}
                 name={field.name}
-                value={field.value || ""}
+                value={field.value ? field.value : options.placeholder || ""}
                 // defaultValue={options?.initialvalue}
                 ref={field.ref}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -184,7 +184,9 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 }}
                 onBlur={field.onBlur}
               >
-                <MenuItem value="" style={{ display: "none" }}></MenuItem>
+                <MenuItem value={options.placeholder ? options.placeholder : ""} style={{ display: "none" }}>
+                  {options.placeholder}
+                </MenuItem>
 
                 {options?.selectOptions?.map(([actualValue, displayValue]: [string, string]) => (
                   <MenuItem
@@ -345,7 +347,13 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
               <S.StyledAutocomplete
                 options={options.selectoptions}
                 renderInput={(params: any) => (
-                  <TextField {...params} helperText={errors[name]?.message as string} label={options.label} InputLabelProps={{ shrink: true }} />
+                  <TextField
+                    {...params}
+                    placeholder={options.placeholder}
+                    helperText={errors[name]?.message as string}
+                    label={options.label}
+                    InputLabelProps={{ shrink: true }}
+                  />
                 )}
                 value={field.value ? field.value : autocomplete}
                 ref={field.ref}
@@ -388,6 +396,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 renderInput={(params: any) => (
                   <TextField
                     {...params}
+                    placeholder={options.placeholder}
                     helperText={errors[name]?.message as string}
                     label={options.label}
                     InputLabelProps={{ shrink: true }}
