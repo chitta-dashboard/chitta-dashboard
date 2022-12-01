@@ -1,19 +1,16 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import IconWrapper from "../../../utils/iconWrapper";
 import ResolutionModal from "../../modals/resolution-modal";
-import { changeTab } from "../../../utils/store/slice/resolution";
-import { RootState } from "../../../utils/store";
 import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
 import { useAdd, useFetch } from "../../../utils/hooks/query";
 import { useAuthContext } from "../../../utils/context/auth";
 import Toast from "../../../utils/toast";
 import S from "./resolutionsHeader.styled";
+import { useResolutionContext } from "../../../utils/context/resolution";
 
 const ResolutionsHeader: FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { tab } = useSelector((state: RootState) => state.resolution);
+  const { tab, changeTab } = useResolutionContext();
   const {
     formatChangeSuccess,
     result: { data: resolutions },
@@ -24,13 +21,13 @@ const ResolutionsHeader: FC = () => {
   return (
     <>
       <S.Header>
-        <IconWrapper onClick={() => dispatch(changeTab("tree"))} isDummy={tab === "tree"}>
+        <IconWrapper onClick={() => changeTab("tree")} isDummy={tab === "tree"}>
           back
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
           {formatChangeSuccess && Object.values(resolutions).length > 4 && tab === "tree" ? (
-            <S.Button onClick={() => dispatch(changeTab("list"))}>View All</S.Button>
+            <S.Button onClick={() => changeTab("list")}>View All</S.Button>
           ) : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
         </S.ButtonBox>

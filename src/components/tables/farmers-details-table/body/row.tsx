@@ -2,9 +2,6 @@ import { useState, useRef, FC, useEffect } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../../utils/store";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
@@ -16,10 +13,10 @@ import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
-import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
+import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
 
@@ -29,10 +26,7 @@ interface FarmersDetailsRowProps {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
-  // const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
+  const { checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -44,7 +38,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<IMdDetails>();
@@ -157,17 +150,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             e.stopPropagation();
           }}
         >
-          <Checkbox
-            onChange={(e) => {
-              dispatch(checkBoxSelect(user.id));
-            }}
-            checked={selectedFarmers.includes(user.id)}
-          />
+          <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
         </S.RowCheckCell>
         <S.WebTableCell>{user.membershipId}</S.WebTableCell>
         {/* for tablet view*/}
         <S.TabCell onClick={(e) => e.stopPropagation()}>
-          <Checkbox onChange={() => dispatch(checkBoxSelect(user.id))} checked={selectedFarmers.includes(user.id)} />
+          <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
           <Stack>
             <CS.Icon onClick={iconModalHandler}>three-dots</CS.Icon>
           </Stack>

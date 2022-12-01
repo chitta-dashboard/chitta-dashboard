@@ -1,9 +1,7 @@
 import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
 import CustomModal from "../../custom-modal";
-import { checkBoxUnselectAll } from "../../../utils/store/slice/farmerDetails";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../utils/store";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
@@ -20,8 +18,7 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-  const dispatch = useDispatch();
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
   const {
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
@@ -35,7 +32,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
       handleClose();
     },
     onAfterPrint() {
-      dispatch(checkBoxUnselectAll());
+      checkboxUnselectAll();
     },
     pageStyle: `@media print {
       @page {

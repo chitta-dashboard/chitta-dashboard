@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
 import { farmerDetail, addFarmerId, setPageCount,setCurrentPage,setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -10,6 +10,8 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
+
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
   const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
   const dispatch = useDispatch();
   const {
@@ -80,6 +82,7 @@ const Body = () => {
     let updatedData = isSuccess && [...result];
     isFarmerByPageSuccess && setFarmersListSearch(Object.values(farmersDetailsByPage));
   }, [searchFilter, farmersListGroup, isSuccess, isFarmerByPageSuccess, sortFilter]);
+
 
   useEffect(() => {
     isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));

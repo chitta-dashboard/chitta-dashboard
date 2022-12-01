@@ -2,13 +2,12 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useDispatch } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { FarmersGroup, useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { IMdDetails } from "../../../utils/context/mdDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
@@ -19,11 +18,8 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
-import { IMdDetails } from "../../../utils/store/slice/mdDetails";
 
 const FarmerFormPreviewLeft = () => {
-  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
@@ -42,23 +38,18 @@ const FarmerFormPreviewLeft = () => {
   } = useFetch(ENDPOINTS.admin);
 
   const { name: titleName, address } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
-
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
-  const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(farmerDetail & { farmerId?: string }) | null>(null);
-  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
