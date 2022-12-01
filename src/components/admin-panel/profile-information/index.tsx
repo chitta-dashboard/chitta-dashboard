@@ -20,12 +20,14 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
       <S.profileInput
         label="பெயர்"
         type="text"
+        placeholder="பெயரை உள்ளிடுக"
         InputLabelProps={{ shrink: true }}
         {...register("name")}
         helperText={errors.name && errors.name.message}
       />
       <S.profileInput
         label="முகவரி"
+        placeholder="முகவரியை உள்ளிடுக"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}
@@ -34,6 +36,7 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
       />
       <S.profileInput
         label="ஒருங்கிணைப்பாளர் முகவரி"
+        placeholder="ஒருங்கிணைப்பாளர் முகவரியை உள்ளிடுக"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}

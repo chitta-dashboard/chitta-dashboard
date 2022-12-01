@@ -34,9 +34,21 @@ const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }
         gridArea="prf"
       />
 
-      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "பெயர் *", gridArea: "nme" }} />
+      <Input
+        name="name"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "பெயர் *", gridArea: "nme", placeholder: "பெயரை உள்ளிடுக " }}
+      />
 
-      <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "பிறந்த தேதி *", gridArea: "dob" }} />
+      <Input
+        name="dob"
+        type="date"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "பிறந்த தேதி *", gridArea: "dob", placeholder: "பிறந்த தேதியை உள்ளிடுக" }}
+      />
 
       <Input
         name="phoneNumber"
@@ -47,16 +59,30 @@ const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }
           minLength: { value: 10, message: "10 digits expected" },
           maxLength: { value: 10, message: "10 digits expected" },
         }}
-        options={{ label: "கைபேசி எண் *", gridArea: "phn" }}
+        options={{ label: "கைபேசி எண் *", gridArea: "phn", placeholder: "கைபேசி எண்ணை உள்ளிடுக" }}
       />
-      <Input name="qualification" type="text" control={control} rules={{ required: "required" }} options={{ label: "தகுதி *", gridArea: "qfn" }} />
+      <Input
+        name="qualification"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "தகுதி *", gridArea: "qfn", placeholder: "தகுதியை உள்ளிடுக" }}
+      />
 
       <Input
         name="description"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "சுயவிவரம் *", gridArea: "dsc", fullHeight: true, multiline: true, maxRows: 4, textarea:true }}
+        options={{
+          label: "சுயவிவரம் *",
+          gridArea: "dsc",
+          fullHeight: true,
+          multiline: true,
+          maxRows: 4,
+          textarea: true,
+          placeholder: "சுய விவரங்களை உள்ளிடுக ",
+        }}
       />
     </S.StaticBox>
   );

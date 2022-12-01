@@ -50,6 +50,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           setproductid: setProductId,
           productimage: productImage,
           disable: disableOnEdit,
+          placeholder: "பொருளின் பெயரை உள்ளிடுக",
         }}
       />
       <Input
@@ -63,6 +64,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           selectOptions: disableOnEdit && variantList === null ? tempVariantsList : variantList,
           availablelist: availableList,
           disable: disableOnEdit,
+          placeholder: "வகையை தேர்ந்தெடுக்க ",
         }}
       />
       <Input
@@ -94,6 +96,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           label: "கையிருப்பு தொகை *",
           gridArea: "ava",
           unit: "kg",
+          placeholder: "கையிருப்பை உள்ளிடுக",
         }}
       />
       <Input
@@ -109,6 +112,8 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["B+", "B+"],
             ["C+", "C+"],
           ],
+          initialvalue: "A+",
+          placeholder: "தரத்தை தேர்ந்தெடுக்க",
         }}
       />
       <Input
@@ -123,6 +128,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           textarea: true,
           multiline: true,
           maxRows: 4,
+          placeholder: "விளக்கங்களை உள்ளிடுக",
         }}
       />
     </S.StaticBox>
