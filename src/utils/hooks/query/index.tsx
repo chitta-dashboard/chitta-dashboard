@@ -1,11 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { Endpoints, groupBy } from "../../constants";
+import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
+import { farmerDetail } from "../../context/farmersDetails";
 
 interface IOptionalCallback {
   successCb?: (data?: any) => void;
@@ -174,32 +175,49 @@ export const useDelete = (endpoint: Endpoints) => {
   );
 };
 
-export const useFetchByPage = (endpoint: Endpoints, page: number) => {
+export const useFetchByPage = (endpoint: Endpoints, page: number, params?: string) => {
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${params ? `${params}&_page=${page}&_limit=${25}` : `?_page=${page}&_limit=${25}`}`;
+  //console.log("Query : ",query)
+  const [dataCount, setDataCount] = useState(1);
   const result = useQuery({
     queryKey: [`${endpoint}-fetch-${page}`],
     queryFn: () => {
-      return axios
-        .get(`${process.env.REACT_APP_API_KEY}/${endpoint}`, {
-          params: {
-            _page: page,
-            _limit: 10,
-          },
-        })
-        .then((res) => res.data);
+      return axios.get(query).then((res: any) => {
+        setDataCount(res.headers.get("X-total-count"));
+        return res.data;
+      });
     },
-    cacheTime: Infinity, // do not change!
-    staleTime: Infinity, // do not change!
+    cacheTime: 0, // do not change!
+    staleTime: 0, // do not change!
   });
-
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+
+  const prefetchByPage = async (pageNo: number) => {
+    // The results of this query will be cached like a normal query
+    let prefetchQuery = `${process.env.REACT_APP_API_KEY}/${endpoint}${
+      params ? `${params}&_page=${pageNo}&_limit=${25}` : `?_page=${pageNo}&_limit=${25}`
+    }`;
+    await queryClient.prefetchQuery({
+      queryKey: [`${endpoint}-fetch-${pageNo}`],
+      queryFn: () => {
+        return axios.get(prefetchQuery).then((res: any) => {
+          //setDataCount(res.headers.get("X-total-count"));
+          //console.log("Response : ",res.data)
+          return res.data;
+        });
+      },
+    });
+  };
+  prefetchByPage(page + 1);
+
   useEffect(() => {
     if (Array.isArray(result.data)) {
       queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
-      setformatChangeSucess(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    setformatChangeSucess(result.isFetched);
   }, [result.isFetched]);
-  return { formatChangeSuccess, result };
+  return { formatChangeSuccess, result, dataCount };
 };
 
 export const useEditPortfolio = (endpoint: Endpoints) => {
@@ -306,4 +324,64 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
       },
     },
   );
+};
+
+export const useGetFarmersCount = () => {
+  const [count, setCount] = useState<string | null[]>([]);
+  useEffect(() => {
+    const getDataCount = async () => {
+      let totalResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails/?_start=0&_end=0`)).headers.get("X-total-count");
+      let maleResult = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=ஆன்&_start=0&_end=0`)
+      ).headers.get("X-total-count");
+      let femaleResult = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=பெண்&_start=0&_end=0`)
+      ).headers.get("X-total-count");
+      let farmerGroupResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
+      return [totalResult, maleResult, femaleResult, farmerGroupResult];
+    };
+    getDataCount().then((res) => setCount(res as SetStateAction<string | null[]>));
+  }, []);
+  return {
+    totalFarmerCount: count[0],
+    maleFarmerCount: count[1],
+    femaleFarmerCount: count[2],
+    farmerGroupCount: count[3],
+  };
+};
+
+export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${params ? `${params}` : ""}`;
+  const [farmerId, setFarmerId] = useState<string[]>([]);
+  const result = useQuery({
+    queryKey: [`${endpoint}-fetch-id}-${params}`],
+    queryFn: () => {
+      return axios.get(query).then((res: any) => {
+        return res.data;
+      });
+    },
+    cacheTime: 0, // do not change!
+    staleTime: 0, // do not change!
+  });
+  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+
+  useEffect(() => {
+    if (Array.isArray(result.data)) {
+      queryClient.setQueryData([`${endpoint}-fetch-id}`], groupBy(result.data, "id"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setformatChangeSucess(result.isFetched);
+    //result.isFetched && console.log("Result : ", Object.keys(result.data));
+    if (result.isFetched) {
+      let idArray: string[] = [];
+      Object.values(result.data).forEach((item: any) => {
+        idArray.push(item.id);
+      });
+      setFarmerId(idArray);
+    }
+  }, [result.isFetched]);
+  //  useEffect(()=>{
+  //    formatChangeSuccess && setFarmerId(Object.keys(result.data) as string[]);
+  //  },[formatChangeSuccess])
+  return { farmerId: farmerId, farmerIdRefetch: result.refetch };
 };
