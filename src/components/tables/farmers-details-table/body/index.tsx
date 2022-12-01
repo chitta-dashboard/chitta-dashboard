@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { farmerDetail, addFarmerId, setPageCount,setCurrentPage,setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail, addFarmerId, setPageCount, setCurrentPage, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
@@ -16,17 +16,18 @@ const Body = () => {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   }: any = useFetch(ENDPOINTS.farmerDetails);
-  
-  const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`
-  const sortQuery = sortFilter === "normal" ? "" : `&_sort=name&_order=${sortFilter === "descending" ? "desc" : sortFilter === "ascending" ? "asc" : ""}`;
+
+  const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`;
+  const sortQuery =
+    sortFilter === "normal" ? "" : `&_sort=name&_order=${sortFilter === "descending" ? "desc" : sortFilter === "ascending" ? "asc" : ""}`;
   const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
   const {
     formatChangeSuccess: isFarmerByPageSuccess,
-    result: { data: farmersDetailsByPage,refetch: farmerPageRefetch },
-    dataCount : totalDataCount
+    result: { data: farmersDetailsByPage, refetch: farmerPageRefetch },
+    dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`);
 
-  const { farmerId,farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
+  const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -49,14 +50,13 @@ const Body = () => {
 
   useEffect(() => {
     farmerPageRefetch();
-    farmerIdRefetch()
+    farmerIdRefetch();
   }, [searchFilter, sortFilter, groupFilter]);
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(addFarmerId(farmerId));
     dispatch(setFarmersIdToExport(farmerId));
-  },[farmerId])
-  
+  }, [farmerId]);
 
   useEffect(() => {
     dispatch(setPageCount({ pageCount: Math.ceil(totalDataCount / 25), totalPageCount: totalDataCount }));
@@ -137,7 +137,7 @@ const Body = () => {
         <BodyWrapper>
           {farmersDetailsByPage &&
             Object.values(farmersDetailsByPage as farmerDetail[]).map((user: farmerDetail) => (
-              <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} />
+              <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
             ))}
         </BodyWrapper>
       ) : (

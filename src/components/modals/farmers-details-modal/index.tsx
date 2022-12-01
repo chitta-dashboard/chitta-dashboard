@@ -12,12 +12,14 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText } from "../../../utils/constants";
-import { useFetch } from "../../../utils/hooks/query";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy } from "../../../utils/constants";
+import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../utils/store";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -27,13 +29,14 @@ interface CustomProps {
   id?: string;
   mdId?: string | undefined;
 }
-
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
+  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
-  const { data: farmersDetailsById } = result;
+  let {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
   // const { farmersDetailsById } = useFarmerDetailsContext();
-  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 
@@ -223,13 +226,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
-
+    let newId = uuidv4().substring(0,7)
     let params = {
       ...form1Data,
       ...data,
       profile: encryptedBase64,
-      id: mdId ? mdId : editMode ? id : uuidv4(),
-      membershipId: farmersDetailsById[id].membershipId,
+      id: mdId ? mdId : editMode ? id : newId,
+      membershipId: id && editMode ? farmersDetailsById[id].membershipId :  `NER-FPC-${newId}`,
       farmerId: id,
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });

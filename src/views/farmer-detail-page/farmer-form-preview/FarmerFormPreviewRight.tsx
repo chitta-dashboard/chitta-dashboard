@@ -1,18 +1,22 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS } from "../../../utils/constants";
-import { useFetch } from "../../../utils/hooks/query";
+import { ENDPOINTS, groupBy } from "../../../utils/constants";
+import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { decryptText } from "../../../utils/constants";
 import { adminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewRight = () => {
-  const {
+  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
+ 
   const { farmerId } = useParams();
   const {
     formatChangeSuccess: isSuccessAdmin,

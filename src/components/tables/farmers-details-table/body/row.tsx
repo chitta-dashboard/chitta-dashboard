@@ -17,7 +17,7 @@ import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
-import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -26,21 +26,22 @@ import S from "./body.styled";
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
   removeGroupMember: (id: string, group: string, isAdd: boolean) => void;
+  params?: string;
 }
 
-const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
+const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
   // const { editFarmerDetail, deleteFarmerDetail, checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers, currentPage } = useSelector((state: RootState) => state.farmerDetails);
   // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
- 
+
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, params);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, params);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
@@ -148,7 +149,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       <tr>
         <td style={{ display: "none" }}>
           <IdCardBody ref={idCardRef} />
-          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
+          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} params={params} />
         </td>
       </tr>
       <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>

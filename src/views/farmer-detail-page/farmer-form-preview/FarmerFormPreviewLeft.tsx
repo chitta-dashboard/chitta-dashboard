@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
@@ -10,9 +10,9 @@ import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
 import { FarmersGroup, useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -20,18 +20,21 @@ import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 import { IMdDetails } from "../../../utils/store/slice/mdDetails";
+import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
+  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  const {
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -44,9 +47,9 @@ const FarmerFormPreviewLeft = () => {
   const { name: titleName, address } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
 
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails,currentPage);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails,currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
   // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();

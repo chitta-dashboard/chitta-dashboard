@@ -163,7 +163,7 @@ export const useDelete = (endpoint: Endpoints) => {
   );
 };
 
-export const useFetchByPage = (endpoint: Endpoints, page: number, params?: string) => {
+export const useFetchByPage = (endpoint: Endpoints, page: number, params?: string, isEnabled: boolean = true) => {
   let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${params ? `${params}&_page=${page}&_limit=${25}` : `?_page=${page}&_limit=${25}`}`;
   //console.log("Query : ",query)
   const [dataCount, setDataCount] = useState(1);
@@ -172,11 +172,12 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     queryFn: () => {
       return axios.get(query).then((res: any) => {
         setDataCount(res.headers.get("X-total-count"));
-        return res.data;
+        return groupBy(res.data, "id");
       });
     },
-    cacheTime: 0, // do not change!
-    staleTime: 0, // do not change!
+    cacheTime: Infinity, // do not change!
+    staleTime: Infinity, // do not change!
+    enabled: isEnabled ? isEnabled : true,
   });
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
 
@@ -189,18 +190,17 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
       queryKey: [`${endpoint}-fetch-${pageNo}`],
       queryFn: () => {
         return axios.get(prefetchQuery).then((res: any) => {
-          //setDataCount(res.headers.get("X-total-count"));
-          //console.log("Response : ",res.data)
           return res.data;
         });
       },
     });
   };
-  prefetchByPage(page + 1);
+  isEnabled && prefetchByPage(page + 1);
 
   useEffect(() => {
     if (Array.isArray(result.data)) {
-      queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
+      //console.log("Result Data : ",result.data)
+      queryClient.setQueryData([`${endpoint}-fetch-${page}`], result.data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setformatChangeSucess(result.isFetched);
@@ -355,21 +355,91 @@ export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
 
   useEffect(() => {
     if (Array.isArray(result.data)) {
-      queryClient.setQueryData([`${endpoint}-fetch-id}`], groupBy(result.data, "id"));
+      queryClient.setQueryData([`${endpoint}-fetch-id}-${params}`], groupBy(result.data, "id"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setformatChangeSucess(result.isFetched);
     //result.isFetched && console.log("Result : ", Object.keys(result.data));
     if (result.isFetched) {
-      let idArray: string[] = [];
-      Object.values(result.data).forEach((item: any) => {
-        idArray.push(item.id);
+      let idArray: string[] = Object.values(result.data).map((item: any) => {
+        return item.id;
       });
       setFarmerId(idArray);
     }
   }, [result.isFetched]);
-  //  useEffect(()=>{
-  //    formatChangeSuccess && setFarmerId(Object.keys(result.data) as string[]);
-  //  },[formatChangeSuccess])
   return { farmerId: farmerId, farmerIdRefetch: result.refetch };
+};
+
+export const useDeleteByPage = (endpoint: Endpoints, page: number, params?: string) => {
+  const { loader } = useAuthContext();
+  const { result } = useFetchByPage(endpoint, page as number, params, false);
+  let successCallback: () => void;
+  let errorCallback: () => void;
+
+  return useMutation(
+    async ({ id, successCb, errorCb }: { id: string | Array<string> } & IOptionalCallback) => {
+      successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
+      loader({ openLoader: true, loaderText: "Deleting" });
+
+      if (Array.isArray(id)) {
+        for (let i = 0; i < id.length; i++) {
+          await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
+        }
+        return id;
+      } else {
+        return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id}`).then(() => id);
+      }
+    },
+    {
+      onSuccess: (deleteId) => {
+        // let updatedData = { ...result.data };
+        // delete updatedData[deleteId as string];
+        // if (Array.isArray(deleteId)) {
+        //   deleteId.forEach((id) => delete updatedData[id]);
+        // } else {
+        //   delete updatedData[deleteId];
+        // }
+        // queryClient.setQueryData([`${endpoint}-fetch-${page}`], updatedData);
+        result.refetch()
+        successCallback();
+      },
+      onError: () => {
+        errorCallback();
+      },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
+    },
+  );
+};
+
+export const useEditByPage = (endpoint: Endpoints, page: number, params?: string) => {
+  const { loader } = useAuthContext();
+  const { result } = useFetchByPage(endpoint, page as number, params, false);
+  let successCallback: () => void;
+  let errorCallback: () => void;
+
+  return useMutation(
+    ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
+      successCallback = successCb ? successCb : () => {};
+      errorCallback = errorCb ? errorCb : () => {};
+      loader({ openLoader: true, loaderText: "Updating" });
+
+      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+    },
+    {
+      onSuccess: (data) => {
+        result.data[data.id] = data;
+        queryClient.setQueryData([`${endpoint}-fetch-${page}`], result.data);
+        successCallback();
+      },
+      onError: () => {
+        errorCallback();
+      },
+      onSettled: () => {
+        loader({ openLoader: false });
+      },
+    },
+  );
 };
