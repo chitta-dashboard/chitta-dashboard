@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, RefObject, SetStateAction, useState } from "react";
 import SearchBar from "../../common-components/search-bar";
 import { Button } from "@mui/material";
 import ToggleButton from "../../../utils/ToggleButton";
@@ -14,10 +14,10 @@ interface Props {
   tab: string;
   setTab: Dispatch<SetStateAction<string>>;
   searchHandler?: (searchText: string) => void;
+  searchRef: RefObject<HTMLInputElement>;
 }
 
-const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler }) => {
-  // const [tab, setTab] = useState("Raw");
+const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) => {
   const [addModalOpen, setAddModalOpen] = useState(false);
   const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
@@ -54,8 +54,8 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler }) => {
         </S.Description>
         <ToggleButton selectedMode={tab} setSelectedMode={setTab} options={["Raw", "Processed", "Animal"]} />
         <S.Action>
-          <SearchBar searchHandler={searchHandler} />
-          <S.ToolTip title={tab !== "Raw" ? "Temporary Unavailable" : ""} placement="bottom-start">
+          <SearchBar searchHandler={searchHandler} ref={searchRef} />
+          <S.ToolTip title={tab !== "Raw" ? "Temporarily unavailable" : ""} placement="bottom-start">
             <span>
               <Button
                 onClick={() => setAddModalOpen(true)}

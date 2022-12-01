@@ -2,7 +2,8 @@ import { read, utils, write, writeFile } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
 import FileSaver from "file-saver";
 import Toast from "../../../utils/toast";
@@ -84,9 +85,23 @@ export const validateFarmerData = function (file: File) {
       const farmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
       const registeredNumbers = new Set(Object.values(farmerDetails).map((farmer) => farmer.phoneNumber));
       const totalFarmers = farmers.length;
+      let findGroupNames = null;
       for (let i = 0; i < totalFarmers; i++) {
-        if (registeredNumbers.has(farmers[i].phoneNumber)) {
+        if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
+          findGroupNames = true;
           return resolve({ status: false, message: "Some phonenumbers are already registered! Rejected." });
+        }
+      }
+
+      // farmer group validation
+      if (findGroupNames === null) {
+        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
+        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
+        const inputGroupNames = Object.values(farmers).map((i) => i.group);
+        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
+        const group = Array.from(newGroupNames);
+        if (group.length > 0) {
+          resolve({ status: true, message: "New grops detected", groups: group });
         }
       }
 
@@ -103,14 +118,14 @@ export const validateFarmerData = function (file: File) {
 export const processFarmerData = (farmers: { [key: string]: string }[]) => {
   return farmers.map(
     (farmer) =>
-      ({
-        ...farmer,
-        id: uuidv4(),
-        border: JSON.parse(farmer.border),
-        acre: JSON.parse(farmer.acre),
-        surveyNo: JSON.parse(farmer.surveyNo),
-        profile: "", // placeholder will be shown incase of no image
-      } as farmerDetail),
+    ({
+      ...farmer,
+      id: uuidv4(),
+      border: JSON.parse(farmer.border),
+      acre: JSON.parse(farmer.acre),
+      surveyNo: JSON.parse(farmer.surveyNo),
+      profile: "", // placeholder will be shown incase of no image
+    } as farmerDetail),
   );
 };
 

@@ -23,7 +23,7 @@ namespace S {
             padding: "0.8rem 2rem",
           },
           "&:nth-last-of-type(2)": {
-            paddingBottom: "1rem",
+            paddingBottom: "1.2rem",
           },
         },
       },

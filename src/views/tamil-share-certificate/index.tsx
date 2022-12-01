@@ -1,7 +1,5 @@
 import { forwardRef } from "react";
-import { useSelector } from "react-redux";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { RootState } from "../../utils/store";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
 import { decryptText } from "../../utils/constants";
@@ -18,7 +16,7 @@ interface Props {
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
-  const { selectedFarmers } = useSelector((state: RootState) => state.farmerDetails);
+  const { selectedFarmers } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,

@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
-import { mdDetail } from "../../utils/context/mdDetails";
+import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
-import { setSearchFilter, setSortFilter, setCurrentPage } from "../../utils/store/slice/farmerDetails";
-import { RootState } from "../../utils/store";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import ShareAmountModal from "../../components/modals/share-amount-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
 const FarmersDetails = () => {
   const {
@@ -23,8 +21,7 @@ const FarmersDetails = () => {
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
-  const { sortFilter } = useSelector((state: RootState) => state.farmerDetails);
-  const dispatch = useDispatch();
+  const { sortFilter, setSearchFilter, setCurrentPage, setSortFilter } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
@@ -48,7 +45,7 @@ const FarmersDetails = () => {
   };
 
   // Add Farmerdetail Handler
-  const addDataHandler = async (data: mdDetail) => {
+  const addDataHandler = async (data: IMdDetails) => {
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
     newFarmer &&
@@ -82,7 +79,7 @@ const FarmersDetails = () => {
               addModalHandler={addModalHandler}
               searchHandler={handleSearchInput}
               sortFilter={sortFilter}
-              sortHandler={(sortValue) => dispatch(setSortFilter(sortValue))}
+              sortHandler={(sortValue) => setSortFilter(sortValue)}
               shareAmountModalHandler={shareAmountModalHandler}
             />
             <FarmersDetailsTable />

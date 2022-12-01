@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
 import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { Founders } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CardHeader } from "../common-styles/commonStyles.styled";
@@ -10,7 +11,6 @@ import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
-import { IFounders } from "../../../../utils/store/slice/founders";
 import S from "./dashoardFounder.styled";
 
 const DashboardFounder = () => {
@@ -75,7 +75,7 @@ const DashboardFounder = () => {
         </CardHeader>
         {formatChangeSuccess ? (
           <Slider {...settings}>
-            {Object.values(foundersById as { [key: string]: IFounders }).map((item) => {
+            {Object.values(foundersById as { [key: string]: Founders }).map((item) => {
               return (
                 <S.FounderCard key={item.id}>
                   <S.FounderImgContainer>

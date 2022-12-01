@@ -85,6 +85,7 @@ const LoginForm: FC = () => {
                   <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
                   <S.LoginInput
                     type="number"
+                    placeholder="கைபேசி எண்ணை உள்ளிடுக "
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -101,6 +102,7 @@ const LoginForm: FC = () => {
                   <S.LoginFormLabel>கடவுச்சொல்</S.LoginFormLabel>
                   <S.LoginInput
                     type={showPassword === false ? "password" : "text"}
+                    placeholder=" கடவு சொல்லை உள்ளிடுக "
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">

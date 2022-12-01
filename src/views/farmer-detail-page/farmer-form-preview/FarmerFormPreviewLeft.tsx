@@ -6,9 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { FarmersGroup, useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
@@ -45,23 +44,18 @@ const FarmerFormPreviewLeft = () => {
   } = useFetch(ENDPOINTS.admin);
 
   const { name: titleName, address } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
-
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails,currentPage);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails,currentPage);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
-  const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(farmerDetail & { farmerId?: string }) | null>(null);
-  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();

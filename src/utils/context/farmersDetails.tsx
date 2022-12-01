@@ -2,18 +2,16 @@ import React, { createContext, FC, useContext, useReducer } from "react";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
-const GET_FARMERS_DETAILS = "GET_FARMERS_DETAILS";
-const SET_LOADER = "SET_LOADER";
-const ADD_FARMER_DETAIL = "ADD_FARMER_DETAIL";
-const EDIT_FARMER_DETAIL = "EDIT_FARMER_DETAIL";
-const DELETE_FARMER_DETAIL = "DELETE_FARMER_DETAIL";
-const EDIT_TABLE_ICON = "EDIT_TABLE_ICON";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT_ALL = "CHECKBOX_SELECT_ALL";
 const CHECKBOX_UNSELECT_ALL = "CHECKBOX_UNSELECT_ALL";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const GROUP_FILTER = "GROUP_FILTER";
+const ADD_FARMER_ID = "ADD_FARMER_ID";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_PAGE_COUNT = "SET_PAGE_COUNT";
+const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
 
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
@@ -61,65 +59,50 @@ interface farmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   sortFilter: SortOrder;
-  isLoader: boolean;
-  getFarmersDetailsData: (data: farmerDetail) => void;
-  setLoader: (loading: boolean) => void;
+  farmerId: selectedFarmer[];
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   selectedFarmers: selectedFarmer[];
-  addFarmerDetail: (data: farmerDetail) => void;
-  editFarmerDetail: (data: farmerDetail) => void;
-  deleteFarmerDetail: (id: string) => void;
-  editTableIcon: (data: farmerDetail) => void;
   checkboxSelectAll: () => void;
   checkboxUnselectAll: () => void;
   checkboxSelect: (id: string | number) => void;
   groupFilter: string;
   setGroupFilter: (selectGroup: string) => void;
+  addFarmerId: (id: string[] | number[]) => void;
+  currentPage: number;
+  pageCount: number;
+  totalPageCount: number;
+  farmersIdToExport: [];
+  setCurrentPage: (pageNo: number) => void;
+  setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
+  setFarmersIdToExport: (id: string[] | number[]) => void;
 }
 
 const initialState: farmerDetailsContextType = {
   farmersDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
-  isLoader: true,
-  getFarmersDetailsData: () => {},
-  setLoader: () => {},
+  farmerId: [],
   setSortFilter: () => {},
   setSearchFilter: () => {},
   selectedFarmers: [],
-  addFarmerDetail: () => {},
-  editFarmerDetail: () => {},
-  deleteFarmerDetail: () => {},
-  editTableIcon: () => {},
   checkboxSelectAll: () => {},
   checkboxUnselectAll: () => {},
   checkboxSelect: () => {},
   groupFilter: DEFAULT_GROUP_FILTER,
   setGroupFilter: () => {},
+  addFarmerId: () => {},
+  currentPage: 1,
+  pageCount: 0,
+  totalPageCount: 0,
+  farmersIdToExport: [],
+  setCurrentPage: () => {},
+  setPageCount: () => {},
+  setFarmersIdToExport: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
   switch (action.type) {
-    case GET_FARMERS_DETAILS:
-      return { ...state, farmersDetailsById: action.payload };
-
-    case SET_LOADER:
-      return { ...state, isLoader: action.payload };
-
-    case ADD_FARMER_DETAIL:
-      delete action.payload.farmerId;
-      return { ...state, farmersDetailsById: { [action.payload.id]: action.payload, ...state.farmersDetailsById } };
-
-    case EDIT_FARMER_DETAIL:
-      const updateData = action.payload.farmerId ? { ...action.payload, id: action.payload.farmerId } : action.payload;
-      action.payload.farmerId ? delete updateData.farmerId : delete action.payload.farmerId;
-      return { ...state, farmersDetailsById: { ...state.farmersDetailsById, [updateData.id]: updateData } };
-
-    case DELETE_FARMER_DETAIL:
-      delete state.farmersDetailsById[action.payload];
-      return { ...state, farmersDetailsById: { ...state.farmersDetailsById } };
-
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
@@ -141,6 +124,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
         ...state,
         selectedFarmers: [],
       };
+
     case CHECKBOX_SELECT:
       let farmerId = action.payload;
       if (state.selectedFarmers.includes(farmerId)) {
@@ -161,6 +145,18 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case GROUP_FILTER:
       return { ...state, groupFilter: action.payload };
 
+    case ADD_FARMER_ID:
+      return { ...state, farmerId: [...action.payload] };
+
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.payload };
+
+    case SET_PAGE_COUNT:
+      return { ...state, pageCount: action.payload.pageCount, totalPageCount: action.payload.totalPageCount };
+
+    case SET_FARMERS_ID_TO_EXPORT:
+      return { ...state, farmerId: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -171,30 +167,6 @@ export const farmerDetailsContext = createContext<farmerDetailsContextType>(init
 
 const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const getFarmersDetailsData = (data: farmerDetail) => {
-    dispatch({ type: GET_FARMERS_DETAILS, payload: data });
-  };
-
-  const setLoader = (loading: boolean) => {
-    dispatch({ type: SET_LOADER, payload: loading });
-  };
-
-  const addFarmerDetail = (data: farmerDetail) => {
-    dispatch({ type: ADD_FARMER_DETAIL, payload: data });
-  };
-
-  const editFarmerDetail = (data: farmerDetail) => {
-    dispatch({ type: EDIT_FARMER_DETAIL, payload: data });
-  };
-
-  const deleteFarmerDetail = (id: string) => {
-    dispatch({ type: DELETE_FARMER_DETAIL, payload: id });
-  };
-
-  const editTableIcon = (data: farmerDetail) => {
-    dispatch({ type: EDIT_TABLE_ICON, payload: data });
-  };
 
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
@@ -220,20 +192,34 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
+  const addFarmerId = (id: string[] | number[]) => {
+    dispatch({ type: ADD_FARMER_ID, payload: id });
+  };
+
+  const setCurrentPage = (pageNo: number) => {
+    dispatch({ type: SET_CURRENT_PAGE, payload: pageNo });
+  };
+
+  const setPageCount = (updatePageCount: { pageCount: number; totalPageCount: number }) => {
+    dispatch({ type: SET_PAGE_COUNT, payload: updatePageCount });
+  };
+
+  const setFarmersIdToExport = (id: string[] | number[]) => {
+    dispatch({ type: SET_FARMERS_ID_TO_EXPORT, payload: id });
+  };
+
   let data = {
     ...state,
-    getFarmersDetailsData,
-    setLoader,
-    addFarmerDetail,
-    editFarmerDetail,
-    deleteFarmerDetail,
-    editTableIcon,
     setSearchFilter,
     setSortFilter,
     checkboxSelectAll,
     checkboxUnselectAll,
     checkboxSelect,
     setGroupFilter,
+    addFarmerId,
+    setCurrentPage,
+    setPageCount,
+    setFarmersIdToExport,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

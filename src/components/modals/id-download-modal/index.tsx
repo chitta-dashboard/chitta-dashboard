@@ -6,14 +6,14 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import IdCardBody from "../../id-card/id-card-body";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { mdDetail } from "../../../utils/context/mdDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { Founders } from "../../../utils/context/founders";
 
 interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
-  cardData?: mdDetail | Founders | farmerDetail;
+  cardData?: IMdDetails | Founders | farmerDetail;
 }
 
 const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {

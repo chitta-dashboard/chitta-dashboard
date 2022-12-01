@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { decryptText } from "../../../../utils/constants";
-import { farmerDetail } from "../../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./tableData.styled";
 
