@@ -1,4 +1,4 @@
-import { styled, Box, Typography } from "@mui/material";
+import { styled, Box, Typography, CircularProgress } from "@mui/material";
 
 namespace S {
   export const ShareDetailBodyContainer = styled(Box)({
@@ -54,6 +54,18 @@ namespace S {
 
   export const InvisibleDiv = styled(Box)({
     display: "none",
+  });
+
+  export const CustomCircularProgress = styled(CircularProgress)({});
+
+  export const LoaderContainer = styled(Box)({
+    display: "flex",
+    gap: "1.5rem",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItem: "center",
+    height: "18.25rem",
+    width: "33.125rem",
   });
 }
 export default S;

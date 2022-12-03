@@ -12,17 +12,11 @@ interface TablePageHeaderProps {
   shareAmountModalHandler?: () => void;
 }
 
-const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({
-  addModalHandler,
-  searchHandler,
-  sortHandler,
-  sortFilter,
-  shareAmountModalHandler,
-}) => {
+const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({ addModalHandler, searchHandler, sortHandler, sortFilter }) => {
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} sortHandler={sortHandler} sortFilter={sortFilter} />
-      <RightSection addModalHandler={addModalHandler} shareAmountModalHandler={shareAmountModalHandler} />
+      <RightSection addModalHandler={addModalHandler} />
     </S.PageHeaderContainer>
   );
 };

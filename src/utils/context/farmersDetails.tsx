@@ -107,7 +107,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
       return { ...state, searchFilter: action.payload };
 
     case CHECKBOX_SELECT_ALL:
-      if (Object.values(state.selectedFarmers).length === Object.values(state.farmersDetailsById).length) {
+      if (state.selectedFarmers.length === state.farmerId.length) {
         return {
           ...state,
           selectedFarmers: [],
@@ -115,7 +115,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
       } else {
         return {
           ...state,
-          selectedFarmers: [...Object.keys(state.farmersDetailsById)],
+          selectedFarmers: state.farmerId,
         };
       }
 
