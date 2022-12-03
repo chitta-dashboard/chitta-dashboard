@@ -28,8 +28,10 @@ interface CustomProps {
 
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
-  const { data: farmersDetailsById } = result;
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 
@@ -219,15 +221,19 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
-
     let params = {
       ...form1Data,
       ...data,
       profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : uuidv4(),
-      membershipId: farmersDetailsById[id].membershipId,
+      // membershipId: farmersDetailsById && farmersDetailsById[id].membershipId,
+      membershipId:
+        farmersDetailsById &&
+        Object.values(farmersDetailsById)
+          .filter((i: any) => i.id === id)
+          .map((i: any) => i.membershipId),
       farmerId: id,
-    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
+    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string | undefined; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };
