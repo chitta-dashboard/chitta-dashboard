@@ -24,16 +24,10 @@ const FarmersDetails = () => {
   const { sortFilter, setSearchFilter, setCurrentPage, setSortFilter } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
-  const [shareModal, setShareModal] = useState(false);
 
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
-  };
-
-  //Share Amount Modal Handler
-  const shareAmountModalHandler = () => {
-    setShareModal(!shareModal);
   };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
@@ -80,11 +74,9 @@ const FarmersDetails = () => {
               searchHandler={handleSearchInput}
               sortFilter={sortFilter}
               sortHandler={(sortValue) => setSortFilter(sortValue)}
-              shareAmountModalHandler={shareAmountModalHandler}
             />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
-          <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
           <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </>
       )}

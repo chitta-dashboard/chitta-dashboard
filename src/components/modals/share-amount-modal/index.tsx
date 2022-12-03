@@ -1,5 +1,5 @@
-import { useReactToPrint } from "react-to-print";
 import { FC, Ref, useState, useRef } from "react";
+import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../custom-modal";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFetch } from "../../../utils/hooks/query";
@@ -23,6 +23,8 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
+  const [loader, setLoader] = useState(true);
+  const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
@@ -34,19 +36,31 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     onAfterPrint() {
       checkboxUnselectAll();
     },
-    pageStyle: `@media print {
-      @page {
-        size: a5 landscape;
-        margin: 0;
-      }
-    }`,
+    // pageStyle: `@media print {
+    //   @page {
+    //     size: a5 landscape;
+    //     margin: 0;
+    //   }
+    // }`,
   });
+
+  const certificateFunctionStart = () => {
+    setLoader(!loader);
+    setTimeout(() => {
+      setCertificateLoader(!certificateLoader);
+      setTimeout(() => {
+        generateTamilCertificatePDF();
+      }, 300);
+    }, 300);
+  };
 
   return (
     <>
-      <S.InvisibleDiv>
-        <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
-      </S.InvisibleDiv>
+      {certificateLoader && (
+        <S.InvisibleDiv>
+          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
+        </S.InvisibleDiv>
+      )}
       <CustomModal openModal={openModal} handleClose={handleClose}>
         <ModalHeader
           handleClose={() => {
@@ -56,12 +70,31 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
         >
           Share Details
         </ModalHeader>
-        <ModalBody id="" onSubmit={() => {}}>
-          <ShareDetailBody setShareAmount={setShareAmount} />
-        </ModalBody>
-        <ModalFooter>
-          <ShareDetailFooter handleClose={handleClose} generateTamilCertificate={() => generateTamilCertificatePDF()} />
-        </ModalFooter>
+
+        {loader ? (
+          <>
+            <ModalBody id="" onSubmit={() => {}}>
+              <ShareDetailBody setShareAmount={setShareAmount} />
+            </ModalBody>
+            <ModalFooter>
+              <ShareDetailFooter
+                handleClose={handleClose}
+                generateTamilCertificate={() => {
+                  certificateFunctionStart();
+                }}
+              />
+            </ModalFooter>
+          </>
+        ) : (
+          <S.LoaderContainer>
+            <S.CustomCircularProgress size="3rem" />
+            <p>
+              Generating share holder{selectedFarmers.length === 1 ? "" : "s"} certificate{selectedFarmers.length === 1 ? "" : "s"} for selected
+              farmer
+              {selectedFarmers.length === 1 ? "" : "s"}
+            </p>
+          </S.LoaderContainer>
+        )}
       </CustomModal>
     </>
   );
