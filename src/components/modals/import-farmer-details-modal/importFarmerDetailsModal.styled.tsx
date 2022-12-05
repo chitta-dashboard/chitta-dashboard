@@ -34,9 +34,9 @@ namespace S {
     paddingLeft: "2rem",
     paddingRight: "2rem",
     backgroundColor: theme.palette.primary.light,
-    "&.MuiButton-textPrimary": {
-      width: "6rem",
-    },
+    // "&.MuiButton-textPrimary": {
+    //   width: "6rem",
+    // },
   }));
   YesButton.defaultProps = {
     size: "small",
@@ -48,7 +48,7 @@ namespace S {
     color: theme.palette.primary.light,
     borderColor: theme.palette.border.primary,
     borderRadius: ".6rem",
-    width: "6rem",
+    // width: "6rem",
   }));
   NoButton.defaultProps = {
     size: "small",
