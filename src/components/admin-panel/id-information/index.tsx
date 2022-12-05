@@ -29,7 +29,7 @@ const IdInformation: FC<CustomProps> = ({ register, errors }) => {
         />
         <S.IdInput
           label="CIN No"
-          type="number"
+          type="text"
           placeholder="நிறுவன அடையாள எண்ணை உள்ளிடுக"
           InputLabelProps={{ shrink: true }}
           {...register("cinNo")}

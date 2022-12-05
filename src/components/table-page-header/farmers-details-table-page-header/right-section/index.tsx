@@ -1,5 +1,4 @@
 import { FC, useCallback, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
 // import { RootState } from "../../../../utils/store";
@@ -22,8 +21,8 @@ interface RightSectionProps {
 
 const RightSection: FC<RightSectionProps> = (props) => {
   // const dispatch = useDispatch();
-  const { addModalHandler } = props;
-  // const { selectedFarmers, farmersIdToExport } = useSelector((state: RootState) => state.farmerDetails);
+
+  const { shareAmountModalHandler, addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();

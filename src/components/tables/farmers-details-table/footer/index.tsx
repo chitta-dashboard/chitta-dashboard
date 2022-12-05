@@ -1,23 +1,17 @@
 import React from "react";
 import FooterWrapper from "../../../custom-tables/footer";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useFetch, useGetFarmersCount } from "../../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../../utils/constants";
+
 
 const Footer = () => {
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmerDetailsContext();
-
-  const {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
   return (
     <FooterWrapper
-      count={pageCount ? pageCount : 1}
+      count={pageCount ? pageCount : 0}
       page={currentPage}
       handlePageCount={handlePageCount}
       totalCount={totalPageCount}

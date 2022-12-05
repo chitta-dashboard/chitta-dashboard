@@ -56,7 +56,7 @@ export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, pl
     }
   }
 
-  return <S.logoImage isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
+  return <S.logoImage iscolor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
 const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setImage }) => {

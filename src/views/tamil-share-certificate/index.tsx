@@ -1,10 +1,9 @@
 import { forwardRef, Fragment } from "react";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { S } from "./tamil-certificate.styled";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import TamilShareHolderCertificateContent from "./tamil-certificate-content";
+import { S } from "./tamil-certificate.styled";
 
 interface Props {
   shareAmount?: number | string;
@@ -27,13 +26,13 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
         selectedFarmers.map((id: any) =>
           Object.values(farmersDetailsById as farmerDetail[])
             .filter((user) => user.id === id)
-            .map((user, i) => {
+            .map((user) => {
               return (
-                <>
+                <Fragment key={user.id}>
                   <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} />
                   <S.CertificateGap />
                   <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} />
-                </>
+                </Fragment>
               );
             }),
         )}
