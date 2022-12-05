@@ -2,9 +2,9 @@ import React from "react";
 import FooterWrapper from "../../../custom-tables/footer";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
+
 const Footer = () => {
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmerDetailsContext();
-  
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };

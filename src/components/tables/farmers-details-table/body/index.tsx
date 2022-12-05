@@ -14,7 +14,6 @@ const Body = () => {
   const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers, setPageCount, setFarmersIdToExport, setCurrentPage,setFarmerQuery } =
     useFarmerDetailsContext();
 
-
   const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`;
   const sortQuery =
     sortFilter === "normal" ? "" : `&_sort=name&_order=${sortFilter === "descending" ? "desc" : sortFilter === "ascending" ? "asc" : ""}`;
@@ -49,7 +48,6 @@ const Body = () => {
   useEffect(() => {
     farmerPageRefetch();
     farmerIdRefetch();
-
     setFarmerQuery(`${searchQuery}${groupQuery}${sortQuery}`);
   }, [searchFilter, sortFilter, groupFilter, currentPage]);
 
