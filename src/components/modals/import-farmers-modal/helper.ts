@@ -99,9 +99,9 @@ export const validateFarmerData = function (file: File) {
         const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
         const inputGroupNames = Object.values(farmers).map((i) => i.group);
         const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
-        const group = Array.from(newGroupNames);
-        if (group.length > 0) {
-          resolve({ status: true, message: "New grops detected", groups: group });
+        const groupNames = Array.from(newGroupNames);
+        if (groupNames.length > 0) {
+          resolve({ status: true, message: "New grops detected", groups: groupNames, data: farmers });
         }
       }
 
@@ -118,14 +118,14 @@ export const validateFarmerData = function (file: File) {
 export const processFarmerData = (farmers: { [key: string]: string }[]) => {
   return farmers.map(
     (farmer) =>
-    ({
-      ...farmer,
-      id: uuidv4(),
-      border: JSON.parse(farmer.border),
-      acre: JSON.parse(farmer.acre),
-      surveyNo: JSON.parse(farmer.surveyNo),
-      profile: "", // placeholder will be shown incase of no image
-    } as farmerDetail),
+      ({
+        ...farmer,
+        id: uuidv4(),
+        border: JSON.parse(farmer.border),
+        acre: JSON.parse(farmer.acre),
+        surveyNo: JSON.parse(farmer.surveyNo),
+        profile: "", // placeholder will be shown incase of no image
+      } as farmerDetail),
   );
 };
 

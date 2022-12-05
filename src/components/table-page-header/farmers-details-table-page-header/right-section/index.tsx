@@ -299,9 +299,9 @@ const RightSection: FC<RightSectionProps> = (props) => {
         }
         handleClose={() => setImportedData(null)}
       />
-      {importModalOpen && (
-        <ImportFarmersModal isOpen={true} handleClose={() => setImportModalOpen(false)} cb={(data: farmerDetail[]) => setImportedData(data)} />
-      )}
+
+      {importModalOpen && <ImportFarmersModal isOpen={true} handleClose={() => setImportModalOpen(false)} />}
+
       {openConfirmationModal && (
         <ConfirmationModal
           openModal={true}

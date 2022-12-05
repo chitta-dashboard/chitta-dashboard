@@ -61,6 +61,7 @@ export const useAdd = (endpoint: Endpoints) => {
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
           await axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data[i]);
+          await new Promise((r) => setTimeout(r, 50));
         }
         return data;
       } else {
@@ -145,6 +146,7 @@ export const useDelete = (endpoint: Endpoints) => {
       if (Array.isArray(id)) {
         for (let i = 0; i < id.length; i++) {
           await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
+          await new Promise((r) => setTimeout(r, 50));
         }
         return id;
       } else {

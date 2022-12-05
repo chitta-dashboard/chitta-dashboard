@@ -1,22 +1,26 @@
-import { ChangeEvent, MouseEvent, SetStateAction, useCallback, useState } from "react";
+import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useCallback, useEffect, useState } from "react";
 import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
-import S from "./dropFile.styled";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import ImportFarmerGroupModal from "../../modals/import-farmerGroup-modal";
+import S from "./dropFile.styled";
 
 export interface IDropValidationResult {
   status: boolean;
   message?: string | undefined;
   groups?: string[];
-  phValidation?: SetStateAction<boolean> | undefined;
+  data?: farmerDetail[];
 }
 interface IDropFile {
   fileFormat?: string[];
   fileExtension?: string[];
   cb: (file: File) => void;
   validate?: (file: File) => Promise<IDropValidationResult>;
+  data?: farmerDetail[];
+  openModal: boolean;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 }
 
 export type DropTargetState = "noDrag" | "validDrag" | "inValidDrag" | "completedDrag" | "processingDrag";
@@ -31,12 +35,26 @@ const DropFile: React.FC<IDropFile> = function ({
   fileExtension = [".xlsx", "xls"],
   validate,
   cb,
+  openModal,
+  setOpenModal,
 }) {
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const [groupNames, setGroupNames] = useState<string[] | undefined>(undefined);
+  const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
+
+// to make the drag & drop avalable after import
+  useEffect(() => {
+    if (openModal === true) {
+      setTimeout(() => {
+        const file = null;
+        setTargetState("noDrag");
+        //@ts-ignore
+        cb(file);
+      }, 500);
+    }
+  }, [openModal,cb]);
 
   const handleDragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
@@ -67,14 +85,14 @@ const DropFile: React.FC<IDropFile> = function ({
       } else if (targetState === "validDrag") {
         setProcessingFile(true);
         const file = e.dataTransfer.files[0];
-        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], phValidation: false };
+        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], data: [] };
         setProcessingFile(false);
-        setOpenModal(validation?.status);
         if (validation.status) {
           // if validation passed
           setTargetState("completedDrag");
           setSelectedFile(file);
           validation && setGroupNames(validation.groups);
+          validation && setInputData(validation.data);
           cb(file);
         } else {
           // if validation failed
@@ -100,11 +118,12 @@ const DropFile: React.FC<IDropFile> = function ({
         setProcessingFile(true);
         const validation = validate ? await validate(file) : { status: true, message: "", groups: [] };
         setProcessingFile(false);
-        setOpenModal(validation?.status);
         if (validation.status) {
           setTargetState("completedDrag");
           setSelectedFile(file);
           validation && setGroupNames(validation.groups);
+          validation && setInputData(validation.data);
+
           cb(file);
         } else {
           Toast({ message: validation.message as string, type: "error" });
@@ -146,7 +165,12 @@ const DropFile: React.FC<IDropFile> = function ({
           })()}
         </S.Message>
       </S.DropBox>
-      <ImportFarmerGroupModal openModal={openModal} handleClose={() => setOpenModal(!openModal)} groups={groupNames && groupNames} />
+      <ImportFarmerGroupModal
+        openModal={openModal}
+        handleClose={() => setOpenModal(!openModal)}
+        groups={groupNames && groupNames} // for display the group names in chips
+        data={inputData && inputData} // for mutate the farmer group db
+      />
     </>
   );
 };
