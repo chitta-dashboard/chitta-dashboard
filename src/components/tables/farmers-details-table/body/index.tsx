@@ -1,20 +1,34 @@
 import { useState, useEffect } from "react";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
+import { farmerDetail, addFarmerId, setPageCount,setCurrentPage,setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
-import { useEdit, useFetch } from "../../../../utils/hooks/query";
+import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
 
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
+  const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
+  const dispatch = useDispatch();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   }: any = useFetch(ENDPOINTS.farmerDetails);
+  
+  const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`
+  const sortQuery = sortFilter === "normal" ? "" : `&_sort=name&_order=${sortFilter === "descending" ? "desc" : sortFilter === "ascending" ? "asc" : ""}`;
+  const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
+  const {
+    formatChangeSuccess: isFarmerByPageSuccess,
+    result: { data: farmersDetailsByPage,refetch: farmerPageRefetch },
+    dataCount : totalDataCount
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`);
+
+  const { farmerId,farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -35,6 +49,22 @@ const Body = () => {
     }, 300);
   }, []);
 
+  useEffect(() => {
+    farmerPageRefetch();
+    farmerIdRefetch()
+  }, [searchFilter, sortFilter, groupFilter]);
+
+  useEffect(()=>{
+    dispatch(addFarmerId(farmerId));
+    dispatch(setFarmersIdToExport(farmerId));
+  },[farmerId])
+  
+
+  useEffect(() => {
+    dispatch(setPageCount({ pageCount: Math.ceil(totalDataCount / 25), totalPageCount: totalDataCount }));
+    totalDataCount <= 25 && currentPage !== 1 && dispatch(setCurrentPage(1));
+  }, [totalDataCount]);
+
   // farmer group filter for farmer detail table
   useEffect(() => {
     if (isSuccess) {
@@ -50,9 +80,9 @@ const Body = () => {
     let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
-    isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
-    setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length });
-  }, [searchFilter, farmersListGroup, isSuccess, sortFilter]);
+    isFarmerByPageSuccess && setFarmersListSearch(Object.values(farmersDetailsByPage));
+  }, [searchFilter, farmersListGroup, isSuccess, isFarmerByPageSuccess, sortFilter]);
+
 
   useEffect(() => {
     isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
@@ -61,15 +91,17 @@ const Body = () => {
   //farmer id to export farmers
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
+    //console.log("Export Data : ",exportFarmerId)
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
-    setFarmersIdToExport(farmersId);
+    //console.log("Farmer Id : ",farmerId)
+    //dispatch(setFarmersIdToExport(farmersId));
   }, [farmersListSort, isSuccess, exportFarmerId]);
 
   // For tamil share holder certificate
   useEffect(() => {
     if (isSuccess) {
       const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
-      isSuccess && addFarmerId(farmerId);
+      //isSuccess && dispatch(addFarmerId(farmerId));
     }
   }, [isSuccess, farmersList, exportFarmerId]);
 
@@ -96,7 +128,7 @@ const Body = () => {
 
   return (
     <>
-      {!loader ? (
+      {!isFarmerByPageSuccess ? (
         <S.LoaderContainer>
           <S.Customtr>
             <td>
@@ -104,11 +136,12 @@ const Body = () => {
             </td>
           </S.Customtr>
         </S.LoaderContainer>
-      ) : farmersList.length > 0 ? (
+      ) : isFarmerByPageSuccess ? (
         <BodyWrapper>
-          {farmersList.map((user: farmerDetail) => (
-            <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} />
-          ))}
+          {farmersDetailsByPage &&
+            Object.values(farmersDetailsByPage as farmerDetail[]).map((user: farmerDetail) => (
+              <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} />
+            ))}
         </BodyWrapper>
       ) : (
         <S.EmptyMsg>

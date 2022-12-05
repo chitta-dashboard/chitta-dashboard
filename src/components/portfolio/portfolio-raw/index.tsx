@@ -39,7 +39,7 @@ const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
         </S.LoaderWrapper>
       ) : (
         <S.PortfolioRaw>
-          {rawProductSearch?.length === 0 && <S.NoDataMessage>No Raw Products</S.NoDataMessage>}
+          {rawProductSearch?.length === 0 && <S.NoDataMessage>No Raw Products.</S.NoDataMessage>}
           {rawProductSearch?.map((rawProduct) => (
             <ItemCard key={rawProduct.id} data={rawProduct}></ItemCard>
           ))}

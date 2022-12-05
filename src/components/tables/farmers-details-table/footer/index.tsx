@@ -1,11 +1,16 @@
 import React from "react";
 import FooterWrapper from "../../../custom-tables/footer";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useFetch } from "../../../../utils/hooks/query";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../utils/store";
+import { useFetch, useGetFarmersCount } from "../../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../../utils/constants";
 
 const Footer = () => {
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmerDetailsContext();
+  const dispatch = useDispatch();
+  const { pageCount, currentPage,totalPageCount } = useSelector((state: RootState) => state.farmerDetails);
+  
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -14,7 +19,7 @@ const Footer = () => {
     setCurrentPage(value);
   };
 
-  return Object.values(isSuccess && farmersDetailsById).length > 0 ? (
+  return (
     <FooterWrapper
       count={pageCount ? pageCount : 1}
       page={currentPage}
@@ -22,7 +27,7 @@ const Footer = () => {
       totalCount={totalPageCount}
       rowsPerPage={25}
     />
-  ) : null;
+  );
 };
 
 export default Footer;
