@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -10,12 +10,13 @@ import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText } from "../../../utils/constants";
-import { useFetch } from "../../../utils/hooks/query";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy } from "../../../utils/constants";
+import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
+import { RootState } from "../../../utils/store";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -25,13 +26,14 @@ interface CustomProps {
   id?: string;
   mdId?: string | undefined;
 }
-
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
+  const { currentPage, farmerQuery } = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const {
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 
@@ -221,17 +223,14 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
+
+    let newId = uuidv4();
     let params = {
       ...form1Data,
       ...data,
       profile: encryptedBase64,
-      id: mdId ? mdId : editMode ? id : uuidv4(),
-      // membershipId: farmersDetailsById && farmersDetailsById[id].membershipId,
-      membershipId:
-        farmersDetailsById &&
-        Object.values(farmersDetailsById)
-          .filter((i: any) => i.id === id)
-          .map((i: any) => i.membershipId),
+      id: mdId ? mdId : editMode ? id : newId,
+      membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newId}`,
       farmerId: id,
     } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string | undefined; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });

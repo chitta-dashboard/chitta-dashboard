@@ -5,29 +5,33 @@ import { useReactToPrint } from "react-to-print";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { IMdDetails } from "../../../utils/context/mdDetails";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
+import { IMdDetails } from "../../../utils/store/slice/mdDetails";
+import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
+  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
+  const { currentPage,farmerQuery,totalPageCount } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  const {
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -39,9 +43,9 @@ const FarmerFormPreviewLeft = () => {
 
   const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
@@ -54,6 +58,7 @@ const FarmerFormPreviewLeft = () => {
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
   const navigate = useNavigate();
+
 
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);

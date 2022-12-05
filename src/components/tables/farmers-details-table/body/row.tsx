@@ -13,8 +13,9 @@ import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+//import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -23,18 +24,21 @@ import S from "./body.styled";
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
   removeGroupMember: (id: string, group: string, isAdd: boolean) => void;
+  params?: string;
 }
 
-const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
-  const { checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  const { checkboxSelect, selectedFarmers, currentPage,farmerQuery } = useFarmerDetailsContext();
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
- 
+
+
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
@@ -141,7 +145,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       <tr>
         <td style={{ display: "none" }}>
           <IdCardBody ref={idCardRef} />
-          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
+          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} params={params} />
         </td>
       </tr>
       <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
@@ -152,7 +156,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
         >
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
         </S.RowCheckCell>
-        <S.WebTableCell>{user.membershipId}</S.WebTableCell>
+        <S.WebTableCell>{user.membershipId.substring(0, 15)}</S.WebTableCell>
         {/* for tablet view*/}
         <S.TabCell onClick={(e) => e.stopPropagation()}>
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
@@ -182,7 +186,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             {user.name}
           </S.NameStack>
         </S.Cell>
-        <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
+        <S.Cell title="உறுப்பினர் எண்">{user.membershipId.substring(0, 15)}</S.Cell>
         <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
         <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
         <S.Cell title="குழு பெயர்">{user.group}</S.Cell>
