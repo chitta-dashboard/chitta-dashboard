@@ -2,16 +2,15 @@ import { useState } from "react";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useEdit, useFetch, useFetchByPage } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
-import ShareAmountModal from "../../components/modals/share-amount-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
 const FarmersDetails = () => {
   const { sortFilter, setSearchFilter, setCurrentPage, currentPage, farmerQuery, setSortFilter } = useFarmerDetailsContext();
@@ -30,16 +29,10 @@ const FarmersDetails = () => {
 
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
-  const [shareModal, setShareModal] = useState(false);
 
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
-  };
-
-  //Share Amount Modal Handler
-  const shareAmountModalHandler = () => {
-    setShareModal(!shareModal);
   };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
@@ -87,11 +80,9 @@ const FarmersDetails = () => {
               searchHandler={handleSearchInput}
               sortFilter={sortFilter}
               sortHandler={(sortValue) => setSortFilter(sortValue)}
-              shareAmountModalHandler={shareAmountModalHandler}
             />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
-          <ShareAmountModal openModal={shareModal} handleClose={shareAmountModalHandler} />
           <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </>
       )}

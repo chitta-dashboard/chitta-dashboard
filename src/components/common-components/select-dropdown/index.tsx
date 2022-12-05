@@ -5,7 +5,7 @@ import { useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 
 const SelectDropDown = () => {
-  const { groupFilter, setGroupFilter } = useFarmerDetailsContext();
+  const { groupFilter, setGroupFilter, checkboxUnselectAll } = useFarmerDetailsContext();
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isSucess,
@@ -13,6 +13,7 @@ const SelectDropDown = () => {
 
   const selectHandler = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setGroupFilter(event.target.value);
+    checkboxUnselectAll();
   };
 
   return (

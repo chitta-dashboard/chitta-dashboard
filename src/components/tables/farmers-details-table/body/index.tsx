@@ -9,8 +9,11 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
+
+
   const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers, setPageCount, setFarmersIdToExport, setCurrentPage,setFarmerQuery } =
     useFarmerDetailsContext();
+
 
   const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`;
   const sortQuery =
@@ -21,7 +24,7 @@ const Body = () => {
     result: { data: farmersDetailsByPage, refetch: farmerPageRefetch },
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`);
-  //console.log("Data : ", farmersDetailsByPage);
+
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
   const {
     result: { data: farmersGroupById },
@@ -46,8 +49,10 @@ const Body = () => {
   useEffect(() => {
     farmerPageRefetch();
     farmerIdRefetch();
+
     setFarmerQuery(`${searchQuery}${groupQuery}${sortQuery}`);
   }, [searchFilter, sortFilter, groupFilter, currentPage]);
+
 
   useEffect(() => {
     addFarmerId(farmerId);

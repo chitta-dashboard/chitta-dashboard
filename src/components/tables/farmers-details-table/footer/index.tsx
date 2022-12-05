@@ -4,7 +4,7 @@ import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetail
 
 const Footer = () => {
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmerDetailsContext();
-
+  
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };

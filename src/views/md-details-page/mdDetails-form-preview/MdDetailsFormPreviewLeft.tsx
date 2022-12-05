@@ -34,7 +34,7 @@ const MdFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
 
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
@@ -227,8 +227,15 @@ const MdFormPreviewLeft = () => {
               நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
             </S.HeaderText>
             <S.HeaderText>
-              ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
-              அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
+              ஒருங்கிணைப்பாளர்:{" "}
+              {coordinatorAddress ? (
+                coordinatorAddress
+              ) : (
+                <>
+                  நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
+                  தாலுக்கா&மாவட்டம், 606213
+                </>
+              )}
             </S.HeaderText>
             {openEditModal && (
               <FarmersDetailsModal

@@ -3,8 +3,8 @@ import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
 // import { RootState } from "../../../../utils/store";
 // import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
-import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
-import { IMdDetails } from "../../../../utils/store/slice/mdDetails";
+// import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
+import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
@@ -14,18 +14,19 @@ import ConfirmationModal from "../../../modals/confirmation-modal";
 import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import ImportFarmersModal from "../../../modals/import-farmers-modal";
 import S from "./rightSection.styled";
+import ShareAmountModal from "../../../modals/share-amount-modal";
 interface RightSectionProps {
   addModalHandler?: () => void;
-  shareAmountModalHandler?: () => void;
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
   // const dispatch = useDispatch();
+
   const { shareAmountModalHandler, addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();
-  const { selectedFarmers, farmersIdToExport, checkboxUnselectAll } = useFarmerDetailsContext();
+  const { selectedFarmers, farmerId, checkboxUnselectAll, groupFilter } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -37,7 +38,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
   const handleExportData = () => {
     if (isSuccess) {
       let resultData: farmerDetail[] = [];
-      farmersIdToExport.forEach((item) => resultData.push(farmersDetailsById[item]));
+      farmerId.forEach((item: any) => resultData.push(farmersDetailsById[item]));
       return resultData;
     }
   };
@@ -52,8 +53,14 @@ const RightSection: FC<RightSectionProps> = (props) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openFarmerGroupModal, setOpenFarmerGroupModal] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<null | string | FarmersGroup>(null);
+  const [shareModal, setShareModal] = useState(false);
 
   handleExportData();
+
+  //Share Amount Modal Handler
+  const shareAmountModalHandler = () => {
+    setShareModal(!shareModal);
+  };
 
   const handleImport = useCallback(() => {
     mutate({
@@ -166,14 +173,14 @@ const RightSection: FC<RightSectionProps> = (props) => {
     if (newFarmerGroup) {
       farmerGroupData =
         isFarmerGroupSuccess &&
-        [newFarmerGroup].concat(Object.values(farmersGroupById as IFarmersGroup[])).map((item) => ({
+        [newFarmerGroup].concat(Object.values(farmersGroupById as FarmersGroup[])).map((item) => ({
           ...item,
           members: item.groupName === groupName ? JoinArray(farmersId, item.members) : RemoveArray(farmersId, item.members),
         }));
     } else {
       farmerGroupData =
         isFarmerGroupSuccess &&
-        Object.values(farmersGroupById as IFarmersGroup[]).map((item) => ({
+        Object.values(farmersGroupById as FarmersGroup[]).map((item) => ({
           ...item,
           members: item.groupName === groupName ? JoinArray(farmersId, item.members) : RemoveArray(farmersId, item.members),
         }));
@@ -245,7 +252,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
             <S.IconPlus>add</S.IconPlus>
             &nbsp;&nbsp; Add Group
           </S.CustomPopoverList>
-          {Object.values(isFarmerGroupSuccess && (farmersGroupById as IFarmersGroup)).map((group) => (
+          {Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup)).map((group) => (
             <S.CustomPopoverList
               key={group.id}
               onClick={() => {
@@ -257,7 +264,17 @@ const RightSection: FC<RightSectionProps> = (props) => {
             </S.CustomPopoverList>
           ))}
         </S.CustomPopover>
-        <S.CustomButton disabled={selectedFarmers.length === 0} onClick={() => shareAmountModalHandler && shareAmountModalHandler()}>
+        <S.CustomButton
+          disabled={
+            selectedFarmers.length === 0 ||
+            !(
+              Object.values(farmersGroupById)
+                .filter((item: any) => item.groupName === groupFilter)
+                .map((item: any) => item.members)[0]?.length > 0
+            )
+          }
+          onClick={() => shareAmountModalHandler()}
+        >
           Share Holder
         </S.CustomButton>
         <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
@@ -281,9 +298,9 @@ const RightSection: FC<RightSectionProps> = (props) => {
         }
         handleClose={() => setImportedData(null)}
       />
-      {importModalOpen && (
-        <ImportFarmersModal isOpen={true} handleClose={() => setImportModalOpen(false)} cb={(data: farmerDetail[]) => setImportedData(data)} />
-      )}
+
+      {importModalOpen && <ImportFarmersModal isOpen={true} handleClose={() => setImportModalOpen(false)} />}
+
       {openConfirmationModal && (
         <ConfirmationModal
           openModal={true}
@@ -322,6 +339,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         />
       )}
       <AddFarmersGroupModal openModal={openFarmerGroupModal} handleClose={farmerGroupModalHandler} cb={farmerGroupModalOpener} />
+      {shareModal && <ShareAmountModal openModal={true} handleClose={shareAmountModalHandler} />}
     </S.RightSectionContainer>
   );
 };

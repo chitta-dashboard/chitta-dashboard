@@ -223,6 +223,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
+
     let newId = uuidv4();
     let params = {
       ...form1Data,
@@ -231,7 +232,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       id: mdId ? mdId : editMode ? id : newId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newId}`,
       farmerId: id,
-    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
+    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string | undefined; farmerId?: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };

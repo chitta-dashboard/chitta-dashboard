@@ -20,8 +20,6 @@ interface CustomProps {
   members?: string[];
 }
 
-
-
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 

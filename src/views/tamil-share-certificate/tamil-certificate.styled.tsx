@@ -8,8 +8,8 @@ export namespace S {
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "839px",
-    width: "74.375rem",
+    height: "775.5px",
+    width: "69rem",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
@@ -87,7 +87,7 @@ export namespace S {
     flexDirection: "column",
     alignItems: "center",
     width: "100%",
-    gap: "1.2rem",
+    gap: "1.1rem",
   }));
 
   export const CertificateHeadingContainer = styled(Box)({
@@ -147,12 +147,16 @@ export namespace S {
   });
 
   export const CertificateContent = styled(Box)({
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "center",
     width: "100%",
     height: "fit-content",
   });
 
   export const CertificateTextLine = styled(Box)({
-    Width: "100%",
+    minWidth: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -176,6 +180,7 @@ export namespace S {
   });
 
   export const ShareCountContainer = styled(DateContainer)({
+    marginTop: "10px",
     width: "100%",
   });
 
@@ -186,8 +191,9 @@ export namespace S {
 
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
-    marginTop: "5rem",
+    marginTop: "5.5rem",
   });
+
   export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
@@ -200,6 +206,7 @@ export namespace S {
     fontWeight: "600",
     color: theme.palette.text.black,
   }));
+
   export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     textAlign: "center",
@@ -210,11 +217,17 @@ export namespace S {
     fontWeight: "600",
     color: theme.palette.text.black,
   }));
-  export const BlankSpace2 = styled(BlankSpace1)(({ theme }) => ({
+
+  export const BlankSpace2 = styled(BlankSpace1)({
     width: "23.75rem",
-  }));
-  export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
+  });
+
+  export const BlankSpace3 = styled(BlankSpace1)({
     width: "85%",
     textAlign: "left",
-  }));
+  });
+
+  export const CertificateGap = styled("div")({
+    height: "11px",
+  });
 }
