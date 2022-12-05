@@ -57,7 +57,7 @@ const FarmersDetails = () => {
   };
 
   const handleSearchInput = (searchText: string) => {
-    dispatch(setSearchFilter(searchText));
+    setSearchFilter(searchText);
   };
 
   return (
