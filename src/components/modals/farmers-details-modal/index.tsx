@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -16,7 +16,6 @@ import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
-import { useSelector } from "react-redux";
 import { RootState } from "../../../utils/store";
 
 interface CustomProps {
@@ -28,13 +27,13 @@ interface CustomProps {
   mdId?: string | undefined;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+  const {currentPage,farmerQuery} = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
-  // const { farmersDetailsById } = useFarmerDetailsContext();
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage,farmerQuery);
+ 
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
 

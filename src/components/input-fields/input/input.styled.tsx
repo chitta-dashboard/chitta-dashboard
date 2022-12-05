@@ -55,7 +55,9 @@ namespace S {
 
   export const DateInput = styled(CommonInputStyled)(() => ({}));
 
-  export const SelectInput = styled(CommonInputStyled)<{ isColor: number }>(({ theme, isColor }) => ({
+  export const SelectInput = styled(CommonInputStyled, {
+    shouldForwardProp: (prop) => prop !== "isColor",
+  })<{ isColor: number }>(({ theme, isColor }) => ({
     "& .MuiOutlinedInput-root": {
       color: isColor ? "" : theme.palette.text.secondaryLight,
       opacity: isColor ? 1 : 0.7,

@@ -3,7 +3,7 @@ import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
-import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
+import { useAdd, useEdit, useFetch, useFetchByPage } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
@@ -14,14 +14,20 @@ import S from "./farmersDetails.styled";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
 const FarmersDetails = () => {
+  const { sortFilter, setSearchFilter, setCurrentPage, currentPage, farmerQuery, setSortFilter } = useFarmerDetailsContext();
+  let {
+    result: { refetch: farmerDetailsRefetch },
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery,false);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
+
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
-  const { sortFilter, setSearchFilter, setCurrentPage, setSortFilter } = useFarmerDetailsContext();
+
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [shareModal, setShareModal] = useState(false);
@@ -54,6 +60,7 @@ const FarmersDetails = () => {
         successCb: () => {
           addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
+          farmerDetailsRefetch();
         },
         errorCb: () => {
           Toast({ message: "Request failed! Please try again", type: "error" });
@@ -63,7 +70,7 @@ const FarmersDetails = () => {
   };
 
   const handleSearchInput = (searchText: string) => {
-    dispatch(setSearchFilter(searchText));
+    setSearchFilter(searchText);
   };
 
   return (

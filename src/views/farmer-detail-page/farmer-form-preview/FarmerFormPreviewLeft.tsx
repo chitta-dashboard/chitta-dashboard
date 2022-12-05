@@ -2,11 +2,10 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useDispatch, useSelector } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
@@ -23,8 +22,7 @@ import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
-  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+  const { currentPage,farmerQuery,totalPageCount } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
@@ -32,8 +30,8 @@ const FarmerFormPreviewLeft = () => {
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
-
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -60,6 +58,7 @@ const FarmerFormPreviewLeft = () => {
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
   const navigate = useNavigate();
+
 
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);

@@ -1,9 +1,8 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 //import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { farmerDetail } from "../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFetch, useFetchByPage } from "../../utils/hooks/query";
 import { adminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
@@ -17,11 +16,11 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint, params }, ref) => {
-  const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+  const {currentPage,farmerQuery} = useFarmerDetailsContext()
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, params);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
 
   const {
     formatChangeSuccess: isSuccessAdmin,

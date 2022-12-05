@@ -15,7 +15,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 //import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -28,17 +28,17 @@ interface FarmersDetailsRowProps {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
-  //const { selectedFarmers, currentPage } = useSelector((state: RootState) => state.farmerDetails);
-  const { checkboxSelect, selectedFarmers, currentPage } = useFarmerDetailsContext();
+  const { checkboxSelect, selectedFarmers, currentPage,farmerQuery } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
+
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, params);
-  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, params);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
