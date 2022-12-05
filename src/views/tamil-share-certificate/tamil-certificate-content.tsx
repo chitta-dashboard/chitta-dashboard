@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { useFetch } from "../../utils/hooks/query";
 import { ENDPOINTS } from "../../utils/constants";
 import { decryptText } from "../../utils/constants";
 import { adminFormInputs } from "../admin-panel";
+import { farmerDetail } from "../../utils/context/farmersDetails";
 import { S } from "./tamil-certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
 import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
@@ -27,10 +26,8 @@ const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount }) =>
 
   const newDate = new Date();
 
-  const keyId = uuidv4();
-
   return (
-    <S.TamilShareCertificateContainer key={keyId}>
+    <S.TamilShareCertificateContainer key={user.id}>
       <S.CertificateTopBorderImg src={ShareHolderCertificateTopBorder} alt="ShareHolderCertificateTopBorder" />
       <S.CertificateBottomBorderImg src={ShareHolderCertificateTopBorder} alt="ShareHolderCertificateTopBorder" />
       <S.CertificateLeftBorderImg src={ShareHolderCertificateLeftBorder} alt="ShareHolderCertificateLeftBorder" />

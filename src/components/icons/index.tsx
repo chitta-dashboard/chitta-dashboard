@@ -7,7 +7,7 @@ const Icon: FC<{
   clickHandler?: () => void;
   color?: boolean;
 }> = ({ iconName, clickHandler, color }) => {
-  return <S.Icon isColor={color ? 1 : 0} onClick={clickHandler} className={`nerkathir-icon-${iconName}`}></S.Icon>;
+  return <S.Icon iscolor={color ? 1 : 0} onClick={clickHandler} className={`nerkathir-icon-${iconName}`}></S.Icon>;
 };
 
 export default Icon;

@@ -2,16 +2,15 @@ import { useState } from "react";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
-import ShareAmountModal from "../../components/modals/share-amount-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 
 const FarmersDetails = () => {
   const {
@@ -21,7 +20,7 @@ const FarmersDetails = () => {
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
-  const { sortFilter, setSearchFilter, setCurrentPage, setSortFilter } = useFarmerDetailsContext();
+  const { sortFilter, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 
@@ -57,7 +56,7 @@ const FarmersDetails = () => {
   };
 
   const handleSearchInput = (searchText: string) => {
-    dispatch(setSearchFilter(searchText));
+    setSearchFilter(searchText);
   };
 
   return (

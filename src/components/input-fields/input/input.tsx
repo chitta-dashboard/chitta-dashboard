@@ -169,7 +169,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           render={({ field, formState: { errors } }) => {
             return (
               <S.SelectInput
-                isColor={field.value ? 1 : 0}
+                iscolor={field.value ? 1 : 0}
                 select
                 disabled={options.disable ? true : false}
                 helperText={errors[name]?.message as string}
