@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 //import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { useFetch, useFetchByPage } from "../../utils/hooks/query";
+import { useFetch } from "../../utils/hooks/query";
 import { adminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
@@ -12,15 +12,13 @@ import { RootState } from "../../utils/store";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;
-  params?: string;
 }
 
-const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint, params }, ref) => {
-  const {currentPage,farmerQuery} = useFarmerDetailsContext()
+const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  } = useFetch(ENDPOINTS.farmerDetails);
 
   const {
     formatChangeSuccess: isSuccessAdmin,

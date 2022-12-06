@@ -1,92 +1,201 @@
 {
-  "portfolio": [
-    {
-      "id": "1",
-      "productId": "101",
-      "productName": "Paddy Seeds",
-      "variant": "Basmati",
+  "eed0024e-9788-4f74-8ef0-ad9d9671b41e": {
+    "id": "eed0024e-9788-4f74-8ef0-ad9d9671b41e",
+    "productId": "101",
+    "productName": "Paddy Seeds",
+    "foodType": "Raw",
+    "variants": ["e2fbf9be-101b-46d8-98d9-0ce106e25b26", "test1", "test2", "test3"],
+    "e2fbf9be-101b-46d8-98d9-0ce106e25b26": {
+      "variantId": "e2fbf9be-101b-46d8-98d9-0ce106e25b26",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit1 sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
       "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "qualityGrade": "C+",
+      "timestamp": 1669610913997
     },
-    {
-      "id": "2",
-      "productId": "102",
-      "productName": "Millets Seeds",
-      "variant": "Paiyur-1",
+    "test1": {
+      "variantId": "test1",
+      "variantName": "Test Variant 1",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "3000",
+      "qualityGrade": "A+",
+      "timestamp": 1669610913966
+    },
+    "test2": {
+      "variantId": "test2",
+      "variantName": "Test Variant 2",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "4000",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913967
+    },
+    "test3": null
+  },
+  "ae276ede-06fd-4044-920e-a3c63c149639": {
+    "id": "ae276ede-06fd-4044-920e-a3c63c149639",
+    "productId": "102",
+    "productName": "Millet Seeds",
+    "foodType": "Raw",
+    "variants": ["a7e8d3fb-b318-481f-8913-a802323d0002", "test1", "test2", "test3"],
+    "a7e8d3fb-b318-481f-8913-a802323d0002": {
+      "variantId": "a7e8d3fb-b318-481f-8913-a802323d0002",
+      "variantName": "Paiyur-1",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "2000",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913999
+    },
+    "test1": {
+      "variantId": "test1",
+      "variantName": "Test Variant 1",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "3000",
+      "qualityGrade": "A+",
+      "timestamp": 1669610913969
+    },
+    "test2": {
+      "variantId": "test2",
+      "variantName": "Test Variant 2",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "4000",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913970
+    },
+    "test3": null
+  },
+  "b1644f14-fd5a-45dd-84be-a403d20ee0ef": {
+    "id": "b1644f14-fd5a-45dd-84be-a403d20ee0ef",
+    "productId": "103",
+    "productName": "Groundnut",
+    "foodType": "Raw",
+    "variants": ["88ee2e31-3abe-448f-a439-2dc087aa9573", "test1", "test2", "test3"],
+    "88ee2e31-3abe-448f-a439-2dc087aa9573": {
+      "variantId": "88ee2e31-3abe-448f-a439-2dc087aa9573",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
       "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "qualityGrade": "A+",
+      "timestamp": 1669610913998
     },
-    {
-      "id": "3",
-      "productId": "103",
-      "productName": "Groundnut",
-      "variant": "Basmati",
+    "test1": {
+      "variantId": "test1",
+      "variantName": "Test Variant 1",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 1",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "3000",
+      "qualityGrade": "A+",
+      "timestamp": 1669610913971
+    },
+    "test2": {
+      "variantId": "test2",
+      "variantName": "Test Variant 2",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit sit amet. Test Variant 2",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "4000",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913972
+    },
+    "test3": null
+  },
+  "79253524-3110-48f7-8769-b9adbd2a26a0": {
+    "id": "79253524-3110-48f7-8769-b9adbd2a26a0",
+    "productId": "104",
+    "productName": "Maize",
+    "foodType": "Raw",
+    "variants": ["88618d44-a095-4217-b09e-30b1b341022f"],
+    "88618d44-a095-4217-b09e-30b1b341022f": {
+      "variantId": "88618d44-a095-4217-b09e-30b1b341022f",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
       "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
-    },
-    {
-      "id": "4",
-      "productId": "104",
-      "productName": "Maize",
-      "variant": "Basmati",
-      "availableAmount": "200",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "C",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
-    },
-    {
-      "id": "5",
-      "productId": "105",
-      "productName": "Ragi Seeds",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "B",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
-    },
-    {
-      "id": "6",
-      "productId": "106",
-      "productName": "Black Gram",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
-    },
-    {
-      "id": "7",
-      "productId": "107",
-      "productName": "Sugarcane",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "C",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
-    },
-    {
-      "id": "8",
-      "productId": "108",
-      "productName": "Cotton Seeds",
-      "variant": "Basmati",
-      "availableAmount": "2000",
-      "startDate": "01-03-2022",
-      "endDate": "",
-      "qualityGrade": "A",
-      "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit. "
+      "qualityGrade": "B+",
+      "timestamp": 1669610913996
     }
-  ]
+  },
+  "ed07c5c6-dce2-48ae-9ef0-8385774e3703": {
+    "id": "ed07c5c6-dce2-48ae-9ef0-8385774e3703",
+    "productId": "105",
+    "productName": "Ragi Seeds",
+    "foodType": "Raw",
+    "variants": ["38a003fd-af1a-4d68-98c9-3e5d4096a5c5"],
+    "38a003fd-af1a-4d68-98c9-3e5d4096a5c5": {
+      "variantId": "38a003fd-af1a-4d68-98c9-3e5d4096a5c5",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "350",
+      "qualityGrade": "C+",
+      "timestamp": 1669610913995
+    }
+  },
+  "6831d66b-b090-469e-a1be-dda258c3b3eb": {
+    "id": "6831d66b-b090-469e-a1be-dda258c3b3eb",
+    "productId": "106",
+    "productName": "Black Gram",
+    "foodType": "Raw",
+    "variants": ["177977f1-861e-4b3d-b54a-1cacfbaa116c"],
+    "177977f1-861e-4b3d-b54a-1cacfbaa116c": {
+      "variantId": "177977f1-861e-4b3d-b54a-1cacfbaa116c",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "350",
+      "qualityGrade": "A+",
+      "timestamp": 1669610913994
+    }
+  },
+  "2f085dc7-3c65-4fb2-bc41-17d07223a613": {
+    "id": "2f085dc7-3c65-4fb2-bc41-17d07223a613",
+    "productId": "107",
+    "productName": "Sugarcane",
+    "foodType": "Raw",
+    "variants": ["c717ca08-1c0d-47a2-a184-7b3a4760752f"],
+    "c717ca08-1c0d-47a2-a184-7b3a4760752f": {
+      "variantId": "c717ca08-1c0d-47a2-a184-7b3a4760752f",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "750",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913993
+    }
+  },
+  "456ea261-efad-492f-a067-ed2284c186c9": {
+    "id": "456ea261-efad-492f-a067-ed2284c186c9",
+    "productId": "108",
+    "productName": "Cotton Seeds",
+    "foodType": "Raw",
+    "variants": ["bf61e4b1-c9bb-4627-a64e-b6c6cec586a7"],
+    "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7": {
+      "variantId": "bf61e4b1-c9bb-4627-a64e-b6c6cec586a7",
+      "variantName": "Basmati",
+      "productDescription": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit Lorem ipsum dolor sit amet consectetur.",
+      "startDate": "2022-01-01",
+      "endDate": "2022-05-02",
+      "availableAmount": "750",
+      "qualityGrade": "B+",
+      "timestamp": 1669610913992
+    }
+  }
 }

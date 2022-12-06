@@ -4,19 +4,17 @@ import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { ENDPOINTS, Message } from "../../utils/constants";
-import { useAdd, useEdit, useFetch, useFetchByPage } from "../../utils/hooks/query";
+import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
+import { CircularStatic } from "../../utils/loaders/circular-progress-loader";
 
 const FarmersDetails = () => {
   const { sortFilter, setSearchFilter, setCurrentPage, currentPage, farmerQuery, setSortFilter } = useFarmerDetailsContext();
-  let {
-    result: { refetch: farmerDetailsRefetch },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery,false);
 
   const {
     result: { data: farmersGroupById },
@@ -53,7 +51,6 @@ const FarmersDetails = () => {
         successCb: () => {
           addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
-          farmerDetailsRefetch();
         },
         errorCb: () => {
           Toast({ message: "Request failed! Please try again", type: "error" });
@@ -84,6 +81,9 @@ const FarmersDetails = () => {
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
           <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
+          {/* <S.CircularLoaderContainer open={true} onClick={() => {}}>
+            <CircularStatic timerDelay={1} />
+          </S.CircularLoaderContainer> */}
         </>
       )}
     </>

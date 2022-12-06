@@ -214,7 +214,6 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
 
   useEffect(() => {
     if (Array.isArray(result.data)) {
-      console.log("Result : ",result.data)
       queryClient.setQueryData([`${endpoint}-fetch-${page}`], result.data);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -331,27 +330,46 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
 };
 
 export const useGetFarmersCount = () => {
-  const [count, setCount] = useState<string | null[]>([]);
+  const [count, setCount] = useState<{ [key: string]: string }>({});
+  const [isLoading, setIsloading] = useState(true);
   useEffect(() => {
     const getDataCount = async () => {
-      let totalResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails/?_start=0&_end=0`)).headers.get("X-total-count");
-      let maleResult = await (
-        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=ஆன்&_start=0&_end=0`)
+      //Total Count
+      let totalFarmerCount = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails/?_start=0&_end=0`)).headers.get("X-total-count");
+
+      //Male Count
+      let maleFarmerCount = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=MALE&_start=0&_end=0`)
       ).headers.get("X-total-count");
-      let femaleResult = await (
-        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=பெண்&_start=0&_end=0`)
+
+      //Female Count
+      let femaleFarmerCount = await (
+        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=FEMALE&_start=0&_end=0`)
       ).headers.get("X-total-count");
-      let farmerGroupResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
-      return [totalResult, maleResult, femaleResult, farmerGroupResult];
+      let farmerGroupCount = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
+
+      //Acre Count
+      let acreFieldResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails`)).json();
+      let acreFieldCount =
+        acreFieldResult
+          .filter((item: any) => item.landAreaInCent)
+          .map((i: any) => i.landAreaInCent)
+          .reduce((a: string, b: string) => parseInt(a) + parseInt(b)) / 100.021;
+
+      return {
+        totalFarmerCount,
+        maleFarmerCount,
+        femaleFarmerCount,
+        farmerGroupCount,
+        acreFieldCount,
+      };
     };
-    getDataCount().then((res) => setCount(res as SetStateAction<string | null[]>));
+    getDataCount().then((res) => {
+      setCount(res as SetStateAction<any>);
+      setIsloading(false);
+    });
   }, []);
-  return {
-    totalFarmerCount: count[0],
-    maleFarmerCount: count[1],
-    femaleFarmerCount: count[2],
-    farmerGroupCount: count[3],
-  };
+  return { ...count, isLoading } as { [key: string]: string | number | boolean };
 };
 
 export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
