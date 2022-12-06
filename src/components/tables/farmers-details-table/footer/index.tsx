@@ -4,12 +4,14 @@ import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetail
 import { useFetch } from "../../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../../utils/constants";
 
+
 const Footer = () => {
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+  
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };

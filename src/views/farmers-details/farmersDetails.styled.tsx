@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled,Backdrop } from "@mui/material";
 
 namespace S {
   export const FarmersDetailsContainer = styled(Box)(({ theme }) => ({
@@ -14,8 +14,20 @@ namespace S {
       gap: "1rem",
     },
   }));
+
   export const InvisibleBox = styled(Box)(() => ({
     display: "none",
+  }));
+
+  export const CircularLoaderContainer = styled(Backdrop)(() => ({
+    color: "#fff",
+    zIndex: 2,
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+    ".MuiBox-root":{
+      zIndex: "3",
+      //backgroundColor: "white",
+      borderRadius: "50%"
+    }
   }));
 }
 

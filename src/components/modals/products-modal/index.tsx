@@ -132,7 +132,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
           handleClose();
         }}
       >
-        {editMode ? "Edit products" : "Add products"}
+        {editMode ? "Edit product" : "Add product"}
       </ModalHeader>
 
       <ModalBody id={"products"} onSubmit={handleSubmit(onSubmit)}>

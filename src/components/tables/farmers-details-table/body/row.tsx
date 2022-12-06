@@ -13,6 +13,7 @@ import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+//import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
@@ -27,10 +28,13 @@ interface FarmersDetailsRowProps {
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
   const { checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+
+
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
@@ -151,7 +155,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
         >
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
         </S.RowCheckCell>
-        <S.WebTableCell>{user.membershipId}</S.WebTableCell>
+        <S.WebTableCell>{user.membershipId.substring(0, 15)}</S.WebTableCell>
         {/* for tablet view*/}
         <S.TabCell onClick={(e) => e.stopPropagation()}>
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
@@ -181,7 +185,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             {user.name}
           </S.NameStack>
         </S.Cell>
-        <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
+        <S.Cell title="உறுப்பினர் எண்">{user.membershipId.substring(0, 15)}</S.Cell>
         <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
         <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
         <S.Cell title="குழு பெயர்">{user.group}</S.Cell>

@@ -55,7 +55,12 @@ namespace S {
 
   export const DateInput = styled(CommonInputStyled)(() => ({}));
 
-  export const SelectInput = styled(CommonInputStyled)(() => ({}));
+  export const SelectInput = styled(CommonInputStyled)<{ iscolor: number }>(({ theme, iscolor }) => ({
+    "& .MuiOutlinedInput-root": {
+      color: iscolor ? "" : theme.palette.text.secondaryLight,
+      opacity: iscolor ? 1 : 0.7,
+    },
+  }));
 
   export const MultiSelectInput = styled(CommonInputStyled)(({ theme }) => ({
     "& .MuiOutlinedInput-root": {
@@ -155,6 +160,7 @@ namespace S {
     "& .MuiOutlinedInput-root": {
       height: "2.5rem",
       fontSize: "0.9rem",
+      paddingRight: "15px !important",
       "& .MuiAutocomplete-input": {
         padding: "0.5px 4px 0.5px 6px",
       },

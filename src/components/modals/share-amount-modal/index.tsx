@@ -26,7 +26,6 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   const [loader, setLoader] = useState(true);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
-
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
     documentTitle: `Shareholder_certificate of_${selectedFarmers.map((id) => farmersDetailsById[id].name)}`,
