@@ -13,22 +13,16 @@ import { useEffect } from "react";
 const DashboardBodyTop = () => {
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
+
   const {
-    formatChangeSuccess: isFarmerDetailsLoading,
-    result: { data: farmerDetails },
-  } = useFetch(ENDPOINTS.farmerDetails as Endpoints);
-  const {
-    formatChangeSuccess: isFarmerGroupLoading,
-    result: { data: farmerGroup },
-  } = useFetch(ENDPOINTS.farmerGroup as Endpoints);
-  const FarmerGroupCount = farmerGroup && Object.values(farmerGroup).length;
-  const acreFieldValue =
-    farmerDetails &&
-    Object.values(farmerDetails)
-      .filter((item: any) => item.landAreaInCent)
-      .map((i: any) => i.landAreaInCent)
-      .reduce((a: string, b: string) => parseInt(a) + parseInt(b)) / 100.021;
-  const {totalFarmerCount,maleFarmerCount,femaleFarmerCount,farmerGroupCount} = useGetFarmersCount();
+    totalFarmerCount,
+    maleFarmerCount,
+    femaleFarmerCount,
+    farmerGroupCount,
+    acreFieldCount,
+    isLoading: isFarmerDetailsLoading,
+  } = useGetFarmersCount();
+  
   const StatisticsItems = [
     {
       id: 1,
@@ -47,7 +41,7 @@ const DashboardBodyTop = () => {
     {
       id: 3,
       headCount: "+59",
-      bodyCount: `${maleFarmerCount}`,
+      bodyCount: `${parseInt(totalFarmerCount as string) - parseInt(femaleFarmerCount as string)}`,
       footerName: "Farmer",
       icon: "male-farmer",
     },
@@ -61,7 +55,7 @@ const DashboardBodyTop = () => {
     {
       id: 5,
       headCount: "-8",
-      bodyCount: `${acreFieldValue?.toFixed(2)}`,
+      bodyCount: `${parseInt(acreFieldCount as string)?.toFixed(2)}`,
       footerName: "Fields Size (Acres)",
       icon: "farmland",
     },
@@ -96,7 +90,7 @@ const DashboardBodyTop = () => {
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
-                  <S.StatCardBody>{isFarmerDetailsLoading && isFarmerGroupLoading ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                  <S.StatCardBody>{!isFarmerDetailsLoading ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
                 </S.StatCardHeaderLeft>
                 <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>

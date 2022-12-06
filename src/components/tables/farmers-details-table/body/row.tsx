@@ -15,7 +15,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 //import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
+import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -24,11 +24,10 @@ import S from "./body.styled";
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
   removeGroupMember: (id: string, group: string, isAdd: boolean) => void;
-  params?: string;
 }
 
-const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
-  const { checkboxSelect, selectedFarmers, currentPage,farmerQuery } = useFarmerDetailsContext();
+const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
+  const { checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
@@ -37,8 +36,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
 
 
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
-  const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
@@ -145,7 +144,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       <tr>
         <td style={{ display: "none" }}>
           <IdCardBody ref={idCardRef} />
-          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} params={params} />
+          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
         </td>
       </tr>
       <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
