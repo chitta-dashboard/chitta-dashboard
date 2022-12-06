@@ -62,9 +62,10 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
         <S.QrCode>
           <QRCodeSVG
             value={JSON.stringify({
-              id: "1",
-              name: "Arockiya",
-              phoneNumber: "8940065783",
+              name: data?.name,
+              phoneNumber: data?.phoneNumber,
+              dob: data?.dob,
+              qualification: data?.qualification,
             })}
             level={"L"}
             size={105}
