@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { ENDPOINTS, groupBy } from "../../../utils/constants";
-import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
+import { useFetch } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
@@ -14,7 +14,7 @@ const FarmerFormPreviewRight = () => {
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
+  } = useFetch(ENDPOINTS.farmerDetails);
 
   const { farmerId } = useParams();
   const {

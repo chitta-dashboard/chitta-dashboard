@@ -11,7 +11,7 @@ import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
 import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
 import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy } from "../../../utils/constants";
-import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
+import { useFetch } from "../../../utils/hooks/query";
 import page1 from "../../../assets/images/page-1.svg";
 import page2 from "../../../assets/images/page-2.svg";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
@@ -32,7 +32,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+  } = useFetch(ENDPOINTS.farmerDetails);
 
   const [next, setNext] = useState(false);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
