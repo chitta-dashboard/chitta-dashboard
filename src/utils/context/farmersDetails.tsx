@@ -48,6 +48,11 @@ export type farmerDetail = {
   cropsType?: string;
   cattle?: string;
   smallOrMarginalFarmer?: string;
+  nameAsPerBank?: string;
+  bankName?:string;
+  accountNumber?: string;
+  confirmAccountNumber?: string;
+  ifscCode?:string;
 };
 
 export type selectedFarmer = number | string;

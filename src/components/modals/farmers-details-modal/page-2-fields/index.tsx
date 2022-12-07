@@ -51,7 +51,7 @@ const FormFieldPage2: FC<CustomProps> = ({ control }) => {
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "தாலுக்கா *", gridArea: "tlk", placeholder: "தாலுகாவை உள்ளிடுக" }}
+        options={{ label: "தாலுக்கா *", gridArea: "tlk", placeholder: "தாலுக்காவை உள்ளிடுக" }}
       />
       <Input
         name="district"
