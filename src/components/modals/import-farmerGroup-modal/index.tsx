@@ -1,14 +1,15 @@
 import { FC, useState } from "react";
 import { v4 as uuid } from "uuid";
-import ImportFarmerDetailsModal from "../import-farmer-details-modal";
+import { ENDPOINTS } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { useAdd } from "../../../utils/hooks/query";
+import Toast from "../../../utils/toast";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
-import Toast from "../../../utils/toast";
-import { useAdd } from "../../../utils/hooks/query";
-import { ENDPOINTS, groupBy } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { useAuthContext } from "../../../utils/context/auth";
+import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
+import ImportFarmerDetailsModal from "../import-farmer-details-modal";
 import S from "./importFarmerGroupModal.styled";
 
 interface Props {
@@ -16,9 +17,10 @@ interface Props {
   handleClose: () => void;
   groups?: string[] | undefined;
   data?: farmerDetail[];
+  handleCloseImport: () => void;
 }
 
-const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, data }) => {
+const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, data, handleCloseImport }) => {
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const { addNotification } = useAuthContext();
   const [farmerDatas, setFarmerDatas] = useState<Object[]>();
@@ -52,7 +54,6 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
       });
 
       setFarmerDatas(newFarmerDetailsDatas);
-
       // mutating farmerGroup while bulk import
       addFarmerGroup({
         data: newFarmerGroupDatas,
@@ -72,21 +73,37 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
   return (
     <>
       <CustomModal openModal={openModal}>
-        <ModalHeader handleClose={handleClose}>New Groups</ModalHeader>
-        <S.ConfirmationText>Do you want to create the following groups ?</S.ConfirmationText>
+        <ModalHeader handleClose={handleClose} alignment={"center"}>
+          Confirmation
+        </ModalHeader>
         <ModalBody>
-          <S.Container>{groups && groups.length > 0 ? groups?.map((i, index) => <S.Chips label={i} key={index} />) : "No new groups"}</S.Container>
+          <S.Contents>
+            <S.DialogueText>Do you want to create the following farmer groups ?</S.DialogueText>
+            <S.ChipContainer>
+              {groups && groups.length > 0 ? groups?.map((i, index) => <S.Chips label={i} key={index} />) : "No new groups"}
+            </S.ChipContainer>
+            <S.ButtonContainer>
+              <YesOrNoButtons
+                yesAction={yesButtonHandler}
+                handleClose={() => {
+                  if (groups && groups.length > 0) {
+                    handleCloseImport();
+                    handleClose();
+                  } else {
+                    setCreateFarmers(true);
+                  }
+                }}
+              />
+            </S.ButtonContainer>
+          </S.Contents>
         </ModalBody>
-        <S.ButtonContainer>
-          <S.NoButton onClick={handleClose}>No</S.NoButton>
-          <S.YesButton onClick={yesButtonHandler}>Yes</S.YesButton>
-        </S.ButtonContainer>
       </CustomModal>
       <ImportFarmerDetailsModal
         handleClose={() => setCreateFarmers(!createFarmers)}
         farmerDetailsData={farmerDatas && farmerDatas} // for mutate the farmer details db
         openModal={createFarmers}
         count={farmerDatas && farmerDatas.length} // for toast message
+        handleCloseImport={handleCloseImport}
       />
     </>
   );

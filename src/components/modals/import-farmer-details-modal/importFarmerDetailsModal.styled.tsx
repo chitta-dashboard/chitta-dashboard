@@ -1,11 +1,13 @@
-import { styled, Stack, Button } from "@mui/material";
+import { styled, Stack, Button, Typography } from "@mui/material";
 
 namespace S {
   export const Container = styled(Stack)(() => ({
     minWidth: "25rem",
-    minHeight: "20rem",
+    minHeight: "30rem",
     height: "inherit",
     display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     flexWrap: "wrap",
     gap: 10,
     left: 0,
@@ -54,6 +56,20 @@ namespace S {
     size: "small",
     variant: "outlined",
   };
+
+  export const DialogueText = styled(Typography)(({ theme }) => ({
+    gridArea: "tit",
+    color: theme.palette.text.secondary,
+    textAlign: "center",
+    width: "100%",
+    fontSize: "1.3rem",
+    top: "1.5rem",
+  }));
+
+  export const Highlite = styled("span")(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontSize: "1.3rem",
+  }));
 }
 
 export default S;
