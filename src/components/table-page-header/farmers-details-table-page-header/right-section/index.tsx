@@ -309,7 +309,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
               <>
                 {typeof openConfirmationModal === "string" ? (
                   <span>
-                    Do you want to register {<S.CustomMessage>{selectedFarmers.length}</S.CustomMessage>} members to{" "}
+                    Do you want to register {<S.CustomMessage>{selectedFarmers.length}</S.CustomMessage>} farmers to{" "}
                     {<S.CustomMessage>{openConfirmationModal}</S.CustomMessage>} farmer group`
                   </span>
                 ) : (

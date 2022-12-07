@@ -4,8 +4,8 @@ namespace S {
   export const Container = styled(Stack, {
     shouldForwardProp: (prop) => prop !== "isPadding",
   })(({ isPadding = true }: { isPadding?: Boolean }) => ({ theme }) => ({
-    minWidth: "30rem",
-    minHeight: "30rem",
+    // minWidth: "30rem",
+    // minHeight: "30rem",
     display: "block",
     justifyContent: "center",
     alignItems: "center",
