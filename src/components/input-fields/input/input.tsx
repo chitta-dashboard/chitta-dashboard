@@ -15,6 +15,7 @@ import {
 import Cancel from "@mui/icons-material/Cancel";
 import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
+import { validate } from "uuid";
 
 interface InputProps extends UseControllerProps {
   type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete" | "autocomplete-with-imagelist";
@@ -22,9 +23,10 @@ interface InputProps extends UseControllerProps {
   options?: {
     [key: string]: any;
   };
+  ref?:any;
 }
 
-function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {} }: InputProps) {
+function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {},ref }: InputProps) {
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");

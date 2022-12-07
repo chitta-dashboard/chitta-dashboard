@@ -40,6 +40,14 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
+export interface IAddFarmersDetailsPage3Input {
+  nameAsPerBank: string;
+  bankName: string;
+  accountNumber: string;
+  confirmAccountNumber: string;
+  ifscCode: string;
+}
+
 export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
 
 export interface IAddFarmersGroupFormInput {
