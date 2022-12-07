@@ -9,12 +9,21 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
+  const {
+    addFarmerId,
+    searchFilter,
+    sortFilter,
+    groupFilter,
+    currentPage,
+    setPageCount,
+    setFarmersIdToExport,
+  } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   }: any = useFetch(ENDPOINTS.farmerDetails);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -61,11 +70,13 @@ const Body = () => {
   //farmer id to export farmers
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
+    //console.log("Export Data : ",exportFarmerId)
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
+    //console.log("Farmer Id : ",farmerId)
     setFarmersIdToExport(farmersId);
   }, [farmersListSort, isSuccess, exportFarmerId]);
 
-  // For tamil share holder certificate
+  //For tamil share holder certificate
   useEffect(() => {
     if (isSuccess) {
       const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
@@ -76,7 +87,7 @@ const Body = () => {
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
     const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
+    const farmerDelete = isAdd ? (!farmersGroupData[noCountUpdate].members.includes(id) as boolean) : true;
     if (farmerDelete) {
       const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);

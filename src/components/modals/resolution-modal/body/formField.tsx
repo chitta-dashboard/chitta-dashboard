@@ -69,6 +69,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           options={{
             label: "தீர்மானம் தலைப்பு *",
             gridArea: "dhd",
+            placeholder: "தீர்மான தலைப்பை உள்ளிடுக",
           }}
         />
         <Input
@@ -119,6 +120,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             label: "பங்கேற்பாளர்கள் *",
             gridArea: "par",
             selectOptions: ["person 1", "person 2", "person 3", "person 4", "person 5"],
+            placeholder: "hello",
           }}
         />
         <S.EditorBox>

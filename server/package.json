@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "json-server --watch db.json --p 5001"
+    "start": "json-server --watch db.json --p 5001 --no-cors"
   },
   "dependencies": {
     "json-server": "^0.17.0"
