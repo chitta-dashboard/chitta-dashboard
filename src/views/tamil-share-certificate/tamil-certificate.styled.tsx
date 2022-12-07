@@ -2,14 +2,17 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
+  // export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
+  export const TamilShareCertificateContainer = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "Toggle",
+  })<{ Toggle: boolean | undefined }>(({ theme, Toggle }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "775.5px",
-    width: "69rem",
+    height: Toggle ? "775.5px" : "839px",
+    width: Toggle ? "69rem" : "74.375rem",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",

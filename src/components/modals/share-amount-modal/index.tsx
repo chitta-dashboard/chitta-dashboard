@@ -18,6 +18,7 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+  const [toggle, setToggle] = useState(false);
   const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
   const {
     result: { data: farmersDetailsById },
@@ -36,12 +37,12 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     onAfterPrint() {
       checkboxUnselectAll();
     },
-    // pageStyle: `@media print {
-    //   @page {
-    //     size: a5 landscape;
-    //     margin: 0;
-    //   }
-    // }`,
+    pageStyle: `@media print {
+      @page {
+        size: ${!toggle ? "a5 landscape" : "a4 portrait"};
+        margin: 0;
+      }
+    }`,
   });
 
   const certificateFunctionStart = () => {
@@ -58,7 +59,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     <>
       {certificateLoader && (
         <S.InvisibleDiv>
-          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
+          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} toggle={toggle} />
         </S.InvisibleDiv>
       )}
       <CustomModal openModal={openModal} handleClose={handleClose}>
@@ -74,7 +75,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
         {loader ? (
           <>
             <ModalBody id="" onSubmit={() => {}}>
-              <ShareDetailBody setShareAmount={setShareAmount} />
+              <ShareDetailBody setShareAmount={setShareAmount} toggle={toggle} setToggle={setToggle} />
             </ModalBody>
             <ModalFooter>
               <ShareDetailFooter
