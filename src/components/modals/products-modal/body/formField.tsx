@@ -112,7 +112,6 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          initialvalue: "A+",
           placeholder: "தரத்தை தேர்ந்தெடுக்க",
         }}
       />
