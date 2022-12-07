@@ -11,6 +11,8 @@ import Toast from "../../../utils/toast";
 /**
  * Checks if the passed object is of valid farmerDetails structure.
  */
+
+let existingFarmers: Object[];
 const isValidFormat = (farmerData: { [key: string]: string }) => {
   const requiredFields = [
     "spouseName",
@@ -76,7 +78,10 @@ export const validateFarmerData = function (file: File) {
         // if the first row is in correct format, then all rows in the sheet will be correct.
         // so validating format only on first row of the sheet.
         if (!isValidFormat(farmersInCurrentSheet[0])) {
-          return resolve({ status: false, message: "Invalid Column Format. Please check if all required fields are present in all sheets." });
+          return resolve({
+            status: false,
+            message: "Invalid Column Format. Please check if all required fields are present in all sheets.",
+          });
         }
         farmers.push(...(farmersInCurrentSheet as unknown as farmerDetail[]));
       }
@@ -86,13 +91,17 @@ export const validateFarmerData = function (file: File) {
       const registeredNumbers = new Set(Object.values(farmerDetails).map((farmer) => farmer.phoneNumber));
       const totalFarmers = farmers.length;
       let findGroupNames = null;
+      const dbFarmersPhoneNumber = Object.values(farmerDetails).map((i) => i.phoneNumber);
+      const newFarmersPhoneNumber = Object.values(farmers).map((i) => i.phoneNumber);
+      const existingFarmersPhoneNumber = newFarmersPhoneNumber.filter((i) => !dbFarmersPhoneNumber.includes(i));
+      existingFarmers = Object.values(farmers).filter((i) => dbFarmersPhoneNumber.includes(i.phoneNumber));
+
       for (let i = 0; i < totalFarmers; i++) {
         if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
           findGroupNames = true;
-          return resolve({ status: false, message: "Some phonenumbers are already registered! Rejected." });
+          return resolve({ status: false, message: "Some phonenumbers are already registered! Rejected.", existingFarmers: existingFarmers });
         }
       }
-
       // farmer group validation
       if (findGroupNames === null) {
         const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
@@ -132,6 +141,50 @@ export const processFarmerData = (farmers: { [key: string]: string }[]) => {
 /**
  * Downloads an excel sheet with sample Farmer Details format..
  */
+export const downloadRejectedData = () => {
+  let data: Object[] = [];
+  existingFarmers.map((i: any) =>
+    data.push({
+      spouseName: i.spouseName,
+      phoneNumber: i.phoneNumber,
+      addhaarNo: i.addhaarNo,
+      dob: i.dob,
+      sex: i.sex,
+      address: i.address,
+      village: i.village,
+      taluk: i.taluk,
+      district: i.district,
+      postalNo: i.postalNo,
+      landAreaInCent: i.landAreaInCent,
+      surveyNo: i.surveyNo,
+      landType: i.landType,
+      irrigationType: i.irrigationType,
+      cropsType: i.cropsType,
+      cattle: i.cropsType,
+      smallOrMarginalFarmer: i.smallOrMarginalFarmer,
+      membershipId: i.membershipId,
+      name: i.name,
+      fatherName: i.fatherName,
+      group: i.group,
+      border: i.border,
+      farmerType: i.farmerType,
+      waterType: i.waterType,
+      animals: i.animals,
+      groupMember: i.groupMember,
+      acre: i.acre,
+      qualification: i.qualification,
+    }),
+  );
+  try {
+    const ws = utils.json_to_sheet(data);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
+    const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
+    FileSaver.saveAs(finalData, "rejected-farmers.xlsx");
+  } catch {
+    Toast({ message: "Download failed, please try again." });
+  }
+};
 export const exportSampleFormat = () => {
   const data = [
     {
