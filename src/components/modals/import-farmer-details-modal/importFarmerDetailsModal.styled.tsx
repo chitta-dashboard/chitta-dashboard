@@ -57,7 +57,7 @@ namespace S {
     variant: "outlined",
   };
 
-  export const DialogueText = styled(Typography)(({ theme }) => ({
+  export const DialogueText = styled("span")(({ theme }) => ({
     gridArea: "tit",
     color: theme.palette.text.secondary,
     textAlign: "center",
