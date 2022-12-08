@@ -15,7 +15,6 @@ export namespace S {
       paddingTop: "0.7rem",
     },
     ".slick-slide": {
-      paddingLeft: "20px !important",
       maxWidth: "calc(278px + 1rem) !important",
     },
     ".slick-prev": {

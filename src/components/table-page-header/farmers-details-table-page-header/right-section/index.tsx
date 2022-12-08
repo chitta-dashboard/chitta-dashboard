@@ -1,7 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
-// import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
@@ -18,8 +17,6 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
-  // const dispatch = useDispatch();
-
   const { addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;

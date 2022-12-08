@@ -10,12 +10,6 @@ namespace S {
     [theme.breakpoints.down("lg")]: {
       justifyContent: "space-between",
     },
-
-    [theme.breakpoints.down("md")]: {
-      flexDirection: "column",
-      alignItems: "flex-start",
-      width: "100%",
-    },
   }));
 
   export const CustomBulkGroupButton = styled(Button)(({ theme }) => ({
@@ -69,6 +63,9 @@ namespace S {
     gap: "1rem",
     "& .Mui-disabled": {
       backgroundColor: theme.palette.custom.disabled,
+    },
+    [theme.breakpoints.down("md")]: {
+      width: "inherit",
     },
   }));
 
