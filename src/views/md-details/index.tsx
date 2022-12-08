@@ -24,7 +24,7 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
+  const { setSearchFilter } = useMdDetailsContext();
   const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
@@ -131,7 +131,7 @@ const MdDetails = () => {
         <Loader />
       ) : (
         <S.MdDetailsContainer>
-          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <MdDetailsTable />
         </S.MdDetailsContainer>
       )}

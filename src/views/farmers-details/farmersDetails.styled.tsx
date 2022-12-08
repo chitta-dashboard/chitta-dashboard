@@ -1,4 +1,4 @@
-import { Box, styled,Backdrop } from "@mui/material";
+import { Box, styled, Backdrop } from "@mui/material";
 
 namespace S {
   export const FarmersDetailsContainer = styled(Box)(({ theme }) => ({
@@ -7,7 +7,7 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     gap: "2rem",
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("lg")]: {
       gap: "1.5rem",
     },
     [theme.breakpoints.down("md")]: {
@@ -23,11 +23,11 @@ namespace S {
     color: "#fff",
     zIndex: 2,
     backgroundColor: "rgba(0, 0, 0, 0.2)",
-    ".MuiBox-root":{
+    ".MuiBox-root": {
       zIndex: "3",
       //backgroundColor: "white",
-      borderRadius: "50%"
-    }
+      borderRadius: "50%",
+    },
   }));
 }
 

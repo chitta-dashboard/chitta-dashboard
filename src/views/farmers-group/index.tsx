@@ -61,13 +61,7 @@ const FarmersGroup = () => {
         <Loader />
       ) : (
         <S.FarmersGroupContainer>
-          <TablePageHeader
-            addModalHandler={addModalHandler}
-            searchHandler={setSearchFilter}
-            sortHandler={setSortFilter}
-            sortFilter={sortFilter}
-            popOverHandler={popOverHandler}
-          />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} popOverHandler={popOverHandler} />
           <FarmersGroupTable />
         </S.FarmersGroupContainer>
       )}

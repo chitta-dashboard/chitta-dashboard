@@ -11,7 +11,7 @@ import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import S from "./importFarmersModal.styled";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
+import { encryptText, ENDPOINTS } from "../../../utils/constants";
 
 interface IImportFarmersModal {
   isOpen: boolean;
@@ -83,6 +83,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
           id: farmerId,
           profile: "",
           membershipId: `NER-FPC-${newMemberId + 1}`,
+          accountNumber: encryptText(i.accountNumber as string),
         };
 
         // creating farmerGroup db structure
