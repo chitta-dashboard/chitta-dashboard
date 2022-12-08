@@ -11,10 +11,9 @@ import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
-import { CircularStatic } from "../../utils/loaders/circular-progress-loader";
 
 const FarmersDetails = () => {
-  const { sortFilter, setSearchFilter, setCurrentPage, currentPage, farmerQuery, setSortFilter } = useFarmerDetailsContext();
+  const { sortFilter, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },
@@ -75,15 +74,12 @@ const FarmersDetails = () => {
             <FarmersDetailsTablePageHeader
               addModalHandler={addModalHandler}
               searchHandler={handleSearchInput}
-              sortFilter={sortFilter}
-              sortHandler={(sortValue) => setSortFilter(sortValue)}
+              // sortFilter={sortFilter}
+              // sortHandler={(sortValue) => setSortFilter(sortValue)}
             />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
           <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
-          {/* <S.CircularLoaderContainer open={true} onClick={() => {}}>
-            <CircularStatic timerDelay={1} />
-          </S.CircularLoaderContainer> */}
         </>
       )}
     </>
