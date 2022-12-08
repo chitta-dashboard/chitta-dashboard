@@ -16,11 +16,10 @@ import {
   IAddFarmersDetailsPage2Input,
   IAddFarmersDetailsPage3Input,
 } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy, ACRETOCENT } from "../../../utils/constants";
 import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
-import { RootState } from "../../../utils/store";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -234,7 +233,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
-  const form1Submit: any = (data: IAddFarmersDetailsPage1Input) => {
+  const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
@@ -252,22 +251,23 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     setPage(2);
   };
 
-  const form2Submit: any = async (data: IAddFarmersDetailsPage2Input) => {
+  const form2Submit = async (data: IAddFarmersDetailsPage2Input) => {
     setForm2Data(data);
     setPage(3);
   };
 
-  const form3Submit: any = async (data: IAddFarmersDetailsPage3Input) => {
+  const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
     //Get Id
-    const dataLength: any = isSuccess && Object.values(farmersDetailsById).length;
-    const lastPageData: any = isSuccess && Object.values(farmersDetailsById);
-    const lastMembershipId = isSuccess && lastPageData[dataLength - 1]["membershipId"].split("-")[2];
+    const dataLength = isSuccess && Object.values(farmersDetailsById).length;
+    const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
+    const lastMembershipId =
+      isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
 
     let newId = uuidv4();
-    let newMemberId = isSuccess && parseInt(lastMembershipId) + 1;
+    let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
 
     let params = {
       ...form1Data,
@@ -277,11 +277,15 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       id: mdId ? mdId : editMode ? id : newId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
+      landAreaInCent: `${Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
+        return a + parseInt(b as string);
+      }, 0) * ACRETOCENT}`,
     } as IAddFarmersDetailsPage1Input &
       IAddFarmersDetailsPage2Input &
-      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string };
+      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
+    //console.log("Params : ",params)
   };
 
   return (

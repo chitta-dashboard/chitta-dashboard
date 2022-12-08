@@ -1,28 +1,46 @@
+import { useNavigate } from "react-router-dom";
 import { Theme } from "@mui/material";
 import Slider from "react-slick";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useGetFarmersCount, useFetch } from "../../../../utils/hooks/query";
+import { useFetch } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
-import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
+import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
-import { useEffect } from "react";
 
 const DashboardBodyTop = () => {
+  const navigate = useNavigate();
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
   const {
-    totalFarmerCount,
-    maleFarmerCount,
-    femaleFarmerCount,
-    farmerGroupCount,
-    acreFieldCount,
-    isLoading: isFarmerDetailsLoading,
-  } = useGetFarmersCount();
-  
+    formatChangeSuccess: farmerDetailsSuccess,
+    result: { data: farmerDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+
+  const {
+    formatChangeSuccess: farmerGroupSuccess,
+    result: { data: farmerGroupById },
+  } = useFetch(ENDPOINTS.farmerGroup);
+
+  const { result } = useFetch(ENDPOINTS.admin);
+
+  let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess ? Object.values(farmerDetailsById) : [];
+  let farmerGroupByIdArray = farmerGroupSuccess ? Object.values(farmerGroupById) : [];
+
+  let totalFarmerCount = farmerDetailsByIdArray.length;
+  let femaleFarmerCount = farmerDetailsByIdArray.filter((item) => item.sex === "FEMALE").length;
+  let farmerGroupCount = farmerGroupByIdArray.length;
+  let totalAcreCount = farmerDetailsSuccess
+    ? farmerDetailsByIdArray.reduce((a, b) => {
+        let value = (b.landAreaInCent as string) ? parseInt(b.landAreaInCent as string) : 0;
+        return a + value;
+      }, 0) / ACRETOCENT
+    : 0;
+
   const StatisticsItems = [
     {
       id: 1,
@@ -30,6 +48,8 @@ const DashboardBodyTop = () => {
       bodyCount: `${totalFarmerCount}`,
       footerName: "Total Farmers",
       icon: "farmer-count",
+      navigate: "/farmers-details",
+      isSuccess: farmerDetailsSuccess,
     },
     {
       id: 2,
@@ -37,13 +57,16 @@ const DashboardBodyTop = () => {
       bodyCount: `${farmerGroupCount}`,
       footerName: "Group",
       icon: "groups",
+      navigate: "/farmers-group",
+      isSuccess: farmerGroupSuccess,
     },
     {
       id: 3,
       headCount: "+59",
-      bodyCount: `${parseInt(totalFarmerCount as string) - parseInt(femaleFarmerCount as string)}`,
+      bodyCount: `${totalFarmerCount - femaleFarmerCount}`,
       footerName: "Farmer",
       icon: "male-farmer",
+      isSuccess: farmerDetailsSuccess,
     },
     {
       id: 4,
@@ -51,13 +74,15 @@ const DashboardBodyTop = () => {
       bodyCount: `${femaleFarmerCount}`,
       footerName: "Farmerette",
       icon: "female-farmer",
+      isSuccess: farmerDetailsSuccess,
     },
     {
       id: 5,
       headCount: "-8",
-      bodyCount: `${parseInt(acreFieldCount as string)?.toFixed(2)}`,
+      bodyCount: `${totalAcreCount.toFixed(2)}`,
       footerName: "Fields Size (Acres)",
       icon: "farmland",
+      isSuccess: farmerDetailsSuccess,
     },
     // {
     //   id: 6,
@@ -84,13 +109,18 @@ const DashboardBodyTop = () => {
       <Slider {...settings}>
         {StatisticsItems.map((card) => {
           return (
-            <S.StasticsCard key={card.id}>
+            <S.StasticsCard
+              key={card.id}
+              onClick={() => {
+                card.navigate && navigate(card.navigate);
+              }}
+            >
               <S.StatCardHeader>
                 <S.StatCardHeaderLeft>
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
-                  <S.StatCardBody>{!isFarmerDetailsLoading ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
                 </S.StatCardHeaderLeft>
                 <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>

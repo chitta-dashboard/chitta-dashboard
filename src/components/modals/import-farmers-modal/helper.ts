@@ -13,6 +13,8 @@ import Toast from "../../../utils/toast";
  */
 
 let existingFarmers: Object[];
+let newFarmers: farmerDetail[];
+let farmers: farmerDetail[] = [];
 const isValidFormat = (farmerData: { [key: string]: string }) => {
   const requiredFields = [
     "spouseName",
@@ -67,7 +69,6 @@ export const validateFarmerData = function (file: File) {
     reader.addEventListener("loadend", () => {
       const rawData = read(reader.result, { type: "binary" });
       const totalSheets = rawData.SheetNames.length;
-      const farmers: farmerDetail[] = [];
 
       // format validation
       for (let i = 0; i < totalSheets; i++) {
@@ -87,22 +88,51 @@ export const validateFarmerData = function (file: File) {
       }
 
       // phonenumber validation
+
       const farmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
       const registeredNumbers = new Set(Object.values(farmerDetails).map((farmer) => farmer.phoneNumber));
       const totalFarmers = farmers.length;
       let findGroupNames = null;
-      const dbFarmersPhoneNumber = Object.values(farmerDetails).map((i) => i.phoneNumber);
+      const dbFarmersPhoneNumber = Object.values(farmerDetails).map((i) => String(i.phoneNumber));
       const newFarmersPhoneNumber = Object.values(farmers).map((i) => i.phoneNumber);
       const existingFarmersPhoneNumber = newFarmersPhoneNumber.filter((i) => !dbFarmersPhoneNumber.includes(i));
-      existingFarmers = Object.values(farmers).filter((i) => dbFarmersPhoneNumber.includes(i.phoneNumber));
+      existingFarmers = Object.values(farmers).filter((i) => dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
+      newFarmers = Object.values(farmers).filter((i) => !dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
 
-      for (let i = 0; i < totalFarmers; i++) {
-        if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
-          findGroupNames = true;
-          return resolve({ status: false, message: "Some phonenumbers are already registered! Rejected.", existingFarmers: existingFarmers });
+      if (existingFarmers.length > 0 && newFarmers.length > 0) {
+        farmers = newFarmers;
+        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
+        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
+        const inputGroupNames = Object.values(farmers).map((i) => i.group);
+        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
+        let groupNames = Array.from(newGroupNames);
+
+        if (groupNames.length > 0) {
+          return resolve({
+            status: false,
+            message: "Some phonenumbers are already registered! Rejected.",
+            existingFarmers: existingFarmers,
+            newFarmers: newFarmers,
+            groups: groupNames,
+          });
+        } else {
+          for (let i = 0; i < totalFarmers; i++) {
+            if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
+              findGroupNames = true;
+              return resolve({
+                status: false,
+                message: "Some phonenumbers are already registered! Rejected.",
+                existingFarmers: existingFarmers,
+                newFarmers: newFarmers,
+              });
+            }
+          }
         }
+        existingFarmers = [];
+        newFarmers = [];
+        groupNames = [];
       }
-      // farmer group validation
+
       if (findGroupNames === null) {
         const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
         const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
@@ -111,6 +141,23 @@ export const validateFarmerData = function (file: File) {
         const groupNames = Array.from(newGroupNames);
         if (groupNames.length > 0) {
           resolve({ status: true, message: "New grops detected", groups: groupNames, data: farmers });
+        } else {
+          resolve({ status: true, message: "New farmers detected", data: farmers, groups: groupNames });
+        }
+      }
+
+      if (existingFarmers.length > 0 && newFarmers.length > 0) {
+        console.log("from helper");
+        farmers = newFarmers;
+        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
+        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
+        const inputGroupNames = Object.values(farmers).map((i) => i.group);
+        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
+        const groupNames = Array.from(newGroupNames);
+        if (groupNames.length > 0) {
+          resolve({ status: true, message: "New grops detected", groups: groupNames, data: farmers });
+        } else {
+          resolve({ status: true, message: "New farmers detected", data: farmers, groups: groupNames });
         }
       }
 

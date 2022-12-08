@@ -1,7 +1,7 @@
-import { createSlice, CaseReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 
-export type farmerDetail = {
+ type farmerDetail = {
   membershipId?: string;
   profile: string;
   id: string;
