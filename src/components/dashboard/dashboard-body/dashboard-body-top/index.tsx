@@ -15,6 +15,7 @@ const DashboardBodyTop = () => {
   const navigate = useNavigate();
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
+  const sm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
 
   const {
     formatChangeSuccess: farmerDetailsSuccess,
@@ -98,7 +99,7 @@ const DashboardBodyTop = () => {
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: xl ? 5 : md ? 4 : 3,
+    slidesToShow: xl ? 4 : md ? 4 : sm ? 3 : 2,
     slidesToScroll: 1,
     autoplay: false,
     centerPadding: "1rem",
