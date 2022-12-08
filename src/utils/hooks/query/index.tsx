@@ -4,7 +4,7 @@ import { SetStateAction, useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
+import { ACRETOCENT, ENDPOINTS, Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 import { farmerDetail } from "../../context/farmersDetails";
 
@@ -349,19 +349,16 @@ export const useGetFarmersCount = () => {
       let farmerGroupCount = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
 
       //Acre Count
-      let acreFieldResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails`)).json();
-      let acreFieldCount =
-        acreFieldResult
-          .filter((item: any) => item.landAreaInCent)
-          .map((i: any) => i.landAreaInCent)
-          .reduce((a: string, b: string) => parseInt(a) + parseInt(b)) / 100.021;
+      let acreFieldResult: farmerDetail[] = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails`)).json();
+      // let acreFieldCount = acreFieldResult ? acreFieldResult.reduce((a, b) => {
+      //     a + parseInt(b.landAreaInCent);
+      //   }, 0) / ACRETOCENT : 0;
 
       return {
         totalFarmerCount,
         maleFarmerCount,
         femaleFarmerCount,
         farmerGroupCount,
-        acreFieldCount,
       };
     };
     getDataCount().then((res) => {
