@@ -104,6 +104,7 @@ export const useEdit = (endpoint: Endpoints) => {
       if (Array.isArray(editedData)) {
         for (let i = 0; i < editedData.length; i++) {
           await axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData[i]?.id}`, editedData[i]);
+          await new Promise((r) => setTimeout(r, 50));
         }
         return editedData;
       } else {
