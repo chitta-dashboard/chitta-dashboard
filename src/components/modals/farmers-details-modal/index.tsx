@@ -277,12 +277,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       id: mdId ? mdId : editMode ? id : newId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
-      landAreaInCent: `${Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
-        return a + parseInt(b as string);
-      }, 0) * ACRETOCENT}`,
+      landAreaInCent:
+        Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
+          return a + parseInt(b as string);
+        }, 0) * ACRETOCENT,
     } as IAddFarmersDetailsPage1Input &
       IAddFarmersDetailsPage2Input &
-      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: string };
+      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: number };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
     //console.log("Params : ",params)
