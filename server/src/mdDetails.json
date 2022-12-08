@@ -39,7 +39,11 @@
       "acre-second": ""
     },
     "qualification": "",
-    "farmerId": "f2ec01ff-d6c4-4f48-baeb-c4ca8993538e"
+    "farmerId": "f2ec01ff-d6c4-4f48-baeb-c4ca8993538e",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "0128d034-0c42-4c64-8e69-de6000ad002b": {
     "id": "0128d034-0c42-4c64-8e69-de6000ad002b",
@@ -81,7 +85,11 @@
       "acre-second": ""
     },
     "qualification": "",
-    "farmerId": "7aadef24-21ef-4555-bbb6-bdc69938b672"
+    "farmerId": "7aadef24-21ef-4555-bbb6-bdc69938b672",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "1c8b299f-d5ee-44ac-97d6-b7eb3e55d4d3": {
     "id": "1c8b299f-d5ee-44ac-97d6-b7eb3e55d4d3",
@@ -129,7 +137,11 @@
       "acre-fourth": ""
     },
     "qualification": "",
-    "farmerId": "eaa42605-c312-40e9-881b-20837fec4e76"
+    "farmerId": "eaa42605-c312-40e9-881b-20837fec4e76",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "3c3b9812-6af5-4315-8feb-629c9e24bd07": {
     "id": "3c3b9812-6af5-4315-8feb-629c9e24bd07",
@@ -171,7 +183,11 @@
       "acre-second": ""
     },
     "qualification": "",
-    "farmerId": "3301cd12-ab47-4e11-b9f3-117a592e34f8"
+    "farmerId": "3301cd12-ab47-4e11-b9f3-117a592e34f8",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "decfca9b-3db4-498c-acb1-371a80aaede5": {
     "id": "decfca9b-3db4-498c-acb1-371a80aaede5",
@@ -213,7 +229,11 @@
       "acre-second": ""
     },
     "qualification": "",
-    "farmerId": "19b3f3b3-ab4a-41a6-96c1-5bf5f295a9cd"
+    "farmerId": "19b3f3b3-ab4a-41a6-96c1-5bf5f295a9cd",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "706b5da2-08af-4f18-bb66-7d77151950b3": {
     "id": "706b5da2-08af-4f18-bb66-7d77151950b3",
@@ -258,7 +278,11 @@
       "acre-third": ""
     },
     "qualification": "",
-    "farmerId": "98e49d74-b28b-41bb-80ce-9d569b716906"
+    "farmerId": "98e49d74-b28b-41bb-80ce-9d569b716906",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "69d18e1c-c0f0-4596-872a-0d4672efdee8": {
     "id": "69d18e1c-c0f0-4596-872a-0d4672efdee8",
@@ -303,7 +327,11 @@
       "acre-third": ""
     },
     "qualification": "",
-    "farmerId": "d50be3bd-9d55-487f-8d26-f576264eb6e5"
+    "farmerId": "d50be3bd-9d55-487f-8d26-f576264eb6e5",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "d448723b-a2ae-4c05-8473-003c307ec0ed": {
     "id": "d448723b-a2ae-4c05-8473-003c307ec0ed",
@@ -345,7 +373,11 @@
       "acre-second": ""
     },
     "qualification": "",
-    "farmerId": "44444a93-c34e-4b6b-82e4-8a1ee26e91ee"
+    "farmerId": "44444a93-c34e-4b6b-82e4-8a1ee26e91ee",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "ef763e19-bf42-490a-92e3-aff87afa3cfa": {
     "id": "ef763e19-bf42-490a-92e3-aff87afa3cfa",
@@ -384,7 +416,11 @@
       "acre-first": ""
     },
     "qualification": "",
-    "farmerId": "5b1d0283-6a0f-4eb0-8109-9af9ee53bd29"
+    "farmerId": "5b1d0283-6a0f-4eb0-8109-9af9ee53bd29",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   },
   "a8455ad9-729a-4a06-9866-fcb47efc44aa": {
     "id": "a8455ad9-729a-4a06-9866-fcb47efc44aa",
@@ -423,6 +459,10 @@
       "acre-first": ""
     },
     "qualification": "",
-    "farmerId": "574fe6f0-3d37-48f3-b604-e66d85e42e53"
+    "farmerId": "574fe6f0-3d37-48f3-b604-e66d85e42e53",
+    "nameAsPerBank": "",
+    "bankName": "",
+    "accountNumber": "",
+    "ifscCode": ""
   }
 }
