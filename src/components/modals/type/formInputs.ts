@@ -48,7 +48,7 @@ export interface IAddFarmersDetailsPage3Input {
   ifscCode: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -66,15 +66,15 @@ export interface IProductVarient {
   endDate: string;
   availableAmount: string;
   qualityGrade: string;
-  timestamp: number
+  timestamp: number;
 }
 
 export interface IAddProductsFormInput extends IProductVarient {
   productName: string;
   products: string[];
   foodType: string;
-  profile: string
-  variantName: string
+  profile: string;
+  variantName: string;
 }
 
 export interface IAddMDDetailsFormInput {

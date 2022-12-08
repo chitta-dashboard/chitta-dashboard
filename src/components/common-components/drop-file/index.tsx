@@ -4,7 +4,6 @@ import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
-import ImportFarmerGroupModal from "../../modals/import-farmerGroup-modal";
 import S from "./dropFile.styled";
 
 export interface IDropValidationResult {
@@ -13,6 +12,7 @@ export interface IDropValidationResult {
   groups?: string[];
   data?: farmerDetail[];
   existingFarmers?: Object[];
+  newFarmers?: farmerDetail[];
 }
 interface IDropFile {
   fileFormat?: string[];
@@ -20,10 +20,11 @@ interface IDropFile {
   cb: (file: File) => void;
   validate?: (file: File) => Promise<IDropValidationResult>;
   data?: farmerDetail[];
-  openModal: boolean;
-  setOpenModal: Dispatch<SetStateAction<boolean>>;
+  isGroupMoalOpened: boolean;
+  setNewGroupNames: Dispatch<SetStateAction<string[] | undefined>>;
   setExistingFarmers: Dispatch<SetStateAction<Object[] | null | undefined>>;
-  handleCloseImport: () => void;
+  setVerifiedNewFarmers: Dispatch<SetStateAction<farmerDetail[] | undefined>>;
+  setInputData: Dispatch<SetStateAction<farmerDetail[] | undefined>>;
 }
 
 export type DropTargetState = "noDrag" | "validDrag" | "inValidDrag" | "completedDrag" | "processingDrag";
@@ -38,20 +39,19 @@ const DropFile: React.FC<IDropFile> = function ({
   fileExtension = [".xlsx", "xls"],
   validate,
   cb,
-  openModal,
-  setOpenModal,
+  isGroupMoalOpened,
+  setNewGroupNames,
   setExistingFarmers,
-  handleCloseImport,
+  setVerifiedNewFarmers,
+  setInputData,
 }) {
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [groupNames, setGroupNames] = useState<string[] | undefined>(undefined);
-  const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
 
   // to make the drag & drop avalable after import
   useEffect(() => {
-    if (openModal === true) {
+    if (isGroupMoalOpened === true) {
       setTimeout(() => {
         const file = null;
         setTargetState("noDrag");
@@ -59,7 +59,7 @@ const DropFile: React.FC<IDropFile> = function ({
         cb(file);
       }, 500);
     }
-  }, [openModal, cb]);
+  }, [isGroupMoalOpened, cb]);
 
   const handleDragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
@@ -90,18 +90,20 @@ const DropFile: React.FC<IDropFile> = function ({
       } else if (targetState === "validDrag") {
         setProcessingFile(true);
         const file = e.dataTransfer.files[0];
-        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], data: [], existingFarmers: [] };
+        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], data: [], existingFarmers: [], newFarmers: [] };
         setProcessingFile(false);
         if (validation.status) {
           // if validation passed
           setTargetState("completedDrag");
           setSelectedFile(file);
-          validation && setGroupNames(validation.groups);
+          validation && setNewGroupNames(validation.groups);
           validation && setInputData(validation.data);
           cb(file);
         } else {
           // if validation failed
+          validation && setNewGroupNames(validation.groups);
           validation && setExistingFarmers(validation.existingFarmers);
+          validation && setVerifiedNewFarmers(validation.newFarmers);
           setTargetState("noDrag");
           Toast({ message: validation.message as string, type: "error" });
         }
@@ -122,17 +124,19 @@ const DropFile: React.FC<IDropFile> = function ({
       const file = e.target.files![0];
       if (file) {
         setProcessingFile(true);
-        const validation = validate ? await validate(file) : { status: true, message: "", groups: [] };
+        const validation = validate ? await validate(file) : { status: true, message: "", groups: [], data: [], existingFarmers: [], newFarmers: [] };
         setProcessingFile(false);
+        // console.log("from d&d", validation.data);
         if (validation.status) {
           setTargetState("completedDrag");
           setSelectedFile(file);
-          validation && setGroupNames(validation.groups);
+          validation && setNewGroupNames(validation.groups);
           validation && setInputData(validation.data);
-
           cb(file);
         } else {
+          validation && setNewGroupNames(validation.groups);
           validation && setExistingFarmers(validation.existingFarmers);
+          validation && setVerifiedNewFarmers(validation.newFarmers);
           Toast({ message: validation.message as string, type: "error" });
         }
         e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.
@@ -172,13 +176,6 @@ const DropFile: React.FC<IDropFile> = function ({
           })()}
         </S.Message>
       </S.DropBox>
-      <ImportFarmerGroupModal
-        openModal={openModal}
-        handleClose={() => setOpenModal(!openModal)}
-        groups={groupNames && groupNames} // for display the group names in chips
-        data={inputData && inputData} // for mutate the farmer group db
-        handleCloseImport={handleCloseImport}
-      />
     </>
   );
 };
