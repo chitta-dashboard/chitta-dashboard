@@ -1,67 +1,67 @@
-import { FC, useState } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { v4 as uuid } from "uuid";
-import { ENDPOINTS } from "../../../utils/constants";
-import { useAuthContext } from "../../../utils/context/auth";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { useAdd } from "../../../utils/hooks/query";
-import Toast from "../../../utils/toast";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
-import ImportFarmerDetailsModal from "../import-farmer-details-modal";
+import Toast from "../../../utils/toast";
+import { useAdd } from "../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../utils/constants";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { useAuthContext } from "../../../utils/context/auth";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import S from "./importFarmerGroupModal.styled";
 
 interface Props {
   openModal: boolean;
   handleClose: () => void;
-  groups?: string[] | undefined;
-  data?: farmerDetail[];
+  newGroupNames?: string[] | undefined;
   handleCloseImport: () => void;
+  farmerGroupDatas: FarmersGroup[] | null;
+  farmerDatas: farmerDetail[] | null;
+  count?: number | null;
+  setNewGroupNames: Dispatch<SetStateAction<string[] | undefined>>;
+  setInputData: Dispatch<SetStateAction<farmerDetail[] | undefined>>;
 }
 
-const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, data, handleCloseImport }) => {
+const ImportFarmerGroupModal: FC<Props> = ({
+  openModal,
+  handleClose,
+  newGroupNames,
+  handleCloseImport,
+  farmerGroupDatas,
+  farmerDatas,
+  count,
+  setNewGroupNames,
+  setInputData,
+}) => {
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+  const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
-  const [farmerDatas, setFarmerDatas] = useState<Object[]>();
-  const [createFarmers, setCreateFarmers] = useState<boolean>(false);
 
   const yesButtonHandler = () => {
-    if (data) {
-      let newId: string;
-      let farmer: Object;
-      let farmerGroup: Object;
-      let newFarmerDetailsDatas: Object[] = [];
-      let newFarmerGroupDatas: Object[] = [];
-
-      // creating the new datas for farmerdDetails & farmerGroup
-      // eslint-disable-next-line array-callback-return
-      data?.map((i: farmerDetail) => {
-        let id = uuid();
-        newId = id;
-
-        // creating farmerDetails db structure
-        farmer = {
-          ...i,
-          id: newId,
-          profile: "",
-        };
-
-        // creating farmerGroup db structure
-        farmerGroup = { id: uuid(), groupName: i.group, explanation: "", chairman: "", treasurer: "", secretary: "", members: [newId] };
-        newFarmerDetailsDatas.push(farmer);
-        newFarmerGroupDatas.push(farmerGroup);
-      });
-
-      setFarmerDatas(newFarmerDetailsDatas);
+    if (farmerGroupDatas && farmerDatas) {
       // mutating farmerGroup while bulk import
       addFarmerGroup({
-        data: newFarmerGroupDatas,
+        data: farmerGroupDatas as FarmersGroup[],
         successCb: () => {
           addNotification({ id: uuid(), message: "New farmer group created" });
-          Toast({ message: `All ${newFarmerGroupDatas.length} groups created Successfully`, type: "success" });
-          setCreateFarmers(true); // for open the import farmerDetails modal
-          handleClose();
+          Toast({ message: `All ${farmerGroupDatas.length} groups created Successfully`, type: "success" });
+
+          addFarmerDetails({
+            data: farmerDatas as farmerDetail[],
+            successCb: () => {
+              addNotification({ id: uuid(), message: `New ${count} farmers created.` });
+              Toast({ type: "success", message: `All ${count} farmers created successfully` });
+              setNewGroupNames(undefined);
+              setInputData(undefined);
+              handleClose();
+              handleCloseImport();
+            },
+            errorCb: () => {
+              Toast({ type: "error", message: `error occured! please retry!` });
+            },
+          });
         },
         errorCb: () => {
           Toast({ message: "Request failed! Please try again", type: "error" });
@@ -71,41 +71,30 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
   };
 
   return (
-    <>
-      <CustomModal openModal={openModal}>
-        <ModalHeader handleClose={handleClose} alignment={"center"}>
-          Confirmation
-        </ModalHeader>
-        <ModalBody>
-          <S.Contents>
-            <S.DialogueText>Do you want to create the following farmer groups ?</S.DialogueText>
-            <S.ChipContainer>
-              {groups && groups.length > 0 ? groups?.map((i, index) => <S.Chips label={i} key={index} />) : "No new groups"}
-            </S.ChipContainer>
-            <S.ButtonContainer>
-              <YesOrNoButtons
-                yesAction={yesButtonHandler}
-                handleClose={() => {
-                  if (groups && groups.length > 0) {
-                    handleCloseImport();
-                    handleClose();
-                  } else {
-                    setCreateFarmers(true);
-                  }
-                }}
-              />
-            </S.ButtonContainer>
-          </S.Contents>
-        </ModalBody>
-      </CustomModal>
-      <ImportFarmerDetailsModal
-        handleClose={() => setCreateFarmers(!createFarmers)}
-        farmerDetailsData={farmerDatas && farmerDatas} // for mutate the farmer details db
-        openModal={createFarmers}
-        count={farmerDatas && farmerDatas.length} // for toast message
-        handleCloseImport={handleCloseImport}
-      />
-    </>
+    <CustomModal openModal={openModal}>
+      <ModalHeader handleClose={handleClose} alignment={"center"}>
+        Confirmation
+      </ModalHeader>
+      <ModalBody>
+        <S.Contents>
+          <S.DialogueText>
+            Do you want to create the following farmer groups & <S.Highlite>{count}</S.Highlite> farmer details?
+          </S.DialogueText>
+          <S.ChipContainer>
+            {newGroupNames && newGroupNames.length > 0 ? newGroupNames?.map((i, index) => <S.Chips label={i} key={index} />) : "No new groups"}
+          </S.ChipContainer>
+          <S.ButtonContainer>
+            <YesOrNoButtons
+              yesAction={yesButtonHandler}
+              handleClose={() => {
+                handleCloseImport();
+                handleClose();
+              }}
+            />
+          </S.ButtonContainer>
+        </S.Contents>
+      </ModalBody>
+    </CustomModal>
   );
 };
 

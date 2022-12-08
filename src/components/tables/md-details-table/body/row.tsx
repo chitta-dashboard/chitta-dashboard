@@ -170,6 +170,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
             delete farmerEditData.farmerId;
             editData &&
               editFarmer({
+                
                 editedData: farmerEditData,
                 successCb: () => {
                   editMdDetail({ editedData: editData });
