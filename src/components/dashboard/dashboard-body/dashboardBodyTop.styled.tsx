@@ -10,11 +10,12 @@ export namespace S {
     [theme.breakpoints.down("md")]: {
       width: "calc(100% - 4rem)",
     },
-    ".slick-list":{
-      minHeight:"200px",
-      paddingTop:"0.7rem"
+    ".slick-list": {
+      minHeight: "200px",
+      paddingTop: "0.7rem",
     },
     ".slick-slide": {
+      paddingLeft: "20px !important",
       maxWidth: "calc(278px + 1rem) !important",
     },
     ".slick-prev": {
@@ -66,11 +67,18 @@ export namespace S {
     flexDirection: "column",
     justifyContent: "space-between",
     gap: "0.8rem",
+    cursor: "pointer",
     [theme.breakpoints.down("xl")]: {
       height: "130px !important",
       width: "200px !important",
       padding: "1rem",
       gap: "0.5rem",
+    },
+    "&:hover": {
+      // border: "0.1875rem solid",
+      // borderColor: theme.palette.border.primary,
+      transform: "scale(1.05)",
+      boxShadow: `0px 8px 12px ${theme.palette.addAlpha(theme.palette.custom.shadow, 0.1)}`,
     },
   }));
 

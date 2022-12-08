@@ -8,7 +8,7 @@ export const customMemberFilter = {
   WITHOUT_MEMBERS: 3,
 };
 
-export type IFarmersGroup = {
+ type IFarmersGroup = {
   id: string;
   groupName: string;
   explanation: string;

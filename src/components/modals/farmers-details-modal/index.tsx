@@ -20,7 +20,6 @@ import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, group
 import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
-import { RootState } from "../../../utils/store";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;

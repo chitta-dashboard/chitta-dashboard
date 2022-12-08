@@ -1,14 +1,12 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-//import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { farmerDetail } from "../../utils/context/farmersDetails";
 import { useFetch } from "../../utils/hooks/query";
 import { adminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
-import { RootState } from "../../utils/store";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;

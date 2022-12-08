@@ -5,10 +5,11 @@ import { useReactToPrint } from "react-to-print";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
@@ -17,8 +18,6 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
-import { IMdDetails } from "../../../utils/store/slice/mdDetails";
-import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
