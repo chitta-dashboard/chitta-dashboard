@@ -22,7 +22,7 @@ interface RightSectionProps {
 const RightSection: FC<RightSectionProps> = (props) => {
   // const dispatch = useDispatch();
 
-  const { shareAmountModalHandler, addModalHandler } = props;
+  const { addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();
