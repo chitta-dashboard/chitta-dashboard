@@ -1,8 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
-// import { RootState } from "../../../../utils/store";
-// import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
 // import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";

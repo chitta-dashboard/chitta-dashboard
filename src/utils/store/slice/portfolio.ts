@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 
-export interface IPortfolioSlice {
+ interface IPortfolioSlice {
     searchFilter: string;
     sortFilter: SortOrder;
     currentPage: number;
