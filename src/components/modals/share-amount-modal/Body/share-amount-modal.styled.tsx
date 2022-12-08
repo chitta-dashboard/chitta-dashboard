@@ -2,9 +2,24 @@ import { styled, Box, Typography, CircularProgress } from "@mui/material";
 
 namespace S {
   export const ShareDetailBodyContainer = styled(Box)({
-    height: "7.5rem",
+    height: "8rem",
     width: "29.375rem",
     padding: "0 0.625rem",
+    display: "flex !important",
+    flexDirection: "column",
+    justifyContent: "space-between !important",
+    gap: "1.5rem",
+  });
+
+  export const ToggleSwitchContainer = styled(Box)({
+    display: "flex !important",
+    justifyContent: "flex-start !important",
+    gap: "6rem",
+    width: "100%",
+  });
+
+  export const ShareModalSubContainer = styled(Box)({
+    width: "100%",
     display: "flex !important",
     justifyContent: "space-between !important",
   });

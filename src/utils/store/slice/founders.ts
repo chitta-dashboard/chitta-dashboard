@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
-export interface IFounders {
+ interface IFounders {
   id: string;
   name: string;
   phoneNumber: string;
@@ -13,7 +13,7 @@ export interface IFounders {
   joinDate?: string;
 }
 
-export interface IFoundersSlice {
+ interface IFoundersSlice {
   foundersById: { [id: string]: IFounders };
   searchFilter: string;
   sortFilter: SortOrder;

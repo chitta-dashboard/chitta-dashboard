@@ -1,16 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import { Theme } from "@mui/material";
 import Slider from "react-slick";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { useGetFarmersCount, useFetch } from "../../../../utils/hooks/query";
-import Icon from "../../../icons";
-import { ENDPOINTS, Endpoints } from "../../../../utils/constants";
+import { useGetFarmersCount } from "../../../../utils/hooks/query";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
-import { useEffect } from "react";
+import Icon from "../../../icons";
 
 const DashboardBodyTop = () => {
+  const navigate = useNavigate();
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
 
@@ -22,7 +22,7 @@ const DashboardBodyTop = () => {
     acreFieldCount,
     isLoading: isFarmerDetailsLoading,
   } = useGetFarmersCount();
-  
+
   const StatisticsItems = [
     {
       id: 1,
@@ -30,6 +30,7 @@ const DashboardBodyTop = () => {
       bodyCount: `${totalFarmerCount}`,
       footerName: "Total Farmers",
       icon: "farmer-count",
+      navigate: "/farmers-details",
     },
     {
       id: 2,
@@ -37,6 +38,7 @@ const DashboardBodyTop = () => {
       bodyCount: `${farmerGroupCount}`,
       footerName: "Group",
       icon: "groups",
+      navigate: "/farmers-group",
     },
     {
       id: 3,
@@ -84,7 +86,12 @@ const DashboardBodyTop = () => {
       <Slider {...settings}>
         {StatisticsItems.map((card) => {
           return (
-            <S.StasticsCard key={card.id}>
+            <S.StasticsCard
+              key={card.id}
+              onClick={() => {
+                card.navigate && navigate(card.navigate);
+              }}
+            >
               <S.StatCardHeader>
                 <S.StatCardHeaderLeft>
                   <S.StatCardIcon>

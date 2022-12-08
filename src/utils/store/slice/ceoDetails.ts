@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ICeoDetail {
+ interface ICeoDetail {
   id: string;
   name: string;
   profile: string;

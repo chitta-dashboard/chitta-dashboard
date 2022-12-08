@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 
-export interface IMdDetails {
+ interface IMdDetails {
   id: string;
   farmerId?: string;
   membershipId?: string;
@@ -32,7 +32,7 @@ export interface IMdDetails {
 
 export type selectedMdListData = number | string;
 
-export interface IMdDetailsSlice {
+ interface IMdDetailsSlice {
   mdDetailsById: { [id: string]: IMdDetails };
   searchFilter: string;
   sortFilter: SortOrder;

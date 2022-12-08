@@ -1,8 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
-// import { RootState } from "../../../../utils/store";
-// import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
 // import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -309,7 +307,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
               <>
                 {typeof openConfirmationModal === "string" ? (
                   <span>
-                    Do you want to register {<S.CustomMessage>{selectedFarmers.length}</S.CustomMessage>} members to{" "}
+                    Do you want to register {<S.CustomMessage>{selectedFarmers.length}</S.CustomMessage>} farmers to{" "}
                     {<S.CustomMessage>{openConfirmationModal}</S.CustomMessage>} farmer group`
                   </span>
                 ) : (
