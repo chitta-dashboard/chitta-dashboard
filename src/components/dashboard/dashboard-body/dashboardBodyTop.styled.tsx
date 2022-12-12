@@ -132,10 +132,10 @@ export namespace S {
   export const StatCardHeaderCount = styled(Box, {
     shouldForwardProp: (prop) => prop !== "neg",
   })(({ theme, neg }: any) => ({
-    width: "4rem",
+    width: "2.5rem",
     height: "1.5rem",
     background: neg ? theme.palette.addAlpha(theme.palette.text.red, 0.1) : theme.palette.bg.light,
-    fontSize: "0.8rem",
+    fontSize: "0.6rem",
     fontWeight: "600",
     display: "flex",
     justifyContent: "center",
@@ -144,8 +144,8 @@ export namespace S {
     color: neg ? "red" : theme.palette.text.primary,
     [theme.breakpoints.down("xl")]: {
       height: "1.2rem",
-      width: "3.5rem",
-      fontSize: "0.7rem",
+      width: "2rem",
+      fontSize: "0.5rem",
     },
   }));
 }

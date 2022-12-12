@@ -30,7 +30,7 @@ interface CustomProps {
   mdId?: string | undefined;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { currentPage, farmerQuery } = useFarmerDetailsContext();
+  const { farmerBankDetail } = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   let {
     formatChangeSuccess: isSuccess,
@@ -182,7 +182,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const accountNumber = form3Watch("accountNumber");
   const confirmAccountNumber = form3Watch("confirmAccountNumber");
   const ifscCode = form3Watch("ifscCode");
-  if (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) {
+  if (
+    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) ||
+    !farmerBankDetail
+  ) {
     form3EnableButton = false;
   }
 
