@@ -13,7 +13,7 @@ import Loader from "../../utils/loaders/tree-loader";
 
 const Founders = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
-  const { setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
+  const { setSearchFilter } = useFounderContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 
@@ -47,7 +47,7 @@ const Founders = () => {
         <Loader />
       ) : (
         <S.foundersContainer>
-          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <FoundersTable />
         </S.foundersContainer>
       )}

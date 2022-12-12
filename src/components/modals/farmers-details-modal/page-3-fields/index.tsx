@@ -36,7 +36,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
         name="confirmAccountNumber"
         type="number"
         control={control}
-        rules={{ required: "required", validate: (value) => value !== accntNo ? "Account number should match" : true }}
+        rules={{ required: "required", validate: (value) => (value !== accntNo ? "Account number should match" : true) }}
         options={{ label: "வங்கி கணக்கு எண்ணை உறுதி செய்க  *", gridArea: "cnanum", placeholder: "வங்கி கணக்கு எண்ணை உறுதி செய்க" }}
       />
       <Input

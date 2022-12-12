@@ -6,6 +6,7 @@ namespace S {
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
+    gap: "1rem",
     [theme.breakpoints.down("lg")]: {
       flexDirection: "column",
       gap: "1rem",
