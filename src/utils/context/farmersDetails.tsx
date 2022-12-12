@@ -1,4 +1,5 @@
 import React, { createContext, FC, useContext, useReducer } from "react";
+import { boolean } from "yup";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
@@ -13,6 +14,7 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
 const SET_FARMER_QUERY = "SET_FARMER_QUERY";
+const SET_FARMER_BANK_DETAIL = "SET_FARMER_BANK_DETAIL";
 
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
@@ -84,6 +86,8 @@ interface farmerDetailsContextType {
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
   setFarmersIdToExport: (id: string[] | number[]) => void;
   setFarmerQuery: (query: string) => void;
+  farmerBankDetail: boolean;
+  setFarmerBankDetail: (value: boolean) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -109,6 +113,8 @@ const initialState: farmerDetailsContextType = {
   setPageCount: () => {},
   setFarmersIdToExport: () => {},
   setFarmerQuery: () => {},
+  farmerBankDetail: false,
+  setFarmerBankDetail: boolean,
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -170,6 +176,9 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case SET_FARMER_QUERY:
       return { ...state, farmerQuery: action.payload };
 
+    case SET_FARMER_BANK_DETAIL:
+      return { ...state, farmerBankDetail: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -225,6 +234,10 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_FARMER_QUERY, payload: query });
   };
 
+  const setFarmerBankDetail = (value: boolean) => {
+    dispatch({ type: SET_FARMER_BANK_DETAIL, payload: value });
+  };
+
   let data = {
     ...state,
     setSearchFilter,
@@ -238,6 +251,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setPageCount,
     setFarmersIdToExport,
     setFarmerQuery,
+    setFarmerBankDetail,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;
