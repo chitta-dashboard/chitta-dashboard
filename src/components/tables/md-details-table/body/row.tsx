@@ -1,13 +1,15 @@
-import React, { useState, useRef, FC } from "react";
+import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
@@ -21,27 +23,36 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
+  const { setFarmerBankDetail } = useFarmerDetailsContext();
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<IMdDetails>();
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
   //Edit MdDetail Handler
-  const editMdDetailHandler = () => setEditMode(!editMode);
+  const editMdDetailHandler = () => {
+    setEditMode(!editMode);
+    setFarmerBankDetail(true);
+  };
 
   //Update MdDetail Handler
   const updateMdDetail = (data: IMdDetails) => {
+    setFarmerBankDetail(false);
     setEditData(data);
     confirmModalHandler();
   };
@@ -91,7 +102,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
-    navigate(`/md-details/${mdId}`);
+    setOpenFarmerRowModal(mdId);
   };
 
   return (
@@ -143,7 +154,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         />
         <FarmersDetailsModal
           openModal={editMode}
-          handleClose={() => setEditMode(false)}
+          handleClose={() => {
+            setEditMode(false);
+            setFarmerBankDetail(false);
+          }}
           cb={updateMdDetail}
           editMode={editMode}
           id={user.farmerId}
@@ -170,7 +184,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
             delete farmerEditData.farmerId;
             editData &&
               editFarmer({
-                
                 editedData: farmerEditData,
                 successCb: () => {
                   editMdDetail({ editedData: editData });
@@ -192,6 +205,18 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
             )
           }
         />
+        {openFarmerRowModal && (
+          <>
+            <FarmerBankDetailModal
+              openModal={true}
+              navigateId={openFarmerRowModal}
+              handleClose={() => {
+                setOpenFarmerRowModal(null);
+              }}
+              mdPage={true}
+            />
+          </>
+        )}
       </S.WebTableCell>
     </TableRow>
   );

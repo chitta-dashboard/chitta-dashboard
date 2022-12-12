@@ -13,7 +13,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
-  const { sortFilter, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
+  const { setSearchFilter, farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },
@@ -30,6 +30,7 @@ const FarmersDetails = () => {
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
+    setFarmerBankDetail(true);
   };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
@@ -42,6 +43,7 @@ const FarmersDetails = () => {
 
   // Add Farmerdetail Handler
   const addDataHandler = async (data: IMdDetails) => {
+    setFarmerBankDetail(false);
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
     newFarmer &&
@@ -79,7 +81,14 @@ const FarmersDetails = () => {
             />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
-          <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
+          <AddFarmersDetailsModal
+            openModal={addModal}
+            handleClose={() => {
+              addModalHandler();
+              setFarmerBankDetail(false);
+            }}
+            cb={addDataHandler}
+          />
         </>
       )}
     </>
