@@ -49,9 +49,16 @@ namespace S {
           },
         }
       : null),
+    "& .Mui-disabled": {
+      backgroundColor: "transparent",
+    },
   }));
 
-  export const NumberInput = styled(CommonInputStyled)(() => ({}));
+  export const NumberInput = styled(CommonInputStyled)(() => ({
+    "& .Mui-disabled": {
+      backgroundColor: "transparent",
+    },
+  }));
 
   export const DateInput = styled(CommonInputStyled)(() => ({}));
 
