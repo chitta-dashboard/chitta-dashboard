@@ -16,6 +16,7 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 //import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
+import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -27,20 +28,18 @@ interface FarmersDetailsRowProps {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
-  const { checkboxSelect, selectedFarmers } = useFarmerDetailsContext();
+  const { checkboxSelect, selectedFarmers, setFarmerBankDetail } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
-
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<IMdDetails>();
@@ -51,6 +50,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const [image, setImage] = useState("");
   const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string | null>(null);
   const [idCard, setIdCard] = useState(false);
+  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
   useEffect(() => {
@@ -60,15 +60,22 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     setFarmerIdtoPrint(null);
   }, [farmerIdtoPrint]);
 
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
+
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
   //Edit Farmers Details Handler
-  const editFarmerDetailHandler = () => setEditMode(!editMode);
-
+  const editFarmerDetailHandler = () => {
+    setEditMode(!editMode);
+    setFarmerBankDetail(true);
+  };
   //Update Farmers Details Handler
   const updateFarmerDetail = (data: farmerDetail) => {
     setEditData(data);
+    setFarmerBankDetail(false);
     confirmModalHandler();
   };
 
@@ -100,10 +107,13 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const generateFarmerDetailForm = useReactToPrint({
     documentTitle: `${user.name}_FarmerDetail_form`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,
+    onAfterPrint() {
+      setFarmerBankDetail(false);
+    },
   });
 
   const NavigateToFarmerDetailForm = (farmerId: string) => {
-    navigate(`/farmers-details/${farmerId}`);
+    setOpenFarmerRowModal(farmerId);
   };
 
   const handleCroppedImage = async (image: string) => {
@@ -196,6 +206,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             <CS.Icon onClick={editFarmerDetailHandler}>edit</CS.Icon>
             <CS.Icon
               onClick={() => {
+                setFarmerBankDetail(true);
                 setFarmerIdtoPrint(user.id);
               }}
             >
@@ -209,12 +220,16 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             handleEdit={() => setEditMode(true)}
             handleIdCard={() => setIdCard(true)}
             handlePdfDownload={() => {
+              setFarmerBankDetail(true);
               setFarmerIdtoPrint(user.id);
             }}
           />
           <FarmersDetailsModal
             openModal={editMode}
-            handleClose={() => setEditMode(false)}
+            handleClose={() => {
+              setFarmerBankDetail(false);
+              setEditMode(false);
+            }}
             cb={updateFarmerDetail}
             editMode={editMode}
             id={user.id}
@@ -297,6 +312,17 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               setIconModal(false);
             }}
           />
+          {openFarmerRowModal && (
+            <>
+              <FarmerBankDetailModal
+                openModal={true}
+                navigateId={openFarmerRowModal}
+                handleClose={() => {
+                  setOpenFarmerRowModal(null);
+                }}
+              />
+            </>
+          )}
         </S.WebTableCell>
       </TableRow>
     </>

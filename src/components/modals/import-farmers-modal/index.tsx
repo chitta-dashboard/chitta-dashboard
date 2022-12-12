@@ -34,18 +34,17 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.farmerDetails);
 
+  const dataLength = isSuccess && Object.values(farmersDetailsById).length;
+  const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
+
+  const lastMembershipId =
+    isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
+  let newMemberId = parseInt(lastMembershipId as string);
+
   const cancelHandler = () => {
     setShowDownloadButton(false);
     handleClose();
   };
-
-  useEffect(() => {
-    if (verifiedNewFarmers && verifiedNewFarmers?.length > 0) {
-      setShowDownloadButton(true);
-      setCount(verifiedNewFarmers.length);
-      setInputData(verifiedNewFarmers);
-    }
-  }, [verifiedNewFarmers, count]);
 
   const downloadAndContinueHandler = () => {
     downloadRejectedData();
@@ -57,13 +56,15 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
     setOpenImportGroup(true);
   };
 
-  const dataLength = isSuccess && Object.values(farmersDetailsById).length;
-  const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
-  const lastMembershipId =
-    isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
-  let newMemberId = parseInt(lastMembershipId as string);
   useEffect(() => {
-    // if (inputData && newGroupNames) {
+    if (verifiedNewFarmers && verifiedNewFarmers?.length > 0) {
+      setShowDownloadButton(true);
+      setCount(verifiedNewFarmers.length);
+      setInputData(verifiedNewFarmers);
+    }
+  }, [verifiedNewFarmers, count]);
+
+  useEffect(() => {
     if (inputData) {
       let farmerId: string;
       let farmer: farmerDetail;
@@ -84,6 +85,9 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
           profile: "",
           membershipId: `NER-FPC-${newMemberId + 1}`,
           accountNumber: encryptText(i.accountNumber as string),
+          nameAsPerBank: "",
+          bankName: "",
+          ifscCode: "",
         };
 
         // creating farmerGroup db structure
@@ -96,7 +100,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
       setNewFarmersDatas(newFarmerDetailsDatas);
       setNewFarmerGroupDatas(newFarmerGroupDatas);
     }
-  }, [inputData]);
+  }, [inputData, newMemberId]);
 
   useEffect(() => {
     if (existingFarmers && existingFarmers.length > 0) {

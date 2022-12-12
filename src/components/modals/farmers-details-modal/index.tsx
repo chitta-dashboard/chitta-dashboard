@@ -30,7 +30,7 @@ interface CustomProps {
   mdId?: string | undefined;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { currentPage, farmerQuery } = useFarmerDetailsContext();
+  const { farmerBankDetail } = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   let {
     formatChangeSuccess: isSuccess,
@@ -182,7 +182,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const accountNumber = form3Watch("accountNumber");
   const confirmAccountNumber = form3Watch("confirmAccountNumber");
   const ifscCode = form3Watch("ifscCode");
-  if (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) {
+  if (
+    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) ||
+    !farmerBankDetail
+  ) {
     form3EnableButton = false;
   }
 
@@ -277,15 +280,15 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       id: mdId ? mdId : editMode ? id : newId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
-      landAreaInCent: `${
+      landAreaInCent:
         Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
           return a + parseInt(b as string);
-        }, 0) * ACRETOCENT
-      }`,
+        }, 0) * ACRETOCENT,
+
       accountNumber: encryptText(accountNumber),
     } as IAddFarmersDetailsPage1Input &
       IAddFarmersDetailsPage2Input &
-      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: string };
+      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: number };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };
