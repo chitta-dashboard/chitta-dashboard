@@ -58,6 +58,7 @@ export const LightTheme: Theme = createTheme({
       return hex + _opacity.toString(16).toUpperCase();
     },
   },
+
   typography: {
     fontFamily: "'Poppins', 'sans-serif'",
   },

@@ -14,8 +14,7 @@ import Toast from "../../utils/toast";
 const FarmersGroup = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-
-  const { setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  const { setSearchFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
