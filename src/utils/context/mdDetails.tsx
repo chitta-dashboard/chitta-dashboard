@@ -7,6 +7,7 @@ const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
+const SET_MD_QUERY = "SET_MD_QUERY";
 
 export interface IMdDetails {
   id: string;
@@ -50,11 +51,13 @@ export interface mdDetailsContextType {
   currentPage: number;
   pageCount: number;
   totalPageCount: number;
+  mdQuery: string;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   checkboxSelect: (id: string | {}) => void;
   setCurrentPage: (pageNo: number) => void;
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
+  setMdQuery: (data: string) => void;
 }
 
 const initialState: mdDetailsContextType = {
@@ -64,11 +67,13 @@ const initialState: mdDetailsContextType = {
   currentPage: 1,
   pageCount: 0,
   totalPageCount: 0,
+  mdQuery: "",
   setSortFilter: () => {},
   setSearchFilter: () => {},
   checkboxSelect: () => {},
   setCurrentPage: () => {},
   setPageCount: () => {},
+  setMdQuery: () => {},
 };
 
 const reducer = (state: mdDetailsContextType, action: any) => {
@@ -87,6 +92,9 @@ const reducer = (state: mdDetailsContextType, action: any) => {
 
     case SET_PAGE_COUNT:
       return { ...state, pageCount: action.payload.pageCount, totalPageCount: action.payload.totalPageCount };
+
+    case SET_MD_QUERY:
+      return { ...state, mdQuery: action.payload };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -118,6 +126,9 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
   const setPageCount = (updatePageCount: { pageCount: number; totalPageCount: number }) => {
     dispatch({ type: SET_PAGE_COUNT, payload: updatePageCount });
   };
+  const setMdQuery = (query: string) => {
+    dispatch({ type: SET_MD_QUERY, payload: query });
+  };
 
   let data = {
     ...state,
@@ -126,6 +137,7 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     checkboxSelect,
     setCurrentPage,
     setPageCount,
+    setMdQuery,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

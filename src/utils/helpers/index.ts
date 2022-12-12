@@ -46,3 +46,11 @@ export const handleDateDifference2 = (start: datePropsType, end: datePropsType) 
   }
   return `${days} ${days > 1 ? "days" : "day"}`;
 };
+
+export const useSearchQuery = (searchKey: number | string,searchName:string) => {
+  return searchKey === "" ? `?q=` : `?${searchName}_like=${searchKey}`;
+};
+
+export const useSortQuery = (sortKey: number | string, sortName: string) => {
+  return sortKey === "normal" ? "" : `&_sort=${sortName}&_order=${sortKey === "descending" ? "desc" : sortKey === "ascending" ? "asc" : ""}`;
+};

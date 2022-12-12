@@ -1,9 +1,9 @@
 import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
@@ -16,10 +16,12 @@ import Toast from "../../../../utils/toast";
 
 interface FarmersGroupRowProp {
   user: FarmersGroup;
+  params?: string;
 }
 
-const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
+const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  const { currentPage } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -27,8 +29,11 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const [editData, setEditData] = useState<FarmersGroup>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
-  const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
-  const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
+  // const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
+  // const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
+
+  const { mutate: farmerGroupEdit } = useEditByPage(ENDPOINTS.farmerGroup, currentPage, params);
+  const { mutate: farmerGroupDelete } = useDeleteByPage(ENDPOINTS.farmerGroup, currentPage, params);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);

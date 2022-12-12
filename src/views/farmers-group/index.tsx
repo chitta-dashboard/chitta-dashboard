@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
@@ -12,10 +13,10 @@ import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
+  const queryClient = useQueryClient();
+  const { setSearchFilter, setSortFilter, sortFilter, currentPage, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-
-  const { setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
@@ -46,12 +47,16 @@ const FarmersGroup = () => {
     addFarmerGroup({
       data: newFarmerGroup,
       successCb: () => {
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerGroup}-fetch-${currentPage}`] });
+        }, 0);
         Toast({ message: "Farmer Group added successfully.", type: "success" });
       },
       errorCb: () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
+
     addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 

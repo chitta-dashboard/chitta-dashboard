@@ -1,67 +1,84 @@
 import { useState, useEffect } from "react";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
+import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
+// import { addFarmerId, setPageCount, setCurrentPage, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Body = () => {
-
-
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers, setPageCount, setFarmersIdToExport, setCurrentPage,setFarmerQuery } =
-    useFarmerDetailsContext();
-
-
-  const searchQuery = searchFilter === "" ? `?q=` : `?name_like=${searchFilter}`;
-  const sortQuery =
-    sortFilter === "normal" ? "" : `&_sort=name&_order=${sortFilter === "descending" ? "desc" : sortFilter === "ascending" ? "asc" : ""}`;
+  const {
+    addFarmerId,
+    searchFilter,
+    sortFilter,
+    groupFilter,
+    farmerQuery,
+    currentPage,
+    setPageCount,
+    setFarmersIdToExport,
+    setCurrentPage,
+    setFarmerQuery,
+  } = useFarmerDetailsContext();
+  // const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
+  // const dispatch = useDispatch();
+  // console.log("currentPage", currentPage);
+  // const {
+  //   formatChangeSuccess: isSuccess,
+  //   result: { data: farmersDetailsById },
+  // }: any = useFetch(ENDPOINTS.farmerDetails);
+  const searchQuery = useSearchQuery(searchFilter, "name");
+  const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
+  const dataLimit = 25;
   const {
     formatChangeSuccess: isFarmerByPageSuccess,
     result: { data: farmersDetailsByPage, refetch: farmerPageRefetch },
     dataCount: totalDataCount,
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
-  const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
-  const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
-  const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
-  const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
-  const [loader, setLoader] = useState<boolean>(false);
+  // const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
+  // const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
+  // const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
+  // const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
+  // const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
+  // const [loader, setLoader] = useState<boolean>(false);
 
-  useEffect(() => {
-    setLoader(false);
+  // useEffect(() => {
+  //   setLoader(false);
 
-    setTimeout(() => {
-      setLoader(true);
-    }, 300);
-  }, []);
+  //   setTimeout(() => {
+  //     setLoader(true);
+  //   }, 300);
+  // }, []);
 
   useEffect(() => {
     farmerPageRefetch();
     farmerIdRefetch();
-
     setFarmerQuery(`${searchQuery}${groupQuery}${sortQuery}`);
-  }, [searchFilter, sortFilter, groupFilter, currentPage]);
-
+  }, [searchQuery, sortQuery, groupQuery, currentPage]);
 
   useEffect(() => {
+    // dispatch(addFarmerId(farmerId));
+    // dispatch(setFarmersIdToExport(farmerId));
     addFarmerId(farmerId);
     setFarmersIdToExport(farmerId);
   }, [farmerId]);
 
   useEffect(() => {
-    setPageCount({ pageCount: Math.ceil(totalDataCount / 25), totalPageCount: totalDataCount });
-    totalDataCount <= 25 && currentPage !== 1 && setCurrentPage(1);
+    setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
+    totalDataCount <= dataLimit && currentPage !== 1 && setCurrentPage(1);
   }, [totalDataCount]);
 
   // farmer group filter for farmer detail table
@@ -95,11 +112,11 @@ const Body = () => {
   //   //dispatch(setFarmersIdToExport(farmersId));
   // }, [farmersListSort, isSuccess, exportFarmerId]);
 
-  // For tamil share holder certificate
+  // // For tamil share holder certificate
   // useEffect(() => {
   //   if (isSuccess) {
   //     const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
-  //     //isSuccess && dispatch(addFarmerId(farmerId));
+  //     //isSuccess && addFarmerId(farmerId);
   //   }
   // }, [isSuccess, farmersList, exportFarmerId]);
 

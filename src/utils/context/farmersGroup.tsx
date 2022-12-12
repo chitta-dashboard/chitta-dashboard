@@ -12,6 +12,9 @@ const SET_SORT_FILTER = "SET_SORT_FILTER";
 const MEMBER_FILTER = "MEMBER_FILTER";
 const ADD_GROUP_MEMBER = "ADD_GROUP_MEMBER";
 const REMOVE_GROUP_MEMBER = "REMOVE_GROUP_MEMBER";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_PAGE_COUNT = "SET_PAGE_COUNT";
+const SET_FARMER_GROUP_QUERY = "SET_FARMER_GROUP_QUERY";
 
 //Group Filter by Member
 export const customMemberFilter = {
@@ -39,11 +42,20 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
+type updatedCountType = {
+  pageCount: number;
+  totalPageCount: number;
+};
+
 interface farmersGroupContextType {
   farmersGroupById: { [id: string]: FarmersGroup };
   searchFilter: string;
   memberFilter: number;
+  currentPage: number;
+  pageCount: number;
+  totalPageCount: number;
   sortFilter: SortOrder;
+  farmerGroupQuery: string;
   getFarmersGroupData: (data: FarmersGroup) => void;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
@@ -53,6 +65,9 @@ interface farmersGroupContextType {
   addGroupMember: (data: IAddGroupMembers) => void;
   removeGroupMember: (groupMemberId?: string) => void;
   setMemberFilter: (value: number) => void;
+  setCurrentPage: (value: number) => void;
+  setPageCount: (value: updatedCountType) => void;
+  setFarmerGroupQuery: (data: string) => void;
 }
 
 const initialState: farmersGroupContextType = {
@@ -98,6 +113,13 @@ const initialState: farmersGroupContextType = {
   removeGroupMember: () => {},
   memberFilter: customMemberFilter.ALL,
   setMemberFilter: () => {},
+  setCurrentPage: () => {},
+  setPageCount: () => {},
+  farmerGroupQuery: "",
+  setFarmerGroupQuery: () => {},
+  currentPage: 1,
+  pageCount: 0,
+  totalPageCount: 0,
 };
 const reducer = (state: farmersGroupContextType, action: any) => {
   switch (action.type) {
@@ -148,6 +170,15 @@ const reducer = (state: farmersGroupContextType, action: any) => {
     case FARMER_GROUP_DATA:
       return { ...state, farmersGroupById: action.payload };
 
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.payload };
+
+    case SET_PAGE_COUNT:
+      return { ...state, pageCount: action.payload.pageCount, totalPageCount: action.payload.totalPageCount };
+
+    case SET_FARMER_GROUP_QUERY:
+      return { ...state, farmerGroupQuery: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -193,6 +224,15 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
   const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
+  const setCurrentPage = (pageNo: number) => {
+    dispatch({ type: SET_CURRENT_PAGE, payload: pageNo });
+  };
+  const setPageCount = (updatePageCount: { pageCount: number; totalPageCount: number }) => {
+    dispatch({ type: SET_PAGE_COUNT, payload: updatePageCount });
+  };
+  const setFarmerGroupQuery = (query: string) => {
+    dispatch({ type: SET_FARMER_GROUP_QUERY, payload: query });
+  };
 
   let data = {
     ...state,
@@ -205,6 +245,9 @@ const FarmersGroupContextProvider: FC<Props> = (props) => {
     setSearchFilter,
     setSortFilter,
     setMemberFilter,
+    setCurrentPage,
+    setPageCount,
+    setFarmerGroupQuery,
   };
 
   return <farmersGroupContext.Provider value={data}>{props.children}</farmersGroupContext.Provider>;
