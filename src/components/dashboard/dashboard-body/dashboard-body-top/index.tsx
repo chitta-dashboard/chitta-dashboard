@@ -10,6 +10,8 @@ import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
+import PopOver from "../../../common-components/pop-over";
+import { useState } from "react";
 
 const DashboardBodyTop = () => {
   const navigate = useNavigate();
@@ -41,10 +43,18 @@ const DashboardBodyTop = () => {
         return a + value;
       }, 0) / ACRETOCENT
     : 0;
+  interface Ivalue {
+    "9eb5af43-f224-4434-9488-fddf4eb004dc": string;
+  }
+  const [isPopOver, setIsPopOver] = useState<HTMLButtonElement | null>(null);
+  const [popId, setPopId] = useState<string>("");
+  const [value, setValue] = useState<Ivalue>({
+    "9eb5af43-f224-4434-9488-fddf4eb004dc": "Acres",
+  });
 
   const StatisticsItems = [
     {
-      id: 1,
+      id: "15c09e0a-274c-4bd5-9b2b-88581ab51f25",
       headCount: "+87",
       bodyCount: `${totalFarmerCount}`,
       footerName: "Total Farmers",
@@ -53,7 +63,7 @@ const DashboardBodyTop = () => {
       isSuccess: farmerDetailsSuccess,
     },
     {
-      id: 2,
+      id: "babdd103-fd3c-4a90-87f7-21d1ef5a9106",
       headCount: "+23",
       bodyCount: `${farmerGroupCount}`,
       footerName: "Group",
@@ -62,7 +72,7 @@ const DashboardBodyTop = () => {
       isSuccess: farmerGroupSuccess,
     },
     {
-      id: 3,
+      id: "ddc859fc-b75f-4b48-ba6d-e30aadc3e9ac",
       headCount: "+59",
       bodyCount: `${totalFarmerCount - femaleFarmerCount}`,
       footerName: "Farmer",
@@ -70,7 +80,7 @@ const DashboardBodyTop = () => {
       isSuccess: farmerDetailsSuccess,
     },
     {
-      id: 4,
+      id: "0fbd3d99-be00-4415-8b90-0bd0f833ee77",
       headCount: "+28",
       bodyCount: `${femaleFarmerCount}`,
       footerName: "Farmerette",
@@ -78,10 +88,12 @@ const DashboardBodyTop = () => {
       isSuccess: farmerDetailsSuccess,
     },
     {
-      id: 5,
+      id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
       headCount: "-8",
-      bodyCount: `${totalAcreCount.toFixed(2)}`,
-      footerName: "Fields Size (Acres)",
+      bodyCount: `${
+        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents" ? (totalAcreCount * ACRETOCENT).toFixed(2) : totalAcreCount.toFixed(2)
+      }`,
+      footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
       isSuccess: farmerDetailsSuccess,
     },
@@ -103,6 +115,27 @@ const DashboardBodyTop = () => {
     slidesToScroll: 1,
     autoplay: false,
     centerPadding: "1rem",
+  };
+
+  const popOverStatisticsItems: any = {
+    "15c09e0a-274c-4bd5-9b2b-88581ab51f25": [],
+    "babdd103-fd3c-4a90-87f7-21d1ef5a9106": [],
+    "ddc859fc-b75f-4b48-ba6d-e30aadc3e9ac": [],
+    "0fbd3d99-be00-4415-8b90-0bd0f833ee77": [],
+    "9eb5af43-f224-4434-9488-fddf4eb004dc": [
+      { id: "1", name: "Acres" },
+      { id: "2", name: "Cents" },
+    ],
+  };
+
+  const onPopOverHandler = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
+    setPopId(id);
+    setIsPopOver(event.currentTarget);
+  };
+
+  const onChangeDataHandler = (updateValue: string) => {
+    setValue({ ...value, [popId as string]: updateValue });
+    setIsPopOver(null);
   };
 
   return (
@@ -129,8 +162,18 @@ const DashboardBodyTop = () => {
               </S.StatCardHeader>
               <S.StatCardFooter>
                 {card.footerName}
-                <Icon iconName="three-dots" />
+                <Icon iconName="three-dots" clickHandler={(event) => onPopOverHandler(event, card.id)} />
               </S.StatCardFooter>
+              {isPopOver && popOverStatisticsItems[popId].length > 0 && (
+                <PopOver
+                  id={card.id}
+                  value={value[popId as keyof Ivalue]}
+                  isOpen={isPopOver}
+                  onSelectHandler={onChangeDataHandler}
+                  onPopCloseHandler={() => setIsPopOver(null)}
+                  popOverOptions={popOverStatisticsItems[popId]}
+                />
+              )}
             </S.StasticsCard>
           );
         })}
