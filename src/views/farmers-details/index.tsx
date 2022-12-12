@@ -13,10 +13,10 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
-  const { sortFilter, setSearchFilter, setCurrentPage, currentPage, farmerQuery, setSortFilter } = useFarmerDetailsContext();
-  let {
-    result: { refetch: farmerDetailsRefetch },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery,false);
+  const { sortFilter, currentPage, farmerQuery, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
+  const {
+    result: { refetch: farmerPageRefetch },
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25,false);
 
   const {
     result: { data: farmersGroupById },
@@ -26,7 +26,6 @@ const FarmersDetails = () => {
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
-
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 
@@ -51,9 +50,9 @@ const FarmersDetails = () => {
       (await mutate({
         data: newFarmer,
         successCb: () => {
+          farmerPageRefetch();
           addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
-          farmerDetailsRefetch();
         },
         errorCb: () => {
           Toast({ message: "Request failed! Please try again", type: "error" });

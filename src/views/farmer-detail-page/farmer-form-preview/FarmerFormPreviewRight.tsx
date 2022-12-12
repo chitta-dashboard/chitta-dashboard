@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { ENDPOINTS, groupBy } from "../../../utils/constants";
-import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
+import { useFetch, useFetchByPage, useIdByPage } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
@@ -10,23 +10,26 @@ import { S } from "./farmer-form-preview.styled";
 import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewRight = () => {
+  // const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
   const { currentPage } = useFarmerDetailsContext();
-  let {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
-
   const { farmerId } = useParams();
-  const {
-    formatChangeSuccess: isSuccessAdmin,
-    result: { data: adminDetails },
-  } = useFetch(ENDPOINTS.admin);
 
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  let {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: farmersDetailsById },
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId);
+  // console.log("mydata", farmersDetailsById);
+
+  // const {
+  //   formatChangeSuccess: isSuccessAdmin,
+  //   result: { data: adminDetails },
+  // } = useFetch(ENDPOINTS.admin);
+
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(farmersDetailsById as adminFormInputs)[0];
 
   return (
     <>
-      {isSuccess &&
+      {isSuccessAdmin &&
         isSuccessAdmin &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId].includes(name.id))

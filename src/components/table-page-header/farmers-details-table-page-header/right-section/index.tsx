@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
-import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
+import { useAdd, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
 // import { RootState } from "../../../../utils/store";
 // import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
 // import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -22,11 +22,11 @@ interface RightSectionProps {
 const RightSection: FC<RightSectionProps> = (props) => {
   // const dispatch = useDispatch();
 
-  const { shareAmountModalHandler, addModalHandler } = props;
+  const {addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();
-  const { selectedFarmers, farmerId, checkboxUnselectAll, groupFilter } = useFarmerDetailsContext();
+  const { selectedFarmers,farmerId ,farmersIdToExport, checkboxUnselectAll, farmerQuery, currentPage ,groupFilter} = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -42,8 +42,13 @@ const RightSection: FC<RightSectionProps> = (props) => {
       return resultData;
     }
   };
+  let {
+    result: { refetch: farmerDetailsRefetch },
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+  // const { mutate: updateFarmerDetails } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+
   const { mutate: updateFarmerDetails } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: updateMdDetails } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: updateFarmergroup } = useEdit(ENDPOINTS.farmerGroup);
@@ -123,13 +128,13 @@ const RightSection: FC<RightSectionProps> = (props) => {
       Object.values(farmersDetailsById as farmerDetail[])
         .filter((item: farmerDetail) => selectedFarmers.includes(item.id))
         .map((element) => ({ ...element, group: groupName }));
-
     updateFarmerDetails({
       editedData: data,
       successCb: () => {
         setTimeout(() => {
           handleMdDetails(data as farmerDetail[], groupName, newFarmerGroup);
         }, 0);
+        farmerDetailsRefetch();
       },
       errorCb: () => {
         Toast({

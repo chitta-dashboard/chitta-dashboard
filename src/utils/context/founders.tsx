@@ -7,6 +7,9 @@ const EDIT_FOUNDERS = "EDIT_FOUNDERS";
 const DELETE_FOUNDERS = "DELETE_FOUNDERS";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
+const SET_FOUNDER_QUERY = "SET_FOUNDER_QUERY";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 
 export type Founders = {
   id: string;
@@ -23,15 +26,27 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
+type updatedCountType = {
+  pageCount: number;
+  totalPageCount: number;
+};
+
 export interface foundersContextType {
   foundersById: { [id: string]: Founders };
   searchFilter: string;
   sortFilter: SortOrder;
+  founderQuery: string;
+  currentPage: number;
+  pageCount: number;
+  totalPageCount: number;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
   addFounder: (data: Founders) => void;
   editFounder: (data: Founders) => void;
   deleteFounder: (id: string) => void;
+  setFounderQuery: (data: string) => void;
+  setCurrentPage: (value: number) => void;
+  setPageCount: (value: updatedCountType) => void;
 }
 
 const initialState: foundersContextType = {
@@ -99,11 +114,18 @@ const initialState: foundersContextType = {
   },
   searchFilter: "",
   sortFilter: NORMAL,
+  founderQuery: "",
+  currentPage: 1,
+  pageCount: 0,
+  totalPageCount: 0,
   setSortFilter: () => {},
   setSearchFilter: () => {},
   addFounder: () => {},
   editFounder: () => {},
   deleteFounder: () => {},
+  setFounderQuery: () => {},
+  setCurrentPage: () => {},
+  setPageCount: () => {},
 };
 
 const reducer = (state: foundersContextType, action: any) => {
@@ -123,6 +145,15 @@ const reducer = (state: foundersContextType, action: any) => {
 
     case SET_SORT_FILTER:
       return { ...state, sortFilter: action.payload };
+
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.payload };
+
+    case SET_PAGE_COUNT:
+      return { ...state, pageCount: action.payload.pageCount, totalPageCount: action.payload.totalPageCount };
+
+    case SET_FOUNDER_QUERY:
+      return { ...state, founderQuery: action.payload };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -154,6 +185,15 @@ const FoundersContextProvider: FC<Props> = (props) => {
   const setSortFilter = (sortOrder: SortOrder) => {
     dispatch({ type: SET_SORT_FILTER, payload: sortOrder });
   };
+  const setCurrentPage = (pageNo: number) => {
+    dispatch({ type: SET_CURRENT_PAGE, payload: pageNo });
+  };
+  const setPageCount = (updatePageCount: { pageCount: number; totalPageCount: number }) => {
+    dispatch({ type: SET_PAGE_COUNT, payload: updatePageCount });
+  };
+  const setFounderQuery = (query: string) => {
+    dispatch({ type: SET_FOUNDER_QUERY, payload: query });
+  };
 
   let data = {
     ...state,
@@ -162,6 +202,7 @@ const FoundersContextProvider: FC<Props> = (props) => {
     deleteFounder,
     setSearchFilter,
     setSortFilter,
+    setFounderQuery,
   };
 
   return <foundersContext.Provider value={data}>{props.children}</foundersContext.Provider>;

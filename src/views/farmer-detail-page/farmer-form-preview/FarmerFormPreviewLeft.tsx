@@ -10,7 +10,7 @@ import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage, useIdByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -22,16 +22,21 @@ import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
   // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  const { currentPage,farmerQuery,totalPageCount } = useFarmerDetailsContext();
+  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
+  // const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+  const { currentPage, farmerQuery } = useFarmerDetailsContext();
+
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  let {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
-  
+
+  // let {
+  //   formatChangeSuccess: isSuccess,
+  //   result: { data: farmersDetailsById },
+  // } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
+  // console.log(farmersDetailsById);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -41,9 +46,10 @@ const FarmerFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
+  const {farmerId} = useParams()
   const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerId);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
@@ -56,9 +62,12 @@ const FarmerFormPreviewLeft = () => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(farmerDetail & { farmerId?: string }) | null>(null);
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const { farmerId } = useParams();
   const navigate = useNavigate();
 
+  let {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId);
 
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
@@ -160,7 +169,7 @@ const FarmerFormPreviewLeft = () => {
       {isSuccess &&
         isSuccessAdmin &&
         farmerId &&
-        [farmersDetailsById[farmerId]].map((user) => (
+        Object.values(farmersDetailsById as farmerDetail[]).map((user) => (
           <S.FarmerFormPreviewLeft key={user.id}>
             <S.CustomBackIcon onClick={() => navigate(-1)}>
               <IconWrapper>back</IconWrapper>

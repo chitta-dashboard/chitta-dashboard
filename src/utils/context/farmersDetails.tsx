@@ -12,7 +12,7 @@ const ADD_FARMER_ID = "ADD_FARMER_ID";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
-const SET_FARMER_QUERY = "SET_FARMER_QUERY"
+const SET_FARMER_QUERY = "SET_FARMER_QUERY";
 
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
@@ -74,11 +74,11 @@ interface farmerDetailsContextType {
   pageCount: number;
   totalPageCount: number;
   farmersIdToExport: [];
-  farmerQuery: string
+  farmerQuery: string;
   setCurrentPage: (pageNo: number) => void;
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
   setFarmersIdToExport: (id: string[] | number[]) => void;
-  setFarmerQuery:(query:string)=>void
+  setFarmerQuery: (query: string) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -99,11 +99,11 @@ const initialState: farmerDetailsContextType = {
   pageCount: 0,
   totalPageCount: 0,
   farmersIdToExport: [],
-  farmerQuery: '',
+  farmerQuery: "",
   setCurrentPage: () => {},
   setPageCount: () => {},
   setFarmersIdToExport: () => {},
-  setFarmerQuery: ()=>{}
+  setFarmerQuery: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -161,9 +161,12 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
 
     case SET_FARMERS_ID_TO_EXPORT:
       return { ...state, farmerId: action.payload };
-    
+
     case SET_FARMER_QUERY:
-      return {...state,farmerQuery: action.payload}
+      return { ...state, farmerQuery: action.payload };
+
+    case SET_FARMER_QUERY:
+      return { ...state, farmerQuery: action.payload };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -215,10 +218,9 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const setFarmersIdToExport = (id: string[] | number[]) => {
     dispatch({ type: SET_FARMERS_ID_TO_EXPORT, payload: id });
   };
-
-  const setFarmerQuery = (query:string)=>{
-    dispatch({type:SET_FARMER_QUERY,payload:query})
-  }
+  const setFarmerQuery = (query: string) => {
+    dispatch({ type: SET_FARMER_QUERY, payload: query });
+  };
 
   let data = {
     ...state,
@@ -232,7 +234,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setCurrentPage,
     setPageCount,
     setFarmersIdToExport,
-    setFarmerQuery
+    setFarmerQuery,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;
