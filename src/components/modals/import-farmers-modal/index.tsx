@@ -47,9 +47,13 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   };
 
   const downloadAndContinueHandler = () => {
-    downloadRejectedData();
-    setInputData(verifiedNewFarmers);
-    setOpenImportGroup(true);
+    if (count && count > 0) {
+      downloadRejectedData();
+      setInputData(verifiedNewFarmers);
+      setOpenImportGroup(true);
+    } else {
+      downloadRejectedData();
+    }
   };
 
   const importButtonHandler = () => {
@@ -117,9 +121,10 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
             <S.OptionalContainer>
               <S.DialogueText>
                 It looks like <S.Highlite>{count}</S.Highlite> farmer(s) have already used the entered mobile number. Click the{" "}
-                <S.Highlite>Download & Continue</S.Highlite> button to get their list and register the remaining farmers.
+                <S.Highlite>{count && count > 0 ? "Download & continue" : "Download"}</S.Highlite>{" "}
+                {count && count > 0 ? "button to get their list and register the remaining farmers." : "button to get the list"}
               </S.DialogueText>
-              <S.DownloadButton onClick={downloadAndContinueHandler}>Download & continue</S.DownloadButton>
+              <S.DownloadButton onClick={downloadAndContinueHandler}>{count && count > 0 ? "Download & continue" : "Download"}</S.DownloadButton>
               <S.CancelButton onClick={cancelHandler}>Cancel</S.CancelButton>
             </S.OptionalContainer>
           ) : (
