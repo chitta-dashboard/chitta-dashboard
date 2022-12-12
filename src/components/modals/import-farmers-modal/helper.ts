@@ -45,6 +45,10 @@ const isValidFormat = (farmerData: { [key: string]: string }) => {
     "groupMember",
     "acre",
     "qualification",
+    "nameAsPerBank",
+    "bankName",
+    "accountNumber",
+    "ifscCode",
   ];
   const loadedFields = Object.keys(farmerData);
   if (requiredFields.length !== loadedFields.length) return false;
@@ -95,9 +99,21 @@ export const validateFarmerData = function (file: File) {
       let findGroupNames = null;
       const dbFarmersPhoneNumber = Object.values(farmerDetails).map((i) => String(i.phoneNumber));
       const newFarmersPhoneNumber = Object.values(farmers).map((i) => i.phoneNumber);
-      const existingFarmersPhoneNumber = newFarmersPhoneNumber.filter((i) => !dbFarmersPhoneNumber.includes(i));
+      const existingFarmersPhoneNumber = newFarmersPhoneNumber.filter((i) => dbFarmersPhoneNumber.includes(i));
       existingFarmers = Object.values(farmers).filter((i) => dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
       newFarmers = Object.values(farmers).filter((i) => !dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
+
+      for (let i = 0; i < totalFarmers; i++) {
+        if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
+          findGroupNames = true;
+          return resolve({
+            status: false,
+            message: "Some phonenumbers are already registered! Rejected.",
+            existingFarmers: existingFarmers,
+            newFarmers: newFarmers,
+          });
+        }
+      }
 
       if (existingFarmers.length > 0 && newFarmers.length > 0) {
         farmers = newFarmers;
@@ -220,6 +236,10 @@ export const downloadRejectedData = () => {
       groupMember: i.groupMember,
       acre: i.acre,
       qualification: i.qualification,
+      nameAsPerBank: i.nameAsPerBank,
+      bankName: i.bankName,
+      accountNumber: i.accountNumber,
+      ifscCode: i.ifscCode,
     }),
   );
   try {
@@ -263,6 +283,10 @@ export const exportSampleFormat = () => {
       groupMember: "Test",
       acre: `{"acreNo-first":"123"}`,
       qualification: "Test",
+      nameAsPerBank: "Test",
+      bankName: "Test",
+      accountNumber: "Test",
+      ifscCode: "Test",
     },
   ];
 
