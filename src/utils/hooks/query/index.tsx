@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
@@ -198,7 +198,6 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     params ? `${params}&_page=${page}&_limit=${dataLimit}` : `?_page=${page}&_limit=${dataLimit}`
   }`;
   const [count, setCount] = useState(1);
-
   const result = useQuery({
     queryKey: [`${endpoint}-fetch-${page}`],
     queryFn: () => {
@@ -209,14 +208,13 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     },
     cacheTime: Infinity, // do not change!
     staleTime: Infinity, // do not change!
-    enabled: isEnabled ? isEnabled : true,
+    enabled: isEnabled,
     onSuccess: () => isEnabled && prefetchByPage(page + 1),
   });
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
 
   useEffect(() => {
     if (Array.isArray(result.data)) {
-      console.log("Result : ",result.data)
       queryClient.setQueryData([`${endpoint}-fetch-${page}`], result.data);
     }
 
@@ -478,4 +476,29 @@ export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnab
     // queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${id}`] });
   }, [result.isFetched]);
   return { formatChangeSuccess, result };
+};
+
+export const useFetchByParams = (endpoint: Endpoints, params: string, isEnabled: boolean = true) => {
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${`?${params}`}`;
+
+  const result: UseQueryResult<any, unknown> = useQuery({
+    queryKey: [`${endpoint}-query`],
+    queryFn: async () => {
+      return axios.get(query).then((res: any) => {
+        return groupBy(res.data, "id");
+      });
+    },
+    enabled: isEnabled,
+  });
+  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
+
+  useEffect(() => {
+    setformatChangeSucess(result.isFetched);
+    // queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${id}`] });
+  }, [result.isFetched]);
+
+  return {
+    formatChangeSuccess,
+    result,
+  };
 };

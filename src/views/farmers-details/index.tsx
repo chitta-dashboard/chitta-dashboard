@@ -9,14 +9,15 @@ import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
+import { CircularStatic } from "../../utils/loaders/circular-progress-loader/index";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
-  const { sortFilter, currentPage, farmerQuery, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
+  const { sortFilter, currentPage, farmerQuery, isCircleLoading, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
   const {
     result: { refetch: farmerPageRefetch },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25,false);
+  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
 
   const {
     result: { data: farmersGroupById },
@@ -83,6 +84,9 @@ const FarmersDetails = () => {
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
           <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
+          <S.CircularLoaderContainer open={isCircleLoading} onClose={() => {}}>
+            <CircularStatic timerDelay={0} />
+          </S.CircularLoaderContainer>
         </>
       )}
     </>

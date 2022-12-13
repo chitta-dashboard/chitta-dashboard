@@ -13,6 +13,7 @@ const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
 const SET_FARMER_QUERY = "SET_FARMER_QUERY";
+const SET_CIRCLE_LOADING = "SET_CIRCLE_LOADING";
 
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
@@ -75,10 +76,12 @@ interface farmerDetailsContextType {
   totalPageCount: number;
   farmersIdToExport: [];
   farmerQuery: string;
+  isCircleLoading: boolean;
   setCurrentPage: (pageNo: number) => void;
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
   setFarmersIdToExport: (id: string[] | number[]) => void;
   setFarmerQuery: (query: string) => void;
+  setIsCircleLoading: (isLoading: boolean) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -100,10 +103,12 @@ const initialState: farmerDetailsContextType = {
   totalPageCount: 0,
   farmersIdToExport: [],
   farmerQuery: "",
+  isCircleLoading: false,
   setCurrentPage: () => {},
   setPageCount: () => {},
   setFarmersIdToExport: () => {},
   setFarmerQuery: () => {},
+  setIsCircleLoading: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -165,8 +170,8 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case SET_FARMER_QUERY:
       return { ...state, farmerQuery: action.payload };
 
-    case SET_FARMER_QUERY:
-      return { ...state, farmerQuery: action.payload };
+    case SET_CIRCLE_LOADING:
+      return { ...state, isCircleLoading: action.payload };
 
     default: {
       throw new Error(`Unknown type: ${action.type}`);
@@ -222,6 +227,10 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_FARMER_QUERY, payload: query });
   };
 
+  const setIsCircleLoading = (isLoading: boolean) => {
+    dispatch({ type: SET_CIRCLE_LOADING, payload: isLoading });
+  };
+
   let data = {
     ...state,
     setSearchFilter,
@@ -235,6 +244,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setPageCount,
     setFarmersIdToExport,
     setFarmerQuery,
+    setIsCircleLoading,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

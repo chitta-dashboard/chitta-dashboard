@@ -3,7 +3,7 @@ import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
 import Toast from "../../../utils/toast";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import ImportFarmerGroupModal from "../../modals/import-farmerGroup-modal";
 import S from "./dropFile.styled";
 
@@ -38,13 +38,14 @@ const DropFile: React.FC<IDropFile> = function ({
   openModal,
   setOpenModal,
 }) {
+  const { setIsCircleLoading } = useFarmerDetailsContext();
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [groupNames, setGroupNames] = useState<string[] | undefined>(undefined);
   const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
 
-// to make the drag & drop avalable after import
+  // to make the drag & drop avalable after import
   useEffect(() => {
     if (openModal === true) {
       setTimeout(() => {
@@ -54,7 +55,7 @@ const DropFile: React.FC<IDropFile> = function ({
         cb(file);
       }, 500);
     }
-  }, [openModal,cb]);
+  }, [openModal, cb]);
 
   const handleDragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
@@ -114,6 +115,7 @@ const DropFile: React.FC<IDropFile> = function ({
   const validateAndSet = useCallback(
     async (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files![0];
+      setIsCircleLoading(true);
       if (file) {
         setProcessingFile(true);
         const validation = validate ? await validate(file) : { status: true, message: "", groups: [] };
@@ -123,9 +125,10 @@ const DropFile: React.FC<IDropFile> = function ({
           setSelectedFile(file);
           validation && setGroupNames(validation.groups);
           validation && setInputData(validation.data);
-
+          setIsCircleLoading(false);
           cb(file);
         } else {
+          setIsCircleLoading(false);
           Toast({ message: validation.message as string, type: "error" });
         }
         e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.

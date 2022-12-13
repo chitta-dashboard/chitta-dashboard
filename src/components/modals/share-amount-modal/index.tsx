@@ -1,8 +1,8 @@
-import { FC, Ref, useState, useRef } from "react";
+import { FC, Ref, useState, useRef, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../custom-modal";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useFetch } from "../../../utils/hooks/query";
+import { useFetch, useFetchByPage, useFetchByParams } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -18,23 +18,31 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
-  const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
+  const { selectedFarmers, farmerQuery, checkboxUnselectAll, setIsCircleLoading } = useFarmerDetailsContext();
+
   const {
-    result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+    result: { data: farmersDetailsById, refetch: farmerDetailsRefetch },
+    formatChangeSuccess: farmerDetailsSuccess,
+  } = useFetchByParams(ENDPOINTS.farmerDetails, farmerQuery, false);
+
   const [shareAmount, setShareAmount] = useState(1000);
   const [loader, setLoader] = useState(true);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
+
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
-    documentTitle: `Shareholder_certificate of_${selectedFarmers.map((id) => farmersDetailsById[id].name)}`,
+    documentTitle: `Shareholder_certificate of_${farmerDetailsSuccess && selectedFarmers.map((id) => farmersDetailsById[id].name)}`,
     content: () => pdftamilcertificate.current as HTMLDivElement,
     onBeforePrint() {
       handleClose();
+      setIsCircleLoading(false);
     },
     onAfterPrint() {
       checkboxUnselectAll();
+    },
+    onPrintError() {
+      setIsCircleLoading(false);
     },
     // pageStyle: `@media print {
     //   @page {
@@ -44,14 +52,17 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     // }`,
   });
 
-  const certificateFunctionStart = () => {
-    setLoader(!loader);
-    setTimeout(() => {
-      setCertificateLoader(!certificateLoader);
+  const certificateFunctionStart = async () => {
+    //setLoader(!loader);
+    setIsCircleLoading(true);
+    let result = await farmerDetailsRefetch();
+    result.isFetched &&
       setTimeout(() => {
-        generateTamilCertificatePDF();
+        setCertificateLoader(!certificateLoader);
+        setTimeout(() => {
+          generateTamilCertificatePDF();
+        }, 300);
       }, 300);
-    }, 300);
   };
 
   return (
@@ -77,12 +88,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
               <ShareDetailBody setShareAmount={setShareAmount} />
             </ModalBody>
             <ModalFooter>
-              <ShareDetailFooter
-                handleClose={handleClose}
-                generateTamilCertificate={() => {
-                  certificateFunctionStart();
-                }}
-              />
+              <ShareDetailFooter handleClose={handleClose} generateTamilCertificate={certificateFunctionStart} />
             </ModalFooter>
           </>
         ) : (
