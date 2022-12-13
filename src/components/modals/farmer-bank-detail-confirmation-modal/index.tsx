@@ -11,9 +11,10 @@ interface CustomProps {
   openModal: boolean;
   handleClose: () => void;
   navigateId: string;
+  mdPage?: boolean;
 }
 
-const FarmerBankDetailModal: FC<CustomProps> = ({ openModal, handleClose, navigateId }) => {
+const FarmerBankDetailModal: FC<CustomProps> = ({ openModal, handleClose, navigateId, mdPage = false }) => {
   const navigate = useNavigate();
 
   return (
@@ -35,7 +36,7 @@ const FarmerBankDetailModal: FC<CustomProps> = ({ openModal, handleClose, naviga
           <FarmerRowModalFooter
             handleClose={handleClose}
             generateFunction={() => {
-              navigate(`/farmers-details/${navigateId}`);
+              !mdPage ? navigate(`/farmers-details/${navigateId}`) : navigate(`/md-details/${navigateId}`);
               handleClose();
             }}
           />
