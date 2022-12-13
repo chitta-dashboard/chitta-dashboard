@@ -46,13 +46,20 @@ const ImportFarmerGroupModal: FC<Props> = ({
         data: farmerGroupDatas as FarmersGroup[],
         successCb: () => {
           addNotification({ id: uuid(), message: "New farmer group created" });
-          Toast({ message: `All ${farmerGroupDatas.length} groups created Successfully`, type: "success" });
-
+          if (count && count > 1) {
+            Toast({ message: `All ${farmerGroupDatas.length} groups created Successfully`, type: "success" });
+          } else {
+            Toast({ message: `${farmerGroupDatas.length} group created Successfully`, type: "success" });
+          }
           addFarmerDetails({
             data: farmerDatas as farmerDetail[],
             successCb: () => {
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
-              Toast({ type: "success", message: `All ${count} farmers created successfully` });
+              if (count && count > 1) {
+                Toast({ type: "success", message: `All ${count} farmers created successfully` });
+              } else {
+                Toast({ type: "success", message: `${count} farmer created successfully` });
+              }
               setNewGroupNames(undefined);
               setInputData(undefined);
               handleClose();
