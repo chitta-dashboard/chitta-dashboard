@@ -44,7 +44,7 @@ export interface IAddFarmersDetailsPage3Input {
   nameAsPerBank: string;
   bankName: string;
   accountNumber: string;
-  confirmAccountNumber: string;
+  confirmAccountNumber?: string;
   ifscCode: string;
 }
 
