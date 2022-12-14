@@ -8,7 +8,6 @@ import ModalBody from "../../custom-modal/body";
 import ModalHeader from "../../custom-modal/header";
 import CustomModal from "../../custom-modal";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import S from "./importFarmersModal.styled";
 import { useFetch } from "../../../utils/hooks/query";
 import { encryptText, ENDPOINTS } from "../../../utils/constants";
@@ -26,7 +25,6 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const [showDownloadButton, setShowDownloadButton] = useState(false);
   const [newGroupNames, setNewGroupNames] = useState<string[] | undefined>(undefined);
   const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
-  const [newFarmerGroupDatas, setNewFarmerGroupDatas] = useState<FarmersGroup[] | null>(null);
   const [newFarmersDatas, setNewFarmersDatas] = useState<farmerDetail[] | null>(null);
   const [count, setCount] = useState(existingFarmers?.length);
   const {
@@ -72,16 +70,11 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
     if (inputData) {
       let farmerId: string;
       let farmer: farmerDetail;
-      let farmerGroup: FarmersGroup;
       let newFarmerDetailsDatas: farmerDetail[] = [];
-      let newFarmerGroupDatas: FarmersGroup[] = [];
-
-      // creating the new datas for farmerdDetails & farmerGroup
       // eslint-disable-next-line array-callback-return
       inputData?.map((i) => {
         let id = uuid();
         farmerId = id;
-
         // creating farmerDetails db structure
         farmer = {
           ...i,
@@ -93,16 +86,9 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
           bankName: "",
           ifscCode: "",
         };
-
-        // creating farmerGroup db structure
-        farmerGroup = { id: uuid(), groupName: i.group, explanation: "", chairman: "", treasurer: "", secretary: "", members: [farmerId] };
-
         newFarmerDetailsDatas.push(farmer);
-        newFarmerGroupDatas.push(farmerGroup);
-        newMemberId++;
       });
       setNewFarmersDatas(newFarmerDetailsDatas);
-      setNewFarmerGroupDatas(newFarmerGroupDatas);
     }
   }, [inputData, newMemberId]);
 
@@ -120,7 +106,8 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
           {showDownloadButton ? (
             <S.OptionalContainer>
               <S.DialogueText>
-                It looks like <S.Highlite>{count}</S.Highlite> farmer(s) have already used the entered mobile number. Click the{" "}
+                It looks like <S.Highlite>{existingFarmers?.length}</S.Highlite> farmer(s) have already used the entered mobile{" "}
+                <S.HighlightText>/</S.HighlightText> aadhaar number. Click the{" "}
                 <S.Highlite>{count && count > 0 ? "Download & continue" : "Download"}</S.Highlite>{" "}
                 {count && count > 0 ? "button to get their list and register the remaining farmers." : "button to get the list"}
               </S.DialogueText>
@@ -156,7 +143,6 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
         setNewGroupNames={setNewGroupNames}
         count={newFarmersDatas && newFarmersDatas.length} // for toast message
         handleCloseImport={handleClose}
-        farmerGroupDatas={newFarmerGroupDatas && newFarmerGroupDatas}
         farmerDatas={newFarmersDatas && newFarmersDatas}
         setInputData={setInputData}
       />
