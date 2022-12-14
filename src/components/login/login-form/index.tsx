@@ -5,7 +5,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
-import { decryptText } from "../../../utils/constants";
+import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
+import { adminFormInputs } from "../../../views/admin-panel";
 import S from "./loginForm.styled";
 
 interface LoginFormInputs {
@@ -26,7 +28,13 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
-  const { login, loginImage } = useAuthContext();
+  const { login } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -63,67 +71,73 @@ const LoginForm: FC = () => {
   const handleClickShowHidePassword = () => setShowPassword(!showPassword);
 
   return (
-    <S.LoginMainContainer>
-      <S.LoginContainer>
-        <S.FormContainer>
-          <S.ImageBox>
-            <S.LogoImage src={loginImage ? decryptText(loginImage) : logo} alt="Nerkathir" />{" "}
-          </S.ImageBox>
+    <>
+      {isSuccess && (
+        <S.LoginMainContainer>
+          <S.LoginContainer>
+            <S.FormContainer>
+              <S.ImageBox>
+                <S.LogoImage src={loginImage ? decryptText(loginImage) : logo} alt="Nerkathir" />{" "}
+              </S.ImageBox>
 
-          <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
-            <S.InputBox>
-              <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
-              <S.LoginInput
-                type="number"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <S.Icon>phone</S.Icon>
-                    </InputAdornment>
-                  ),
-                }}
-                {...register("mobileNo")}
-                helperText={errors.mobileNo && errors.mobileNo.message}
-              />
-            </S.InputBox>
-            <br />
-            <S.InputBox>
-              <S.LoginFormLabel>கடவுச்சொல்</S.LoginFormLabel>
-              <S.LoginInput
-                type={showPassword === false ? "password" : "text"}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <S.Icon>lock</S.Icon>
-                    </InputAdornment>
-                  ),
+              <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
+                <S.InputBox>
+                  <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
+                  <S.LoginInput
+                    type="number"
+                    placeholder="கைபேசி எண்ணை உள்ளிடுக "
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <S.Icon>phone</S.Icon>
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...register("mobileNo")}
+                    helperText={errors.mobileNo && errors.mobileNo.message}
+                  />
+                </S.InputBox>
+                <br />
+                <S.InputBox>
+                  <S.LoginFormLabel>கடவுச்சொல்</S.LoginFormLabel>
+                  <S.LoginInput
+                    type={showPassword === false ? "password" : "text"}
+                    placeholder=" கடவு சொல்லை உள்ளிடுக "
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <S.Icon>lock</S.Icon>
+                        </InputAdornment>
+                      ),
 
-                  endAdornment: (
-                    <InputAdornment sx={{ cursor: "pointer" }} onClick={handleClickShowHidePassword} position="end">
-                      {showPassword === false ? <S.EyeIcon>show</S.EyeIcon> : <S.EyeIcon>hide</S.EyeIcon>}
-                    </InputAdornment>
-                  ),
-                }}
-                {...register("loginPassword")}
-                helperText={errors.loginPassword && errors.loginPassword.message}
-                autoComplete="off"
-              />
-              <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
-            </S.InputBox>
-          </S.LoginForm>
-          <S.ButtonContainer>
-            <S.ButtonBox>
-              <S.LoginButton form="loginForm" size="large" type="submit">
-                Login
-              </S.LoginButton>
-            </S.ButtonBox>
-            <S.LoginText variant="subtitle1">
-              Don't have an account?&nbsp;<span>Signup</span>
-            </S.LoginText>
-          </S.ButtonContainer>
-        </S.FormContainer>
-      </S.LoginContainer>
-    </S.LoginMainContainer>
+                      endAdornment: (
+                        <InputAdornment sx={{ cursor: "pointer" }} onClick={handleClickShowHidePassword} position="end">
+                          {showPassword === false ? <S.EyeIcon>show</S.EyeIcon> : <S.EyeIcon>hide</S.EyeIcon>}
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...register("loginPassword")}
+                    helperText={errors.loginPassword && errors.loginPassword.message}
+                    autoComplete="off"
+                  />
+                  <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
+                </S.InputBox>
+              </S.LoginForm>
+              <S.ButtonContainer>
+                <S.ButtonBox>
+                  <S.LoginButton form="loginForm" size="large" type="submit">
+                    Login
+                  </S.LoginButton>
+                </S.ButtonBox>
+                <S.LoginText variant="subtitle1">
+                  Don't have an account?&nbsp;<span>Signup</span>
+                </S.LoginText>
+              </S.ButtonContainer>
+            </S.FormContainer>
+          </S.LoginContainer>
+        </S.LoginMainContainer>
+      )}
+    </>
   );
 };
 

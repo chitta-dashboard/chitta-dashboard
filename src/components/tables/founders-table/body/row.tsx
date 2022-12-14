@@ -126,7 +126,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             founderMutateDelete({
               id: user.id,
               successCb: () => {
-                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFoundersDetails });
+                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteFoundersDetails });
                 Toast({ message: "Founder Deleted Successfully", type: "success" });
               },
               errorCb: () => {

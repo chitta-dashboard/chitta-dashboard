@@ -9,6 +9,14 @@ namespace S {
   }));
 
   export const WebTableCell = styled(TableCell)(({ theme }) => ({
+    span: {
+      display: "flex",
+      width: "fit-content",
+      gap: "1rem",
+      "&:hover": {
+        cursor: "pointer",
+      },
+    },
     [theme.breakpoints.down("xl")]: {
       "&:nth-of-type(2)": {
         width: "12%",
@@ -31,10 +39,14 @@ namespace S {
     },
   }));
 
+  export const icon = styled("i")({
+    padding: "0 1rem",
+  });
+
   export const TabTableCell = styled(TableCell)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
-    gap: "30%",
+    justifyContent: "space-between",
     [theme.breakpoints.up("md")]: {
       display: "none",
     },

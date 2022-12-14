@@ -8,7 +8,7 @@ namespace S {
     padding: " 0  1.875rem 1.875rem 1.875rem",
     gap: "1rem",
     ".MuiButton-textPrimary": {
-      width: "10rem",
+      width: "6rem",
     },
     "& .Mui-disabled": {
       backgroundColor: theme.palette.custom.disabled,

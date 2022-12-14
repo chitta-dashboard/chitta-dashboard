@@ -30,7 +30,7 @@ interface IContextType {
   logout: () => void;
   clearNotification: () => void;
   addNotification: (data: Notification) => void;
-  addLogo: () => void;
+  addLogo: (data: {}) => void;
   loader: (data: loader) => void;
   userNotification: Notification[];
   AdminUpdate: { [id: string]: adminFormInputs };
@@ -56,14 +56,14 @@ const initialState: IContextType = {
   loader: () => {},
   userNotification: [],
   AdminUpdate: {},
-  headerImage: localStorage.getItem("headerLogo"),
-  loginImage: localStorage.getItem("loginLogo"),
-  certificateImage: localStorage.getItem("certificateLogo"),
-  pdfImage: localStorage.getItem("pdfLogo"),
-  titleName: localStorage.getItem("title"),
-  cinNo: localStorage.getItem("cinNo"),
-  regNo: localStorage.getItem("regNo"),
-  address: localStorage.getItem("address"),
+  headerImage: "",
+  loginImage: "",
+  certificateImage: "",
+  pdfImage: "",
+  titleName: "",
+  cinNo: "",
+  regNo: "",
+  address: "",
   openLoader: false,
   loaderText: "",
 };
@@ -81,14 +81,22 @@ const reducer = (state: IContextType, action: any) => {
     case ADD_LOGO:
       return {
         ...state,
-        headerImage: localStorage.getItem("headerLogo"),
-        loginImage: localStorage.getItem("loginLogo"),
-        certificateImage: localStorage.getItem("certificateLogo"),
-        pdfImage: localStorage.getItem("pdfLogo"),
-        titleName: localStorage.getItem("title"),
-        cinNo: localStorage.getItem("cinNo"),
-        regNo: localStorage.getItem("regNo"),
-        address: localStorage.getItem("address"),
+        // headerImage: localStorage.getItem("headerLogo"),
+        // loginImage: localStorage.getItem("loginLogo"),
+        // certificateImage: localStorage.getItem("certificateLogo"),
+        // pdfImage: localStorage.getItem("pdfLogo"),
+        // titleName: localStorage.getItem("title"),
+        // cinNo: localStorage.getItem("cinNo"),
+        // regNo: localStorage.getItem("regNo"),
+        // address: localStorage.getItem("address"),
+        headerImage: action.payload.headerLogo,
+        loginImage: action.payload.loginLogo,
+        certificateImage: action.payload.certificateLogo,
+        pdfImage: action.payload.pdfLogo,
+        titleName: action.payload.name,
+        cinNo: action.payload.cinNo,
+        regNo: action.payload.regNo,
+        address: action.payload.address,
       };
     case LOADER:
       return {
@@ -145,14 +153,11 @@ const AuthContextProvider: FC<Props> = (props) => {
 
   const clearNotification = () => {
     // dispatch({ type: CLEAR_NOTIFICATION });
-
-    if (isSuccess) {
-      deleteNotification({ id: Object.keys(NotificationData) });
-    }
+    deleteNotification({ id: Object.keys(NotificationData) });
   };
 
-  const addLogo = () => {
-    dispatch({ type: ADD_LOGO });
+  const addLogo = (data: {}) => {
+    dispatch({ type: ADD_LOGO, payload: data });
   };
 
   const loader = (data: loader) => {

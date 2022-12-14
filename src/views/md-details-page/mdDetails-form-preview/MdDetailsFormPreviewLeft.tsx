@@ -1,15 +1,12 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import { useDispatch } from "react-redux";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import MdDetailsForm from "../MdDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-// import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-// import { editFarmerDetail } from "../../../utils/store/slice/farmerDetails";
-// import { useFarmersGroupContext } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
@@ -18,7 +15,7 @@ import FarmersDetailsModal from "../../../components/modals/farmers-details-moda
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
-import { mdDetail } from "../../../utils/context/mdDetails";
+import { adminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
@@ -26,21 +23,30 @@ const MdFormPreviewLeft = () => {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
+
+  const {
+    formatChangeSuccess: isSuccessAdmin,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { addNotification, titleName, address } = useAuthContext();
+  const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openConfirmationModal, setOpenConfirmationModal] = useState<mdDetail | null>(null);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<IMdDetails | null>(null);
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
@@ -86,34 +92,37 @@ const MdFormPreviewLeft = () => {
     const encryptedBase64 = encryptText(compressedBase64);
     let result = mdDetailsById[userId];
     result.profile = encryptedBase64;
-    const farmerEditData = { ...result, id: result.farmerId } as mdDetail;
+    const farmerEditData = { ...result, id: result.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
       editedData: farmerEditData,
       successCb: () => {
-        editMdDetail({ editedData: result });
-        Toast({ message: "MD Edited Successfully.", type: "success" });
-      },
-      errorCb: () => {
-        Toast({ message: "Request failed! Please try again.", type: "error" });
+        editMdDetail({
+          editedData: result,
+          successCb: () => {
+            Toast({ message: "MD Edited Successfully.", type: "success" });
+          },
+          errorCb: () => {
+            Toast({ message: "Request failed! Please try again.", type: "error" });
+          },
+        });
       },
     });
   };
 
   //Update MdDetail Handler
-  const updateMdDetail = (data: mdDetail) => setOpenConfirmationModal(data);
+  const updateMdDetail = (data: IMdDetails) => setOpenConfirmationModal(data);
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = async (id: string, group: string) => {
     const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    farmersGroupData[noCountUpdate].members.includes(id);
-    if (!farmersGroupData[noCountUpdate].members.includes(id)) {
+    if (!farmersGroupData[noCountUpdate]?.members.includes(id)) {
       const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
-      const updatedMember = farmersGroupData[removeMemberIndex]["members"].filter((member: string) => member !== id);
+      const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       await addGroupMember(id, group);
-      await editFarmerGroup({ editedData: updatedFarmerGroup });
+      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
     }
   };
 
@@ -129,7 +138,7 @@ const MdFormPreviewLeft = () => {
       <S.InvisibleBox>
         <MdDetailsForm ref={mdFormPdf} />
       </S.InvisibleBox>
-      {Object.values(isSuccess && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewLeft key={user.id}>
@@ -181,7 +190,10 @@ const MdFormPreviewLeft = () => {
             <S.FormHeading>
               <S.Text1>
                 {titleName ? (
-                  titleName
+                  <>
+                    {titleName} உழவர் <br />
+                    உற்பத்தியாளர் நிறுவனம்
+                  </>
                 ) : (
                   <>
                     நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
@@ -212,11 +224,18 @@ const MdFormPreviewLeft = () => {
             </S.MdImgContainer>
             <S.HeaderText>
               உறுப்பினர் எண் : {user.membershipId} <br />
-              நாள்: {current.getDate()}/{current.getMonth()}/{current.getFullYear()}
+              நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
             </S.HeaderText>
             <S.HeaderText>
-              ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
-              அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
+              ஒருங்கிணைப்பாளர்:{" "}
+              {coordinatorAddress ? (
+                coordinatorAddress
+              ) : (
+                <>
+                  நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
+                  தாலுக்கா&மாவட்டம், 606213
+                </>
+              )}
             </S.HeaderText>
             {openEditModal && (
               <FarmersDetailsModal
@@ -236,7 +255,7 @@ const MdFormPreviewLeft = () => {
                   deleteMdDetail({
                     id: user.id,
                     successCb: () => {
-                      addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteFarmDetail });
+                      addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                       Toast({ message: "MD Deleted Successfully", type: "success" });
                       navigate(-1);
                     },
@@ -259,12 +278,8 @@ const MdFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={async () => {
-                  // const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
-                  // await memberCountHandler(user.farmerId, AddNewMember);
                   await removeGroupMember(user.farmerId, openConfirmationModal.group);
-                  // const farmerEditData = { ...editData, id: editData?.farmerId };
-                  // delete farmerEditData.farmerId;
-                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as mdDetail;
+                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as IMdDetails;
                   delete farmerEditData.farmerId;
                   editFarmer({
                     editedData: farmerEditData,

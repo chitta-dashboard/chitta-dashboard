@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect, FC } from "react";
+import { useRef, useEffect, FC, SetStateAction, Dispatch } from "react";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import {  UseFormRegister } from "react-hook-form";
+import { UseFormRegister } from "react-hook-form";
 import { FieldErrorsImpl } from "react-hook-form";
 import { adminFormInputs } from "../../../views/admin-panel";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
@@ -11,7 +11,7 @@ import DummyLogo180 from "../../../assets/images/DummyLogo180.svg";
 import S from "./adminLogo.styled";
 
 interface CustomProps {
-  file?: File;
+  file?: File | null;
   width: number;
   height: number;
   placeholder: string;
@@ -21,6 +21,10 @@ interface CustomProps {
 interface LogoProps {
   register: UseFormRegister<adminFormInputs>;
   errors?: FieldErrorsImpl<adminFormInputs>;
+  logo: File | undefined | null;
+  setLogo: Dispatch<SetStateAction<File | undefined | null>>;
+  image: File | undefined | null;
+  setImage: Dispatch<SetStateAction<File | undefined | null>>;
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
@@ -45,21 +49,28 @@ export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, pl
     }
   }, [file, height, width]);
 
-  return <S.logoImage isColor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
+  if (file === null) {
+    const image = imageRef.current;
+    if (image != null) {
+      image.src = placeholder;
+    }
+  }
+
+  return <S.logoImage iscolor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
-const AdminLogo: FC<LogoProps> = ({ register, errors }) => {
-  const [logo, setlogo] = useState<File>();
-  const [image, setImage] = useState<File>();
+const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setImage }) => {
   useEffect(() => {
     if (image) {
       if (image.type === "image/png" || image.type === "image/jpeg") {
-        setlogo(image);
+        setLogo(image);
       } else {
-        setlogo(undefined);
+        setLogo(null);
       }
     }
-  }, [image]);
+  }, [image, setLogo]);
+
+  useEffect(() => {}, [register]);
 
   return (
     <S.ContainerStack>

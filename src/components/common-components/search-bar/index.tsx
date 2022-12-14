@@ -1,13 +1,20 @@
-import { FC, useEffect, ChangeEvent } from "react";
+import { useEffect, ChangeEvent, forwardRef, MutableRefObject, LegacyRef } from "react";
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 
 interface CustomProps {
   searchHandler?: (searchText: string) => void;
-  setSearchKeyWord?: (value: string) => void;
+}
+type Ref = HTMLInputElement;
+
+let debounceTimer: undefined | NodeJS.Timeout;
+function debounce(cb: () => void) {
+  if (debounceTimer) clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(cb, 500); // .5s is the debounce time.
 }
 
-const SearchBar: FC<CustomProps> = ({ searchHandler, setSearchKeyWord }) => {
+const SearchBar = forwardRef<Ref, CustomProps>(({ searchHandler }, ref) => {
+  // to clear search text on component unmount
   useEffect(
     () => () => {
       searchHandler && searchHandler("");
@@ -21,13 +28,14 @@ const SearchBar: FC<CustomProps> = ({ searchHandler, setSearchKeyWord }) => {
       <IconGreen>search</IconGreen>
       <S.SearchBar
         placeholder="  Search..."
-        onChange={(e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLInputElement>) => {
-          setSearchKeyWord
-            ? setSearchKeyWord((e.target as HTMLInputElement).value)
-            : searchHandler && searchHandler((e.target as HTMLInputElement).value);
-        }}
+        ref={ref}
+        onChange={(e: ChangeEvent<HTMLInputElement>) =>
+          debounce(function () {
+            searchHandler && searchHandler((e.target as HTMLInputElement).value);
+          })
+        }
       />
     </S.SearchBarPaper>
   );
-};
+});
 export default SearchBar;

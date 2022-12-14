@@ -44,6 +44,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
       let userData = id && ceoDetailsById[id];
       reset({
         name: userData?.name as string,
+        joinedDate: userData?.joinedDate as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
@@ -73,6 +74,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
+      joinedDate: data?.joinedDate,
       phoneNumber: data.phoneNumber,
       profile: encryptedBase64,
       qualification: data.qualification,

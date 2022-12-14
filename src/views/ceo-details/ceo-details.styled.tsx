@@ -24,7 +24,7 @@ namespace S {
     gap: "1rem",
     backgroundColor: theme.palette.bg.main,
     height: "fit-content",
-    minHeight: "17rem",
+    minHeight: "18.85rem",
     width: "37.5rem",
     borderRadius: "1.25rem",
     padding: "1.5rem 2rem",
@@ -52,18 +52,24 @@ namespace S {
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
+    height: "100%",
+    maxWidth: "50%",
   });
 
-  export const ProfilePictureBox = styled(Box)({
+  export const ProfilePictureBox = styled(Box)(({ theme }: any) => ({
     borderRadius: "50%",
     height: "100%",
+    minWidth: "6rem",
     position: "relative",
     cursor: "pointer",
     overflow: "hidden",
     "&:hover > .MuiBox-root": {
       display: "flex",
     },
-  });
+    [theme.breakpoints.down("lg")]: {
+      minWidth: "5rem",
+    },
+  }));
 
   export const CeoProfilePicture = styled("img")({
     width: "100%",
@@ -97,7 +103,7 @@ namespace S {
   });
 
   export const CeoData = styled(Box)({
-    height: "90%",
+    minHeight: "95%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
@@ -106,6 +112,7 @@ namespace S {
   export const CeoName = styled(Typography)(({ theme }: any) => ({
     fontSize: "1.3125rem",
     fontWeight: "500",
+    lineHeight: "1.1",
     color: theme.palette.text.primary,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.9375rem",
@@ -129,25 +136,32 @@ namespace S {
 
   export const CeoJoinedDate = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.75rem",
-    marginTop: "0.625rem",
+    // marginTop: "0.625rem",
     color: `${theme.palette.addAlpha(theme.palette.text.secondaryLight, 0.8)}`,
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.625rem",
     },
   }));
 
-  export const CeoInfo = styled(Typography)(({ theme }: any) => ({
+  export const CeoInfoLeft = styled(Typography)(({ theme }: any) => ({
     fontSize: "0.9375rem",
     fontWeight: "500",
     color: theme.palette.text.secondary,
+    minWidth: "5.9825rem",
     [theme.breakpoints.down("lg")]: {
       fontSize: "0.75rem",
+      minWidth: "4.7862rem",
     },
+  }));
+
+  export const CeoInfo = styled(CeoInfoLeft)(({ theme }: any) => ({
+    width: "auto",
   }));
 
   export const CeoDataRight = styled(CeoDataLeft)(({ theme }: any) => ({
     justifyContent: "space-between",
-    gap: "3rem",
+    gap: "2rem",
+    height: "100%",
     [theme.breakpoints.down("lg")]: {
       gap: "0.5rem",
     },

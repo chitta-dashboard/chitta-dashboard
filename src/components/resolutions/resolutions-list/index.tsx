@@ -6,9 +6,9 @@ import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
 import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 import rightConnect from "../../../assets/images/rightDash.svg";
 import leftConnect from "../../../assets/images/leftDash.svg";
-import { IResolution } from "../../../utils/store/slice/resolution";
+import { IResolution } from "../../../utils/context/resolution";
 import { useFetch } from "../../../utils/hooks/query";
-import Loader from "../../loader";
+import Loader from "../../../utils/loaders/tree-loader";
 import S from "./resolutionsList.styled";
 
 interface Props {
@@ -18,7 +18,6 @@ interface Props {
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-  // const resolutionsObj = useSelector((state: RootState) => state.resolution.resolutions);
   const {
     formatChangeSuccess,
     result: { data: resolutionsObj },

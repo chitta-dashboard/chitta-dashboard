@@ -2,14 +2,17 @@ import { Typography } from "@mui/material";
 import { Box, styled } from "@mui/material";
 
 export namespace S {
-  export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
+  // export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
+  export const TamilShareCertificateContainer = styled(Box, {
+    shouldForwardProp: (prop) => prop !== "Toggle",
+  })<{ Toggle: boolean | undefined }>(({ theme, Toggle }) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "space-between",
     boxSizing: "border-box",
-    height: "839px",
-    width: "74.375rem",
+    height: Toggle ? "775.5px" : "839px",
+    width: Toggle ? "69rem" : "74.375rem",
     backgroundColor: theme.palette.bg.main,
     position: "relative",
     padding: "4.375rem 6.25rem ",
@@ -82,6 +85,14 @@ export namespace S {
     width: "10rem",
   });
 
+  export const CertificateHeadingMainContainer = styled(Box)(({ theme }) => ({
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+    gap: "1.1rem",
+  }));
+
   export const CertificateHeadingContainer = styled(Box)({
     width: "100%",
     display: "flex",
@@ -98,7 +109,7 @@ export namespace S {
     marginRight: "4.375rem",
     borderRadius: "50%",
     aspectRatio: "1/1",
-    filter: "grayscale(100%)",
+    // filter: "grayscale(100%)",
   });
 
   export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
@@ -139,12 +150,16 @@ export namespace S {
   });
 
   export const CertificateContent = styled(Box)({
+    // display: "flex",
+    // flexDirection: "column",
+    // justifyContent: "center",
+    // alignItems: "center",
     width: "100%",
     height: "fit-content",
   });
 
   export const CertificateTextLine = styled(Box)({
-    Width: "100%",
+    minWidth: "100%",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "flex-end",
@@ -168,18 +183,20 @@ export namespace S {
   });
 
   export const ShareCountContainer = styled(DateContainer)({
-    width: "80%",
+    marginTop: "10px",
+    width: "100%",
   });
 
   export const ShareCountInnerContainer = styled(DateContainer)({
     width: "fit-content",
-    gap: "1rem",
+    gap: "0.1rem !important",
   });
 
   export const SignatureLine = styled(DateContainer)({
     width: "100%",
-    marginTop: "3.125rem",
+    marginTop: "5.5rem",
   });
+
   export const ShareCount = styled(Box)(({ theme }) => ({
     display: "flex",
     alignItems: "center",
@@ -190,8 +207,9 @@ export namespace S {
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: theme.palette.text.red,
+    color: theme.palette.text.black,
   }));
+
   export const BlankSpace1 = styled(Typography)(({ theme }) => ({
     boxSizing: "border-box",
     textAlign: "center",
@@ -200,14 +218,19 @@ export namespace S {
     height: "1.625rem",
     fontSize: "1.125rem",
     fontWeight: "600",
-    color: theme.palette.text.red,
+    color: theme.palette.text.black,
   }));
-  export const BlankSpace2 = styled(BlankSpace1)(({ theme }) => ({
+
+  export const BlankSpace2 = styled(BlankSpace1)({
     width: "23.75rem",
-    color: theme.palette.text.red,
-  }));
-  export const BlankSpace3 = styled(BlankSpace1)(({ theme }) => ({
+  });
+
+  export const BlankSpace3 = styled(BlankSpace1)({
     width: "85%",
-    color: theme.palette.text.red,
-  }));
+    textAlign: "left",
+  });
+
+  export const CertificateGap = styled("div")({
+    height: "11px",
+  });
 }

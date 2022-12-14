@@ -1,24 +1,21 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
+import { IMdDetails, useMdDetailsContext } from "../../utils/context/mdDetails";
 import { farmerDetail } from "../../utils/context/farmersDetails";
-import { useAuthContext } from "../../utils/context/auth";
+import { Notification } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../utils/store";
-// import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: mdIsSuccess,
     result: { data: mdData },
   } = useFetch(ENDPOINTS.mdDetails);
   const {
@@ -27,8 +24,8 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
-  const { addNotification } = useAuthContext();
+  const { setSearchFilter } = useMdDetailsContext();
+  const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
@@ -36,7 +33,7 @@ const MdDetails = () => {
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
   useEffect(() => {
-    Object.values(farmerIsSuccess && (mdData as mdDetail[])).map((item) => {
+    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).map((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
         let index = farmerKeys.indexOf(item.farmerId as string);
         farmerKeys.splice(index, 1);
@@ -48,7 +45,7 @@ const MdDetails = () => {
       return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
-  }, [mdData, farmersData, isSuccess, farmerIsSuccess]);
+  }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
 
   const CustomMessage = () => {
     return (
@@ -80,17 +77,18 @@ const MdDetails = () => {
     }
   };
 
-  const handleYesAction = () => {
-    let farmerData: mdDetail[] = [];
+  const handleYesAction = async () => {
+    let farmerData: IMdDetails[] = [];
+    const notifications: Notification[] = [];
     selectedKeys.map((item: string) => {
       let generatedId = uuidv4();
-      let farmerDetailsResult: mdDetail = {} as mdDetail;
+      let farmerDetailsResult: IMdDetails = {} as IMdDetails;
       let farmerKeys = Object.keys(farmersData[item]);
       farmerDetailsResult.id = generatedId;
       farmerDetailsResult.farmerId = farmersData[item].id;
       farmerKeys.map((key) => {
         if (key !== "id") {
-          farmerDetailsResult[key as keyof mdDetail] = farmersData[item][key as keyof farmerDetail] as never;
+          farmerDetailsResult[key as keyof IMdDetails] = farmersData[item][key as keyof farmerDetail] as never;
         }
       });
       farmerData.push(farmerDetailsResult);
@@ -101,12 +99,14 @@ const MdDetails = () => {
         image: farmersData[item].profile,
         message: Message(farmersData[item].name).addMd,
       };
-      addNotification(notification);
+
+      notifications.push(notification);
     });
-    addMdDetail({
+    await addMdDetail({
       data: farmerData,
       successCb: () => {
         Toast({ message: "MD Added successfully.", type: "success" });
+        addMdNotification({ data: notifications });
       },
       errorCb: () => {
         Toast({ message: "Request failed! Please try again.", type: "error" });
@@ -131,7 +131,7 @@ const MdDetails = () => {
         <Loader />
       ) : (
         <S.MdDetailsContainer>
-          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <MdDetailsTable />
         </S.MdDetailsContainer>
       )}

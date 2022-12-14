@@ -20,17 +20,6 @@ interface CustomProps {
   members?: string[];
 }
 
-// const schema = yup
-//   .object()
-//   .shape({
-//     groupName: yup.string().required("required"),
-//     explanation: yup.string().required("required"),
-//     chairman: yup.string().required("required").nullable(),
-//     treasurer: yup.string().required("required").nullable(),
-//     secretary: yup.string().required("required").nullable(),
-//   })
-//   .required();
-
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 

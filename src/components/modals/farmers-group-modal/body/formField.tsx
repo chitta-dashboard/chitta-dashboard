@@ -18,6 +18,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
         options={{
           label: "குழு பெயர் *",
           gridArea: "gpn",
+          placeholder: "குழு பெயரை உள்ளிடுக",
         }}
       />
       <Input
@@ -29,6 +30,10 @@ const FormField: FC<CustomProps> = ({ control }) => {
           label: "விளக்கம் *",
           gridArea: "exn",
           fullHeight: true,
+          multiline: true,
+          maxRows: 4,
+          textarea: true,
+          placeholder: "விளக்கங்களை உள்ளிடுக",
         }}
       />
       <Input
@@ -40,6 +45,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
           label: "தலைவர் *",
           selectoptions: ["option-1", "option-2", "option-3"],
           gridArea: "chn",
+          placeholder: "--தலைவர்--",
         }}
       />
       <Input
@@ -51,6 +57,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
           gridArea: "tsr",
           label: "பொருளாளர் *",
           selectoptions: ["option-1", "option-2", "option-3"],
+          placeholder: "--பொருளாளர்--",
         }}
       />
       <Input
@@ -62,6 +69,7 @@ const FormField: FC<CustomProps> = ({ control }) => {
           label: "செயலாளர் *",
           selectoptions: ["option-1", "option-2", "option-3"],
           gridArea: "sty",
+          placeholder: "--செயலாளர்--",
         }}
       />
     </S.StaticBox>

@@ -26,12 +26,12 @@ namespace S {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    margin: " 10rem auto",
+    height: "3rem",
   });
 
   export const LoaderParticle1 = styled("span")(({ theme }) => ({
-    width: ".3rem",
-    height: "1rem",
+    width: ".25rem",
+    height: ".7rem",
     marginLeft: ".5rem",
     // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
@@ -39,8 +39,8 @@ namespace S {
   }));
 
   export const LoaderParticle2 = styled("span")(({ theme }) => ({
-    width: ".3rem",
-    height: "1rem",
+    width: ".25rem",
+    height: ".7rem",
     margin: "0 .5rem 0 .5rem",
     // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
@@ -48,8 +48,8 @@ namespace S {
   }));
 
   export const LoaderParticle3 = styled("span")(({ theme }) => ({
-    width: ".3rem",
-    height: "1rem",
+    width: ".25rem",
+    height: ".7rem",
     // borderRadius: "50%",
     backgroundColor: theme.palette.primary.light,
     animation: `${load} 0.5s ease-in-out infinite`,

@@ -3,7 +3,7 @@ import { Paper, styled } from "@mui/material";
 export namespace S {
   export const SearchBarPaper = styled(Paper)(({ theme }) => ({
     borderRadius: "1.2rem",
-    width: "29rem",
+    width: "100%",
     height: "2.5rem",
     display: "flex",
     justifyContent: "center",

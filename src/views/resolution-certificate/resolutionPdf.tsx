@@ -1,11 +1,11 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
-import { useAuthContext } from "../../utils/context/auth";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
-import { IResolutions } from "../../utils/store/slice/resolution";
-import Loader from "../../components/loader";
+import { IResolutions } from "../../utils/context/resolution";
+import Loader from "../../utils/loaders/tree-loader";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
+import { adminFormInputs } from "../admin-panel";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
@@ -17,11 +17,17 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
     formatChangeSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
-  const { headerImage, titleName, regNo, cinNo } = useAuthContext();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: adminDetails },
+  } = useFetch(ENDPOINTS.admin);
+
+  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
-  return formatChangeSuccess ? (
+  return formatChangeSuccess && isSuccess ? (
     <>
       {Object.values(resolutions as IResolutions)
         .filter((name) => name.id === resolutionId)
@@ -31,7 +37,10 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
               <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="NerkathirLogoGray" />
               <S.HeaderText>
                 {titleName ? (
-                  titleName
+                  <>
+                    {titleName} உழவர் <br />
+                    உற்பத்தியாளர் நிறுவனம்
+                  </>
                 ) : (
                   <>
                     நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்

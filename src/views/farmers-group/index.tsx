@@ -8,14 +8,13 @@ import { useFetch, useAdd } from "../../utils/hooks/query";
 import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
 import S from "./farmersGroup.styled";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-
-  const { setSearchFilter, setSortFilter, sortFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  const { setSearchFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
@@ -52,7 +51,7 @@ const FarmersGroup = () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
-    addNotification({ id: newFarmerGroup.id, message: Message(newFarmerGroup.groupName).addFarmGroup });
+    addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 
   return (
@@ -61,13 +60,7 @@ const FarmersGroup = () => {
         <Loader />
       ) : (
         <S.FarmersGroupContainer>
-          <TablePageHeader
-            addModalHandler={addModalHandler}
-            searchHandler={setSearchFilter}
-            sortHandler={setSortFilter}
-            sortFilter={sortFilter}
-            popOverHandler={popOverHandler}
-          />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} popOverHandler={popOverHandler} />
           <FarmersGroupTable />
         </S.FarmersGroupContainer>
       )}

@@ -1,5 +1,6 @@
 import { Theme, Box, styled, Typography, Badge, Popover } from "@mui/material";
 import { Link } from "react-router-dom";
+
 namespace S {
   export const Header = styled(Box)(({ theme }: { theme: Theme }) => ({
     maxWidth: "100vw",
@@ -26,13 +27,16 @@ namespace S {
     aspectRatio: "1/1",
   });
 
-  export const LogoText = styled(Typography)(({ theme }: { theme: Theme }) => ({
+  export const LogoText = styled(Box)(({ theme }: { theme: Theme }) => ({
+    width: "152px",
+    height: "100%",
+    lineHeight: "1.5",
     fontSize: "0.8rem",
     fontWeight: "bold",
     textAlign: "center",
     letterSpacing: ".5px",
     color: theme.palette.text.primary,
-    whiteSpace: "nowrap",
+    // whiteSpace: "nowrap",
   }));
 
   export const NavBar = styled("nav", {
@@ -43,7 +47,6 @@ namespace S {
     alignItems: "center",
     justifyContent: "space-evenly",
     width: "100%",
-    gap: ".5rem 1rem",
     flexWrap: "wrap",
     backgroundColor: theme.palette.bg.main,
     [theme.breakpoints.down("lg")]: {
@@ -68,16 +71,58 @@ namespace S {
     },
   }));
 
+  export const NavbarSlickContainer = styled(Box)(({ theme }) => ({
+    width: "calc(100vw - 25rem)",
+    margin: "0 2rem",
+    ".slick-slide": {
+      maxWidth: "calc(278px + 1rem) !important",
+      textAlign: "center",
+    },
+    ".slick-disabled": {
+      ":before": {
+        display: "none",
+      },
+    },
+    ".slick-prev": {
+      top: "27% !important",
+      zIndex: "3",
+      width: "13px",
+      height: "13px",
+      transform: "scaleX(-1)",
+      borderRadius: "50%",
+      ":before": {
+        content: '"j"',
+        fontFamily: "nerkathir-icon",
+        color: theme.palette.text.secondaryLight,
+        fontSize: "13px",
+      },
+    },
+    ".slick-next": {
+      width: "13px",
+      height: "13px",
+      borderRadius: "50%",
+      zIndex: "3",
+      ":before": {
+        content: '"j"',
+        fontFamily: "nerkathir-icon",
+        color: theme.palette.text.secondaryLight,
+        fontSize: "13px",
+      },
+    },
+  }));
+
   export const NavLink = styled(Link, {
     shouldForwardProp: (prop) => prop !== "isActive",
   })<{ isActive: boolean }>(({ theme, isActive }) => ({
     position: "relative",
+    width: "fit-content !important",
     textDecoration: "none",
     [theme.breakpoints.down("md")]: {
       padding: "1rem 1rem 1rem 2rem",
+      width: "100% !important",
       "&::after": {
         content: "''",
-        width: "100%",
+        width: "100% !important",
         height: "100%",
         position: "absolute",
         top: "0",

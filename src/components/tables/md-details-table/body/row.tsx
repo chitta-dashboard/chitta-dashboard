@@ -1,13 +1,15 @@
-import React, { useState, useRef, FC } from "react";
+import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { mdDetail } from "../../../../utils/context/mdDetails";
+import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
@@ -16,32 +18,40 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 
 interface MdDetailsRowProps {
-  user: mdDetail;
+  user: IMdDetails;
   removeGroupMember: (id: string, group: string) => void;
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
+  const { setFarmerBankDetail } = useFarmerDetailsContext();
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
-  const [editData, setEditData] = useState<mdDetail>();
+  const [editData, setEditData] = useState<IMdDetails>();
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
   //Edit MdDetail Handler
-  const editMdDetailHandler = () => setEditMode(!editMode);
+  const editMdDetailHandler = () => {
+    setEditMode(!editMode);
+    setFarmerBankDetail(true);
+  };
 
   //Update MdDetail Handler
-  const updateMdDetail = (data: mdDetail) => {
+  const updateMdDetail = (data: IMdDetails) => {
     setEditData(data);
     confirmModalHandler();
   };
@@ -72,22 +82,26 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     user["profile"] = await encryptText(compressedBase64);
-    const farmerEditData = { ...user, id: user.farmerId } as mdDetail;
+    const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
       editedData: farmerEditData,
       successCb: () => {
-        editMdDetail({ editedData: user });
-        Toast({ message: "MD Edited Successfully.", type: "success" });
-      },
-      errorCb: () => {
-        Toast({ message: "Request failed! Please try again.", type: "error" });
+        editMdDetail({
+          editedData: user,
+          successCb: () => {
+            Toast({ message: "MD Edited Successfully.", type: "success" });
+          },
+          errorCb: () => {
+            Toast({ message: "Request failed! Please try again.", type: "error" });
+          },
+        });
       },
     });
   };
 
   const NavigateToMdDetailForm = (mdId: string) => {
-    navigate(`/md-details/${mdId}`);
+    setOpenFarmerRowModal(mdId);
   };
 
   return (
@@ -139,7 +153,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         />
         <FarmersDetailsModal
           openModal={editMode}
-          handleClose={() => setEditMode(false)}
+          handleClose={() => {
+            setEditMode(false);
+            setFarmerBankDetail(false);
+          }}
           cb={updateMdDetail}
           editMode={editMode}
           id={user.farmerId}
@@ -154,7 +171,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
               deleteMdDetail({
                 id: user.id,
                 successCb: () => {
-                  addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteMd });
+                  addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteMd });
                   Toast({ message: "MD Deleted Successfully", type: "success" });
                 },
                 errorCb: () => {
@@ -176,6 +193,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
                 },
               });
             setEditMode(false);
+            setFarmerBankDetail(false);
             setConfirmModal(false);
             setIconModal(false);
           }}
@@ -187,6 +205,18 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
             )
           }
         />
+        {openFarmerRowModal && (
+          <>
+            <FarmerBankDetailModal
+              openModal={true}
+              navigateId={openFarmerRowModal}
+              handleClose={() => {
+                setOpenFarmerRowModal(null);
+              }}
+              mdPage={true}
+            />
+          </>
+        )}
       </S.WebTableCell>
     </TableRow>
   );

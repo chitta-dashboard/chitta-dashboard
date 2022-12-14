@@ -2,16 +2,15 @@ import { forwardRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
 import IDCardHeader from "../id-card-header";
 import Signature from "../../../assets/images/Signature.png";
-// import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { mdDetail } from "../../../utils/context/mdDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { Founders } from "../../../utils/context/founders";
 import { decryptText } from "../../../utils/constants";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./idCardBody.styled";
 
 interface Props {
-  data?: farmerDetail | mdDetail | Founders;
+  data?: farmerDetail | IMdDetails | Founders;
 }
 
 type Ref = HTMLDivElement | undefined;
@@ -63,9 +62,10 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
         <S.QrCode>
           <QRCodeSVG
             value={JSON.stringify({
-              id: "1",
-              name: "Arockiya",
-              phoneNumber: "8940065783",
+              name: data?.name,
+              phoneNumber: data?.phoneNumber,
+              dob: data?.dob,
+              qualification: data?.qualification,
             })}
             level={"L"}
             size={105}

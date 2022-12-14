@@ -4,13 +4,20 @@ namespace S {
   type TableBodyContainerType = {
     isDataAvailable: boolean;
   };
+
   export const TableBodyContainer = styled(Box, {
     shouldForwardProp: (prop) => prop !== "isDataAvailable",
   })(({ isDataAvailable }: TableBodyContainerType) => ({
-    minHeight:"300px",
-    // justifyContent:isDataAvailable ? "space-between !important" : "center",
+    minHeight: "500px",
+    minWidth: "600px",
     alignItems: isDataAvailable ? "flex-start !important" : "center !important",
   }));
+
+  export const SearchBarContainer = styled("div")({
+    "& .MuiPaper-root": {
+      width: "auto",
+    },
+  });
 
   export const AddButtonContainer = styled(Box)({
     width: "100%",

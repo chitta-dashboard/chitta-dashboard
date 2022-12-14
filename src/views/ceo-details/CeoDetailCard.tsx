@@ -10,7 +10,7 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
-import Loader from "../../components/loader";
+import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
 
@@ -99,14 +99,17 @@ const CeoDetailsCard = ({ user }: Props) => {
               </S.CeoDataLeft>
               <S.CeoDataRight>
                 <S.CeoData>
-                  <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-                  <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-                  <S.CeoInfo>தகுதி:</S.CeoInfo>
+                  <S.CeoInfoLeft>கைபேசி எண்: </S.CeoInfoLeft>
+                  <S.CeoInfoLeft>பிறந்த தேதி:</S.CeoInfoLeft>
+                  <S.CeoInfoLeft>தகுதி:</S.CeoInfoLeft>
                 </S.CeoData>
                 <S.CeoData>
                   <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
                   <S.CeoInfo>{user.dob}</S.CeoInfo>
-                  <S.CeoInfo>{user.qualification}</S.CeoInfo>
+                  <S.CeoInfo>
+                    {user.qualification.split("").splice(0, 14).join("")}
+                    {user.qualification.length > 14 ? "..." : ""}
+                  </S.CeoInfo>
                 </S.CeoData>
               </S.CeoDataRight>
             </S.CeoDetailData>
@@ -161,7 +164,7 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoDelete({
               id: user.id,
               successCb: () => {
-                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
                 Toast({ message: "CEO deleted successfully.", type: "success" });
               },
               errorCb: () => {
