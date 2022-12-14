@@ -27,6 +27,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
 
   const [shareAmount, setShareAmount] = useState(1000);
   const [loader, setLoader] = useState(true);
+  const [toggle, setToggle] = useState(false);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
@@ -44,12 +45,12 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     onPrintError() {
       setIsCircleLoading(false);
     },
-    // pageStyle: `@media print {
-    //   @page {
-    //     size: a5 landscape;
-    //     margin: 0;
-    //   }
-    // }`,
+    pageStyle: `@media print {
+      @page {
+        size: ${!toggle ? "a5 landscape" : "a4 portrait"};
+        margin: 0;
+      }
+    }`,
   });
 
   const certificateFunctionStart = async () => {
@@ -69,7 +70,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     <>
       {certificateLoader && (
         <S.InvisibleDiv>
-          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} />
+          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} toggle={toggle} />
         </S.InvisibleDiv>
       )}
       <CustomModal openModal={openModal} handleClose={handleClose}>
@@ -85,7 +86,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
         {loader ? (
           <>
             <ModalBody id="" onSubmit={() => {}}>
-              <ShareDetailBody setShareAmount={setShareAmount} />
+              <ShareDetailBody setShareAmount={setShareAmount} toggle={toggle} setToggle={setToggle} />
             </ModalBody>
             <ModalFooter>
               <ShareDetailFooter handleClose={handleClose} generateTamilCertificate={certificateFunctionStart} />

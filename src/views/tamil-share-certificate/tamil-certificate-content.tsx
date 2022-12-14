@@ -14,9 +14,10 @@ import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
 interface Props {
   user: farmerDetail;
   shareAmount?: number | string;
+  toggle?: boolean;
 }
 
-const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount }) => {
+const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, toggle }) => {
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -27,7 +28,7 @@ const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount }) =>
   const newDate = new Date();
 
   return (
-    <S.TamilShareCertificateContainer key={user.id}>
+    <S.TamilShareCertificateContainer key={user.id} Toggle={toggle}>
       <S.CertificateTopBorderImg src={ShareHolderCertificateTopBorder} alt="ShareHolderCertificateTopBorder" />
       <S.CertificateBottomBorderImg src={ShareHolderCertificateTopBorder} alt="ShareHolderCertificateTopBorder" />
       <S.CertificateLeftBorderImg src={ShareHolderCertificateLeftBorder} alt="ShareHolderCertificateLeftBorder" />
@@ -89,11 +90,14 @@ const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount }) =>
         <S.CertificateTextLine>
           <S.CertificateText2>
             {titleName} &nbsp; உழவர் &nbsp; உற்பத்தியாளர் &nbsp; நிறுவனத்தால் &nbsp; கம்பெனியின் &nbsp; சட்டத்திட்டங்களுக்கு &nbsp; உட்பட்டு
+            {!toggle && <span> &nbsp; வழங்கப்படுகிறது.</span>}
           </S.CertificateText2>
         </S.CertificateTextLine>
-        <S.CertificateTextLine>
-          <S.CertificateText2>வழங்கப்படுகிறது.</S.CertificateText2>
-        </S.CertificateTextLine>
+        {toggle && (
+          <S.CertificateTextLine>
+            <S.CertificateText2>வழங்கப்படுகிறது.</S.CertificateText2>
+          </S.CertificateTextLine>
+        )}
       </S.CertificateContent>
       <S.ShareCountContainer>
         <S.ShareCountInnerContainer>

@@ -7,9 +7,10 @@ import { S } from "./tamil-certificate.styled";
 
 interface Props {
   shareAmount?: number | string;
+  toggle?: boolean;
 }
 
-const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount }, ref) => {
+const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount,toggle }, ref) => {
   const { selectedFarmers } = useFarmerDetailsContext();
 
   const {
@@ -29,9 +30,13 @@ const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAm
             .map((user) => {
               return (
                 <Fragment key={user.id}>
-                  <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} />
-                  <S.CertificateGap />
-                  <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} />
+                  <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} toggle={toggle} />
+                  {toggle && (
+                    <>
+                      <S.CertificateGap />
+                      <TamilShareHolderCertificateContent user={user} shareAmount={shareAmount} toggle={toggle} />
+                    </>
+                  )}
                 </Fragment>
               );
             }),
