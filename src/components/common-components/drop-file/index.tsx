@@ -96,12 +96,12 @@ const DropFile: React.FC<IDropFile> = function ({
           // if validation passed
           setTargetState("completedDrag");
           setSelectedFile(file);
-          validation && setNewGroupNames(validation.groups);
+          validation && setNewGroupNames(Array.from(new Set(validation.data?.map((i) => i.group))));
           validation && setInputData(validation.data);
           cb(file);
         } else {
           // if validation failed
-          validation && setNewGroupNames(validation.groups);
+          validation && setNewGroupNames(Array.from(new Set(validation.data?.map((i) => i.group))));
           validation && setExistingFarmers(validation.existingFarmers);
           validation && setVerifiedNewFarmers(validation.newFarmers);
           setTargetState("noDrag");
@@ -130,11 +130,11 @@ const DropFile: React.FC<IDropFile> = function ({
         if (validation.status) {
           setTargetState("completedDrag");
           setSelectedFile(file);
-          validation && setNewGroupNames(validation.groups);
+          validation && setNewGroupNames(Array.from(new Set(validation.data?.map((i) => i.group))));
           validation && setInputData(validation.data);
           cb(file);
         } else {
-          validation && setNewGroupNames(validation.groups);
+          validation && setNewGroupNames(Array.from(new Set(validation.data?.map((i) => i.group))));
           validation && setExistingFarmers(validation.existingFarmers);
           validation && setVerifiedNewFarmers(validation.newFarmers);
           Toast({ message: validation.message as string, type: "error" });
