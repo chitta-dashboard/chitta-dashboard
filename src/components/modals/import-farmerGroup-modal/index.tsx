@@ -46,17 +46,13 @@ const ImportFarmerGroupModal: FC<Props> = ({
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
 
-  const {
-    result: { data: farmerDetaisById },
-    formatChangeSuccess: isFarmerDetailsSuccess,
-  } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
 
   const yesButtonHandler = () => {
-    if (farmerDatas && isFarmerGroupSuccess && isFarmerDetailsSuccess) {
+    if (farmerDatas && isFarmerGroupSuccess) {
       let newdata = farmerDatas.map((item) => item.group);
       let groupName = newdata.filter((item, i, ar) => ar.indexOf(item) === i);
       let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
@@ -75,15 +71,11 @@ const ImportFarmerGroupModal: FC<Props> = ({
       });
 
       let updatedFarmerGroup = Object.values(farmersGroupById).concat(newFarmerGroup) as FarmersGroup[];
-      let updatedFarmerDetail = Object.values(farmerDetaisById).concat(farmerDatas) as farmerDetail[];
 
       const finalFarmerGroup = updatedFarmerGroup.map((item) => {
         return {
           ...item,
-          members: updatedFarmerDetail
-            .filter((name) => name.group === item.groupName)
-            .map((item1) => item1.id)
-            .filter((item, i, ar) => ar.indexOf(item) === i),
+          members: [...farmerDatas.filter((farmer) => farmer.group === item.groupName).map((name) => name.id), ...item.members],
         };
       });
 
