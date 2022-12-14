@@ -228,7 +228,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         nameAsPerBank: farmerData?.nameAsPerBank,
         bankName: farmerData?.bankName,
         accountNumber: decryptText(farmerData?.accountNumber as string),
-        confirmAccountNumber: farmerData?.confirmAccountNumber,
+        // confirmAccountNumber: farmerData?.confirmAccountNumber,
         ifscCode: farmerData?.ifscCode,
       });
     }
@@ -272,10 +272,17 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     let newId = uuidv4();
     let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
 
+    let editedData = {
+      accountNumber: data.accountNumber,
+      ifscCode: data.ifscCode,
+      bankName: data.bankName,
+      nameAsPerBank: data.nameAsPerBank,
+    };
+
     let params = {
       ...form1Data,
       ...form2Data,
-      ...data,
+      ...editedData,
       profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : newId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,

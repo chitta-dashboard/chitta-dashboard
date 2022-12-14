@@ -52,7 +52,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
 
   //Update MdDetail Handler
   const updateMdDetail = (data: IMdDetails) => {
-    setFarmerBankDetail(false);
     setEditData(data);
     confirmModalHandler();
   };
@@ -194,6 +193,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
                 },
               });
             setEditMode(false);
+            setFarmerBankDetail(false);
             setConfirmModal(false);
             setIconModal(false);
           }}
