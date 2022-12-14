@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { IMdDetails } from "../../../utils/context/mdDetails";
-import { useFetch } from "../../../utils/hooks/query";
+import { useFetch, useIdByPage } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import { adminFormInputs } from "../../admin-panel";
 import { decryptText } from "../../../utils/constants";
@@ -9,10 +9,13 @@ import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 
 const MdFormPreviewRight = () => {
+  const { mdId } = useParams();
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
-  } = useFetch(ENDPOINTS.mdDetails);
+  } = useIdByPage(ENDPOINTS.mdDetails, mdId);
+
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -20,7 +23,6 @@ const MdFormPreviewRight = () => {
 
   const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
 
-  const { mdId } = useParams();
   return (
     <>
       {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))

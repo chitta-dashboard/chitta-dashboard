@@ -12,6 +12,7 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
+import { useQueryClient } from "@tanstack/react-query";
 
 const MdDetails = () => {
   const {
@@ -24,14 +25,14 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
+  const { setSearchFilter, sortFilter, setSortFilter, currentPage } = useMdDetailsContext();
   const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
-
+  const queryClient = useQueryClient();
   useEffect(() => {
     Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).map((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
@@ -105,6 +106,9 @@ const MdDetails = () => {
     await addMdDetail({
       data: farmerData,
       successCb: () => {
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.mdDetails}-fetch-${currentPage}`] });
+        }, 0);
         Toast({ message: "MD Added successfully.", type: "success" });
         addMdNotification({ data: notifications });
       },

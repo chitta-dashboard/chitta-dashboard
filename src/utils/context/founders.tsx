@@ -203,6 +203,8 @@ const FoundersContextProvider: FC<Props> = (props) => {
     setSearchFilter,
     setSortFilter,
     setFounderQuery,
+    setCurrentPage,
+    setPageCount,
   };
 
   return <foundersContext.Provider value={data}>{props.children}</foundersContext.Provider>;

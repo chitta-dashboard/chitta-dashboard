@@ -1,10 +1,10 @@
 import React, { useState, useRef, FC } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { IMdDetails } from "../../../../utils/context/mdDetails";
+import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
@@ -18,11 +18,15 @@ import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 interface MdDetailsRowProps {
   user: IMdDetails;
   removeGroupMember: (id: string, group: string) => void;
+  params?: string;
 }
 
-const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
-  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  const { currentPage } = useMdDetailsContext();
+  const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, params);
+  const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage, params);
+  // const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  // const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();

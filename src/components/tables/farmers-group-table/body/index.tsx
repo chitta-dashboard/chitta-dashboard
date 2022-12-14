@@ -15,7 +15,7 @@ const Body = () => {
   const searchQuery = useSearchQuery(searchFilter, "groupName");
   const sortQuery = useSortQuery(sortFilter, "groupName");
   const groupQuery = "";
-  const dataLimit = 2;
+  const dataLimit = 7;
 
   const {
     result: { data: farmerGroupByPage, refetch: farmergroupRefetch, isFetched: isFarmerByPageSuccess },

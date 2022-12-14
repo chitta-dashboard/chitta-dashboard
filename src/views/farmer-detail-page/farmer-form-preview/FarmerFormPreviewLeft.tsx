@@ -46,10 +46,10 @@ const FarmerFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const {farmerId} = useParams()
+  const { farmerId } = useParams();
   const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerId);
+  const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, farmerId);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);

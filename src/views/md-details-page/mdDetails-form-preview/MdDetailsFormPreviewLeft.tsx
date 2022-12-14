@@ -6,10 +6,10 @@ import MdDetailsForm from "../MdDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
 import { useAuthContext } from "../../../utils/context/auth";
-import { IMdDetails } from "../../../utils/context/mdDetails";
+import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
-import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -19,10 +19,17 @@ import { adminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
-  const {
+  const { mdId } = useParams();
+
+  // const {
+  //   formatChangeSuccess: isSuccess,
+  //   result: { data: mdDetailsById },
+  // } = useFetch(ENDPOINTS.mdDetails);
+
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
-  } = useFetch(ENDPOINTS.mdDetails);
+  } = useIdByPage(ENDPOINTS.mdDetails, mdId);
 
   const {
     result: { data: farmersGroupById },
@@ -34,12 +41,13 @@ const MdFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
+  const { currentPage, mdQuery } = useMdDetailsContext();
   const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
 
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, mdQuery, mdId);
+  const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -49,7 +57,6 @@ const MdFormPreviewLeft = () => {
   const [openConfirmationModal, setOpenConfirmationModal] = useState<IMdDetails | null>(null);
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const { mdId } = useParams();
   const navigate = useNavigate();
 
   // popover open

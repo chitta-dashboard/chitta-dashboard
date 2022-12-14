@@ -12,6 +12,7 @@ import AddFarmersDetailsModal from "../../components/modals/farmers-details-moda
 import { CircularStatic } from "../../utils/loaders/circular-progress-loader/index";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
+import { useQueryClient } from "@tanstack/react-query";
 
 const FarmersDetails = () => {
   const { sortFilter, currentPage, farmerQuery, isCircleLoading, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
@@ -24,6 +25,7 @@ const FarmersDetails = () => {
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
 
+  const queryClient = useQueryClient();
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
@@ -51,7 +53,10 @@ const FarmersDetails = () => {
       (await mutate({
         data: newFarmer,
         successCb: () => {
-          farmerPageRefetch();
+          // farmerPageRefetch();
+          setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerDetails}-fetch-${currentPage}`] });
+          }, 0);
           addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
         },

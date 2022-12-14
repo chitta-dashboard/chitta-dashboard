@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { adminFormInputs } from "../admin-panel";
-import { useFetch } from "../../utils/hooks/query";
+import { useFetch, useIdByPage } from "../../utils/hooks/query";
 import S from "./md-details-page.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -13,10 +13,16 @@ interface Props {
 }
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
+  const { mdId } = useParams();
+  // const {
+  //   result: { data: mdDetailsById },
+  //   formatChangeSuccess: isSuccess,
+  // } = useFetch(ENDPOINTS.mdDetails);
+
   const {
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,
-  } = useFetch(ENDPOINTS.mdDetails);
+  } = useIdByPage(ENDPOINTS.mdDetails, mdId);
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -30,8 +36,6 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     address,
     coordinatorAddress,
   } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
-
-  const { mdId } = useParams();
 
   return (
     <>

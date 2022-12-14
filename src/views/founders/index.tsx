@@ -10,12 +10,14 @@ import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Founders = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
-  const { setSearchFilter, sortFilter, setSortFilter } = useFounderContext();
+  const { setSearchFilter, sortFilter, currentPage, setSortFilter } = useFounderContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
+  const queryClient = useQueryClient();
 
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
@@ -28,6 +30,9 @@ const Founders = () => {
     founderMutateAdd({
       data,
       successCb: () => {
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.founders}-fetch-${currentPage}`] });
+        }, 0);
         addNotification({
           id: `add_${data.id}`,
           image: data.profile,

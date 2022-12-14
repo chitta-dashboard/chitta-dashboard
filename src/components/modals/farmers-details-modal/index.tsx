@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { useFarmerDetailsContext, farmerDetail } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -33,9 +33,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   const { currentPage, farmerQuery, farmerId } = useFarmerDetailsContext();
   let {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
+    result: { data: farmersDetailsById, isFetched: isSuccess },
+  } = useIdByPage(ENDPOINTS.farmerDetails, id);
 
   const {
     result: { data: lastFarmerDetail },
@@ -48,14 +47,14 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
-      let farmerData = Object.values(isSuccess && (farmersDetailsById as farmerDetail)).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = isSuccess && farmersDetailsById[id];
       let masterKey = "";
       let surveyName = "";
       let acreName = "";
       let borderName = "";
       let temp: Array<{ [key: string]: [string, string, string] }> = [];
 
-      farmerData &&
+      isSuccess &&
         Object.keys(farmerData.acre).map((item, index) => {
           masterKey = uuidv4();
           surveyName = farmerData && Object.keys(farmerData.surveyNo)[index];
@@ -69,19 +68,44 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
   });
 
+  useEffect(() => {
+    setDynamicInputs(() => {
+      if (editMode) {
+        let farmerData = isSuccess && farmersDetailsById[id];
+        let masterKey = "";
+        let surveyName = "";
+        let acreName = "";
+        let borderName = "";
+        let temp: Array<{ [key: string]: [string, string, string] }> = [];
+
+        farmerData &&
+          Object.keys(farmerData.acre).map((item, index) => {
+            masterKey = uuidv4();
+            surveyName = farmerData && Object.keys(farmerData.surveyNo)[index];
+            acreName = item;
+            borderName = farmerData && Object.keys(farmerData.border)[index];
+            temp = [...temp, { [masterKey]: [surveyName, acreName, borderName] }];
+            return undefined;
+          });
+        return temp.reverse();
+      }
+      return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
+    });
+  }, [isSuccess]);
+
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
     const acreName = "acre-" + uuidv4();
     const borderName = "border-" + uuidv4();
     const masterKey = uuidv4();
 
-    setDynamicInputs([{ [masterKey]: [surveyName, acreName, borderName] }, ...dynamicInputs]);
+    dynamicInputs && setDynamicInputs([{ [masterKey]: [surveyName, acreName, borderName] }, ...dynamicInputs]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dynamicInputs]);
 
   const removeInput = useCallback(
     (key: string) => {
-      setDynamicInputs(dynamicInputs.filter((inp) => Object.keys(inp)[0] !== key));
+      setDynamicInputs(dynamicInputs && dynamicInputs.filter((inp) => Object.keys(inp)[0] !== key));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dynamicInputs],
@@ -128,10 +152,11 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const groupEvent = form1Watch("group");
   const phoneNumberEvent = form1Watch("phoneNumber");
   const addhaarNoEvent = form1Watch("addhaarNo");
-  const surveyNoEvent = form1Watch("surveyNo");
+  const surveyNoEvent = isSuccess && form1Watch("surveyNo");
   const acreEvent = form1Watch("acre");
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
+
   if (
     nameEvent &&
     fatherNameEvent &&
@@ -148,6 +173,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     !Object.values(surveyNoEvent).includes("") &&
     !Object.values(acreEvent).includes("") &&
     !Object.values(borderEvent).includes("") &&
+    dynamicInputs &&
     Object.values(surveyNoEvent).length === dynamicInputs.length &&
     Object.values(acreEvent).length === dynamicInputs.length &&
     Object.values(borderEvent).length === dynamicInputs.length
@@ -193,7 +219,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   useEffect(() => {
     if (editMode) {
-      let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = Object.values(isSuccess && (farmersDetailsById as { [id: string]: farmerDetail }))?.find(
+        (f) => String(f.id) === id,
+      ) as farmerDetail;
+      // let farmerData = isSuccess && farmersDetailsById[id];
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,
@@ -236,7 +265,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, id]);
+  }, [editMode, id, isSuccess]);
 
   const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
@@ -294,85 +323,89 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   };
 
   return (
-    <CustomModal openModal={openModal} handleClose={handleClose}>
-      <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
+    <>
+      {isSuccess && (
+        <CustomModal openModal={openModal} handleClose={handleClose}>
+          <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
 
-      {page === 2 ? (
-        <>
-          <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
-            <FormFieldPage2 control={form2Control as unknown as Control} />
-          </ModalBody>
-          <ModalFooter>
-            <S.PageNumber>
-              <S.CurrentPage>{page}/3</S.CurrentPage>
-            </S.PageNumber>
-            <S.ButtonContainer>
-              <Button
-                onClick={() => {
-                  form2ClearErrors();
-                  //setNext(!next);
-                  setPage(1);
-                }}
-              >
-                Back
-              </Button>
-              <Button type="submit" form={"farmersDetailsForm2"} disabled={form2EnableButton}>
-                Next
-              </Button>
-            </S.ButtonContainer>
-          </ModalFooter>
-        </>
-      ) : page === 3 ? (
-        <>
-          <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
-            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
-          </ModalBody>
-          <ModalFooter>
-            <S.PageNumber>
-              <S.CurrentPage>{page}/3</S.CurrentPage>
-            </S.PageNumber>
-            <S.ButtonContainer>
-              <Button
-                onClick={() => {
-                  form3ClearErrors();
-                  //setNext(!next);
-                  setPage(2);
-                }}
-              >
-                Back
-              </Button>
-              <Button type="submit" form={"farmersDetailsForm3"} disabled={form3EnableButton}>
-                Submit
-              </Button>
-            </S.ButtonContainer>
-          </ModalFooter>
-        </>
-      ) : (
-        <>
-          <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
-            <FormField
-              dynamicInputs={dynamicInputs}
-              addInput={addInput}
-              removeInput={removeInput}
-              control={form1Control as unknown as Control}
-              setValue={form1SetValue}
-              getValues={form1GetValues}
-              unregister={form1Unregister}
-              editMode={editMode}
-              watch={form1Watch}
-            />
-          </ModalBody>
-          <ModalFooter>
-            <S.PageNumber>
-              <S.CurrentPage>{page}/3</S.CurrentPage>
-            </S.PageNumber>
-            <Button type="submit" form={"farmersDetailsForm1"} disabled={form1EnableButton}>
-              Next
-            </Button>
-          </ModalFooter>
-        </>
+          {page === 2 ? (
+            <>
+              <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
+                <FormFieldPage2 control={form2Control as unknown as Control} />
+              </ModalBody>
+              <ModalFooter>
+                <S.PageNumber>
+                  <S.CurrentPage>{page}/3</S.CurrentPage>
+                </S.PageNumber>
+                <S.ButtonContainer>
+                  <Button
+                    onClick={() => {
+                      form2ClearErrors();
+                      //setNext(!next);
+                      setPage(1);
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button type="submit" form={"farmersDetailsForm2"} disabled={form2EnableButton}>
+                    Next
+                  </Button>
+                </S.ButtonContainer>
+              </ModalFooter>
+            </>
+          ) : page === 3 ? (
+            <>
+              <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
+                <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
+              </ModalBody>
+              <ModalFooter>
+                <S.PageNumber>
+                  <S.CurrentPage>{page}/3</S.CurrentPage>
+                </S.PageNumber>
+                <S.ButtonContainer>
+                  <Button
+                    onClick={() => {
+                      form3ClearErrors();
+                      //setNext(!next);
+                      setPage(2);
+                    }}
+                  >
+                    Back
+                  </Button>
+                  <Button type="submit" form={"farmersDetailsForm3"} disabled={form3EnableButton}>
+                    Submit
+                  </Button>
+                </S.ButtonContainer>
+              </ModalFooter>
+            </>
+          ) : (
+            <>
+              <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
+                <FormField
+                  dynamicInputs={dynamicInputs}
+                  addInput={addInput}
+                  removeInput={removeInput}
+                  control={form1Control as unknown as Control}
+                  setValue={form1SetValue}
+                  getValues={form1GetValues}
+                  unregister={form1Unregister}
+                  editMode={editMode}
+                  watch={form1Watch}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <S.PageNumber>
+                  <S.CurrentPage>{page}/3</S.CurrentPage>
+                </S.PageNumber>
+                <Button type="submit" form={"farmersDetailsForm1"} disabled={form1EnableButton}>
+                  Next
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </CustomModal>
       )}
-    </CustomModal>
+    </>
   );
 };
 

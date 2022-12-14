@@ -4,25 +4,21 @@ import { useFetch } from "../../../../utils/hooks/query";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
-  const {
-    formatChangeSuccess: isSuccess,
-    result: { data: mdDetailsById },
-  } = useFetch(ENDPOINTS.mdDetails);
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useMdDetailsContext();
 
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
-  return Object.values(isSuccess && mdDetailsById).length > 0 ? (
+  return (
     <FooterWrapper
       count={pageCount ? pageCount : 1}
       page={currentPage}
       totalCount={totalPageCount}
       handlePageCount={handlePageCount}
-      rowsPerPage={6}
+      rowsPerPage={7}
     />
-  ) : null;
+  );
 };
 
 export default Footer;

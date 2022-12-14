@@ -1,9 +1,9 @@
 import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
-import { Founders } from "../../../../utils/context/founders";
+import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";
@@ -17,9 +17,10 @@ import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 
 interface FoundersRowProp {
   user: Founders;
+  params?: string;
 }
 
-const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
+const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
   // const { editFounder, deleteFounder } = useFounderContext();
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
@@ -31,9 +32,12 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
 
+  const { currentPage } = useFounderContext();
   // hook for edit and delete mutation
-  const { mutate: founderMutateUpdate } = useEdit(ENDPOINTS.founders);
-  const { mutate: founderMutateDelete } = useDelete(ENDPOINTS.founders);
+  const { mutate: founderMutateUpdate } = useEditByPage(ENDPOINTS.founders, currentPage, params);
+  const { mutate: founderMutateDelete } = useDeleteByPage(ENDPOINTS.founders, currentPage, params);
+  // const { mutate: founderMutateUpdate } = useEdit(ENDPOINTS.founders);
+  // const { mutate: founderMutateDelete } = useDelete(ENDPOINTS.founders);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);

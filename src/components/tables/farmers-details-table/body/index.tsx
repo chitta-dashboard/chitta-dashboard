@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
+import { ENDPOINTS } from "../../../../utils/constants";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 // import { addFarmerId, setPageCount, setCurrentPage, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -9,21 +9,10 @@ import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
 import S from "./body.styled";
-import { useQueryClient } from "@tanstack/react-query";
 
 const Body = () => {
-  const {
-    addFarmerId,
-    searchFilter,
-    sortFilter,
-    groupFilter,
-    farmerQuery,
-    currentPage,
-    setPageCount,
-    setFarmersIdToExport,
-    setCurrentPage,
-    setFarmerQuery,
-  } = useFarmerDetailsContext();
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport, setCurrentPage, setFarmerQuery } =
+    useFarmerDetailsContext();
   // const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
   // const dispatch = useDispatch();
   // console.log("currentPage", currentPage);
@@ -36,10 +25,11 @@ const Body = () => {
   const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
   const dataLimit = 25;
   const {
-    formatChangeSuccess: isFarmerByPageSuccess,
-    result: { data: farmersDetailsByPage, refetch: farmerPageRefetch },
+    result: { data: farmersDetailsByPage, refetch: farmerPageRefetch, isFetched: isFarmerByPageSuccess },
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
+
+  console.log("totalDataCount", totalDataCount);
 
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
 
@@ -67,7 +57,7 @@ const Body = () => {
     farmerPageRefetch();
     farmerIdRefetch();
     setFarmerQuery(`${searchQuery}${groupQuery}${sortQuery}`);
-  }, [searchQuery, sortQuery, groupQuery, currentPage]);
+  }, [searchQuery, sortQuery, groupQuery, currentPage, isFarmerByPageSuccess]);
 
   useEffect(() => {
     // dispatch(addFarmerId(farmerId));
@@ -79,7 +69,7 @@ const Body = () => {
   useEffect(() => {
     setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
     totalDataCount <= dataLimit && currentPage !== 1 && setCurrentPage(1);
-  }, [totalDataCount]);
+  }, [totalDataCount, isFarmerByPageSuccess]);
 
   // farmer group filter for farmer detail table
   // useEffect(() => {
@@ -151,7 +141,7 @@ const Body = () => {
             </td>
           </S.Customtr>
         </S.LoaderContainer>
-      ) : isFarmerByPageSuccess ? (
+      ) : isFarmerByPageSuccess && Object.values(farmersDetailsByPage as farmerDetail[]).length > 0 ? (
         <BodyWrapper>
           {farmersDetailsByPage &&
             Object.values(farmersDetailsByPage as farmerDetail[]).map((user: farmerDetail) => (

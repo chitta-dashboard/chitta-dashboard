@@ -9,15 +9,13 @@ import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 
 const Body = () => {
   const { searchFilter, sortFilter, currentPage, setCurrentPage, setPageCount, setFounderQuery } = useFounderContext();
-  console.log(searchFilter);
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = "";
-  const dataLimit = 2;
+  const dataLimit = 7;
 
   const {
-    formatChangeSuccess: isFounderByPageSuccess,
-    result: { data: founderByPage, refetch: foundergroupRefetch },
+    result: { data: founderByPage, refetch: foundergroupRefetch, isFetched: isFounderByPageSuccess },
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.founders, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
@@ -53,7 +51,10 @@ const Body = () => {
     <>
       {isFounderByPageSuccess && Object.values(founderByPage).length > 0 ? (
         <BodyWrapper>
-          {isFounderByPageSuccess && Object.values(founderByPage as Founders[]).map((user) => <FoundersRow {...{ user }} key={user.id} />)}
+          {isFounderByPageSuccess &&
+            Object.values(founderByPage as Founders[]).map((user) => (
+              <FoundersRow {...{ user }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
+            ))}
         </BodyWrapper>
       ) : (
         <S.EmptyMsg>
