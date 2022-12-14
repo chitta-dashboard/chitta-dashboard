@@ -5,7 +5,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
 import Toast from "../../../utils/toast";
-import { useAdd } from "../../../utils/hooks/query";
+import { useAdd, useEdit, useFetch } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { useAuthContext } from "../../../utils/context/auth";
@@ -17,40 +17,85 @@ interface Props {
   handleClose: () => void;
   newGroupNames?: string[] | undefined;
   handleCloseImport: () => void;
-  farmerGroupDatas: FarmersGroup[] | null;
   farmerDatas: farmerDetail[] | null;
   count?: number | null;
   setNewGroupNames: Dispatch<SetStateAction<string[] | undefined>>;
   setInputData: Dispatch<SetStateAction<farmerDetail[] | undefined>>;
 }
 
+const RemoveArray = (farmerId: string[], members: string[]) => {
+  if (members.length === 0) {
+    return [];
+  }
+  let finalArr = members.filter((item) => !farmerId.includes(item));
+  return finalArr;
+};
+
 const ImportFarmerGroupModal: FC<Props> = ({
   openModal,
   handleClose,
   newGroupNames,
   handleCloseImport,
-  farmerGroupDatas,
   farmerDatas,
   count,
   setNewGroupNames,
   setInputData,
 }) => {
+  const {
+    result: { data: farmersGroupById },
+    formatChangeSuccess: isFarmerGroupSuccess,
+  } = useFetch(ENDPOINTS.farmerGroup);
+
+  const {
+    result: { data: farmerDetaisById },
+    formatChangeSuccess: isFarmerDetailsSuccess,
+  } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+  const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
 
   const yesButtonHandler = () => {
-    if (farmerGroupDatas && farmerDatas) {
-      // mutating farmerGroup while bulk import
+    if (farmerDatas && isFarmerGroupSuccess && isFarmerDetailsSuccess) {
+      let newdata = farmerDatas.map((item) => item.group);
+      let groupName = newdata.filter((item, i, ar) => ar.indexOf(item) === i);
+      let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
+
+      const grouptobeadded = RemoveArray(existingGroup, groupName);
+      const newFarmerGroup = grouptobeadded.map((item) => {
+        return {
+          id: uuid(),
+          groupName: item,
+          explanation: "",
+          chairman: "",
+          treasurer: "",
+          secretary: "",
+          members: [],
+        };
+      });
+
+      let updatedFarmerGroup = Object.values(farmersGroupById).concat(newFarmerGroup) as FarmersGroup[];
+      let updatedFarmerDetail = Object.values(farmerDetaisById).concat(farmerDatas) as farmerDetail[];
+
+      const finalFarmerGroup = updatedFarmerGroup.map((item) => {
+        return {
+          ...item,
+          members: updatedFarmerDetail
+            .filter((name) => name.group === item.groupName)
+            .map((item1) => item1.id)
+            .filter((item, i, ar) => ar.indexOf(item) === i),
+        };
+      });
+
       addFarmerGroup({
-        data: farmerGroupDatas as FarmersGroup[],
+        data: newFarmerGroup,
         successCb: () => {
-          addNotification({ id: uuid(), message: "New farmer group created" });
           if (count && count > 1) {
-            Toast({ message: `All ${farmerGroupDatas.length} groups created Successfully`, type: "success" });
+            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
           } else {
-            Toast({ message: `${farmerGroupDatas.length} group created Successfully`, type: "success" });
+            Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
           }
+
           addFarmerDetails({
             data: farmerDatas as farmerDetail[],
             successCb: () => {
@@ -60,10 +105,25 @@ const ImportFarmerGroupModal: FC<Props> = ({
               } else {
                 Toast({ type: "success", message: `${count} farmer created successfully` });
               }
-              setNewGroupNames(undefined);
-              setInputData(undefined);
-              handleClose();
-              handleCloseImport();
+
+              updateFarmerGroup({
+                editedData: finalFarmerGroup,
+                successCb: () => {
+                  if (count && count > 1) {
+                    Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
+                  } else {
+                    Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
+                  }
+
+                  setNewGroupNames(undefined);
+                  setInputData(undefined);
+                  handleClose();
+                  handleCloseImport();
+                },
+                errorCb: () => {
+                  Toast({ type: "error", message: `error occured! please retry!` });
+                },
+              });
             },
             errorCb: () => {
               Toast({ type: "error", message: `error occured! please retry!` });
@@ -71,7 +131,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
           });
         },
         errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
+          Toast({ message: "Request failed, please try again.", type: "error" });
         },
       });
     }
