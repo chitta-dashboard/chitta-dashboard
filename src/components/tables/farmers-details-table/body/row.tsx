@@ -28,13 +28,12 @@ interface FarmersDetailsRowProps {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
-  const { checkboxSelect, selectedFarmers, currentPage,farmerQuery } = useFarmerDetailsContext();
+  const { checkboxSelect, selectedFarmers, currentPage, farmerQuery } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-
 
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
@@ -156,7 +155,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
         >
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
         </S.RowCheckCell>
-        <S.WebTableCell>{user.membershipId.substring(0, 15)}</S.WebTableCell>
+        <S.WebTableCell>{user.membershipId}</S.WebTableCell>
         {/* for tablet view*/}
         <S.TabCell onClick={(e) => e.stopPropagation()}>
           <Checkbox onChange={() => checkboxSelect(user.id)} checked={selectedFarmers.includes(user.id)} />
@@ -186,7 +185,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             {user.name}
           </S.NameStack>
         </S.Cell>
-        <S.Cell title="உறுப்பினர் எண்">{user.membershipId.substring(0, 15)}</S.Cell>
+        <S.Cell title="உறுப்பினர் எண்">{user.membershipId}</S.Cell>
         <S.Cell title="பிறந்த தேதி">{user.dob}</S.Cell>
         <S.Cell title="கைபேசி எண்">{user.phoneNumber}</S.Cell>
         <S.Cell title="குழு பெயர்">{user.group}</S.Cell>

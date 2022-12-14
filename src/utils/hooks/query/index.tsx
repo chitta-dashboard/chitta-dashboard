@@ -1,10 +1,11 @@
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
+import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { getProductStructure } from "../../../components/portfolio/helper";
 // import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
-import { ENDPOINTS, Endpoints, groupBy } from "../../constants";
+import { ACRETOCENT, ENDPOINTS, Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 import { farmerDetail } from "../../context/farmersDetails";
 
@@ -333,25 +334,39 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
 
 export const useGetFarmersCount = () => {
   const [count, setCount] = useState<string | null[]>([]);
+  const [isGroupSuccess, setIsGroupSuccess] = useState<boolean>(false);
+  const {
+    result: { data },
+    formatChangeSuccess,
+  } = useFetch(ENDPOINTS.farmerDetails);
+
+  let farmerDetailsData: farmerDetail[] = formatChangeSuccess ? Object.values(data) : [];
+  let totalFarmerCount = farmerDetailsData.length;
+  let femaleFarmerCount = farmerDetailsData.filter((item) => item.sex === "FEMALE").length;
+  let maleFarmerCount = totalFarmerCount - femaleFarmerCount;
+  let acreFieldValue =
+    farmerDetailsData.reduce((a, b) => {
+      let value = (b.landAreaInCent as string) ? parseInt(b.landAreaInCent as string) : 0;
+      return a + value;
+    }, 0) / ACRETOCENT;
+
   useEffect(() => {
     const getDataCount = async () => {
-      let totalResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails/?_start=0&_end=0`)).headers.get("X-total-count");
-      let maleResult = await (
-        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=ஆன்&_start=0&_end=0`)
-      ).headers.get("X-total-count");
-      let femaleResult = await (
-        await fetch(`${process.env.REACT_APP_API_KEY}/farmerDetails?sex_like=பெண்&_start=0&_end=0`)
-      ).headers.get("X-total-count");
       let farmerGroupResult = await (await fetch(`${process.env.REACT_APP_API_KEY}/farmerGroup?_start=0&_end=0`)).headers.get("X-total-count");
-      return [totalResult, maleResult, femaleResult, farmerGroupResult];
+      setCount(farmerGroupResult as SetStateAction<string | null[]>);
+      setIsGroupSuccess(true);
     };
-    getDataCount().then((res) => setCount(res as SetStateAction<string | null[]>));
+    getDataCount();
   }, []);
+
   return {
-    totalFarmerCount: count[0],
-    maleFarmerCount: count[1],
-    femaleFarmerCount: count[2],
-    farmerGroupCount: count[3],
+    totalFarmerCount,
+    maleFarmerCount,
+    femaleFarmerCount,
+    farmerGroupCount: count[0],
+    acreFieldValue,
+    isFarmerDetailsLoading: formatChangeSuccess,
+    isFarmerGroupLoading: isGroupSuccess,
   };
 };
 

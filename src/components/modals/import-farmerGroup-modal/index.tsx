@@ -5,9 +5,9 @@ import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import Toast from "../../../utils/toast";
-import { useAdd } from "../../../utils/hooks/query";
-import { ENDPOINTS, groupBy } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { useAdd, useIdByPage } from "../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../utils/constants";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useAuthContext } from "../../../utils/context/auth";
 import S from "./importFarmerGroupModal.styled";
 
@@ -24,6 +24,13 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
   const [farmerDatas, setFarmerDatas] = useState<Object[]>();
   const [createFarmers, setCreateFarmers] = useState<boolean>(false);
 
+  const { farmerId } = useFarmerDetailsContext();
+
+  const {
+    result: { data: lastFarmerDetail },
+    formatChangeSuccess: isLastDataSuccess,
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1] as string);
+
   const yesButtonHandler = () => {
     if (data) {
       let newId: string;
@@ -32,6 +39,9 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
       let newFarmerDetailsDatas: Object[] = [];
       let newFarmerGroupDatas: Object[] = [];
 
+      //Get Id
+      const lastMembershipId = isLastDataSuccess && (Object.values(lastFarmerDetail as farmerDetail[])[0]["membershipId"] as string).split("-")[2];
+      let newMembershipId: number = parseInt(lastMembershipId as string) + 1;
       // creating the new datas for farmerdDetails & farmerGroup
       // eslint-disable-next-line array-callback-return
       data?.map((i: farmerDetail) => {
@@ -43,12 +53,14 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, groups, dat
           ...i,
           id: newId,
           profile: "",
+          membershipId: `NER-FPC-${newMembershipId}`,
         };
 
         // creating farmerGroup db structure
         farmerGroup = { id: uuid(), groupName: i.group, explanation: "", chairman: "", treasurer: "", secretary: "", members: [newId] };
         newFarmerDetailsDatas.push(farmer);
         newFarmerGroupDatas.push(farmerGroup);
+        newMembershipId++;
       });
 
       setFarmerDatas(newFarmerDetailsDatas);

@@ -495,3 +495,6 @@ export const PRODUCT_DATA = {
   PRODUCT_DATA.raw[6].image = await fileToBase64(Sugarcane, true);
   PRODUCT_DATA.raw[7].image = await fileToBase64(Cotton, true);
 })();
+
+
+export const ACRETOCENT = 100.021;

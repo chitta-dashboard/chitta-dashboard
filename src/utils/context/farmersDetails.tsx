@@ -19,7 +19,7 @@ const SET_CIRCLE_LOADING = "SET_CIRCLE_LOADING";
 export const DEFAULT_GROUP_FILTER = "all";
 
 export type farmerDetail = {
-  membershipId?: string;
+  membershipId: string;
   profile: string;
   id: string;
   name: string;
@@ -49,6 +49,11 @@ export type farmerDetail = {
   cropsType?: string;
   cattle?: string;
   smallOrMarginalFarmer?: string;
+  nameAsPerBank?: string;
+  bankName?: string;
+  accountNumber?: string;
+  confirmAccountNumber?: string;
+  ifscCode?: string;
 };
 
 export type selectedFarmer = number | string;

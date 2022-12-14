@@ -9,14 +9,17 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
-import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy } from "../../../utils/constants";
-import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
-import page1 from "../../../assets/images/page-1.svg";
-import page2 from "../../../assets/images/page-2.svg";
+import FormFieldPage3 from "./page-3-fields";
+import {
+  IAddFarmersDetailsFormInput,
+  IAddFarmersDetailsPage1Input,
+  IAddFarmersDetailsPage2Input,
+  IAddFarmersDetailsPage3Input,
+} from "../type/formInputs";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
+import { useFetchByPage, useGetFarmersCount, useIdByPage } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
-import { RootState } from "../../../utils/store";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -27,15 +30,21 @@ interface CustomProps {
   mdId?: string | undefined;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { currentPage, farmerQuery } = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
+  const { currentPage, farmerQuery, farmerId } = useFarmerDetailsContext();
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
 
-  const [next, setNext] = useState(false);
+  const {
+    result: { data: lastFarmerDetail },
+    formatChangeSuccess: isLastDataSuccess,
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1] as string);
+
+  const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
+  const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -95,6 +104,16 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     control: form2Control,
     watch: form2Watch,
   } = useForm<IAddFarmersDetailsPage2Input>({
+    mode: "onChange",
+  });
+
+  const {
+    handleSubmit: form3HandleSubmit,
+    reset: form3Reset,
+    clearErrors: form3ClearErrors,
+    control: form3Control,
+    watch: form3Watch,
+  } = useForm<IAddFarmersDetailsPage3Input>({
     mode: "onChange",
   });
 
@@ -162,6 +181,16 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     form2EnableButton = false;
   }
 
+  let form3EnableButton = true;
+  const nameAsPerBank = form3Watch("nameAsPerBank");
+  const bankName = form3Watch("bankName");
+  const accountNumber = form3Watch("accountNumber");
+  const confirmAccountNumber = form3Watch("accountNumber");
+  const ifscCode = form3Watch("ifscCode");
+  if (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) {
+    form3EnableButton = false;
+  }
+
   useEffect(() => {
     if (editMode) {
       let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
@@ -196,12 +225,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         animals: farmerData?.animals,
         groupMember: farmerData?.groupMember,
       });
+
+      form3Reset({
+        nameAsPerBank: farmerData?.nameAsPerBank,
+        bankName: farmerData?.bankName,
+        accountNumber: decryptText(farmerData?.accountNumber as string),
+        confirmAccountNumber: farmerData?.confirmAccountNumber,
+        ifscCode: farmerData?.ifscCode,
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
-  const form1Submit: any = (data: IAddFarmersDetailsPage1Input) => {
+  const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
@@ -216,23 +253,42 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       sex: data.sex,
       spouseName: data.spouseName,
     });
-    setNext(true);
+    setPage(2);
   };
 
-  const form2Submit: any = async (data: IAddFarmersDetailsPage2Input) => {
+  const form2Submit = async (data: IAddFarmersDetailsPage2Input) => {
+    setForm2Data(data);
+    setPage(3);
+  };
+
+  const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
 
+    //Get Id
+    const lastMembershipId = isLastDataSuccess && (Object.values(lastFarmerDetail as farmerDetail[])[0]["membershipId"] as string).split("-")[2];
+
     let newId = uuidv4();
+    let newMemberId = isLastDataSuccess && parseInt(lastMembershipId as string) + 1;
+    delete data?.confirmAccountNumber;
     let params = {
       ...form1Data,
+      ...form2Data,
       ...data,
       profile: encryptedBase64,
       id: mdId ? mdId : editMode ? id : newId,
-      membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newId}`,
+      membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
-    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string | undefined; farmerId?: string };
+      landAreaInCent: `${
+        Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
+          return a + parseInt(b as string);
+        }, 0) * ACRETOCENT
+      }`,
+      accountNumber: encryptText(accountNumber),
+    } as IAddFarmersDetailsPage1Input &
+      IAddFarmersDetailsPage2Input &
+      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: string };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };
@@ -241,23 +297,51 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     <CustomModal openModal={openModal} handleClose={handleClose}>
       <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
 
-      {next ? (
+      {page === 2 ? (
         <>
           <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
             <FormFieldPage2 control={form2Control as unknown as Control} />
           </ModalBody>
           <ModalFooter>
-            <S.PageNumber alt="page number 2" src={page2} />
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
             <S.ButtonContainer>
               <Button
                 onClick={() => {
                   form2ClearErrors();
-                  setNext(!next);
+                  //setNext(!next);
+                  setPage(1);
                 }}
               >
                 Back
               </Button>
               <Button type="submit" form={"farmersDetailsForm2"} disabled={form2EnableButton}>
+                Next
+              </Button>
+            </S.ButtonContainer>
+          </ModalFooter>
+        </>
+      ) : page === 3 ? (
+        <>
+          <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
+            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
+          </ModalBody>
+          <ModalFooter>
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
+            <S.ButtonContainer>
+              <Button
+                onClick={() => {
+                  form3ClearErrors();
+                  //setNext(!next);
+                  setPage(2);
+                }}
+              >
+                Back
+              </Button>
+              <Button type="submit" form={"farmersDetailsForm3"} disabled={form3EnableButton}>
                 Submit
               </Button>
             </S.ButtonContainer>
@@ -279,7 +363,9 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
             />
           </ModalBody>
           <ModalFooter>
-            <S.PageNumber alt="page number 1" src={page1} />
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
             <Button type="submit" form={"farmersDetailsForm1"} disabled={form1EnableButton}>
               Next
             </Button>
