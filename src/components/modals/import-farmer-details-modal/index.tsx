@@ -29,7 +29,6 @@ const ImportFarmerDetailsModal: FC<Props> = ({ openModal, handleClose, count, fa
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
 
-  console.log("totalPageCount", totalPageCount);
 
   const yesButtonHandler = () => {
     farmerDetailsData &&

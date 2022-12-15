@@ -17,7 +17,7 @@ import {
   IAddFarmersDetailsPage3Input,
 } from "../type/formInputs";
 import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
-import { useFetchByPage, useGetFarmersCount, useIdByPage } from "../../../utils/hooks/query";
+import { useGetFarmersId, useIdByPage } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
 
@@ -31,14 +31,16 @@ interface CustomProps {
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const { currentPage, farmerQuery, farmerId } = useFarmerDetailsContext();
+  const { farmerBankDetail } = useFarmerDetailsContext();
+  const { farmerId } = useGetFarmersId(ENDPOINTS.farmerDetails);
+
   let {
     result: { data: farmersDetailsById, isFetched: isSuccess },
   } = useIdByPage(ENDPOINTS.farmerDetails, id);
 
   const {
-    result: { data: lastFarmerDetail },
-    formatChangeSuccess: isLastDataSuccess,
+    result: { data: lastFarmerDetail, isFetched: isLastDataSuccess },
+    // formatChangeSuccess: isLastDataSuccess,
   } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1] as string);
 
   const [page, setPage] = useState(1);
@@ -213,7 +215,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const accountNumber = form3Watch("accountNumber");
   const confirmAccountNumber = form3Watch("accountNumber");
   const ifscCode = form3Watch("ifscCode");
-  if (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) {
+  if (
+    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) ||
+    !farmerBankDetail
+  ) {
     form3EnableButton = false;
   }
 
@@ -259,13 +264,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         nameAsPerBank: farmerData?.nameAsPerBank,
         bankName: farmerData?.bankName,
         accountNumber: decryptText(farmerData?.accountNumber as string),
-        confirmAccountNumber: farmerData?.confirmAccountNumber,
+        // confirmAccountNumber: farmerData?.confirmAccountNumber,
         ifscCode: farmerData?.ifscCode,
       });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, id, isSuccess]);
+  }, [editMode, id, isSuccess, isLastDataSuccess]);
 
   const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
@@ -294,8 +299,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
-
-    //Get Id
     const lastMembershipId = isLastDataSuccess && (Object.values(lastFarmerDetail as farmerDetail[])[0]["membershipId"] as string).split("-")[2];
 
     let newId = uuidv4();

@@ -2,6 +2,7 @@ import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { IMdDetails } from "../../utils/context/mdDetails";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { adminFormInputs } from "../admin-panel";
 import { useFetch, useIdByPage } from "../../utils/hooks/query";
 import S from "./md-details-page.styled";
@@ -14,6 +15,8 @@ interface Props {
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
   const { mdId } = useParams();
+  const { farmerBankDetail } = useFarmerDetailsContext();
+
   // const {
   //   result: { data: mdDetailsById },
   //   formatChangeSuccess: isSuccess,
@@ -213,6 +216,26 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
                 <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
                 <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
               </S.UserInfoRow>
+              {farmerBankDetail && (
+                <>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கில் இருக்கும் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.nameAsPerBank}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கியின் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.bankName}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கு எண்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.accountNumber && decryptText(user.accountNumber)}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>IFSC குறியீடு</S.UserInfoData1>
+                    <S.UserInfoData2>{user.ifscCode}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                </>
+              )}
             </S.UserInfoContainer>
           </S.MdsDetailsContent>
         ))}

@@ -14,6 +14,7 @@ const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
 const SET_FARMER_QUERY = "SET_FARMER_QUERY";
 const SET_CIRCLE_LOADING = "SET_CIRCLE_LOADING";
+const SET_FARMER_BANK_DETAIL = "SET_FARMER_BANK_DETAIL";
 
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
@@ -87,6 +88,8 @@ interface farmerDetailsContextType {
   setFarmersIdToExport: (id: string[] | number[]) => void;
   setFarmerQuery: (query: string) => void;
   setIsCircleLoading: (isLoading: boolean) => void;
+  farmerBankDetail: boolean;
+  setFarmerBankDetail: (value: boolean) => void;
 }
 
 const initialState: farmerDetailsContextType = {
@@ -114,6 +117,8 @@ const initialState: farmerDetailsContextType = {
   setFarmersIdToExport: () => {},
   setFarmerQuery: () => {},
   setIsCircleLoading: () => {},
+  farmerBankDetail: false,
+  setFarmerBankDetail: () => {},
 };
 
 const reducer = (state: farmerDetailsContextType, action: any) => {
@@ -178,6 +183,9 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
     case SET_CIRCLE_LOADING:
       return { ...state, isCircleLoading: action.payload };
 
+    case SET_FARMER_BANK_DETAIL:
+      return { ...state, farmerBankDetail: action.payload };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
@@ -236,6 +244,10 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_CIRCLE_LOADING, payload: isLoading });
   };
 
+  const setFarmerBankDetail = (value: boolean) => {
+    dispatch({ type: SET_FARMER_BANK_DETAIL, payload: value });
+  };
+
   let data = {
     ...state,
     setSearchFilter,
@@ -250,6 +262,7 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setFarmersIdToExport,
     setFarmerQuery,
     setIsCircleLoading,
+    setFarmerBankDetail,
   };
 
   return <farmerDetailsContext.Provider value={data}>{props.children}</farmerDetailsContext.Provider>;

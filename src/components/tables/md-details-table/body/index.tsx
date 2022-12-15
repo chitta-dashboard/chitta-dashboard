@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { ENDPOINTS, searchWord, sortObj } from "../../../../utils/constants";
-import { useEdit, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
+import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import MdDetailsRow from "./row";
 import S from "./body.styled";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
+import { addFarmerId } from "../../../../utils/store/slice/farmerDetails";
 
 const Body = () => {
   const { searchFilter, sortFilter, currentPage, setCurrentPage, setPageCount, setMdQuery } = useMdDetailsContext();

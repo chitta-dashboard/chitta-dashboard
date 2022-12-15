@@ -29,8 +29,6 @@ const Body = () => {
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
-  console.log("totalDataCount", totalDataCount);
-
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
 
   const {
@@ -62,7 +60,7 @@ const Body = () => {
   useEffect(() => {
     // dispatch(addFarmerId(farmerId));
     // dispatch(setFarmersIdToExport(farmerId));
-    addFarmerId(farmerId);
+    // addFarmerId(farmerId);
     setFarmersIdToExport(farmerId);
   }, [farmerId]);
 

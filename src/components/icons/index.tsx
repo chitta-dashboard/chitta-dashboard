@@ -4,7 +4,7 @@ import S from "./icon-styled";
 
 const Icon: FC<{
   iconName: IconType;
-  clickHandler?: () => void;
+  clickHandler?: (event: any) => void;
   color?: boolean;
 }> = ({ iconName, clickHandler, color }) => {
   return <S.Icon iscolor={color ? 1 : 0} onClick={clickHandler} className={`nerkathir-icon-${iconName}`}></S.Icon>;

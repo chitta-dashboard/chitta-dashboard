@@ -15,7 +15,7 @@ import S from "./farmersDetails.styled";
 import { useQueryClient } from "@tanstack/react-query";
 
 const FarmersDetails = () => {
-  const { sortFilter, currentPage, farmerQuery, isCircleLoading, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
+  const { sortFilter, currentPage, farmerQuery, isCircleLoading, setFarmerBankDetail, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
   const {
     result: { refetch: farmerPageRefetch },
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
@@ -35,6 +35,7 @@ const FarmersDetails = () => {
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
+    setFarmerBankDetail(true);
   };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
@@ -47,6 +48,7 @@ const FarmersDetails = () => {
 
   // Add Farmerdetail Handler
   const addDataHandler = async (data: IMdDetails) => {
+    setFarmerBankDetail(false);
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
     newFarmer &&
@@ -88,7 +90,14 @@ const FarmersDetails = () => {
             />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
-          <AddFarmersDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
+          <AddFarmersDetailsModal
+            openModal={addModal}
+            handleClose={() => {
+              addModalHandler();
+              setFarmerBankDetail(false);
+            }}
+            cb={addDataHandler}
+          />
           <S.CircularLoaderContainer open={isCircleLoading} onClose={() => {}}>
             <CircularStatic timerDelay={0} />
           </S.CircularLoaderContainer>

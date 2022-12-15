@@ -1,7 +1,8 @@
-import React, { useState, useRef, FC } from "react";
+import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
@@ -10,10 +11,12 @@ import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import IdCardModal from "../../../modals/id-download-modal";
 import ConfirmationModal from "../../../modals/confirmation-modal";
+import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface MdDetailsRowProps {
   user: IMdDetails;
@@ -22,12 +25,15 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  const queryClient = useQueryClient();
   const { currentPage } = useMdDetailsContext();
   const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, params);
   const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage, params);
   // const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
   // const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+  const { setFarmerBankDetail } = useFarmerDetailsContext();
+
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
@@ -36,13 +42,20 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
   const [editData, setEditData] = useState<IMdDetails>();
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
   //Edit MdDetail Handler
-  const editMdDetailHandler = () => setEditMode(!editMode);
+  const editMdDetailHandler = () => {
+    setFarmerBankDetail(true);
+    setEditMode(!editMode);
+  };
 
   //Update MdDetail Handler
   const updateMdDetail = (data: IMdDetails) => {
@@ -94,8 +107,11 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
     });
   };
 
+  // const NavigateToMdDetailForm = (mdId: string) => {
+  //   navigate(`/md-details/${mdId}`);
+  // };
   const NavigateToMdDetailForm = (mdId: string) => {
-    navigate(`/md-details/${mdId}`);
+    setOpenFarmerRowModal(mdId);
   };
 
   return (
@@ -147,7 +163,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
         />
         <FarmersDetailsModal
           openModal={editMode}
-          handleClose={() => setEditMode(false)}
+          handleClose={() => {
+            setFarmerBankDetail(false);
+            setEditMode(false);
+          }}
           cb={updateMdDetail}
           editMode={editMode}
           id={user.farmerId}
@@ -162,6 +181,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
               deleteMdDetail({
                 id: user.id,
                 successCb: () => {
+                  setTimeout(() => {
+                    queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.mdDetails}-fetch`] });
+                  }, 0);
                   addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteMd });
                   Toast({ message: "MD Deleted Successfully", type: "success" });
                 },
@@ -184,6 +206,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
                 },
               });
             setEditMode(false);
+            setFarmerBankDetail(false);
             setConfirmModal(false);
             setIconModal(false);
           }}
@@ -195,6 +218,18 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
             )
           }
         />
+        {openFarmerRowModal && (
+          <>
+            <FarmerBankDetailModal
+              openModal={true}
+              navigateId={openFarmerRowModal}
+              handleClose={() => {
+                setOpenFarmerRowModal(null);
+              }}
+              mdPage={true}
+            />
+          </>
+        )}
       </S.WebTableCell>
     </TableRow>
   );
