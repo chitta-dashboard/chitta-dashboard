@@ -14,7 +14,7 @@ namespace S {
   };
 
   export const ChipContainer = styled(Stack)(() => ({
-    height: "18rem",
+    // height: "18rem",
     maxHeight: "25rem",
     overflowY: "scroll",
     gridArea: "cip",

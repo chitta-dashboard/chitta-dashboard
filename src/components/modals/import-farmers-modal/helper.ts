@@ -12,9 +12,8 @@ import Toast from "../../../utils/toast";
  * Checks if the passed object is of valid farmerDetails structure.
  */
 
-let existingFarmers: Object[];
-let newFarmers: farmerDetail[];
-let farmers: farmerDetail[] = [];
+let InputFarmersDatas: farmerDetail[] = [];
+
 const isValidFormat = (farmerData: { [key: string]: string }) => {
   const requiredFields = [
     "spouseName",
@@ -88,92 +87,80 @@ export const validateFarmerData = function (file: File) {
             message: "Invalid Column Format. Please check if all required fields are present in all sheets.",
           });
         }
-        farmers.push(...(farmersInCurrentSheet as unknown as farmerDetail[]));
+        InputFarmersDatas.push(...(farmersInCurrentSheet as unknown as farmerDetail[]));
       }
 
-      // phonenumber validation
+      // validation for repeating phone & aadhaar numbers on import file
 
-      const farmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
-      const registeredNumbers = new Set(Object.values(farmerDetails).map((farmer) => farmer.phoneNumber));
-      const totalFarmers = farmers.length;
-      let findGroupNames = null;
-      const dbFarmersPhoneNumber = Object.values(farmerDetails).map((i) => String(i.phoneNumber));
-      const newFarmersPhoneNumber = Object.values(farmers).map((i) => i.phoneNumber);
-      const existingFarmersPhoneNumber = newFarmersPhoneNumber.filter((i) => dbFarmersPhoneNumber.includes(i));
-      existingFarmers = Object.values(farmers).filter((i) => dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
-      newFarmers = Object.values(farmers).filter((i) => !dbFarmersPhoneNumber.includes(String(i.phoneNumber)));
+      const phoneNos = Object.values(InputFarmersDatas).map((i) => i.phoneNumber);
+      const aadhaarNos = Object.values(InputFarmersDatas).map((i) => i.addhaarNo);
 
-      for (let i = 0; i < totalFarmers; i++) {
-        if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
-          findGroupNames = true;
-          return resolve({
-            status: false,
-            message: "Some phonenumbers are already registered! Rejected.",
-            existingFarmers: existingFarmers,
-            newFarmers: newFarmers,
-          });
-        }
-      }
+      // checking for repeating phone numbers & empty fields
 
-      if (existingFarmers.length > 0 && newFarmers.length > 0) {
-        farmers = newFarmers;
-        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
-        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
-        const inputGroupNames = Object.values(farmers).map((i) => i.group);
-        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
-        let groupNames = Array.from(newGroupNames);
-
-        if (groupNames.length > 0) {
-          return resolve({
-            status: false,
-            message: "Some phonenumbers are already registered! Rejected.",
-            existingFarmers: existingFarmers,
-            newFarmers: newFarmers,
-            groups: groupNames,
-          });
-        } else {
-          for (let i = 0; i < totalFarmers; i++) {
-            if (registeredNumbers.has(String(farmers[i].phoneNumber))) {
-              findGroupNames = true;
-              return resolve({
-                status: false,
-                message: "Some phonenumbers are already registered! Rejected.",
-                existingFarmers: existingFarmers,
-                newFarmers: newFarmers,
-              });
+      if (phoneNos.length > 0 || aadhaarNos.length > 0) {
+        for (let i = 0; i < phoneNos.length; i++) {
+          for (let j = i + 1; j < phoneNos.length; j++) {
+            if (phoneNos[i] === phoneNos[j] || phoneNos[i] === "" || phoneNos[j] === "") {
+              return resolve({ status: false, message: "Some phone numbers are repeating or empty! Rejected." });
             }
           }
         }
-        existingFarmers = [];
-        newFarmers = [];
-        groupNames = [];
-      }
 
-      if (findGroupNames === null) {
-        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
-        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
-        const inputGroupNames = Object.values(farmers).map((i) => i.group);
-        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
-        const groupNames = Array.from(newGroupNames);
-        if (groupNames.length > 0) {
-          resolve({ status: true, message: "New grops detected", groups: groupNames, data: farmers });
-        } else {
-          resolve({ status: true, message: "New farmers detected", data: farmers, groups: groupNames });
+        // checking for repeating aadhaar numbers & empty fields
+
+        for (let i = 0; i < aadhaarNos.length; i++) {
+          for (let j = i + 1; j < aadhaarNos.length; j++) {
+            if (aadhaarNos[i] === aadhaarNos[j] || aadhaarNos[i] === "" || aadhaarNos[j] === "") {
+              return resolve({ status: false, message: "Some aadhaar numbers are repeating or empty! Rejected." });
+            }
+          }
         }
       }
 
-      if (existingFarmers.length > 0 && newFarmers.length > 0) {
-        console.log("from helper");
-        farmers = newFarmers;
-        const farmerGroup = queryClient.getQueryData([`${ENDPOINTS.farmerGroup}-fetch`]) as { [key: string]: FarmersGroup };
-        const farmerGroupNames = Object.values(farmerGroup).map((group) => group.groupName);
-        const inputGroupNames = Object.values(farmers).map((i) => i.group);
-        const newGroupNames = new Set(inputGroupNames.filter((i) => !farmerGroupNames.includes(i)));
-        const groupNames = Array.from(newGroupNames);
-        if (groupNames.length > 0) {
-          resolve({ status: true, message: "New grops detected", groups: groupNames, data: farmers });
+      // validation for phone & aadhaar number existing on db.json
+
+      let DBFarmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
+
+      if (DBFarmerDetails) {
+        const dbPhoneNos = Object.values(DBFarmerDetails).map((farmer) => farmer.phoneNumber);
+        const dbAadhaarNos = Object.values(DBFarmerDetails).map((farmer) => farmer.addhaarNo);
+        const inputPhoneNos = InputFarmersDatas.map((i) => String(i.phoneNumber));
+        const inputAadhaarNos = InputFarmersDatas.map((i) => String(i.addhaarNo));
+        const existingPhoneNos = dbPhoneNos.filter((data: any) => inputPhoneNos.includes(data));
+        const existingAadhaarNos = dbAadhaarNos.filter((data: any) => inputAadhaarNos.includes(data));
+        const Iterationlength = Object.values(DBFarmerDetails).map((farmer) => farmer).length;
+
+        if (existingPhoneNos.length > 0 || existingAadhaarNos.length > 0) {
+          if (existingPhoneNos.length > 0 && existingAadhaarNos.length > 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter(
+                (data: any) => existingPhoneNos.includes(data.phoneNumber) || existingAadhaarNos.includes(data.addhaarNo),
+              ),
+              newFarmers: InputFarmersDatas.filter(
+                (data: any) => !existingPhoneNos.includes(data.phoneNumber) && !existingAadhaarNos.includes(data.addhaarNo),
+              ),
+            });
+          }
+          if (existingPhoneNos.length > 0 && existingAadhaarNos.length == 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter((data: any) => existingPhoneNos.includes(data.phoneNumber)),
+              newFarmers: InputFarmersDatas.filter((data: any) => !existingPhoneNos.includes(data.phoneNumber)),
+            });
+          }
+          if (existingAadhaarNos.length > 0 && existingPhoneNos.length == 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter((data: any) => existingAadhaarNos.includes(data.addhaarNo)),
+              newFarmers: InputFarmersDatas.filter((data: any) => !existingAadhaarNos.includes(data.addhaarNo)),
+            });
+          }
         } else {
-          resolve({ status: true, message: "New farmers detected", data: farmers, groups: groupNames });
+          return resolve({ status: true, message: "", data: InputFarmersDatas });
         }
       }
 
@@ -206,7 +193,7 @@ export const processFarmerData = (farmers: { [key: string]: string }[]) => {
  */
 export const downloadRejectedData = () => {
   let data: Object[] = [];
-  existingFarmers.map((i: any) =>
+  InputFarmersDatas.map((i: any) =>
     data.push({
       spouseName: i.spouseName,
       phoneNumber: i.phoneNumber,
