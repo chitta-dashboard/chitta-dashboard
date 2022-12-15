@@ -9,6 +9,7 @@ import Icon from "../../../icons";
 import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
+import { formatNumberToSmallScale } from "../../../../utils/helpers";
 import S from "../dashboardBodyTop.styled";
 import PopOver from "../../../common-components/pop-over";
 import { useState } from "react";
@@ -91,7 +92,9 @@ const DashboardBodyTop = () => {
       id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
       headCount: "-8",
       bodyCount: `${
-        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents" ? (totalAcreCount * ACRETOCENT).toFixed(2) : totalAcreCount.toFixed(2)
+        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents"
+          ? formatNumberToSmallScale(Number((totalAcreCount * ACRETOCENT).toFixed(2)))
+          : formatNumberToSmallScale(Number(totalAcreCount.toFixed(2)))
       }`,
       footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
