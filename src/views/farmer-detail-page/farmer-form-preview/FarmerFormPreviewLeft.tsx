@@ -41,6 +41,7 @@ const FarmerFormPreviewLeft = () => {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
+  
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },

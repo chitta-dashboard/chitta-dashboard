@@ -31,10 +31,12 @@ const RightSection: FC<RightSectionProps> = (props) => {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+
   const {
     formatChangeSuccess: isMdDetailSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+
   const handleExportData = () => {
     if (isSuccess) {
       let resultData: farmerDetail[] = [];
@@ -45,6 +47,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
   let {
     result: { refetch: farmerDetailsRefetch },
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
+
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   // const { mutate: updateFarmerDetails } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);

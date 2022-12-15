@@ -4,7 +4,7 @@ import Slider from "react-slick";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useFetch } from "../../../../utils/hooks/query";
+import { useGetFarmersCount } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
 import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
@@ -19,30 +19,9 @@ const DashboardBodyTop = () => {
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const sm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
 
-  const {
-    formatChangeSuccess: farmerDetailsSuccess,
-    result: { data: farmerDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
+  const { totalFarmerCount, farmerGroupCount, maleFarmerCount, femaleFarmerCount, acreFieldValue, isFarmerDetailsLoading, isFarmerGroupLoading } =
+    useGetFarmersCount();
 
-  const {
-    formatChangeSuccess: farmerGroupSuccess,
-    result: { data: farmerGroupById },
-  } = useFetch(ENDPOINTS.farmerGroup);
-
-  const { result } = useFetch(ENDPOINTS.admin);
-
-  let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess ? Object.values(farmerDetailsById) : [];
-  let farmerGroupByIdArray = farmerGroupSuccess ? Object.values(farmerGroupById) : [];
-
-  let totalFarmerCount = farmerDetailsByIdArray.length;
-  let femaleFarmerCount = farmerDetailsByIdArray.filter((item) => item.sex === "FEMALE").length;
-  let farmerGroupCount = farmerGroupByIdArray.length;
-  let totalAcreCount = farmerDetailsSuccess
-    ? farmerDetailsByIdArray.reduce((a, b) => {
-        let value = (b.landAreaInCent as string) ? parseInt(b.landAreaInCent as string) : 0;
-        return a + value;
-      }, 0) / ACRETOCENT
-    : 0;
   interface Ivalue {
     "9eb5af43-f224-4434-9488-fddf4eb004dc": string;
   }
@@ -60,7 +39,7 @@ const DashboardBodyTop = () => {
       footerName: "Total Farmers",
       icon: "farmer-count",
       navigate: "/farmers-details",
-      isSuccess: farmerDetailsSuccess,
+      isSuccess: isFarmerDetailsLoading,
     },
     {
       id: "babdd103-fd3c-4a90-87f7-21d1ef5a9106",
@@ -69,15 +48,15 @@ const DashboardBodyTop = () => {
       footerName: "Group",
       icon: "groups",
       navigate: "/farmers-group",
-      isSuccess: farmerGroupSuccess,
+      isSuccess: isFarmerGroupLoading,
     },
     {
       id: "ddc859fc-b75f-4b48-ba6d-e30aadc3e9ac",
       headCount: "+59",
-      bodyCount: `${totalFarmerCount - femaleFarmerCount}`,
+      bodyCount: `${maleFarmerCount}`,
       footerName: "Farmer",
       icon: "male-farmer",
-      isSuccess: farmerDetailsSuccess,
+      isSuccess: isFarmerDetailsLoading,
     },
     {
       id: "0fbd3d99-be00-4415-8b90-0bd0f833ee77",
@@ -85,17 +64,17 @@ const DashboardBodyTop = () => {
       bodyCount: `${femaleFarmerCount}`,
       footerName: "Farmerette",
       icon: "female-farmer",
-      isSuccess: farmerDetailsSuccess,
+      isSuccess: isFarmerDetailsLoading,
     },
     {
       id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
       headCount: "-8",
       bodyCount: `${
-        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents" ? (totalAcreCount * ACRETOCENT).toFixed(2) : totalAcreCount.toFixed(2)
+        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents" ? (acreFieldValue * ACRETOCENT).toFixed(2) : acreFieldValue.toFixed(2)
       }`,
       footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
-      isSuccess: farmerDetailsSuccess,
+      isSuccess: isFarmerDetailsLoading,
     },
     // {
     //   id: 6,

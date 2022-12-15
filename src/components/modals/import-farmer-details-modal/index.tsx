@@ -9,7 +9,6 @@ import { ENDPOINTS } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import S from "./importFarmerDetailsModal.styled";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { setPageCount } from "../../../utils/store/slice/farmerDetails";
 
 interface Props {
   openModal: boolean;
@@ -21,14 +20,7 @@ interface Props {
 const ImportFarmerDetailsModal: FC<Props> = ({ openModal, handleClose, count, farmerDetailsData }) => {
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
-  const { currentPage, farmerQuery, totalPageCount } = useFarmerDetailsContext();
-
-  const {
-    formatChangeSuccess: isFarmerByPageSuccess,
-    result: { refetch: farmerDetailsRefetch },
-    dataCount: totalDataCount,
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
-
+  const { totalPageCount, setPageCount } = useFarmerDetailsContext();
 
   const yesButtonHandler = () => {
     farmerDetailsData &&
@@ -37,10 +29,8 @@ const ImportFarmerDetailsModal: FC<Props> = ({ openModal, handleClose, count, fa
         successCb: () => {
           addNotification({ id: uuidv4(), message: `New ${count} farmers created.` });
           Toast({ type: "success", message: `All ${count} farmers created successfully` });
-          farmerDetailsRefetch().then((res) => {
-            //console.log("Result : ", res.isFetched);
-            res.isFetched && setPageCount({ pageCount: Math.ceil(totalDataCount / 25), totalPageCount: totalDataCount });
-          });
+          let newDataCount: number = farmerDetailsData.length * 1 + totalPageCount * 1;
+          setPageCount({ pageCount: Math.ceil(newDataCount / 25), totalPageCount: newDataCount });
           handleClose();
         },
         errorCb: () => {

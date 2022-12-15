@@ -1,24 +1,25 @@
 import { useParams } from "react-router-dom";
 import FarmerFormPreviewLeft from "./FarmerFormPreviewLeft";
 import FarmerFormPreviewRight from "./FarmerFormPreviewRight";
-import { useFetch } from "../../../utils/hooks/query";
+import { useFetch, useIdByPage } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ErrorPage from "../../../components/error-page";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreview = () => {
-  const {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
   const { farmerId } = useParams();
+
+  const {
+    result: { data: farmerDetails },
+    formatChangeSuccess: isSuccess,
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId);
 
   return (
     <>
-      {isSuccess && Object.keys(farmersDetailsById).includes(farmerId as string) ? (
+      {isSuccess && farmerDetails[farmerId as string]["id"] === farmerId ? (
         <S.FarmerFormPreviewMainContainer>
           <FarmerFormPreviewLeft />
-          <FarmerFormPreviewRight />
+          <FarmerFormPreviewRight isFarmerSuccess={isSuccess} farmersDetailsById={isSuccess ? farmerDetails : []} />
         </S.FarmerFormPreviewMainContainer>
       ) : (
         <>{isSuccess && <ErrorPage />}</>

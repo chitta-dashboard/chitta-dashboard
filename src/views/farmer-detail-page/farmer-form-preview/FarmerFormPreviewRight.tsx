@@ -1,36 +1,28 @@
-import { Fragment } from "react";
+import { FC, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS, groupBy } from "../../../utils/constants";
-import { useFetch, useFetchByPage, useIdByPage } from "../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../utils/constants";
+import { useIdByPage } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
 import { adminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
-import { RootState } from "../../../utils/store";
 
-const FarmerFormPreviewRight = () => {
-  // const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
+type FarmerFormPreviewType = {
+  farmersDetailsById: farmerDetail[] | adminFormInputs;
+  isFarmerSuccess: boolean;
+};
+
+const FarmerFormPreviewRight: FC<FarmerFormPreviewType> = ({ farmersDetailsById, isFarmerSuccess }) => {
   const { farmerBankDetail } = useFarmerDetailsContext();
   const { farmerId } = useParams();
 
-  let {
-    formatChangeSuccess: isSuccessAdmin,
-    result: { data: farmersDetailsById },
-  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId);
-  // console.log("mydata", farmersDetailsById);
-
-  // const {
-  //   formatChangeSuccess: isSuccessAdmin,
-  //   result: { data: adminDetails },
-  // } = useFetch(ENDPOINTS.admin);
-
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(farmersDetailsById as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isFarmerSuccess && Object.values(farmersDetailsById as adminFormInputs)[0];
 
   return (
     <>
-      {isSuccessAdmin &&
-        isSuccessAdmin &&
+      {isFarmerSuccess &&
+        isFarmerSuccess &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId].includes(name.id))
           .map((user) => (
