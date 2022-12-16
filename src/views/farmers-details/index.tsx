@@ -15,10 +15,7 @@ import S from "./farmersDetails.styled";
 import { useQueryClient } from "@tanstack/react-query";
 
 const FarmersDetails = () => {
-  const { sortFilter, currentPage, farmerQuery, isCircleLoading, setFarmerBankDetail, setSearchFilter, setSortFilter } = useFarmerDetailsContext();
-  const {
-    result: { refetch: farmerPageRefetch },
-  } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery, 25, false);
+  const { currentPage, farmerQuery, isCircleLoading, setFarmerBankDetail, setSearchFilter } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },
@@ -82,12 +79,7 @@ const FarmersDetails = () => {
       ) : (
         <>
           <S.FarmersDetailsContainer>
-            <FarmersDetailsTablePageHeader
-              addModalHandler={addModalHandler}
-              searchHandler={handleSearchInput}
-              sortFilter={sortFilter}
-              sortHandler={(sortValue) => setSortFilter(sortValue)}
-            />
+            <FarmersDetailsTablePageHeader addModalHandler={addModalHandler} searchHandler={handleSearchInput} />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
           <AddFarmersDetailsModal

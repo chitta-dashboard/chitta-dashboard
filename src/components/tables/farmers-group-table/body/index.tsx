@@ -6,11 +6,13 @@ import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupRow from "./row";
 import S from "./body.styled";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Body = () => {
   // const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   // const { data: farmerGroupData } = result;
   // console.log(farmerGroupData);
+  // const queryClient = useQueryClient();
   const { searchFilter, sortFilter, memberFilter, currentPage, setFarmerGroupQuery, setCurrentPage, setPageCount } = useFarmersGroupContext();
   const searchQuery = useSearchQuery(searchFilter, "groupName");
   const sortQuery = useSortQuery(sortFilter, "groupName");
@@ -22,6 +24,8 @@ const Body = () => {
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.farmerGroup, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
+  // console.log(searchQuery, sortQuery);
+  // console.log("farmerGroupByPage", isFarmerByPageSuccess && Object.values(farmerGroupByPage));
   // const [farmersGroupMemberList, setFarmersGroupMemberList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   // const [farmersGroupListSearch, setFarmersGroupListSearch] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   // const [farmersGroupListSort, setFarmersGroupListSort] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
@@ -55,8 +59,9 @@ const Body = () => {
 
   useEffect(() => {
     farmergroupRefetch();
+    // queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerGroup}-fetch-${currentPage}`] });
     setFarmerGroupQuery(`${searchQuery}${groupQuery}${sortQuery}`);
-  }, [searchFilter, sortFilter, currentPage]);
+  }, [searchFilter, sortFilter, currentPage, sortQuery]);
 
   return (
     <>

@@ -106,7 +106,7 @@ const initialState: farmerDetailsContextType = {
   groupFilter: DEFAULT_GROUP_FILTER,
   setGroupFilter: () => {},
   addFarmerId: () => {},
-  currentPage: 0,
+  currentPage: 1,
   pageCount: 0,
   totalPageCount: 0,
   farmersIdToExport: [],

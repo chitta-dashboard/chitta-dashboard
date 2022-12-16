@@ -39,7 +39,6 @@ const Body = () => {
 
   useEffect(() => {
     setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
-    totalDataCount <= dataLimit && currentPage !== 1 && setCurrentPage(1);
   }, [totalDataCount, founderByPage]);
 
   useEffect(() => {

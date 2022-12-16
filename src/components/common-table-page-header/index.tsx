@@ -17,7 +17,7 @@ const TablePageHeader: FC<TablePageHeaderProps> = (props) => {
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} />
-      <RightSection addModalHandler={addModalHandler} sortHandler={sortHandler} sortFilter={sortFilter} popOverHandler={popOverHandler} />
+      <RightSection addModalHandler={addModalHandler} popOverHandler={popOverHandler} />
     </S.PageHeaderContainer>
   );
 };
