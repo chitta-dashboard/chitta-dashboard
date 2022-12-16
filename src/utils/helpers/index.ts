@@ -16,12 +16,10 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
     let month = Math.floor(week / 4.34524);
     let remainingWeeks = Math.floor(week % 4.34524);
 
-    const weekResult = `${week} ${week > 1 ? "weeks" : "week"} ${
-      remainingDays > 0 ? `and ${remainingDays} ${remainingDays > 1 ? "days" : "day"}` : ""
-    }`;
-    const monthResult = `${month} ${month > 1 ? "months" : "month"} ${
-      remainingWeeks > 0 ? `and ${remainingWeeks} ${remainingWeeks > 1 ? "weeks" : "week"}` : ""
-    }`;
+    const weekResult = `${week} ${week > 1 ? "weeks" : "week"} ${remainingDays > 0 ? `and ${remainingDays} ${remainingDays > 1 ? "days" : "day"}` : ""
+      }`;
+    const monthResult = `${month} ${month > 1 ? "months" : "month"} ${remainingWeeks > 0 ? `and ${remainingWeeks} ${remainingWeeks > 1 ? "weeks" : "week"}` : ""
+      }`;
     let result = month > 0 ? monthResult : weekResult;
     return result;
   }
@@ -45,4 +43,20 @@ export const handleDateDifference2 = (start: datePropsType, end: datePropsType) 
     return result;
   }
   return `${days} ${days > 1 ? "days" : "day"}`;
+};
+
+
+const formatNumber = (num: number) => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+const toFixedOf = (value: number, fixedOf: number) => {
+  return !isNaN(value) && !isNaN(fixedOf) ? parseFloat(Number(value).toFixed(fixedOf)) : value;
+};
+
+export const formatNumberToSmallScale = (number: number) => {
+  if (number / Math.pow(10, 9) >= 1) return `${formatNumber(toFixedOf(number / Math.pow(10, 9), 2))}B`;
+  else if (number / Math.pow(10, 6) >= 1) return `${formatNumber(toFixedOf(number / Math.pow(10, 6), 2))}M`;
+  else if (number / Math.pow(10, 3) >= 1) return `${formatNumber(toFixedOf(number / Math.pow(10, 3), 2))}K`;
+  return number;
 };
