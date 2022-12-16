@@ -54,12 +54,10 @@ const Body = () => {
   // }, [farmersGroupListSort, isSuccess]);
   useEffect(() => {
     setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
-    totalDataCount <= dataLimit && currentPage !== 1 && setCurrentPage(1);
   }, [totalDataCount, farmerGroupByPage]);
 
   useEffect(() => {
     farmergroupRefetch();
-    // queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerGroup}-fetch-${currentPage}`] });
     setFarmerGroupQuery(`${searchQuery}${groupQuery}${sortQuery}`);
   }, [searchFilter, sortFilter, currentPage, sortQuery]);
 
