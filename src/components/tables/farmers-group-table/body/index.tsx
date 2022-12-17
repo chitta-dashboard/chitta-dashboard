@@ -12,7 +12,7 @@ const Body = () => {
   // const { data: farmerGroupData } = result;
   // console.log(farmerGroupData);
   // const queryClient = useQueryClient();
-  const { searchFilter, sortFilter, memberFilter, currentPage, setFarmerGroupQuery, setCurrentPage, setPageCount } = useFarmersGroupContext();
+  const { searchFilter, sortFilter, currentPage, setFarmerGroupQuery, setPageCount } = useFarmersGroupContext();
   const searchQuery = useSearchQuery(searchFilter, "groupName");
   const sortQuery = useSortQuery(sortFilter, "groupName");
   const groupQuery = "";
@@ -58,7 +58,7 @@ const Body = () => {
   useEffect(() => {
     farmergroupRefetch();
     setFarmerGroupQuery(`${searchQuery}${groupQuery}${sortQuery}`);
-  }, [searchFilter, sortFilter, currentPage, sortQuery]);
+  }, [searchFilter, sortFilter, currentPage]);
 
   return (
     <>

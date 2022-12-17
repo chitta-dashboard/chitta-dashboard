@@ -1,8 +1,7 @@
-import { read, utils, write, writeFile } from "xlsx";
+import { read, utils, write } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
 import FileSaver from "file-saver";

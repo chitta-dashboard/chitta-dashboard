@@ -1,11 +1,11 @@
 import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
+import { useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
@@ -16,7 +16,6 @@ import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface MdDetailsRowProps {
   user: IMdDetails;
@@ -35,7 +34,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
   const { setFarmerBankDetail } = useFarmerDetailsContext();
 
   const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);

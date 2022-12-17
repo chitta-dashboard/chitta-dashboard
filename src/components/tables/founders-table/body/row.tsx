@@ -3,7 +3,7 @@ import { TableRow } from "@mui/material";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
+import { useDeleteByPage, useEditByPage } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
 import FoundersModal from "../../../modals/founders-modal";

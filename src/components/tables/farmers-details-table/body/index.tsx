@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { ENDPOINTS } from "../../../../utils/constants";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
-// import { addFarmerId, setPageCount, setCurrentPage, setFarmersIdToExport } from "../../../../utils/store/slice/farmerDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
@@ -11,8 +10,7 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport, setCurrentPage, setFarmerQuery } =
-    useFarmerDetailsContext();
+  const { searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport, setFarmerQuery } = useFarmerDetailsContext();
   // const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
   // const dispatch = useDispatch();
   // console.log("currentPage", currentPage);

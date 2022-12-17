@@ -1,7 +1,5 @@
 import { FC, Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS } from "../../../utils/constants";
-import { useIdByPage } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
@@ -16,7 +14,6 @@ type FarmerFormPreviewType = {
 const FarmerFormPreviewRight: FC<FarmerFormPreviewType> = ({ farmersDetailsById, isFarmerSuccess }) => {
   const { farmerBankDetail } = useFarmerDetailsContext();
   const { farmerId } = useParams();
-
   const { pdfLogo: pdfImage } = isFarmerSuccess && Object.values(farmersDetailsById as adminFormInputs)[0];
 
   return (

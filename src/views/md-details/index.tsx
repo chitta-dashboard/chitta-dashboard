@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 import { IMdDetails, useMdDetailsContext } from "../../utils/context/mdDetails";
 import { farmerDetail } from "../../utils/context/farmersDetails";
@@ -12,7 +13,6 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
-import { useQueryClient } from "@tanstack/react-query";
 
 const MdDetails = () => {
   const {

@@ -9,7 +9,7 @@ import { useAuthContext } from "../../../utils/context/auth";
 import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
+import { useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -20,11 +20,6 @@ import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
   const { mdId } = useParams();
-
-  // const {
-  //   formatChangeSuccess: isSuccess,
-  //   result: { data: mdDetailsById },
-  // } = useFetch(ENDPOINTS.mdDetails);
 
   let {
     formatChangeSuccess: isSuccess,

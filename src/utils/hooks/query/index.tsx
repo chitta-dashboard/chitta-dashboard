@@ -1,9 +1,7 @@
 import { useMutation, useQuery, UseQueryResult } from "@tanstack/react-query";
 import axios from "axios";
 import { SetStateAction, useEffect, useState } from "react";
-import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { getProductStructure } from "../../../components/portfolio/helper";
-// import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
 import { ACRETOCENT, ENDPOINTS, Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";

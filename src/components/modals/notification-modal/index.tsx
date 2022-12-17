@@ -3,7 +3,6 @@ import Icon from "../../icons";
 import { useFetch } from "../../../utils/hooks/query";
 import { decryptText, ENDPOINTS } from "../../../utils/constants";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
-// import { useAuthContext } from "../../../utils/context/auth";
 import S from "./NotificationModal.styled";
 
 interface notificationProps {
@@ -15,12 +14,10 @@ interface notificationProps {
 }
 
 const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
-  // const { userNotification } = useAuthContext();
   const {
     result: { data: NotificationData },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
-  // const { data: NotificationData } = result;
   const [seeMore, setSeeMore] = useState(false);
   const bodyref = useRef<any>();
 

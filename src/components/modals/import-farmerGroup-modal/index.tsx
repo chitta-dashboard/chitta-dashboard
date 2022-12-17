@@ -1,4 +1,5 @@
 import { Dispatch, FC, SetStateAction } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuid } from "uuid";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -11,7 +12,6 @@ import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/fa
 import { useAuthContext } from "../../../utils/context/auth";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import S from "./importFarmerGroupModal.styled";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface Props {
   openModal: boolean;

@@ -1,7 +1,6 @@
 import { useState, useRef, FC, useEffect } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
@@ -15,7 +14,7 @@ import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 //import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
@@ -41,7 +40,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
   const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<IMdDetails>();

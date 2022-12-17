@@ -1,6 +1,4 @@
-import { ENDPOINTS } from "../../../../utils/constants";
 import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { useFetch } from "../../../../utils/hooks/query";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {

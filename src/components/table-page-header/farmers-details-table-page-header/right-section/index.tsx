@@ -1,9 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
-// import { RootState } from "../../../../utils/store";
-// import { farmerDetail, checkBoxUnselectAll } from "../../../../utils/store/slice/farmerDetails";
-// import { IFarmersGroup } from "../../../../utils/context/farmersGroup";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
@@ -22,11 +19,11 @@ interface RightSectionProps {
 const RightSection: FC<RightSectionProps> = (props) => {
   // const dispatch = useDispatch();
 
-  const {addModalHandler } = props;
+  const { addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();
-  const { selectedFarmers,farmerId ,farmersIdToExport, checkboxUnselectAll, farmerQuery, currentPage ,groupFilter} = useFarmerDetailsContext();
+  const { selectedFarmers, farmerId, checkboxUnselectAll, farmerQuery, currentPage, groupFilter } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },

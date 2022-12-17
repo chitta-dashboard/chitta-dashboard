@@ -8,9 +8,9 @@ import IconWrapper from "../../../utils/iconWrapper";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, groupBy, imageCompressor, Message } from "../../../utils/constants";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useFetchByPage, useIdByPage } from "../../../utils/hooks/query";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
@@ -18,12 +18,8 @@ import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 import { IMdDetails } from "../../../utils/store/slice/mdDetails";
-import { RootState } from "../../../utils/store";
 
 const FarmerFormPreviewLeft = () => {
-  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
-  // const { currentPage } = useSelector((state: RootState) => state.farmerDetails);
   const { currentPage, farmerQuery } = useFarmerDetailsContext();
 
   const {
@@ -31,17 +27,11 @@ const FarmerFormPreviewLeft = () => {
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
-  // let {
-  //   formatChangeSuccess: isSuccess,
-  //   result: { data: farmersDetailsById },
-  // } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage);
-  // console.log(farmersDetailsById);
-
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
-  
+
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },

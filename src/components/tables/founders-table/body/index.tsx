@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { Founders, useFounderContext } from "../../../../utils/context/founders";
 import { ENDPOINTS } from "../../../../utils/constants";
-import {useFetchByPage } from "../../../../utils/hooks/query";
+import { useFetchByPage } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FoundersRow from "./row";
 import S from "./body.styled";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 
 const Body = () => {
-  const { searchFilter, sortFilter, currentPage,setPageCount, setFounderQuery } = useFounderContext();
+  const { searchFilter, sortFilter, currentPage, setPageCount, setFounderQuery } = useFounderContext();
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = "";

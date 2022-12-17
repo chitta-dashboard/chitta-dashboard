@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
+import { useDeleteByPage, useEditByPage } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";

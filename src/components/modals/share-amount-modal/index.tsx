@@ -1,8 +1,8 @@
-import { FC, Ref, useState, useRef, useEffect } from "react";
+import { FC, Ref, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../custom-modal";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useFetch, useFetchByPage, useFetchByParams } from "../../../utils/hooks/query";
+import { useFetchByPage, useFetchByParams } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import TablePageHeader from "../../components/common-table-page-header";
 import FoundersModal from "../../components/modals/founders-modal";
 import FoundersTable from "../../components/tables/founders-table";
@@ -10,7 +11,6 @@ import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
-import { useQueryClient } from "@tanstack/react-query";
 
 const Founders = () => {
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);

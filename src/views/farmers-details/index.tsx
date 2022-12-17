@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { ENDPOINTS, Message } from "../../utils/constants";
-import { useAdd, useEdit, useFetch, useFetchByPage } from "../../utils/hooks/query";
+import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
@@ -12,10 +13,9 @@ import AddFarmersDetailsModal from "../../components/modals/farmers-details-moda
 import { CircularStatic } from "../../utils/loaders/circular-progress-loader/index";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
-import { useQueryClient } from "@tanstack/react-query";
 
 const FarmersDetails = () => {
-  const { currentPage, farmerQuery, isCircleLoading, setFarmerBankDetail, setSearchFilter } = useFarmerDetailsContext();
+  const { currentPage, isCircleLoading, setFarmerBankDetail, setSearchFilter } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },

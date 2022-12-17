@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import FarmerFormPreviewLeft from "./FarmerFormPreviewLeft";
 import FarmerFormPreviewRight from "./FarmerFormPreviewRight";
-import { useFetch, useIdByPage } from "../../../utils/hooks/query";
+import { useIdByPage } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ErrorPage from "../../../components/error-page";
 import { S } from "./farmer-form-preview.styled";
