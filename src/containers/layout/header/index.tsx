@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Theme, useMediaQuery } from "@mui/material";
@@ -28,6 +28,7 @@ const Header = () => {
   const [navOpen, setNavOpen] = useState(false);
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openLoader, setOpenLoader] = useState(false);
   pathname = pathname.split("/")[1];
 
   const isXl = useMediaQuery((theme: Theme) => theme.breakpoints.down("xl"));
@@ -37,7 +38,7 @@ const Header = () => {
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
   const { data: NotificationData } = result;
   const clearNotifyHandler = () => {
-    setnotification(null);
+    setOpenLoader(true);
     clearNotification();
   };
 
@@ -48,6 +49,13 @@ const Header = () => {
   const notificationHandler = () => {
     setnotification(null);
   };
+
+  useEffect(() => {
+    if (NotificationData && Object.values(NotificationData).length === 0) {
+      setOpenLoader(false);
+      setnotification(null);
+    }
+  }, [NotificationData]);
 
   const popHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -156,7 +164,13 @@ const Header = () => {
             <S.Items onClick={logout}>Logout</S.Items>
           </S.Pop>
           {open && (
-            <NotificationModal open={open} anchorEl={notification} handleClose={notificationHandler} clearNotifyHandler={clearNotifyHandler} />
+            <NotificationModal
+              open={open}
+              anchorEl={notification}
+              handleClose={notificationHandler}
+              clearNotifyHandler={clearNotifyHandler}
+              openLoader={openLoader}
+            />
           )}
         </>
       )}

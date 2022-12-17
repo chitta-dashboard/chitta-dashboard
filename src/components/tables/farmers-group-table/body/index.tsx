@@ -1,12 +1,11 @@
-import { useEffect, useState } from "react";
-import { customMemberFilter, FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useFetch, useFetchByPage } from "../../../../utils/hooks/query";
-import { searchWord, sortObj, ENDPOINTS } from "../../../../utils/constants";
+import { useEffect } from "react";
+import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useFetchByPage } from "../../../../utils/hooks/query";
+import { ENDPOINTS } from "../../../../utils/constants";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupRow from "./row";
 import S from "./body.styled";
 import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
-import { useQueryClient } from "@tanstack/react-query";
 
 const Body = () => {
   // const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);

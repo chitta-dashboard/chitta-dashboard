@@ -1,4 +1,4 @@
-import { styled, Box, Typography, Popover, Stack, Avatar } from "@mui/material";
+import { styled, Box, Typography, Popover, Stack, Avatar, Backdrop } from "@mui/material";
 
 namespace S {
   export const ModalContainer = styled(Popover)(({ theme }) => ({
@@ -71,6 +71,11 @@ namespace S {
     fontSize: "0.7rem",
     lineHeight: "0.75rem",
     cursor: "pointer",
+  }));
+
+  export const LoaderContainer = styled(Backdrop)(({ theme }) => ({
+    position: "absolute",
+    backgroundColor: theme.palette.custom.backdrop,
   }));
 }
 

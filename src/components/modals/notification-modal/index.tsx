@@ -2,6 +2,7 @@ import { FC, useState, useRef } from "react";
 import Icon from "../../icons";
 import { useFetch } from "../../../utils/hooks/query";
 import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { BufferLoader } from "../../../utils/loaders/api-loader";
 // import { useAuthContext } from "../../../utils/context/auth";
 import S from "./NotificationModal.styled";
 
@@ -10,9 +11,10 @@ interface notificationProps {
   handleClose: () => void;
   anchorEl: HTMLButtonElement | null;
   clearNotifyHandler: () => void;
+  openLoader: boolean;
 }
 
-const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler }) => {
+const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
   // const { userNotification } = useAuthContext();
   const {
     result: { data: NotificationData },
@@ -62,6 +64,9 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
           </S.FooterText>{" "}
         </S.FooterBox>
       )}
+      <S.LoaderContainer open={openLoader}>
+        <BufferLoader loaderText="Clearing Notifications" />
+      </S.LoaderContainer>
     </S.ModalContainer>
   );
 };
