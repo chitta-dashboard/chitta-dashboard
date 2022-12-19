@@ -50,9 +50,13 @@ const ImportFarmerGroupModal: FC<Props> = ({
   const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
+  let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
+  let newdata = farmerDatas && farmerDatas.map((item) => item.group);
+  let groupName = newdata && newdata.filter((item, i, ar) => ar.indexOf(item) === i);
+  const groupNamesOnChip = groupName && RemoveArray(existingGroup, groupName);
 
   const yesButtonHandler = () => {
-    if (farmerDatas && isFarmerGroupSuccess) {
+    if (farmerDatas && isFarmerGroupSuccess && isFarmerDetailsSuccess && groupName) {
       let newdata = farmerDatas.map((item) => item.group);
       let groupName = newdata.filter((item, i, ar) => ar.indexOf(item) === i);
       let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
@@ -102,9 +106,9 @@ const ImportFarmerGroupModal: FC<Props> = ({
                 editedData: finalFarmerGroup,
                 successCb: () => {
                   if (count && count > 1) {
-                    Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
+                    Toast({ message: `All groups count updated Successfully`, type: "success" });
                   } else {
-                    Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
+                    Toast({ message: ` Group count updated Successfully`, type: "success" });
                   }
 
                   setNewGroupNames(undefined);
@@ -140,7 +144,9 @@ const ImportFarmerGroupModal: FC<Props> = ({
             Do you want to create the following farmer groups & <S.Highlite>{count}</S.Highlite> farmer details?
           </S.DialogueText>
           <S.ChipContainer>
-            {newGroupNames && newGroupNames.length > 0 ? newGroupNames?.map((i, index) => <S.Chips label={i} key={index} />) : "No new groups"}
+            {groupNamesOnChip && groupNamesOnChip.length > 0
+              ? groupNamesOnChip?.map((i, index) => <S.Chips label={i} key={index} />)
+              : "No new groups"}
           </S.ChipContainer>
           <S.ButtonContainer>
             <YesOrNoButtons
