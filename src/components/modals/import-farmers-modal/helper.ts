@@ -167,6 +167,8 @@ export const validateFarmerData = function (file: File) {
       resolve({ status: true, message: "" });
     });
   });
+
+  InputFarmersDatas = [];
   reader.readAsBinaryString(file);
   return readerPromise;
 };
