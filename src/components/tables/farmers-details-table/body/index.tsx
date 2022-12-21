@@ -9,15 +9,7 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const {
-    addFarmerId,
-    searchFilter,
-    sortFilter,
-    groupFilter,
-    currentPage,
-    setPageCount,
-    setFarmersIdToExport,
-  } = useFarmerDetailsContext();
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
@@ -56,7 +48,7 @@ const Body = () => {
   }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
 
   useEffect(() => {
-    let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let result = isSuccess && Object.values(farmersListGroup).filter((farmer) => searchWord(farmer.name, searchFilter));
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
     isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
@@ -87,7 +79,7 @@ const Body = () => {
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
     const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    const farmerDelete = isAdd ? (!farmersGroupData[noCountUpdate].members.includes(id) as boolean) : true;
+    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
     if (farmerDelete) {
       const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);

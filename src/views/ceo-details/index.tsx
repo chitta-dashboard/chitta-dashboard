@@ -3,7 +3,7 @@ import CeoDetailsCard from "./CeoDetailCard";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import Loader from "../../utils/loaders/tree-loader";
-import { Endpoints, ENDPOINTS, Message } from "../../utils/constants";
+import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFetch, useAdd } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
@@ -13,8 +13,8 @@ const CeoDetails = () => {
   const {
     formatChangeSuccess,
     result: { data: ceoDetails },
-  } = useFetch(ENDPOINTS.ceo as Endpoints);
-  const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo as Endpoints);
+  } = useFetch(ENDPOINTS.ceo);
+  const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 

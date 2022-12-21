@@ -1,7 +1,7 @@
-import { wrapChildrenProps } from "../../../types/wrap-child-props";
+import { WrapChildrenProps } from "../../../types/wrap-child-props";
 import S from "./tableWrapper.styled";
 
-const TableWrapper = ({ children }: wrapChildrenProps) => {
+const TableWrapper = ({ children }: WrapChildrenProps) => {
   return (
     <S.TableContainerBox>
       <S.TableBox stickyHeader aria-label="sticky table">

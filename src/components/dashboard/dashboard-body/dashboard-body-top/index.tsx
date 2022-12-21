@@ -148,7 +148,7 @@ const DashboardBodyTop = () => {
   };
 
   const onChangeDataHandler = (updateValue: string) => {
-    setValue({ ...value, [popId as string]: updateValue });
+    setValue({ ...value, [popId]: updateValue });
     setIsPopOver(null);
   };
 

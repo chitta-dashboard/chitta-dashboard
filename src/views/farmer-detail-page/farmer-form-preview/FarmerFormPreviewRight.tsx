@@ -1,11 +1,10 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS, decryptText } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { decryptText } from "../../../utils/constants";
-import { adminFormInputs } from "../../admin-panel";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewRight = () => {
@@ -22,7 +21,7 @@ const FarmerFormPreviewRight = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>

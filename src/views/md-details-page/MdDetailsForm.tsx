@@ -2,7 +2,7 @@ import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { IMdDetails } from "../../utils/context/mdDetails";
-import { adminFormInputs } from "../admin-panel";
+import { AdminFormInputs } from "../admin-panel";
 import { useFetch } from "../../utils/hooks/query";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import S from "./md-details-page.styled";
@@ -32,7 +32,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     name: titleName,
     address,
     coordinatorAddress,
-  } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mdId } = useParams();
 

@@ -48,4 +48,4 @@ export type IconType =
   | "horizontal-rule"
   | "numbering"
   | "strike-through"
-  | String;
+  | string;

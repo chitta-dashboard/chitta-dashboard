@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { v4 as uuidv4, validate } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -16,7 +16,7 @@ import {
   IAddFarmersDetailsPage2Input,
   IAddFarmersDetailsPage3Input,
 } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy, ACRETOCENT } from "../../../utils/constants";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
@@ -278,8 +278,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;
     const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
-    const lastMembershipId =
-      isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
+    const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
 
     let newId = uuidv4();
     let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;

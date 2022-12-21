@@ -1,3 +1,3 @@
-export interface wrapChildrenProps {
+export interface WrapChildrenProps {
   children: React.ReactNode;
 }

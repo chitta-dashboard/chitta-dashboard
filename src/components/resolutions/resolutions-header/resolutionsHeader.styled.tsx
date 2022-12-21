@@ -1,5 +1,4 @@
-import { Box } from "@mui/material";
-import { styled, Typography, Button as MuiButton } from "@mui/material";
+import { Box, styled, Typography, Button as MuiButton } from "@mui/material";
 
 namespace S {
   export const Header = styled("div")({

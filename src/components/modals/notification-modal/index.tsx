@@ -5,7 +5,7 @@ import { BufferLoader } from "../../../utils/loaders/api-loader";
 import Icon from "../../icons";
 import S from "./NotificationModal.styled";
 
-interface notificationProps {
+interface NotificationProps {
   open: boolean;
   handleClose: () => void;
   anchorEl: HTMLButtonElement | null;
@@ -13,7 +13,7 @@ interface notificationProps {
   openLoader: boolean;
 }
 
-const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
+const NotificationModal: FC<NotificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
   const {
     result: { data: NotificationData },
     formatChangeSuccess: isSuccess,
@@ -47,7 +47,7 @@ const NotificationModal: FC<notificationProps> = ({ open, handleClose, anchorEl,
           </S.HeadingIcons>
         </S.HeadingBox>
         <S.BodyContainer isheight={seeMore ? 1 : 0} ref={bodyref}>
-          {Object.values(isSuccess && (NotificationData as notificationProps)).map((user, i) => (
+          {Object.values(isSuccess && (NotificationData as NotificationProps)).map((user, i) => (
             <S.BodyBox key={user.id + i}>
               <S.UserImage alt="userImage" src={user.image ? decryptText(user.image) : ""} />
               <S.UserText variant="subtitle1">{user.message}</S.UserText>
