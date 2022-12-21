@@ -36,8 +36,6 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
     enableButton = false;
-  } else {
-    enableButton = true;
   }
 
   useEffect(() => {

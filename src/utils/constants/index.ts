@@ -101,6 +101,28 @@ export const sortObj = <ObjStructure>(
   return arrClone;
 };
 
+export const sortFilterHandler = (sortFilter:string) => {
+    switch (sortFilter) {
+      case NORMAL:
+        return ASCENDING;
+      case ASCENDING:
+        return DESCENDING;
+      default:
+        return NORMAL;
+    }
+  };
+  export const sortIconHandler = (sortFilter:string) => {
+    switch (sortFilter) {
+      case NORMAL:
+        return "sort";
+      case ASCENDING:
+        return "ascending";
+      default:
+        return "descending";
+    }
+  };
+
+
 export const createTimeStamp = (dateTimeInString: string) => {
   const dateObj = new Date(dateTimeInString).toString().split(" ");
   const date = dateObj.slice(1, 4).join(",").replace(",", " ");
@@ -259,7 +281,6 @@ export const decryptText = (encryptedText: string, secretPhrase: string = "123")
     const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretPhrase).toString(CryptoJS.enc.Utf8);
     return decryptedText;
   } catch (err) {
-    // console.log("the passed string was not a encrypted string");
     return encryptedText;
   }
 };

@@ -1,11 +1,12 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { ASCENDING, DESCENDING, NORMAL } from "../../../../utils/constants";
+import { ASCENDING, DESCENDING, NORMAL, sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
 const Header = () => {
   const { farmerId, sortFilter, setSortFilter, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
+
   return (
     <TableHead>
       <TableRow>
@@ -14,13 +15,9 @@ const Header = () => {
         </S.ColCheckCell>
         <S.WebTableCell>உறுப்பினர் எண்</S.WebTableCell>
         <S.WebTableCell>
-          <span
-            onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
-            }}
-          >
+          <span onClick={() => setSortFilter && setSortFilter(sortFilterHandler(sortFilter))}>
             பெயர்
-            <i>{sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}</i>
+            <i>{sortIconHandler(sortFilter)}</i>
           </span>
         </S.WebTableCell>
         <S.WebTableCell>பிறந்த தேதி</S.WebTableCell>
@@ -32,13 +29,7 @@ const Header = () => {
             <Checkbox onChange={() => checkboxSelectAll()} checked={selectedFarmers.length === farmerId.length && selectedFarmers.length !== 0} />
           </Stack>
           <Stack>Farmers Details</Stack>
-          <IconWrapper
-            onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
-            }}
-          >
-            {sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}
-          </IconWrapper>
+          <IconWrapper onClick={() => setSortFilter && setSortFilter(sortFilterHandler(sortFilter))}>{sortIconHandler(sortFilter)}</IconWrapper>
         </S.TabTableCell>
       </TableRow>
     </TableHead>

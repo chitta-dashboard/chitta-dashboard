@@ -13,7 +13,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
-  const { setSearchFilter, farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
+  const { setSearchFilter, setFarmerBankDetail } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },

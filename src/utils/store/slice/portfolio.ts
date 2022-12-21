@@ -27,7 +27,7 @@ const portfolioSlice = createSlice({
     },
 });
 
-export const {
+ const {
     setSearchFilter,
 } = portfolioSlice.actions;
 export const portfoliosReducer = portfolioSlice.reducer;

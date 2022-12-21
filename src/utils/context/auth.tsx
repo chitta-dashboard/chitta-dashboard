@@ -13,7 +13,7 @@ const LOADER = "LOADER";
 
 export type Notification = {
   id: string;
-  image?: string | undefined;
+  image?: string;
   message: string;
 };
 export type loader = {
@@ -119,7 +119,6 @@ const AuthContextProvider: FC<Props> = (props) => {
   const { mutate: addNotify } = useAdd(ENDPOINTS.notification);
   const {
     result: { data: NotificationData },
-    formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
   const { mutate: deleteNotification } = useDelete(ENDPOINTS.notification);
 
@@ -147,12 +146,9 @@ const AuthContextProvider: FC<Props> = (props) => {
 
   const addNotification = (data: Notification) => {
     return addNotify({ data: data });
-
-    // dispatch({ type: ADD_NOTIFICATION, payload: data });
   };
 
   const clearNotification = () => {
-    // dispatch({ type: CLEAR_NOTIFICATION });
     deleteNotification({ id: Object.keys(NotificationData) });
   };
 

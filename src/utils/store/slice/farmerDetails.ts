@@ -138,7 +138,7 @@ const farmerDetailsSlice = createSlice({
   },
 });
 
-export const {
+ const {
   addFarmerDetails,
   editFarmerDetail,
   deleteFarmerDetail,
