@@ -26,7 +26,7 @@ const ResolutionCertificatePage = lazy(() => import("../../views/resolution-cert
 const MDDetailsFormPreview = lazy(() => import("../../views/md-details-page/mdDetails-form-preview/MdDetailsFormPreview"));
 
 export const fileValidation = (file: string) => {
-  var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+  let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
   if (!allowedExtensions.exec(file)) {
     return false;
@@ -223,10 +223,10 @@ export const dateFormat = (mydate?: string) => {
 export const calculateAge = (dob: string) => {
   let seperatedDate = dob.split("-");
   let dob1 = [seperatedDate[1], seperatedDate[0], seperatedDate[2]].join("-");
-  var today = new Date();
-  var birthDate = new Date(dob1);
-  var age_now = today.getFullYear() - birthDate.getFullYear();
-  var month = today.getMonth() - birthDate.getMonth();
+  let today = new Date();
+  let birthDate = new Date(dob1);
+  let age_now = today.getFullYear() - birthDate.getFullYear();
+  let month = today.getMonth() - birthDate.getMonth();
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
     age_now--;
   }

@@ -98,7 +98,7 @@ const Header = () => {
     }
   };
 
-  var settings = {
+  let settings = {
     arrows: true,
     infinite: false,
     speed: 500,

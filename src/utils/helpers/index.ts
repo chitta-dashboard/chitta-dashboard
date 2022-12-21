@@ -32,10 +32,10 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
 };
 
 export const handleDateDifference2 = (start: datePropsType, end: datePropsType) => {
-  var date1 = moment(start, "MMDDYYYY");
-  var date2 = moment(end, "MMDDYYYY");
+  let date1 = moment(start, "MMDDYYYY");
+  let date2 = moment(end, "MMDDYYYY");
 
-  var days = date2.diff(date1, "days");
+  let days = date2.diff(date1, "days");
   if (days > 5) {
     let week = Math.ceil(days / 7);
     let month = Math.ceil(week / 4.34524);

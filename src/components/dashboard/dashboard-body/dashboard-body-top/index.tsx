@@ -120,7 +120,7 @@ const DashboardBodyTop = () => {
     }
   };
 
-  var settings = {
+  let settings = {
     dots: false,
     arrows: true,
     infinite: false,
