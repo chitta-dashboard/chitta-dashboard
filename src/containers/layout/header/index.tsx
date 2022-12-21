@@ -2,18 +2,16 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Theme, useMediaQuery } from "@mui/material";
-import { decryptText, ROUTES } from "../../../utils/constants";
+import { decryptText, ENDPOINTS, ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import { adminFormInputs } from "../../../views/admin-panel";
 import NotificationModal from "../../../components/modals/notification-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./header.styled";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Slideshow } from "@mui/icons-material";
 
 const Header = () => {
   const { clearNotification, logout } = useAuthContext();
@@ -22,7 +20,7 @@ const Header = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const navigate = useNavigate();
   let { pathname } = useLocation();

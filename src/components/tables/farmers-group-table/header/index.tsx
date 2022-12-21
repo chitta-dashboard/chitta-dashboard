@@ -1,6 +1,6 @@
 import { TableHead, TableRow } from "@mui/material";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { ASCENDING, DESCENDING, NORMAL, sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 

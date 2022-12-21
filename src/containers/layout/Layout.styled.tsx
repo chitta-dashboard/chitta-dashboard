@@ -1,6 +1,4 @@
 import { styled, Box } from "@mui/material";
-import { ToastContainer } from "react-toastify";
-import { LightTheme } from "../../utils/theme";
 
 namespace S {
   export const Layout = styled(Box)(({ theme }) => ({

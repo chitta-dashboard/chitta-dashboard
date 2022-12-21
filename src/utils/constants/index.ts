@@ -34,7 +34,7 @@ export const fileValidation = (file: string) => {
   return true;
 };
 
-export const searchWord = (text: String, word: String) =>
+export const searchWord = (text: string, word: string) =>
   text
     ? text
       .trim()
@@ -210,9 +210,9 @@ export const MessageStructured = (name: string, endPoint: string, action: "edit"
     case "edit":
       return `${key[endPoint]} "${name}" has been edited`;
     case "delete":
-      return `${key[endPoint] as string} "${name}" has been removed`;
+      return `${key[endPoint]} "${name}" has been removed`;
     case "add":
-      return `New ${key[endPoint] as string} "${name}" has been registered`;
+      return `New ${key[endPoint]} "${name}" has been registered`;
   }
 };
 

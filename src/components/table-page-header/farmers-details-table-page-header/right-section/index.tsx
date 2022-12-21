@@ -224,7 +224,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomBulkGroupButton
           aria-describedby={Boolean(anchorEl) ? "simple-popover" : undefined}
           onClick={handleClick}
-          disabled={!(selectedFarmers.length > 1)}
+          disabled={selectedFarmers.length <= 1}
         >
           Bulk Group
         </S.CustomBulkGroupButton>
@@ -262,15 +262,13 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomButton
           disabled={
             selectedFarmers.length === 0 ||
-            !(
-              Object.values(farmersGroupById)
-                .filter((item: any) => item.groupName === groupFilter)
-                .map((item: any) => item.members)[0]?.length > 0
-            )
+            Object.values(farmersGroupById)
+              .filter((item: any) => item.groupName === groupFilter)
+              .map((item: any) => item.members)[0]?.length <= 0
           }
           onClick={() => shareAmountModalHandler()}
         >
-          Share Holder
+          s Share Holder
         </S.CustomButton>
         <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
         <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />

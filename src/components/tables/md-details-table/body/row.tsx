@@ -1,6 +1,5 @@
 import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";

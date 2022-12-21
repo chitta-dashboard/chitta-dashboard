@@ -1,6 +1,6 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { ASCENDING, DESCENDING, NORMAL, sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 

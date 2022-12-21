@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
 import { queryClient } from "../../../containers/provider";
-import { ACRETOCENT, ENDPOINTS, Endpoints, groupBy } from "../../constants";
+import { Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
 
 interface IOptionalCallback {
@@ -270,41 +270,6 @@ export const useEditPortfolio = (endpoint: Endpoints) => {
         }
 
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCallback();
-      },
-      onError: () => {
-        errorCallback();
-      },
-      onSettled: () => {
-        loader({ openLoader: false });
-      },
-    },
-  );
-};
-
-export const useDeleteByPage = (endpoint: Endpoints, page: number, params?: string) => {
-  const { loader } = useAuthContext();
-  let successCallback: () => void;
-  let errorCallback: () => void;
-
-  return useMutation(
-    async ({ id, successCb, errorCb }: { id: string | Array<string> } & IOptionalCallback) => {
-      successCallback = successCb ? successCb : () => {};
-      errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Deleting" });
-
-      if (Array.isArray(id)) {
-        for (let i = 0; i < id.length; i++) {
-          await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
-        }
-        return id;
-      } else {
-        return axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id}`).then(() => id);
-      }
-    },
-    {
-      onSuccess: (deleteId) => {
-        queryClient.invalidateQueries({ queryKey: [`${endpoint}-fetch-${page}`] });
         successCallback();
       },
       onError: () => {

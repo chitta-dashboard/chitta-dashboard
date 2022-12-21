@@ -35,8 +35,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const dataLength = isSuccess && Object.values(farmersDetailsById).length;
   const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
 
-  const lastMembershipId =
-    isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
+  const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
   let newMemberId = parseInt(lastMembershipId as string);
 
   const cancelHandler = () => {

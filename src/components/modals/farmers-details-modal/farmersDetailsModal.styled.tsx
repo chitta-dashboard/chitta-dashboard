@@ -1,4 +1,4 @@
-import { styled, Avatar,Box,Typography } from "@mui/material";
+import { styled, Box, Typography } from "@mui/material";
 
 namespace S {
   export const PageNumber = styled(Box)({

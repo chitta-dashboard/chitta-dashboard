@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
-import { adminFormInputs } from "../../views/admin-panel";
+import { AdminFormInputs } from "../../views/admin-panel";
 import { useAdd, useFetch, useDelete } from "../hooks/query";
 import { ENDPOINTS } from "../constants";
 import Toast from "../toast";
@@ -33,7 +33,7 @@ interface IContextType {
   addLogo: (data: {}) => void;
   loader: (data: loader) => void;
   userNotification: Notification[];
-  AdminUpdate: { [id: string]: adminFormInputs };
+  AdminUpdate: { [id: string]: AdminFormInputs };
   headerImage: string | null;
   loginImage: string | null;
   certificateImage: string | null;

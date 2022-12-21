@@ -21,7 +21,7 @@ const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />
       <S.IdCardBodyWrapper>
-        <S.IdImage src={data?.profile ? decryptText(data?.profile as string) : placeHolderImg} alt="id-photo" />
+        <S.IdImage src={data?.profile ? decryptText(data?.profile) : placeHolderImg} alt="id-photo" />
         <S.MiddleBox>
           <S.IdDetailsWrapper>
             <S.DescriptionBox>

@@ -1,6 +1,6 @@
 import { TableHead, TableRow } from "@mui/material";
 import { useFounderContext } from "../../../../utils/context/founders";
-import { ASCENDING, DESCENDING, NORMAL, sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
