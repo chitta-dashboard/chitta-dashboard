@@ -64,7 +64,7 @@ const Body = () => {
     <>
       {isFarmerByPageSuccess && Object.values(farmerGroupByPage).length > 0 ? (
         <BodyWrapper>
-          {Object.values(farmerGroupByPage as FarmersGroup[]).map((user) => (
+          {farmerGroupByPage.map((user: FarmersGroup) => (
             <FarmersGroupRow {...{ user }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
           ))}
         </BodyWrapper>

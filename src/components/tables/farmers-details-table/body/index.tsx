@@ -28,7 +28,7 @@ const Body = () => {
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
-
+  // console.log("farmersDetailsByPage", farmersDetailsByPage);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -136,10 +136,10 @@ const Body = () => {
             </td>
           </S.Customtr>
         </S.LoaderContainer>
-      ) : isFarmerByPageSuccess && Object.values(farmersDetailsByPage as farmerDetail[]).length > 0 ? (
+      ) : isFarmerByPageSuccess && farmersDetailsByPage.length > 0 ? (
         <BodyWrapper>
           {farmersDetailsByPage &&
-            Object.values(farmersDetailsByPage as farmerDetail[]).map((user: farmerDetail) => (
+            farmersDetailsByPage.map((user: farmerDetail) => (
               <FarmersDetailsRow {...{ user, removeGroupMember }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
             ))}
         </BodyWrapper>

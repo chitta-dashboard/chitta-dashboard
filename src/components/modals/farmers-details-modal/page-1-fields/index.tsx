@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister, UseFormWatch } from "react-hook-form";
 import { ENDPOINTS, fileValidation } from "../../../../utils/constants";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -20,7 +20,17 @@ interface CustomProps {
   watch: UseFormWatch<IAddFarmersDetailsPage1Input>;
 }
 
-const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode, watch }) => {
+const FormField: FC<CustomProps> = ({
+  control,
+  dynamicInputs,
+  addInput,
+  removeInput,
+  setValue,
+  getValues,
+  unregister,
+  editMode,
+  watch,
+}) => {
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
@@ -29,13 +39,25 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
   let enableAddButton = true;
 
   useEffect(() => {
+    if (
+      editMode &&
+      Object.values(surveyNo).length !== Object.values(getValues("surveyNo")).length &&
+      Object.values(acre).length !== Object.values(getValues("acre")).length &&
+      Object.values(border).length !== Object.values(getValues("border")).length
+    ) {
+      setSurveyNo(getValues("surveyNo"));
+      setAcre(getValues("acre"));
+      setBorder(getValues("border"));
+    }
+  }, [getValues("surveyNo"), getValues("acre"), getValues("border")]);
+
+
+  useEffect(() => {
     setValue("surveyNo", surveyNo);
     setValue("acre", acre);
     setValue("border", border);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [surveyNo, acre, border]);
-
-  // button enabling
 
   if (surveyNo && acre && border) {
     if (
@@ -50,7 +72,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
       }
     }
   }
-
+  
   return (
     <S.StaticBox>
       <AddProfile<IAddFarmersDetailsPage1Input>
@@ -153,6 +175,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
       <S.DynamicInputsBox>
         {dynamicInputs.map((inp, ind) => {
           const [[key, [surveyName, acreName, borderName]]] = Object.entries(inp);
+
 
           return (
             <S.DynamicInputs key={key}>

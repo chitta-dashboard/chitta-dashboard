@@ -10,7 +10,7 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import { dateFormat } from "../../../utils/constants";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
-import { useFetch } from "../../../utils/hooks/query";
+import { useFetch, useIdByPage } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
@@ -25,8 +25,13 @@ interface CustomProps {
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
   // let { foundersById } = useFounderContext();
 
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
-  const { data: foundersById } = result;
+  // const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: foundersById, isFetchedAfterMount: isFetched },
+  } = useIdByPage(ENDPOINTS.founders, id);
+
+  // const { data: foundersById } = result;
 
   const { handleSubmit, reset, clearErrors, setValue, getValues, control: formControl, unregister, watch } = useForm<IAddFounderDetailsFormInput>();
 
@@ -69,7 +74,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         joinDate: "",
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode]);
+  }, [editMode, isFetched]);
   // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {

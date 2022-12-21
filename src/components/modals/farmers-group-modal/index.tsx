@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { ENDPOINTS } from "../../../utils/constants";
-import { useFetch } from "../../../utils/hooks/query";
+import { useFetch, useIdByPage } from "../../../utils/hooks/query";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -24,8 +24,13 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
-  const { data: farmerGroupData } = result;
+  // const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    result: { data: farmerGroupData, isFetchedAfterMount: isFetched },
+    formatChangeSuccess: isSuccess,
+  } = useIdByPage(ENDPOINTS.farmerGroup, id);
+
+  // const { data: farmerGroupData } = result;
   // for enabling the submit button
   const groupNameEvent = watch("groupName");
   const explanationEvent = watch("explanation");
@@ -61,7 +66,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, id]);
+  }, [editMode, id, isFetched]);
 
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
     cb({ ...data, id: editMode ? id : uuidv4(), members: members });

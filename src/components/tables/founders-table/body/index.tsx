@@ -48,12 +48,10 @@ const Body = () => {
 
   return (
     <>
-      {isFounderByPageSuccess && Object.values(founderByPage).length > 0 ? (
+      {isFounderByPageSuccess && founderByPage.length > 0 ? (
         <BodyWrapper>
           {isFounderByPageSuccess &&
-            Object.values(founderByPage as Founders[]).map((user) => (
-              <FoundersRow {...{ user }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
-            ))}
+            founderByPage.map((user: Founders) => <FoundersRow {...{ user }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />)}
         </BodyWrapper>
       ) : (
         <S.EmptyMsg>

@@ -35,12 +35,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { farmerId } = useGetFarmersId(ENDPOINTS.farmerDetails);
 
   let {
-    result: { data: farmersDetailsById, isFetched: isSuccess },
+    formatChangeSuccess: DataSuccess,
+    result: { data: farmersDetailsById, isFetched: isSuccess, isFetchedAfterMount: isfetched },
   } = useIdByPage(ENDPOINTS.farmerDetails, id);
 
   const {
     result: { data: lastFarmerDetail, isFetched: isLastDataSuccess },
-    // formatChangeSuccess: isLastDataSuccess,
   } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1] as string);
 
   const [page, setPage] = useState(1);
@@ -93,7 +93,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       }
       return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
     });
-  }, [isSuccess]);
+  }, [isSuccess, isfetched, farmersDetailsById, isfetched]);
 
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
@@ -154,12 +154,14 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const groupEvent = form1Watch("group");
   const phoneNumberEvent = form1Watch("phoneNumber");
   const addhaarNoEvent = form1Watch("addhaarNo");
-  const surveyNoEvent = isSuccess && form1Watch("surveyNo");
+  const surveyNoEvent = form1Watch("surveyNo");
   const acreEvent = form1Watch("acre");
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
 
+  // console.log("surveyNoEvent", surveyNoEvent);
   if (
+    dynamicInputs &&
     nameEvent &&
     fatherNameEvent &&
     sexEvent &&
@@ -175,7 +177,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     !Object.values(surveyNoEvent).includes("") &&
     !Object.values(acreEvent).includes("") &&
     !Object.values(borderEvent).includes("") &&
-    dynamicInputs &&
     Object.values(surveyNoEvent).length === dynamicInputs.length &&
     Object.values(acreEvent).length === dynamicInputs.length &&
     Object.values(borderEvent).length === dynamicInputs.length
@@ -227,7 +228,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       let farmerData = Object.values(isSuccess && (farmersDetailsById as { [id: string]: farmerDetail }))?.find(
         (f) => String(f.id) === id,
       ) as farmerDetail;
-      // let farmerData = isSuccess && farmersDetailsById[id];
       form1Reset({
         name: farmerData?.name,
         fatherName: farmerData?.fatherName,
@@ -268,9 +268,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         ifscCode: farmerData?.ifscCode,
       });
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editMode, id, isSuccess, isLastDataSuccess]);
+  }, [editMode, id, isSuccess, isLastDataSuccess, isfetched, farmersDetailsById]);
 
   const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
@@ -384,17 +383,19 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
           ) : (
             <>
               <ModalBody id={"farmersDetailsForm1"} onSubmit={form1handleSubmit(form1Submit)}>
-                <FormField
-                  dynamicInputs={dynamicInputs}
-                  addInput={addInput}
-                  removeInput={removeInput}
-                  control={form1Control as unknown as Control}
-                  setValue={form1SetValue}
-                  getValues={form1GetValues}
-                  unregister={form1Unregister}
-                  editMode={editMode}
-                  watch={form1Watch}
-                />
+                {
+                  <FormField
+                    dynamicInputs={dynamicInputs}
+                    addInput={addInput}
+                    removeInput={removeInput}
+                    control={form1Control as unknown as Control}
+                    setValue={form1SetValue}
+                    getValues={form1GetValues}
+                    unregister={form1Unregister}
+                    editMode={editMode}
+                    watch={form1Watch}
+                  />
+                }
               </ModalBody>
               <ModalFooter>
                 <S.PageNumber>

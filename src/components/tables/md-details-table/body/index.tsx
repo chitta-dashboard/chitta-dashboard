@@ -80,10 +80,10 @@ const Body = () => {
 
   return (
     <>
-      {isMdDetailsSuccess && Object.values(mdDetailsById as IMdDetails).length > 0 ? (
+      {isMdDetailsSuccess && mdDetailsById.length > 0 ? (
         <BodyWrapper>
           {isMdDetailsSuccess &&
-            Object.values(mdDetailsById as IMdDetails).map((user) => (
+            mdDetailsById.map((user: IMdDetails) => (
               <MdDetailsRow {...{ user, removeGroupMember }} key={user.id} params={`${searchQuery}${groupQuery}${sortQuery}`} />
             ))}
         </BodyWrapper>

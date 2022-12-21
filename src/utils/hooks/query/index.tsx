@@ -186,7 +186,8 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
       queryKey: [`${endpoint}-fetch-${pageNo}`],
       queryFn: () => {
         return axios.get(prefetchQuery).then((res: any) => {
-          return groupBy(res.data, "id");
+          // return groupBy(res.data, "id");
+          return res.data;
         });
       },
     });
@@ -202,7 +203,8 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     queryFn: () => {
       return axios.get(query).then((res: any) => {
         setCount(res.headers.get("X-total-count"));
-        return groupBy(res.data, "id");
+        // return groupBy(res.data, "id");
+        return res.data;
       });
     },
     cacheTime: Infinity, // do not change!
@@ -389,7 +391,6 @@ export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setformatChangeSucess(result.isFetched);
-    //result.isFetched && console.log("Result : ", Object.keys(result.data));
     if (result.isFetched) {
       let idArray: string[] = Object.values(result.data).map((item: any) => {
         return item.id;
@@ -452,9 +453,9 @@ export const useEditByPage = (endpoint: Endpoints, page: number, params?: string
     },
     {
       onSuccess: (data) => {
-        result.data[data.id] = data;
-        queryClient.setQueryData([`${endpoint}-fetch-${page}`], result.data);
-        // queryClient.setQueryData([`${endpoint}-single-${data.id}`], data);
+        const updateData = groupBy(result.data, "id");
+        updateData[data.id] = data;
+        queryClient.setQueryData([`${endpoint}-fetch-${page}`], Object.values(updateData));
         queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${data.id}`] });
         successCallback();
       },
@@ -470,7 +471,6 @@ export const useEditByPage = (endpoint: Endpoints, page: number, params?: string
 
 export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnabled: boolean = true) => {
   let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${`?id=${id}`}`;
-
   const result = useQuery({
     queryKey: [`${endpoint}-single-${id}`],
     queryFn: async () => {
@@ -478,12 +478,11 @@ export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnab
         return groupBy(res.data, "id");
       });
     },
-    cacheTime: Infinity, // do not change!
-    staleTime: Infinity, // do not change!
+    // cacheTime: Infinity, // do not change!
+    // staleTime: Infinity, // do not change!
     enabled: isEnabled ? isEnabled : true,
   });
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
-
   useEffect(() => {
     setformatChangeSucess(result.isFetched);
     // queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${id}`] });
