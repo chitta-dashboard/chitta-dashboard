@@ -1,5 +1,4 @@
-import { Theme, Typography, Button as MuiButton } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Theme, Typography, Button as MuiButton } from "@mui/material";
 
 export namespace S {
   export const FarmersDetailsMainContainer = styled(Box)({

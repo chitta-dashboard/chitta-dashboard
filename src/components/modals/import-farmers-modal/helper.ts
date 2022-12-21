@@ -1,11 +1,10 @@
-import { read, utils, write, writeFile } from "xlsx";
+import { read, utils, write } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
-import FileSaver from "file-saver";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
+import { saveAs } from "file-saver";
 import Toast from "../../../utils/toast";
 
 /**
@@ -178,14 +177,14 @@ export const validateFarmerData = function (file: File) {
 export const processFarmerData = (farmers: { [key: string]: string }[]) => {
   return farmers.map(
     (farmer) =>
-      ({
-        ...farmer,
-        id: uuidv4(),
-        border: JSON.parse(farmer.border),
-        acre: JSON.parse(farmer.acre),
-        surveyNo: JSON.parse(farmer.surveyNo),
-        profile: "", // placeholder will be shown incase of no image
-      } as farmerDetail),
+    ({
+      ...farmer,
+      id: uuidv4(),
+      border: JSON.parse(farmer.border),
+      acre: JSON.parse(farmer.acre),
+      surveyNo: JSON.parse(farmer.surveyNo),
+      profile: "", // placeholder will be shown incase of no image
+    } as farmerDetail),
   );
 };
 
@@ -235,7 +234,7 @@ export const downloadRejectedData = () => {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
     const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
-    FileSaver.saveAs(finalData, "rejected-farmers.xlsx");
+    saveAs(finalData, "rejected-farmers.xlsx");
   } catch {
     Toast({ message: "Download failed, please try again." });
   }
@@ -283,7 +282,7 @@ export const exportSampleFormat = () => {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
     const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
-    FileSaver.saveAs(finalData, "format-sample.xlsx");
+    saveAs(finalData, "format-sample.xlsx");
   } catch {
     Toast({ message: "Download failed, please try again." });
   }

@@ -7,17 +7,17 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-interface portfolioContextType {
+interface PortfolioContextType {
   searchFilter: string;
   setSearchFilter: (searchText: string) => void;
 }
 
-const initialState: portfolioContextType = {
+const initialState: PortfolioContextType = {
   searchFilter: "",
   setSearchFilter: () => {},
 };
 
-const reducer = (state: portfolioContextType, action: any) => {
+const reducer = (state: PortfolioContextType, action: any) => {
   switch (action.type) {
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -28,7 +28,7 @@ const reducer = (state: portfolioContextType, action: any) => {
   }
 };
 
-export const portfolioContext = createContext<portfolioContextType>(initialState);
+export const portfolioContext = createContext<PortfolioContextType>(initialState);
 
 const PortfolioContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer<(reducer: any, initialState: any) => any>(reducer, initialState);

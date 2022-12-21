@@ -23,7 +23,7 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export interface foundersContextType {
+export interface FoundersContextType {
   foundersById: { [id: string]: Founders };
   searchFilter: string;
   sortFilter: SortOrder;
@@ -34,7 +34,7 @@ export interface foundersContextType {
   deleteFounder: (id: string) => void;
 }
 
-const initialState: foundersContextType = {
+const initialState: FoundersContextType = {
   foundersById: {
     a: {
       id: "a",
@@ -106,7 +106,7 @@ const initialState: foundersContextType = {
   deleteFounder: () => {},
 };
 
-const reducer = (state: foundersContextType, action: any) => {
+const reducer = (state: FoundersContextType, action: any) => {
   switch (action.type) {
     case ADD_FOUNDERS:
       return { ...state, foundersById: { [action.payload.id]: action.payload, ...state.foundersById } };
@@ -130,7 +130,7 @@ const reducer = (state: foundersContextType, action: any) => {
   }
 };
 
-export const foundersContext = createContext<foundersContextType>(initialState);
+export const foundersContext = createContext<FoundersContextType>(initialState);
 
 const FoundersContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);

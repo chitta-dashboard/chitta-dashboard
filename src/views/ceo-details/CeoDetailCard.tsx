@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptText, Endpoints, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -19,12 +19,12 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
-  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo as Endpoints);
-  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo as Endpoints);
+  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
+  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
   const {
     formatChangeSuccess,
     result: { data: ceoDetailsById },
-  } = useFetch(ENDPOINTS.ceo as Endpoints);
+  } = useFetch(ENDPOINTS.ceo);
   const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");

@@ -43,7 +43,7 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export interface mdDetailsContextType {
+export interface MdDetailsContextType {
   mdDetailsById: { [id: string]: IMdDetails };
   searchFilter: string;
   sortFilter: SortOrder;
@@ -57,7 +57,7 @@ export interface mdDetailsContextType {
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
 }
 
-const initialState: mdDetailsContextType = {
+const initialState: MdDetailsContextType = {
   mdDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
@@ -71,7 +71,7 @@ const initialState: mdDetailsContextType = {
   setPageCount: () => {},
 };
 
-const reducer = (state: mdDetailsContextType, action: any) => {
+const reducer = (state: MdDetailsContextType, action: any) => {
   switch (action.type) {
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -94,7 +94,7 @@ const reducer = (state: mdDetailsContextType, action: any) => {
   }
 };
 
-export const mdDetailsContext = createContext<mdDetailsContextType>(initialState);
+export const mdDetailsContext = createContext<MdDetailsContextType>(initialState);
 
 const MdDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);

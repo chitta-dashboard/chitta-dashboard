@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { ENDPOINTS, Endpoints, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
+import { ENDPOINTS, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { IAddProductsFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
@@ -37,7 +37,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
   const {
     formatChangeSuccess: isSuccess,
     result: { data: productDetails },
-  } = useFetch(ENDPOINTS.portfolioRaw as Endpoints);
+  } = useFetch(ENDPOINTS.portfolioRaw);
   const productImage = editMode && PRODUCT_DATA.raw.filter((product) => product.id === id)[0].image;
 
   // for enabling the submit button

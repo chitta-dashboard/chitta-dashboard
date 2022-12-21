@@ -93,8 +93,9 @@ const FarmerFormPreviewLeft = () => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
+
     const encryptedBase64 = encryptText(compressedBase64);
-    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     !isFarmerInMd &&
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
@@ -262,8 +263,7 @@ const FarmerFormPreviewLeft = () => {
                 cb={updateFarmerDetail}
                 editMode={true}
                 id={user.id}
-                // mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
-                mdId={(Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id}
+                mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
               />
             )}
             {openDeleteModal && (
@@ -272,7 +272,7 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
                   await removeGroupMember(user.id, user.group, false);
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   !isFarmerInMd &&
                     farmerDelete({
                       id: user.id,
@@ -316,7 +316,7 @@ const FarmerFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={async () => {
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   openConfirmationModal && (await removeGroupMember(user.id, openConfirmationModal.group, true));
                   const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
                   delete farmerEditData.farmerId;

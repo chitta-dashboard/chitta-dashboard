@@ -15,7 +15,7 @@ import FarmersDetailsModal from "../../../components/modals/farmers-details-moda
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
-import { adminFormInputs } from "../../admin-panel";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
@@ -34,7 +34,7 @@ const MdFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);

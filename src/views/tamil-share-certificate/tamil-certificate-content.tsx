@@ -1,8 +1,7 @@
 import { FC } from "react";
 import { useFetch } from "../../utils/hooks/query";
-import { ENDPOINTS } from "../../utils/constants";
-import { decryptText } from "../../utils/constants";
-import { adminFormInputs } from "../admin-panel";
+import { ENDPOINTS, decryptText } from "../../utils/constants";
+import { AdminFormInputs } from "../admin-panel";
 import { farmerDetail } from "../../utils/context/farmersDetails";
 import { S } from "./tamil-certificate.styled";
 import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
@@ -23,7 +22,7 @@ const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, togg
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { certificateLogo: certificateImage, name: titleName, regNo, cinNo } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { certificateLogo: certificateImage, name: titleName, regNo, cinNo } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const newDate = new Date();
 

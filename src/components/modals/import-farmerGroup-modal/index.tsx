@@ -93,7 +93,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
           }
 
           addFarmerDetails({
-            data: farmerDatas as farmerDetail[],
+            data: farmerDatas,
             successCb: () => {
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
               if (count && count > 1) {

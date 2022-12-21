@@ -1,7 +1,7 @@
 import EllipseBottom from "../../../assets/images/EllipseBottom.svg";
 import farmer from "../../../assets/images/farmer.svg";
 import { useFetch } from "../../../utils/hooks/query";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import { ENDPOINTS } from "../../../utils/constants";
 import S from "./background.style";
 
@@ -11,7 +11,7 @@ const LoginBackground = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name, regNo, cinNo } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+  const { name, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>

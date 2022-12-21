@@ -63,7 +63,7 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-interface farmerDetailsContextType {
+interface FarmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   sortFilter: SortOrder;
@@ -90,7 +90,7 @@ interface farmerDetailsContextType {
   setFarmerBankDetail: (value: boolean) => void;
 }
 
-const initialState: farmerDetailsContextType = {
+const initialState: FarmerDetailsContextType = {
   farmersDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
@@ -117,7 +117,7 @@ const initialState: farmerDetailsContextType = {
   setFarmerBankDetail: boolean,
 };
 
-const reducer = (state: farmerDetailsContextType, action: any) => {
+const reducer = (state: FarmerDetailsContextType, action: any) => {
   switch (action.type) {
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
@@ -185,7 +185,7 @@ const reducer = (state: farmerDetailsContextType, action: any) => {
   }
 };
 
-export const farmerDetailsContext = createContext<farmerDetailsContextType>(initialState);
+export const farmerDetailsContext = createContext<FarmerDetailsContextType>(initialState);
 
 const FarmerDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -11,7 +11,7 @@ import ProfileInformation from "../../components/admin-panel/profile-information
 import { encryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
 import S from "./adminPanel.styled";
 
-export interface adminFormInputs {
+export interface AdminFormInputs {
   id?: string;
   profile?: any;
   name: string;
@@ -57,7 +57,7 @@ const AdminPanel = () => {
     formState: { errors },
     reset,
     watch,
-  } = useForm<adminFormInputs>({
+  } = useForm<AdminFormInputs>({
     resolver: yupResolver(adminSchema),
   });
 
@@ -101,7 +101,7 @@ const AdminPanel = () => {
     enableButton = false;
   }
 
-  const onSubmit = async (data: adminFormInputs) => {
+  const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
 
     const headerLogo = await fileChangedHandler(imgObj, 94, 94);

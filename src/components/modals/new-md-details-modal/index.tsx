@@ -26,8 +26,7 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
 
   useEffect(() => {
-    let reg = new RegExp("^[0-9]+$");
-
+    let reg = new RegExp("^[/d]+$");
     let filteredFarmerData = farmerDetails.filter((item) => {
       let search = reg.test(searchKeyWord) ? item.phoneNumber : item.name;
       return searchWord(search, searchKeyWord);

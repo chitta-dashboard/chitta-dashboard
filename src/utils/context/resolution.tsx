@@ -25,17 +25,17 @@ export interface IResolutions {
   [id: string]: IResolution;
 }
 
-interface resolutionContextType {
+interface ResolutionContextType {
   tab: string;
   changeTab: (tabType: "tree" | "list") => void;
 }
 
-const initialState: resolutionContextType = {
+const initialState: ResolutionContextType = {
   tab: "tree",
   changeTab: () => {},
 };
 
-const reducer = (state: resolutionContextType, action: any) => {
+const reducer = (state: ResolutionContextType, action: any) => {
   switch (action.type) {
     case SET_TAB:
       return { ...state, tab: action.payload };
@@ -46,7 +46,7 @@ const reducer = (state: resolutionContextType, action: any) => {
   }
 };
 
-export const resolutionContext = createContext<resolutionContextType>(initialState);
+export const resolutionContext = createContext<ResolutionContextType>(initialState);
 
 const ResolutionContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer<(reducer: any, initialState: any) => any>(reducer, initialState);
