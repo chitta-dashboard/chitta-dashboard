@@ -13,7 +13,6 @@ import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-//import { farmerDetail, checkBoxSelect } from "../../../../utils/store/slice/farmerDetails";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";

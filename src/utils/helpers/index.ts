@@ -2,6 +2,7 @@ import moment from "moment/moment";
 
 type datePropsType = string | number;
 
+
 export const handleDateDifference = (start: datePropsType, end: datePropsType) => {
   let updatedStart: number = new Date(start).getTime();
   let updatedEnd: number = new Date(end).getTime();
@@ -16,10 +17,13 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
     let month = Math.floor(week / 4.34524);
     let remainingWeeks = Math.floor(week % 4.34524);
 
-    const weekResult = `${week} ${week > 1 ? "weeks" : "week"} ${remainingDays > 0 ? `and ${remainingDays} ${remainingDays > 1 ? "days" : "day"}` : ""
-      }`;
-    const monthResult = `${month} ${month > 1 ? "months" : "month"} ${remainingWeeks > 0 ? `and ${remainingWeeks} ${remainingWeeks > 1 ? "weeks" : "week"}` : ""
-      }`;
+    let checkDay = remainingDays > 1 ? "days" : "day"
+    let checkWeek = week > 1 ? "weeks" : "week"
+    let checkMonth = month > 1 ? "months" : "month"
+    let  checkRemainingWeek = remainingWeeks > 1 ? "weeks" : "week"
+
+    const weekResult = `${week} ${checkWeek} ${remainingDays > 0 && `and ${remainingDays} ${checkDay}`}`;
+    const monthResult = `${month} ${checkMonth} ${remainingWeeks > 0 && `and ${remainingWeeks} ${checkRemainingWeek}` }`;
     let result = month > 0 ? monthResult : weekResult;
     return result;
   }

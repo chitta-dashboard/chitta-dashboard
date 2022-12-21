@@ -78,8 +78,6 @@ const ProductsModal: FC<CustomProps> = (props) => {
     descriptionEvent
   ) {
     enableButton = false;
-  } else {
-    enableButton = true;
   }
 
   useEffect(() => {

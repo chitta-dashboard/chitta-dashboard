@@ -3,7 +3,6 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-// import { useFounderContext } from "../../../utils/context/founders";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -23,8 +22,6 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  // let { foundersById } = useFounderContext();
-
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
   const { data: foundersById } = result;
 

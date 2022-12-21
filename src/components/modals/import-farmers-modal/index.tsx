@@ -4,13 +4,13 @@ import { v4 as uuid } from "uuid";
 import { validateFarmerData, exportSampleFormat, downloadRejectedData } from "./helper";
 import ImportFarmerGroupModal from "../import-farmerGroup-modal";
 import { encryptText, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
 import DropFile from "../../common-components/drop-file";
 import ModalBody from "../../custom-modal/body";
 import ModalHeader from "../../custom-modal/header";
 import CustomModal from "../../custom-modal";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import S from "./importFarmersModal.styled";
-import { useFetch } from "../../../utils/hooks/query";
 
 interface IImportFarmersModal {
   isOpen: boolean;
@@ -139,11 +139,11 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
       <ImportFarmerGroupModal
         openModal={openImportGroup}
         handleClose={() => setOpenImportGroup(!openImportGroup)}
-        newGroupNames={newGroupNames && newGroupNames} // for display the group names in chips
+        newGroupNames={newGroupNames} // for display the group names in chips
         setNewGroupNames={setNewGroupNames}
         count={newFarmersDatas && newFarmersDatas.length} // for toast message
         handleCloseImport={handleClose}
-        farmerDatas={newFarmersDatas && newFarmersDatas}
+        farmerDatas={newFarmersDatas}
         setInputData={setInputData}
       />
     </>

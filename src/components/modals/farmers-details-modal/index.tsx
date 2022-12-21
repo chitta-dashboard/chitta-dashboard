@@ -17,7 +17,7 @@ import {
   IAddFarmersDetailsPage3Input,
 } from "../type/formInputs";
 import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, groupBy, ACRETOCENT } from "../../../utils/constants";
-import { useFetch, useFetchByPage } from "../../../utils/hooks/query";
+import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
 
@@ -27,7 +27,7 @@ interface CustomProps {
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
-  mdId?: string | undefined;
+  mdId?: string;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { farmerBankDetail } = useFarmerDetailsContext();
@@ -259,6 +259,18 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     setPage(3);
   };
 
+  const setId = (newId: string) => {
+    // id: mdId ? mdId : editMode ? id : newId,
+    switch (mdId || editMode || newId) {
+      case mdId:
+        return mdId;
+      case editMode:
+        return id;
+      default:
+        return newId;
+    }
+  };
+
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
@@ -284,7 +296,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...form2Data,
       ...editedData,
       profile: encryptedBase64,
-      id: mdId ? mdId : editMode ? id : newId,
+      id: setId(newId),
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
       landAreaInCent:
@@ -317,7 +329,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
               <Button
                 onClick={() => {
                   form2ClearErrors();
-                  //setNext(!next);
                   setPage(1);
                 }}
               >
@@ -342,7 +353,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
               <Button
                 onClick={() => {
                   form3ClearErrors();
-                  //setNext(!next);
                   setPage(2);
                 }}
               >

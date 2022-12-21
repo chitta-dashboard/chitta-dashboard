@@ -1,6 +1,6 @@
 import { Ref, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import IconWrapper from "../../utils/iconWrapper";
 import ShareHolderCertificate from "../share-holder-certificate";
 import TamilShareHolderCertificate from "../tamil-share-certificate";
@@ -13,7 +13,6 @@ const MdDetailPage = () => {
   const pdfcertificate = useRef<HTMLDivElement>();
   const pdftamilcertificate = useRef<HTMLDivElement>();
   const navigate = useNavigate();
-  const { id } = useParams();
 
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({

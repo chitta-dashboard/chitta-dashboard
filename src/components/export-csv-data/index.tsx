@@ -19,10 +19,10 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
   const exportToCSV = (csvData: farmerDetail[], fileName: string) => {
     let updatedCSVData: farmerDetail[] = [];
 
-    csvData.map((item) => {
+    csvData.forEach((item) => {
       let newCSVData: any = {};
       let keys = Object.keys(item);
-      Object.values(item).map((value, i) => {
+      Object.values(item).forEach((value, i) => {
         let updatedValue = JSON.stringify(value);
         newCSVData[keys[i]] =
           updatedValue.includes("border-first") || updatedValue.includes("acre-first") || updatedValue.includes("surveyNo-first")

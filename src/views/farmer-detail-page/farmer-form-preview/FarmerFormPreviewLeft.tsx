@@ -20,7 +20,6 @@ import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
-  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
@@ -68,7 +67,7 @@ const FarmerFormPreviewLeft = () => {
 
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
-    // documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
+    documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 

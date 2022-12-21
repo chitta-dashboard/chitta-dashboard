@@ -16,12 +16,12 @@ type FinalImageType = {
 };
 
 interface Crop {
-  aspect?: number | undefined;
-  x?: number | undefined;
-  y?: number | undefined;
-  width?: number | undefined;
-  height?: number | undefined;
-  unit?: "px" | "%" | undefined;
+  aspect?: number;
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+  unit?: "px" | "%";
 }
 
 interface PixelDataType {
@@ -37,7 +37,7 @@ export default function ImagePreview({ image, setImage, handleCroppedImage }: Im
   const [crop, setCrop] = useState<Crop>({
     unit: "%",
     width: 30,
-    aspect: 1 / 1,
+    aspect: 1,
   });
   const [imageRef, setImageRef] = useState<HTMLElement | null>(null);
   const [finalImage, setFinalImage] = useState<FinalImageType | null>(null);

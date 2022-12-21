@@ -1,11 +1,11 @@
 import { read, utils, write, writeFile } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
+import FileSaver from "file-saver";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
-import FileSaver from "file-saver";
 import Toast from "../../../utils/toast";
 
 /**
@@ -128,7 +128,6 @@ export const validateFarmerData = function (file: File) {
         const inputAadhaarNos = InputFarmersDatas.map((i) => String(i.addhaarNo));
         const existingPhoneNos = dbPhoneNos.filter((data: any) => inputPhoneNos.includes(data));
         const existingAadhaarNos = dbAadhaarNos.filter((data: any) => inputAadhaarNos.includes(data));
-        const Iterationlength = Object.values(DBFarmerDetails).map((farmer) => farmer).length;
 
         if (existingPhoneNos.length > 0 || existingAadhaarNos.length > 0) {
           if (existingPhoneNos.length > 0 && existingAadhaarNos.length > 0) {
@@ -195,7 +194,7 @@ export const processFarmerData = (farmers: { [key: string]: string }[]) => {
  */
 export const downloadRejectedData = () => {
   let data: Object[] = [];
-  InputFarmersDatas.map((i: any) =>
+  InputFarmersDatas.forEach((i: any) =>
     data.push({
       spouseName: i.spouseName,
       phoneNumber: i.phoneNumber,
