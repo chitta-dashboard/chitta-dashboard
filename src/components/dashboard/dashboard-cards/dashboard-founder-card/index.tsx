@@ -23,7 +23,7 @@ const DashboardFounder = () => {
   const { mutate: editFounder } = useEdit(ENDPOINTS.founders);
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
-  var settings = {
+  let settings = {
     dots: true,
     arrows: true,
     infinite: true,

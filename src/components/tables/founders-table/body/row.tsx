@@ -76,7 +76,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptText(compressedBase64);
+    user["profile"] = encryptText(compressedBase64);
     founderMutateUpdate({ editedData: user });
   };
 

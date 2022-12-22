@@ -93,7 +93,8 @@ const FarmerFormPreviewLeft = () => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptText(compressedBase64);
+
+    const encryptedBase64 = encryptText(compressedBase64);
     const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     !isFarmerInMd &&
       editFarmer({
@@ -109,7 +110,7 @@ const FarmerFormPreviewLeft = () => {
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
         successCb: async () => {
-          await editMdDetail({
+          editMdDetail({
             editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
             successCb: () => {
               Toast({ message: "Farmer Edited Successfully", type: "success" });
@@ -137,7 +138,7 @@ const FarmerFormPreviewLeft = () => {
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
     }
   };
 
@@ -145,7 +146,7 @@ const FarmerFormPreviewLeft = () => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    editFarmerGroup({ editedData: newGroupMember });
   };
 
   return (
@@ -287,7 +288,7 @@ const FarmerFormPreviewLeft = () => {
                     farmerDelete({
                       id: user.id,
                       successCb: async () => {
-                        await mdDelete({
+                        mdDelete({
                           id: isFarmerInMd,
                           successCb: () => {
                             addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });

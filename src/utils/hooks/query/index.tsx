@@ -90,7 +90,7 @@ export const useAdd = (endpoint: Endpoints) => {
 export const useEdit = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
-  let successCallback: () => void;
+  let successCallback: (data?: any) => void;
   let errorCallback: () => void;
 
   return useMutation(
@@ -118,7 +118,7 @@ export const useEdit = (endpoint: Endpoints) => {
           updatedData = { ...result.data, [data.id]: data };
         }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCallback();
+        successCallback(updatedData);
       },
       onError: () => {
         errorCallback();
