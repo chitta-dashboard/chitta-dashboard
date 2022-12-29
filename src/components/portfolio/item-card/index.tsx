@@ -2,6 +2,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Popover } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { handleDateDifference } from "../../../utils/helpers";
+import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
+import { useEditPortfolio } from "../../../utils/hooks/query";
+import { useAuthContext } from "../../../utils/context/auth";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
+import DeleteModal from "../../modals/delete-modal";
+import Toast from "../../../utils/toast";
+import ProductsModal from "../../modals/products-modal";
+import ConfirmationModal from "../../modals/confirmation-modal";
+import CS from "../../../components/common-styles/commonStyles.styled";
+import S from "./itemCard.styled";
 import paddy from "../../../assets/images/paddy.png";
 import millet from "../../../assets/images/millet.png";
 import groundnut from "../../../assets/images/groundnut.png";
@@ -10,17 +21,6 @@ import ragi from "../../../assets/images/ragi.png";
 import blackgram from "../../../assets/images/blackgram.png";
 import sugarcane from "../../../assets/images/sugarcane.png";
 import cotton from "../../../assets/images/cotton.png";
-import { handleDateDifference } from "../../../utils/helpers";
-import DeleteModal from "../../modals/delete-modal";
-import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
-import { useEditPortfolio } from "../../../utils/hooks/query";
-import { useAuthContext } from "../../../utils/context/auth";
-import Toast from "../../../utils/toast";
-import ProductsModal from "../../modals/products-modal";
-import ConfirmationModal from "../../modals/confirmation-modal";
-import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
-import CS from "../../../components/common-styles/commonStyles.styled";
-import S from "./itemCard.styled";
 
 export interface IPortfolioVariant {
   variantId: string;
@@ -58,7 +58,6 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
         latestVariantId = id;
       }
     }
-    // console.log("final", data[latestVariantId]);
     return data[latestVariantId] as IPortfolioVariant;
   });
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);

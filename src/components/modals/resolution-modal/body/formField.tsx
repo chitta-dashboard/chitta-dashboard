@@ -1,6 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import { Control, useWatch } from "react-hook-form";
-import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { Control, useWatch, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IResolutionFormInput } from "../../type/formInputs";
 import Input from "../../../input-fields/input/input";

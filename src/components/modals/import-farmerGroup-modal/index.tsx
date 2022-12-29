@@ -15,7 +15,7 @@ import S from "./importFarmerGroupModal.styled";
 interface Props {
   openModal: boolean;
   handleClose: () => void;
-  newGroupNames?: string[] | undefined;
+  newGroupNames?: string[];
   handleCloseImport: () => void;
   farmerDatas: farmerDetail[] | null;
   count?: number | null;
@@ -56,7 +56,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
   const groupNamesOnChip = groupName && RemoveArray(existingGroup, groupName);
 
   const yesButtonHandler = () => {
-    if (farmerDatas && isFarmerGroupSuccess && isFarmerDetailsSuccess && groupName) {
+    if (farmerDatas && isFarmerGroupSuccess && groupName) {
       let newdata = farmerDatas.map((item) => item.group);
       let groupName = newdata.filter((item, i, ar) => ar.indexOf(item) === i);
       let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
@@ -93,7 +93,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
           }
 
           addFarmerDetails({
-            data: farmerDatas as farmerDetail[],
+            data: farmerDatas,
             successCb: () => {
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
               if (count && count > 1) {

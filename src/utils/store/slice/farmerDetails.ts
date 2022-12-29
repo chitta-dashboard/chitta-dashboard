@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 
- type farmerDetail = {
+type farmerDetail = {
   membershipId?: string;
   profile: string;
   id: string;
@@ -39,7 +39,7 @@ export const DEFAULT_GROUP_FILTER = "all";
 
 export type selectedFarmer = number | string;
 
-interface farmerDetailsContextType {
+interface FarmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   isFarmerDetailsDataSet: boolean;
@@ -53,7 +53,7 @@ interface farmerDetailsContextType {
   farmersIdToExport: [];
 }
 
-const initialState: farmerDetailsContextType = {
+const initialState: FarmerDetailsContextType = {
   farmersDetailsById: {},
   searchFilter: "",
   isFarmerDetailsDataSet: false,
@@ -138,7 +138,7 @@ const farmerDetailsSlice = createSlice({
   },
 });
 
-export const {
+ const {
   addFarmerDetails,
   editFarmerDetail,
   deleteFarmerDetail,

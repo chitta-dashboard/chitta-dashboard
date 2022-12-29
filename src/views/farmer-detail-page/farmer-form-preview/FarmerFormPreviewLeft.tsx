@@ -20,7 +20,6 @@ import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
-  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
@@ -68,7 +67,7 @@ const FarmerFormPreviewLeft = () => {
 
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
-    // documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
+    documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 
@@ -94,8 +93,9 @@ const FarmerFormPreviewLeft = () => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptText(compressedBase64);
-    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+
+    const encryptedBase64 = encryptText(compressedBase64);
+    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     !isFarmerInMd &&
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
@@ -110,7 +110,7 @@ const FarmerFormPreviewLeft = () => {
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
         successCb: async () => {
-          await editMdDetail({
+          editMdDetail({
             editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
             successCb: () => {
               Toast({ message: "Farmer Edited Successfully", type: "success" });
@@ -138,7 +138,7 @@ const FarmerFormPreviewLeft = () => {
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
     }
   };
 
@@ -146,7 +146,7 @@ const FarmerFormPreviewLeft = () => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    editFarmerGroup({ editedData: newGroupMember });
   };
 
   return (
@@ -263,8 +263,7 @@ const FarmerFormPreviewLeft = () => {
                 cb={updateFarmerDetail}
                 editMode={true}
                 id={user.id}
-                // mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
-                mdId={(Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id}
+                mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
               />
             )}
             {openDeleteModal && (
@@ -273,7 +272,7 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
                   await removeGroupMember(user.id, user.group, false);
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   !isFarmerInMd &&
                     farmerDelete({
                       id: user.id,
@@ -289,7 +288,7 @@ const FarmerFormPreviewLeft = () => {
                     farmerDelete({
                       id: user.id,
                       successCb: async () => {
-                        await mdDelete({
+                        mdDelete({
                           id: isFarmerInMd,
                           successCb: () => {
                             addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -317,7 +316,7 @@ const FarmerFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={async () => {
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   openConfirmationModal && (await removeGroupMember(user.id, openConfirmationModal.group, true));
                   const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
                   delete farmerEditData.farmerId;

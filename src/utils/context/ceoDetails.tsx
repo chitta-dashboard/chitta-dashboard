@@ -20,21 +20,21 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-interface ceoDetailsContextType {
+interface CeoDetailsContextType {
   ceoDetailsById: { [id: string]: ceoDetail };
   addCeoDetail: (data: ceoDetail) => void;
   editCeoDetail: (data: ceoDetail) => void;
   deleteCeoDetail: (id: string) => void;
 }
 
-const initialState: ceoDetailsContextType = {
+const initialState: CeoDetailsContextType = {
   ceoDetailsById: {},
   addCeoDetail: () => {},
   editCeoDetail: () => {},
   deleteCeoDetail: () => {},
 };
 
-const reducer = (state: ceoDetailsContextType, action: any) => {
+const reducer = (state: CeoDetailsContextType, action: any) => {
   switch (action.type) {
     case ADD_CEO_DETAIL:
       return { ...state, ceoDetailsById: { ...state.ceoDetailsById, [action.payload.id]: action.payload } };
@@ -52,7 +52,7 @@ const reducer = (state: ceoDetailsContextType, action: any) => {
   }
 };
 
-export const ceoDetailsContext = createContext<ceoDetailsContextType>(initialState);
+export const ceoDetailsContext = createContext<CeoDetailsContextType>(initialState);
 
 const CeoDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);

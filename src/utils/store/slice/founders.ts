@@ -92,5 +92,5 @@ const foundersSlice = createSlice({
   reducers: {},
 });
 
-// export const {} = foundersSlice.actions;
+//  create this to use this slice  const {} = foundersSlice.actions;
 export const foundersReducer = foundersSlice.reducer;

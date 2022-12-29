@@ -15,7 +15,7 @@ import FarmersDetailsModal from "../../../components/modals/farmers-details-moda
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
-import { adminFormInputs } from "../../admin-panel";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
@@ -34,7 +34,7 @@ const MdFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
@@ -99,12 +99,8 @@ const MdFormPreviewLeft = () => {
       successCb: () => {
         editMdDetail({
           editedData: result,
-          successCb: () => {
-            Toast({ message: "MD Edited Successfully.", type: "success" });
-          },
-          errorCb: () => {
-            Toast({ message: "Request failed! Please try again.", type: "error" });
-          },
+          successCb: () => Toast({ message: "MD Edited Successfully.", type: "success" }),
+          errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
         });
       },
     });
@@ -113,24 +109,60 @@ const MdFormPreviewLeft = () => {
   //Update MdDetail Handler
   const updateMdDetail = (data: IMdDetails) => setOpenConfirmationModal(data);
 
+  // const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  // const removeGroupMember = async (id: string, group: string) => {
+  //   const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   if (!farmersGroupData[noCountUpdate]?.members.includes(id)) {
+  //     const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  //     const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
+  //     const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+  //     updatedFarmerGroup.members = updatedMember;
+  //     await addGroupMember(id, group);
+  //     updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+  //   }
+  // };
+
+  // const addGroupMember = async (id: string, group: string) => {
+  //   const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   const newGroupMember = farmersGroupData[groupIndex];
+  //   newGroupMember.members.push(id);
+  //   await editFarmerGroup({ editedData: newGroupMember });
+  // };
+
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = async (id: string, group: string) => {
-    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    if (!farmersGroupData[noCountUpdate]?.members.includes(id)) {
-      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  const removeGroupMember = (id: string, group: string) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    if (!isCountUpdate) {
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
-      await addGroupMember(id, group);
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && addGroupMember(id, group, farmersGroupData);
     }
   };
 
-  const addGroupMember = async (id: string, group: string) => {
-    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-    const newGroupMember = farmersGroupData[groupIndex];
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
   };
 
   return (
@@ -247,7 +279,7 @@ const MdFormPreviewLeft = () => {
                 mdId={user.id}
               />
             )}
-            {openDeleteModal && (
+            {/* {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
@@ -289,6 +321,55 @@ const MdFormPreviewLeft = () => {
                     },
                     errorCb: () => {
                       Toast({ message: "Request failed! Please try again.", type: "error" });
+                    },
+                  });
+                  setOpenConfirmationModal(null);
+                  setOpenEditModal(false);
+                }}
+              />
+            )} */}
+            {openDeleteModal && (
+              <DeleteModal
+                openModal={true}
+                handleClose={() => setOpenDeleteModal(false)}
+                handleDelete={() => {
+                  deleteMdDetail({
+                    id: user.id,
+                    successCb: () => {
+                      addNotification({ id: user.id, image: user.profile ? user.profile : profilePlaceholder, message: Message(user.name).deleteMd });
+                      Toast({ message: "MD Deleted Successfully", type: "success" });
+                      navigate(-1);
+                    },
+                    errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                  });
+                }}
+                deleteMessage={
+                  <span>
+                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from MD Details?
+                  </span>
+                }
+              />
+            )}
+            {openConfirmationModal && (
+              <ConfirmationModal
+                openModal={true}
+                handleClose={() => {
+                  setOpenConfirmationModal(null);
+                }}
+                yesAction={() => {
+                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId };
+                  delete farmerEditData.farmerId;
+                  editFarmer({
+                    editedData: farmerEditData,
+                    successCb: () => {
+                      editMdDetail({
+                        editedData: openConfirmationModal,
+                        successCb: () => {
+                          user.farmerId && removeGroupMember(user.farmerId, openConfirmationModal.group);
+                          Toast({ message: "MD Edited Successfully", type: "success" });
+                        },
+                        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                      });
                     },
                   });
                   setOpenConfirmationModal(null);

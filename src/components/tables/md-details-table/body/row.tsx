@@ -1,6 +1,5 @@
 import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
@@ -81,7 +80,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptText(compressedBase64);
+    user["profile"] = encryptText(compressedBase64);
     const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
@@ -89,12 +88,8 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
       successCb: () => {
         editMdDetail({
           editedData: user,
-          successCb: () => {
-            Toast({ message: "MD Edited Successfully.", type: "success" });
-          },
-          errorCb: () => {
-            Toast({ message: "Request failed! Please try again.", type: "error" });
-          },
+          successCb: () => Toast({ message: "MD Edited Successfully.", type: "success" }),
+          errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
         });
       },
     });
@@ -166,7 +161,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={async () => {
+          yesAction={() => {
             !editMode &&
               deleteMdDetail({
                 id: user.id,
@@ -174,22 +169,37 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
                   addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteMd });
                   Toast({ message: "MD Deleted Successfully", type: "success" });
                 },
-                errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
-                },
+                errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
               });
-            editData && user.farmerId && (await removeGroupMember(user.farmerId, editData.group));
+            // editData && user.farmerId && removeGroupMember(user.farmerId, editData.group);
+            // const farmerEditData = { ...editData, id: editData?.farmerId };
+            // delete farmerEditData.farmerId;
+            // editData &&
+            //   editFarmer({
+            //     editedData: farmerEditData,
+            //     successCb: () => {
+            //       editMdDetail({ editedData: editData });
+            //       Toast({ message: "MD Edited Successfully", type: "success" });
+            //     },
+            //     errorCb: () => {
+            //       Toast({ message: "Request failed! Please try again", type: "error" });
+            //     },
+            // });
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editData &&
+            editMode &&
+              editData &&
               editFarmer({
                 editedData: farmerEditData,
                 successCb: () => {
-                  editMdDetail({ editedData: editData });
-                  Toast({ message: "MD Edited Successfully", type: "success" });
-                },
-                errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  editMdDetail({
+                    editedData: editData,
+                    successCb: () => {
+                      user.farmerId && removeGroupMember(user.farmerId, editData.group);
+                      Toast({ message: "MD Edited Successfully", type: "success" });
+                    },
+                    errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                  });
                 },
               });
             setEditMode(false);

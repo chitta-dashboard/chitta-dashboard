@@ -20,7 +20,6 @@ interface FoundersRowProp {
 }
 
 const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
-  // const { editFounder, deleteFounder } = useFounderContext();
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
@@ -77,8 +76,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptText(compressedBase64);
-    // editFounder({ ...user });
+    user["profile"] = encryptText(compressedBase64);
     founderMutateUpdate({ editedData: user });
   };
 
@@ -122,7 +120,6 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={() => {
-            // deleteFounder(user.id);
             founderMutateDelete({
               id: user.id,
               successCb: () => {
@@ -146,7 +143,6 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            // editMode && editData && editFounder(editData);
             editMode &&
               editData &&
               founderMutateUpdate({

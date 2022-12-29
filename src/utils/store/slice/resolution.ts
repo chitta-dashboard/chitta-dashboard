@@ -104,5 +104,5 @@ const resolutionSlice = createSlice({
   },
 });
 
-export const { addResolution, deleteResolution, editResolution, changeTab } = resolutionSlice.actions;
+ const { addResolution, deleteResolution, editResolution, changeTab } = resolutionSlice.actions;
 export const resolutionReducer = resolutionSlice.reducer;

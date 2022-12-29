@@ -1,5 +1,4 @@
-import { Typography } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 export namespace S {
   export const MdFormPreviewMainContainer = styled(Box)(({ theme }) => ({

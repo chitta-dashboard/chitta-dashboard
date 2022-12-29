@@ -45,8 +45,6 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
     ) {
       if (Object.values(surveyNo).includes("") !== true && Object.values(acre).includes("") !== true && Object.values(border).includes("") !== true) {
         enableAddButton = false;
-      } else {
-        enableAddButton = true;
       }
     }
   }

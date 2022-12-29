@@ -4,13 +4,13 @@ import { v4 as uuid } from "uuid";
 import { validateFarmerData, exportSampleFormat, downloadRejectedData } from "./helper";
 import ImportFarmerGroupModal from "../import-farmerGroup-modal";
 import { encryptText, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
 import DropFile from "../../common-components/drop-file";
 import ModalBody from "../../custom-modal/body";
 import ModalHeader from "../../custom-modal/header";
 import CustomModal from "../../custom-modal";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import S from "./importFarmersModal.styled";
-import { useFetch } from "../../../utils/hooks/query";
 
 interface IImportFarmersModal {
   isOpen: boolean;
@@ -35,8 +35,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const dataLength = isSuccess && Object.values(farmersDetailsById).length;
   const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
 
-  const lastMembershipId =
-    isSuccess && (((lastPageData as farmerDetail[])[(dataLength as number) - 1] as farmerDetail)["membershipId"] as string).split("-")[2];
+  const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
   let newMemberId = parseInt(lastMembershipId as string);
 
   const cancelHandler = () => {
@@ -139,11 +138,11 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
       <ImportFarmerGroupModal
         openModal={openImportGroup}
         handleClose={() => setOpenImportGroup(!openImportGroup)}
-        newGroupNames={newGroupNames && newGroupNames} // for display the group names in chips
+        newGroupNames={newGroupNames} // for display the group names in chips
         setNewGroupNames={setNewGroupNames}
         count={newFarmersDatas && newFarmersDatas.length} // for toast message
         handleCloseImport={handleClose}
-        farmerDatas={newFarmersDatas && newFarmersDatas}
+        farmerDatas={newFarmersDatas}
         setInputData={setInputData}
       />
     </>

@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { UseFormRegister } from "react-hook-form";
-import { adminFormInputs } from "../../../views/admin-panel";
-import { FieldErrorsImpl } from "react-hook-form";
+import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./idInformation.styled";
 
 interface CustomProps {
-  register: UseFormRegister<adminFormInputs>;
+  register: UseFormRegister<AdminFormInputs>;
   errors: FieldErrorsImpl<{
     regNo: string;
     cinNo: string;
