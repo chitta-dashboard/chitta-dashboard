@@ -1,9 +1,9 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFetch } from "../../utils/hooks/query";
-import { adminFormInputs } from "../admin-panel";
+import { AdminFormInputs } from "../admin-panel";
 import { S } from "./farmerDetailPage.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -13,7 +13,9 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
-  const {
+  const { farmerBankDetail } = useFarmerDetailsContext();
+
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
@@ -25,10 +27,9 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   const current = new Date();
 
-  const { loginLogo: loginImage, name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { loginLogo: loginImage, name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { farmerId } = useParams();
-
   return (
     <>
       {isSuccess &&
@@ -73,8 +74,15 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                 </S.UserImgContainer>
               </S.FarmersDetailsHeader>
               <S.HeaderTextBox>
-                ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவலப்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
-                அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
+                ஒருங்கிணைப்பாளர்:{" "}
+                {coordinatorAddress ? (
+                  coordinatorAddress
+                ) : (
+                  <>
+                    நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
+                    தாலுக்கா&மாவட்டம், 606213
+                  </>
+                )}
               </S.HeaderTextBox>
               <S.HeaderDateBox>
                 <S.HeaderDateText>உறுப்பினர் எண் : NER-FPC-2</S.HeaderDateText>
@@ -199,6 +207,26 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                   <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
                   <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
                 </S.UserInfoRow>
+                {farmerBankDetail && (
+                  <>
+                    <S.UserInfoRow>
+                      <S.UserInfoData1>வங்கி கணக்கில் இருக்கும் பெயர்</S.UserInfoData1>
+                      <S.UserInfoData2>{user.nameAsPerBank}</S.UserInfoData2>
+                    </S.UserInfoRow>
+                    <S.UserInfoRow>
+                      <S.UserInfoData1>வங்கியின் பெயர்</S.UserInfoData1>
+                      <S.UserInfoData2>{user.bankName}</S.UserInfoData2>
+                    </S.UserInfoRow>
+                    <S.UserInfoRow>
+                      <S.UserInfoData1>வங்கி கணக்கு எண்</S.UserInfoData1>
+                      <S.UserInfoData2>{user.accountNumber && decryptText(user.accountNumber)}</S.UserInfoData2>
+                    </S.UserInfoRow>
+                    <S.UserInfoRow>
+                      <S.UserInfoData1>IFSC குறியீடு</S.UserInfoData1>
+                      <S.UserInfoData2>{user.ifscCode}</S.UserInfoData2>
+                    </S.UserInfoRow>
+                  </>
+                )}
               </S.UserInfoContainer>
             </S.FarmersDetailsContent>
           ))}

@@ -39,7 +39,7 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-interface farmersGroupContextType {
+interface FarmersGroupContextType {
   farmersGroupById: { [id: string]: FarmersGroup };
   searchFilter: string;
   memberFilter: number;
@@ -55,7 +55,7 @@ interface farmersGroupContextType {
   setMemberFilter: (value: number) => void;
 }
 
-const initialState: farmersGroupContextType = {
+const initialState: FarmersGroupContextType = {
   // farmersGroupById: {
   //   a: {
   //     id: "a",
@@ -99,7 +99,7 @@ const initialState: farmersGroupContextType = {
   memberFilter: customMemberFilter.ALL,
   setMemberFilter: () => {},
 };
-const reducer = (state: farmersGroupContextType, action: any) => {
+const reducer = (state: FarmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
       return { ...state, farmersGroupById: { [action.payload.id]: action.payload, ...state.farmersGroupById } };
@@ -154,7 +154,7 @@ const reducer = (state: farmersGroupContextType, action: any) => {
   }
 };
 
-export const farmersGroupContext = createContext<farmersGroupContextType>(initialState);
+export const farmersGroupContext = createContext<FarmersGroupContextType>(initialState);
 
 const FarmersGroupContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer<(reducer: any, initialState: any) => any>(reducer, initialState);

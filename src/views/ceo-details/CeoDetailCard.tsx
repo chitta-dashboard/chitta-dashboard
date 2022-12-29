@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptText, Endpoints, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
@@ -19,12 +19,12 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
-  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo as Endpoints);
-  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo as Endpoints);
+  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
+  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
   const {
     formatChangeSuccess,
     result: { data: ceoDetailsById },
-  } = useFetch(ENDPOINTS.ceo as Endpoints);
+  } = useFetch(ENDPOINTS.ceo);
   const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
@@ -99,14 +99,17 @@ const CeoDetailsCard = ({ user }: Props) => {
               </S.CeoDataLeft>
               <S.CeoDataRight>
                 <S.CeoData>
-                  <S.CeoInfo>கைபேசி எண்: </S.CeoInfo>
-                  <S.CeoInfo>பிறந்த தேதி:</S.CeoInfo>
-                  <S.CeoInfo>தகுதி:</S.CeoInfo>
+                  <S.CeoInfoLeft>கைபேசி எண்: </S.CeoInfoLeft>
+                  <S.CeoInfoLeft>பிறந்த தேதி:</S.CeoInfoLeft>
+                  <S.CeoInfoLeft>தகுதி:</S.CeoInfoLeft>
                 </S.CeoData>
                 <S.CeoData>
                   <S.CeoInfo>{user.phoneNumber}</S.CeoInfo>
                   <S.CeoInfo>{user.dob}</S.CeoInfo>
-                  <S.CeoInfo>{user.qualification}</S.CeoInfo>
+                  <S.CeoInfo>
+                    {user.qualification.split("").splice(0, 14).join("")}
+                    {user.qualification.length > 14 ? "..." : ""}
+                  </S.CeoInfo>
                 </S.CeoData>
               </S.CeoDataRight>
             </S.CeoDetailData>
@@ -161,7 +164,7 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoDelete({
               id: user.id,
               successCb: () => {
-                addNotification({ id: user.id, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
                 Toast({ message: "CEO deleted successfully.", type: "success" });
               },
               errorCb: () => {
@@ -186,7 +189,6 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoEdit({
               editedData: openConfirmationModal,
               successCb: () => {
-                addNotification({ id: "edit" + openConfirmationModal.id, message: `CEO  ${openConfirmationModal.name} has been edited.` });
                 Toast({ message: "CEO updated successfully.", type: "success" });
               },
               errorCb: () => {

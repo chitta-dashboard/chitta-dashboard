@@ -1,15 +1,18 @@
-import { read, utils, write, writeFile } from "xlsx";
+import { read, utils, write } from "xlsx";
 import { v4 as uuidv4 } from "uuid";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IDropValidationResult } from "../../common-components/drop-file";
-import FileSaver from "file-saver";
+import { saveAs } from "file-saver";
 import Toast from "../../../utils/toast";
 
 /**
  * Checks if the passed object is of valid farmerDetails structure.
  */
+
+let InputFarmersDatas: farmerDetail[] = [];
+
 const isValidFormat = (farmerData: { [key: string]: string }) => {
   const requiredFields = [
     "spouseName",
@@ -40,6 +43,10 @@ const isValidFormat = (farmerData: { [key: string]: string }) => {
     "groupMember",
     "acre",
     "qualification",
+    "nameAsPerBank",
+    "bankName",
+    "accountNumber",
+    "ifscCode",
   ];
   const loadedFields = Object.keys(farmerData);
   if (requiredFields.length !== loadedFields.length) return false;
@@ -64,7 +71,6 @@ export const validateFarmerData = function (file: File) {
     reader.addEventListener("loadend", () => {
       const rawData = read(reader.result, { type: "binary" });
       const totalSheets = rawData.SheetNames.length;
-      const farmers: farmerDetail[] = [];
 
       // format validation
       for (let i = 0; i < totalSheets; i++) {
@@ -75,24 +81,92 @@ export const validateFarmerData = function (file: File) {
         // if the first row is in correct format, then all rows in the sheet will be correct.
         // so validating format only on first row of the sheet.
         if (!isValidFormat(farmersInCurrentSheet[0])) {
-          return resolve({ status: false, message: "Invalid Column Format. Please check if all required fields are present in all sheets." });
+          return resolve({
+            status: false,
+            message: "Invalid Column Format. Please check if all required fields are present in all sheets.",
+          });
         }
-        farmers.push(...(farmersInCurrentSheet as unknown as farmerDetail[]));
+        InputFarmersDatas.push(...(farmersInCurrentSheet as unknown as farmerDetail[]));
       }
 
-      // phonenumber validation
-      const farmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
-      const registeredNumbers = new Set(Object.values(farmerDetails).map((farmer) => farmer.phoneNumber));
-      const totalFarmers = farmers.length;
-      for (let i = 0; i < totalFarmers; i++) {
-        if (registeredNumbers.has(farmers[i].phoneNumber)) {
-          return resolve({ status: false, message: "Some phonenumbers are already registered! Rejected." });
+      // validation for repeating phone & aadhaar numbers on import file
+
+      const phoneNos = Object.values(InputFarmersDatas).map((i) => i.phoneNumber);
+      const aadhaarNos = Object.values(InputFarmersDatas).map((i) => i.addhaarNo);
+
+      // checking for repeating phone numbers & empty fields
+
+      if (phoneNos.length > 0 || aadhaarNos.length > 0) {
+        for (let i = 0; i < phoneNos.length; i++) {
+          for (let j = i + 1; j < phoneNos.length; j++) {
+            if (phoneNos[i] === phoneNos[j] || phoneNos[i] === "" || phoneNos[j] === "") {
+              return resolve({ status: false, message: "Some phone numbers are repeating or empty! Rejected." });
+            }
+          }
+        }
+
+        // checking for repeating aadhaar numbers & empty fields
+
+        for (let i = 0; i < aadhaarNos.length; i++) {
+          for (let j = i + 1; j < aadhaarNos.length; j++) {
+            if (aadhaarNos[i] === aadhaarNos[j] || aadhaarNos[i] === "" || aadhaarNos[j] === "") {
+              return resolve({ status: false, message: "Some aadhaar numbers are repeating or empty! Rejected." });
+            }
+          }
+        }
+      }
+
+      // validation for phone & aadhaar number existing on db.json
+
+      let DBFarmerDetails = queryClient.getQueryData([`${ENDPOINTS.farmerDetails}-fetch`]) as { [key: string]: farmerDetail };
+
+      if (DBFarmerDetails) {
+        const dbPhoneNos = Object.values(DBFarmerDetails).map((farmer) => farmer.phoneNumber);
+        const dbAadhaarNos = Object.values(DBFarmerDetails).map((farmer) => farmer.addhaarNo);
+        const inputPhoneNos = InputFarmersDatas.map((i) => String(i.phoneNumber));
+        const inputAadhaarNos = InputFarmersDatas.map((i) => String(i.addhaarNo));
+        const existingPhoneNos = dbPhoneNos.filter((data: any) => inputPhoneNos.includes(data));
+        const existingAadhaarNos = dbAadhaarNos.filter((data: any) => inputAadhaarNos.includes(data));
+
+        if (existingPhoneNos.length > 0 || existingAadhaarNos.length > 0) {
+          if (existingPhoneNos.length > 0 && existingAadhaarNos.length > 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter(
+                (data: any) => existingPhoneNos.includes(data.phoneNumber) || existingAadhaarNos.includes(data.addhaarNo),
+              ),
+              newFarmers: InputFarmersDatas.filter(
+                (data: any) => !existingPhoneNos.includes(data.phoneNumber) && !existingAadhaarNos.includes(data.addhaarNo),
+              ),
+            });
+          }
+          if (existingPhoneNos.length > 0 && existingAadhaarNos.length == 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter((data: any) => existingPhoneNos.includes(data.phoneNumber)),
+              newFarmers: InputFarmersDatas.filter((data: any) => !existingPhoneNos.includes(data.phoneNumber)),
+            });
+          }
+          if (existingAadhaarNos.length > 0 && existingPhoneNos.length == 0) {
+            return resolve({
+              status: false,
+              message: "Some phone or aadhaar numbers are already existed! Rejected.",
+              existingFarmers: InputFarmersDatas.filter((data: any) => existingAadhaarNos.includes(data.addhaarNo)),
+              newFarmers: InputFarmersDatas.filter((data: any) => !existingAadhaarNos.includes(data.addhaarNo)),
+            });
+          }
+        } else {
+          return resolve({ status: true, message: "", data: InputFarmersDatas });
         }
       }
 
       resolve({ status: true, message: "" });
     });
   });
+
+  InputFarmersDatas = [];
   reader.readAsBinaryString(file);
   return readerPromise;
 };
@@ -103,20 +177,68 @@ export const validateFarmerData = function (file: File) {
 export const processFarmerData = (farmers: { [key: string]: string }[]) => {
   return farmers.map(
     (farmer) =>
-      ({
-        ...farmer,
-        id: uuidv4(),
-        border: JSON.parse(farmer.border),
-        acre: JSON.parse(farmer.acre),
-        surveyNo: JSON.parse(farmer.surveyNo),
-        profile: "", // placeholder will be shown incase of no image
-      } as farmerDetail),
+    ({
+      ...farmer,
+      id: uuidv4(),
+      border: JSON.parse(farmer.border),
+      acre: JSON.parse(farmer.acre),
+      surveyNo: JSON.parse(farmer.surveyNo),
+      profile: "", // placeholder will be shown incase of no image
+    } as farmerDetail),
   );
 };
 
 /**
  * Downloads an excel sheet with sample Farmer Details format..
  */
+export const downloadRejectedData = () => {
+  let data: Object[] = [];
+  InputFarmersDatas.forEach((i: any) =>
+    data.push({
+      spouseName: i.spouseName,
+      phoneNumber: i.phoneNumber,
+      addhaarNo: i.addhaarNo,
+      dob: i.dob,
+      sex: i.sex,
+      address: i.address,
+      village: i.village,
+      taluk: i.taluk,
+      district: i.district,
+      postalNo: i.postalNo,
+      landAreaInCent: i.landAreaInCent,
+      surveyNo: i.surveyNo,
+      landType: i.landType,
+      irrigationType: i.irrigationType,
+      cropsType: i.cropsType,
+      cattle: i.cropsType,
+      smallOrMarginalFarmer: i.smallOrMarginalFarmer,
+      membershipId: i.membershipId,
+      name: i.name,
+      fatherName: i.fatherName,
+      group: i.group,
+      border: i.border,
+      farmerType: i.farmerType,
+      waterType: i.waterType,
+      animals: i.animals,
+      groupMember: i.groupMember,
+      acre: i.acre,
+      qualification: i.qualification,
+      nameAsPerBank: i.nameAsPerBank,
+      bankName: i.bankName,
+      accountNumber: i.accountNumber,
+      ifscCode: i.ifscCode,
+    }),
+  );
+  try {
+    const ws = utils.json_to_sheet(data);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
+    const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
+    saveAs(finalData, "rejected-farmers.xlsx");
+  } catch {
+    Toast({ message: "Download failed, please try again." });
+  }
+};
 export const exportSampleFormat = () => {
   const data = [
     {
@@ -148,6 +270,10 @@ export const exportSampleFormat = () => {
       groupMember: "Test",
       acre: `{"acreNo-first":"123"}`,
       qualification: "Test",
+      nameAsPerBank: "Test",
+      bankName: "Test",
+      accountNumber: "Test",
+      ifscCode: "Test",
     },
   ];
 
@@ -156,7 +282,7 @@ export const exportSampleFormat = () => {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = write(wb, { bookType: "xlsx", type: "array" });
     const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
-    FileSaver.saveAs(finalData, "format-sample.xlsx");
+    saveAs(finalData, "format-sample.xlsx");
   } catch {
     Toast({ message: "Download failed, please try again." });
   }

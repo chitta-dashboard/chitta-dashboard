@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { dateFormat, decryptText, encryptText, Endpoints, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { dateFormat, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -21,7 +21,7 @@ interface CustomProps {
 }
 
 const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo as Endpoints);
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo);
   const { data: ceoDetailsById } = result;
   const { handleSubmit, reset, clearErrors, unregister, setValue, getValues, watch, control: formControl } = useForm<IAddCEODetailsFormInput>({});
 
@@ -44,6 +44,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
       let userData = id && ceoDetailsById[id];
       reset({
         name: userData?.name as string,
+        joinedDate: userData?.joinedDate as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
@@ -73,6 +74,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
+      joinedDate: data?.joinedDate,
       phoneNumber: data.phoneNumber,
       profile: encryptedBase64,
       qualification: data.qualification,

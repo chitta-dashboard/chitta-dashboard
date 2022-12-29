@@ -3,7 +3,7 @@ import { styled, TextField, Autocomplete, FormControl, FormLabel, FormControlLab
 namespace S {
   export const CommonInputStyled = styled(TextField, {
     shouldForwardProp: (prop) =>
-      prop !== "gridArea" && prop !== "fullHeight" && prop !== "hide" && prop !== "selectOptions" && prop !== "specialOptions",
+      prop !== "gridArea" && prop !== "fullHeight" && prop !== "hide" && prop !== "selectOptions" && prop !== "specialOptions" && prop !== "textarea",
   })<{
     gridArea?: string;
     fullHeight?: boolean;
@@ -25,7 +25,7 @@ namespace S {
     inputProps: { noValidate: true },
   };
 
-  export const TextInput = styled(CommonInputStyled)<{ hide?: boolean }>(({ hide }) => ({
+  export const TextInput = styled(CommonInputStyled)<{ hide?: boolean; textarea?: boolean }>(({ hide, textarea }) => ({
     ...(hide
       ? {
           padding: "0 !important",
@@ -40,13 +40,34 @@ namespace S {
           },
         }
       : null),
+    ...(textarea
+      ? {
+          ".css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input": {
+            top: 10,
+            position: "absolute",
+            width: "95% !important",
+          },
+        }
+      : null),
+    "& .Mui-disabled": {
+      backgroundColor: "transparent",
+    },
   }));
 
-  export const NumberInput = styled(CommonInputStyled)(() => ({}));
+  export const NumberInput = styled(CommonInputStyled)(() => ({
+    "& .Mui-disabled": {
+      backgroundColor: "transparent",
+    },
+  }));
 
   export const DateInput = styled(CommonInputStyled)(() => ({}));
 
-  export const SelectInput = styled(CommonInputStyled)(() => ({}));
+  export const SelectInput = styled(CommonInputStyled)<{ iscolor: number }>(({ theme, iscolor }) => ({
+    "& .MuiOutlinedInput-root": {
+      color: iscolor ? "" : theme.palette.text.secondaryLight,
+      opacity: iscolor ? 1 : 0.7,
+    },
+  }));
 
   export const MultiSelectInput = styled(CommonInputStyled)(({ theme }) => ({
     "& .MuiOutlinedInput-root": {
@@ -146,6 +167,7 @@ namespace S {
     "& .MuiOutlinedInput-root": {
       height: "2.5rem",
       fontSize: "0.9rem",
+      paddingRight: "15px !important",
       "& .MuiAutocomplete-input": {
         padding: "0.5px 4px 0.5px 6px",
       },

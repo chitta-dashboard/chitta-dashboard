@@ -20,8 +20,6 @@ interface CustomProps {
   members?: string[];
 }
 
-
-
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
@@ -38,8 +36,6 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
     enableButton = false;
-  } else {
-    enableButton = true;
   }
 
   useEffect(() => {

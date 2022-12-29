@@ -54,12 +54,12 @@ namespace S {
     },
 
     "& .MuiInputBase-input": {
-      color: theme.palette.primary.main,
+      color: theme.palette.text.black,
     },
     input: {
       ":-webkit-autofill": {
         WebkitBoxShadow: "0 0 0 1000px white inset",
-        WebkitTextFillColor: theme.palette.primary.main,
+        WebkitTextFillColor: theme.palette.text.black,
       },
     },
   }));

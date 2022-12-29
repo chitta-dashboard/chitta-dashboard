@@ -5,7 +5,7 @@ import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import TableData from "./body/tableData";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { searchWord } from "../../../utils/constants";
 import SearchBar from "../../common-components/search-bar";
 import S from "./index.styled";
@@ -26,8 +26,7 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
 
   useEffect(() => {
-    var reg = new RegExp("^[0-9]+$");
-
+    let reg = new RegExp("^[/d]+$");
     let filteredFarmerData = farmerDetails.filter((item) => {
       let search = reg.test(searchKeyWord) ? item.phoneNumber : item.name;
       return searchWord(search, searchKeyWord);
@@ -55,7 +54,9 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
       </ModalHeader>
       <ModalBody id="mdDetails" isPadding={false}>
         <Stack spacing={0}>
-          <SearchBar setSearchKeyWord={setSearchKeyWord} />
+          <S.SearchBarContainer>
+            <SearchBar searchHandler={(searchText) => setSearchKeyWord(searchText)} />
+          </S.SearchBarContainer>
           <S.TableBodyContainer isDataAvailable={farmerDetailsByIdData.length > 0 ? true : false}>
             {farmerDetailsByIdData.length > 0 ? (
               <TableData

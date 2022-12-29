@@ -1,10 +1,10 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { mdDetail } from "../../utils/context/mdDetails";
-import { adminFormInputs } from "../admin-panel";
+import { IMdDetails } from "../../utils/context/mdDetails";
+import { AdminFormInputs } from "../admin-panel";
 import { useFetch } from "../../utils/hooks/query";
-import { MD_DATA } from "./constant";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import S from "./md-details-page.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
 import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
@@ -14,6 +14,8 @@ interface Props {
 }
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
+  const { farmerBankDetail } = useFarmerDetailsContext();
+
   const {
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,
@@ -25,13 +27,18 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
 
   const current = new Date();
 
-  const { headerLogo: headerImage, name: titleName, address } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const {
+    headerLogo: headerImage,
+    name: titleName,
+    address,
+    coordinatorAddress,
+  } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mdId } = useParams();
 
   return (
     <>
-      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
         .filter((name) => [mdId, MdIdtoPrint].includes(name.id))
         .map((user) => (
           <S.MdsDetailsContent ref={ref} key={user.id}>
@@ -68,8 +75,15 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
               </S.UserImgContainer>
             </S.MdsDetailsHeader>
             <S.HeaderTextBox>
-              ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவலப்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
-              அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
+              ஒருங்கிணைப்பாளர்:{" "}
+              {coordinatorAddress ? (
+                coordinatorAddress
+              ) : (
+                <>
+                  நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
+                  தாலுக்கா&மாவட்டம், 606213
+                </>
+              )}
             </S.HeaderTextBox>
             <S.HeaderDateBox>
               <S.HeaderDateText>உறுப்பினர் எண் : NER-FPC-2</S.HeaderDateText>
@@ -198,6 +212,26 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
                 <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
                 <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
               </S.UserInfoRow>
+              {farmerBankDetail && (
+                <>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கில் இருக்கும் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.nameAsPerBank}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கியின் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.bankName}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கு எண்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.accountNumber && decryptText(user.accountNumber)}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>IFSC குறியீடு</S.UserInfoData1>
+                    <S.UserInfoData2>{user.ifscCode}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                </>
+              )}
             </S.UserInfoContainer>
           </S.MdsDetailsContent>
         ))}

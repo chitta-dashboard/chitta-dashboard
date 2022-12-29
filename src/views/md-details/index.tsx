@@ -1,14 +1,11 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { mdDetail, useMdDetailsContext } from "../../utils/context/mdDetails";
+import { IMdDetails, useMdDetailsContext } from "../../utils/context/mdDetails";
 import { farmerDetail } from "../../utils/context/farmersDetails";
 import { Notification } from "../../utils/context/auth";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../utils/store";
-// import { farmerDetail } from "../../utils/store/slice/farmerDetails";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
@@ -27,7 +24,7 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  const { setSearchFilter, sortFilter, setSortFilter } = useMdDetailsContext();
+  const { setSearchFilter } = useMdDetailsContext();
   const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
@@ -36,7 +33,7 @@ const MdDetails = () => {
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
   useEffect(() => {
-    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as mdDetail[])).map((item) => {
+    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
         let index = farmerKeys.indexOf(item.farmerId as string);
         farmerKeys.splice(index, 1);
@@ -44,7 +41,7 @@ const MdDetails = () => {
       return null;
     });
     let filteredFarmerData: farmerDetail[] = [];
-    farmerKeys.map((item) => {
+    farmerKeys.forEach((item) => {
       return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
@@ -65,7 +62,7 @@ const MdDetails = () => {
       setSelectedKeys([]);
     } else {
       let newFarmerKeys: string[] = [];
-      filteredFarmerDetails.map((item) => !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id));
+      filteredFarmerDetails.forEach((item) => !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id));
       setSelectedKeys([...selectedKeys, ...newFarmerKeys]);
     }
   };
@@ -81,17 +78,17 @@ const MdDetails = () => {
   };
 
   const handleYesAction = async () => {
-    let farmerData: mdDetail[] = [];
+    let farmerData: IMdDetails[] = [];
     const notifications: Notification[] = [];
-    selectedKeys.map((item: string) => {
+    selectedKeys.forEach((item: string) => {
       let generatedId = uuidv4();
-      let farmerDetailsResult: mdDetail = {} as mdDetail;
+      let farmerDetailsResult: IMdDetails = {} as IMdDetails;
       let farmerKeys = Object.keys(farmersData[item]);
       farmerDetailsResult.id = generatedId;
       farmerDetailsResult.farmerId = farmersData[item].id;
-      farmerKeys.map((key) => {
+      farmerKeys.forEach((key) => {
         if (key !== "id") {
-          farmerDetailsResult[key as keyof mdDetail] = farmersData[item][key as keyof farmerDetail] as never;
+          farmerDetailsResult[key as keyof IMdDetails] = farmersData[item][key as keyof farmerDetail] as never;
         }
       });
       farmerData.push(farmerDetailsResult);
@@ -134,7 +131,7 @@ const MdDetails = () => {
         <Loader />
       ) : (
         <S.MdDetailsContainer>
-          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} sortHandler={setSortFilter} sortFilter={sortFilter} />
+          <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <MdDetailsTable />
         </S.MdDetailsContainer>
       )}

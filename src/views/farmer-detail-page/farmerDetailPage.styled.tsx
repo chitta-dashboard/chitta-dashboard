@@ -1,5 +1,4 @@
-import { Theme, Typography, Button as MuiButton } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Theme, Typography, Button as MuiButton } from "@mui/material";
 
 export namespace S {
   export const FarmersDetailsMainContainer = styled(Box)({
@@ -44,7 +43,7 @@ export namespace S {
     width: "100%",
     justifyContent: "space-between",
     alignItems: "center",
-    height: "11.875rem",
+    height: "11.0625rem",
   });
 
   export const NerkathirLogo = styled("img")({
@@ -132,7 +131,7 @@ export namespace S {
     alignItems: "center",
     color: theme.palette.text.secondary,
     borderBottom: `4px solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,
-    marginBottom: "0.1875rem",
+    marginBottom: "0.125rem",
     [theme.breakpoints.down("md")]: {
       margin: "0.3125rem 0 0.3125rem 0",
     },
@@ -150,9 +149,9 @@ export namespace S {
     display: "flex",
     flexDirection: "column",
     width: "100%",
-    height: "Calc(100% - 16.5625rem)",
+    height: "Calc(100% - 15.5625rem)",
     overflowY: "auto",
-    marginTop: "0.625rem",
+    marginTop: "0.3125rem",
     "&::-webkit-scrollbar": {
       width: "0.4375rem",
       background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
@@ -170,14 +169,14 @@ export namespace S {
     justifyContent: "center",
     width: "100%",
     height: "fit-content",
-    padding: "0.0938rem 0",
+    padding: "0.0625rem 0",
     color: theme.palette.text.secondary,
   }));
 
   export const UserInfoData1 = styled(Typography)(({ theme }: { theme: Theme }) => ({
     display: "flex",
-    width: "40%",
-    paddingLeft: "10%",
+    width: "44%",
+    paddingLeft: "8%",
     fontFamily: "Poppins",
     fontSize: "1.125rem",
     fontWeight: "500",

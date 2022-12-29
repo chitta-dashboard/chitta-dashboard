@@ -2,10 +2,10 @@ import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
 import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
-import { IResolutions } from "../../utils/store/slice/resolution";
+import { IResolutions } from "../../utils/context/resolution";
 import Loader from "../../utils/loaders/tree-loader";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { adminFormInputs } from "../admin-panel";
+import { AdminFormInputs } from "../admin-panel";
 import { S } from "./resolutionCertificate.styled";
 
 interface Props {
@@ -22,7 +22,7 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Badge, FormHelperText } from "@mui/material";
 import { Control, Controller, FieldValues, Path, PathValue, UseFormGetValues, UseFormSetValue, UseFormUnregister } from "react-hook-form";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import { fileValidation, imageCompressor } from "../../../utils/constants";
+import { fileValidation } from "../../../utils/constants";
 import S from "./body/addProfile.styled";
 
 interface AddProfileProps<FormInputTypes extends FieldValues> {

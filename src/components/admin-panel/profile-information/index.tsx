@@ -1,11 +1,10 @@
 import { FC } from "react";
-import { UseFormRegister } from "react-hook-form";
-import { FieldErrorsImpl } from "react-hook-form";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./profileInformation.styled";
 
 interface CustomProps {
-  register: UseFormRegister<adminFormInputs>;
+  register: UseFormRegister<AdminFormInputs>;
   errors: FieldErrorsImpl<{
     name: string;
     address: string;
@@ -20,12 +19,14 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
       <S.profileInput
         label="பெயர்"
         type="text"
+        placeholder="பெயரை உள்ளிடுக"
         InputLabelProps={{ shrink: true }}
         {...register("name")}
         helperText={errors.name && errors.name.message}
       />
       <S.profileInput
         label="முகவரி"
+        placeholder="முகவரியை உள்ளிடுக"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}
@@ -34,6 +35,7 @@ const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
       />
       <S.profileInput
         label="ஒருங்கிணைப்பாளர் முகவரி"
+        placeholder="ஒருங்கிணைப்பாளர் முகவரியை உள்ளிடுக"
         multiline
         rows={3}
         InputLabelProps={{ shrink: true }}

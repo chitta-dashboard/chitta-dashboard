@@ -1,6 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import { Control, useWatch } from "react-hook-form";
-import { UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { Control, useWatch, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IResolutionFormInput } from "../../type/formInputs";
 import Input from "../../../input-fields/input/input";
@@ -8,7 +7,7 @@ import { useFetch } from "../../../../utils/hooks/query";
 import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
 import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./formField.styled";
-import { IFarmersGroup } from "../../../../utils/store/slice/farmersGroup";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 
 interface CustomProps {
   setValue: UseFormSetValue<IResolutionFormInput>;
@@ -69,6 +68,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
           options={{
             label: "தீர்மானம் தலைப்பு *",
             gridArea: "dhd",
+            placeholder: "தீர்மான தலைப்பை உள்ளிடுக",
           }}
         />
         <Input
@@ -92,7 +92,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             options={{
               label: "குழு *",
               gridArea: "grp",
-              selectOptions: Object.values(farmersGroupById as { [key: string]: IFarmersGroup }).map((g) => [g.groupName, g.groupName]),
+              selectOptions: Object.values(farmersGroupById as { [key: string]: FarmersGroup }).map((g) => [g.groupName, g.groupName]),
               specialOptions: ["~All Groups~"],
             }}
           />
@@ -119,6 +119,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             label: "பங்கேற்பாளர்கள் *",
             gridArea: "par",
             selectOptions: ["person 1", "person 2", "person 3", "person 4", "person 5"],
+            placeholder: "hello",
           }}
         />
         <S.EditorBox>

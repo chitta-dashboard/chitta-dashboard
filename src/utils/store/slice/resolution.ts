@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface IResolution {
+ interface IResolution {
   id: string;
   groupName: string;
   groupTitle: string;
@@ -14,11 +14,11 @@ export interface IResolution {
   participator: string[];
 }
 
-export interface IResolutions {
+ interface IResolutions {
   [id: string]: IResolution;
 }
 
-export interface IResolutionSlice {
+ interface IResolutionSlice {
   resolutions: IResolutions;
   tab: "tree" | "list";
 }
@@ -104,5 +104,5 @@ const resolutionSlice = createSlice({
   },
 });
 
-export const { addResolution, deleteResolution, editResolution, changeTab } = resolutionSlice.actions;
+ const { addResolution, deleteResolution, editResolution, changeTab } = resolutionSlice.actions;
 export const resolutionReducer = resolutionSlice.reducer;

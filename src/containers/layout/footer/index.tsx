@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./footer.styled";
 
 const Footer: FC = () => {
@@ -10,7 +10,7 @@ const Footer: FC = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { regNo, cinNo } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+  const { regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>

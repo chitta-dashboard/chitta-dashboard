@@ -3,6 +3,7 @@ import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
 import { PRODUCT_DATA, VARIANT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
+
 interface CustomProps {
   control?: Control;
   variantList?: string[][] | null;
@@ -11,11 +12,12 @@ interface CustomProps {
   setProductId?: (name: string) => void;
   productImage?: string;
   disableOnEdit?: number;
+  tab?: string;
 }
 
-const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit }) => {
+const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit, tab }) => {
   let temp: any = [];
-  Object.values(VARIANT_DATA).map((i) => (temp = [...temp, Object.entries(i)]));
+  Object.values(VARIANT_DATA).forEach((i) => (temp = [...temp, Object.entries(i)]));
   const tempVariantsList = temp.flat(1);
   return (
     <S.StaticBox>
@@ -32,7 +34,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["Processed", "Processed"],
             ["Animal", "Animal"],
           ],
-          initialvalue: "Raw",
+          initialvalue: tab,
           disable: disableOnEdit,
         }}
       />
@@ -49,6 +51,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           setproductid: setProductId,
           productimage: productImage,
           disable: disableOnEdit,
+          placeholder: "பொருளின் பெயரை உள்ளிடுக",
         }}
       />
       <Input
@@ -59,9 +62,10 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
         options={{
           label: "வகை *",
           gridArea: "var",
-          selectOptions: variantList === null ? tempVariantsList : variantList,
+          selectOptions: disableOnEdit && variantList === null ? tempVariantsList : variantList,
           availablelist: availableList,
           disable: disableOnEdit,
+          placeholder: "வகையை தேர்ந்தெடுக்க ",
         }}
       />
       <Input
@@ -93,6 +97,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           label: "கையிருப்பு தொகை *",
           gridArea: "ava",
           unit: "kg",
+          placeholder: "கையிருப்பை உள்ளிடுக",
         }}
       />
       <Input
@@ -108,7 +113,7 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
             ["B+", "B+"],
             ["C+", "C+"],
           ],
-          initialvalue: "A+",
+          placeholder: "தரத்தை தேர்ந்தெடுக்க",
         }}
       />
       <Input
@@ -120,6 +125,10 @@ const FormField: FC<CustomProps> = ({ control, variantList, availableList, setPr
           label: "விளக்கம் *",
           gridArea: "des",
           fullHeight: true,
+          textarea: true,
+          multiline: true,
+          maxRows: 4,
+          placeholder: "விளக்கங்களை உள்ளிடுக",
         }}
       />
     </S.StaticBox>

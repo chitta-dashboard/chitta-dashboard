@@ -1,10 +1,7 @@
-import { width } from "@mui/system";
-import * as FileSaver from "file-saver";
+import { saveAs } from "file-saver";
 import { FC } from "react";
 import * as XLSX from "xlsx";
-import { number } from "yup";
-import { farmerDetail } from "../../utils/store/slice/farmerDetails";
-// import { farmerDetail } from "../../utils/context/farmersDetails";
+import { farmerDetail } from "../../utils/context/farmersDetails";
 import S from "./exportData.styled";
 
 type ExportCSVType = {
@@ -20,10 +17,10 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
   const exportToCSV = (csvData: farmerDetail[], fileName: string) => {
     let updatedCSVData: farmerDetail[] = [];
 
-    csvData.map((item) => {
+    csvData.forEach((item) => {
       let newCSVData: any = {};
       let keys = Object.keys(item);
-      Object.values(item).map((value, i) => {
+      Object.values(item).forEach((value, i) => {
         let updatedValue = JSON.stringify(value);
         newCSVData[keys[i]] =
           updatedValue.includes("border-first") || updatedValue.includes("acre-first") || updatedValue.includes("surveyNo-first")
@@ -56,7 +53,7 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
     const data = new Blob([excelBuffer], { type: fileType });
-    FileSaver.saveAs(data, fileName + fileExtension);
+    saveAs(data, fileName + fileExtension);
   };
 
   return <S.ExportDataButton onClick={() => exportToCSV(csvData, fileName)}>{name}</S.ExportDataButton>;

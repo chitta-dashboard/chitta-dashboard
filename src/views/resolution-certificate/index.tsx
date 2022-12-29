@@ -5,7 +5,7 @@ import { useReactToPrint } from "react-to-print";
 import IconWrapper from "../../utils/iconWrapper";
 import ResolutionPdf from "./resolutionPdf";
 import DeleteModal from "../../components/modals/delete-modal";
-import { IResolution } from "../../utils/store/slice/resolution";
+import { IResolution } from "../../utils/context/resolution";
 import ResolutionModal from "../../components/modals/resolution-modal";
 import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
@@ -49,7 +49,7 @@ const ResolutionCertificatePage = () => {
           navigate(-1);
           addNotification({
             id: "delete" + resolutionId,
-            message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
+            message: MessageStructured(resolutions[resolutionId].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
           Toast({ message: "Resolution deleted successfully.", type: "success" });
         },
@@ -150,10 +150,6 @@ const ResolutionCertificatePage = () => {
             mutateEdition({
               editedData: editedData.current,
               successCb: () => {
-                addNotification({
-                  id: "edit" + resolutionId,
-                  message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "edit"),
-                });
                 Toast({ message: "Resolution edited successfully.", type: "success" });
               },
               errorCb: () => {

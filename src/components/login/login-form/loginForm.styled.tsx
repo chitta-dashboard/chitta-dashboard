@@ -1,5 +1,4 @@
-import { Box, Button, Stack, TextField, Typography, styled } from "@mui/material";
-import { FormLabel, FormControl } from "@mui/material";
+import { Box, Button, Stack, TextField, Typography, styled, FormLabel, FormControl } from "@mui/material";
 
 namespace S {
   export const Icon = styled("i")(({ theme }) => ({

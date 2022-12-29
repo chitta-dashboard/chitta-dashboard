@@ -1,5 +1,4 @@
-import { Theme, Typography } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Box, styled, Theme, Typography } from "@mui/material";
 
 export namespace S {
   export const ShareHolderCertificateContainer = styled(Box)(({ theme }) => ({

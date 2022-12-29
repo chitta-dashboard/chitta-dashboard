@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,7 +11,7 @@ import ProfileInformation from "../../components/admin-panel/profile-information
 import { encryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
 import S from "./adminPanel.styled";
 
-export interface adminFormInputs {
+export interface AdminFormInputs {
   id?: string;
   profile?: any;
   name: string;
@@ -45,6 +46,9 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
+  const [logo, setLogo] = useState<File | null>();
+  const [image, setImage] = useState<File | null>();
+
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
 
   const {
@@ -53,7 +57,7 @@ const AdminPanel = () => {
     formState: { errors },
     reset,
     watch,
-  } = useForm<adminFormInputs>({
+  } = useForm<AdminFormInputs>({
     resolver: yupResolver(adminSchema),
   });
 
@@ -97,7 +101,7 @@ const AdminPanel = () => {
     enableButton = false;
   }
 
-  const onSubmit = async (data: adminFormInputs) => {
+  const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
 
     const headerLogo = await fileChangedHandler(imgObj, 94, 94);
@@ -130,6 +134,8 @@ const AdminPanel = () => {
         Toast({ message: "Request failed, please try again.", type: "error" });
       },
     });
+    setLogo(null);
+    setImage(null);
   };
 
   return (
@@ -138,7 +144,7 @@ const AdminPanel = () => {
       <S.ContainerBox>
         <S.Adminform id="adminForm" onSubmit={handleSubmit(onSubmit)}>
           <S.ContainerStack>
-            <AdminLogo register={register} errors={errors} />
+            <AdminLogo register={register} errors={errors} logo={logo} setLogo={setLogo} image={image} setImage={setImage} />
             <ProfileInformation register={register} errors={errors} />
             <IdInformation register={register} errors={errors} />
             <S.ButtonBox>

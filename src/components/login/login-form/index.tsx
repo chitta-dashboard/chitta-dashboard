@@ -7,7 +7,7 @@ import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
 import { decryptText, ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./loginForm.styled";
 
 interface LoginFormInputs {
@@ -34,7 +34,7 @@ const LoginForm: FC = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -85,6 +85,7 @@ const LoginForm: FC = () => {
                   <S.LoginFormLabel>கைபேசி எண்</S.LoginFormLabel>
                   <S.LoginInput
                     type="number"
+                    placeholder="கைபேசி எண்ணை உள்ளிடுக "
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -101,6 +102,7 @@ const LoginForm: FC = () => {
                   <S.LoginFormLabel>கடவுச்சொல்</S.LoginFormLabel>
                   <S.LoginInput
                     type={showPassword === false ? "password" : "text"}
+                    placeholder=" கடவு சொல்லை உள்ளிடுக "
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">

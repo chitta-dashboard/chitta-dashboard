@@ -2,15 +2,13 @@ import { createContext, FC, useContext, useReducer } from "react";
 import { NORMAL, SortOrder } from "../constants";
 
 //ACTION TYPES
-const GET_MD_DETAIL = "GET_MD_DETAIL";
-const SET_LOADER = "SET_LOADER";
-const EDIT_MD_DETAIL = "EDIT_MD_DETAIL";
-const DELETE_MD_DETAIL = "DELETE_MD_DETAIL";
 const SET_SEARCH_FILTER = "SET_SEARCH_FILTER";
 const SET_SORT_FILTER = "SET_SORT_FILTER";
 const CHECKBOX_SELECT = "CHECKBOX_SELECT";
+const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 
-export type mdDetail = {
+export interface IMdDetails {
   id: string;
   farmerId?: string;
   membershipId?: string;
@@ -37,7 +35,7 @@ export type mdDetail = {
   animals: string;
   groupMember: string;
   qualification: string;
-};
+}
 
 export type selectedMdListData = number | string;
 
@@ -45,51 +43,36 @@ type Props = {
   children: React.ReactNode | React.ReactNode[];
 };
 
-export interface mdDetailsContextType {
-  mdDetailsById: { [id: string]: mdDetail };
+export interface MdDetailsContextType {
+  mdDetailsById: { [id: string]: IMdDetails };
   searchFilter: string;
   sortFilter: SortOrder;
-  isLoader: boolean;
-  getMdDetailsData: (data: mdDetail) => void;
-  setLoader: (loading: boolean) => void;
+  currentPage: number;
+  pageCount: number;
+  totalPageCount: number;
   setSortFilter: (sortOrder: SortOrder) => void;
   setSearchFilter: (searchText: string) => void;
-  editMdDetail: (data: mdDetail) => void;
-  deleteMdDetail: (id: string) => void;
-  editTableIcon: (data: any) => void;
   checkboxSelect: (id: string | {}) => void;
+  setCurrentPage: (pageNo: number) => void;
+  setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
 }
 
-const initialState: mdDetailsContextType = {
+const initialState: MdDetailsContextType = {
   mdDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
-  isLoader: true,
-  getMdDetailsData: () => {},
-  setLoader: () => {},
+  currentPage: 1,
+  pageCount: 0,
+  totalPageCount: 0,
   setSortFilter: () => {},
   setSearchFilter: () => {},
-  editMdDetail: () => {},
-  deleteMdDetail: () => {},
-  editTableIcon: () => {},
   checkboxSelect: () => {},
+  setCurrentPage: () => {},
+  setPageCount: () => {},
 };
 
-const reducer = (state: mdDetailsContextType, action: any) => {
+const reducer = (state: MdDetailsContextType, action: any) => {
   switch (action.type) {
-    case GET_MD_DETAIL:
-      return { ...state, mdDetailsById: action.payload };
-
-    case SET_LOADER:
-      return { ...state, isLoader: action.payload };
-
-    case EDIT_MD_DETAIL:
-      return { ...state, mdDetailsById: { ...state.mdDetailsById, [action.payload.id]: action.payload } };
-
-    case DELETE_MD_DETAIL:
-      delete state.mdDetailsById[action.payload];
-      return { ...state, mdDetailsById: { ...state.mdDetailsById } };
-
     case SET_SEARCH_FILTER:
       return { ...state, searchFilter: action.payload };
 
@@ -99,32 +82,22 @@ const reducer = (state: mdDetailsContextType, action: any) => {
     case CHECKBOX_SELECT:
       return { ...state, mdDetailsById: { ...action.payload, ...state.mdDetailsById } };
 
+    case SET_CURRENT_PAGE:
+      return { ...state, currentPage: action.payload };
+
+    case SET_PAGE_COUNT:
+      return { ...state, pageCount: action.payload.pageCount, totalPageCount: action.payload.totalPageCount };
+
     default: {
       throw new Error(`Unknown type: ${action.type}`);
     }
   }
 };
 
-export const mdDetailsContext = createContext<mdDetailsContextType>(initialState);
+export const mdDetailsContext = createContext<MdDetailsContextType>(initialState);
 
 const MdDetailsContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-
-  const getMdDetailsData = (data: mdDetail) => {
-    dispatch({ type: GET_MD_DETAIL, payload: data });
-  };
-
-  const setLoader = (loading: boolean) => {
-    dispatch({ type: SET_LOADER, payload: loading });
-  };
-
-  const editMdDetail = (data: mdDetail) => {
-    dispatch({ type: EDIT_MD_DETAIL, payload: data });
-  };
-
-  const deleteMdDetail = (id: string) => {
-    dispatch({ type: DELETE_MD_DETAIL, payload: id });
-  };
 
   const setSearchFilter = (searchText: string) => {
     dispatch({ type: SET_SEARCH_FILTER, payload: searchText });
@@ -138,15 +111,21 @@ const MdDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: CHECKBOX_SELECT, payload: id });
   };
 
+  const setCurrentPage = (pageNo: number) => {
+    dispatch({ type: SET_CURRENT_PAGE, payload: pageNo });
+  };
+
+  const setPageCount = (updatePageCount: { pageCount: number; totalPageCount: number }) => {
+    dispatch({ type: SET_PAGE_COUNT, payload: updatePageCount });
+  };
+
   let data = {
     ...state,
-    getMdDetailsData,
-    setLoader,
-    editMdDetail,
-    deleteMdDetail,
     setSearchFilter,
     setSortFilter,
     checkboxSelect,
+    setCurrentPage,
+    setPageCount,
   };
 
   return <mdDetailsContext.Provider value={data}>{props.children}</mdDetailsContext.Provider>;

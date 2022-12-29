@@ -2,20 +2,22 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-// import { useSelector } from "react-redux";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-// import { RootState } from "../../../utils/store";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import FormField from "./page-1-fields";
 import FormFieldPage2 from "./page-2-fields";
-import { IAddFarmersDetailsFormInput, IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText } from "../../../utils/constants";
+import FormFieldPage3 from "./page-3-fields";
+import {
+  IAddFarmersDetailsFormInput,
+  IAddFarmersDetailsPage1Input,
+  IAddFarmersDetailsPage2Input,
+  IAddFarmersDetailsPage3Input,
+} from "../type/formInputs";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import page1 from "../../../assets/images/page-1.svg";
-import page2 from "../../../assets/images/page-2.svg";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
 
@@ -25,17 +27,19 @@ interface CustomProps {
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
-  mdId?: string | undefined;
+  mdId?: string;
 }
-
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
+  const { farmerBankDetail } = useFarmerDetailsContext();
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
-  const { data: farmersDetailsById } = result;
-  // const { farmersDetailsById } = useFarmerDetailsContext();
-  // const { farmersDetailsById } = useSelector((state: RootState) => state.farmerDetails);
-  const [next, setNext] = useState(false);
+  let {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+
+  const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
+  const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -98,6 +102,16 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     mode: "onChange",
   });
 
+  const {
+    handleSubmit: form3HandleSubmit,
+    reset: form3Reset,
+    clearErrors: form3ClearErrors,
+    control: form3Control,
+    watch: form3Watch,
+  } = useForm<IAddFarmersDetailsPage3Input>({
+    mode: "onChange",
+  });
+
   // submit button enabling
 
   let form1EnableButton = true;
@@ -113,7 +127,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const acreEvent = form1Watch("acre");
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
-
   if (
     nameEvent &&
     fatherNameEvent &&
@@ -148,7 +161,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const waterTypeEvent = form2Watch("waterType");
   const farmerTypeEvent = form2Watch("farmerType");
   const groupMemberEvent = form2Watch("groupMember");
-
   if (
     qualificationEvent &&
     villageEvent &&
@@ -162,6 +174,19 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     groupMemberEvent
   ) {
     form2EnableButton = false;
+  }
+
+  let form3EnableButton = true;
+  const nameAsPerBank = form3Watch("nameAsPerBank");
+  const bankName = form3Watch("bankName");
+  const accountNumber = form3Watch("accountNumber");
+  const confirmAccountNumber = form3Watch("confirmAccountNumber");
+  const ifscCode = form3Watch("ifscCode");
+  if (
+    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) ||
+    !farmerBankDetail
+  ) {
+    form3EnableButton = false;
   }
 
   useEffect(() => {
@@ -198,12 +223,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         animals: farmerData?.animals,
         groupMember: farmerData?.groupMember,
       });
+
+      form3Reset({
+        nameAsPerBank: farmerData?.nameAsPerBank,
+        bankName: farmerData?.bankName,
+        accountNumber: decryptText(farmerData?.accountNumber as string),
+        // confirmAccountNumber: farmerData?.confirmAccountNumber,
+        ifscCode: farmerData?.ifscCode,
+      });
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
-  const form1Submit: any = (data: IAddFarmersDetailsPage1Input) => {
+  const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
@@ -218,22 +251,62 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       sex: data.sex,
       spouseName: data.spouseName,
     });
-    setNext(true);
+    setPage(2);
   };
 
-  const form2Submit: any = async (data: IAddFarmersDetailsPage2Input) => {
+  const form2Submit = async (data: IAddFarmersDetailsPage2Input) => {
+    setForm2Data(data);
+    setPage(3);
+  };
+
+  const setId = (newId: string) => {
+    // id: mdId ? mdId : editMode ? id : newId,
+    switch (mdId || editMode || newId) {
+      case mdId:
+        return mdId;
+      case editMode:
+        return id;
+      default:
+        return newId;
+    }
+  };
+
+  const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
+    //Get Id
+    const dataLength = isSuccess && Object.values(farmersDetailsById).length;
+    const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
+    const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
+
+    let newId = uuidv4();
+    let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
+
+    let editedData = {
+      accountNumber: data.accountNumber,
+      ifscCode: data.ifscCode,
+      bankName: data.bankName,
+      nameAsPerBank: data.nameAsPerBank,
+    };
 
     let params = {
       ...form1Data,
-      ...data,
+      ...form2Data,
+      ...editedData,
       profile: encryptedBase64,
-      id: mdId ? mdId : editMode ? id : uuidv4(),
-      membershipId: "NEF-FPC-2",
-      farmerId: !!mdId && id,
-    } as IAddFarmersDetailsPage1Input & IAddFarmersDetailsPage2Input & { id: string; membershipId: string; farmerId?: string };
+      id: setId(newId),
+      membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
+      farmerId: id,
+      landAreaInCent:
+        Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
+          return a + parseInt(b as string);
+        }, 0) * ACRETOCENT,
+
+      accountNumber: encryptText(accountNumber),
+    } as IAddFarmersDetailsPage1Input &
+      IAddFarmersDetailsPage2Input &
+      IAddFarmersDetailsPage3Input & { id: string; membershipId: string | undefined; farmerId?: string; landAreaInCent: number };
     cb({ ...params } as IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string });
     !editMode && handleClose();
   };
@@ -242,23 +315,49 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     <CustomModal openModal={openModal} handleClose={handleClose}>
       <ModalHeader handleClose={handleClose}>{editMode ? "Edit Farmer's Details" : "Add Farmer's Details"}</ModalHeader>
 
-      {next ? (
+      {page === 2 ? (
         <>
           <ModalBody id={"farmersDetailsForm2"} onSubmit={form2HandleSubmit(form2Submit)}>
             <FormFieldPage2 control={form2Control as unknown as Control} />
           </ModalBody>
           <ModalFooter>
-            <S.PageNumber alt="page number 2" src={page2} />
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
             <S.ButtonContainer>
               <Button
                 onClick={() => {
                   form2ClearErrors();
-                  setNext(!next);
+                  setPage(1);
                 }}
               >
                 Back
               </Button>
               <Button type="submit" form={"farmersDetailsForm2"} disabled={form2EnableButton}>
+                Next
+              </Button>
+            </S.ButtonContainer>
+          </ModalFooter>
+        </>
+      ) : page === 3 ? (
+        <>
+          <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
+            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
+          </ModalBody>
+          <ModalFooter>
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
+            <S.ButtonContainer>
+              <Button
+                onClick={() => {
+                  form3ClearErrors();
+                  setPage(2);
+                }}
+              >
+                Back
+              </Button>
+              <Button type="submit" form={"farmersDetailsForm3"} disabled={form3EnableButton}>
                 Submit
               </Button>
             </S.ButtonContainer>
@@ -280,7 +379,9 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
             />
           </ModalBody>
           <ModalFooter>
-            <S.PageNumber alt="page number 1" src={page1} />
+            <S.PageNumber>
+              <S.CurrentPage>{page}/3</S.CurrentPage>
+            </S.PageNumber>
             <Button type="submit" form={"farmersDetailsForm1"} disabled={form1EnableButton}>
               Next
             </Button>

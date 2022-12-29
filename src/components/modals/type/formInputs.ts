@@ -40,7 +40,15 @@ export interface IAddFarmersDetailsPage2Input {
   groupMember: string;
 }
 
-export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input { }
+export interface IAddFarmersDetailsPage3Input {
+  nameAsPerBank: string;
+  bankName: string;
+  accountNumber: string;
+  confirmAccountNumber?: string;
+  ifscCode: string;
+}
+
+export interface IAddFarmersDetailsFormInput extends IAddFarmersDetailsPage1Input, IAddFarmersDetailsPage2Input {}
 
 export interface IAddFarmersGroupFormInput {
   groupName: string;
@@ -58,14 +66,15 @@ export interface IProductVarient {
   endDate: string;
   availableAmount: string;
   qualityGrade: string;
+  timestamp: number;
 }
 
 export interface IAddProductsFormInput extends IProductVarient {
   productName: string;
   products: string[];
   foodType: string;
-  profile: string
-  name: string
+  profile: string;
+  variantName: string;
 }
 
 export interface IAddMDDetailsFormInput {
@@ -84,7 +93,7 @@ export interface IAddCEODetailsFormInput {
   dob: string;
   profile: string;
   description: string;
-  joinDate: string;
+  joinedDate: string;
 }
 export interface IAddFounderDetailsFormInput {
   name: string;

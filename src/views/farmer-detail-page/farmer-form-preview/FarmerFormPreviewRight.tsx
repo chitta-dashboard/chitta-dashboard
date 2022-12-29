@@ -1,25 +1,27 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS, decryptText } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
-import { farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { decryptText } from "../../../utils/constants";
-import { adminFormInputs } from "../../admin-panel";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewRight = () => {
-  const {
+  const { farmerBankDetail } = useFarmerDetailsContext();
+
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+
   const { farmerId } = useParams();
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>
@@ -150,6 +152,26 @@ const FarmerFormPreviewRight = () => {
                 <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
                 <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
               </S.UserInfoRow>
+              {farmerBankDetail && (
+                <>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கில் இருக்கும் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.nameAsPerBank}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கியின் பெயர்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.bankName}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>வங்கி கணக்கு எண்</S.UserInfoData1>
+                    <S.UserInfoData2>{user.accountNumber && decryptText(user.accountNumber)}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                  <S.UserInfoRow>
+                    <S.UserInfoData1>IFSC குறியீடு</S.UserInfoData1>
+                    <S.UserInfoData2>{user.ifscCode}</S.UserInfoData2>
+                  </S.UserInfoRow>
+                </>
+              )}
             </S.FarmerFormPreviewRight>
           ))}
     </>

@@ -38,8 +38,8 @@ namespace S {
     gap: "2rem",
   });
 
-  export const logoImage = styled("img")<{ isColor: boolean }>(({ isColor }) => ({
-    filter: isColor ? "grayscale(100%)" : "",
+  export const logoImage = styled("img")<{ iscolor: boolean }>(({ iscolor }) => ({
+    filter: iscolor ? "grayscale(100%)" : "",
     width: "100%",
     height: "100%",
     aspectRatio: "1/1",

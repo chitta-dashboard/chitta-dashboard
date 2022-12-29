@@ -1,4 +1,3 @@
-// import styled from "@emotion/styled";
 import { Box, Grid, Typography, Checkbox, styled } from "@mui/material";
 
 namespace S {
@@ -9,7 +8,7 @@ namespace S {
     display: "flex",
     flexDirection: "column",
     alignItems: "center !important",
-    justifyContent:"center !important"
+    justifyContent: "center !important",
   });
 
   export const MdDetailsTableHeadContainer = styled(Grid)(({ theme }) => ({
@@ -40,7 +39,7 @@ namespace S {
     alignItems: "center",
     justifyContent: "flex-start !important",
     width: "98%",
-    height: "300px",
+    height: "400px",
     overflowY: "auto",
   });
 

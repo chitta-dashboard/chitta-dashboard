@@ -8,7 +8,7 @@ export const customMemberFilter = {
   WITHOUT_MEMBERS: 3,
 };
 
-export type IFarmersGroup = {
+ type IFarmersGroup = {
   id: string;
   groupName: string;
   explanation: string;
@@ -66,5 +66,5 @@ const farmersGroupSlice = createSlice({
   reducers: {},
 });
 
-// export const {} = farmersGroupSlice.actions;
+//  create this to use this slice  const {} = farmersGroupSlice.actions;
 export const farmersGroupReducer = farmersGroupSlice.reducer;

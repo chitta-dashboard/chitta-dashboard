@@ -2,13 +2,12 @@ import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useDispatch } from "react-redux";
 import FarmerDetailsForm from "../FarmerDetailsForm";
 import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import IconWrapper from "../../../utils/iconWrapper";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { editFarmerDetail, deleteFarmerDetail, farmerDetail } from "../../../utils/store/slice/farmerDetails";
-import { FarmersGroup, useFarmersGroupContext } from "../../../utils/context/farmersGroup";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
 import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
@@ -19,19 +18,17 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
-import { IMdDetails } from "../../../utils/store/slice/mdDetails";
 
 const FarmerFormPreviewLeft = () => {
-  // const { farmersDetailsById, editFarmerDetail, deleteFarmerDetail } = useFarmerDetailsContext();
-  // const farmersDetailsById = useSelector((state: any) => state.farmerDetails.farmersDetailsById) as { [id: string]: farmerDetail };
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-  const {
+  let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -41,24 +38,19 @@ const FarmerFormPreviewLeft = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name: titleName, address } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
-
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
-  // const { addGroupMember, removeGroupMember } = useFarmersGroupContext();
-  // const { mdDetailsById, editMdDetail, deleteMdDetail } = useMdDetailsContext();
   const { addNotification } = useAuthContext();
-  const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
   const [openEditModal, setOpenEditModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(farmerDetail & { farmerId?: string }) | null>(null);
-  const AddNewMember = { id: openConfirmationModal?.farmerId, group: openConfirmationModal?.group };
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
@@ -75,7 +67,7 @@ const FarmerFormPreviewLeft = () => {
 
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
-    // documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
+    documentTitle: `${farmerId && farmersDetailsById[farmerId].name}_FarmerDetail_form`,
     content: () => farmerFormPdf.current as HTMLDivElement,
   });
 
@@ -101,8 +93,9 @@ const FarmerFormPreviewLeft = () => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = await encryptText(compressedBase64);
-    const isFarmerInMd = (Object.values(isMdSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+
+    const encryptedBase64 = encryptText(compressedBase64);
+    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     !isFarmerInMd &&
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
@@ -117,7 +110,7 @@ const FarmerFormPreviewLeft = () => {
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
         successCb: async () => {
-          await editMdDetail({
+          editMdDetail({
             editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
             successCb: () => {
               Toast({ message: "Farmer Edited Successfully", type: "success" });
@@ -145,7 +138,7 @@ const FarmerFormPreviewLeft = () => {
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
       isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
     }
   };
 
@@ -153,7 +146,7 @@ const FarmerFormPreviewLeft = () => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    editFarmerGroup({ editedData: newGroupMember });
   };
 
   return (
@@ -253,8 +246,15 @@ const FarmerFormPreviewLeft = () => {
               நாள்: {current.getDate()}/{current.getMonth() + 1}/{current.getFullYear()}
             </S.HeaderText>
             <S.HeaderText>
-              ஒருங்கிணைப்பாளர்: நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி
-              அஞ்சல்,கள்ளக்குறிச்சி தாலுக்கா&மாவட்டம், 606213
+              ஒருங்கிணைப்பாளர்:{" "}
+              {coordinatorAddress ? (
+                coordinatorAddress
+              ) : (
+                <>
+                  நேச்சர் ஃபார்ம் & ரூரல் டெவல்மென்ட் சொசைட்டிஎண், 453,பவர் ஆபீஸ் மெயின் ரோடு, சடையம்பட்டு,சோமண்டார்குடி அஞ்சல்,கள்ளக்குறிச்சி
+                  தாலுக்கா&மாவட்டம், 606213
+                </>
+              )}
             </S.HeaderText>
             {openEditModal && (
               <AddFarmersDetailsModal
@@ -263,8 +263,7 @@ const FarmerFormPreviewLeft = () => {
                 cb={updateFarmerDetail}
                 editMode={true}
                 id={user.id}
-                // mdId={Object.values(mdDetailsById).find((data) => data.farmerId === user.id)?.id}
-                mdId={(Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id}
+                mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
               />
             )}
             {openDeleteModal && (
@@ -273,7 +272,7 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
                   await removeGroupMember(user.id, user.group, false);
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   !isFarmerInMd &&
                     farmerDelete({
                       id: user.id,
@@ -289,7 +288,7 @@ const FarmerFormPreviewLeft = () => {
                     farmerDelete({
                       id: user.id,
                       successCb: async () => {
-                        await mdDelete({
+                        mdDelete({
                           id: isFarmerInMd,
                           successCb: () => {
                             addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
@@ -317,7 +316,7 @@ const FarmerFormPreviewLeft = () => {
                   setOpenConfirmationModal(null);
                 }}
                 yesAction={async () => {
-                  const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   openConfirmationModal && (await removeGroupMember(user.id, openConfirmationModal.group, true));
                   const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
                   delete farmerEditData.farmerId;

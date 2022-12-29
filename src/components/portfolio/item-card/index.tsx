@@ -2,6 +2,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Popover } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { handleDateDifference } from "../../../utils/helpers";
+import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
+import { useEditPortfolio } from "../../../utils/hooks/query";
+import { useAuthContext } from "../../../utils/context/auth";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
+import DeleteModal from "../../modals/delete-modal";
+import Toast from "../../../utils/toast";
+import ProductsModal from "../../modals/products-modal";
+import ConfirmationModal from "../../modals/confirmation-modal";
+import CS from "../../../components/common-styles/commonStyles.styled";
+import S from "./itemCard.styled";
 import paddy from "../../../assets/images/paddy.png";
 import millet from "../../../assets/images/millet.png";
 import groundnut from "../../../assets/images/groundnut.png";
@@ -10,17 +21,6 @@ import ragi from "../../../assets/images/ragi.png";
 import blackgram from "../../../assets/images/blackgram.png";
 import sugarcane from "../../../assets/images/sugarcane.png";
 import cotton from "../../../assets/images/cotton.png";
-import { handleDateDifference } from "../../../utils/helpers";
-import DeleteModal from "../../modals/delete-modal";
-import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
-import { useEditPortfolio } from "../../../utils/hooks/query";
-import { useAuthContext } from "../../../utils/context/auth";
-import Toast from "../../../utils/toast";
-import ProductsModal from "../../modals/products-modal";
-import ConfirmationModal from "../../modals/confirmation-modal";
-import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
-import CS from "../../../components/common-styles/commonStyles.styled";
-import S from "./itemCard.styled";
 
 export interface IPortfolioVariant {
   variantId: string;
@@ -30,12 +30,14 @@ export interface IPortfolioVariant {
   endDate: string;
   availableAmount: number;
   qualityGrade: string;
+  timestamp: number;
 }
 
 export interface IPortfolioProduct {
   id: string;
   productId: string;
   productName: string;
+  foodType: string;
   variants: string[];
   [key: string]: IPortfolioVariant | string | string[];
 }
@@ -45,20 +47,24 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
-  const { mutate } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
   const { addNotification } = useAuthContext();
-  const [variantData, setVariantdata] = useState((): IPortfolioVariant => {
+  const [variantData, setVariantdata] = useState<IPortfolioVariant>(() => {
+    let latestVariantId = "";
+    let LatestVariantTime = 0;
     for (let id of data.variants) {
-      if (data[id] !== null) return data[id] as IPortfolioVariant;
+      if (data[id] !== null && (data[id] as IPortfolioVariant).timestamp > LatestVariantTime) {
+        LatestVariantTime = (data[id] as IPortfolioVariant).timestamp;
+        latestVariantId = id;
+      }
     }
-    return {} as unknown as IPortfolioVariant; // a hack to satisfy typescript.
+    return data[latestVariantId] as IPortfolioVariant;
   });
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState<(IAddProductsFormInput & { id: string }) | null>(null);
-  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
   const image = useMemo(() => {
     switch (data.productName) {
@@ -84,9 +90,15 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
   }, [data.productName]);
 
   useEffect(() => {
+    let latestVariantId = "";
+    let LatestVariantTime = 0;
     for (let id of data.variants) {
-      if (data[id] !== null) return setVariantdata(data[id] as IPortfolioVariant);
+      if (data[id] !== null && (data[id] as IPortfolioVariant).timestamp > LatestVariantTime) {
+        LatestVariantTime = (data[id] as IPortfolioVariant).timestamp;
+        latestVariantId = id;
+      }
     }
+    return setVariantdata(data[latestVariantId] as IPortfolioVariant);
   }, [data]);
 
   const editDataHandler = (data: IAddProductsFormInput & { id: string }) => {
@@ -157,7 +169,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
           }
           openModal={true}
           handleDelete={() => {
-            mutate({
+            editPortfolio({
               data: {
                 [variantData.variantId]: null,
               },

@@ -2,7 +2,6 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getProductStructure } from "../../../components/portfolio/helper";
-// import Loader from "../../../components/loader";
 import { queryClient } from "../../../containers/provider";
 import { Endpoints, groupBy } from "../../constants";
 import { useAuthContext } from "../../context/auth";
@@ -55,11 +54,12 @@ export const useAdd = (endpoint: Endpoints) => {
     async ({ data, successCb, errorCb }: { data: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Creating" });
+      loader({ openLoader: true, loaderText: `Creating ${endpoint}` });
 
       if (Array.isArray(data)) {
         for (let i = 0; i < data.length; i++) {
           await axios.post(`${process.env.REACT_APP_API_KEY}/${endpoint}/`, data[i]);
+          await new Promise((r) => setTimeout(r, 50));
         }
         return data;
       } else {
@@ -90,22 +90,35 @@ export const useAdd = (endpoint: Endpoints) => {
 export const useEdit = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
-  let successCallback: () => void;
+  let successCallback: (data?: any) => void;
   let errorCallback: () => void;
 
   return useMutation(
-    ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
+    async ({ editedData, successCb, errorCb }: { editedData: any } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Updating" });
+      loader({ openLoader: true, loaderText: `Updating ${endpoint}` });
 
-      return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+      if (Array.isArray(editedData)) {
+        for (let i = 0; i < editedData.length; i++) {
+          await axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData[i]?.id}`, editedData[i]);
+          await new Promise((r) => setTimeout(r, 50));
+        }
+        return editedData;
+      } else {
+        return axios.patch(`${process.env.REACT_APP_API_KEY}/${endpoint}/${editedData?.id}`, editedData).then(() => editedData);
+      }
     },
     {
       onSuccess: (data) => {
-        const updatedData = { ...result.data, [data.id]: data };
+        let updatedData;
+        if (Array.isArray(data)) {
+          updatedData = { ...result.data, ...groupBy(data, "id") };
+        } else {
+          updatedData = { ...result.data, [data.id]: data };
+        }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCallback();
+        successCallback(updatedData);
       },
       onError: () => {
         errorCallback();
@@ -127,11 +140,12 @@ export const useDelete = (endpoint: Endpoints) => {
     async ({ id, successCb, errorCb }: { id: string | Array<string> } & IOptionalCallback) => {
       successCallback = successCb ? successCb : () => {};
       errorCallback = errorCb ? errorCb : () => {};
-      loader({ openLoader: true, loaderText: "Deleting" });
+      loader({ openLoader: true, loaderText: `Deleting ${endpoint}` });
 
       if (Array.isArray(id)) {
         for (let i = 0; i < id.length; i++) {
           await axios.delete(`${process.env.REACT_APP_API_KEY}/${endpoint}/${id[i]}`);
+          await new Promise((r) => setTimeout(r, 50));
         }
         return id;
       } else {
@@ -160,34 +174,6 @@ export const useDelete = (endpoint: Endpoints) => {
       },
     },
   );
-};
-
-export const useFetchByPage = (endpoint: Endpoints, page: number) => {
-  const result = useQuery({
-    queryKey: [`${endpoint}-fetch-${page}`],
-    queryFn: () => {
-      return axios
-        .get(`${process.env.REACT_APP_API_KEY}/${endpoint}`, {
-          params: {
-            _page: page,
-            _limit: 10,
-          },
-        })
-        .then((res) => res.data);
-    },
-    cacheTime: Infinity, // do not change!
-    staleTime: Infinity, // do not change!
-  });
-
-  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
-  useEffect(() => {
-    if (Array.isArray(result.data)) {
-      queryClient.setQueryData([`${endpoint}-fetch-${page}`], groupBy(result.data, "id"));
-      setformatChangeSucess(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [result.isFetched]);
-  return { formatChangeSuccess, result };
 };
 
 export const useEditPortfolio = (endpoint: Endpoints) => {

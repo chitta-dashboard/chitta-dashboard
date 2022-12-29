@@ -45,8 +45,6 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
     ) {
       if (Object.values(surveyNo).includes("") !== true && Object.values(acre).includes("") !== true && Object.values(border).includes("") !== true) {
         enableAddButton = false;
-      } else {
-        enableAddButton = true;
       }
     }
   }
@@ -70,19 +68,29 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         unregister={unregister}
         gridArea="prf"
       />
-      <Input name="name" type="text" control={control} rules={{ required: "required" }} options={{ label: "பெயர் *", gridArea: "nme" }} />
+      <Input
+        name="name"
+        type="text"
+        control={control}
+        rules={{ required: "required" }}
+        options={{ label: "பெயர் *", gridArea: "nme", placeholder: "பெயரை உள்ளிடுக" }}
+      />
       <Input
         name="sex"
         type="select"
         control={control}
         rules={{ required: "required" }}
         options={{
+          // initialvalue: "gender",
+          // placeholder: "gender",
+          // value: "gender",
           label: "பாலினம் *",
           gridArea: "sex",
           selectOptions: [
             ["male", "ஆண்"],
             ["female", "பெண்"],
           ],
+          placeholder: "பாலினம் தேர்வு செய்க ",
         }}
       />
       <Input
@@ -90,14 +98,14 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "தந்தையின் பெயர் *", gridArea: "fnm" }}
+        options={{ label: "தந்தையின் பெயர் *", gridArea: "fnm", placeholder: "தந்தையின் பெயரை உள்ளிடுக" }}
       />
       <Input
         name="spouseName"
         type="text"
         control={control}
         rules={{ required: "required" }}
-        options={{ label: "கணவன்/மணைவி பெயர் *", gridArea: "spo" }}
+        options={{ label: "கணவன்/மணைவி பெயர் *", gridArea: "spo", placeholder: "துணைவர் பெயரை உள்ளிடுக" }}
       />
       <Input name="dob" type="date" control={control} rules={{ required: "required" }} options={{ label: "பிறந்த தேதி *", gridArea: "dob" }} />
       <Input
@@ -109,6 +117,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           label: "குழு *",
           gridArea: "grp",
           selectOptions: Object.values(isSuccess && (farmersGroupById as FarmersGroup[])).map((g) => [g.groupName, g.groupName]),
+          placeholder: "குழுவை தேர்வு செய்க ",
         }}
       />
       <Input
@@ -120,7 +129,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 10, message: "10 digits expected" },
           maxLength: { value: 10, message: "10 digits expected" },
         }}
-        options={{ label: "கைபேசி எண் *", gridArea: "phn" }}
+        options={{ label: "கைபேசி எண் *", gridArea: "phn", placeholder: "கைபேசி எண்ணை உள்ளிடுக" }}
       />
       <Input
         name="addhaarNo"
@@ -131,7 +140,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 12, message: "12 digits expected" },
           maxLength: { value: 12, message: "12 digits expected" },
         }}
-        options={{ label: "ஆதார் எண் *", gridArea: "adh" }}
+        options={{ label: "ஆதார் எண் *", gridArea: "adh", placeholder: "ஆதார் எண்ணை உள்ளிடுக" }}
       />
       <S.DividerLine />
       <S.AddLandDetailsContainer>
@@ -156,6 +165,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                 options={{
                   label: "கணக்கெடுப்பு எண் *",
                   gridArea: "srv",
+                  placeholder: "கணக்கெடுப்பு எண்ணை உள்ளிடுக",
                 }}
               />
               <Input
@@ -169,6 +179,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                 options={{
                   label: "ஏக்கர் *",
                   gridArea: "acr",
+                  placeholder: "ஏக்கர் அளவை உள்ளிடுக",
                 }}
               />
               <Input
@@ -182,6 +193,7 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
                 options={{
                   label: "நில எல்லை *",
                   gridArea: "bdr",
+                  placeholder: "நில எல்லையை உள்ளிடுக",
                 }}
               />
 

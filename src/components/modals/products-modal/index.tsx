@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { ENDPOINTS, Endpoints, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
+import { ENDPOINTS, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { IAddProductsFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
@@ -18,6 +18,7 @@ interface CustomProps {
   products?: string[];
   id?: string;
   variantData?: any;
+  tab?: string;
 }
 
 const ProductsModal: FC<CustomProps> = (props) => {
@@ -36,7 +37,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
   const {
     formatChangeSuccess: isSuccess,
     result: { data: productDetails },
-  } = useFetch(ENDPOINTS.portfolioRaw as Endpoints);
+  } = useFetch(ENDPOINTS.portfolioRaw);
   const productImage = editMode && PRODUCT_DATA.raw.filter((product) => product.id === id)[0].image;
 
   // for enabling the submit button
@@ -77,16 +78,11 @@ const ProductsModal: FC<CustomProps> = (props) => {
     descriptionEvent
   ) {
     enableButton = false;
-  } else {
-    enableButton = true;
   }
- 
 
   useEffect(() => {
     if (editMode) {
       let productData = Object.values(isSuccess && (productDetails as CustomProps)).find((f) => String(f.id) === id);
-      // console.log("onedit variants ", productData.variants);
-      // console.log("onedit variantIds ", productData);
       setProductName(productData?.productName);
       reset({
         foodType: productData?.foodType as string,
@@ -114,7 +110,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
 
   const onSubmit: any = (data: IAddProductsFormInput & { id: string; products: string[] }) => {
     const variantName = editMode ? variantData?.variantName : VARIANT_DATA[productId][data.variantId];
-    cb({ ...data, id: editMode ? id : productId, products: products, variantName: variantName });
+    cb({ ...data, id: editMode ? id : productId, products: products, variantName: variantName, timestamp: new Date().getTime() });
     !editMode && reset();
     !editMode && handleClose();
   };
@@ -134,7 +130,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
           handleClose();
         }}
       >
-        {editMode ? "Edit products" : "Add products"}
+        {editMode ? "Edit product" : "Add product"}
       </ModalHeader>
 
       <ModalBody id={"products"} onSubmit={handleSubmit(onSubmit)}>
@@ -146,6 +142,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
           setProductId={productIdHandler}
           productImage={productImage as string}
           disableOnEdit={editMode ? 1 : 0}
+          tab={props.tab}
         />
       </ModalBody>
 

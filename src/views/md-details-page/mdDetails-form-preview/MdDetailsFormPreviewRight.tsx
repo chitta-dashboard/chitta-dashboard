@@ -1,14 +1,16 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { mdDetail } from "../../../utils/context/mdDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import { adminFormInputs } from "../../admin-panel";
-import { decryptText } from "../../../utils/constants";
+import { ENDPOINTS, decryptText } from "../../../utils/constants";
+import { AdminFormInputs } from "../../admin-panel";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 
 const MdFormPreviewRight = () => {
+  const { farmerBankDetail } = useFarmerDetailsContext();
+
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -18,12 +20,12 @@ const MdFormPreviewRight = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mdId } = useParams();
   return (
     <>
-      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as mdDetail[]))
+      {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
         .filter((name) => [mdId].includes(name.id))
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>
@@ -150,6 +152,26 @@ const MdFormPreviewRight = () => {
               <S.UserInfoData1>குழு உறுப்பினர்</S.UserInfoData1>
               <S.UserInfoData2>{user.groupMember}</S.UserInfoData2>
             </S.UserInfoRow>
+            {farmerBankDetail && (
+              <>
+                <S.UserInfoRow>
+                  <S.UserInfoData1>வங்கி கணக்கில் இருக்கும் பெயர்</S.UserInfoData1>
+                  <S.UserInfoData2>{user.nameAsPerBank}</S.UserInfoData2>
+                </S.UserInfoRow>
+                <S.UserInfoRow>
+                  <S.UserInfoData1>வங்கியின் பெயர்</S.UserInfoData1>
+                  <S.UserInfoData2>{user.bankName}</S.UserInfoData2>
+                </S.UserInfoRow>
+                <S.UserInfoRow>
+                  <S.UserInfoData1>வங்கி கணக்கு எண்</S.UserInfoData1>
+                  <S.UserInfoData2>{user.accountNumber && decryptText(user.accountNumber)}</S.UserInfoData2>
+                </S.UserInfoRow>
+                <S.UserInfoRow>
+                  <S.UserInfoData1>IFSC குறியீடு</S.UserInfoData1>
+                  <S.UserInfoData2>{user.ifscCode}</S.UserInfoData2>
+                </S.UserInfoRow>
+              </>
+            )}
           </S.MdFormPreviewRight>
         ))}
     </>
