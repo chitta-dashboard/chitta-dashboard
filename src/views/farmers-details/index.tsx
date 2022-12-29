@@ -40,7 +40,7 @@ const FarmersDetails = () => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    editFarmerGroup({ editedData: newGroupMember });
   };
 
   // Add Farmerdetail Handler
@@ -49,7 +49,7 @@ const FarmersDetails = () => {
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
     newFarmer &&
-      (await mutate({
+      mutate({
         data: newFarmer,
         successCb: () => {
           setTimeout(() => {
@@ -61,7 +61,7 @@ const FarmersDetails = () => {
         errorCb: () => {
           Toast({ message: "Request failed! Please try again", type: "error" });
         },
-      }));
+      });
     await addGroupMember(data.id, data.group);
   };
 

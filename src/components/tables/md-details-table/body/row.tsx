@@ -184,20 +184,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
                   Toast({ message: "Request failed! Please try again", type: "error" });
                 },
               });
-            // editData && user.farmerId && (await removeGroupMember(user.farmerId, editData.group));
-            // const farmerEditData = { ...editData, id: editData?.farmerId };
-            // delete farmerEditData.farmerId;
-            // editData &&
-            //   editFarmer({
-            //     editedData: farmerEditData,
-            //     successCb: () => {
-            //       editMdDetail({ editedData: editData });
-            //       Toast({ message: "MD Edited Successfully", type: "success" });
-            //     },
-            //     errorCb: () => {
-            //       Toast({ message: "Request failed! Please try again", type: "error" });
-            //     },
-            //   });
 
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;

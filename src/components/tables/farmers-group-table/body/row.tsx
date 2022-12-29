@@ -18,7 +18,6 @@ interface FarmersGroupRowProp {
   user: FarmersGroup;
   params?: string;
 }
-kk
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { currentPage } = useFarmersGroupContext();

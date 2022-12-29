@@ -103,7 +103,7 @@ const MdDetails = () => {
 
       notifications.push(notification);
     });
-    await addMdDetail({
+    addMdDetail({
       data: farmerData,
       successCb: () => {
         setTimeout(() => {
