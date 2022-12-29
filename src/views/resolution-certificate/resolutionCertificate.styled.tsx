@@ -1,5 +1,4 @@
-import { Theme, Box, Typography } from "@mui/material";
-import { styled } from "@mui/material";
+import { Theme, Box, Typography, styled } from "@mui/material";
 
 export namespace S {
   export const ResolutionCertificateMainContainer = styled(Box)({

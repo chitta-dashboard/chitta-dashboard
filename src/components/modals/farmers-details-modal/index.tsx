@@ -27,7 +27,7 @@ interface CustomProps {
   handleClose: () => void;
   editMode?: boolean;
   id?: string;
-  mdId?: string | undefined;
+  mdId?: string;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
@@ -35,13 +35,13 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { farmerId } = useGetFarmersId(ENDPOINTS.farmerDetails);
 
   let {
-    formatChangeSuccess: DataSuccess,
     result: { data: farmersDetailsById, isFetched: isSuccess, isFetchedAfterMount: isfetched },
   } = useIdByPage(ENDPOINTS.farmerDetails, id);
 
+
   const {
     result: { data: lastFarmerDetail, isFetched: isLastDataSuccess },
-  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1] as string);
+  } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1]);
 
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
@@ -159,7 +159,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const borderEvent = form1Watch("border");
   const profileEvent = form1Watch("profile");
 
-  // console.log("surveyNoEvent", surveyNoEvent);
   if (
     dynamicInputs &&
     nameEvent &&
@@ -298,17 +297,18 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
-    const lastMembershipId = isLastDataSuccess && (Object.values(lastFarmerDetail as farmerDetail[])[0]["membershipId"] as string).split("-")[2];
+    const lastMembershipId = isLastDataSuccess && Object.values(lastFarmerDetail as farmerDetail[])[0]["membershipId"].split("-")[2];
 
     let newId = uuidv4();
     let newMemberId = isLastDataSuccess && parseInt(lastMembershipId as string) + 1;
+    let editModeId = editMode ? id : newId;
     delete data?.confirmAccountNumber;
     let params = {
       ...form1Data,
       ...form2Data,
       ...data,
       profile: encryptedBase64,
-      id: mdId ? mdId : editMode ? id : newId,
+      id: mdId ? mdId : editModeId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
       landAreaInCent: `${
@@ -343,7 +343,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
                   <Button
                     onClick={() => {
                       form2ClearErrors();
-                      //setNext(!next);
                       setPage(1);
                     }}
                   >
@@ -368,7 +367,6 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
                   <Button
                     onClick={() => {
                       form3ClearErrors();
-                      //setNext(!next);
                       setPage(2);
                     }}
                   >

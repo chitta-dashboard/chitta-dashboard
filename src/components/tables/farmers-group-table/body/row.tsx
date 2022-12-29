@@ -2,8 +2,8 @@ import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDeleteByPage, useEditByPage } from "../../../../utils/hooks/query";
+import { useFarmerDetailsContext, farmerDetail } from "../../../../utils/context/farmersDetails";
+import { useDeleteByPage, useEditByPage, useFetch, useEdit } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
@@ -18,7 +18,7 @@ interface FarmersGroupRowProp {
   user: FarmersGroup;
   params?: string;
 }
-
+kk
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { currentPage } = useFarmersGroupContext();
@@ -29,11 +29,18 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
   const [editData, setEditData] = useState<FarmersGroup>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
-  // const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
-  // const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
 
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmerDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+  const {
+    formatChangeSuccess: isSuccessFarmerGroup,
+    result: { data: farmerGroupById },
+  } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: farmerGroupEdit } = useEditByPage(ENDPOINTS.farmerGroup, currentPage, params);
   const { mutate: farmerGroupDelete } = useDeleteByPage(ENDPOINTS.farmerGroup, currentPage, params);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -130,19 +137,36 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            editMode &&
+            if (isSuccess && isSuccessFarmerGroup && editData && editMode) {
+              const editFarmerGroupName = farmerGroupById[editData.id].groupName;
+              let newFarmerDetails = Object.values(farmerDetailsById as farmerDetail[])
+                .filter((item) => item.group === editFarmerGroupName)
+                .map((name) => {
+                  return { ...name, group: editData.groupName };
+                });
+
               farmerGroupEdit({
                 editedData: editData,
                 successCb: () => {
                   Toast({ message: "Farmer group updated successfully.", type: "success" });
+                  editFarmer({
+                    editedData: newFarmerDetails,
+                    successCb: () => {
+                      Toast({ message: "Farmer Edited Successfully", type: "success" });
+                    },
+                    errorCb: () => {
+                      Toast({ message: "Request failed! Please try again", type: "error" });
+                    },
+                  });
                 },
                 errorCb: () => {
                   Toast({ message: "Request failed, please try again.", type: "error" });
                 },
               });
-            setEditMode(false);
-            setConfirmModal(false);
-            setIconModal(false);
+              setEditMode(false);
+              setConfirmModal(false);
+              setIconModal(false);
+            }
           }}
         />
       </S.WebTableCell>

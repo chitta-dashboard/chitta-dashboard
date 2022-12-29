@@ -92,5 +92,4 @@ const foundersSlice = createSlice({
   reducers: {},
 });
 
-// export const {} = foundersSlice.actions;
 export const foundersReducer = foundersSlice.reducer;

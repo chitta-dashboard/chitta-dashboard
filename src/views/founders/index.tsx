@@ -26,7 +26,6 @@ const Founders = () => {
   };
 
   const addDataHandler = (data: IAddFounderDetailsFormInput & { id: string }) => {
-    // addFounder(data);
     founderMutateAdd({
       data,
       successCb: () => {

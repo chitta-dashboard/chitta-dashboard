@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { TableRow, TableCell, Pagination } from "@mui/material";
 import S from "./footerWrapper";
 
-interface pageHandlerProps {
+interface PageHandlerProps {
   count: number;
   page?: number;
   totalCount: number;
@@ -10,7 +10,7 @@ interface pageHandlerProps {
   handlePageCount?: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const FooterWrapper: FC<pageHandlerProps> = ({ count, page, totalCount, rowsPerPage, handlePageCount }) => {
+const FooterWrapper: FC<PageHandlerProps> = ({ count, page, totalCount, rowsPerPage, handlePageCount }) => {
   return (
     <S.Footer>
       <TableRow>

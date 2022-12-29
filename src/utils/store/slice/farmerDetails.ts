@@ -1,4 +1,4 @@
-import { createSlice, CaseReducer } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { NORMAL, SortOrder } from "../../constants";
 
 export type farmerDetail = {
@@ -39,7 +39,7 @@ export const DEFAULT_GROUP_FILTER = "all";
 
 export type selectedFarmer = number | string;
 
-interface farmerDetailsContextType {
+interface FarmerDetailsContextType {
   farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   isFarmerDetailsDataSet: boolean;
@@ -53,7 +53,7 @@ interface farmerDetailsContextType {
   farmersIdToExport: [];
 }
 
-const initialState: farmerDetailsContextType = {
+const initialState: FarmerDetailsContextType = {
   farmersDetailsById: {},
   searchFilter: "",
   isFarmerDetailsDataSet: false,
@@ -155,4 +155,3 @@ export const {
 } = farmerDetailsSlice.actions;
 
 export const farmerDetailsReducer = farmerDetailsSlice.reducer;
-

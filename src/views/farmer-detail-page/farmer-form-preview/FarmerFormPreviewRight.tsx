@@ -3,23 +3,22 @@ import { useParams } from "react-router-dom";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { decryptText } from "../../../utils/constants";
-import { adminFormInputs } from "../../admin-panel";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
 
 type FarmerFormPreviewType = {
-  farmersDetailsById: farmerDetail[] | adminFormInputs;
+  farmersDetailsById: farmerDetail[] | AdminFormInputs;
   isFarmerSuccess: boolean;
 };
 
 const FarmerFormPreviewRight: FC<FarmerFormPreviewType> = ({ farmersDetailsById, isFarmerSuccess }) => {
   const { farmerBankDetail } = useFarmerDetailsContext();
   const { farmerId } = useParams();
-  const { pdfLogo: pdfImage } = isFarmerSuccess && Object.values(farmersDetailsById as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isFarmerSuccess && Object.values(farmersDetailsById as AdminFormInputs)[0];
 
   return (
     <>
       {isFarmerSuccess &&
-        isFarmerSuccess &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId].includes(name.id))
           .map((user) => (

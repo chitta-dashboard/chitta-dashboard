@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
-import { useAdd, useEdit, useEditByPage, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
+import { useAdd, useEdit, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../../utils/context/auth";
@@ -17,7 +17,6 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
-  // const dispatch = useDispatch();
 
   const { addModalHandler } = props;
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
@@ -47,7 +46,6 @@ const RightSection: FC<RightSectionProps> = (props) => {
 
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-  // const { mutate: updateFarmerDetails } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
 
   const { mutate: updateFarmerDetails } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: updateMdDetails } = useEdit(ENDPOINTS.mdDetails);
@@ -234,7 +232,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomBulkGroupButton
           aria-describedby={Boolean(anchorEl) ? "simple-popover" : undefined}
           onClick={handleClick}
-          disabled={!(selectedFarmers.length > 1)}
+          disabled={selectedFarmers.length <= 1}
         >
           Bulk Group
         </S.CustomBulkGroupButton>
@@ -272,11 +270,9 @@ const RightSection: FC<RightSectionProps> = (props) => {
         <S.CustomButton
           disabled={
             selectedFarmers.length === 0 ||
-            !(
-              Object.values(farmersGroupById)
-                .filter((item: any) => item.groupName === groupFilter)
-                .map((item: any) => item.members)[0]?.length > 0
-            )
+            Object.values(farmersGroupById)
+              .filter((item: any) => item.groupName === groupFilter)
+              .map((item: any) => item.members)[0]?.length <= 0
           }
           onClick={() => shareAmountModalHandler()}
         >

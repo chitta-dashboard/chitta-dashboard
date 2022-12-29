@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister, UseFormWatch } from "react-hook-form";
 import { ENDPOINTS, fileValidation } from "../../../../utils/constants";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
@@ -20,22 +20,12 @@ interface CustomProps {
   watch: UseFormWatch<IAddFarmersDetailsPage1Input>;
 }
 
-const FormField: FC<CustomProps> = ({
-  control,
-  dynamicInputs,
-  addInput,
-  removeInput,
-  setValue,
-  getValues,
-  unregister,
-  editMode,
-  watch,
-}) => {
+const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode, watch }) => {
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
-  const { data: farmersGroupById } = result;
+  const { data: farmersGroupById, isFetched: afterFetch } = result;
   let enableAddButton = true;
 
   useEffect(() => {
@@ -50,7 +40,6 @@ const FormField: FC<CustomProps> = ({
       setBorder(getValues("border"));
     }
   }, [getValues("surveyNo"), getValues("acre"), getValues("border")]);
-
 
   useEffect(() => {
     setValue("surveyNo", surveyNo);
@@ -67,12 +56,10 @@ const FormField: FC<CustomProps> = ({
     ) {
       if (Object.values(surveyNo).includes("") !== true && Object.values(acre).includes("") !== true && Object.values(border).includes("") !== true) {
         enableAddButton = false;
-      } else {
-        enableAddButton = true;
       }
     }
   }
-  
+
   return (
     <S.StaticBox>
       <AddProfile<IAddFarmersDetailsPage1Input>
@@ -140,7 +127,7 @@ const FormField: FC<CustomProps> = ({
         options={{
           label: "குழு *",
           gridArea: "grp",
-          selectOptions: Object.values(isSuccess && (farmersGroupById as FarmersGroup[])).map((g) => [g.groupName, g.groupName]),
+          selectOptions: Object.values(isSuccess && afterFetch && (farmersGroupById as FarmersGroup[])).map((g) => [g.groupName, g.groupName]),
           placeholder: "குழுவை தேர்வு செய்க ",
         }}
       />
@@ -175,7 +162,6 @@ const FormField: FC<CustomProps> = ({
       <S.DynamicInputsBox>
         {dynamicInputs.map((inp, ind) => {
           const [[key, [surveyName, acreName, borderName]]] = Object.entries(inp);
-
 
           return (
             <S.DynamicInputs key={key}>

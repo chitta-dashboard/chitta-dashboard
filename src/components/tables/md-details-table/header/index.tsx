@@ -1,6 +1,6 @@
 import { TableHead, TableRow } from "@mui/material";
 import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { ASCENDING, DESCENDING, NORMAL } from "../../../../utils/constants";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
@@ -13,11 +13,11 @@ const Header = () => {
         <S.WebTableCell>
           <span
             onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
+              setSortFilter(sortFilterHandler(sortFilter));
             }}
           >
             பெயர்
-            <i>{sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}</i>
+            <i>{sortIconHandler(sortFilter)}</i>
           </span>
         </S.WebTableCell>
         <S.WebTableCell>பிறந்த தேதி</S.WebTableCell>
@@ -28,10 +28,10 @@ const Header = () => {
           <p>MD Details</p>
           <IconWrapper
             onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
+              setSortFilter(sortFilterHandler(sortFilter));
             }}
           >
-            {sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}
+            {sortIconHandler(sortFilter)}
           </IconWrapper>
         </S.TabTableCell>
       </TableRow>

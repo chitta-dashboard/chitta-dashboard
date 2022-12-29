@@ -15,13 +15,11 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
 
     let month = Math.floor(week / 4.34524);
     let remainingWeeks = Math.floor(week % 4.34524);
+    let setRemainingDays = remainingDays > 1 ? "days" : "day";
+    let setRemainingWeeks = remainingWeeks > 1 ? "weeks" : "week";
 
-    const weekResult = `${week} ${week > 1 ? "weeks" : "week"} ${
-      remainingDays > 0 ? `and ${remainingDays} ${remainingDays > 1 ? "days" : "day"}` : ""
-    }`;
-    const monthResult = `${month} ${month > 1 ? "months" : "month"} ${
-      remainingWeeks > 0 ? `and ${remainingWeeks} ${remainingWeeks > 1 ? "weeks" : "week"}` : ""
-    }`;
+    const weekResult = `${week} ${week > 1 ? "weeks" : "week"} ${remainingDays > 0 ? `and ${remainingDays} ${setRemainingDays}` : ""}`;
+    const monthResult = `${month} ${month > 1 ? "months" : "month"} ${remainingWeeks > 0 ? `and ${remainingWeeks} ${setRemainingWeeks}` : ""}`;
     let result = month > 0 ? monthResult : weekResult;
     return result;
   }
@@ -30,10 +28,10 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
 };
 
 export const handleDateDifference2 = (start: datePropsType, end: datePropsType) => {
-  var date1 = moment(start, "MMDDYYYY");
-  var date2 = moment(end, "MMDDYYYY");
+  let date1 = moment(start, "MMDDYYYY");
+  let date2 = moment(end, "MMDDYYYY");
 
-  var days = date2.diff(date1, "days");
+  let days = date2.diff(date1, "days");
   if (days > 5) {
     let week = Math.ceil(days / 7);
     let month = Math.ceil(week / 4.34524);
@@ -47,10 +45,19 @@ export const handleDateDifference2 = (start: datePropsType, end: datePropsType) 
   return `${days} ${days > 1 ? "days" : "day"}`;
 };
 
-export const useSearchQuery = (searchKey: number | string,searchName:string) => {
+export const useSearchQuery = (searchKey: number | string, searchName: string) => {
   return searchKey === "" ? `?q=` : `?${searchName}_like=${searchKey}`;
 };
 
 export const useSortQuery = (sortKey: number | string, sortName: string) => {
-  return sortKey === "normal" ? "" : `&_sort=${sortName}&_order=${sortKey === "descending" ? "desc" : sortKey === "ascending" ? "asc" : ""}`;
+  switch (sortKey) {
+    case "normal":
+      return "";
+    case "ascending":
+      return `&_sort=${sortName}&_order=asc`;
+    case "descending":
+      return `&_sort=${sortName}&_order=desc`;
+    default:
+      return "";
+  }
 };

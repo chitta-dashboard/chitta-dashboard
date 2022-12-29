@@ -2,7 +2,7 @@ import { FC, Ref, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../custom-modal";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useFetchByPage, useFetchByParams } from "../../../utils/hooks/query";
+import { useFetchByParams } from "../../../utils/hooks/query";
 import { ENDPOINTS } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -26,7 +26,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   } = useFetchByParams(ENDPOINTS.farmerDetails, farmerQuery, false);
 
   const [shareAmount, setShareAmount] = useState(1000);
-  const [loader, setLoader] = useState(true);
+  const loader = true;
   const [toggle, setToggle] = useState(false);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
@@ -54,7 +54,6 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   });
 
   const certificateFunctionStart = async () => {
-    //setLoader(!loader);
     setIsCircleLoading(true);
     let result = await farmerDetailsRefetch();
     result.isFetched &&

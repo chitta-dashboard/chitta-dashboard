@@ -7,7 +7,7 @@ import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
 import { decryptText, ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./loginForm.styled";
 
 interface LoginFormInputs {
@@ -34,7 +34,7 @@ const LoginForm: FC = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as adminFormInputs)[0];
+  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
   const [showPassword, setShowPassword] = useState(false);
 
   const {

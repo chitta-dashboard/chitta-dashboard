@@ -1,5 +1,4 @@
-import { Typography } from "@mui/material";
-import { Box, styled } from "@mui/material";
+import { Typography, Box, styled } from "@mui/material";
 
 export namespace S {
   export const FarmerFormPreviewMainContainer = styled(Box)(({ theme }) => ({

@@ -26,7 +26,7 @@ const ResolutionCertificatePage = lazy(() => import("../../views/resolution-cert
 const MDDetailsFormPreview = lazy(() => import("../../views/md-details-page/mdDetails-form-preview/MdDetailsFormPreview"));
 
 export const fileValidation = (file: string) => {
-  var allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
+  let allowedExtensions = /(\.jpg|\.jpeg|\.png)$/i;
 
   if (!allowedExtensions.exec(file)) {
     return false;
@@ -34,17 +34,17 @@ export const fileValidation = (file: string) => {
   return true;
 };
 
-export const searchWord = (text: String, word: String) =>
+export const searchWord = (text: string, word: string) =>
   text
     ? text
-      .trim()
-      .toLowerCase()
-      .search(
-        word
-          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-          .trim()
-          .toLowerCase(),
-      ) >= 0
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -59,8 +59,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-      asDate: false,
-    },
+    asDate: false,
+  },
 ) => {
   const arrClone = [...arr];
 
@@ -99,6 +99,28 @@ export const sortObj = <ObjStructure>(
   }
 
   return arrClone;
+};
+
+export const sortFilterHandler = (sortFilter: string) => {
+  switch (sortFilter) {
+    case NORMAL:
+      return ASCENDING;
+    case ASCENDING:
+      return DESCENDING;
+    default:
+      return NORMAL;
+  }
+};
+
+export const sortIconHandler = (sortFilter: string) => {
+  switch (sortFilter) {
+    case NORMAL:
+      return "sort";
+    case ASCENDING:
+      return "ascending";
+    default:
+      return "descending";
+  }
 };
 
 export const createTimeStamp = (dateTimeInString: string) => {
@@ -188,9 +210,9 @@ export const MessageStructured = (name: string, endPoint: string, action: "edit"
     case "edit":
       return `${key[endPoint]} "${name}" has been edited`;
     case "delete":
-      return `${key[endPoint] as string} "${name}" has been removed`;
+      return `${key[endPoint]} "${name}" has been removed`;
     case "add":
-      return `New ${key[endPoint] as string} "${name}" has been registered`;
+      return `New ${key[endPoint]} "${name}" has been registered`;
   }
 };
 
@@ -201,10 +223,10 @@ export const dateFormat = (mydate?: string) => {
 export const calculateAge = (dob: string) => {
   let seperatedDate = dob.split("-");
   let dob1 = [seperatedDate[1], seperatedDate[0], seperatedDate[2]].join("-");
-  var today = new Date();
-  var birthDate = new Date(dob1);
-  var age_now = today.getFullYear() - birthDate.getFullYear();
-  var month = today.getMonth() - birthDate.getMonth();
+  let today = new Date();
+  let birthDate = new Date(dob1);
+  let age_now = today.getFullYear() - birthDate.getFullYear();
+  let month = today.getMonth() - birthDate.getMonth();
   if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
     age_now--;
   }
@@ -259,7 +281,6 @@ export const decryptText = (encryptedText: string, secretPhrase: string = "123")
     const decryptedText = CryptoJS.AES.decrypt(encryptedText, secretPhrase).toString(CryptoJS.enc.Utf8);
     return decryptedText;
   } catch (err) {
-    // console.log("the passed string was not a encrypted string");
     return encryptedText;
   }
 };
@@ -495,6 +516,5 @@ export const PRODUCT_DATA = {
   PRODUCT_DATA.raw[6].image = await fileToBase64(Sugarcane, true);
   PRODUCT_DATA.raw[7].image = await fileToBase64(Cotton, true);
 })();
-
 
 export const ACRETOCENT = 100.021;

@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFetch, useIdByPage } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import { adminFormInputs } from "../../admin-panel";
-import { decryptText } from "../../../utils/constants";
+import { ENDPOINTS, decryptText } from "../../../utils/constants";
+import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 
@@ -23,7 +22,7 @@ const MdFormPreviewRight = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>

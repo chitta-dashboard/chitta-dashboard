@@ -66,5 +66,4 @@ const farmersGroupSlice = createSlice({
   reducers: {},
 });
 
-// export const {} = farmersGroupSlice.actions;
 export const farmersGroupReducer = farmersGroupSlice.reducer;

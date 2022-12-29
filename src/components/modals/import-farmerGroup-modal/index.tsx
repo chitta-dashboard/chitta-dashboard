@@ -16,7 +16,7 @@ import S from "./importFarmerGroupModal.styled";
 interface Props {
   openModal: boolean;
   handleClose: () => void;
-  newGroupNames?: string[] | undefined;
+  newGroupNames?: string[];
   handleCloseImport: () => void;
   farmerDatas: farmerDetail[] | null;
   count?: number | null;
@@ -91,7 +91,7 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
           }
 
           addFarmerDetails({
-            data: farmerDatas as farmerDetail[],
+            data: farmerDatas,
             successCb: () => {
               setTimeout(() => {
                 queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerDetails}-fetch-${currentPage}`] });

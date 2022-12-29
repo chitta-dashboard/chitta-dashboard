@@ -19,24 +19,6 @@ const Body = () => {
     dataCount: totalDataCount,
   } = useFetchByPage(ENDPOINTS.founders, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
-  // const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
-  // const { data: foundersData } = result;
-  // const [founderSearch, setFounderSearch] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
-  // const [founderSort, setFounderSort] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
-  // const [founder, setFounder] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
-
-  // useEffect(() => {
-  //   isSuccess && setFounderSearch(Object.values(foundersData as Founders[]).filter((list) => searchWord(list.name, searchFilter)));
-  // }, [isSuccess, foundersData, searchFilter]);
-
-  // useEffect(() => {
-  //   setFounderSort(sortObj<Founders>(founderSearch, sortFilter, "name"));
-  // }, [founderSearch, sortFilter]);
-
-  // useEffect(() => {
-  //   setFounder(founderSort);
-  // }, [founderSort]);
-
   useEffect(() => {
     setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
   }, [totalDataCount, founderByPage]);

@@ -2,9 +2,8 @@ import { useRef, useEffect, FC, SetStateAction, Dispatch } from "react";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { UseFormRegister } from "react-hook-form";
-import { FieldErrorsImpl } from "react-hook-form";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
+import { AdminFormInputs } from "../../../views/admin-panel";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
 import DummyLogo156 from "../../../assets/images/DummyLogo156.svg";
 import DummyLogo180 from "../../../assets/images/DummyLogo180.svg";
@@ -18,13 +17,18 @@ interface CustomProps {
   color?: boolean;
 }
 
+type TLogo = File | undefined | null;
+type TSetLogo = Dispatch<SetStateAction<File | undefined | null>>;
+type TImage = File | undefined | null;
+type TSetImage = Dispatch<SetStateAction<File | undefined | null>>;
+
 interface LogoProps {
-  register: UseFormRegister<adminFormInputs>;
-  errors?: FieldErrorsImpl<adminFormInputs>;
-  logo: File | undefined | null;
-  setLogo: Dispatch<SetStateAction<File | undefined | null>>;
-  image: File | undefined | null;
-  setImage: Dispatch<SetStateAction<File | undefined | null>>;
+  register: UseFormRegister<AdminFormInputs>;
+  errors?: FieldErrorsImpl<AdminFormInputs>;
+  logo: TLogo;
+  setLogo: TSetLogo;
+  image: TImage;
+  setImage: TSetImage;
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {

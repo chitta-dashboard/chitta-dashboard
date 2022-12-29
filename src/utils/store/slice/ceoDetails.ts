@@ -48,5 +48,4 @@ const ceoDetailsSlice = createSlice({
   reducers: {},
 });
 
-// export const { } = ceoDetailsSlice.actions;
 export const ceoDetailsReducer = ceoDetailsSlice.reducer;

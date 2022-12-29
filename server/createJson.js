@@ -19,7 +19,6 @@ const handleJSONFile = () => {
   fs.writeFile("db.json", JSON.stringify(file), (err) => {
     if (err) {
       console.log(err);
-      return;
     }
   });
 };

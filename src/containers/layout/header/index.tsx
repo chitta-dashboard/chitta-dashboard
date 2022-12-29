@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Theme, useMediaQuery } from "@mui/material";
-import { decryptText, ROUTES } from "../../../utils/constants";
+import { decryptText, ROUTES, ENDPOINTS } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
 import NotificationModal from "../../../components/modals/notification-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
 import S from "./header.styled";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { adminFormInputs } from "../../../views/admin-panel";
+import { AdminFormInputs } from "../../../views/admin-panel";
 
 const Header = () => {
   const { clearNotification, logout } = useAuthContext();
@@ -21,7 +20,7 @@ const Header = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
@@ -65,28 +64,45 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  var settings = {
+  const slidesToShowFunc = () => {
+    switch (isLg || isXl || null) {
+      case isLg:
+        return 5;
+      case isXl:
+        return 7;
+      default:
+        return 8;
+    }
+  };
+
+  const initialSlideFunc = () => {
+    switch (isLg || isXl || null) {
+      case pathname.includes("portfolio") && !isXl && !isLg && !isLg:
+        return 1;
+      case pathname.includes("admin-panel") && isXl && !isLg:
+        return 1;
+      case pathname.includes("portfolio") && isXl && !isLg:
+        return 2;
+      case pathname.includes("farmers-details") && isXl && isLg:
+        return 3;
+      case pathname.includes("board-resolution") && isXl && isLg:
+        return 3;
+      case pathname.includes("admin-panel") && isXl && isLg:
+        return 4;
+      case pathname.includes("portfolio") && isXl && isLg:
+        return 4;
+      default:
+        return 0;
+    }
+  };
+
+  let settings = {
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: isLg ? 5 : isXl ? 7 : 8,
+    slidesToShow: slidesToShowFunc(),
     slidesToScroll: 1,
-    initialSlide:
-      pathname.includes("portfolio") && !isXl && !isLg && !isLg
-        ? 1
-        : pathname.includes("admin-panel") && isXl && !isLg
-        ? 1
-        : pathname.includes("portfolio") && isXl && !isLg
-        ? 2
-        : pathname.includes("farmers-details") && isXl && isLg
-        ? 3
-        : pathname.includes("board-resolution") && isXl && isLg
-        ? 3
-        : pathname.includes("admin-panel") && isXl && isLg
-        ? 4
-        : pathname.includes("portfolio") && isXl && isLg
-        ? 4
-        : 0,
+    initialSlide: initialSlideFunc(),
     centerPadding: "1rem",
   };
 

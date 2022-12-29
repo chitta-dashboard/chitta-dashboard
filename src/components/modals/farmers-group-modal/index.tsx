@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { ENDPOINTS } from "../../../utils/constants";
-import { useFetch, useIdByPage } from "../../../utils/hooks/query";
+import { useIdByPage } from "../../../utils/hooks/query";
 import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
 import FormField from "./body/formField";
@@ -24,13 +24,11 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
-  // const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const {
     result: { data: farmerGroupData, isFetchedAfterMount: isFetched },
     formatChangeSuccess: isSuccess,
   } = useIdByPage(ENDPOINTS.farmerGroup, id);
 
-  // const { data: farmerGroupData } = result;
   // for enabling the submit button
   const groupNameEvent = watch("groupName");
   const explanationEvent = watch("explanation");
@@ -41,8 +39,6 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
 
   if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
     enableButton = false;
-  } else {
-    enableButton = true;
   }
 
   useEffect(() => {

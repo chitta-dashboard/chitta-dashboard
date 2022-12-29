@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { adminFormInputs } from "../admin-panel";
+import { AdminFormInputs } from "../admin-panel";
 import { useFetch, useIdByPage } from "../../utils/hooks/query";
 import S from "./md-details-page.styled";
 import nerkathirDefaultLogo from "../../assets/images/logo.png";
@@ -16,11 +16,6 @@ interface Props {
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
   const { mdId } = useParams();
   const { farmerBankDetail } = useFarmerDetailsContext();
-
-  // const {
-  //   result: { data: mdDetailsById },
-  //   formatChangeSuccess: isSuccess,
-  // } = useFetch(ENDPOINTS.mdDetails);
 
   const {
     result: { data: mdDetailsById },
@@ -38,7 +33,7 @@ const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPri
     name: titleName,
     address,
     coordinatorAddress,
-  } = isSuccessAdmin && Object.values(adminDetails as adminFormInputs)[0];
+  } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>

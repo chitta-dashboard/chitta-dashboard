@@ -11,13 +11,6 @@ import S from "./body.styled";
 
 const Body = () => {
   const { searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport, setFarmerQuery } = useFarmerDetailsContext();
-  // const { searchFilter, sortFilter, groupFilter, currentPage, selectedFarmers } = useSelector((state: any) => state.farmerDetails);
-  // const dispatch = useDispatch();
-  // console.log("currentPage", currentPage);
-  // const {
-  //   formatChangeSuccess: isSuccess,
-  //   result: { data: farmersDetailsById },
-  // }: any = useFetch(ENDPOINTS.farmerDetails);
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
@@ -28,26 +21,11 @@ const Body = () => {
   } = useFetchByPage(ENDPOINTS.farmerDetails, currentPage, `${searchQuery}${groupQuery}${sortQuery}`, dataLimit);
 
   const { farmerId, farmerIdRefetch } = useGetFarmersId(ENDPOINTS.farmerDetails, `${searchQuery}${groupQuery}${sortQuery}`);
-  // console.log("farmersDetailsByPage", farmersDetailsByPage);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  // const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
-  // const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
-  // const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
-  // const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
-  // const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
-  // const [loader, setLoader] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   setLoader(false);
-
-  //   setTimeout(() => {
-  //     setLoader(true);
-  //   }, 300);
-  // }, []);
 
   useEffect(() => {
     farmerPageRefetch();
@@ -56,9 +34,6 @@ const Body = () => {
   }, [searchQuery, sortQuery, groupQuery, currentPage, isFarmerByPageSuccess]);
 
   useEffect(() => {
-    // dispatch(addFarmerId(farmerId));
-    // dispatch(setFarmersIdToExport(farmerId));
-    // addFarmerId(farmerId);
     setFarmersIdToExport(farmerId);
   }, [farmerId]);
 
@@ -66,64 +41,62 @@ const Body = () => {
     setPageCount({ pageCount: Math.ceil(totalDataCount / dataLimit), totalPageCount: totalDataCount });
   }, [totalDataCount, isFarmerByPageSuccess]);
 
-  // farmer group filter for farmer detail table
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setFarmersListGroup(
-  //       groupFilter === "all"
-  //         ? Object.values(farmersDetailsById as farmerDetail[])
-  //         : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
-  //     );
+  // const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  // const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
+  //   const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
+  //   if (farmerDelete) {
+  //     const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  //     const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
+  //     const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+  //     updatedFarmerGroup.members = updatedMember;
+  //     isAdd && (await addGroupMember(id, group));
+  //     updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
   //   }
-  // }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
+  // };
 
-  // useEffect(() => {
-  //   let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
-  //   setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
-  //   let updatedData = isSuccess && [...result];
-  //   isFarmerByPageSuccess && setFarmersListSearch(Object.values(farmersDetailsByPage));
-  // }, [searchFilter, farmersListGroup, isSuccess, isFarmerByPageSuccess, sortFilter]);
-
-  // useEffect(() => {
-  //   isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
-  // }, [farmersListSearch, sortFilter, isSuccess]);
-
-  //farmer id to export farmers
-  // useEffect(() => {
-  //   isSuccess && setFarmersList(farmersListSort);
-  //   //console.log("Export Data : ",exportFarmerId)
-  //   let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
-  //   //console.log("Farmer Id : ",farmerId)
-  //   //dispatch(setFarmersIdToExport(farmersId));
-  // }, [farmersListSort, isSuccess, exportFarmerId]);
-
-  // // For tamil share holder certificate
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
-  //     //isSuccess && addFarmerId(farmerId);
-  //   }
-  // }, [isSuccess, farmersList, exportFarmerId]);
+  // const addGroupMember = async (id: string, group: string) => {
+  //   const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   const newGroupMember = farmersGroupData[groupIndex];
+  //   newGroupMember.members.push(id);
+  //   await editFarmerGroup({ editedData: newGroupMember });
+  // };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
-    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate].members.includes(id) : true;
-    if (farmerDelete) {
-      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    const onlyRemove = !toAdd ? !toAdd : !isCountUpdate;
+    if (onlyRemove) {
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
-      isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => toAdd && addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && toAdd && addGroupMember(id, group, farmersGroupData);
     }
   };
 
-  const addGroupMember = async (id: string, group: string) => {
-    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-    const newGroupMember = farmersGroupData[groupIndex];
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
   };
 
   return (

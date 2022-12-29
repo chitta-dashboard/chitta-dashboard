@@ -91,7 +91,7 @@ export const useAdd = (endpoint: Endpoints) => {
 export const useEdit = (endpoint: Endpoints) => {
   const { loader } = useAuthContext();
   const { result } = useFetch(endpoint);
-  let successCallback: () => void;
+  let successCallback: (data?: any) => void;
   let errorCallback: () => void;
 
   return useMutation(
@@ -118,7 +118,7 @@ export const useEdit = (endpoint: Endpoints) => {
           updatedData = { ...result.data, [data.id]: data };
         }
         queryClient.setQueryData([`${endpoint}-fetch`], updatedData);
-        successCallback();
+        successCallback(updatedData);
       },
       onError: () => {
         errorCallback();
@@ -186,14 +186,11 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
       queryKey: [`${endpoint}-fetch-${pageNo}`],
       queryFn: () => {
         return axios.get(prefetchQuery).then((res: any) => {
-          // return groupBy(res.data, "id");
           return res.data;
         });
       },
     });
   };
-  //console.log("querypage", params);
-  //page = params ? 1 : page;
   let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${
     params ? `${params}&_page=${page}&_limit=${dataLimit}` : `?_page=${page}&_limit=${dataLimit}`
   }`;
@@ -203,7 +200,6 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     queryFn: () => {
       return axios.get(query).then((res: any) => {
         setCount(res.headers.get("X-total-count"));
-        // return groupBy(res.data, "id");
         return res.data;
       });
     },
@@ -222,7 +218,6 @@ export const useFetchByPage = (endpoint: Endpoints, page: number, params?: strin
     // eslint-disable-next-line react-hooks/exhaustive-deps
     setformatChangeSucess(result.isFetched);
   }, [result.isFetched && count]);
-  //console.log("Result : ",result.data)
   return { formatChangeSuccess, result, dataCount: count };
 };
 
@@ -371,7 +366,8 @@ export const useGetFarmersCount = () => {
 };
 
 export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
-  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${params ? `${params}` : ""}`;
+  let setParams = params ? params : "";
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${setParams}`;
   const [farmerId, setFarmerId] = useState<string[]>([]);
   const result = useQuery({
     queryKey: [`${endpoint}-fetch-id}-${params}`],
@@ -383,14 +379,12 @@ export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
     cacheTime: 0, // do not change!
     staleTime: 0, // do not change!
   });
-  const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
 
   useEffect(() => {
     if (Array.isArray(result.data)) {
       queryClient.setQueryData([`${endpoint}-fetch-id}-${params}`], groupBy(result.data, "id"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    setformatChangeSucess(result.isFetched);
     if (result.isFetched) {
       let idArray: string[] = Object.values(result.data).map((item: any) => {
         return item.id;
@@ -403,7 +397,6 @@ export const useGetFarmersId = (endpoint: Endpoints, params?: string) => {
 
 export const useDeleteByPage = (endpoint: Endpoints, page: number, params?: string, dataLimit?: number) => {
   const { loader } = useAuthContext();
-  const { result } = useFetchByPage(endpoint, page as number, params, dataLimit, false);
   let successCallback: () => void;
   let errorCallback: () => void;
 
@@ -425,6 +418,7 @@ export const useDeleteByPage = (endpoint: Endpoints, page: number, params?: stri
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: [`${endpoint}-fetch-${page}`] });
+        queryClient.invalidateQueries({ queryKey: [`${endpoint}-fetch`] });
         successCallback();
       },
       onError: () => {
@@ -439,7 +433,7 @@ export const useDeleteByPage = (endpoint: Endpoints, page: number, params?: stri
 
 export const useEditByPage = (endpoint: Endpoints, page: number, params?: string, id?: string, dataLimit?: number) => {
   const { loader } = useAuthContext();
-  const { result } = useFetchByPage(endpoint, page as number, params, dataLimit, false);
+  const { result } = useFetchByPage(endpoint, page, params, dataLimit, false);
   let successCallback: () => void;
   let errorCallback: () => void;
 
@@ -456,6 +450,7 @@ export const useEditByPage = (endpoint: Endpoints, page: number, params?: string
         const updateData = groupBy(result.data, "id");
         updateData[data.id] = data;
         queryClient.setQueryData([`${endpoint}-fetch-${page}`], Object.values(updateData));
+        queryClient.setQueryData([`${endpoint}-fetch`], updateData);
         queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${data.id}`] });
         successCallback();
       },
@@ -470,7 +465,7 @@ export const useEditByPage = (endpoint: Endpoints, page: number, params?: string
 };
 
 export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnabled: boolean = true) => {
-  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${`?id=${id}`}`;
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}?id=${id}`;
   const result = useQuery({
     queryKey: [`${endpoint}-single-${id}`],
     queryFn: async () => {
@@ -478,6 +473,7 @@ export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnab
         return groupBy(res.data, "id");
       });
     },
+    cacheTime: 0, // do not change!
     // cacheTime: Infinity, // do not change!
     // staleTime: Infinity, // do not change!
     enabled: isEnabled ? isEnabled : true,
@@ -485,13 +481,12 @@ export const useIdByPage = (endpoint: Endpoints, id?: string | undefined, isEnab
   const [formatChangeSuccess, setformatChangeSucess] = useState<boolean>(result.isFetched);
   useEffect(() => {
     setformatChangeSucess(result.isFetched);
-    // queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${id}`] });
   }, [result.isFetched]);
   return { formatChangeSuccess, result };
 };
 
 export const useFetchByParams = (endpoint: Endpoints, params: string, isEnabled: boolean = true) => {
-  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}${`?${params}`}`;
+  let query = `${process.env.REACT_APP_API_KEY}/${endpoint}?${params}`;
 
   const result: UseQueryResult<any, unknown> = useQuery({
     queryKey: [`${endpoint}-query`],
@@ -506,7 +501,6 @@ export const useFetchByParams = (endpoint: Endpoints, params: string, isEnabled:
 
   useEffect(() => {
     setformatChangeSucess(result.isFetched);
-    // queryClient.invalidateQueries({ queryKey: [`${endpoint}-single-${id}`] });
   }, [result.isFetched]);
 
   return {

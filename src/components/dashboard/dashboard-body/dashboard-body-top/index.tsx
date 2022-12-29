@@ -6,8 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useGetFarmersCount } from "../../../../utils/hooks/query";
 import Icon from "../../../icons";
-import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
-import { farmerDetail } from "../../../../utils/context/farmersDetails";
+import { ACRETOCENT } from "../../../../utils/constants";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
 import S from "../dashboardBodyTop.styled";
 import PopOver from "../../../common-components/pop-over";
@@ -76,21 +75,27 @@ const DashboardBodyTop = () => {
       icon: "farmland",
       isSuccess: isFarmerDetailsLoading,
     },
-    // {
-    //   id: 6,
-    //   headCount: "-122",
-    //   bodyCount: 770,
-    //   footerName: "Cultivation (Kg)",
-    //   icon: "cultivation",
-    // },
   ];
 
-  var settings = {
+  const slides = () => {
+    switch (xl || md || sm || null) {
+      case xl:
+        return 4;
+      case md:
+        return 4;
+      case sm:
+        return 3;
+      default:
+        return 2;
+    }
+  };
+
+  let settings = {
     dots: false,
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: xl ? 4 : md ? 4 : sm ? 3 : 2,
+    slidesToShow: slides(),
     slidesToScroll: 1,
     autoplay: false,
     centerPadding: "1rem",
@@ -113,7 +118,7 @@ const DashboardBodyTop = () => {
   };
 
   const onChangeDataHandler = (updateValue: string) => {
-    setValue({ ...value, [popId as string]: updateValue });
+    setValue({ ...value, [popId]: updateValue });
     setIsPopOver(null);
   };
 

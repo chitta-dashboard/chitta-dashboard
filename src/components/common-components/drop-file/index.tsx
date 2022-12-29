@@ -8,7 +8,7 @@ import S from "./dropFile.styled";
 
 export interface IDropValidationResult {
   status: boolean;
-  message?: string | undefined;
+  message?: string;
   groups?: string[];
   data?: farmerDetail[];
   existingFarmers?: Object[];
@@ -126,7 +126,6 @@ const DropFile: React.FC<IDropFile> = function ({
         setProcessingFile(true);
         const validation = validate ? await validate(file) : { status: true, message: "", groups: [], data: [], existingFarmers: [], newFarmers: [] };
         setProcessingFile(false);
-        // console.log("from d&d", validation.data);
         if (validation.status) {
           setTargetState("completedDrag");
           setSelectedFile(file);

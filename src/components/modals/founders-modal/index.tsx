@@ -2,15 +2,13 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-// import { useFounderContext } from "../../../utils/context/founders";
+import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor, dateFormat } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import { dateFormat } from "../../../utils/constants";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
-import { useFetch, useIdByPage } from "../../../utils/hooks/query";
+import { useIdByPage } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
@@ -23,15 +21,12 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  // let { foundersById } = useFounderContext();
 
-  // const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
   const {
     formatChangeSuccess: isSuccess,
     result: { data: foundersById, isFetchedAfterMount: isFetched },
   } = useIdByPage(ENDPOINTS.founders, id);
 
-  // const { data: foundersById } = result;
 
   const { handleSubmit, reset, clearErrors, setValue, getValues, control: formControl, unregister, watch } = useForm<IAddFounderDetailsFormInput>();
 

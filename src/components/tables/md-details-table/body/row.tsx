@@ -28,8 +28,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
   const { currentPage } = useMdDetailsContext();
   const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, params);
   const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage, params);
-  // const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  // const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { setFarmerBankDetail } = useFarmerDetailsContext();
 
@@ -86,7 +84,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = await encryptText(compressedBase64);
+    user["profile"] = encryptText(compressedBase64);
     const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
@@ -105,9 +103,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
     });
   };
 
-  // const NavigateToMdDetailForm = (mdId: string) => {
-  //   navigate(`/md-details/${mdId}`);
-  // };
   const NavigateToMdDetailForm = (mdId: string) => {
     setOpenFarmerRowModal(mdId);
   };
@@ -189,18 +184,36 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
                   Toast({ message: "Request failed! Please try again", type: "error" });
                 },
               });
-            editData && user.farmerId && (await removeGroupMember(user.farmerId, editData.group));
+            // editData && user.farmerId && (await removeGroupMember(user.farmerId, editData.group));
+            // const farmerEditData = { ...editData, id: editData?.farmerId };
+            // delete farmerEditData.farmerId;
+            // editData &&
+            //   editFarmer({
+            //     editedData: farmerEditData,
+            //     successCb: () => {
+            //       editMdDetail({ editedData: editData });
+            //       Toast({ message: "MD Edited Successfully", type: "success" });
+            //     },
+            //     errorCb: () => {
+            //       Toast({ message: "Request failed! Please try again", type: "error" });
+            //     },
+            //   });
+
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editData &&
+            editMode &&
+              editData &&
               editFarmer({
                 editedData: farmerEditData,
                 successCb: () => {
-                  editMdDetail({ editedData: editData });
-                  Toast({ message: "MD Edited Successfully", type: "success" });
-                },
-                errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  editMdDetail({
+                    editedData: editData,
+                    successCb: () => {
+                      user.farmerId && removeGroupMember(user.farmerId, editData.group);
+                      Toast({ message: "MD Edited Successfully", type: "success" });
+                    },
+                    errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                  });
                 },
               });
             setEditMode(false);

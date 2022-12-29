@@ -58,7 +58,6 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
         latestVariantId = id;
       }
     }
-    // console.log("final", data[latestVariantId]);
     return data[latestVariantId] as IPortfolioVariant;
   });
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);

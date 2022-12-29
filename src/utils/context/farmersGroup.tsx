@@ -47,7 +47,7 @@ type updatedCountType = {
   totalPageCount: number;
 };
 
-interface farmersGroupContextType {
+interface FarmersGroupContextType {
   farmersGroupById: { [id: string]: FarmersGroup };
   searchFilter: string;
   memberFilter: number;
@@ -70,7 +70,7 @@ interface farmersGroupContextType {
   setFarmerGroupQuery: (data: string) => void;
 }
 
-const initialState: farmersGroupContextType = {
+const initialState: FarmersGroupContextType = {
   // farmersGroupById: {
   //   a: {
   //     id: "a",
@@ -121,7 +121,7 @@ const initialState: farmersGroupContextType = {
   pageCount: 0,
   totalPageCount: 0,
 };
-const reducer = (state: farmersGroupContextType, action: any) => {
+const reducer = (state: FarmersGroupContextType, action: any) => {
   switch (action.type) {
     case ADD_FARMERS_GROUP:
       return { ...state, farmersGroupById: { [action.payload.id]: action.payload, ...state.farmersGroupById } };
@@ -185,7 +185,7 @@ const reducer = (state: farmersGroupContextType, action: any) => {
   }
 };
 
-export const farmersGroupContext = createContext<farmersGroupContextType>(initialState);
+export const farmersGroupContext = createContext<FarmersGroupContextType>(initialState);
 
 const FarmersGroupContextProvider: FC<Props> = (props) => {
   const [state, dispatch] = useReducer<(reducer: any, initialState: any) => any>(reducer, initialState);

@@ -61,9 +61,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         signature: "",
         profile: "",
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
-  // }, [editMode, id]);
 
   const onSubmit: any = async (data: IAddMDDetailsFormInput & { id: string }) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
@@ -79,8 +77,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
       profile: encryptedBase64,
       id: editMode ? id : uuidv4(),
     } as IAddMDDetailsFormInput & { id: string });
-    // handleClose();
-    // reset();
+    
   };
 
   return (

@@ -49,7 +49,7 @@ const ResolutionCertificatePage = () => {
           navigate(-1);
           addNotification({
             id: "delete" + resolutionId,
-            message: MessageStructured(resolutions[resolutionId as string].groupTitle, ENDPOINTS.resolutions, "delete"),
+            message: MessageStructured(resolutions[resolutionId].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
           Toast({ message: "Resolution deleted successfully.", type: "success" });
         },

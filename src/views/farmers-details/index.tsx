@@ -52,7 +52,6 @@ const FarmersDetails = () => {
       (await mutate({
         data: newFarmer,
         successCb: () => {
-          // farmerPageRefetch();
           setTimeout(() => {
             queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerDetails}-fetch-${currentPage}`] });
           }, 0);
