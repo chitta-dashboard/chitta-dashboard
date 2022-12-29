@@ -277,6 +277,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   id: user.id,
                   successCb: () => {
                     Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                    removeGroupMember(user.id, user.group, false);
                     addNotification({
                       id: `delete${user.id}`,
                       image: user.profile ? user.profile : placeHolderImg,
@@ -285,7 +286,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   },
                   errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                 });
-              isFarmerInMd && removeGroupMember(user.id, user.group, false);
               isFarmerInMd &&
                 farmerDelete({
                   id: user.id,
@@ -293,6 +293,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                     mdDelete({
                       id: isFarmerInMd,
                       successCb: async () => {
+                        removeGroupMember(user.id, user.group, false);
                         Toast({ message: "Farmer Deleted Successfully", type: "success" });
                         addNotification({
                           id: `delete${user.id}`,
@@ -353,7 +354,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={async () => {
-              const isFarmerInMd = (Object.values(isSuccess && mdDetailsById) as IMdDetails[]).find((data) => data.farmerId === user.id)?.id;
+              const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
               delete farmerEditData.farmerId;
               !isFarmerInMd &&

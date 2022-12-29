@@ -128,25 +128,62 @@ const FarmerFormPreviewLeft = () => {
     setOpenConfirmationModal(data);
   };
 
+  // const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  // const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
+  //   const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate]?.members.includes(id) : true;
+  //   if (farmerDelete) {
+  //     const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  //     const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
+  //     const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+  //     updatedFarmerGroup.members = updatedMember;
+  //     isAdd && (await addGroupMember(id, group));
+  //     updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
+  //   }
+  // };
+
+  // const addGroupMember = async (id: string, group: string) => {
+  //   const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
+  //   const newGroupMember = farmersGroupData[groupIndex];
+  //   newGroupMember.members.push(id);
+  //   editFarmerGroup({ editedData: newGroupMember });
+  // };
+
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
-    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate]?.members.includes(id) : true;
-    if (farmerDelete) {
-      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    const onlyRemove = !toAdd ? !toAdd : !isCountUpdate;
+    if (onlyRemove) {
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
-      isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => toAdd && addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && toAdd && addGroupMember(id, group, farmersGroupData);
     }
   };
 
-  const addGroupMember = async (id: string, group: string) => {
-    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-    const newGroupMember = farmersGroupData[groupIndex];
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
     newGroupMember.members.push(id);
-    editFarmerGroup({ editedData: newGroupMember });
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
   };
 
   return (
@@ -266,7 +303,7 @@ const FarmerFormPreviewLeft = () => {
                 mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
               />
             )}
-            {openDeleteModal && (
+            {/* {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
@@ -280,9 +317,7 @@ const FarmerFormPreviewLeft = () => {
                         addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                         Toast({ message: "Farmer Deleted Successfully", type: "success" });
                       },
-                      errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
-                      },
+                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                     });
                   isFarmerInMd &&
                     farmerDelete({
@@ -294,9 +329,7 @@ const FarmerFormPreviewLeft = () => {
                             addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
                             Toast({ message: "Farmer Deleted Successfully", type: "success" });
                           },
-                          errorCb: () => {
-                            Toast({ message: "Request failed! Please try again", type: "error" });
-                          },
+                          errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                         });
                       },
                     });
@@ -339,6 +372,91 @@ const FarmerFormPreviewLeft = () => {
                       },
                       errorCb: () => {
                         Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  setOpenConfirmationModal(null);
+                  setOpenEditModal(false);
+                }}
+              />
+            )} */}
+            {openDeleteModal && (
+              <DeleteModal
+                openModal={true}
+                handleClose={() => setOpenDeleteModal(false)}
+                handleDelete={async () => {
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+                  !isFarmerInMd &&
+                    farmerDelete({
+                      id: user.id,
+                      successCb: () => {
+                        Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                        addNotification({
+                          id: `delete${user.id}`,
+                          image: user.profile ? user.profile : profilePlaceholder,
+                          message: Message(user.name).deleteFarmDetail,
+                        });
+                      },
+                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                    });
+                  isFarmerInMd && removeGroupMember(user.id, user.group, false);
+                  isFarmerInMd &&
+                    farmerDelete({
+                      id: user.id,
+                      successCb: () => {
+                        mdDelete({
+                          id: isFarmerInMd,
+                          successCb: async () => {
+                            Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                            addNotification({
+                              id: `delete${user.id}`,
+                              image: user.profile ? user.profile : profilePlaceholder,
+                              message: Message(user.name).deleteFarmDetail,
+                            });
+                          },
+                          errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                        });
+                      },
+                    });
+                  navigate(-1);
+                }}
+                deleteMessage={
+                  <span>
+                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from Farmers Details?
+                  </span>
+                }
+              />
+            )}
+            {openConfirmationModal && (
+              <ConfirmationModal
+                openModal={true}
+                handleClose={() => {
+                  setOpenConfirmationModal(null);
+                }}
+                yesAction={async () => {
+                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
+                  delete farmerEditData.farmerId;
+                  !isFarmerInMd &&
+                    editFarmer({
+                      editedData: farmerEditData,
+                      successCb: async () => {
+                        removeGroupMember(user.id, openConfirmationModal.group, true);
+                        Toast({ message: "Farmer Edited Successfully", type: "success" });
+                      },
+                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                    });
+                  isFarmerInMd &&
+                    editFarmer({
+                      editedData: farmerEditData,
+                      successCb: () => {
+                        editMdDetail({
+                          editedData: openConfirmationModal,
+                          successCb: () => {
+                            removeGroupMember(user.id, openConfirmationModal.group, true);
+                            Toast({ message: "Farmer Edited Successfully", type: "success" });
+                          },
+                          errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                        });
                       },
                     });
                   setOpenConfirmationModal(null);

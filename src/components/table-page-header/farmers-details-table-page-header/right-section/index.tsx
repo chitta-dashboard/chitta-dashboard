@@ -268,7 +268,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
           }
           onClick={() => shareAmountModalHandler()}
         >
-          s Share Holder
+          Share Holder
         </S.CustomButton>
         <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
         <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
