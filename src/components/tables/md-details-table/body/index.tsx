@@ -77,7 +77,6 @@ const Body = () => {
         editFarmerGroup({
           editedData: updatedFarmerGroup,
           successCb: (data) => {
-            console.log(data);
             setTimeout(() => addGroupMember(id, group, Object.values(data)), 0);
           },
         });

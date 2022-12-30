@@ -41,7 +41,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
         control={control}
         rules={{
           required: farmerBankDetail && "required",
-          validate: (value) => (value !== accntNo ? "Account number should match" : true),
+          validate: (value) => (value !== accntNo && farmerBankDetail ? "Account number should match" : true),
         }}
         options={{
           label: "வங்கி கணக்கு எண்ணை உறுதி செய்க  *",
