@@ -77,45 +77,6 @@ const MdDetails = () => {
     }
   };
 
-  // const handleYesAction = async () => {
-  //   let farmerData: IMdDetails[] = [];
-  //   const notifications: Notification[] = [];
-  //   selectedKeys.forEach((item: string) => {
-  //     let generatedId = uuidv4();
-  //     let farmerDetailsResult: IMdDetails = {} as IMdDetails;
-  //     let farmerKeys = Object.keys(farmersData[item]);
-  //     farmerDetailsResult.id = generatedId;
-  //     farmerDetailsResult.farmerId = farmersData[item].id;
-  //     farmerKeys.forEach((key) => {
-  //       if (key !== "id") {
-  //         farmerDetailsResult[key as keyof IMdDetails] = farmersData[item][key as keyof farmerDetail] as never;
-  //       }
-  //     });
-  //     farmerData.push(farmerDetailsResult);
-
-  //     //Notification
-  //     let notification = {
-  //       id: generatedId,
-  //       image: farmersData[item].profile,
-  //       message: Message(farmersData[item].name).addMd,
-  //     };
-
-  //     notifications.push(notification);
-  //   });
-  //   await addMdDetail({
-  //     data: farmerData,
-  //     successCb: () => {
-  //       Toast({ message: "MD Added successfully.", type: "success" });
-  //       addMdNotification({ data: notifications });
-  //     },
-  //     errorCb: () => {
-  //       Toast({ message: "Request failed! Please try again.", type: "error" });
-  //     },
-  //   });
-  //   setIsConfirmModalOpen(false);
-  //   addModalHandler();
-  // };
-
   const handleYesAction = () => {
     let farmerData: IMdDetails[] = [];
     const notifications: Notification[] = [];

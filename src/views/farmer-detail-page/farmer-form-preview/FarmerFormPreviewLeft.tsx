@@ -128,27 +128,6 @@ const FarmerFormPreviewLeft = () => {
     setOpenConfirmationModal(data);
   };
 
-  // const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  // const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
-  //   const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-  //   const farmerDelete = isAdd ? !farmersGroupData[noCountUpdate]?.members.includes(id) : true;
-  //   if (farmerDelete) {
-  //     const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
-  //     const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
-  //     const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
-  //     updatedFarmerGroup.members = updatedMember;
-  //     isAdd && (await addGroupMember(id, group));
-  //     updatedFarmerGroup.members && editFarmerGroup({ editedData: updatedFarmerGroup });
-  //   }
-  // };
-
-  // const addGroupMember = async (id: string, group: string) => {
-  //   const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-  //   const newGroupMember = farmersGroupData[groupIndex];
-  //   newGroupMember.members.push(id);
-  //   editFarmerGroup({ editedData: newGroupMember });
-  // };
-
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
     let removeMemberIndex = -1;
