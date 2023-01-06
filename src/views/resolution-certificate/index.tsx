@@ -17,6 +17,7 @@ import Toast from "../../utils/toast";
 import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
+  const toastId = "toastId";
   const [deletion, setDeletion] = useState(false);
   const [edition, setEdition] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
@@ -51,10 +52,10 @@ const ResolutionCertificatePage = () => {
             id: "delete" + resolutionId,
             message: MessageStructured(resolutions[resolutionId].groupTitle, ENDPOINTS.resolutions, "delete"),
           });
-          Toast({ message: "Resolution deleted successfully.", type: "success" });
+          Toast({ message: "Resolution deleted successfully.", type: "success", customId: `${toastId}-resolutionDelteSuccess` });
         },
         errorCb: () => {
-          Toast({ message: "Request failed, please try again.", type: "error" });
+          Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-resolutionDelteFail` });
         },
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,10 +151,10 @@ const ResolutionCertificatePage = () => {
             mutateEdition({
               editedData: editedData.current,
               successCb: () => {
-                Toast({ message: "Resolution edited successfully.", type: "success" });
+                Toast({ message: "Resolution edited successfully.", type: "success", customId: `${toastId}-resolutionEditSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-resolutionEditFail` });
               },
             });
             setConfirmation(false);

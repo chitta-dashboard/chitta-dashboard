@@ -13,6 +13,7 @@ import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
 
 const Founders = () => {
+  const toastId = "toastId";
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
   const { setSearchFilter, sortFilter, currentPage, setSortFilter } = useFounderContext();
   const { addNotification } = useAuthContext();
@@ -37,10 +38,10 @@ const Founders = () => {
           image: data.profile,
           message: Message(data.name).addFoundersDetails,
         });
-        Toast({ message: "Founder Added Successfully", type: "success" });
+        Toast({ message: "Founder Added Successfully", type: "success", customId: `${toastId}-founderAdd` });
       },
       errorCb: () => {
-        Toast({ message: "Request failed! Please try again", type: "error" });
+        Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-founderAddFail` });
       },
     });
   };

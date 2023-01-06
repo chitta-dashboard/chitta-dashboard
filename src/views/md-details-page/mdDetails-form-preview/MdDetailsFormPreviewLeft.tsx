@@ -19,6 +19,7 @@ import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
+  const toastId = "toastId";
   const { mdId } = useParams();
 
   let {
@@ -102,10 +103,10 @@ const MdFormPreviewLeft = () => {
         editMdDetail({
           editedData: result,
           successCb: () => {
-            Toast({ message: "MD Edited Successfully.", type: "success" });
+            Toast({ message: "MD Edited Successfully.", type: "success", customId: `${toastId}-mdEditSuccess` });
           },
           errorCb: () => {
-            Toast({ message: "Request failed! Please try again.", type: "error" });
+            Toast({ message: "Request failed! Please try again.", type: "error", customId: `${toastId}-mdEditFail` });
           },
         });
       },
@@ -274,11 +275,11 @@ const MdFormPreviewLeft = () => {
                     id: user.id,
                     successCb: () => {
                       addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                      Toast({ message: "MD Deleted Successfully", type: "success" });
+                      Toast({ message: "MD Deleted Successfully", type: "success", customId: `${toastId}-mdDeleteSuccess` });
                       navigate(-1);
                     },
                     errorCb: () => {
-                      Toast({ message: "Request failed! Please try again", type: "error" });
+                      Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdDeleteFail` });
                     },
                   });
                 }}
@@ -305,9 +306,9 @@ const MdFormPreviewLeft = () => {
                         editedData: openConfirmationModal,
                         successCb: () => {
                           user.farmerId && removeGroupMember(user.farmerId, openConfirmationModal.group);
-                          Toast({ message: "MD Edited Successfully", type: "success" });
+                          Toast({ message: "MD Edited Successfully", type: "success", customId: `${toastId}-mdEditSuccessForm` });
                         },
-                        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdEditFailForm` }),
                       });
                     },
                   });

@@ -10,6 +10,7 @@ const CLEAR_NOTIFICATION = "CLEAR_NOTIFICATION";
 const ADD_UPDATE = "ADD_UPDATE";
 const ADD_LOGO = "ADD_LOGO";
 const LOADER = "LOADER";
+const toastId = "toastId";
 
 export type Notification = {
   id: string;
@@ -117,6 +118,7 @@ const AuthContextProvider: FC<Props> = (props) => {
     Toast({
       message: "Login successfull.",
       type: "success",
+      customId: `${toastId}-loginSuccess`,
     });
   };
 
@@ -126,6 +128,7 @@ const AuthContextProvider: FC<Props> = (props) => {
     Toast({
       message: "Logout successfull.",
       type: "success",
+      customId: `${toastId}-logoutSuccess`,
     });
   };
 

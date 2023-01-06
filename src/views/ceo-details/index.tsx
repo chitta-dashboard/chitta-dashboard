@@ -10,6 +10,7 @@ import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
 
 const CeoDetails = () => {
+  const toastId = "toastId";
   const {
     formatChangeSuccess,
     result: { data: ceoDetails },
@@ -26,10 +27,10 @@ const CeoDetails = () => {
     ceoAdd({
       data: data,
       successCb: () => {
-        Toast({ message: "CEO added successfully.", type: "success" });
+        Toast({ message: "CEO added successfully.", type: "success", customId: `${toastId}-ceoaddSuccess` });
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-ceoaddFail` });
       },
     });
     addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addCeoDetails });

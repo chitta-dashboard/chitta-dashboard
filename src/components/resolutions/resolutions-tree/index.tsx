@@ -16,10 +16,13 @@ interface Props {
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
+  const toastId = "toastId";
   const {
     formatChangeSuccess,
     result: { data: resolutionsObj, isError },
-  } = useFetch(ENDPOINTS.resolutions, { errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error" }) });
+  } = useFetch(ENDPOINTS.resolutions, {
+    errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error", customId: `${toastId}-cantReach` }),
+  });
 
   const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
   const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;

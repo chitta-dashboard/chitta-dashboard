@@ -20,6 +20,7 @@ import { S } from "./farmer-form-preview.styled";
 import { IMdDetails } from "../../../utils/store/slice/mdDetails";
 
 const FarmerFormPreviewLeft = () => {
+  const toastId = "toastId";
   const { currentPage, farmerQuery } = useFarmerDetailsContext();
 
   const {
@@ -103,10 +104,10 @@ const FarmerFormPreviewLeft = () => {
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
         successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
+          Toast({ message: "Farmer Edited Successfully", type: "success", customId: `${toastId}-farmerEditSuccess` });
         },
         errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
+          Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerEditFail` });
         },
       });
     isFarmerInMd &&
@@ -116,10 +117,10 @@ const FarmerFormPreviewLeft = () => {
           editMdDetail({
             editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
             successCb: () => {
-              Toast({ message: "Farmer Edited Successfully", type: "success" });
+              Toast({ message: "Farmer Edited Successfully", type: "success", customId: `${toastId}-farmerEditSuccessInmd` });
             },
             errorCb: () => {
-              Toast({ message: "Request failed! Please try again", type: "error" });
+              Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerEditFailInmd` });
             },
           });
         },
@@ -282,10 +283,10 @@ const FarmerFormPreviewLeft = () => {
                       id: user.id,
                       successCb: () => {
                         addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                        Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                        Toast({ message: "Farmer Deleted Successfully", type: "success", customId: `${toastId}-farmerDeleteSuccess` });
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerDeleteFail` });
                       },
                     });
                   isFarmerInMd &&
@@ -296,10 +297,10 @@ const FarmerFormPreviewLeft = () => {
                           id: isFarmerInMd,
                           successCb: () => {
                             addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                            Toast({ message: "Farmer Deleted Successfully", type: "success" });
+                            Toast({ message: "Farmer Deleted Successfully", type: "success", customId: `${toastId}-farmerDeleteSuccessInmd` });
                           },
                           errorCb: () => {
-                            Toast({ message: "Request failed! Please try again", type: "error" });
+                            Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerdeleteFailInmd` });
                           },
                         });
                       },
@@ -328,10 +329,10 @@ const FarmerFormPreviewLeft = () => {
                     editFarmer({
                       editedData: farmerEditData,
                       successCb: () => {
-                        Toast({ message: "MD Edited Successfully", type: "success" });
+                        Toast({ message: "MD Edited Successfully", type: "success", customId: `${toastId}-mdEditSuccess` });
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdEditFail` });
                       },
                     });
                   isFarmerInMd &&
@@ -339,10 +340,10 @@ const FarmerFormPreviewLeft = () => {
                       editedData: farmerEditData,
                       successCb: () => {
                         editMdDetail({ editedData: openConfirmationModal });
-                        Toast({ message: "MD Edited Successfully", type: "success" });
+                        Toast({ message: "MD Edited Successfully", type: "success", customId: `${toastId}-mdEditSuccessInmd` });
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdEditFailInmd` });
                       },
                     });
                   setOpenConfirmationModal(null);

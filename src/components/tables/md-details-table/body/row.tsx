@@ -24,6 +24,7 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  const toastId = "toastId";
   const queryClient = useQueryClient();
   const { currentPage } = useMdDetailsContext();
   const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, params);
@@ -93,10 +94,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
         editMdDetail({
           editedData: user,
           successCb: () => {
-            Toast({ message: "MD Edited Successfully.", type: "success" });
+            Toast({ message: "MD Edited Successfully.", type: "success", customId: `${toastId}-mdEditSuccess` });
           },
           errorCb: () => {
-            Toast({ message: "Request failed! Please try again.", type: "error" });
+            Toast({ message: "Request failed! Please try again.", type: "error", customId: `${toastId}-mdEditFail` });
           },
         });
       },
@@ -178,10 +179,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
                     queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.mdDetails}-fetch`] });
                   }, 0);
                   addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteMd });
-                  Toast({ message: "MD Deleted Successfully", type: "success" });
+                  Toast({ message: "MD Deleted Successfully", type: "success", customId: `${toastId}-mdDeleteSuccess` });
                 },
                 errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdDeleteFail` });
                 },
               });
 
@@ -196,9 +197,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }
                     editedData: editData,
                     successCb: () => {
                       user.farmerId && removeGroupMember(user.farmerId, editData.group);
-                      Toast({ message: "MD Edited Successfully", type: "success" });
+                      Toast({ message: "MD Edited Successfully", type: "success", customId: `${toastId}-mdEditSuccessForm` });
                     },
-                    errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                    errorCb: () => Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-mdEditFailForm` }),
                   });
                 },
               });

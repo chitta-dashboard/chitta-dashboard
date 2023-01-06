@@ -45,6 +45,7 @@ const DropFile: React.FC<IDropFile> = function ({
   setVerifiedNewFarmers,
   setInputData,
 }) {
+  const toastId = "toastId";
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -86,7 +87,7 @@ const DropFile: React.FC<IDropFile> = function ({
       stopDefaultBehaviour(e);
       if (targetState === "inValidDrag") {
         setTargetState("noDrag");
-        Toast({ message: "Invalid file format!", type: "error" });
+        Toast({ message: "Invalid file format!", type: "error", customId: `${toastId}-invalidFile` });
       } else if (targetState === "validDrag") {
         setProcessingFile(true);
         const file = e.dataTransfer.files[0];
@@ -105,7 +106,7 @@ const DropFile: React.FC<IDropFile> = function ({
           validation && setExistingFarmers(validation.existingFarmers);
           validation && setVerifiedNewFarmers(validation.newFarmers);
           setTargetState("noDrag");
-          Toast({ message: validation.message as string, type: "error" });
+          Toast({ message: validation.message as string, type: "error", customId: `${toastId}-handle drop` });
         }
       }
     },
@@ -136,7 +137,7 @@ const DropFile: React.FC<IDropFile> = function ({
           validation && setNewGroupNames(Array.from(new Set(validation.data?.map((i) => i.group))));
           validation && setExistingFarmers(validation.existingFarmers);
           validation && setVerifiedNewFarmers(validation.newFarmers);
-          Toast({ message: validation.message as string, type: "error" });
+          Toast({ message: validation.message as string, type: "error", customId: `${toastId}-validate` });
         }
         e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.
       }

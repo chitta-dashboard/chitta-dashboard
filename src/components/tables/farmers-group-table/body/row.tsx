@@ -20,6 +20,7 @@ interface FarmersGroupRowProp {
   params?: string;
 }
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
+  const toastId = "toastId";
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { currentPage } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
@@ -114,10 +115,10 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
             farmerGroupDelete({
               id: user.id,
               successCb: () => {
-                Toast({ message: "Farmer group removed successfully.", type: "success" });
+                Toast({ message: "Farmer group removed successfully.", type: "success", customId: `${toastId}-farmerGroupSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-farmerGroupFail` });
               },
             });
             setDeleteModal(false);
@@ -159,30 +160,30 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
                 farmerGroupEdit({
                   editedData: editData,
                   successCb: () => {
-                    Toast({ message: "Farmer group updated successfully.", type: "success" });
+                    Toast({ message: "Farmer group updated successfully.", type: "success", customId: `${toastId}-farmerGroupUpdateSuccess` });
                     newFarmerDetails.length > 0 &&
                       editFarmer({
                         editedData: newFarmerDetails,
                         successCb: () => {
-                          Toast({ message: "Farmer Edited Successfully", type: "success" });
+                          Toast({ message: "Farmer Edited Successfully", type: "success", customId: `${toastId}-farmerEditSuccess` });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerEditFail` });
                         },
                       });
                     newResolutionDetails.length > 0 &&
                       resolutionEdit({
                         editedData: newResolutionDetails,
                         successCb: () => {
-                          Toast({ message: "Resolution Edited Successfully", type: "success" });
+                          Toast({ message: "Resolution Edited Successfully", type: "success", customId: `${toastId}-resolutionEditSuccess` });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-resolutionEditFail` });
                         },
                       });
                   },
                   errorCb: () => {
-                    Toast({ message: "Request failed, please try again.", type: "error" });
+                    Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-requestFail` });
                   },
                 });
                 setEditMode(false);

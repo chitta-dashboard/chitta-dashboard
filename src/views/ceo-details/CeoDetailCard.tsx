@@ -19,6 +19,7 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
+  const toastId = "toastId";
   const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
   const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
   const {
@@ -165,10 +166,10 @@ const CeoDetailsCard = ({ user }: Props) => {
               id: user.id,
               successCb: () => {
                 addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
-                Toast({ message: "CEO deleted successfully.", type: "success" });
+                Toast({ message: "CEO deleted successfully.", type: "success", customId: `${toastId}-ceoDeletedSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-ceoDeleteFail` });
               },
             });
           }}
@@ -189,10 +190,10 @@ const CeoDetailsCard = ({ user }: Props) => {
             ceoEdit({
               editedData: openConfirmationModal,
               successCb: () => {
-                Toast({ message: "CEO updated successfully.", type: "success" });
+                Toast({ message: "CEO updated successfully.", type: "success", customId: `${toastId}-ceoUpdateSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-ceoUpdateFail` });
               },
             });
             setOpenConfirmationModal(null);

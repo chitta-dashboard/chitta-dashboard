@@ -21,6 +21,7 @@ interface FoundersRowProp {
 }
 
 const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
+  const toastId = "toastId";
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
@@ -126,10 +127,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
               id: user.id,
               successCb: () => {
                 addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteFoundersDetails });
-                Toast({ message: "Founder Deleted Successfully", type: "success" });
+                Toast({ message: "Founder Deleted Successfully", type: "success", customId: `${toastId}-founderDeleteSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed! Please try again", type: "error" });
+                Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-founderDeleteFail` });
               },
             });
             setDeleteModal(false);
@@ -150,10 +151,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
               founderMutateUpdate({
                 editedData: editData,
                 successCb: () => {
-                  Toast({ message: "Founder Edited Successfully", type: "success" });
+                  Toast({ message: "Founder Edited Successfully", type: "success", customId: `${toastId}-founderEditSuccess` });
                 },
                 errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-founderEditFail` });
                 },
               });
             setEditMode(false);

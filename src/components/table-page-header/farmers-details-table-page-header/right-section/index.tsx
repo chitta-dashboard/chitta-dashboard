@@ -17,8 +17,8 @@ interface RightSectionProps {
 }
 
 const RightSection: FC<RightSectionProps> = (props) => {
-
   const { addModalHandler } = props;
+  const toastId = "ToastId";
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   const { addNotification } = useAuthContext();
@@ -72,6 +72,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         Toast({
           message: `${importedData?.length} new farmer${Number(importedData?.length) > 1 ? "s have" : " has"} been registered.`,
           type: "success",
+          customId: `${toastId}-importedData`,
         });
 
         addNewNotification({
@@ -87,6 +88,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         Toast({
           message: `Something went wrong, sorry for the inconvenience.`,
           type: "error",
+          customId: `${toastId}-importFail`,
         });
         setImportedData(null);
         setImportModalOpen(false);
@@ -114,7 +116,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         }, 0);
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-addFarmerFail` });
       },
     });
     addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
@@ -138,6 +140,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         Toast({
           message: `Something went wrong, sorry for the inconvenience.`,
           type: "error",
+          customId: `${toastId}-somthingWentWrong`,
         });
       },
     });
@@ -165,6 +168,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
           Toast({
             message: `Something went wrong, sorry for the inconvenience.`,
             type: "error",
+            customId: `${toastId}-updateMdFail`,
           });
         },
       });
@@ -195,18 +199,21 @@ const RightSection: FC<RightSectionProps> = (props) => {
           Toast({
             message: `${selectedFarmers.length} members have been added to new farmer group ${newFarmerGroup.groupName}`,
             type: "success",
+            customId: `${toastId}-newFarmerGroup`,
           });
 
         !newFarmerGroup &&
           Toast({
             message: `${selectedFarmers.length} members have been added to existing farmer group ${groupName}`,
             type: "success",
+            customId: `${toastId}-notInnewFarmerGroup`,
           });
       },
       errorCb: () => {
         Toast({
           message: `Something went wrong at farmerGroup, sorry for the inconvenience.`,
           type: "error",
+          customId: `${toastId}-notInnewFarmerGroupFail`,
         });
       },
     });

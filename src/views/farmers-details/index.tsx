@@ -15,6 +15,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
+  const toastId = "toastId";
   const { currentPage, isCircleLoading, setFarmerBankDetail, setSearchFilter } = useFarmerDetailsContext();
 
   const {
@@ -56,10 +57,10 @@ const FarmersDetails = () => {
             queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerDetails}-fetch-${currentPage}`] });
           }, 0);
           addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
-          Toast({ message: "Farmer Added Successfully", type: "success" });
+          Toast({ message: "Farmer Added Successfully", type: "success", customId: `${toastId}-farmerAddSuccess` });
         },
         errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
+          Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerAddFail` });
         },
       });
     await addGroupMember(data.id, data.group);

@@ -12,6 +12,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
+  const toastId = "toastId";
   const queryClient = useQueryClient();
   const { setSearchFilter, setSortFilter, sortFilter, currentPage, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
@@ -49,10 +50,10 @@ const FarmersGroup = () => {
         setTimeout(() => {
           queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.farmerGroup}-fetch-${currentPage}`] });
         }, 0);
-        Toast({ message: "Farmer Group added successfully.", type: "success" });
+        Toast({ message: "Farmer Group added successfully.", type: "success", customId: `${toastId}-farmerGroupAdd` });
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-addFail` });
       },
     });
 

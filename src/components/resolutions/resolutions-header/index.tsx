@@ -9,6 +9,7 @@ import S from "./resolutionsHeader.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
 const ResolutionsHeader: FC = () => {
+  const toastId = "toadtId";
   const [modalOpen, setModalOpen] = useState(false);
   const { tab, changeTab } = useResolutionContext();
   const {
@@ -44,10 +45,10 @@ const ResolutionsHeader: FC = () => {
                   id: "add" + data.id,
                   message: MessageStructured(data.groupTitle, ENDPOINTS.resolutions, "add"),
                 });
-                Toast({ message: "Resolution added successfully.", type: "success" });
+                Toast({ message: "Resolution added successfully.", type: "success", customId: `${toastId}-resolutionAdd` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-resolutionFail` });
               },
             })
           }

@@ -47,6 +47,7 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
+  const toastId = "toastId";
   const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
   const { addNotification } = useAuthContext();
   const [variantData, setVariantdata] = useState<IPortfolioVariant>(() => {
@@ -181,7 +182,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
                   id: "delete_" + variantData.variantId + data.productName,
                   image: base64Image,
                 });
-                Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success" });
+                Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success", customId: `${toastId}-editPortFolio` });
               },
             });
             setDeleteModal(false);
@@ -211,10 +212,10 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
               data: editVarient,
               productId: id,
               successCb: () => {
-                Toast({ message: "Product Edited successfully.", type: "success" });
+                Toast({ message: "Product Edited successfully.", type: "success", customId: `${toastId}-productSuccess` });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-productFail` });
               },
             });
             setEditModal(false);

@@ -33,6 +33,7 @@ const RemoveArray = (farmerId: string[], members: string[]) => {
 };
 
 const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleCloseImport, farmerDatas, count, setNewGroupNames, setInputData }) => {
+  const toasId = "toasId";
   const { currentPage } = useFarmerDetailsContext();
   const queryClient = useQueryClient();
   const {
@@ -85,9 +86,9 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
         data: newFarmerGroup,
         successCb: () => {
           if (count && count > 1) {
-            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
+            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success", customId: `${toasId}-groupsCreationSuccess` });
           } else {
-            Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
+            Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success", customId: `${toasId}-groupCreationSuccess` });
           }
 
           addFarmerDetails({
@@ -98,18 +99,18 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
               }, 0);
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
               if (count && count > 1) {
-                Toast({ type: "success", message: `All ${count} farmers created successfully` });
+                Toast({ type: "success", message: `All ${count} farmers created successfully`, customId: `${toasId}-farmersCreation` });
               } else {
-                Toast({ type: "success", message: `${count} farmer created successfully` });
+                Toast({ type: "success", message: `${count} farmer created successfully`, customId: `${toasId}-farmerCreation` });
               }
 
               updateFarmerGroup({
                 editedData: finalFarmerGroup,
                 successCb: () => {
                   if (count && count > 1) {
-                    Toast({ message: `All groups count updated Successfully`, type: "success" });
+                    Toast({ message: `All groups count updated Successfully`, type: "success", customId: `${toasId}-groupsCount` });
                   } else {
-                    Toast({ message: ` Group count updated Successfully`, type: "success" });
+                    Toast({ message: ` Group count updated Successfully`, type: "success", customId: `${toasId}-groupCount` });
                   }
 
                   setNewGroupNames(undefined);
@@ -118,17 +119,17 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
                   handleCloseImport();
                 },
                 errorCb: () => {
-                  Toast({ type: "error", message: `error occured! please retry!` });
+                  Toast({ type: "error", message: `error occured! please retry!`, customId: `${toasId}-errorOccur` });
                 },
               });
             },
             errorCb: () => {
-              Toast({ type: "error", message: `error occured! please retry!` });
+              Toast({ type: "error", message: `error occured! please retry!`, customId: `${toasId}-errorFail` });
             },
           });
         },
         errorCb: () => {
-          Toast({ message: "Request failed, please try again.", type: "error" });
+          Toast({ message: "Request failed, please try again.", type: "error", customId: `${toasId}-errorFirst` });
         },
       });
     }

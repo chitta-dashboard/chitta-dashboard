@@ -10,7 +10,7 @@ import Toast from "../../../utils/toast";
 /**
  * Checks if the passed object is of valid farmerDetails structure.
  */
-
+const toastId = "toastId";
 let InputFarmersDatas: farmerDetail[] = [];
 
 const isValidFormat = (farmerData: { [key: string]: string }) => {
@@ -236,7 +236,7 @@ export const downloadRejectedData = () => {
     const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
     saveAs(finalData, "rejected-farmers.xlsx");
   } catch {
-    Toast({ message: "Download failed, please try again." });
+    Toast({ message: "Download failed, please try again.", customId: `${toastId}-downloadFail` });
   }
 };
 export const exportSampleFormat = () => {
@@ -284,6 +284,6 @@ export const exportSampleFormat = () => {
     const finalData = new Blob([excelBuffer], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8" });
     saveAs(finalData, "format-sample.xlsx");
   } catch {
-    Toast({ message: "Download failed, please try again." });
+    Toast({ message: "Download failed, please try again.", customId: `${toastId}-download` });
   }
 };

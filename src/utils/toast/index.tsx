@@ -15,15 +15,17 @@ interface IToast {
   message: string;
   type?: ToastType;
   life?: number;
+  customId: string;
 }
 
 export const ToastContainer = ({ ...options }) => <S.ToastContainerStyled {...options} />;
 
-const Toast = ({ message, type = "info", life = 3500 }: IToast) =>
+const Toast = ({ message, type = "info", life = 3500, customId }: IToast) =>
   toast[type](<ToastContent message={message} />, {
     position: "bottom-right" as ToastPosition,
     autoClose: life,
     closeOnClick: false,
+    toastId: customId,
     // pauseOnHover: true,
     draggable: false,
   });

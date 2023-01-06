@@ -15,6 +15,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
+  const toastId = "toastId";
   const {
     formatChangeSuccess: mdIsSuccess,
     result: { data: mdData },
@@ -109,11 +110,11 @@ const MdDetails = () => {
         setTimeout(() => {
           queryClient.invalidateQueries({ queryKey: [`${ENDPOINTS.mdDetails}-fetch-${currentPage}`] });
         }, 0);
-        Toast({ message: "MD Added successfully.", type: "success" });
+        Toast({ message: "MD Added successfully.", type: "success", customId: `${toastId}-mdAddSuccess` });
         addMdNotification({ data: notifications });
       },
       errorCb: () => {
-        Toast({ message: "Request failed! Please try again.", type: "error" });
+        Toast({ message: "Request failed! Please try again.", type: "error", customId: `${toastId}-mdAddFail` });
       },
     });
     setIsConfirmModalOpen(false);

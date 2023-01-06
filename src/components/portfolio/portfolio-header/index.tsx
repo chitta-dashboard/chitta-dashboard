@@ -18,6 +18,7 @@ interface Props {
 }
 
 const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) => {
+  const toastId = "toastId";
   const [addModalOpen, setAddModalOpen] = useState(false);
   const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
@@ -32,7 +33,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) =
       data: addVarient,
       productId: id,
       successCb: () => {
-        Toast({ message: "Product added successfully.", type: "success" });
+        Toast({ message: "Product added successfully.", type: "success", customId: `${toastId}-productAdd` });
         addNotification({
           id: `Add${data.id}${addData.availableAmount}${addData.variantName}`,
           image: getProductImage[0].image,
@@ -40,7 +41,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) =
         });
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-productFail` });
       },
     });
   };

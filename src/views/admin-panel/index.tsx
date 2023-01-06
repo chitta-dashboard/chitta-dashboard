@@ -46,6 +46,7 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
+  const toastId = "toastId";
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
 
@@ -127,11 +128,11 @@ const AdminPanel = () => {
     updateAdminDetail({
       editedData: uploadData,
       successCb: () => {
-        Toast({ message: "Admin updated successfully.", type: "success" });
+        Toast({ message: "Admin updated successfully.", type: "success", customId: `${toastId}-adminUpdateSuccess` });
         reset();
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Request failed, please try again.", type: "error", customId: `${toastId}-adminUpdateFail` });
       },
     });
     setLogo(null);
