@@ -1,20 +1,22 @@
 import { useEffect } from "react";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import S from "./body.styled";
 import { ENDPOINTS } from "../../../../utils/constants";
-import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 import { useEdit, useFetch, useFetchByPage, useGetFarmersId } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersDetailsRow from "./row";
-import S from "./body.styled";
 
 const Body = () => {
+  // state values
   const { searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport, setFarmerQuery } = useFarmerDetailsContext();
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = groupFilter === "all" ? "" : `&group_like=${groupFilter.split(" ").join("%20")}`;
   const dataLimit = 25;
+  // Queries
   const {
     result: { data: farmersDetailsByPage, refetch: farmerPageRefetch, isFetched: isFarmerByPageSuccess },
     dataCount: totalDataCount,

@@ -1,18 +1,19 @@
 import { forwardRef } from "react";
 import { useParams } from "react-router-dom";
-import NerkathirLogo from "../../assets/images/logo.svg";
-import { useFetch } from "../../utils/hooks/query";
-import { IResolutions } from "../../utils/context/resolution";
-import Loader from "../../utils/loaders/tree-loader";
-import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { AdminFormInputs } from "../admin-panel";
 import { S } from "./resolutionCertificate.styled";
+import NerkathirLogo from "../../assets/images/logo.svg";
+import { decryptText, ENDPOINTS } from "../../utils/constants";
+import { IResolutions } from "../../utils/context/resolution";
+import { useFetch } from "../../utils/hooks/query";
+import Loader from "../../utils/loaders/tree-loader";
+import { AdminFormInputs } from "../admin-panel";
 
 interface Props {
   resolutionId?: string | null;
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
+  // Queries
   const {
     formatChangeSuccess,
     result: { data: resolutions },

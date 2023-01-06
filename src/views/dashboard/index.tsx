@@ -1,8 +1,8 @@
-import DashboardHeader from "../../components/dashboard/dashboard-header";
-import DashboardSummaryCard from "../../components/dashboard/dashboard-cards/dashboard-summary-card/index";
+import S from "./dashboard.styled";
 import DashboardBodyTop from "../../components/dashboard/dashboard-body/dashboard-body-top";
 import DashboardFounder from "../../components/dashboard/dashboard-cards/dashboard-founder-card";
-import S from "./dashboard.styled";
+import DashboardSummaryCard from "../../components/dashboard/dashboard-cards/dashboard-summary-card/index";
+import DashboardHeader from "../../components/dashboard/dashboard-header";
 
 const Dashboard = () => {
   return (

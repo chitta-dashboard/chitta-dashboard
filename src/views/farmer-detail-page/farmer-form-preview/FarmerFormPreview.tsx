@@ -1,14 +1,14 @@
 import { useParams } from "react-router-dom";
+import { S } from "./farmer-form-preview.styled";
+import ErrorPage from "../../../components/error-page";
+import { ENDPOINTS } from "../../../utils/constants";
+import { useIdByPage } from "../../../utils/hooks/query";
 import FarmerFormPreviewLeft from "./FarmerFormPreviewLeft";
 import FarmerFormPreviewRight from "./FarmerFormPreviewRight";
-import { useIdByPage } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import ErrorPage from "../../../components/error-page";
-import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreview = () => {
   const { farmerId } = useParams();
-
+// Queries
   const {
     result: { data: farmerDetails },
     formatChangeSuccess: isSuccess,

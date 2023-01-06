@@ -1,12 +1,12 @@
 import { forwardRef, Fragment } from "react";
 import { useParams } from "react-router-dom";
+import { S } from "./farmerDetailPage.styled";
+import nerkathirDefaultLogo from "../../assets/images/logo.png";
+import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 import { decryptText, ENDPOINTS } from "../../utils/constants";
 import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFetch, useIdByPage } from "../../utils/hooks/query";
 import { AdminFormInputs } from "../admin-panel";
-import { S } from "./farmerDetailPage.styled";
-import nerkathirDefaultLogo from "../../assets/images/logo.png";
-import profilePlaceholder from "../../assets/images/profile-placeholder.jpg";
 
 interface Props {
   farmerIdtoPrint?: number | string | null;
@@ -14,9 +14,10 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint, params }, ref) => {
+  // state values
   const { farmerBankDetail } = useFarmerDetailsContext();
   const { farmerId } = useParams();
-
+  // Queries
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },

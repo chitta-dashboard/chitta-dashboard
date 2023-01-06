@@ -2,19 +2,19 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Theme, useMediaQuery } from "@mui/material";
+import S from "./header.styled";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import Logo from "../../../assets/images/logo.svg";
+import Icon from "../../../components/icons";
+import NotificationModal from "../../../components/modals/notification-modal";
 import { decryptText, ROUTES, ENDPOINTS } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
-import NotificationModal from "../../../components/modals/notification-modal";
-import Logo from "../../../assets/images/logo.svg";
-import Icon from "../../../components/icons";
-import S from "./header.styled";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { AdminFormInputs } from "../../../views/admin-panel";
 
 const Header = () => {
-  const { clearNotification, logout } = useAuthContext();
+  // Queries
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -24,6 +24,8 @@ const Header = () => {
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
+  // state values
+  const { clearNotification, logout } = useAuthContext();
   const [navOpen, setNavOpen] = useState(false);
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -34,6 +36,7 @@ const Header = () => {
   const isLg = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
+  // Queries
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
   const { data: NotificationData } = result;
   const clearNotifyHandler = () => {

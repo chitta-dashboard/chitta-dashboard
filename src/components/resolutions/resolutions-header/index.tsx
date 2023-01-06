@@ -1,17 +1,20 @@
 import { FC, useState } from "react";
-import IconWrapper from "../../../utils/iconWrapper";
-import ResolutionModal from "../../modals/resolution-modal";
-import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
-import { useAdd, useFetch } from "../../../utils/hooks/query";
-import { useAuthContext } from "../../../utils/context/auth";
-import Toast from "../../../utils/toast";
 import S from "./resolutionsHeader.styled";
+import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
 import { useResolutionContext } from "../../../utils/context/resolution";
+import { useAdd, useFetch } from "../../../utils/hooks/query";
+import IconWrapper from "../../../utils/iconWrapper";
+import Toast from "../../../utils/toast";
+import ResolutionModal from "../../modals/resolution-modal";
 
 const ResolutionsHeader: FC = () => {
+  // constants
   const toastId = "toadtId";
+  // state values
   const [modalOpen, setModalOpen] = useState(false);
   const { tab, changeTab } = useResolutionContext();
+  // Queries
   const {
     formatChangeSuccess,
     result: { data: resolutions },

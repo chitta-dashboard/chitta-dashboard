@@ -1,14 +1,14 @@
 import { FC, useRef } from "react";
-import { Button } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
+import { Button } from "@mui/material";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { Founders } from "../../../utils/context/founders";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import IdCardBody from "../../id-card/id-card-body";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { IMdDetails } from "../../../utils/context/mdDetails";
-import { Founders } from "../../../utils/context/founders";
 
 interface CustomProps {
   openModal: boolean;

@@ -1,11 +1,11 @@
 import { Ref, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import S from "./md-details-page.styled";
 import IconWrapper from "../../utils/iconWrapper";
 import ShareHolderCertificate from "../share-holder-certificate";
 import TamilShareHolderCertificate from "../tamil-share-certificate";
 import MdDetailsForm from "./MdDetailsForm";
-import S from "./md-details-page.styled";
 
 // Design of this page is changed, so it is not currently used.
 const MdDetailPage = () => {

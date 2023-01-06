@@ -1,17 +1,17 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuid } from "uuid";
-import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
-import ModalBody from "../../custom-modal/body";
-import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
-import Toast from "../../../utils/toast";
-import { useAdd, useEdit, useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useAuthContext } from "../../../utils/context/auth";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import S from "./importFarmerGroupModal.styled";
+import { ENDPOINTS } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
+import { useAdd, useEdit, useFetch } from "../../../utils/hooks/query";
+import Toast from "../../../utils/toast";
+import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
+import CustomModal from "../../custom-modal";
+import ModalBody from "../../custom-modal/body";
+import ModalHeader from "../../custom-modal/header";
 
 interface Props {
   openModal: boolean;
@@ -33,8 +33,12 @@ const RemoveArray = (farmerId: string[], members: string[]) => {
 };
 
 const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleCloseImport, farmerDatas, count, setNewGroupNames, setInputData }) => {
+  // constants
   const toasId = "toasId";
+  //state values
   const { currentPage } = useFarmerDetailsContext();
+  const { addNotification } = useAuthContext();
+  // queries
   const queryClient = useQueryClient();
   const {
     result: { data: farmersGroupById },
@@ -48,7 +52,7 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
-  const { addNotification } = useAuthContext();
+
   let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
   let newdata = farmerDatas && farmerDatas.map((item) => item.group);
   let groupName = newdata && newdata.filter((item, i, ar) => ar.indexOf(item) === i);
@@ -86,7 +90,11 @@ const ImportFarmerGroupModal: FC<Props> = ({ openModal, handleClose, handleClose
         data: newFarmerGroup,
         successCb: () => {
           if (count && count > 1) {
-            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success", customId: `${toasId}-groupsCreationSuccess` });
+            Toast({
+              message: `All ${newFarmerGroup.length} groups created Successfully`,
+              type: "success",
+              customId: `${toasId}-groupsCreationSuccess`,
+            });
           } else {
             Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success", customId: `${toasId}-groupCreationSuccess` });
           }

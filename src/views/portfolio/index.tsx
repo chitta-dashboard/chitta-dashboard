@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
-import { usePortfolioContext } from "../../utils/context/portfolio";
+import S from "./portfolio.styled";
 import PortfolioContent from "../../components/portfolio/portfolio-content";
 import PortfolioHeader from "../../components/portfolio/portfolio-header";
-import S from "./portfolio.styled";
+import { usePortfolioContext } from "../../utils/context/portfolio";
 
 const Portfolio = () => {
+  // state values
   const { setSearchFilter } = usePortfolioContext();
   const [tab, setTab] = useState<string>("Raw");
   const searchRef = useRef<HTMLInputElement>(null);

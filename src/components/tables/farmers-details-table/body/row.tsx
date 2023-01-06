@@ -1,24 +1,24 @@
 import { useState, useRef, FC, useEffect } from "react";
-import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
-import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
-import FarmersDetailsModal from "../../../modals/farmers-details-modal";
-import DeleteModal from "../../../modals/delete-modal";
-import ConfirmationModal from "../../../modals/confirmation-modal";
-import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
-import IdCardBody from "../../../id-card/id-card-body";
-import IdCardModal from "../../../modals/id-download-modal";
+import { Checkbox, Stack, TableRow } from "@mui/material";
 import CS from "../../../common-styles/commonStyles.styled";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch } from "../../../../utils/hooks/query";
-import Toast from "../../../../utils/toast";
-import { IMdDetails } from "../../../../utils/context/mdDetails";
-import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
+import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../../utils/context/mdDetails";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch } from "../../../../utils/hooks/query";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import Toast from "../../../../utils/toast";
+import FarmerDetailsForm from "../../../../views/farmer-detail-page/FarmerDetailsForm";
+import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
+import IdCardBody from "../../../id-card/id-card-body";
+import ConfirmationModal from "../../../modals/confirmation-modal";
+import DeleteModal from "../../../modals/delete-modal";
 import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
+import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
@@ -27,8 +27,11 @@ interface FarmersDetailsRowProps {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  // state values
   const { checkboxSelect, selectedFarmers, currentPage, farmerQuery, setFarmerBankDetail } = useFarmerDetailsContext();
+  // constants
   const toastId = "toastId";
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -37,6 +40,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const { mutate: editFarmer } = useEditByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
   const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage, farmerQuery);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
+  // state values
   const { addNotification } = useAuthContext();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -379,7 +383,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         editData && removeGroupMember(user.id, editData.group, true);
                         Toast({ message: "Farmer Edited Successfully", type: "success", customId: `${toastId}-farmerEditSuccessInMdForm` });
                       },
-                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerEditFailInMdForm` }),
+                      errorCb: () =>
+                        Toast({ message: "Request failed! Please try again", type: "error", customId: `${toastId}-farmerEditFailInMdForm` }),
                     });
                   },
                 });

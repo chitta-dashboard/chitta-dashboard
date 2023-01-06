@@ -1,10 +1,10 @@
 import { FC } from "react";
-import CustomModal from "../../custom-modal";
 import YesOrNoButtons from "../../buttons/yes-or-no-buttons";
-import DeleteBody from "./body";
-import ModalHeader from "../../custom-modal/header";
+import CustomModal from "../../custom-modal";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
+import DeleteBody from "./body";
 
 interface CustomProps {
   openModal: boolean;

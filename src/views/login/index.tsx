@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
+import S from "./login.styled";
 import LoginBackground from "../../components/login/login-background";
 import LoginForm from "../../components/login/login-form";
 import { useAuthContext } from "../../utils/context/auth";
-import S from "./login.styled";
 
 const Login = () => {
+  // state values
   const { isAuthenticated } = useAuthContext();
 
   return (

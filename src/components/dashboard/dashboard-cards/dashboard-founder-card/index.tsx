@@ -1,21 +1,23 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Box } from "@mui/material";
 import Slider from "react-slick";
+import { Box } from "@mui/material";
+import { CardHeader } from "../common-styles/commonStyles.styled";
+import S from "./dashoardFounder.styled";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
 import { Founders } from "../../../../utils/context/founders";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { CardHeader } from "../common-styles/commonStyles.styled";
-import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import Loader from "../../../../utils/loaders/tree-loader";
-import S from "./dashoardFounder.styled";
 
 const DashboardFounder = () => {
+  // state values
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+  //Queries
   const {
     formatChangeSuccess,
     result: { data: foundersById },

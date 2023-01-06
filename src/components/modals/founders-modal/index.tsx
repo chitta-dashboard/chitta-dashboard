@@ -1,16 +1,16 @@
+import { FC, useEffect } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { createJoinDate, decryptText, encryptText, ENDPOINTS, imageCompressor, dateFormat } from "../../../utils/constants";
+import { useIdByPage } from "../../../utils/hooks/query";
 import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import { IAddFounderDetailsFormInput } from "../type/formInputs";
-import { useIdByPage } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -21,17 +21,16 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: foundersById, isFetchedAfterMount: isFetched },
   } = useIdByPage(ENDPOINTS.founders, id);
 
-
   const { handleSubmit, reset, clearErrors, setValue, getValues, control: formControl, unregister, watch } = useForm<IAddFounderDetailsFormInput>();
 
   // submit button enabling
-
+// constants
   let enableButton = true;
   const nameEvent = watch("name");
   const phoneNumberEvent = watch("phoneNumber");

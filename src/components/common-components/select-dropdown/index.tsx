@@ -1,11 +1,13 @@
+import S from "./selectDropdown.styled";
+import { ENDPOINTS } from "../../../utils/constants";
 import { DEFAULT_GROUP_FILTER, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
-import S from "./selectDropdown.styled";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
 
 const SelectDropDown = () => {
+  // state values
   const { groupFilter, setGroupFilter, checkboxUnselectAll } = useFarmerDetailsContext();
+  // Queries
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isSucess,

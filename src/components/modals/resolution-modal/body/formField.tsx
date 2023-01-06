@@ -1,13 +1,13 @@
 import { FC, useEffect, useRef } from "react";
 import { Control, useWatch, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import S from "./formField.styled";
+import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { useFetch } from "../../../../utils/hooks/query";
+import Loader from "../../../../utils/loaders/tree-loader";
+import Input from "../../../input-fields/input/input";
 import Editor from "../../../rich-text/rich-text-editor/index";
 import { IResolutionFormInput } from "../../type/formInputs";
-import Input from "../../../input-fields/input/input";
-import { useFetch } from "../../../../utils/hooks/query";
-import { ENDPOINTS, getCurrentTime } from "../../../../utils/constants";
-import Loader from "../../../../utils/loaders/tree-loader";
-import S from "./formField.styled";
-import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 
 interface CustomProps {
   setValue: UseFormSetValue<IResolutionFormInput>;
@@ -18,6 +18,7 @@ interface CustomProps {
 }
 
 const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id = "" }) => {
+  // Queries
   const {
     formatChangeSuccess: farmerGroupDataLoaded,
     result: { data: farmersGroupById },

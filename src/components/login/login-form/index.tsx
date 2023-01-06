@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
-import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InputAdornment from "@mui/material/InputAdornment";
 import * as yup from "yup";
-import { useAuthContext } from "../../../utils/context/auth";
+import S from "./loginForm.styled";
 import logo from "../../../assets/images/logo.png";
 import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
 import { AdminFormInputs } from "../../../views/admin-panel";
-import S from "./loginForm.styled";
 
 interface LoginFormInputs {
   mobileNo: string;
@@ -28,14 +28,16 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
+  // state values
   const { login } = useAuthContext();
+  const [showPassword, setShowPassword] = useState(false);
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
   const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
-  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,

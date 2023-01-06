@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import MdDetailsTableBody from "./tableBody";
-import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import S from "./tableData.styled";
+import { farmerDetail } from "../../../../utils/context/farmersDetails";
+import MdDetailsTableBody from "./tableBody";
 
 type TableDataPropsType = {
   farmerDetails: farmerDetail[];

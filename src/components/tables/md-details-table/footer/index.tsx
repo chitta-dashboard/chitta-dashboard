@@ -2,6 +2,7 @@ import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
+  // state values
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useMdDetailsContext();
 
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {

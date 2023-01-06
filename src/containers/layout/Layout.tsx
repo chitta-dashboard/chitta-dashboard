@@ -1,16 +1,17 @@
 import { FC } from "react";
-import { GlobalStyles } from "@mui/material";
-import "react-toastify/dist/ReactToastify.min.css";
 import { Navigate } from "react-router-dom";
-import Header from "./header";
+import "react-toastify/dist/ReactToastify.min.css";
+import { GlobalStyles } from "@mui/material";
+import S from "./Layout.styled";
 import AppRouters from "../../routes/AppRoutes";
-import Content from "./content";
-import Footer from "./footer";
 import { useAuthContext } from "../../utils/context/auth";
 import APIloader from "../../utils/loaders/api-loader";
-import S from "./Layout.styled";
+import Content from "./content";
+import Footer from "./footer";
+import Header from "./header";
 
 const Layout: FC = () => {
+  // state values
   const { openLoader, loaderText, isAuthenticated } = useAuthContext();
 
   return (

@@ -1,12 +1,13 @@
 import { FC } from "react";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import ToggleSwitch from "../../../../utils/ToggleSwitch";
-import ConfirmationIcon from "../../confirmation-modal/body/confirmationIcon";
 import S from "./farmer-row-modalstyled";
+import ToggleSwitch from "../../../../utils/ToggleSwitch";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import ConfirmationIcon from "../../confirmation-modal/body/confirmationIcon";
 
 interface CustomProps {}
 
 const ShareDetailBody: FC<CustomProps> = () => {
+  // state values
   const { farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
 
   return (

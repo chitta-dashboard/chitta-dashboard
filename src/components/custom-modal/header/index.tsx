@@ -1,6 +1,6 @@
 import { FC } from "react";
-import TitleCloseButton from "../../buttons/title-close-button";
 import S from "./header.styled";
+import TitleCloseButton from "../../buttons/title-close-button";
 
 interface CustomProps {
   children: string;

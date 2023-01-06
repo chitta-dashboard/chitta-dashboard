@@ -1,6 +1,6 @@
 import { FC } from "react";
-import SearchBar from "../../common-components/search-bar";
 import S from "./leftSection.styled";
+import SearchBar from "../../common-components/search-bar";
 
 interface CustomProps {
   searchHandler?: (searchString: string) => void;

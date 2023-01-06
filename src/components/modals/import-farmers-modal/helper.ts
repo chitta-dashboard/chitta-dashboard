@@ -1,11 +1,11 @@
-import { read, utils, write } from "xlsx";
-import { v4 as uuidv4 } from "uuid";
 import { saveAs } from "file-saver";
+import { v4 as uuidv4 } from "uuid";
+import { read, utils, write } from "xlsx";
 import { queryClient } from "../../../containers/provider";
 import { ENDPOINTS } from "../../../utils/constants";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { IDropValidationResult } from "../../common-components/drop-file";
 import Toast from "../../../utils/toast";
+import { IDropValidationResult } from "../../common-components/drop-file";
 
 /**
  * Checks if the passed object is of valid farmerDetails structure.

@@ -1,19 +1,19 @@
 import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
-import { Founders, useFounderContext } from "../../../../utils/context/founders";
-import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDeleteByPage, useEditByPage } from "../../../../utils/hooks/query";
-import Toast from "../../../../utils/toast";
-import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
-import FoundersModal from "../../../modals/founders-modal";
-import IdCardModal from "../../../modals/id-download-modal";
-import DeleteModal from "../../../modals/delete-modal";
-import ConfirmationModal from "../../../modals/confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import { useDeleteByPage, useEditByPage } from "../../../../utils/hooks/query";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import Toast from "../../../../utils/toast";
+import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
+import ConfirmationModal from "../../../modals/confirmation-modal";
+import DeleteModal from "../../../modals/delete-modal";
+import FoundersModal from "../../../modals/founders-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 
 interface FoundersRowProp {
   user: Founders;
@@ -21,7 +21,9 @@ interface FoundersRowProp {
 }
 
 const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
+  // constants
   const toastId = "toastId";
+  // state values
   const { addNotification } = useAuthContext();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const [image, setImage] = useState<string>("");
@@ -34,6 +36,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user, params }) => {
 
   const { currentPage } = useFounderContext();
   // hook for edit and delete mutation
+  // Queries
   const { mutate: founderMutateUpdate } = useEditByPage(ENDPOINTS.founders, currentPage, params);
   const { mutate: founderMutateDelete } = useDeleteByPage(ENDPOINTS.founders, currentPage, params);
 

@@ -1,18 +1,19 @@
 import { forwardRef, Fragment } from "react";
-import { useFetch } from "../../utils/hooks/query";
+import { S } from "./tamil-certificate.styled";
 import { ENDPOINTS } from "../../utils/constants";
 import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { useFetch } from "../../utils/hooks/query";
 import TamilShareHolderCertificateContent from "./tamil-certificate-content";
-import { S } from "./tamil-certificate.styled";
 
 interface Props {
   shareAmount?: number | string;
   toggle?: boolean;
 }
 
-const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount,toggle }, ref) => {
+const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount, toggle }, ref) => {
+  // state values
   const { selectedFarmers } = useFarmerDetailsContext();
-
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },

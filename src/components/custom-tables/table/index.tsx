@@ -1,5 +1,5 @@
-import { WrapChildrenProps } from "../../../types/wrap-child-props";
 import S from "./tableWrapper.styled";
+import { WrapChildrenProps } from "../../../types/wrap-child-props";
 
 const TableWrapper = ({ children }: WrapChildrenProps) => {
   return (

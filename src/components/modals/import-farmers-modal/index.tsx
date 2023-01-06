@@ -1,16 +1,16 @@
-import { Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { Typography } from "@mui/material";
 import { v4 as uuid } from "uuid";
-import { validateFarmerData, exportSampleFormat, downloadRejectedData } from "./helper";
-import ImportFarmerGroupModal from "../import-farmerGroup-modal";
+import S from "./importFarmersModal.styled";
 import { encryptText, ENDPOINTS } from "../../../utils/constants";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { useFetch } from "../../../utils/hooks/query";
 import DropFile from "../../common-components/drop-file";
+import CustomModal from "../../custom-modal";
 import ModalBody from "../../custom-modal/body";
 import ModalHeader from "../../custom-modal/header";
-import CustomModal from "../../custom-modal";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import S from "./importFarmersModal.styled";
-import { useFetch } from "../../../utils/hooks/query";
+import ImportFarmerGroupModal from "../import-farmerGroup-modal";
+import { validateFarmerData, exportSampleFormat, downloadRejectedData } from "./helper";
 
 interface IImportFarmersModal {
   isOpen: boolean;
@@ -18,6 +18,7 @@ interface IImportFarmersModal {
 }
 
 const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, handleClose }) {
+  // state values
   const [importedFile, setImportedFile] = useState<File | null>(null);
   const [openImportGroup, setOpenImportGroup] = useState<boolean>(false);
   const [existingFarmers, setExistingFarmers] = useState<Object[] | null | undefined>(null);
@@ -27,6 +28,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
   const [newFarmersDatas, setNewFarmersDatas] = useState<farmerDetail[] | null>(null);
   const [count, setCount] = useState(existingFarmers?.length);
+  // Queries
   const {
     result: { data: farmersDetailsById },
     formatChangeSuccess: isSuccess,

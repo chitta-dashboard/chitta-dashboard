@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
-import Input from "../../../input-fields/input/input";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import S from "./page3Fields.styled";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import Input from "../../../input-fields/input/input";
 
 interface CustomProps {
   control: Control;
@@ -10,6 +10,7 @@ interface CustomProps {
 }
 
 const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
+  // state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
   return (

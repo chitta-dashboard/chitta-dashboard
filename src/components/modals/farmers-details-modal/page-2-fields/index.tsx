@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
-import Input from "../../../input-fields/input/input";
 import S from "./page2Fields.styled";
+import Input from "../../../input-fields/input/input";
 
 interface CustomProps {
   control: Control;

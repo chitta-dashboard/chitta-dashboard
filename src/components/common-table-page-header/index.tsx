@@ -1,8 +1,8 @@
 import { FC } from "react";
+import S from "./tablePageHeader.styled";
 import { SortOrder } from "../../utils/constants";
 import LeftSection from "./left-section";
 import RightSection from "./right-section";
-import S from "./tablePageHeader.styled";
 
 interface TablePageHeaderProps {
   addModalHandler?: () => void;

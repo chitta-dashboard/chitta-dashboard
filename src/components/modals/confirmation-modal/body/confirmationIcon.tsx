@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
-import successIcon from "../../../../assets/images/success.svg";
 import S from "./confirmationModal.styled";
+import successIcon from "../../../../assets/images/success.svg";
 
 const ConfirmationIcon = () => {
   return (

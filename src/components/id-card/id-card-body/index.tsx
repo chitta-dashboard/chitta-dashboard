@@ -1,13 +1,13 @@
 import { forwardRef } from "react";
 import { QRCodeSVG } from "qrcode.react";
-import IDCardHeader from "../id-card-header";
-import Signature from "../../../assets/images/Signature.png";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { IMdDetails } from "../../../utils/context/mdDetails";
-import { Founders } from "../../../utils/context/founders";
-import { decryptText } from "../../../utils/constants";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./idCardBody.styled";
+import Signature from "../../../assets/images/Signature.png";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import { decryptText } from "../../../utils/constants";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { Founders } from "../../../utils/context/founders";
+import { IMdDetails } from "../../../utils/context/mdDetails";
+import IDCardHeader from "../id-card-header";
 
 interface Props {
   data?: farmerDetail | IMdDetails | Founders;

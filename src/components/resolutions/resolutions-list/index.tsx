@@ -1,15 +1,15 @@
 import { Dispatch, FC, Ref, useEffect, useRef } from "react";
-import { Theme, useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
-import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
-import rightConnect from "../../../assets/images/rightDash.svg";
+import { Theme, useMediaQuery } from "@mui/material";
+import S from "./resolutionsList.styled";
 import leftConnect from "../../../assets/images/leftDash.svg";
+import rightConnect from "../../../assets/images/rightDash.svg";
+import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
 import { IResolution } from "../../../utils/context/resolution";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";
-import S from "./resolutionsList.styled";
+import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 
 interface Props {
   resolutionId: string | null;
@@ -18,6 +18,7 @@ interface Props {
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
+  // Queries
   const {
     formatChangeSuccess,
     result: { data: resolutionsObj },

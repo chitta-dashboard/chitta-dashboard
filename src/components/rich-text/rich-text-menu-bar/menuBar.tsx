@@ -1,8 +1,8 @@
-import { Editor } from "@tiptap/react";
 import { FC } from "react";
+import { Editor } from "@tiptap/react";
+import S from "../richText.styled";
 import "../../../assets/css/index.css";
 import Icon from "../../icons";
-import S from "../richText.styled";
 
 type TextEditor = {
   editor: Editor | null;

@@ -1,26 +1,28 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import S from "./founders.styled";
 import TablePageHeader from "../../components/common-table-page-header";
 import FoundersModal from "../../components/modals/founders-modal";
-import FoundersTable from "../../components/tables/founders-table";
-import { useFounderContext } from "../../utils/context/founders";
 import { IAddFounderDetailsFormInput } from "../../components/modals/type/formInputs";
-import { useAuthContext } from "../../utils/context/auth";
+import FoundersTable from "../../components/tables/founders-table";
 import { ENDPOINTS, Message } from "../../utils/constants";
+import { useAuthContext } from "../../utils/context/auth";
+import { useFounderContext } from "../../utils/context/founders";
 import { useAdd, useFetch } from "../../utils/hooks/query";
-import Toast from "../../utils/toast";
-import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
+import Toast from "../../utils/toast";
 
 const Founders = () => {
+  // constants
   const toastId = "toastId";
+  // Queries
+  const queryClient = useQueryClient();
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
+  const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
+  // state values
   const { setSearchFilter, sortFilter, currentPage, setSortFilter } = useFounderContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
-  const queryClient = useQueryClient();
-
-  const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
   const addModalHandler = () => {
     setAddModal(!addModal);

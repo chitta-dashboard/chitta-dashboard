@@ -1,16 +1,16 @@
+import { FC, useEffect } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { dateFormat, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
 import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
-import { useFetch } from "../../../utils/hooks/query";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -21,6 +21,7 @@ interface CustomProps {
 }
 
 const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  // Queries
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo);
   const { data: ceoDetailsById } = result;
   const { handleSubmit, reset, clearErrors, unregister, setValue, getValues, watch, control: formControl } = useForm<IAddCEODetailsFormInput>({});

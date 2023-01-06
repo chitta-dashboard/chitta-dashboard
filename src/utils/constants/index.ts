@@ -1,15 +1,15 @@
 import { lazy } from "react";
-import CryptoJS from "crypto-js";
 import Compress from "react-image-file-resizer";
+import CryptoJS from "crypto-js";
 import { read, utils } from "xlsx";
-import Paddy from "../../assets/images/rice.png";
-import Millet from "../../assets/images/millet.png";
+import Blackgram from "../../assets/images/blackgram.png";
+import Cotton from "../../assets/images/cotton.png";
 import Groundnut from "../../assets/images/groundnut.png";
 import Maize from "../../assets/images/maize.png";
+import Millet from "../../assets/images/millet.png";
 import Ragi from "../../assets/images/ragi.png";
-import Blackgram from "../../assets/images/blackgram.png";
+import Paddy from "../../assets/images/rice.png";
 import Sugarcane from "../../assets/images/sugarcane.png";
-import Cotton from "../../assets/images/cotton.png";
 
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));

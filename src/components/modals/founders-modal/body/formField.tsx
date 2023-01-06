@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Control, UseFormSetValue, UseFormGetValues, UseFormUnregister } from "react-hook-form";
+import S from "./foundersModal.styled";
 import { fileValidation } from "../../../../utils/constants";
 import AddProfile from "../../../input-fields/add-profile";
 import Input from "../../../input-fields/input/input";
 import { IAddFounderDetailsFormInput } from "../../type/formInputs";
-import S from "./foundersModal.styled";
 
 interface CustomProps {
   control: Control;

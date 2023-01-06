@@ -1,14 +1,14 @@
-import { Stack } from "@mui/material";
 import { FC, useState, useEffect } from "react";
+import { Stack } from "@mui/material";
+import S from "./index.styled";
+import { searchWord } from "../../../utils/constants";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import SearchBar from "../../common-components/search-bar";
 import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import TableData from "./body/tableData";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
-import { searchWord } from "../../../utils/constants";
-import SearchBar from "../../common-components/search-bar";
-import S from "./index.styled";
 
 interface CustomProps {
   openModal: boolean;
@@ -22,6 +22,7 @@ interface CustomProps {
 
 const MdDetailsModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, handleConfirmModal, handleCheckBox, handleCheckBoxAll, selectedFarmerKeys, farmerDetails } = props;
+  // state vales
   const [farmerDetailsByIdData, setFarmerDetailsByIdData] = useState(farmerDetails);
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
 

@@ -1,7 +1,7 @@
 import { FC } from "react";
+import S from "./farmersDetailsTablePageHeader.styled";
 import LeftSection from "./left-section";
 import RightSection from "./right-section";
-import S from "./farmersDetailsTablePageHeader.styled";
 
 interface TablePageHeaderProps {
   addModalHandler?: () => void;

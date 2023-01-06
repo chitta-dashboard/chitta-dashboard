@@ -12,6 +12,7 @@ type FarmerFormPreviewType = {
 };
 
 const FarmerFormPreviewRight: FC<FarmerFormPreviewType> = ({ farmersDetailsById, isFarmerSuccess }) => {
+  // state values
   const { farmerBankDetail } = useFarmerDetailsContext();
   const { farmerId } = useParams();
   const { pdfLogo: pdfImage } = isFarmerSuccess && Object.values(farmersDetailsById as AdminFormInputs)[0];

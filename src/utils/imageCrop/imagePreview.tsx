@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import ReactCrop from "react-image-crop";
-import { createCanvas } from "./createCanvas";
-import S from "./image-preview.styled";
 import "react-image-crop/dist/ReactCrop.css";
+import S from "./image-preview.styled";
+import { createCanvas } from "./createCanvas";
 
 type ImagePreviewType = {
   image: string;

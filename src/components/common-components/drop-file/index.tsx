@@ -1,10 +1,10 @@
 import { ChangeEvent, Dispatch, MouseEvent, SetStateAction, useCallback, useEffect, useState } from "react";
-import { FileDownload } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import Toast from "../../../utils/toast";
-import { BufferLoader } from "../../../utils/loaders/api-loader";
-import { farmerDetail } from "../../../utils/context/farmersDetails";
 import S from "./dropFile.styled";
+import { FileDownload } from "@mui/icons-material";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { BufferLoader } from "../../../utils/loaders/api-loader";
+import Toast from "../../../utils/toast";
 
 export interface IDropValidationResult {
   status: boolean;
@@ -45,7 +45,9 @@ const DropFile: React.FC<IDropFile> = function ({
   setVerifiedNewFarmers,
   setInputData,
 }) {
+  // constants
   const toastId = "toastId";
+  // state values
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

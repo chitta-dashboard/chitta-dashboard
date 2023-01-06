@@ -1,10 +1,11 @@
 import { TableHead, TableRow } from "@mui/material";
-import { useFounderContext } from "../../../../utils/context/founders";
-import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
-import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { useFounderContext } from "../../../../utils/context/founders";
+import IconWrapper from "../../../../utils/iconWrapper";
 
 const Header = () => {
+  // state values
   const { sortFilter, setSortFilter } = useFounderContext();
   return (
     <TableHead>

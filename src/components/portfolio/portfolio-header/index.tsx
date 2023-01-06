@@ -1,14 +1,14 @@
 import { Dispatch, FC, RefObject, SetStateAction, useState } from "react";
-import SearchBar from "../../common-components/search-bar";
 import { Button } from "@mui/material";
+import S from "./portfolioHeader.styled";
 import ToggleButton from "../../../utils/ToggleButton";
-import ProductsModal from "../../modals/products-modal";
-import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
-import { useEditPortfolio } from "../../../utils/hooks/query";
 import { ENDPOINTS, Message, PRODUCT_DATA } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
-import S from "./portfolioHeader.styled";
+import { useEditPortfolio } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
+import SearchBar from "../../common-components/search-bar";
+import ProductsModal from "../../modals/products-modal";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
 
 interface Props {
   tab: string;
@@ -18,12 +18,13 @@ interface Props {
 }
 
 const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) => {
+  // constants
   const toastId = "toastId";
+  // state values
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
-
   const { addNotification } = useAuthContext();
-
+  // Queries
+  const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
   const addDataHandler = (data: IAddProductsFormInput & { id: string }) => {
     const { foodType, id, productName, products, ...addData } = data;
     const addVarient = {} as { [key: string]: IProductVarient };

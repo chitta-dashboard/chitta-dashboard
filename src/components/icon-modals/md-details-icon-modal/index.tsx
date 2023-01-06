@@ -1,8 +1,8 @@
 import { FC } from "react";
 import { Switch } from "@mui/material";
+import S from "../iconModals.styled";
 import CommonIconModal from "../../common-icon-modal";
 import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
-import S from "../iconModals.styled";
 
 const MdDetailsIconModal: FC<CommonModalProps> = ({ ...props }) => {
   const { check, open, handleClose, handleEdit, handleConfirm, handleIdCard } = props;

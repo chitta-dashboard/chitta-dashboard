@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Stack } from "@mui/material";
-import DeleteIcon from "./deleteIcon";
 import S from "./deleteModal.styled";
+import DeleteIcon from "./deleteIcon";
 
 interface DeleteProps {
   deleteMessage?: JSX.Element;

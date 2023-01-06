@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Controller, UseControllerProps } from "react-hook-form";
 import {
   FormHelperText,
   InputLabel,
@@ -12,9 +13,8 @@ import {
   InputAdornment,
   Popper,
 } from "@mui/material";
-import Cancel from "@mui/icons-material/Cancel";
-import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
+import Cancel from "@mui/icons-material/Cancel";
 
 interface InputProps extends UseControllerProps {
   type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete" | "autocomplete-with-imagelist";
@@ -25,6 +25,7 @@ interface InputProps extends UseControllerProps {
 }
 
 function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {} }: InputProps) {
+  // state values
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");

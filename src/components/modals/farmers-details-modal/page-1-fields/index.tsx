@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
 import { Control, UseFormGetValues, UseFormSetValue, UseFormUnregister, UseFormWatch } from "react-hook-form";
+import S from "./page1Fields.styled";
 import { ENDPOINTS, fileValidation } from "../../../../utils/constants";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { useFetch } from "../../../../utils/hooks/query";
 import AddProfile from "../../../input-fields/add-profile";
 import Input from "../../../input-fields/input/input";
 import { IAddFarmersDetailsPage1Input } from "../../type/formInputs";
-import S from "./page1Fields.styled";
 
 interface CustomProps {
   control: Control;
@@ -21,11 +21,14 @@ interface CustomProps {
 }
 
 const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeInput, setValue, getValues, unregister, editMode, watch }) => {
+  // state values
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
+  // Queries
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById, isFetched: afterFetch } = result;
+  // contants
   let enableAddButton = true;
 
   useEffect(() => {

@@ -1,21 +1,21 @@
 import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
-import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useQueryClient } from "@tanstack/react-query";
-import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
-import Toast from "../../../../utils/toast";
-import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
-import FarmersDetailsModal from "../../../modals/farmers-details-modal";
-import IdCardModal from "../../../modals/id-download-modal";
-import ConfirmationModal from "../../../modals/confirmation-modal";
-import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import S from "./body.styled";
-import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { useAuthContext } from "../../../../utils/context/auth";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { useDeleteByPage, useEdit, useEditByPage } from "../../../../utils/hooks/query";
+import ImagePreview from "../../../../utils/imageCrop/imagePreview";
+import Toast from "../../../../utils/toast";
+import MdDetailsIconModal from "../../../icon-modals/md-details-icon-modal";
+import ConfirmationModal from "../../../modals/confirmation-modal";
+import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
+import FarmersDetailsModal from "../../../modals/farmers-details-modal";
+import IdCardModal from "../../../modals/id-download-modal";
 
 interface MdDetailsRowProps {
   user: IMdDetails;
@@ -24,14 +24,16 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember, params }) => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const queryClient = useQueryClient();
   const { currentPage } = useMdDetailsContext();
   const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, params);
   const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage, params);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { setFarmerBankDetail } = useFarmerDetailsContext();
-
+  // state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);

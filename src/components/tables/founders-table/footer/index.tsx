@@ -2,6 +2,7 @@ import { useFounderContext } from "../../../../utils/context/founders";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
+  // state values
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFounderContext();
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);

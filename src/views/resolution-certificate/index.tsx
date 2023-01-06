@@ -1,23 +1,25 @@
 import { Ref, RefObject, useCallback, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import IconWrapper from "../../utils/iconWrapper";
-import ResolutionPdf from "./resolutionPdf";
-import DeleteModal from "../../components/modals/delete-modal";
-import { IResolution } from "../../utils/context/resolution";
-import ResolutionModal from "../../components/modals/resolution-modal";
+import { Popover } from "@mui/material";
+import { S } from "./resolutionCertificate.styled";
 import ErrorPage from "../../components/error-page";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
-import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
+import DeleteModal from "../../components/modals/delete-modal";
+import ResolutionModal from "../../components/modals/resolution-modal";
 import { ENDPOINTS, MessageStructured } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
+import { IResolution } from "../../utils/context/resolution";
+import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
+import IconWrapper from "../../utils/iconWrapper";
 import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
-import { S } from "./resolutionCertificate.styled";
+import ResolutionPdf from "./resolutionPdf";
 
 const ResolutionCertificatePage = () => {
+  // constants
   const toastId = "toastId";
+  // state values
   const [deletion, setDeletion] = useState(false);
   const [edition, setEdition] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
@@ -26,6 +28,7 @@ const ResolutionCertificatePage = () => {
   const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: resolutions },

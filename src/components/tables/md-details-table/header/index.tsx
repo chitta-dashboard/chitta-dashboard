@@ -1,10 +1,11 @@
 import { TableHead, TableRow } from "@mui/material";
-import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
-import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
-import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import IconWrapper from "../../../../utils/iconWrapper";
 
 const Header = () => {
+  // state values
   const { sortFilter, setSortFilter } = useMdDetailsContext();
 
   return (

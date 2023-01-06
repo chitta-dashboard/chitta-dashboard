@@ -1,19 +1,20 @@
 import { useEffect } from "react";
-import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import S from "./body.styled";
 import { ENDPOINTS } from "../../../../utils/constants";
+import { Founders, useFounderContext } from "../../../../utils/context/founders";
+import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 import { useFetchByPage } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FoundersRow from "./row";
-import S from "./body.styled";
-import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 
 const Body = () => {
+  // state values
   const { searchFilter, sortFilter, currentPage, setPageCount, setFounderQuery } = useFounderContext();
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
   const groupQuery = "";
   const dataLimit = 7;
-
+  // Queries
   const {
     result: { data: founderByPage, refetch: foundergroupRefetch, isFetched: isFounderByPageSuccess },
     dataCount: totalDataCount,

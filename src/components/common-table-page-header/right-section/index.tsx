@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import IconWrapper from "../../../utils/iconWrapper";
 import S from "./rightSection.styled";
+import IconWrapper from "../../../utils/iconWrapper";
 
 interface RightSectionProps {
   addModalHandler?: () => void;

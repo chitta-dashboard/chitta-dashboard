@@ -1,21 +1,24 @@
 import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
-import { IMdDetails, useMdDetailsContext } from "../../utils/context/mdDetails";
-import { farmerDetail } from "../../utils/context/farmersDetails";
-import { Notification } from "../../utils/context/auth";
-import { ENDPOINTS, Message } from "../../utils/constants";
-import { useAdd, useFetch } from "../../utils/hooks/query";
-import Toast from "../../utils/toast";
-import TablePageHeader from "../../components/common-table-page-header";
-import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
-import ConfirmationModal from "../../components/modals/confirmation-modal";
-import MdDetailsTable from "../../components/tables/md-details-table";
-import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
+import TablePageHeader from "../../components/common-table-page-header";
+import ConfirmationModal from "../../components/modals/confirmation-modal";
+import AddMdDetailsModal from "../../components/modals/new-md-details-modal";
+import MdDetailsTable from "../../components/tables/md-details-table";
+import { ENDPOINTS, Message } from "../../utils/constants";
+import { Notification } from "../../utils/context/auth";
+import { farmerDetail } from "../../utils/context/farmersDetails";
+import { IMdDetails, useMdDetailsContext } from "../../utils/context/mdDetails";
+import { useAdd, useFetch } from "../../utils/hooks/query";
+import Loader from "../../utils/loaders/tree-loader";
+import Toast from "../../utils/toast";
 
 const MdDetails = () => {
+  // constants
   const toastId = "toastId";
+  // Queries
+  const queryClient = useQueryClient();
   const {
     formatChangeSuccess: mdIsSuccess,
     result: { data: mdData },
@@ -25,15 +28,14 @@ const MdDetails = () => {
     result: { data: farmersData },
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
-
-  const { setSearchFilter, sortFilter, setSortFilter, currentPage } = useMdDetailsContext();
   const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
+  // state values
+  const { setSearchFilter, sortFilter, setSortFilter, currentPage } = useMdDetailsContext();
   const [addModal, setAddModal] = useState(false);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
-  const queryClient = useQueryClient();
   useEffect(() => {
     Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {

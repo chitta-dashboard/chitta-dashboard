@@ -1,27 +1,28 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import MdDetailsForm from "../MdDetailsForm";
-import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import IconWrapper from "../../../utils/iconWrapper";
-import { useAuthContext } from "../../../utils/context/auth";
-import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
-import { useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
-import Toast from "../../../utils/toast";
-import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import { Popover } from "@mui/material";
+import { S } from "./mdDetails-form-preview.styled";
+import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
+import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
+import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
+import IconWrapper from "../../../utils/iconWrapper";
+import ImagePreview from "../../../utils/imageCrop/imagePreview";
+import Toast from "../../../utils/toast";
 import { AdminFormInputs } from "../../admin-panel";
-import { S } from "./mdDetails-form-preview.styled";
+import MdDetailsForm from "../MdDetailsForm";
 
 const MdFormPreviewLeft = () => {
+  // constants
   const toastId = "toastId";
   const { mdId } = useParams();
-
+  // Queries
   let {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -44,6 +45,7 @@ const MdFormPreviewLeft = () => {
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: editMdDetail } = useEditByPage(ENDPOINTS.mdDetails, currentPage, mdQuery, mdId);
   const { mutate: deleteMdDetail } = useDeleteByPage(ENDPOINTS.mdDetails, currentPage);
+  // state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");

@@ -1,8 +1,8 @@
 import { FC } from "react";
+import S from "./tableData.styled";
+import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import { decryptText } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
-import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
-import S from "./tableData.styled";
 
 interface Props {
   farmerData: farmerDetail;

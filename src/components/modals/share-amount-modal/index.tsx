@@ -1,16 +1,16 @@
 import { FC, Ref, useState, useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import CustomModal from "../../custom-modal";
+import S from "./Body/share-amount-modal.styled";
+import { ENDPOINTS } from "../../../utils/constants";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFetchByParams } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
-import ModalHeader from "../../custom-modal/header";
+import TamilShareHolderCertificate from "../../../views/tamil-share-certificate";
+import CustomModal from "../../custom-modal";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import ShareDetailBody from "./Body/ShareDetailBody";
 import ShareDetailFooter from "./Footer/ShareDetailFooter";
-import TamilShareHolderCertificate from "../../../views/tamil-share-certificate";
-import S from "./Body/share-amount-modal.styled";
 
 interface CustomProps {
   openModal: boolean;
@@ -18,13 +18,14 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+  // state values
   const { selectedFarmers, farmerQuery, checkboxUnselectAll, setIsCircleLoading } = useFarmerDetailsContext();
-
+  // Queries
   const {
     result: { data: farmersDetailsById, refetch: farmerDetailsRefetch },
     formatChangeSuccess: farmerDetailsSuccess,
   } = useFetchByParams(ENDPOINTS.farmerDetails, farmerQuery, false);
-
+  // state values
   const [shareAmount, setShareAmount] = useState(1000);
   const loader = true;
   const [toggle, setToggle] = useState(false);

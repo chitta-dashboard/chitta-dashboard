@@ -1,8 +1,8 @@
 import { FC, useState } from "react";
-import ResolutionsTree from "../resolutions-tree";
-import ResolutionsList from "../resolutions-list";
 import S from "./resolutionsContent.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
+import ResolutionsList from "../resolutions-list";
+import ResolutionsTree from "../resolutions-tree";
 
 const ResolutionsContent: FC = () => {
   const [resolutionId, setResolutionId] = useState<string | null>("");

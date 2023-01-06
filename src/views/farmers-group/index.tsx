@@ -1,22 +1,25 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
+import S from "./farmersGroup.styled";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
 import { Message, ENDPOINTS } from "../../utils/constants";
-import { useFetch, useAdd } from "../../utils/hooks/query";
 import { useAuthContext } from "../../utils/context/auth";
 import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../utils/context/farmersGroup";
-import S from "./farmersGroup.styled";
+import { useFetch, useAdd } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
+  // constants
   const toastId = "toastId";
   const queryClient = useQueryClient();
-  const { setSearchFilter, setSortFilter, sortFilter, currentPage, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  // Queries
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+  // state values
+  const { setSearchFilter, setSortFilter, sortFilter, currentPage, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);

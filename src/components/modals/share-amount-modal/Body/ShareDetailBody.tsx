@@ -1,8 +1,8 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import ToggleSwitch from "../../../../utils/ToggleSwitch";
 import S from "./share-amount-modal.styled";
 import peopleIcon from "../../../../assets/images/People-icon.svg";
+import ToggleSwitch from "../../../../utils/ToggleSwitch";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 
 interface CustomProps {
   setShareAmount: Dispatch<SetStateAction<number>>;
@@ -11,6 +11,7 @@ interface CustomProps {
 }
 
 const ShareDetailBody: FC<CustomProps> = ({ setShareAmount, toggle, setToggle }) => {
+  // state values
   const { selectedFarmers } = useFarmerDetailsContext();
 
   const shareAmountHandler = (e: any) => {

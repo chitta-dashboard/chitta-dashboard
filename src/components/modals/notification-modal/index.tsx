@@ -1,9 +1,9 @@
 import { FC, useState, useRef } from "react";
-import Icon from "../../icons";
-import { useFetch } from "../../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
-import { BufferLoader } from "../../../utils/loaders/api-loader";
 import S from "./NotificationModal.styled";
+import Icon from "../../icons";
+import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
+import { BufferLoader } from "../../../utils/loaders/api-loader";
 
 interface NotificationProps {
   open: boolean;
@@ -14,10 +14,12 @@ interface NotificationProps {
 }
 
 const NotificationModal: FC<NotificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
+  // Queries
   const {
     result: { data: NotificationData },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
+  // state values
   const [seeMore, setSeeMore] = useState(false);
   const bodyref = useRef<any>();
 

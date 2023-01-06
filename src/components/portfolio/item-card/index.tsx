@@ -1,26 +1,26 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Popover } from "@mui/material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import paddy from "../../../assets/images/paddy.png";
-import millet from "../../../assets/images/millet.png";
-import groundnut from "../../../assets/images/groundnut.png";
-import maize from "../../../assets/images/maize.png";
-import ragi from "../../../assets/images/ragi.png";
-import blackgram from "../../../assets/images/blackgram.png";
-import sugarcane from "../../../assets/images/sugarcane.png";
-import cotton from "../../../assets/images/cotton.png";
-import { handleDateDifference } from "../../../utils/helpers";
-import DeleteModal from "../../modals/delete-modal";
-import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
-import { useEditPortfolio } from "../../../utils/hooks/query";
-import { useAuthContext } from "../../../utils/context/auth";
-import Toast from "../../../utils/toast";
-import ProductsModal from "../../modals/products-modal";
-import ConfirmationModal from "../../modals/confirmation-modal";
-import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CS from "../../../components/common-styles/commonStyles.styled";
 import S from "./itemCard.styled";
+import blackgram from "../../../assets/images/blackgram.png";
+import cotton from "../../../assets/images/cotton.png";
+import groundnut from "../../../assets/images/groundnut.png";
+import maize from "../../../assets/images/maize.png";
+import millet from "../../../assets/images/millet.png";
+import paddy from "../../../assets/images/paddy.png";
+import ragi from "../../../assets/images/ragi.png";
+import sugarcane from "../../../assets/images/sugarcane.png";
+import { ENDPOINTS, fileToBase64 } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { handleDateDifference } from "../../../utils/helpers";
+import { useEditPortfolio } from "../../../utils/hooks/query";
+import Toast from "../../../utils/toast";
+import ConfirmationModal from "../../modals/confirmation-modal";
+import DeleteModal from "../../modals/delete-modal";
+import ProductsModal from "../../modals/products-modal";
+import { IAddProductsFormInput, IProductVarient } from "../../modals/type/formInputs";
 
 export interface IPortfolioVariant {
   variantId: string;
@@ -47,8 +47,11 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  // state values
   const { addNotification } = useAuthContext();
   const [variantData, setVariantdata] = useState<IPortfolioVariant>(() => {
     let latestVariantId = "";
@@ -62,6 +65,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
     return data[latestVariantId] as IPortfolioVariant;
   });
   const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
+  // state values
   const [popoverOpen, setPopoverOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
@@ -182,7 +186,11 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
                   id: "delete_" + variantData.variantId + data.productName,
                   image: base64Image,
                 });
-                Toast({ message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`, type: "success", customId: `${toastId}-editPortFolio` });
+                Toast({
+                  message: `Product ${variantData.variantName} - ${data.productName} has been deleted.`,
+                  type: "success",
+                  customId: `${toastId}-editPortFolio`,
+                });
               },
             });
             setDeleteModal(false);

@@ -1,7 +1,7 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
 import { AdminFormInputs } from "../../views/admin-panel";
-import { useAdd, useFetch, useDelete } from "../hooks/query";
 import { ENDPOINTS } from "../constants";
+import { useAdd, useFetch, useDelete } from "../hooks/query";
 import Toast from "../toast";
 
 //Action type

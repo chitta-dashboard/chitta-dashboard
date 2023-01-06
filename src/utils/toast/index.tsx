@@ -1,4 +1,3 @@
-import React from "react";
 import { toast, ToastPosition } from "react-toastify";
 import { Typography } from "@mui/material";
 import S from "./toast.styled";

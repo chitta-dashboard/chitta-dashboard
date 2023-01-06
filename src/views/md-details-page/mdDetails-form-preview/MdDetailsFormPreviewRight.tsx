@@ -1,17 +1,18 @@
 import { Fragment } from "react";
 import { useParams } from "react-router-dom";
-import { IMdDetails } from "../../../utils/context/mdDetails";
-import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { useFetch, useIdByPage } from "../../../utils/hooks/query";
-import { ENDPOINTS, decryptText } from "../../../utils/constants";
-import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
+import { ENDPOINTS, decryptText } from "../../../utils/constants";
+import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
+import { useFetch, useIdByPage } from "../../../utils/hooks/query";
+import { AdminFormInputs } from "../../admin-panel";
 
 const MdFormPreviewRight = () => {
   const { mdId } = useParams();
+  // state values
   const { farmerBankDetail } = useFarmerDetailsContext();
-
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },

@@ -1,7 +1,7 @@
 import { FC } from "react";
+import S from "./leftSection.styled";
 import SearchBar from "../../../common-components/search-bar";
 import SelectDropDown from "../../../common-components/select-dropdown";
-import S from "./leftSection.styled";
 
 interface CustomProps {
   searchHandler?: (searchText: string) => void;

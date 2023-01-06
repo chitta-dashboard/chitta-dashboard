@@ -1,11 +1,12 @@
+import S from "./background.style";
 import EllipseBottom from "../../../assets/images/EllipseBottom.svg";
 import farmer from "../../../assets/images/farmer.svg";
+import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { AdminFormInputs } from "../../../views/admin-panel";
-import { ENDPOINTS } from "../../../utils/constants";
-import S from "./background.style";
 
 const LoginBackground = () => {
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },

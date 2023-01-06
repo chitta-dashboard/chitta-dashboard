@@ -1,26 +1,28 @@
 import { useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Popover } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
-import FarmerDetailsForm from "../FarmerDetailsForm";
-import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import IconWrapper from "../../../utils/iconWrapper";
-import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { FarmersGroup } from "../../../utils/context/farmersGroup";
-import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
-import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
-import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
-import Toast from "../../../utils/toast";
-import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import { Popover } from "@mui/material";
+import { S } from "./farmer-form-preview.styled";
+import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
-import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
-import { S } from "./farmer-form-preview.styled";
+import AddFarmersDetailsModal from "../../../components/modals/farmers-details-modal";
+import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
+import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { useAuthContext } from "../../../utils/context/auth";
+import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../../utils/context/farmersGroup";
+import { useDelete, useDeleteByPage, useEdit, useEditByPage, useFetch, useIdByPage } from "../../../utils/hooks/query";
+import IconWrapper from "../../../utils/iconWrapper";
+import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import { IMdDetails } from "../../../utils/store/slice/mdDetails";
+import Toast from "../../../utils/toast";
+import FarmerDetailsForm from "../FarmerDetailsForm";
 
 const FarmerFormPreviewLeft = () => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const { currentPage, farmerQuery } = useFarmerDetailsContext();
 
   const {
@@ -45,6 +47,7 @@ const FarmerFormPreviewLeft = () => {
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDeleteByPage(ENDPOINTS.farmerDetails, currentPage);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
+  // state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");

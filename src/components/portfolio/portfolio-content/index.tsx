@@ -1,8 +1,9 @@
 import { FC } from "react";
+import S from "./portfolioContent.styled";
 import PortfolioAnimal from "../portfolio-animal";
 import PortfolioProcessed from "../portfolio-processed";
 import PortfolioRaw from "../portfolio-raw";
-import S from "./portfolioContent.styled";
+
 interface Props {
   tab: string;
   clearSearchHandler: () => void;

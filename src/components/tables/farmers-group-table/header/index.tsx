@@ -1,10 +1,11 @@
 import { TableHead, TableRow } from "@mui/material";
-import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
-import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import IconWrapper from "../../../../utils/iconWrapper";
 
 const Header = () => {
+  // state values
   const { sortFilter, setSortFilter } = useFarmersGroupContext();
   return (
     <TableHead>

@@ -1,14 +1,14 @@
 import { FC } from "react";
-import { useFetch } from "../../utils/hooks/query";
-import { ENDPOINTS, decryptText } from "../../utils/constants";
-import { AdminFormInputs } from "../admin-panel";
-import { farmerDetail } from "../../utils/context/farmersDetails";
 import { S } from "./tamil-certificate.styled";
-import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
-import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
-import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
-import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
+import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
+import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
+import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
+import { ENDPOINTS, decryptText } from "../../utils/constants";
+import { farmerDetail } from "../../utils/context/farmersDetails";
+import { useFetch } from "../../utils/hooks/query";
+import { AdminFormInputs } from "../admin-panel";
 
 interface Props {
   user: farmerDetail;
@@ -17,6 +17,7 @@ interface Props {
 }
 
 const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, toggle }) => {
+  // Queries
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },

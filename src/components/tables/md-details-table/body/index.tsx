@@ -1,20 +1,22 @@
 import { useEffect } from "react";
-import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import S from "./body.styled";
 import { ENDPOINTS } from "../../../../utils/constants";
+import { FarmersGroup } from "../../../../utils/context/farmersGroup";
+import { IMdDetails, useMdDetailsContext } from "../../../../utils/context/mdDetails";
+import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 import { useEdit, useFetch, useFetchByPage } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
-import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import MdDetailsRow from "./row";
-import S from "./body.styled";
-import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 
 const Body = () => {
+  // state values
   const { searchFilter, sortFilter, currentPage, setPageCount, setMdQuery } = useMdDetailsContext();
   const searchQuery = useSearchQuery(searchFilter, "name");
   const sortQuery = useSortQuery(sortFilter, "name");
+  // constants
   const groupQuery = "";
   const dataLimit = 7;
-
+  // Queries
   const {
     result: { data: mdDetailsById, refetch: mdDetailRefetch, isFetched: isMdDetailsSuccess },
     dataCount: totalDataCount,
@@ -25,7 +27,6 @@ const Body = () => {
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const removeGroupMember = (id: string, group: string) => {

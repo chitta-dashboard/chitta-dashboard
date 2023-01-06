@@ -1,10 +1,11 @@
 import { FC } from "react";
+import S from "./footer.styled";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { AdminFormInputs } from "../../../views/admin-panel";
-import S from "./footer.styled";
 
 const Footer: FC = () => {
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },

@@ -2,24 +2,24 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import S from "./farmersDetailsModal.styled";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
 import { useFarmerDetailsContext, farmerDetail } from "../../../utils/context/farmersDetails";
+import { useGetFarmersId, useIdByPage } from "../../../utils/hooks/query";
 import CustomModal from "../../custom-modal";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
-import FormField from "./page-1-fields";
-import FormFieldPage2 from "./page-2-fields";
-import FormFieldPage3 from "./page-3-fields";
+import ModalHeader from "../../custom-modal/header";
 import {
   IAddFarmersDetailsFormInput,
   IAddFarmersDetailsPage1Input,
   IAddFarmersDetailsPage2Input,
   IAddFarmersDetailsPage3Input,
 } from "../type/formInputs";
-import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRETOCENT } from "../../../utils/constants";
-import { useGetFarmersId, useIdByPage } from "../../../utils/hooks/query";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
-import S from "./farmersDetailsModal.styled";
+import FormField from "./page-1-fields";
+import FormFieldPage2 from "./page-2-fields";
+import FormFieldPage3 from "./page-3-fields";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -31,18 +31,19 @@ interface CustomProps {
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
+  // state values
   const { farmerBankDetail } = useFarmerDetailsContext();
+  // Queries
   const { farmerId } = useGetFarmersId(ENDPOINTS.farmerDetails);
 
   let {
     result: { data: farmersDetailsById, isFetched: isSuccess, isFetchedAfterMount: isfetched },
   } = useIdByPage(ENDPOINTS.farmerDetails, id);
 
-
   const {
     result: { data: lastFarmerDetail, isFetched: isLastDataSuccess },
   } = useIdByPage(ENDPOINTS.farmerDetails, farmerId[farmerId.length - 1]);
-
+  // state values
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
   const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();

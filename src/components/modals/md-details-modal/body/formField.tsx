@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { UseFormSetValue, UseFormGetValues, UseFormUnregister, Control } from "react-hook-form";
-import { fileValidation } from "../../../../utils/constants";
-import Input from "../../../input-fields/input/input";
-import AddProfile from "../../../input-fields/add-profile";
-import { IAddMDDetailsFormInput } from "../../type/formInputs";
 import S from "./mdDetailsModal.styled";
+import { fileValidation } from "../../../../utils/constants";
+import AddProfile from "../../../input-fields/add-profile";
+import Input from "../../../input-fields/input/input";
+import { IAddMDDetailsFormInput } from "../../type/formInputs";
 
 interface CustomProps {
   setValue: UseFormSetValue<IAddMDDetailsFormInput>;

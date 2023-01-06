@@ -1,17 +1,17 @@
 import { useRef, useState } from "react";
-import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
-import ImagePreview from "../../utils/imageCrop/imagePreview";
-import { CeoDetail } from "../../utils/context/ceoDetails";
-import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
-import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
-import DeleteModal from "../../components/modals/delete-modal";
-import ConfirmationModal from "../../components/modals/confirmation-modal";
-import { useAuthContext } from "../../utils/context/auth";
-import IdCardModal from "../../components/modals/id-download-modal";
-import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
-import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
+import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
+import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
+import ConfirmationModal from "../../components/modals/confirmation-modal";
+import DeleteModal from "../../components/modals/delete-modal";
+import IdCardModal from "../../components/modals/id-download-modal";
+import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
+import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { useAuthContext } from "../../utils/context/auth";
+import { CeoDetail } from "../../utils/context/ceoDetails";
+import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
+import ImagePreview from "../../utils/imageCrop/imagePreview";
+import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 interface Props {
@@ -19,7 +19,9 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
   const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
   const {
@@ -27,6 +29,7 @@ const CeoDetailsCard = ({ user }: Props) => {
     result: { data: ceoDetailsById },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
+  // state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);

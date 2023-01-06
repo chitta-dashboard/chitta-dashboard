@@ -3,12 +3,12 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { ENDPOINTS, VARIANT_DATA, PRODUCT_DATA } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
-import { IAddProductsFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
-import FormField from "./body/formField";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
+import { IAddProductsFormInput } from "../type/formInputs";
+import FormField from "./body/formField";
 
 interface CustomProps {
   cb: (data: IAddProductsFormInput & { id: string; products: string[]; variantName: string }) => void;
@@ -24,6 +24,7 @@ interface CustomProps {
 const ProductsModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", products = [], variantData } = props;
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddProductsFormInput>();
+  // state values
   const [availableList, setAvailableList] = useState<string[] | null>(null);
   const [variantList, setVariantList] = useState<string[][] | null>(null);
   const [productName, setProductName] = useState<string>("");
@@ -34,6 +35,7 @@ const ProductsModal: FC<CustomProps> = (props) => {
   const productIdHandler = (id: string) => {
     setProductId(id);
   };
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: productDetails },

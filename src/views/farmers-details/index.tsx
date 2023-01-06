@@ -1,23 +1,25 @@
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { FarmersGroup } from "../../utils/context/farmersGroup";
-import { IMdDetails } from "../../utils/context/mdDetails";
-import { useAuthContext } from "../../utils/context/auth";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
-import { ENDPOINTS, Message } from "../../utils/constants";
-import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
-import Toast from "../../utils/toast";
+import S from "./farmersDetails.styled";
+import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import FarmersDetailsTablePageHeader from "../../components/table-page-header/farmers-details-table-page-header";
 import FarmersDetailsTable from "../../components/tables/farmers-details-table";
-import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
+import { ENDPOINTS, Message } from "../../utils/constants";
+import { useAuthContext } from "../../utils/context/auth";
+import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { FarmersGroup } from "../../utils/context/farmersGroup";
+import { IMdDetails } from "../../utils/context/mdDetails";
+import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import { CircularStatic } from "../../utils/loaders/circular-progress-loader/index";
 import Loader from "../../utils/loaders/tree-loader";
-import S from "./farmersDetails.styled";
+import Toast from "../../utils/toast";
 
 const FarmersDetails = () => {
+  // constants
   const toastId = "toastId";
+  // state values
   const { currentPage, isCircleLoading, setFarmerBankDetail, setSearchFilter } = useFarmerDetailsContext();
-
+  // Queries
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -27,6 +29,7 @@ const FarmersDetails = () => {
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
+  // state values
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 

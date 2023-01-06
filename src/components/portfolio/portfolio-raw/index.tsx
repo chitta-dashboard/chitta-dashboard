@@ -1,19 +1,22 @@
 import { FC, useEffect, useState } from "react";
+import S from "./portfolioRaw.styled";
 import { ENDPOINTS, searchWord } from "../../../utils/constants";
 import { usePortfolioContext } from "../../../utils/context/portfolio";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";
 import ItemCard, { IPortfolioProduct } from "../item-card";
-import S from "./portfolioRaw.styled";
+
 interface Props {
   tab: string;
   clearSearchHandler: () => void;
 }
 const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
+  // Queries
   const {
     formatChangeSuccess: isRawSuccess,
     result: { data: rawProducts },
   } = useFetch(ENDPOINTS.portfolioRaw);
+  // state values
   const { searchFilter, setSearchFilter } = usePortfolioContext();
   const [rawProductSearch, setRawProductSearchSearch] = useState<IPortfolioProduct[]>(isRawSuccess ? Object.values(rawProducts) : []);
 

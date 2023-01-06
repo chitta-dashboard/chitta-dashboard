@@ -1,8 +1,9 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
-import Input from "../../../input-fields/input/input";
-import { PRODUCT_DATA, VARIANT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
+import { PRODUCT_DATA, VARIANT_DATA } from "../../../../utils/constants";
+import Input from "../../../input-fields/input/input";
+
 interface CustomProps {
   control?: Control;
   variantList?: string[][] | null;

@@ -1,15 +1,15 @@
 import { FC, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 import { ENDPOINTS } from "../../../utils/constants";
 import { useIdByPage } from "../../../utils/hooks/query";
-import { IAddFarmersGroupFormInput } from "../type/formInputs";
 import CustomModal from "../../custom-modal";
-import FormField from "./body/formField";
-import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
+import { IAddFarmersGroupFormInput } from "../type/formInputs";
+import FormField from "./body/formField";
 
 interface CustomProps {
   cb: (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => void;
@@ -24,6 +24,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
+  // Queries
   const {
     result: { data: farmerGroupData, isFetchedAfterMount: isFetched },
     formatChangeSuccess: isSuccess,

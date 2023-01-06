@@ -1,16 +1,16 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Theme } from "@mui/material";
 import Slider from "react-slick";
+import { Theme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "slick-carousel/slick/slick.css";
+import S from "../dashboardBodyTop.styled";
 import "slick-carousel/slick/slick-theme.css";
-import { useGetFarmersCount } from "../../../../utils/hooks/query";
+import "slick-carousel/slick/slick.css";
 import Icon from "../../../icons";
 import { ACRETOCENT } from "../../../../utils/constants";
+import { useGetFarmersCount } from "../../../../utils/hooks/query";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
-import S from "../dashboardBodyTop.styled";
 import PopOver from "../../../common-components/pop-over";
-import { useState } from "react";
 
 const DashboardBodyTop = () => {
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const DashboardBodyTop = () => {
   interface Ivalue {
     "9eb5af43-f224-4434-9488-fddf4eb004dc": string;
   }
+  // state values
   const [isPopOver, setIsPopOver] = useState<HTMLButtonElement | null>(null);
   const [popId, setPopId] = useState<string>("");
   const [value, setValue] = useState<Ivalue>({

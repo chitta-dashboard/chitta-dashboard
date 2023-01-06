@@ -1,14 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
+import { S } from "./dashboardHeader.styled";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import { fileToBase64, fileValidation } from "../../../utils/constants";
+import IconWrapper from "../../../utils/iconWrapper";
+import ImagePreview from "../../../utils/imageCrop/imagePreview";
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
-import { fileToBase64, fileValidation } from "../../../utils/constants";
-import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import IconWrapper from "../../../utils/iconWrapper";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
-import { S } from "./dashboardHeader.styled";
 
 const DashboardHeader = () => {
+  // state values
   const [openSearch, setOpenSearch] = useState(false);
   const [image, setImage] = useState<string>("");
   const [imagePic, setImagePic] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));

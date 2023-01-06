@@ -2,6 +2,7 @@ import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
+  // state values
   const { pageCount, currentPage, totalPageCount, setCurrentPage } = useFarmersGroupContext();
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);

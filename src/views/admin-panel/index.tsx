@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import Compress from "react-image-file-resizer";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import Compress from "react-image-file-resizer";
-import { useEdit } from "../../utils/hooks/query";
-import Toast from "../../utils/toast";
+import S from "./adminPanel.styled";
 import AdminLogo from "../../components/admin-panel/admin-logo";
 import IdInformation from "../../components/admin-panel/id-information";
 import ProfileInformation from "../../components/admin-panel/profile-information";
 import { encryptText, ENDPOINTS, fileValidation } from "../../utils/constants";
-import S from "./adminPanel.styled";
+import { useEdit } from "../../utils/hooks/query";
+import Toast from "../../utils/toast";
 
 export interface AdminFormInputs {
   id?: string;
@@ -46,10 +46,12 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
+  // constants
   const toastId = "toastId";
+  // state values
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
-
+// Queries
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
 
   const {

@@ -20,7 +20,9 @@ interface FarmersGroupRowProp {
   params?: string;
 }
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
+  // constants
   const toastId = "toastId";
+  //state values
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
   const { currentPage } = useFarmersGroupContext();
   const { addNotification } = useAuthContext();
@@ -30,7 +32,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user, params }) => {
   const [editData, setEditData] = useState<FarmersGroup>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
-
+// Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmerDetailsById },

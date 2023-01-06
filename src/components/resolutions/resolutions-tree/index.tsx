@@ -1,14 +1,14 @@
 import { Ref, useEffect, useRef, Dispatch, FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
-import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
-import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
-import { IResolution } from "../../../utils/context/resolution";
+import S from "./resolutionsTree.styled";
 import leafLine from "../../../assets/images/leafLine.svg";
+import { DESCENDING, ENDPOINTS, sortObj } from "../../../utils/constants";
+import { IResolution } from "../../../utils/context/resolution";
 import { useFetch } from "../../../utils/hooks/query";
 import Loader from "../../../utils/loaders/tree-loader";
 import Toast from "../../../utils/toast";
-import S from "./resolutionsTree.styled";
+import ResolutionPdf from "../../../views/resolution-certificate/resolutionPdf";
 
 interface Props {
   resolutionId: string | null;
@@ -16,7 +16,9 @@ interface Props {
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const {
     formatChangeSuccess,
     result: { data: resolutionsObj, isError },

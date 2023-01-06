@@ -1,10 +1,10 @@
 import { forwardRef } from "react";
 import { S } from "./certificate.styled";
-import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
-import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
-import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
-import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 import NerkathirLogoGray from "../../assets/images/nerkathir-logo-gray.svg";
+import ShareHolderCertificateBottomCornerIcon from "../../assets/images/share-holder-certificate-bottom-corner-icon.svg";
+import ShareHolderCertificateLeftBorder from "../../assets/images/share-holder-certificate-left-border.svg";
+import ShareHolderCertificateTopBorder from "../../assets/images/share-holder-certificate-top-border.svg";
+import ShareHolderCertificateTopCornerIcon from "../../assets/images/share-holder-certificate-top-corner-icon.svg";
 
 const ShareHolderCertificate = forwardRef<HTMLDivElement>((props, ref) => (
   <div className="print-container" ref={ref}>

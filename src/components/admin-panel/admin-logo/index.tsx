@@ -1,13 +1,13 @@
 import { useRef, useEffect, FC, SetStateAction, Dispatch } from "react";
+import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
 import Resizer from "react-image-file-resizer";
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
-import { AdminFormInputs } from "../../../views/admin-panel";
+import S from "./adminLogo.styled";
 import DummyLogo94 from "../../../assets/images/DummyLogo94.svg";
 import DummyLogo156 from "../../../assets/images/DummyLogo156.svg";
 import DummyLogo180 from "../../../assets/images/DummyLogo180.svg";
-import S from "./adminLogo.styled";
+import { AdminFormInputs } from "../../../views/admin-panel";
 
 interface CustomProps {
   file?: File | null;

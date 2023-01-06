@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { IconType } from "../../types/icon-types";
 import S from "./icon-styled";
+import { IconType } from "../../types/icon-types";
 
 const Icon: FC<{
   iconName: IconType;

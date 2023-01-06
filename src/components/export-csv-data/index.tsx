@@ -1,8 +1,8 @@
-import { saveAs } from "file-saver";
 import { FC } from "react";
+import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
-import { farmerDetail } from "../../utils/context/farmersDetails";
 import S from "./exportData.styled";
+import { farmerDetail } from "../../utils/context/farmersDetails";
 
 type ExportCSVType = {
   name: string;
@@ -11,6 +11,7 @@ type ExportCSVType = {
 };
 
 export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
+  // constants
   const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";
 

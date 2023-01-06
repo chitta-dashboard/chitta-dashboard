@@ -1,11 +1,11 @@
 import { Ref, useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import { useNavigate } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
+import { S } from "./farmerDetailPage.styled";
 import IconWrapper from "../../utils/iconWrapper";
 import ShareHolderCertificate from "../share-holder-certificate";
 import TamilShareHolderCertificate from "../tamil-share-certificate";
 import FarmerDetailsForm from "./FarmerDetailsForm";
-import { S } from "./farmerDetailPage.styled";
 
 // Design of this page is changed, so it is not currently used.
 const FarmerDetailPage = () => {

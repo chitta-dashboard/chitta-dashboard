@@ -1,19 +1,20 @@
 import { useEffect } from "react";
-import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { useFetchByPage } from "../../../../utils/hooks/query";
+import S from "./body.styled";
 import { ENDPOINTS } from "../../../../utils/constants";
+import { FarmersGroup, useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
+import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
+import { useFetchByPage } from "../../../../utils/hooks/query";
 import BodyWrapper from "../../../custom-tables/body";
 import FarmersGroupRow from "./row";
-import S from "./body.styled";
-import { useSearchQuery, useSortQuery } from "../../../../utils/helpers";
 
 const Body = () => {
+  // state values
   const { searchFilter, sortFilter, currentPage, setFarmerGroupQuery, setPageCount } = useFarmersGroupContext();
   const searchQuery = useSearchQuery(searchFilter, "groupName");
   const sortQuery = useSortQuery(sortFilter, "groupName");
   const groupQuery = "";
   const dataLimit = 7;
-
+  // Queries
   const {
     result: { data: farmerGroupByPage, refetch: farmergroupRefetch, isFetched: isFarmerByPageSuccess },
     dataCount: totalDataCount,

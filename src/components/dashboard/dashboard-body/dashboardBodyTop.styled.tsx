@@ -1,5 +1,5 @@
-import styled from "@emotion/styled";
 import { Box } from "@mui/material";
+import styled from "@emotion/styled";
 
 export namespace S {
   export const StasticsCardContainer = styled(Box)(({ theme }: any) => ({

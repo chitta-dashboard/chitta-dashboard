@@ -1,10 +1,12 @@
 import { FC, useEffect } from "react";
-import { usePortfolioContext } from "../../../utils/context/portfolio";
 import S from "./portfolioAnimal.styled";
+import { usePortfolioContext } from "../../../utils/context/portfolio";
+
 interface Props {
   clearSearchHandler: () => void;
 }
 const PortfolioAnimal: FC<Props> = ({ clearSearchHandler }) => {
+  // state values
   const { setSearchFilter } = usePortfolioContext();
 
   useEffect(() => {

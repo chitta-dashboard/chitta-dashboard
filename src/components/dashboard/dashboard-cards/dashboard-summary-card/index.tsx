@@ -1,10 +1,11 @@
 import { useState } from "react";
-import SummaryChart from "./summary-chart/index";
-import OptionCard from "./option-card/index";
 import { CardHeader } from "../common-styles/commonStyles.styled";
 import { S } from "./dashboardSummaryCard.styled";
+import OptionCard from "./option-card/index";
+import SummaryChart from "./summary-chart/index";
 
 const DashboardSummaryCard = () => {
+  //  state values
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
 
   const optionHandler = () => {

@@ -1,5 +1,5 @@
-import { Box, Button, IconButton, Theme, Typography } from "@mui/material";
 import styled from "@emotion/styled/macro";
+import { Box, Button, IconButton, Theme, Typography } from "@mui/material";
 import { BRANCH_DURATION, growX, growY, LEAF_DURATION, popIn, slideUp, STEM_DURATION, TOTAL_DURATION } from "./animation";
 
 namespace S {

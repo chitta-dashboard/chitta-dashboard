@@ -1,16 +1,16 @@
+import { FC, useEffect } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
+import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { dateFormat, decryptText, encryptText, imageCompressor } from "../../../utils/constants";
-import ModalHeader from "../../custom-modal/header";
-import ModalFooter from "../../custom-modal/footer";
-import ModalBody from "../../custom-modal/body";
+import { useMdDetailsContext } from "../../../utils/context/mdDetails";
 import CustomModal from "../../custom-modal";
+import ModalBody from "../../custom-modal/body";
+import ModalFooter from "../../custom-modal/footer";
+import ModalHeader from "../../custom-modal/header";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
-import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 
 interface CustomProps {
   openModal: boolean;
@@ -21,6 +21,7 @@ interface CustomProps {
 }
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  // state values
   let { mdDetailsById } = useMdDetailsContext();
 
   const { handleSubmit, reset, clearErrors, setValue, getValues, unregister, control, watch } = useForm<IAddMDDetailsFormInput>();
@@ -77,7 +78,6 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
       profile: encryptedBase64,
       id: editMode ? id : uuidv4(),
     } as IAddMDDetailsFormInput & { id: string });
-    
   };
 
   return (

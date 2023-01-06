@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Control } from "react-hook-form";
-import Input from "../../../input-fields/input/input";
 import S from "./farmersGroupModal.styled";
+import Input from "../../../input-fields/input/input";
 
 interface CustomProps {
   control?: Control;

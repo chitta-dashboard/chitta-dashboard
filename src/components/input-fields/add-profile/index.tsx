@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { Badge, FormHelperText } from "@mui/material";
 import { Control, Controller, FieldValues, Path, PathValue, UseFormGetValues, UseFormSetValue, UseFormUnregister } from "react-hook-form";
-import ImagePreview from "../../../utils/imageCrop/imagePreview";
-import { fileValidation } from "../../../utils/constants";
+import { Badge, FormHelperText } from "@mui/material";
 import S from "./body/addProfile.styled";
+import { fileValidation } from "../../../utils/constants";
+import ImagePreview from "../../../utils/imageCrop/imagePreview";
 
 interface AddProfileProps<FormInputTypes extends FieldValues> {
   ImageHandler?: () => void;
@@ -17,6 +17,7 @@ interface AddProfileProps<FormInputTypes extends FieldValues> {
 }
 
 function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridArea, getValues }: AddProfileProps<FormInputTypes & FieldValues>) {
+  // state values
   // latest chosen image
   const [imageToCrop, setImageToCrop] = useState<string>("");
   // latest cropped image

@@ -1,10 +1,11 @@
 import { Checkbox, TableHead, TableRow, Stack } from "@mui/material";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
-import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
+import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import IconWrapper from "../../../../utils/iconWrapper";
 
 const Header = () => {
+  // state values
   const { farmerId, selectedFarmers, sortFilter, setSortFilter, checkboxSelectAll } = useFarmerDetailsContext();
   return (
     <TableHead>

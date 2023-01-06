@@ -1,6 +1,6 @@
 import { FieldValues, UseFormRegister, Path } from "react-hook-form";
-import { getCurrentTime } from "../../../utils/constants";
 import S from "./dateTime.styled";
+import { getCurrentTime } from "../../../utils/constants";
 
 interface CustomProps<FormInputType extends FieldValues> {
   label: string;

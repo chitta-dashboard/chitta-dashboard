@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
-import { IconType } from "../../../types/icon-types";
 import S from "./icons-wrapper-styled";
+import { IconType } from "../../../types/icon-types";
 
 interface Props {
   iconName: IconType;

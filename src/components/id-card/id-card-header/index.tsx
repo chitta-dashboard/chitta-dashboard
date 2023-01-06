@@ -1,10 +1,11 @@
-import IdLogo from "../../../assets/images/logo.svg";
-import { useFetch } from "../../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
-import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./idCardHeader.styled";
+import IdLogo from "../../../assets/images/logo.svg";
+import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { useFetch } from "../../../utils/hooks/query";
+import { AdminFormInputs } from "../../../views/admin-panel";
 
 const IDCardHeader = () => {
+  // Queries
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },

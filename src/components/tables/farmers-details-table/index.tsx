@@ -1,7 +1,7 @@
 import TableWrapper from "../../custom-tables/table";
-import Header from "./header";
 import Body from "./body";
 import Footer from "./footer";
+import Header from "./header";
 
 const FarmersDetailsTable = () => {
   return (

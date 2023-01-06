@@ -1,21 +1,24 @@
 import { Fragment, useState } from "react";
-import CeoDetailsCard from "./CeoDetailCard";
+import S from "./ceo-details.styled";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
-import Loader from "../../utils/loaders/tree-loader";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAuthContext } from "../../utils/context/auth";
 import { useFetch, useAdd } from "../../utils/hooks/query";
-import S from "./ceo-details.styled";
+import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
+import CeoDetailsCard from "./CeoDetailCard";
 
 const CeoDetails = () => {
+  // constants
   const toastId = "toastId";
+  // Queries
   const {
     formatChangeSuccess,
     result: { data: ceoDetails },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
+  // state values
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 
