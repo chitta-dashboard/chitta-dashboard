@@ -66,5 +66,5 @@ const farmersGroupSlice = createSlice({
   reducers: {},
 });
 
-// export const {} = farmersGroupSlice.actions;
+//  create this to use this slice  const {} = farmersGroupSlice.actions;
 export const farmersGroupReducer = farmersGroupSlice.reducer;

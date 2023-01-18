@@ -1,5 +1,5 @@
 import { createContext, FC, useContext, useState, useReducer } from "react";
-import { adminFormInputs } from "../../views/admin-panel";
+import { AdminFormInputs } from "../../views/admin-panel";
 import { useAdd, useFetch, useDelete } from "../hooks/query";
 import { ENDPOINTS } from "../constants";
 import Toast from "../toast";
@@ -13,7 +13,7 @@ const LOADER = "LOADER";
 
 export type Notification = {
   id: string;
-  image?: string | undefined;
+  image?: string;
   message: string;
 };
 export type loader = {
@@ -33,7 +33,7 @@ interface IContextType {
   addLogo: (data: {}) => void;
   loader: (data: loader) => void;
   userNotification: Notification[];
-  AdminUpdate: { [id: string]: adminFormInputs };
+  AdminUpdate: { [id: string]: AdminFormInputs };
   headerImage: string | null;
   loginImage: string | null;
   certificateImage: string | null;
@@ -119,7 +119,6 @@ const AuthContextProvider: FC<Props> = (props) => {
   const { mutate: addNotify } = useAdd(ENDPOINTS.notification);
   const {
     result: { data: NotificationData },
-    formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
   const { mutate: deleteNotification } = useDelete(ENDPOINTS.notification);
 
@@ -147,12 +146,9 @@ const AuthContextProvider: FC<Props> = (props) => {
 
   const addNotification = (data: Notification) => {
     return addNotify({ data: data });
-
-    // dispatch({ type: ADD_NOTIFICATION, payload: data });
   };
 
   const clearNotification = () => {
-    // dispatch({ type: CLEAR_NOTIFICATION });
     deleteNotification({ id: Object.keys(NotificationData) });
   };
 

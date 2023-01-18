@@ -13,7 +13,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 
 const FarmersDetails = () => {
-  const { setSearchFilter, farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
+  const { setSearchFilter, setFarmerBankDetail } = useFarmerDetailsContext();
 
   const {
     result: { data: farmersGroupById },
@@ -34,30 +34,27 @@ const FarmersDetails = () => {
   };
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const addGroupMember = async (id: string, group: string) => {
+  const addGroupMember = (id: string, group: string) => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    editFarmerGroup({ editedData: newGroupMember });
   };
 
   // Add Farmerdetail Handler
-  const addDataHandler = async (data: IMdDetails) => {
-    setFarmerBankDetail(false);
+  const addDataHandler = (data: IMdDetails) => {
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
     newFarmer &&
-      (await mutate({
+      mutate({
         data: newFarmer,
         successCb: () => {
-          addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
+          addNotification({ id: newFarmer.id, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
           Toast({ message: "Farmer Added Successfully", type: "success" });
         },
-        errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
-        },
-      }));
-    await addGroupMember(data.id, data.group);
+        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+      });
+    addGroupMember(data.id, data.group);
   };
 
   const handleSearchInput = (searchText: string) => {
@@ -73,12 +70,7 @@ const FarmersDetails = () => {
       ) : (
         <>
           <S.FarmersDetailsContainer>
-            <FarmersDetailsTablePageHeader
-              addModalHandler={addModalHandler}
-              searchHandler={handleSearchInput}
-              // sortFilter={sortFilter}
-              // sortHandler={(sortValue) => setSortFilter(sortValue)}
-            />
+            <FarmersDetailsTablePageHeader addModalHandler={addModalHandler} searchHandler={handleSearchInput} />
             <FarmersDetailsTable />
           </S.FarmersDetailsContainer>
           <AddFarmersDetailsModal

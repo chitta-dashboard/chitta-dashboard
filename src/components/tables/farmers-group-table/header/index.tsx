@@ -1,6 +1,6 @@
 import { TableHead, TableRow } from "@mui/material";
 import { useFarmersGroupContext } from "../../../../utils/context/farmersGroup";
-import { ASCENDING, DESCENDING, NORMAL } from "../../../../utils/constants";
+import { sortFilterHandler, sortIconHandler } from "../../../../utils/constants";
 import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
@@ -10,13 +10,9 @@ const Header = () => {
     <TableHead>
       <TableRow>
         <S.WebTableCell>
-          <span
-            onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
-            }}
-          >
+          <span onClick={() => setSortFilter && setSortFilter(sortFilterHandler(sortFilter))}>
             குழுபெயர்
-            <i>{sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}</i>
+            <i>{sortIconHandler(sortFilter)}</i>
           </span>
         </S.WebTableCell>
         <S.WebTableCell>எண்ணிக்கை</S.WebTableCell>
@@ -24,13 +20,7 @@ const Header = () => {
         <S.WebTableCell></S.WebTableCell>
         <S.TabTableCell>
           <p>MD Farmers Group</p>
-          <IconWrapper
-            onClick={() => {
-              setSortFilter && setSortFilter(sortFilter === NORMAL ? ASCENDING : sortFilter === ASCENDING ? DESCENDING : NORMAL);
-            }}
-          >
-            {sortFilter === NORMAL ? "sort" : sortFilter === ASCENDING ? "ascending" : "descending"}
-          </IconWrapper>
+          <IconWrapper onClick={() => setSortFilter && setSortFilter(sortFilterHandler(sortFilter))}>{sortIconHandler(sortFilter)}</IconWrapper>
         </S.TabTableCell>
       </TableRow>
     </TableHead>

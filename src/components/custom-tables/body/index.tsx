@@ -1,7 +1,7 @@
-import { wrapChildrenProps } from "../../../types/wrap-child-props";
+import { WrapChildrenProps } from "../../../types/wrap-child-props";
 import S from "./bodyWrapper.styled";
 
-const BodyWrapper = ({ children }: wrapChildrenProps) => {
+const BodyWrapper = ({ children }: WrapChildrenProps) => {
   return <S.Content>{children}</S.Content>;
 };
 

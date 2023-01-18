@@ -10,20 +10,24 @@ const Body = () => {
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmerGroupData } = result;
 
-  const { searchFilter, sortFilter, memberFilter, getFarmersGroupData } = useFarmersGroupContext();
+  const { searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
   const [farmersGroupMemberList, setFarmersGroupMemberList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupListSearch, setFarmersGroupListSearch] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupListSort, setFarmersGroupListSort] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupList, setFarmersGroupList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
 
+  const memberFilterHandler = () => {
+    switch (memberFilter) {
+      case customMemberFilter.ALL:
+        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[]));
+      case customMemberFilter.WITH_MEMBERS:
+        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length !== 0);
+      default:
+        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length === 0);
+    }
+  };
   useEffect(() => {
-    setFarmersGroupMemberList(
-      customMemberFilter.ALL === memberFilter
-        ? Object.values(isSuccess && (farmerGroupData as FarmersGroup[]))
-        : customMemberFilter.WITH_MEMBERS === memberFilter
-        ? Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length !== 0)
-        : Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length === 0),
-    );
+    setFarmersGroupMemberList(memberFilterHandler());
   }, [memberFilter, farmerGroupData, isSuccess]);
 
   useEffect(() => {

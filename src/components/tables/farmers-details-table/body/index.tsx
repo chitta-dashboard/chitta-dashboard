@@ -9,15 +9,7 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const {
-    addFarmerId,
-    searchFilter,
-    sortFilter,
-    groupFilter,
-    currentPage,
-    setPageCount,
-    setFarmersIdToExport,
-  } = useFarmerDetailsContext();
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
 
   const {
     formatChangeSuccess: isSuccess,
@@ -56,7 +48,7 @@ const Body = () => {
   }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
 
   useEffect(() => {
-    let result = isSuccess && Object.values(farmersListGroup as farmerDetail[]).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let result = isSuccess && Object.values(farmersListGroup).filter((farmer) => searchWord(farmer.name, searchFilter));
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
     isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
@@ -70,9 +62,7 @@ const Body = () => {
   //farmer id to export farmers
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
-    //console.log("Export Data : ",exportFarmerId)
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
-    //console.log("Farmer Id : ",farmerId)
     setFarmersIdToExport(farmersId);
   }, [farmersListSort, isSuccess, exportFarmerId]);
 
@@ -85,24 +75,40 @@ const Body = () => {
   }, [isSuccess, farmersList, exportFarmerId]);
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = async (id: string, group: string, isAdd: boolean) => {
-    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    const farmerDelete = isAdd ? (!farmersGroupData[noCountUpdate].members.includes(id) as boolean) : true;
-    if (farmerDelete) {
-      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    const onlyRemove = !toAdd ? !toAdd : !isCountUpdate;
+    if (onlyRemove) {
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
-      isAdd && (await addGroupMember(id, group));
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => toAdd && addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && toAdd && addGroupMember(id, group, farmersGroupData);
     }
   };
 
-  const addGroupMember = async (id: string, group: string) => {
-    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-    const newGroupMember = farmersGroupData[groupIndex];
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
   };
 
   return (

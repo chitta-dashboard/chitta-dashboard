@@ -2,8 +2,9 @@ import { FC, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
-import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
-import { useDelete, useEdit } from "../../../../utils/hooks/query";
+import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { IResolution } from "../../../../utils/context/resolution";
+import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
 import FarmersGroupIconModal from "../../../icon-modals/farmers-group-icon-modal";
@@ -20,6 +21,20 @@ interface FarmersGroupRowProp {
 
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmerDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+  const {
+    formatChangeSuccess: isSuccessFarmerGroup,
+    result: { data: farmerGroupById },
+  } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isSuccessFarmerResolution,
+    result: { data: farmerResolutionById },
+  } = useFetch(ENDPOINTS.resolutions);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -29,6 +44,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
   const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
+  const { mutate: resolutionEdit } = useEdit(ENDPOINTS.resolutions);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -125,19 +141,54 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={() => {
-            editMode &&
-              farmerGroupEdit({
-                editedData: editData,
-                successCb: () => {
-                  Toast({ message: "Farmer group updated successfully.", type: "success" });
-                },
-                errorCb: () => {
-                  Toast({ message: "Request failed, please try again.", type: "error" });
-                },
-              });
-            setEditMode(false);
-            setConfirmModal(false);
-            setIconModal(false);
+            if (isSuccess && isSuccessFarmerGroup && editData && editMode) {
+              const editFarmerGroupName = farmerGroupById[editData.id].groupName;
+              let newFarmerDetails = Object.values(farmerDetailsById as farmerDetail[])
+                .filter((item) => item.group === editFarmerGroupName)
+                .map((name) => {
+                  return { ...name, group: editData.groupName };
+                });
+              if (isSuccess && isSuccessFarmerResolution && editData && editMode) {
+                const editResolutionGroupName = farmerGroupById[editData.id].groupName;
+                let newResolutionDetails = Object.values(farmerResolutionById as IResolution[])
+                  .filter((item) => item.groupName === editResolutionGroupName)
+                  .map((name) => {
+                    return { ...name, groupName: editData.groupName };
+                  });
+                farmerGroupEdit({
+                  editedData: editData,
+                  successCb: () => {
+                    Toast({ message: "Farmer group updated successfully.", type: "success" });
+                    newFarmerDetails.length > 0 &&
+                      editFarmer({
+                        editedData: newFarmerDetails,
+                        successCb: () => {
+                          Toast({ message: "Farmer Edited Successfully", type: "success" });
+                        },
+                        errorCb: () => {
+                          Toast({ message: "Request failed! Please try again", type: "error" });
+                        },
+                      });
+                    newResolutionDetails.length > 0 &&
+                      resolutionEdit({
+                        editedData: newResolutionDetails,
+                        successCb: () => {
+                          Toast({ message: "Resolution Edited Successfully", type: "success" });
+                        },
+                        errorCb: () => {
+                          Toast({ message: "Request failed! Please try again", type: "error" });
+                        },
+                      });
+                  },
+                  errorCb: () => {
+                    Toast({ message: "Request failed, please try again.", type: "error" });
+                  },
+                });
+                setEditMode(false);
+                setConfirmModal(false);
+                setIconModal(false);
+              }
+            }
           }}
         />
       </S.WebTableCell>

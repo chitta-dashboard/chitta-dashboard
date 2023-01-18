@@ -54,7 +54,7 @@ export const LightTheme: Theme = createTheme({
     },
     // returns hex value with opacity added
     addAlpha: (hex, opacity) => {
-      var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+      let _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
       return hex + _opacity.toString(16).toUpperCase();
     },
   },

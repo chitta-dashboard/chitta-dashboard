@@ -1,17 +1,18 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Theme } from "@mui/material";
-import Slider from "react-slick";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import Slider from "react-slick";
 import { useFetch } from "../../../../utils/hooks/query";
-import Icon from "../../../icons";
 import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
-import S from "../dashboardBodyTop.styled";
+import { formatNumberToSmallScale } from "../../../../utils/helpers";
 import PopOver from "../../../common-components/pop-over";
-import { useState } from "react";
+import Icon from "../../../icons";
+import S from "../dashboardBodyTop.styled";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const DashboardBodyTop = () => {
   const navigate = useNavigate();
@@ -28,8 +29,6 @@ const DashboardBodyTop = () => {
     formatChangeSuccess: farmerGroupSuccess,
     result: { data: farmerGroupById },
   } = useFetch(ENDPOINTS.farmerGroup);
-
-  const { result } = useFetch(ENDPOINTS.admin);
 
   let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess ? Object.values(farmerDetailsById) : [];
   let farmerGroupByIdArray = farmerGroupSuccess ? Object.values(farmerGroupById) : [];
@@ -91,7 +90,9 @@ const DashboardBodyTop = () => {
       id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
       headCount: "-8",
       bodyCount: `${
-        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents" ? (totalAcreCount * ACRETOCENT).toFixed(2) : totalAcreCount.toFixed(2)
+        value["9eb5af43-f224-4434-9488-fddf4eb004dc"] === "Cents"
+          ? formatNumberToSmallScale(Number((totalAcreCount * ACRETOCENT).toFixed(2)))
+          : formatNumberToSmallScale(Number(totalAcreCount.toFixed(2)))
       }`,
       footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
@@ -106,12 +107,25 @@ const DashboardBodyTop = () => {
     // },
   ];
 
-  var settings = {
+  const slides = () => {
+    switch (xl || md || sm || null) {
+      case xl:
+        return 4;
+      case md:
+        return 4;
+      case sm:
+        return 3;
+      default:
+        return 2;
+    }
+  };
+
+  let settings = {
     dots: false,
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: xl ? 4 : md ? 4 : sm ? 3 : 2,
+    slidesToShow: slides(),
     slidesToScroll: 1,
     autoplay: false,
     centerPadding: "1rem",
@@ -134,7 +148,7 @@ const DashboardBodyTop = () => {
   };
 
   const onChangeDataHandler = (updateValue: string) => {
-    setValue({ ...value, [popId as string]: updateValue });
+    setValue({ ...value, [popId]: updateValue });
     setIsPopOver(null);
   };
 

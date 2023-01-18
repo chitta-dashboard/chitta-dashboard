@@ -33,7 +33,7 @@ const MdDetails = () => {
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
   useEffect(() => {
-    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).map((item) => {
+    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
       if (farmerKeys.includes(item.farmerId as string)) {
         let index = farmerKeys.indexOf(item.farmerId as string);
         farmerKeys.splice(index, 1);
@@ -41,7 +41,7 @@ const MdDetails = () => {
       return null;
     });
     let filteredFarmerData: farmerDetail[] = [];
-    farmerKeys.map((item) => {
+    farmerKeys.forEach((item) => {
       return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
@@ -62,7 +62,7 @@ const MdDetails = () => {
       setSelectedKeys([]);
     } else {
       let newFarmerKeys: string[] = [];
-      filteredFarmerDetails.map((item) => !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id));
+      filteredFarmerDetails.forEach((item) => !selectedKeys.includes(item.id) && newFarmerKeys.push(item.id));
       setSelectedKeys([...selectedKeys, ...newFarmerKeys]);
     }
   };
@@ -77,16 +77,16 @@ const MdDetails = () => {
     }
   };
 
-  const handleYesAction = async () => {
+  const handleYesAction = () => {
     let farmerData: IMdDetails[] = [];
     const notifications: Notification[] = [];
-    selectedKeys.map((item: string) => {
+    selectedKeys.forEach((item: string) => {
       let generatedId = uuidv4();
       let farmerDetailsResult: IMdDetails = {} as IMdDetails;
       let farmerKeys = Object.keys(farmersData[item]);
       farmerDetailsResult.id = generatedId;
       farmerDetailsResult.farmerId = farmersData[item].id;
-      farmerKeys.map((key) => {
+      farmerKeys.forEach((key) => {
         if (key !== "id") {
           farmerDetailsResult[key as keyof IMdDetails] = farmersData[item][key as keyof farmerDetail] as never;
         }
@@ -99,23 +99,19 @@ const MdDetails = () => {
         image: farmersData[item].profile,
         message: Message(farmersData[item].name).addMd,
       };
-
       notifications.push(notification);
     });
-    await addMdDetail({
+    addMdDetail({
       data: farmerData,
       successCb: () => {
         Toast({ message: "MD Added successfully.", type: "success" });
         addMdNotification({ data: notifications });
       },
-      errorCb: () => {
-        Toast({ message: "Request failed! Please try again.", type: "error" });
-      },
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
     });
     setIsConfirmModalOpen(false);
     addModalHandler();
   };
-
   const handleNoAction = () => setIsConfirmModalOpen(false);
 
   const addModalHandler = () => {

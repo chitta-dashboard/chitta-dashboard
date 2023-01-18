@@ -39,23 +39,39 @@ const Body = () => {
   }, [mdListSort, isSuccess]);
 
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = async (id: string, group: string) => {
-    const noCountUpdate = farmersGroupData.findIndex((list) => list.groupName === group);
-    if (!farmersGroupData[noCountUpdate]?.members.includes(id)) {
-      const removeMemberIndex = farmersGroupData.map((farmersGroup) => farmersGroup.members).findIndex((members) => members.includes(id));
+  const removeGroupMember = (id: string, group: string) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    if (!isCountUpdate) {
       const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
       const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
       updatedFarmerGroup.members = updatedMember;
-      await addGroupMember(id, group);
-      updatedFarmerGroup.members && (await editFarmerGroup({ editedData: updatedFarmerGroup }));
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && addGroupMember(id, group, farmersGroupData);
     }
   };
 
-  const addGroupMember = async (id: string, group: string) => {
-    const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-    const newGroupMember = farmersGroupData[groupIndex];
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
     newGroupMember.members.push(id);
-    await editFarmerGroup({ editedData: newGroupMember });
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
   };
 
   return (

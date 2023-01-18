@@ -79,8 +79,6 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
       profile: encryptedBase64,
       id: editMode ? id : uuidv4(),
     } as IAddMDDetailsFormInput & { id: string });
-    // handleClose();
-    // reset();
   };
 
   return (

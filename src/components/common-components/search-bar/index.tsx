@@ -1,4 +1,4 @@
-import { useEffect, ChangeEvent, forwardRef, MutableRefObject, LegacyRef } from "react";
+import { useEffect, ChangeEvent, forwardRef } from "react";
 import { IconGreen } from "../../dashboard/dashboard-cards/common-styles/commonStyles.styled";
 import S from "./dashboardSearch.styled";
 

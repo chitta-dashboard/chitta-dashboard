@@ -64,5 +64,5 @@ const mdDetailsSlice = createSlice({
   },
 });
 
-export const mdDetailActions = mdDetailsSlice.actions;
+ const mdDetailActions = mdDetailsSlice.actions;
 export const mdDetailsReducer = mdDetailsSlice.reducer;

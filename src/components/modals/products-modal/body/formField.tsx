@@ -3,6 +3,7 @@ import { Control } from "react-hook-form";
 import Input from "../../../input-fields/input/input";
 import { PRODUCT_DATA, VARIANT_DATA } from "../../../../utils/constants";
 import S from "./productsModal.styled";
+
 interface CustomProps {
   control?: Control;
   variantList?: string[][] | null;
@@ -16,7 +17,7 @@ interface CustomProps {
 
 const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit, tab }) => {
   let temp: any = [];
-  Object.values(VARIANT_DATA).map((i) => (temp = [...temp, Object.entries(i)]));
+  Object.values(VARIANT_DATA).forEach((i) => (temp = [...temp, Object.entries(i)]));
   const tempVariantsList = temp.flat(1);
   return (
     <S.StaticBox>
