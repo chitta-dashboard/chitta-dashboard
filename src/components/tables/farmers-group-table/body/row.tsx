@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { FarmersGroup } from "../../../../utils/context/farmersGroup";
 import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { IResolution } from "../../../../utils/context/resolution";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { useAuthContext } from "../../../../utils/context/auth";
 import { Message, ENDPOINTS } from "../../../../utils/constants";
@@ -29,6 +30,10 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
     formatChangeSuccess: isSuccessFarmerGroup,
     result: { data: farmerGroupById },
   } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isSuccessFarmerResolution,
+    result: { data: farmerResolutionById },
+  } = useFetch(ENDPOINTS.resolutions);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
   const navigate = useNavigate();
@@ -39,6 +44,7 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
   const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
+  const { mutate: resolutionEdit } = useEdit(ENDPOINTS.resolutions);
 
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
@@ -142,28 +148,46 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
                 .map((name) => {
                   return { ...name, group: editData.groupName };
                 });
-
-              farmerGroupEdit({
-                editedData: editData,
-                successCb: () => {
-                  Toast({ message: "Farmer group updated successfully.", type: "success" });
-                  editFarmer({
-                    editedData: newFarmerDetails,
-                    successCb: () => {
-                      Toast({ message: "Farmer Edited Successfully", type: "success" });
-                    },
-                    errorCb: () => {
-                      Toast({ message: "Request failed! Please try again", type: "error" });
-                    },
+              if (isSuccess && isSuccessFarmerResolution && editData && editMode) {
+                const editResolutionGroupName = farmerGroupById[editData.id].groupName;
+                let newResolutionDetails = Object.values(farmerResolutionById as IResolution[])
+                  .filter((item) => item.groupName === editResolutionGroupName)
+                  .map((name) => {
+                    return { ...name, groupName: editData.groupName };
                   });
-                },
-                errorCb: () => {
-                  Toast({ message: "Request failed, please try again.", type: "error" });
-                },
-              });
-              setEditMode(false);
-              setConfirmModal(false);
-              setIconModal(false);
+                farmerGroupEdit({
+                  editedData: editData,
+                  successCb: () => {
+                    Toast({ message: "Farmer group updated successfully.", type: "success" });
+                    newFarmerDetails.length > 0 &&
+                      editFarmer({
+                        editedData: newFarmerDetails,
+                        successCb: () => {
+                          Toast({ message: "Farmer Edited Successfully", type: "success" });
+                        },
+                        errorCb: () => {
+                          Toast({ message: "Request failed! Please try again", type: "error" });
+                        },
+                      });
+                    newResolutionDetails.length > 0 &&
+                      resolutionEdit({
+                        editedData: newResolutionDetails,
+                        successCb: () => {
+                          Toast({ message: "Resolution Edited Successfully", type: "success" });
+                        },
+                        errorCb: () => {
+                          Toast({ message: "Request failed! Please try again", type: "error" });
+                        },
+                      });
+                  },
+                  errorCb: () => {
+                    Toast({ message: "Request failed, please try again.", type: "error" });
+                  },
+                });
+                setEditMode(false);
+                setConfirmModal(false);
+                setIconModal(false);
+              }
             }
           }}
         />

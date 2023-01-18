@@ -33,33 +33,6 @@ const FarmersDetails = () => {
     setFarmerBankDetail(true);
   };
 
-  // const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  // const addGroupMember = async (id: string, group: string) => {
-  //   const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
-  //   const newGroupMember = farmersGroupData[groupIndex];
-  //   newGroupMember.members.push(id);
-  //   await editFarmerGroup({ editedData: newGroupMember });
-  // };
-
-  // // Add Farmerdetail Handler
-  // const addDataHandler = async (data: IMdDetails) => {
-  //   setFarmerBankDetail(false);
-  //   const newFarmer = { ...data };
-  //   data && delete newFarmer.farmerId;
-  //   newFarmer &&
-  //     (await mutate({
-  //       data: newFarmer,
-  //       successCb: () => {
-  //         addNotification({ id: `add_${newFarmer.id}`, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
-  //         Toast({ message: "Farmer Added Successfully", type: "success" });
-  //       },
-  //       errorCb: () => {
-  //         Toast({ message: "Request failed! Please try again", type: "error" });
-  //       },
-  //     }));
-  //   await addGroupMember(data.id, data.group);
-  // };
-
   const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
   const addGroupMember = (id: string, group: string) => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
