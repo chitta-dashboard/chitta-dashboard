@@ -85,11 +85,11 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
           <S.ShareHolderInfoRow>
             <S.CertificateDetailWrapper>
               <S.ShareInfoText>Register Folio No</S.ShareInfoText>
-              <S.Detail>{regNo}</S.Detail>
+              <S.Detail>{user.membershipId}</S.Detail>
             </S.CertificateDetailWrapper>
             <S.CertificateDetailWrapper>
               <S.ShareInfoTextRight>Certificate No</S.ShareInfoTextRight>
-              <S.Detail></S.Detail>
+              <S.Detail>{user.membershipId}</S.Detail>
             </S.CertificateDetailWrapper>
           </S.ShareHolderInfoRow>
           <S.ShareHolderInfoRow>
@@ -129,11 +129,11 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         <S.ShareHolderInfoRow>
           <S.CertificateDetailWrapper>
             <S.ShareInfoText>Register Folio No</S.ShareInfoText>
-            <S.Detail>{regNo}</S.Detail>
+            <S.Detail>{user.membershipId}</S.Detail>
           </S.CertificateDetailWrapper>
           <S.CertificateDetailWrapper>
             <S.ShareInfoTextRight>Certificate No</S.ShareInfoTextRight>
-            <S.Detail></S.Detail>
+            <S.Detail>{user.membershipId}</S.Detail>
           </S.CertificateDetailWrapper>
         </S.ShareHolderInfoRow>
         <S.ShareHolderInfoRow>

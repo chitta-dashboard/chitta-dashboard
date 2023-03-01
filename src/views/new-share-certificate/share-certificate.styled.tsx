@@ -44,9 +44,6 @@ export namespace S {
   }));
 
   export const CustomLogo = styled("img")(() => ({
-    maxHeight: "97%",
-    maxWidth: "95%",
-    width: "100%",
     height: "100%",
   }));
 
