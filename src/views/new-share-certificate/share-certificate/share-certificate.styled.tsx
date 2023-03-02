@@ -16,8 +16,8 @@ export namespace S {
     overflow: "hidden",
   }));
 
-  export const CertificateMainContent = styled(Box)(() => ({
-    border: "0.3125rem solid #284120",
+  export const CertificateMainContent = styled(Box)(({ theme }) => ({
+    border: `5px solid ${theme.palette.border.primaryDark}`,
     minHeight: "1129.67px",
     maxHeight: "1129.67px",
     width: "100%",
@@ -65,8 +65,8 @@ export namespace S {
     top: "-16px",
   }));
 
-  export const HeaderMainText = styled(Typography)(() => ({
-    color: "#284120",
+  export const HeaderMainText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primaryDark,
     fontSize: "1.625rem",
     fontWeight: "600",
   }));
@@ -76,9 +76,9 @@ export namespace S {
     fontSize: "1rem",
   }));
 
-  export const CertificateTitle = styled(Typography)(() => ({
+  export const CertificateTitle = styled(Typography)(({ theme }) => ({
     fontSize: "1.625rem",
-    color: "#ad1010",
+    color: theme.palette.text.red,
     fontWeight: "600",
   }));
 
@@ -202,8 +202,8 @@ export namespace S {
     margin: "24.9px 0",
   }));
 
-  export const CertificateDetachableContent = styled(Box)(() => ({
-    border: "5px solid #284120",
+  export const CertificateDetachableContent = styled(Box)(({ theme }) => ({
+    border: `5px solid ${theme.palette.border.primaryDark}`,
     width: "100%",
     minHeight: "319.17px",
     maxHeight: "319.17px",
@@ -222,14 +222,14 @@ export namespace S {
     alignItems: "center",
   }));
 
-  export const DetachableHeaderTitle = styled(Box)(() => ({
+  export const DetachableHeaderTitle = styled(Box)(({ theme }) => ({
     fontSize: "1rem",
-    color: "#ad1010",
+    color: theme.palette.text.red,
     fontWeight: "600",
   }));
 
-  export const DetachableHeaderText = styled(Box)(() => ({
-    color: "#284120",
+  export const DetachableHeaderText = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primaryDark,
     fontSize: "1.625rem",
     fontWeight: "600",
   }));

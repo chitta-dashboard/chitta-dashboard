@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { S } from "./share-certificate.styled";
-import NerkathirLogo from "../../assets/images/logo.svg";
-import { AdminFormInputs } from "../admin-panel";
-import { useFetch } from "../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../utils/constants";
-import { farmerDetail } from "../../utils/context/farmersDetails";
+import NerkathirLogo from "../../../assets/images/logo.svg";
+import { AdminFormInputs } from "../../admin-panel";
+import { useFetch } from "../../../utils/hooks/query";
+import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
 
 interface Props {
   user: farmerDetail;

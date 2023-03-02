@@ -2,7 +2,8 @@ import { forwardRef, Fragment } from "react";
 import { ENDPOINTS } from "../../utils/constants";
 import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { useFetch } from "../../utils/hooks/query";
-import ShareCertificateContent from "./share-certificate-content";
+import ShareCertificateTable from "./share-certificate-table/share-certificate-table";
+import ShareCertificateContent from "./share-certificate/share-certificate-content";
 
 interface Props {
   shareAmount?: number | string;
@@ -29,7 +30,13 @@ const ShareCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount, toggl
               return (
                 <Fragment key={user.id}>
                   <ShareCertificateContent user={user} shareAmount={shareAmount} />
-                  {toggle && <ShareCertificateContent user={user} shareAmount={shareAmount} />}
+                  <ShareCertificateTable />
+                  {toggle && (
+                    <>
+                      <ShareCertificateContent user={user} shareAmount={shareAmount} />
+                      <ShareCertificateTable />
+                    </>
+                  )}
                 </Fragment>
               );
             }),
