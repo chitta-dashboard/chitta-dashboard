@@ -48,6 +48,7 @@ export namespace S {
   }));
 
   export const HeaderContent = styled(Box)(() => ({
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     alignItem: "center",
@@ -55,38 +56,48 @@ export namespace S {
     width: "75%",
   }));
 
+  export const FormNo = styled(Typography)(() => ({
+    position: "absolute",
+    color: "#112f5c",
+    fontSize: "18px",
+    fontWeight: "600",
+    right: "0",
+    top: "-16px",
+  }));
+
   export const HeaderMainText = styled(Typography)(() => ({
     color: "#284120",
-    fontSize: "1.5rem",
+    fontSize: "1.625rem",
     fontWeight: "600",
   }));
 
   export const HeaderSubtext = styled(Typography)(() => ({
-    color: "#1B3616",
+    color: "#112f5c",
     fontSize: "1rem",
   }));
 
   export const CertificateTitle = styled(Typography)(() => ({
     fontSize: "1.625rem",
-    color: "red",
+    color: "#ad1010",
     fontWeight: "600",
   }));
 
   export const HeaderAddressText = styled(Typography)(() => ({
-    color: "#1B3616",
+    color: "#112f5c",
     fontSize: "1.25rem",
+    fontWeight: "500",
     margin: "0.5rem 0",
   }));
 
   export const Description = styled(Typography)(() => ({
-    color: "#1B3616",
+    color: "#112f5c",
     fontSize: "1.25rem",
     width: "100%",
     textIndent: "0.625rem",
   }));
 
   export const DescriptionBold = styled("span")(() => ({
-    color: "#1B3616",
+    color: "#112f5c",
     fontSize: "1.25rem",
     width: "100%",
     fontWeight: "600",
@@ -102,14 +113,14 @@ export namespace S {
   export const CompanySeal = styled(Box)(() => ({
     width: "100%",
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     paddingTop: "0.625rem",
   }));
 
   export const DirectorSign = styled(Box)(() => ({
     width: "100%",
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "600",
     textAlign: "right",
     paddingTop: "0.625rem",
@@ -123,7 +134,7 @@ export namespace S {
   export const CertificateNote = styled(Box)(() => ({
     width: "100%",
     fontSize: "1rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "500",
   }));
 
@@ -135,7 +146,7 @@ export namespace S {
 
   export const ShareText = styled(Typography)(() => ({
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "600",
     width: "11.5625rem",
   }));
@@ -148,7 +159,7 @@ export namespace S {
 
   export const ShareInfoText = styled(Typography)(() => ({
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "600",
     width: "15.625rem",
     position: "relative",
@@ -174,13 +185,13 @@ export namespace S {
     minWidth: "9.375rem",
     paddingLeft: "0.625rem",
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "600",
   }));
 
   export const SignatureText = styled(Typography)(() => ({
     fontSize: "1.25rem",
-    color: "#1B3616",
+    color: "#112f5c",
     fontWeight: "600",
     marginRight: "1.25rem",
   }));
@@ -201,7 +212,7 @@ export namespace S {
     alignItems: "flex-start",
     justifyContent: "flex-start",
     gap: "0.8rem",
-    padding: "0 1rem 1.5rem",
+    padding: "0 1rem 1rem",
   }));
 
   export const DetachableHeaderContainer = styled(Box)(() => ({
@@ -212,14 +223,14 @@ export namespace S {
   }));
 
   export const DetachableHeaderTitle = styled(Box)(() => ({
-    fontSize: "16px",
-    color: "red",
+    fontSize: "1rem",
+    color: "#ad1010",
     fontWeight: "600",
   }));
 
   export const DetachableHeaderText = styled(Box)(() => ({
     color: "#284120",
-    fontSize: "1.5rem",
+    fontSize: "1.625rem",
     fontWeight: "600",
   }));
 }

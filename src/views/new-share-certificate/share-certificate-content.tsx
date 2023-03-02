@@ -17,13 +17,7 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
-  const {
-    certificateLogo: certificateImage,
-    name: titleName,
-    regNo,
-    cinNo,
-    address,
-  } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
+  const { certificateLogo: certificateImage, name: titleName, cinNo, address } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <S.ShareCertificateContent key={user.id}>
@@ -33,6 +27,7 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
             <S.CustomLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogo} alt="nerkathir logo" />
           </S.HeaderLogo>
           <S.HeaderContent>
+            <S.FormNo>Form No.SH1</S.FormNo>
             <S.HeaderMainText>
               {titleName ? (
                 <>
@@ -61,24 +56,24 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         </S.CertificateHeader>
         <S.CertificateTitle>SHARE CERTIFICATE</S.CertificateTitle>
         <S.Description>
-          <S.DescriptionBold>THIS IS TP CERTIFY</S.DescriptionBold> that the preson(s) names in this certificate is/are the Registered Holder(s) of
-          the mentionaed share(s) bearing the distinctive numbers(s) here in specified in the above named Company subject to the Memorandum and
-          Articles of Association of the Company and the amount endorsed here in have ? has been paid on each such share.
+          <S.DescriptionBold>THIS IS TO CERTIFY</S.DescriptionBold> that the person(s) named in this certificate is/are the Registered Holder(s) of
+          the mentioned share(s) bearing the distinctive numbers(s) here in specified in the above named Company subject to the Memorandum and
+          Articles of Association of the Company and the amount endorsed here in have / has been paid on each such share.
         </S.Description>
         <S.ShareValue>
           <S.ShareRow>
             <S.ShareText>FACE</S.ShareText>
-            <S.ShareText>VALUE PER : {shareAmount}</S.ShareText>
+            <S.ShareText>VALUE PER</S.ShareText>
             <S.ShareText>EQUITY</S.ShareText>
             <S.ShareText>SHARE :</S.ShareText>
-            <S.ShareText>Rs. 100.00 EACH</S.ShareText>
+            <S.ShareText>Rs. {shareAmount} EACH</S.ShareText>
           </S.ShareRow>
           <S.ShareRow>
             <S.ShareText>PAID -UP</S.ShareText>
-            <S.ShareText>VALUE PER : {shareAmount}</S.ShareText>
+            <S.ShareText>VALUE PER</S.ShareText>
             <S.ShareText>EQUITY</S.ShareText>
             <S.ShareText>SHARE :</S.ShareText>
-            <S.ShareText>Rs. 100.00 EACH</S.ShareText>
+            <S.ShareText>Rs. {shareAmount} EACH</S.ShareText>
           </S.ShareRow>
         </S.ShareValue>
         <S.ShareValue>
@@ -114,7 +109,7 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         <S.CompanySeal>Given under the common seal of the company this _____/_____/_____</S.CompanySeal>
         <S.DirectorSign>DIRECTOR</S.DirectorSign>
         <S.DirectorSign2>DIRECTOR</S.DirectorSign2>
-        <S.DirectorSign2>AUTHORISED SIGNATORY</S.DirectorSign2>
+        <S.DirectorSign2>AUTHORIZED SIGNATORY</S.DirectorSign2>
         <S.CertificateNote>
           No transfer of the share(s) compromised in the certificate can be registered unless accompanied by this certificate.
         </S.CertificateNote>
@@ -123,9 +118,10 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
       <S.CertificateDetachableContent>
         <S.DetachableHeaderContainer>
           <S.DetachableHeaderTitle>COUNTER FOIL</S.DetachableHeaderTitle>
-          <S.DetachableHeaderText>TNIAMP MUSKUNDA FARMER PRODUCER COMPANY LIMITED</S.DetachableHeaderText>
+          <S.DetachableHeaderText>
+            {titleName ? <>{titleName} உழவர் உற்பத்தியாளர் நிறுவனம்</> : <>நெற்கதிர் உழவர் உற்பத்தியாளர் நிறுவனம்</>}
+          </S.DetachableHeaderText>
         </S.DetachableHeaderContainer>
-
         <S.ShareHolderInfoRow>
           <S.CertificateDetailWrapper>
             <S.ShareInfoText>Register Folio No</S.ShareInfoText>
