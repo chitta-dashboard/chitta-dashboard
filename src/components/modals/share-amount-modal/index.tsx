@@ -9,8 +9,8 @@ import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
 import ShareDetailBody from "./Body/ShareDetailBody";
 import ShareDetailFooter from "./Footer/ShareDetailFooter";
-import TamilShareHolderCertificate from "../../../views/tamil-share-certificate";
 import S from "./Body/share-amount-modal.styled";
+import ShareCertificate from "../../../views/new-share-certificate";
 
 interface CustomProps {
   openModal: boolean;
@@ -39,8 +39,8 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     },
     pageStyle: `@media print {
       @page {
-        size: ${!toggle ? "a5 landscape" : "a4 portrait"};
-        margin: 0;
+        size: "a4 portrait";
+        margin:"0";
       }
     }`,
   });
@@ -59,7 +59,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
     <>
       {certificateLoader && (
         <S.InvisibleDiv>
-          <TamilShareHolderCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} toggle={toggle} />
+          <ShareCertificate shareAmount={shareAmount} ref={pdftamilcertificate as Ref<HTMLDivElement> | undefined} toggle={toggle} />
         </S.InvisibleDiv>
       )}
       <CustomModal openModal={openModal} handleClose={handleClose}>
