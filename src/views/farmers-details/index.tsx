@@ -11,6 +11,7 @@ import FarmersDetailsTable from "../../components/tables/farmers-details-table";
 import AddFarmersDetailsModal from "../../components/modals/farmers-details-modal";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
+import { addCustomer } from "../../queries";
 
 const FarmersDetails = () => {
   const { setSearchFilter, setFarmerBankDetail } = useFarmerDetailsContext();
@@ -24,7 +25,7 @@ const FarmersDetails = () => {
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
 
-  const { addNotification } = useAuthContext();
+  const { addNotification, loader } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
 
   //Add Modal Handler
@@ -45,16 +46,21 @@ const FarmersDetails = () => {
   const addDataHandler = (data: IMdDetails) => {
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
-    newFarmer &&
-      mutate({
-        data: newFarmer,
-        successCb: () => {
-          addNotification({ id: newFarmer.id, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
-          Toast({ message: "Farmer Added Successfully", type: "success" });
-        },
-        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-      });
-    addGroupMember(data.id, data.group);
+    loader({ openLoader: true, loaderText: `Creating customer` });
+    addCustomer(newFarmer).then((res) => {
+      if (res) {
+        newFarmer &&
+          mutate({
+            data: newFarmer,
+            successCb: () => {
+              addNotification({ id: newFarmer.id, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
+              Toast({ message: "Farmer Added Successfully", type: "success" });
+            },
+            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+          });
+        addGroupMember(data.id, data.group);
+      }
+    });
   };
 
   const handleSearchInput = (searchText: string) => {

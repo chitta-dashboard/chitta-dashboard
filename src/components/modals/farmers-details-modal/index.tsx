@@ -228,7 +228,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         nameAsPerBank: farmerData?.nameAsPerBank,
         bankName: farmerData?.bankName,
         accountNumber: decryptText(farmerData?.accountNumber as string),
-        // confirmAccountNumber: farmerData?.confirmAccountNumber,
+        confirmAccountNumber: decryptText(farmerData?.accountNumber as string),
         ifscCode: farmerData?.ifscCode,
       });
     }
@@ -342,7 +342,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ) : page === 3 ? (
         <>
           <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
-            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
+            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} editMode={editMode} />
           </ModalBody>
           <ModalFooter>
             <S.PageNumber>
