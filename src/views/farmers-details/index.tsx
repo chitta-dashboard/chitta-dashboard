@@ -46,7 +46,7 @@ const FarmersDetails = () => {
     editFarmerGroup({ editedData: newGroupMember });
   };
 
-  // Add Farmerdetail Handler before proceding to password modal
+  // Add Farmerdetail Handler before proceeding to password modal
   const addDataHandler = (data: IMdDetails) => {
     const newFarmer = { ...data };
     data && delete newFarmer.farmerId;
