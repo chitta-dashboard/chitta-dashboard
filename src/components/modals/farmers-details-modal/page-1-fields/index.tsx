@@ -129,7 +129,12 @@ const FormField: FC<CustomProps> = ({ control, dynamicInputs, addInput, removeIn
           minLength: { value: 10, message: "10 digits expected" },
           maxLength: { value: 10, message: "10 digits expected" },
         }}
-        options={{ label: "கைபேசி எண் *", gridArea: "phn", placeholder: "கைபேசி எண்ணை உள்ளிடுக" }}
+        options={{
+          label: "கைபேசி எண் *",
+          gridArea: "phn",
+          placeholder: "கைபேசி எண்ணை உள்ளிடுக",
+          unitstart: "+91",
+        }}
       />
       <Input
         name="addhaarNo"
