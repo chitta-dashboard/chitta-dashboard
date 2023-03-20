@@ -39,7 +39,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
-  const { addNotification } = useAuthContext();
+  const { addNotification, loader } = useAuthContext();
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editData, setEditData] = useState<IMdDetails>();
@@ -359,7 +359,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
               delete farmerEditData.farmerId;
-
+              loader({ openLoader: true, loaderText: `Updating customer` });
               editCustomer(farmerEditData as IAddFarmersDetailsFormInput).then((res) => {
                 if (res && farmerEditData) {
                   console.log(res);
@@ -386,7 +386,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         });
                       },
                     });
-                } else Toast({ message: "Request failed! Please try again", type: "error" });
+                } else {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  loader({ openLoader: false });
+                }
               });
               setEditMode(false);
               setConfirmModal(false);

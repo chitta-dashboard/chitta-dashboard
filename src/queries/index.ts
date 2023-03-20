@@ -49,7 +49,7 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
           const res = await axios.post(`${process.env.REACT_APP_BACKEND_ENDPOINT}/customers`, data, config);
           if (res && res.data && res.data.status && res.data.customer) i++;
           //TODO:Need to handle else case
-        }
+        } else return null;
       }
       return true;
     } else {
@@ -81,7 +81,7 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
           return res.data.customer;
         }
         return null;
-      }
+      } else return null;
     }
   } catch (e) {
     console.log("Creating customer failed", e);
@@ -114,13 +114,11 @@ export const editCustomer = async (customer: IAddFarmersDetailsFormInput) => {
         },
       };
       const res = await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/customers/${customer.id}`, data, config);
-      if (res && res.data && res.data.status && res.data.customer) {
-        return res.data.customer;
-      }
-      return null;
-    }
+      if (res && res.data && res.data.status) return true;
+      else return false;
+    } else return false;
   } catch (e) {
     console.log("Updating customer failed", e);
-    return null;
+    return false;
   }
 };

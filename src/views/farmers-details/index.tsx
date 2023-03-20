@@ -75,6 +75,9 @@ const FarmersDetails = () => {
             errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
           });
           addGroupMember(id, group);
+        } else {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+          loader({ openLoader: false });
         }
       });
     } else Toast({ message: "Wallet creation failed! Please try again", type: "error" });
