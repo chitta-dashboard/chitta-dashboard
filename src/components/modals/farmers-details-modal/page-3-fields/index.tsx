@@ -7,10 +7,9 @@ import S from "./page3Fields.styled";
 interface CustomProps {
   control: Control;
   accntNo: string;
-  editMode: boolean;
 }
 
-const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
+const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
   const { farmerBankDetail } = useFarmerDetailsContext();
 
   return (
@@ -24,7 +23,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
           label: "பெயர்(வங்கி கணக்கில் இருப்பது போல் ) *",
           gridArea: "napb",
           placeholder: "பெயரை உள்ளிடுக",
-          disabled: !farmerBankDetail || editMode,
+          disabled: !farmerBankDetail,
         }}
       />
       <Input
@@ -32,7 +31,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
         type="text"
         control={control}
         rules={{ required: farmerBankDetail && "required" }}
-        options={{ label: "வங்கியின் பெயர் *", gridArea: "bn", placeholder: "வங்கியின் பெயரை உள்ளிடுக ", disabled: !farmerBankDetail || editMode }}
+        options={{ label: "வங்கியின் பெயர் *", gridArea: "bn", placeholder: "வங்கியின் பெயரை உள்ளிடுக ", disabled: !farmerBankDetail }}
       />
       <Input
         name="accountNumber"
@@ -43,7 +42,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
           label: "வங்கி கணக்கு எண் *",
           gridArea: "anum",
           placeholder: "வங்கி கணக்கு எண்ணை உள்ளிடுக",
-          disabled: !farmerBankDetail || editMode,
+          disabled: !farmerBankDetail,
         }}
       />
       <Input
@@ -58,7 +57,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
           label: "வங்கி கணக்கு எண்ணை உறுதி செய்க  *",
           gridArea: "cnanum",
           placeholder: "வங்கி கணக்கு எண்ணை உறுதி செய்க",
-          disabled: !farmerBankDetail || editMode,
+          disabled: !farmerBankDetail,
         }}
       />
       <Input
@@ -66,7 +65,7 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo, editMode }) => {
         type="text"
         control={control}
         rules={{ required: farmerBankDetail && "required" }}
-        options={{ label: "IFSC குறியீடு *", gridArea: "code", placeholder: "IFSC குறியீட்டை  உள்ளிடுக", disabled: !farmerBankDetail || editMode }}
+        options={{ label: "IFSC குறியீடு *", gridArea: "code", placeholder: "IFSC குறியீட்டை  உள்ளிடுக", disabled: !farmerBankDetail }}
       />
     </S.FieldsBox>
   );

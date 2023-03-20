@@ -1,7 +1,7 @@
 import { loader } from "./../utils/context/auth";
 import { base64Encode, decryptCrypto } from "./../utils/helpers/index";
 import axios from "axios";
-import { IAddFarmersDetailsFormInput } from "../components/modals/type/formInputs";
+import { IAddFarmersDetailsFormInput } from "./../components/modals/type/formInputs";
 import { decryptText } from "../utils/constants";
 
 const getAuthToken = async (customerId: string) => {
@@ -91,6 +91,44 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
     }
   } catch (e) {
     console.log("Creating customer failed", e);
+    return null;
+  }
+};
+
+export const editCustomer = async (customer: IAddFarmersDetailsFormInput) => {
+  try {
+    const authToken = await getAuthToken(customer.id as string);
+    if (authToken) {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      };
+      const data = {
+        name: customer.name,
+        email: "",
+        contact: customer.phoneNumber,
+        type: "employee",
+        customerId: customer.id,
+        payment: {
+          accountType: "bank",
+          accountNumber: decryptText(customer.accountNumber as string),
+          bankName: customer.bankName,
+          ifscCode: customer.ifscCode,
+        },
+        notes: {
+          reason: "Contact Update",
+        },
+      };
+      return data;
+      // const res = await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/data.customerId`, data, config);
+      // if (res && res.data && res.data.status && res.data.customer) {
+      //   return res.data.customer;
+      // }
+      // return null;
+    }
+  } catch (e) {
+    console.log("Updating customer failed", e);
     return null;
   }
 };
