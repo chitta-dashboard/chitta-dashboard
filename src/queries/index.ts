@@ -1,4 +1,3 @@
-import { loader } from "./../utils/context/auth";
 import { base64Encode, decryptCrypto } from "./../utils/helpers/index";
 import axios from "axios";
 import { IAddFarmersDetailsFormInput } from "./../components/modals/type/formInputs";
@@ -23,8 +22,7 @@ const getAuthToken = async (customerId: string) => {
 export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddFarmersDetailsFormInput[]) => {
   try {
     if (Array.isArray(customers)) {
-      let count = 0;
-      for (let i = 0; i < customers.length; i++) {
+      for (let i = 0; i < customers.length; ) {
         const authToken = await getAuthToken(customers[i].id as string);
 
         if (authToken) {
@@ -35,7 +33,6 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
           };
           const data = {
             name: customers[i].name,
-            email: "",
             contact: customers[i].phoneNumber,
             type: "employee",
             customerId: customers[i].id,
@@ -50,13 +47,11 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
             },
           };
           const res = await axios.post(`${process.env.REACT_APP_BACKEND_ENDPOINT}/customers`, data, config);
-          if (res && res.data && res.data.status && res.data.customer) {
-            count = count + 1;
-          }
+          if (res && res.data && res.data.status && res.data.customer) i++;
+          //TODO:Need to handle else case
         }
       }
-      if (count === customers.length) return true;
-      else return null;
+      return true;
     } else {
       const authToken = await getAuthToken(customers.id as string);
 
@@ -68,7 +63,6 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
         };
         const data = {
           name: customers.name,
-          email: "",
           contact: customers.phoneNumber,
           type: "employee",
           customerId: customers.id,
@@ -106,7 +100,6 @@ export const editCustomer = async (customer: IAddFarmersDetailsFormInput) => {
       };
       const data = {
         name: customer.name,
-        email: "",
         contact: customer.phoneNumber,
         type: "employee",
         customerId: customer.id,
@@ -117,15 +110,14 @@ export const editCustomer = async (customer: IAddFarmersDetailsFormInput) => {
           ifscCode: customer.ifscCode,
         },
         notes: {
-          reason: "Contact Update",
+          reason: "Contact Updation",
         },
       };
-      return data;
-      // const res = await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/data.customerId`, data, config);
-      // if (res && res.data && res.data.status && res.data.customer) {
-      //   return res.data.customer;
-      // }
-      // return null;
+      const res = await axios.patch(`${process.env.REACT_APP_BACKEND_ENDPOINT}/customers/${customer.id}`, data, config);
+      if (res && res.data && res.data.status && res.data.customer) {
+        return res.data.customer;
+      }
+      return null;
     }
   } catch (e) {
     console.log("Updating customer failed", e);
