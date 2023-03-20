@@ -44,6 +44,7 @@ export const createWalletAndEncrypt = (farmers) => {
 
     //Use the passcode to encrypt the wallets' SK
     const SK_encryptedMsg = encrypt_AES_GCM(SK, binaryPasscode);
+    const pin_encryptedMsg = encrypt_AES_GCM(pin, binaryPasscode);
 
     //Use the secret key and passcode to generate the K ciphertext
     const binary_secretkey = binascii.hexlify(secretkey.toString().slice(0, 12));
@@ -61,10 +62,18 @@ export const createWalletAndEncrypt = (farmers) => {
     //Add pin and pk to farmerlist
     farmer["SK_cipher"] = SK_encryptedMsg;
     farmer["K_cipher"] = K_encryptedMsg;
+    farmer["pin"] = pin_encryptedMsg;
+    farmer["PK"] = PK;
     //Append object to list
     updatedFarmers.push(farmer);
   }
   console.log("updatedFarmers", updatedFarmers);
 
   return updatedFarmers;
+};
+
+export const getPin = (pin_encryptedMsg, password) => {
+  const binaryPasscode = binascii.hexlify(password.slice(0, 16));
+  const pin = decrypt_AES_GCM(pin_encryptedMsg, binaryPasscode);
+  return pin;
 };
