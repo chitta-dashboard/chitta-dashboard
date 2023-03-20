@@ -14,6 +14,7 @@ import AddFarmersDetailsModal from "../../components/modals/farmers-details-moda
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 import { addCustomer } from "../../queries";
+import { createWalletAndEncrypt } from "../../services/algorand";
 
 const FarmersDetails = () => {
   const { setSearchFilter, setFarmerBankDetail } = useFarmerDetailsContext();
@@ -55,24 +56,31 @@ const FarmersDetails = () => {
   };
 
   // Add Farmerdetail Handler after entering correct password
-  const addFarmerDetailHandler = (data: any) => {
+  const addFarmerDetailHandler = (data: string) => {
     const newFarmer = { ...farmerData, password: data } as IAddFarmersDetailsFormInput;
     setPasswordConfirmModal(false);
-    loader({ openLoader: true, loaderText: `Creating customer` });
-    addCustomer(newFarmer).then((res) => {
-      if (res) {
-        newFarmer &&
+    const newFarmerWithWallet = createWalletAndEncrypt([newFarmer]);
+    if (newFarmerWithWallet.length) {
+      delete newFarmerWithWallet[0].password;
+      loader({ openLoader: true, loaderText: `Creating customer` });
+      addCustomer(newFarmerWithWallet[0]).then((res) => {
+        if (res) {
+          const { id, group } = newFarmerWithWallet[0];
           mutate({
-            data: newFarmer,
+            data: newFarmerWithWallet[0] as IAddFarmersDetailsFormInput,
             successCb: () => {
               addNotification({ id: newFarmer.id as string, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
               Toast({ message: "Farmer Added Successfully", type: "success" });
             },
             errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
           });
-        addGroupMember(data.id, data.group);
-      }
-    });
+          addGroupMember(id, group);
+        } else {
+          Toast({ message: "Request failed! Please try again", type: "error" });
+          loader({ openLoader: false });
+        }
+      });
+    } else Toast({ message: "Wallet creation failed! Please try again", type: "error" });
   };
 
   const handleSearchInput = (searchText: string) => {
