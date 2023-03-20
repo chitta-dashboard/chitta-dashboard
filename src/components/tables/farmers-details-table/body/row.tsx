@@ -19,6 +19,8 @@ import Toast from "../../../../utils/toast";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
+import { editCustomer } from "../../../../queries";
+import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
@@ -357,29 +359,35 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
               delete farmerEditData.farmerId;
-              !isFarmerInMd &&
-                editFarmer({
-                  editedData: farmerEditData,
-                  successCb: async () => {
-                    editData && removeGroupMember(user.id, editData.group, true);
-                    Toast({ message: "Farmer Edited Successfully", type: "success" });
-                  },
-                  errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-                });
-              isFarmerInMd &&
-                editFarmer({
-                  editedData: farmerEditData,
-                  successCb: () => {
-                    editMdDetail({
-                      editedData: editData,
-                      successCb: () => {
-                        editData && removeGroupMember(user.id, editData.group, true);
-                        Toast({ message: "Farmer Edited Successfully", type: "success" });
-                      },
-                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-                    });
-                  },
-                });
+
+              editCustomer(farmerEditData as IAddFarmersDetailsFormInput).then((res) => {
+                if (res && farmerEditData) {
+                  console.log(res);
+                  // !isFarmerInMd &&
+                  //   editFarmer({
+                  //     editedData: farmerEditData,
+                  //     successCb: async () => {
+                  //       editData && removeGroupMember(user.id, editData.group, true);
+                  //       Toast({ message: "Farmer Edited Successfully", type: "success" });
+                  //     },
+                  //     errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                  //   });
+                  // isFarmerInMd &&
+                  //   editFarmer({
+                  //     editedData: farmerEditData,
+                  //     successCb: () => {
+                  //       editMdDetail({
+                  //         editedData: editData,
+                  //         successCb: () => {
+                  //           editData && removeGroupMember(user.id, editData.group, true);
+                  //           Toast({ message: "Farmer Edited Successfully", type: "success" });
+                  //         },
+                  //         errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                  //       });
+                  //     },
+                  //   });
+                }
+              });
               setEditMode(false);
               setConfirmModal(false);
               setIconModal(false);

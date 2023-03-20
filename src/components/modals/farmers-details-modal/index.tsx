@@ -343,7 +343,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ) : page === 3 ? (
         <>
           <ModalBody id={"farmersDetailsForm3"} onSubmit={form3HandleSubmit(form3Submit)}>
-            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} editMode={editMode} />
+            <FormFieldPage3 control={form3Control as unknown as Control} accntNo={accountNumber} />
           </ModalBody>
           <ModalFooter>
             <S.PageNumber>
