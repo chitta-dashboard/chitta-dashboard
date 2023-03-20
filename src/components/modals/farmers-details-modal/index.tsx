@@ -199,7 +199,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         spouseName: farmerData?.spouseName,
         dob: dateFormat(farmerData?.dob),
         group: farmerData?.group,
-        phoneNumber: farmerData?.phoneNumber,
+        phoneNumber: farmerData?.phoneNumber.replace("+91", ""),
         addhaarNo: farmerData?.addhaarNo,
         ...farmerData?.surveyNo,
         ...farmerData?.acre,
@@ -298,6 +298,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       id: setId(newId),
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
+      phoneNumber: `+91${form1Data?.phoneNumber}`,
       landAreaInCent:
         Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
           return a + parseInt(b as string);
