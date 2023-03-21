@@ -1,4 +1,4 @@
-import { useState, useRef, FC, useEffect } from "react";
+import { useState, useRef, FC, useEffect, Ref } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useAuthContext } from "../../../../utils/context/auth";
@@ -21,10 +21,18 @@ import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
 import { editCustomer } from "../../../../queries";
 import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
+import FormSelectionModal from "../../../modals/form-selection-modal";
+import PasswordModal from "../../../modals/password-modal";
+import CredentialsCertificate from "../../../../views/credentials-certificate";
 
 interface FarmersDetailsRowProps {
   user: farmerDetail | any;
   removeGroupMember: (id: string, group: string, isAdd: boolean) => void;
+}
+
+interface farmerData {
+  id: string | null;
+  password: string | null;
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
@@ -45,6 +53,9 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const [editData, setEditData] = useState<IMdDetails>();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const [formSelectionModal, setFormSelectionModal] = useState<boolean>(false);
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [farmerData, setFarmerData] = useState<farmerData>({ id: null, password: null });
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const [image, setImage] = useState("");
@@ -52,13 +63,22 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const [idCard, setIdCard] = useState(false);
   const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const credentialCertificate = useRef<HTMLDivElement>();
 
+  // to print farmer detail form
   useEffect(() => {
     if (farmerIdtoPrint !== null || undefined) {
       generateFarmerDetailForm();
     }
     setFarmerIdtoPrint(null);
   }, [farmerIdtoPrint]);
+
+  // to print credential certificate
+  useEffect(() => {
+    if (farmerData.id !== null && farmerData.password !== null) {
+      credentialCertificateHandler();
+    }
+  }, [farmerData]);
 
   useEffect(() => {
     setFarmerBankDetail(false);
@@ -115,6 +135,23 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     setOpenFarmerRowModal(farmerId);
   };
 
+  const credentialCertificateHandler = useReactToPrint({
+    documentTitle: "Credential_certificate",
+    content: () => credentialCertificate.current as HTMLDivElement,
+    onBeforePrint() {
+      setOpenPasswordModal(false);
+    },
+    onAfterPrint() {
+      setFarmerData({ id: null, password: null });
+    },
+    pageStyle: `@media print {
+        @page {
+          size: "a4 portrait";
+          margin:"0";
+        }
+      }`,
+  });
+
   const handleCroppedImage = async (image: string) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
@@ -145,7 +182,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       <tr>
         <td style={{ display: "none" }}>
           <IdCardBody ref={idCardRef} />
-          <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />
+          {farmerIdtoPrint && <FarmerDetailsForm ref={farmerDetailFormRef} farmerIdtoPrint={farmerIdtoPrint} />}
+          {farmerData.id !== null && farmerData.password !== null && (
+            <CredentialsCertificate ref={credentialCertificate as Ref<HTMLDivElement> | undefined} farmerDatatoPrint={farmerData} />
+          )}
         </td>
       </tr>
       <TableRow key={user.id} onClick={() => NavigateToFarmerDetailForm(user.id)}>
@@ -197,8 +237,12 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             <CS.Icon onClick={editFarmerDetailHandler}>edit</CS.Icon>
             <CS.Icon
               onClick={() => {
-                setFarmerBankDetail(true);
-                setFarmerIdtoPrint(user.id);
+                if (user.pin) {
+                  setFormSelectionModal(!formSelectionModal);
+                } else {
+                  setFarmerIdtoPrint(user.id);
+                  setFarmerBankDetail(true);
+                }
               }}
             >
               download
@@ -362,7 +406,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               loader({ openLoader: true, loaderText: `Updating customer` });
               editCustomer(farmerEditData as IAddFarmersDetailsFormInput).then((res) => {
                 if (res && farmerEditData) {
-                  console.log(res);
                   !isFarmerInMd &&
                     editFarmer({
                       editedData: farmerEditData,
@@ -407,6 +450,29 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               />
             </>
           )}
+          {formSelectionModal && (
+            <>
+              <FormSelectionModal
+                openModal={true}
+                handleClose={() => {
+                  setFormSelectionModal(!formSelectionModal);
+                }}
+                farmerId={user.id}
+                cb={() => {
+                  setOpenPasswordModal(!openPasswordModal);
+                }}
+              />
+            </>
+          )}
+          <PasswordModal
+            openModal={openPasswordModal}
+            handleClose={() => {
+              setOpenPasswordModal(false);
+            }}
+            cb={(data: string) => {
+              setFarmerData({ id: user.id, password: data });
+            }}
+          />
         </S.WebTableCell>
       </TableRow>
     </>

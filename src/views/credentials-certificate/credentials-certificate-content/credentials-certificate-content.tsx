@@ -1,14 +1,15 @@
 import { FC } from "react";
 import { S } from "./credentials-certificate.styled";
 import chittaLogo from "../../../assets/images/clean-gradient.png";
+import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { getPin } from "../../../services/algorand";
 
-interface Props {}
+interface Props {
+  user: farmerDetail;
+  farmerDatatoPrint: { id: string | null; password: string | null };
+}
 
-const CredentialsContainerContent: FC<Props> = ({}) => {
-  const name = "Abdhur Rahman";
-  const secretKey = 7299;
-  const publicKey = "SNLRPAS22ARSIYT6ZYDD2ZYW4XMYEEIMQHBAFIIAQLOSV5M5U3W2475DCU";
-
+const CredentialsContainerContent: FC<Props> = ({ user, farmerDatatoPrint }) => {
   return (
     <S.CredentialsContainerContent>
       <S.CertificateHeader>
@@ -20,15 +21,16 @@ const CredentialsContainerContent: FC<Props> = ({}) => {
       </S.CertificateHeader>
       <S.UserCredentials>
         <S.CredentialText>
-          வணக்கம் <S.UserName>{name}</S.UserName>,
+          வணக்கம் <S.UserName>{user.name}</S.UserName>,
         </S.CredentialText>
         <S.CredentialTextBold> நீங்கள், டிஜிட்டல் சிட்டா வாலட்டின் உரிமையாளராகியதற்கு வாழ்த்துக்கள். </S.CredentialTextBold>
         <S.CredentialTextBold>
-          ரகசிய குறியீடு : {secretKey} <u>யாருடனும் பகிர வேண்டாம்</u>
+          ரகசிய குறியீடு :{getPin(user.pin, farmerDatatoPrint.password)}
+          <u>யாருடனும் பகிர வேண்டாம்</u>
         </S.CredentialTextBold>
         <S.CredentialRow>
           <S.CredentialTextBold>பப்ளிக் கீ :</S.CredentialTextBold>
-          <S.CredentialTextBold>{publicKey}</S.CredentialTextBold>
+          <S.CredentialTextBold>{user.PK}</S.CredentialTextBold>
         </S.CredentialRow>
         <S.CredentialTextBold>நீங்கள் டிஜிட்டல் வாலட்டில் என்ன செய்ய முடியும்?</S.CredentialTextBold>
       </S.UserCredentials>

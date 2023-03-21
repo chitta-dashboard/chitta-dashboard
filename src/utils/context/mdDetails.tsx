@@ -35,6 +35,10 @@ export interface IMdDetails {
   animals: string;
   groupMember: string;
   qualification: string;
+  K_cipher?: string;
+  SK_cipher?: string;
+  pin?: string;
+  PK?: string;
 }
 
 export type selectedMdListData = number | string;
