@@ -55,6 +55,10 @@ export type farmerDetail = {
   accountNumber?: string;
   confirmAccountNumber?: string;
   ifscCode?: string;
+  K_cipher?: string;
+  SK_cipher?: string;
+  pin?: string;
+  PK?: string;
 };
 
 export type selectedFarmer = number | string;

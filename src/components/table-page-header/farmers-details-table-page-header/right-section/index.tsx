@@ -1,4 +1,4 @@
-import { FC, Ref, useCallback, useRef, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
@@ -12,8 +12,7 @@ import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import ImportFarmersModal from "../../../modals/import-farmers-modal";
 import S from "./rightSection.styled";
 import ShareAmountModal from "../../../modals/share-amount-modal";
-import { useReactToPrint } from "react-to-print";
-import CredentialsCertificate from "../../../../views/credentials-certificate";
+
 interface RightSectionProps {
   addModalHandler?: () => void;
 }
@@ -51,8 +50,6 @@ const RightSection: FC<RightSectionProps> = (props) => {
   const [openFarmerGroupModal, setOpenFarmerGroupModal] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<null | string | FarmersGroup>(null);
   const [shareModal, setShareModal] = useState(false);
-
-  const pdfcertificate = useRef<HTMLDivElement>();
 
   handleExportData();
 
@@ -222,23 +219,8 @@ const RightSection: FC<RightSectionProps> = (props) => {
     return finalArr;
   };
 
-  const credentialCertificateHandler = useReactToPrint({
-    documentTitle: "Credential_certificate",
-    content: () => pdfcertificate.current as HTMLDivElement,
-
-    pageStyle: `@media print {
-      @page {
-        size: "a4 portrait";
-        margin:"0";
-      }
-    }`,
-  });
-
   return (
     <S.RightSectionContainer>
-      <div style={{ display: "none" }}>
-        <CredentialsCertificate ref={pdfcertificate as Ref<HTMLDivElement> | undefined} />
-      </div>
       <S.ButtonStack>
         <S.CustomBulkGroupButton
           aria-describedby={Boolean(anchorEl) ? "simple-popover" : undefined}
@@ -289,7 +271,6 @@ const RightSection: FC<RightSectionProps> = (props) => {
         >
           Share Holder
         </S.CustomButton>
-        <S.CustomButton onClick={() => credentialCertificateHandler()}>credential certificate</S.CustomButton>
         <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
         <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
         <S.CustomButton
