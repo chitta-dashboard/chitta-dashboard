@@ -1,3 +1,4 @@
+import { farmerDetail } from "./../utils/context/farmersDetails";
 import { base64Encode, decryptCrypto } from "./../utils/helpers/index";
 import axios from "axios";
 import { IAddFarmersDetailsFormInput } from "./../components/modals/type/formInputs";
@@ -89,7 +90,7 @@ export const addCustomer = async (customers: IAddFarmersDetailsFormInput | IAddF
   }
 };
 
-export const editCustomer = async (customer: IAddFarmersDetailsFormInput) => {
+export const editCustomer = async (customer: farmerDetail) => {
   try {
     const authToken = await getAuthToken(customer.id as string);
     if (authToken) {

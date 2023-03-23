@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
-import { useFarmerDetailsContext } from "../../utils/context/farmersDetails";
+import { farmerDetail, useFarmerDetailsContext } from "../../utils/context/farmersDetails";
 import { ENDPOINTS, Message } from "../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
@@ -57,7 +57,7 @@ const FarmersDetails = () => {
 
   // Add Farmerdetail Handler after entering correct password
   const addFarmerDetailHandler = (data: string) => {
-    const newFarmer = { ...farmerData, password: data } as IAddFarmersDetailsFormInput;
+    const newFarmer = { ...farmerData, password: data } as farmerDetail;
     setPasswordConfirmModal(false);
     const newFarmerWithWallet = createWalletAndEncrypt([newFarmer]);
     if (newFarmerWithWallet.length) {

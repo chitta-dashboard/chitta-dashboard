@@ -17,7 +17,18 @@ import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
-  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete" | "autocomplete-with-imagelist";
+  type:
+    | "text"
+    | "email"
+    | "number"
+    | "date"
+    | "datetime"
+    | "select"
+    | "multiselect"
+    | "file"
+    | "radio"
+    | "autocomplete"
+    | "autocomplete-with-imagelist";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options?: {
     [key: string]: any;
@@ -57,6 +68,34 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
             <S.TextInput
               helperText={errors[name]?.message as string}
               type="text"
+              multiline={options?.multiline}
+              maxRows={options?.maxRows}
+              {...options}
+              name={field.name}
+              value={field.value}
+              ref={field.ref}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                field.onChange(e.target.value);
+                onChange && onChange(e);
+              }}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
+      );
+
+    case "email":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || ""}
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => (
+            <S.TextInput
+              helperText={errors[name]?.message as string}
+              type="email"
               multiline={options?.multiline}
               maxRows={options?.maxRows}
               {...options}

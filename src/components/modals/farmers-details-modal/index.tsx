@@ -40,6 +40,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
   const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
+  const [selectedKey, setSelectedKey] = useState<string[]>([]);
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -191,6 +192,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   useEffect(() => {
     if (editMode) {
+      setSelectedKey([farmersDetailsById[id].representative.id]);
+    }
+  }, [editMode, id]);
+
+  useEffect(() => {
+    if (editMode) {
       let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
       form1Reset({
         name: farmerData?.name,
@@ -208,6 +215,14 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         acre: farmerData?.acre,
         border: farmerData?.border,
         profile: decryptText(farmerData?.profile) || placeHolderImg,
+        email: farmerData?.email,
+        representative: {
+          id: farmerData?.representative?.id,
+          name: farmerData?.representative?.name,
+          phoneNumber: farmerData?.representative?.phoneNumber,
+          pk: farmerData?.representative?.pk,
+        },
+        hasNoWhatsapp: farmerData.hasNoWhatsapp,
       });
 
       form2Reset({
@@ -250,10 +265,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       profile: data.profile,
       sex: data.sex,
       spouseName: data.spouseName,
+      email: data.email,
+      representative:
+        isSuccess && Boolean(selectedKey.length)
+          ? {
+              id: farmersDetailsById[selectedKey[0]]?.id,
+              name: farmersDetailsById[selectedKey[0]]?.name ?? "",
+              phoneNumber: farmersDetailsById[selectedKey[0]]?.phoneNumber ?? "",
+              pk: farmersDetailsById[selectedKey[0]]?.pk ?? "",
+            }
+          : { id: "", name: "", phoneNumber: "", pk: "" },
+      hasNoWhatsapp: !selectedKey.length ? "false" : "true",
     });
     setPage(2);
   };
-
   const form2Submit = async (data: IAddFarmersDetailsPage2Input) => {
     setForm2Data(data);
     setPage(3);
@@ -377,6 +402,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
               unregister={form1Unregister}
               editMode={editMode}
               watch={form1Watch}
+              selectedKey={selectedKey}
+              setSelectedKey={setSelectedKey}
             />
           </ModalBody>
           <ModalFooter>
