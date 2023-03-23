@@ -59,6 +59,9 @@ export type farmerDetail = {
   SK_cipher?: string;
   pin?: string;
   PK?: string;
+  email?: string;
+  representative?: { id: string; name: string; phoneNumber: string; pk: string };
+  hasNoWhatsapp?: string;
 };
 
 export type selectedFarmer = number | string;

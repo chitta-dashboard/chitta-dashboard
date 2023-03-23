@@ -8,15 +8,20 @@ type TableDataPropsType = {
   handleCheckBox: (id: string) => void;
   handleCheckBoxAll: () => void;
   selectedFarmerKeys: string[];
+  representative?: boolean;
 };
 
 const TableData: FC<TableDataPropsType> = (props) => {
-  const { farmerDetails, handleCheckBoxAll, handleCheckBox, selectedFarmerKeys } = props;
+  const { farmerDetails, handleCheckBoxAll, handleCheckBox, selectedFarmerKeys, representative } = props;
 
   return (
     <S.MdDetailsTableContainer>
       <S.MdDetailsTableHeadContainer container>
-        <S.MdDetailsTableCheckBox checked={selectedFarmerKeys.length === farmerDetails.length} onChange={handleCheckBoxAll} />
+        {!representative ? (
+          <S.MdDetailsTableCheckBox checked={selectedFarmerKeys.length === farmerDetails.length} onChange={handleCheckBoxAll} />
+        ) : (
+          <p></p>
+        )}
         <S.MdDetailsTableHeadTitle>பெயர்</S.MdDetailsTableHeadTitle>
         <S.MdDetailsTableHeadTitle>கைபேசி என்</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableHeadContainer>

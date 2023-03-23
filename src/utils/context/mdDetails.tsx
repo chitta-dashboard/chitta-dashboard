@@ -39,6 +39,9 @@ export interface IMdDetails {
   SK_cipher?: string;
   pin?: string;
   PK?: string;
+  email?: string;
+  representative?: { name: string; phoneNumber: string; pk: string };
+  hasNoWhatsapp?: string;
 }
 
 export type selectedMdListData = number | string;

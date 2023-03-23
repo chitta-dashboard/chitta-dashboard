@@ -404,7 +404,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               const farmerEditData = { ...editData, id: editData?.farmerId };
               delete farmerEditData.farmerId;
               loader({ openLoader: true, loaderText: `Updating customer` });
-              editCustomer(farmerEditData as IAddFarmersDetailsFormInput).then((res) => {
+              editCustomer(farmerEditData as farmerDetail).then((res) => {
                 if (res && farmerEditData) {
                   !isFarmerInMd &&
                     editFarmer({
