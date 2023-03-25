@@ -14,12 +14,17 @@ interface NotificationProps {
 }
 
 const NotificationModal: FC<NotificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
+  //constants
   const {
     result: { data: NotificationData },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
-  const [seeMore, setSeeMore] = useState(false);
   const bodyref = useRef<any>();
+
+  //state values
+  const [seeMore, setSeeMore] = useState(false);
+
+  //functions
   const styleHandler = () => {
     bodyref.current.scrollHeight > bodyref.current.clientHeight ? setSeeMore(!seeMore) : setSeeMore(false);
   };

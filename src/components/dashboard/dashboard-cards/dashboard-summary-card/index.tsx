@@ -5,8 +5,10 @@ import { CardHeader } from "../common-styles/commonStyles.styled";
 import { S } from "./dashboardSummaryCard.styled";
 
 const DashboardSummaryCard = () => {
+  //state values
   const [isOptionOpen, setIsOptionOpen] = useState<boolean>(false);
 
+  //functions
   const optionHandler = () => {
     let value = isOptionOpen === true ? false : true;
     setIsOptionOpen(value);

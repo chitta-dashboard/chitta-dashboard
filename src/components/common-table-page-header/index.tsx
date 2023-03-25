@@ -10,7 +10,9 @@ interface TablePageHeaderProps {
 }
 
 const TablePageHeader: FC<TablePageHeaderProps> = (props) => {
+  //constants
   const { searchHandler, addModalHandler, popOverHandler } = props;
+
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} />

@@ -9,14 +9,17 @@ import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./dashboardHeader.styled";
 
 const DashboardHeader = () => {
+  //state values
   const [openSearch, setOpenSearch] = useState(false);
   const [image, setImage] = useState<string>("");
   const [imagePic, setImagePic] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));
 
   useEffect(() => {}, [image, imagePic]);
 
+  //constants
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
+  //functions
   const openSearchHandle = () => {
     setOpenSearch(!openSearch);
   };

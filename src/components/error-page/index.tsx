@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import S from "./error-page.styled";
 
 const ErrorPage = () => {
+  //constructors
   const navigate = useNavigate();
 
   return (

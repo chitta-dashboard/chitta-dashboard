@@ -21,6 +21,7 @@ interface CustomProps {
 }
 
 const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  //constants
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo);
   const { data: ceoDetailsById } = result;
   const { handleSubmit, reset, clearErrors, unregister, setValue, getValues, watch, control: formControl } = useForm<IAddCEODetailsFormInput>({});
@@ -66,6 +67,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   }, [editMode]);
   // }, [editMode, id]);
 
+  //functions
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);

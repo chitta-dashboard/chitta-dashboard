@@ -11,8 +11,10 @@ interface CustomProps {
 }
 
 const ShareDetailBody: FC<CustomProps> = ({ setShareAmount, toggle, setToggle }) => {
+  //state values
   const { selectedFarmers } = useFarmerDetailsContext();
 
+  //functions
   const shareAmountHandler = (e: any) => {
     setShareAmount(e.target.value);
   };

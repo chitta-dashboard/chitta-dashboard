@@ -14,8 +14,11 @@ import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./dashoardFounder.styled";
 
 const DashboardFounder = () => {
+  //state values
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+
+  //constants
   const {
     formatChangeSuccess,
     result: { data: foundersById },
@@ -38,6 +41,7 @@ const DashboardFounder = () => {
     ),
   };
 
+  //functions
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));

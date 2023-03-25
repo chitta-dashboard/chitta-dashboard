@@ -22,6 +22,7 @@ interface CustomProps {
 }
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  //constants
   const {
     formatChangeSuccess: isMdDetailSuccess,
     result: { data: mdDetailsById },

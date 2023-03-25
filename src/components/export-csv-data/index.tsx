@@ -11,9 +11,11 @@ type ExportCSVType = {
 };
 
 export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
+  //constants
   const fileType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
   const fileExtension = ".xlsx";
 
+  //functions
   const exportToCSV = (csvData: farmerDetail[], fileName: string) => {
     let updatedCSVData: farmerDetail[] = [];
 

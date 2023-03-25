@@ -12,6 +12,7 @@ type TableDataPropsType = {
 };
 
 const TableData: FC<TableDataPropsType> = (props) => {
+  //constants
   const { farmerDetails, handleCheckBoxAll, handleCheckBox, selectedFarmerKeys, representative } = props;
 
   return (

@@ -22,6 +22,7 @@ interface CustomProps {
 }
 
 const MdDetailsModal: FC<CustomProps> = (props) => {
+  //constants
   const {
     openModal,
     handleClose,
@@ -32,6 +33,8 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
     farmerDetails,
     representative = false,
   } = props;
+
+  //state values
   const [farmerDetailsByIdData, setFarmerDetailsByIdData] = useState(farmerDetails);
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
 

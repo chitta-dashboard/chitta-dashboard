@@ -18,10 +18,12 @@ interface CustomProps {
 }
 
 const FormSelectionModal: FC<CustomProps> = ({ openModal, handleClose, farmerId, cb }) => {
+  //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
 
   const [selectFile, setSelectFile] = useState(true);
 
+  //constants
   const farmerDetailFormRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const FormSelectionModal: FC<CustomProps> = ({ openModal, handleClose, farmerId,
     }
   }, [selectFile]);
 
+  //functions
   const generateFarmerDetailForm = useReactToPrint({
     documentTitle: `Farmer_Detail_form`,
     content: () => farmerDetailFormRef.current as HTMLDivElement,

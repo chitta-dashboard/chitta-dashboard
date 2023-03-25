@@ -30,13 +30,15 @@ interface CustomProps {
   mdId?: string;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { farmerBankDetail } = useFarmerDetailsContext();
+  //constants
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
+  //state values
+  const { farmerBankDetail } = useFarmerDetailsContext();
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
   const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
@@ -65,6 +67,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
   });
 
+  //functions
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
     const acreName = "acre-" + uuidv4();

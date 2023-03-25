@@ -8,7 +8,9 @@ interface ConfirmProps {
 }
 
 const ConfirmationBody: FC<ConfirmProps> = ({ confirmMessage }) => {
+  //constants
   const message = confirmMessage ? confirmMessage : "Do you want to save changes?";
+  
   return (
     <S.Container>
       <S.ContainerItems>

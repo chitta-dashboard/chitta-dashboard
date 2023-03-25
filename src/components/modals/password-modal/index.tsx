@@ -21,12 +21,14 @@ interface PasswordInputs {
 }
 
 const PasswordModal: FC<CustomProps> = ({ openModal, handleClose, cb }) => {
+  //constants
   const userAuth: PasswordInputs = { loginPassword: "nerkathir" };
 
   const LoginSchema = yup.object().shape({
     loginPassword: yup.string().required("Password is required !"),
   });
 
+  //state values
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -40,6 +42,7 @@ const PasswordModal: FC<CustomProps> = ({ openModal, handleClose, cb }) => {
     criteriaMode: "all",
   });
 
+  //functions
   const onPasswordConfirmation = (userData: PasswordInputs) => {
     if (userData.loginPassword !== userAuth.loginPassword) {
       setError("loginPassword", {

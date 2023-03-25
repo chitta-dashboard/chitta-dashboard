@@ -37,10 +37,12 @@ interface InputProps extends UseControllerProps {
 }
 
 function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref }: InputProps) {
+  //state values
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");
 
+  //functions
   const PopperWidth = function (props: any) {
     return (
       <Popper

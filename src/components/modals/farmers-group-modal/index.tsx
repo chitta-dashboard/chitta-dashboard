@@ -21,6 +21,7 @@ interface CustomProps {
 }
 
 const FarmersGroupModal: FC<CustomProps> = (props) => {
+  //constants
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
@@ -61,6 +62,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
+  //functions
   const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
     cb({ ...data, id: editMode ? id : uuidv4(), members: members });
     !editMode && reset();

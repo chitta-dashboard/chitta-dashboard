@@ -11,7 +11,9 @@ interface Props {
 }
 
 const TableBody: FC<Props> = (props) => {
+  //constants
   const { farmerData, selectedFarmerKeys, handleCheckBox } = props;
+
   return (
     <S.MdDetailsTableBodyContainer key={farmerData.id}>
       <S.MdDetailsTableCheckBox onChange={() => handleCheckBox(farmerData.id)} checked={selectedFarmerKeys.includes(farmerData.id)} />

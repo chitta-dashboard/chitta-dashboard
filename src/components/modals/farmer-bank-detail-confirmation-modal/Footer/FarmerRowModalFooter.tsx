@@ -8,7 +8,9 @@ interface CustomProps {
 }
 
 const ShareDetailFooter: FC<CustomProps> = ({ handleClose, generateFunction }) => {
+  //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
+  
   return (
     <S.FarmerBankDetailFooterContainer>
       <S.CustomButton

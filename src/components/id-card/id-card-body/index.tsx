@@ -16,7 +16,9 @@ interface Props {
 type Ref = HTMLDivElement | undefined;
 
 const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
+  //constants
   const { data } = props;
+
   return (
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />

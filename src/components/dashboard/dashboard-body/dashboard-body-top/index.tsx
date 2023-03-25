@@ -15,7 +15,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const DashboardBodyTop = () => {
+  //constructors
   const navigate = useNavigate();
+
+  //constants
   const xl = useMediaQuery((theme: Theme) => theme.breakpoints.up("xl"));
   const md = useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
   const sm = useMediaQuery((theme: Theme) => theme.breakpoints.up("sm"));
@@ -45,6 +48,8 @@ const DashboardBodyTop = () => {
   interface Ivalue {
     "9eb5af43-f224-4434-9488-fddf4eb004dc": string;
   }
+
+  //state values
   const [isPopOver, setIsPopOver] = useState<HTMLButtonElement | null>(null);
   const [popId, setPopId] = useState<string>("");
   const [value, setValue] = useState<Ivalue>({
@@ -142,6 +147,7 @@ const DashboardBodyTop = () => {
     ],
   };
 
+  //functions
   const onPopOverHandler = (event: React.MouseEvent<HTMLButtonElement>, id: string) => {
     setPopId(id);
     setIsPopOver(event.currentTarget);

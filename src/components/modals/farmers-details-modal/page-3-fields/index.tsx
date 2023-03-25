@@ -10,6 +10,7 @@ interface CustomProps {
 }
 
 const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
   return (

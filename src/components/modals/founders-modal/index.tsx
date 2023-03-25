@@ -21,6 +21,7 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  //constants
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
   const { data: foundersById } = result;
 
@@ -68,6 +69,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   }, [editMode]);
   // }, [editMode, id]);
 
+  //functions
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);

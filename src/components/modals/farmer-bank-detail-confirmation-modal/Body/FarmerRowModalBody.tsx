@@ -7,6 +7,7 @@ import S from "./farmer-row-modalstyled";
 interface CustomProps {}
 
 const ShareDetailBody: FC<CustomProps> = () => {
+  //state values
   const { farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
 
   return (

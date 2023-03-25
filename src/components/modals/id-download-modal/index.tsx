@@ -17,8 +17,10 @@ interface CustomProps {
 }
 
 const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {
+  //constants
   const idCardRef = useRef<HTMLDivElement>();
 
+  //functions
   const generateIdCard = useReactToPrint({
     documentTitle: `CEO_${cardData && cardData.name}_IdCard`,
     content: () => idCardRef.current as HTMLDivElement,

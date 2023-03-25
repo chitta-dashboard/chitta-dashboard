@@ -5,6 +5,7 @@ import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./idCardHeader.styled";
 
 const IDCardHeader = () => {
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },

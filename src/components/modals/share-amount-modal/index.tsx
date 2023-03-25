@@ -18,15 +18,20 @@ interface CustomProps {
 }
 
 const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+  //state values
   const [toggle, setToggle] = useState(false);
   const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
-  const {
-    result: { data: farmersDetailsById },
-  } = useFetch(ENDPOINTS.farmerDetails);
   const [shareAmount, setShareAmount] = useState(1000);
   const [loader, setLoader] = useState(true);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();
+
+  //constants
+  const {
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
+
+  //functions
   // to generate Tamil share holder certificate
   const generateTamilCertificatePDF = useReactToPrint({
     documentTitle: `Shareholder_certificate of_${selectedFarmers.map((id) => farmersDetailsById[id].name)}`,

@@ -10,6 +10,7 @@ type CustomPopoverProps = {
 };
 
 const CustomPopover: FC<CustomPopoverProps> = (props) => {
+  //constants
   const { id, isOpen, onClose, children, customStyle } = props;
 
   return (

@@ -32,6 +32,7 @@ interface LogoProps {
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
+  //constants
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {

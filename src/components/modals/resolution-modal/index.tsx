@@ -20,6 +20,7 @@ interface CustomProps {
 }
 
 const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
+  //constants
   const { handleSubmit, setValue, trigger, control, watch } = useForm<IResolutionFormInput>({});
 
   // enabling submit button
@@ -34,6 +35,7 @@ const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode
     enableButton = false;
   }
 
+  //functions
   const onSubmit: any = (data: IResolutionFormInput) => {
     cb({
       id: editMode ? id : uuidv4(),

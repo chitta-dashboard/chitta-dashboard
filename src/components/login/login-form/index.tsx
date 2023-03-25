@@ -28,15 +28,17 @@ const LoginSchema = yup.object().shape({
 });
 
 const LoginForm: FC = () => {
+  //state values
   const { login } = useAuthContext();
+  const [showPassword, setShowPassword] = useState(false);
+
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
   const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
-  const [showPassword, setShowPassword] = useState(false);
-
   const {
     register,
     handleSubmit,

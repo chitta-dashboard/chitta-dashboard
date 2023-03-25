@@ -22,18 +22,23 @@ interface CustomProps {
 }
 
 const ProductsModal: FC<CustomProps> = (props) => {
-  const { openModal, handleClose, cb, editMode = false, id = "", products = [], variantData } = props;
-  const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddProductsFormInput>();
+  //state values
   const [availableList, setAvailableList] = useState<string[] | null>(null);
   const [variantList, setVariantList] = useState<string[][] | null>(null);
   const [productName, setProductName] = useState<string>("");
   const [productId, setProductId] = useState<string>("");
+
+  //functions
   const productNameHandler = (name: string) => {
     setProductName(name);
   };
   const productIdHandler = (id: string) => {
     setProductId(id);
   };
+
+  //constants
+  const { openModal, handleClose, cb, editMode = false, id = "", products = [], variantData } = props;
+  const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddProductsFormInput>();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: productDetails },

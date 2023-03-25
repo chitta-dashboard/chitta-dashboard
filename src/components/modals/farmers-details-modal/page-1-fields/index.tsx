@@ -39,6 +39,7 @@ const FormField: FC<CustomProps> = ({
   selectedKey,
   setSelectedKey,
 }) => {
+  //state values
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
   const [acre, setAcre] = useState<{ [key: string]: string }>(getValues("acre") as { [key: string]: string });
   const [border, setBorder] = useState<{ [key: string]: string }>(getValues("border") as { [key: string]: string });
@@ -47,6 +48,8 @@ const FormField: FC<CustomProps> = ({
   const [openMdModal, setOpenMdModal] = useState(false);
   // const [selectedKey, setSelectedKey] = useState<string[]>([]);
   const [representativeFarmer, setRepresentativeFarmer] = useState<string>("");
+
+  //constants
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
   let enableAddButton = true;
@@ -91,6 +94,7 @@ const FormField: FC<CustomProps> = ({
     }
   }
 
+  //functions
   const handleCheckBoxSelect = (value: string) => {
     if (selectedKey[0] === value) {
       setSelectedKey([]);

@@ -41,6 +41,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
   setNewGroupNames,
   setInputData,
 }) => {
+  //constants
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -49,12 +50,15 @@ const ImportFarmerGroupModal: FC<Props> = ({
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
-  const { addNotification } = useAuthContext();
   let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
   let newdata = farmerDatas && farmerDatas.map((item) => item.group);
   let groupName = newdata && newdata.filter((item, i, ar) => ar.indexOf(item) === i);
   const groupNamesOnChip = groupName && RemoveArray(existingGroup, groupName);
 
+  //state values
+  const { addNotification } = useAuthContext();
+
+  //functions
   const yesButtonHandler = () => {
     if (farmerDatas && isFarmerGroupSuccess && groupName) {
       let newdata = farmerDatas.map((item) => item.group);

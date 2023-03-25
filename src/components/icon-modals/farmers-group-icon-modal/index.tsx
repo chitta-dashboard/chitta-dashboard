@@ -4,6 +4,7 @@ import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
 const FarmersGroupIconModal: FC<CommonModalProps> = (props) => {
+  //constants
   const { open, handleClose, handleDelete, handleEdit, deleteicon } = props;
 
   return (
