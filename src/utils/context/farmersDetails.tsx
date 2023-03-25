@@ -13,7 +13,6 @@ const ADD_FARMER_ID = "ADD_FARMER_ID";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
-const SET_FARMER_QUERY = "SET_FARMER_QUERY";
 const SET_FARMER_BANK_DETAIL = "SET_FARMER_BANK_DETAIL";
 
 //Group filter value
@@ -71,7 +70,6 @@ type Props = {
 };
 
 interface FarmerDetailsContextType {
-  farmersDetailsById: { [id: string]: farmerDetail };
   searchFilter: string;
   sortFilter: SortOrder;
   farmerId: selectedFarmer[];
@@ -87,18 +85,14 @@ interface FarmerDetailsContextType {
   currentPage: number;
   pageCount: number;
   totalPageCount: number;
-  farmersIdToExport: [];
-  farmerQuery: string;
   setCurrentPage: (pageNo: number) => void;
   setPageCount: (updatePageCount: { pageCount: number; totalPageCount: number }) => void;
   setFarmersIdToExport: (id: string[] | number[]) => void;
-  setFarmerQuery: (query: string) => void;
   farmerBankDetail: boolean;
   setFarmerBankDetail: (value: boolean) => void;
 }
 
 const initialState: FarmerDetailsContextType = {
-  farmersDetailsById: {},
   searchFilter: "",
   sortFilter: NORMAL,
   farmerId: [],
@@ -114,12 +108,9 @@ const initialState: FarmerDetailsContextType = {
   currentPage: 1,
   pageCount: 0,
   totalPageCount: 0,
-  farmersIdToExport: [],
-  farmerQuery: "",
   setCurrentPage: () => {},
   setPageCount: () => {},
   setFarmersIdToExport: () => {},
-  setFarmerQuery: () => {},
   farmerBankDetail: false,
   setFarmerBankDetail: boolean,
 };
@@ -180,9 +171,6 @@ const reducer = (state: FarmerDetailsContextType, action: any) => {
     case SET_FARMERS_ID_TO_EXPORT:
       return { ...state, farmerId: action.payload };
 
-    case SET_FARMER_QUERY:
-      return { ...state, farmerQuery: action.payload };
-
     case SET_FARMER_BANK_DETAIL:
       return { ...state, farmerBankDetail: action.payload };
 
@@ -237,10 +225,6 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     dispatch({ type: SET_FARMERS_ID_TO_EXPORT, payload: id });
   };
 
-  const setFarmerQuery = (query: string) => {
-    dispatch({ type: SET_FARMER_QUERY, payload: query });
-  };
-
   const setFarmerBankDetail = (value: boolean) => {
     dispatch({ type: SET_FARMER_BANK_DETAIL, payload: value });
   };
@@ -257,7 +241,6 @@ const FarmerDetailsContextProvider: FC<Props> = (props) => {
     setCurrentPage,
     setPageCount,
     setFarmersIdToExport,
-    setFarmerQuery,
     setFarmerBankDetail,
   };
 
