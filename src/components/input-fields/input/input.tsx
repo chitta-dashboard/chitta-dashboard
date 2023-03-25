@@ -34,9 +34,10 @@ interface InputProps extends UseControllerProps {
     [key: string]: any;
   };
   ref?: any;
+  helperText?: string;
 }
 
-function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref }: InputProps) {
+function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref, helperText }: InputProps) {
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");
@@ -122,7 +123,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => (
             <S.NumberInput
-              helperText={errors[name]?.message as string}
+              helperText={helperText ? helperText : (errors[name]?.message as string)}
               type="number"
               {...options}
               name={field.name}
