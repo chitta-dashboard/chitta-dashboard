@@ -2,7 +2,6 @@ import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
 import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
-import { ceoDetail } from "../../utils/context/ceoDetails";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
 import DeleteModal from "../../components/modals/delete-modal";
@@ -13,6 +12,17 @@ import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
+
+type ceoDetail = {
+  id: string;
+  name: string;
+  profile: string;
+  dob: string;
+  phoneNumber: string;
+  qualification: string;
+  description: string;
+  joinedDate?: string;
+};
 
 interface Props {
   user: ceoDetail;

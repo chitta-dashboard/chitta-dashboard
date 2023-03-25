@@ -30,7 +30,6 @@ interface IContextType {
   logout: () => void;
   clearNotification: () => void;
   addNotification: (data: Notification) => void;
-  addLogo: (data: {}) => void;
   loader: (data: loader) => void;
   userNotification: Notification[];
   AdminUpdate: { [id: string]: AdminFormInputs };
@@ -52,7 +51,6 @@ const initialState: IContextType = {
   logout: () => {},
   clearNotification: () => {},
   addNotification: () => {},
-  addLogo: () => {},
   loader: () => {},
   userNotification: [],
   AdminUpdate: {},
@@ -152,10 +150,6 @@ const AuthContextProvider: FC<Props> = (props) => {
     deleteNotification({ id: Object.keys(NotificationData) });
   };
 
-  const addLogo = (data: {}) => {
-    dispatch({ type: ADD_LOGO, payload: data });
-  };
-
   const loader = (data: loader) => {
     dispatch({ type: LOADER, payload: data });
   };
@@ -167,8 +161,6 @@ const AuthContextProvider: FC<Props> = (props) => {
     logout,
     clearNotification,
     addNotification,
-    // addUpdate,
-    addLogo,
     loader,
   };
 
