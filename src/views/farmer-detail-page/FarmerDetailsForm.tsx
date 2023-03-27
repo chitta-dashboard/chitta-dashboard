@@ -13,8 +13,10 @@ interface Props {
 }
 
 const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farmerIdtoPrint }, ref) => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
+  //constants
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -30,6 +32,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
   const { loginLogo: loginImage, name: titleName, address, coordinatorAddress } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { farmerId } = useParams();
+
   return (
     <>
       {isSuccess &&

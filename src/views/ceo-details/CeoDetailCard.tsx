@@ -29,13 +29,7 @@ interface Props {
 }
 
 const CeoDetailsCard = ({ user }: Props) => {
-  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
-  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
-  const {
-    formatChangeSuccess,
-    result: { data: ceoDetailsById },
-  } = useFetch(ENDPOINTS.ceo);
-  const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
+  //state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
@@ -43,8 +37,18 @@ const CeoDetailsCard = ({ user }: Props) => {
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState<(IAddCEODetailsFormInput & { id: string }) | null>(null);
   const [cardExpand, setCardExpand] = useState<boolean>(true);
+
+  //constants
+  const {
+    formatChangeSuccess,
+    result: { data: ceoDetailsById },
+  } = useFetch(ENDPOINTS.ceo);
+  const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
+  const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
+  const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
   const hiddenFileInput: any = useRef<HTMLInputElement>();
 
+  // functions
   const handleIconClick = () => {
     hiddenFileInput && hiddenFileInput.current.click();
   };

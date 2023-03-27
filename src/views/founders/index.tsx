@@ -12,13 +12,16 @@ import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
 
 const Founders = () => {
-  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
-  const { setSearchFilter } = useFounderContext();
+  //state values
   const { addNotification } = useAuthContext();
+  const { setSearchFilter } = useFounderContext();
   const [addModal, setAddModal] = useState(false);
 
+  //constants
+  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
+  //functions
   const addModalHandler = () => {
     setAddModal(!addModal);
   };

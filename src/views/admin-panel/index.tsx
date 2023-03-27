@@ -46,9 +46,11 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
+  //state values
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
 
+  //constants
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
 
   const {
@@ -60,22 +62,6 @@ const AdminPanel = () => {
   } = useForm<AdminFormInputs>({
     resolver: yupResolver(adminSchema),
   });
-
-  const fileChangedHandler = (file: File, width: number, height: number, name?: string) =>
-    new Promise((resolve) => {
-      Compress.imageFileResizer(
-        file,
-        width,
-        height,
-        "jpeg",
-        100,
-        0,
-        (uri) => {
-          resolve(encryptText(uri as string));
-        },
-        "base64",
-      );
-    });
 
   // enabling submit button
   let enableButton = true;
@@ -101,6 +87,7 @@ const AdminPanel = () => {
     enableButton = false;
   }
 
+  //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
 
@@ -137,6 +124,22 @@ const AdminPanel = () => {
     setLogo(null);
     setImage(null);
   };
+
+  const fileChangedHandler = (file: File, width: number, height: number, name?: string) =>
+    new Promise((resolve) => {
+      Compress.imageFileResizer(
+        file,
+        width,
+        height,
+        "jpeg",
+        100,
+        0,
+        (uri) => {
+          resolve(encryptText(uri as string));
+        },
+        "base64",
+      );
+    });
 
   return (
     <S.MainContainer>

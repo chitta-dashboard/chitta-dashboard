@@ -5,6 +5,7 @@ import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
 const Header = () => {
+  //state values
   const { farmerId, sortFilter, setSortFilter, selectedFarmers, checkboxSelectAll } = useFarmerDetailsContext();
 
   return (

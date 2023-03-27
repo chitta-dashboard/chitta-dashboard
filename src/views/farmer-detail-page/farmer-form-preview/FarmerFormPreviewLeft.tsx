@@ -20,6 +20,7 @@ import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
+  //constants
   const {
     formatChangeSuccess: isMdSuccess,
     result: { data: mdDetailsById },
@@ -37,13 +38,14 @@ const FarmerFormPreviewLeft = () => {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
-
-  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
+  const { name: titleName, address, coordinatorAddress } = isSuccessAdmin && (Object.values(adminDetails)[0] as any);
+
+  //state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -56,6 +58,7 @@ const FarmerFormPreviewLeft = () => {
   const { farmerId } = useParams();
   const navigate = useNavigate();
 
+  //functions
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 

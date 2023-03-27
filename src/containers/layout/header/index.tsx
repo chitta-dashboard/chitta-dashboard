@@ -14,7 +14,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Header = () => {
+  //state values
   const { clearNotification, logout } = useAuthContext();
+  const [navOpen, setNavOpen] = useState(false);
+  const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openLoader, setOpenLoader] = useState(false);
+
+  //constants
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -24,10 +31,6 @@ const Header = () => {
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
-  const [navOpen, setNavOpen] = useState(false);
-  const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openLoader, setOpenLoader] = useState(false);
   pathname = pathname.split("/")[1];
 
   const isXl = useMediaQuery((theme: Theme) => theme.breakpoints.down("xl"));
@@ -36,6 +39,8 @@ const Header = () => {
   const open = Boolean(notification);
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
   const { data: NotificationData } = result;
+
+  //functions
   const clearNotifyHandler = () => {
     setOpenLoader(true);
     clearNotification();
@@ -48,13 +53,6 @@ const Header = () => {
   const notificationHandler = () => {
     setnotification(null);
   };
-
-  useEffect(() => {
-    if (NotificationData && Object.values(NotificationData).length === 0) {
-      setOpenLoader(false);
-      setnotification(null);
-    }
-  }, [NotificationData]);
 
   const popHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -74,6 +72,13 @@ const Header = () => {
         return 8;
     }
   };
+
+  useEffect(() => {
+    if (NotificationData && Object.values(NotificationData).length === 0) {
+      setOpenLoader(false);
+      setnotification(null);
+    }
+  }, [NotificationData]);
 
   const initialSlideFunc = () => {
     switch (isLg || isXl || null) {

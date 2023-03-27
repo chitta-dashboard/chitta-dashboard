@@ -7,8 +7,11 @@ import FoundersRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
+  //constants
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
   const { data: foundersData } = result;
+
+  //state values
   const { searchFilter, sortFilter } = useFounderContext();
   const [founderSearch, setFounderSearch] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);
   const [founderSort, setFounderSort] = useState<Founders[]>(isSuccess ? Object.values(foundersData) : []);

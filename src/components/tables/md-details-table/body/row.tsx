@@ -22,10 +22,8 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
+  //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
-  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -34,12 +32,14 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
+
+  //constants
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
 
-  useEffect(() => {
-    setFarmerBankDetail(false);
-  }, []);
-
+  //functions
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -95,9 +95,11 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     });
   };
 
-  const NavigateToMdDetailForm = (mdId: string) => {
-    setOpenFarmerRowModal(mdId);
-  };
+  const NavigateToMdDetailForm = (mdId: string) => setOpenFarmerRowModal(mdId);
+
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
 
   return (
     <TableRow onClick={() => NavigateToMdDetailForm(user.id)}>

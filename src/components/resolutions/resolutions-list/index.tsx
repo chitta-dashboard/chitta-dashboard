@@ -17,6 +17,7 @@ interface Props {
 }
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
+  //constants
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const {
     formatChangeSuccess,
@@ -29,6 +30,7 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
   const leftData = resolutions ? resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2)) : [];
   const rightData = isMd ? resolutions : resolutions && resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
 
+  //functions
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
     documentTitle: `Board_Resolution_${resolutionId && formatChangeSuccess && resolutionsObj[resolutionId].groupName}`,

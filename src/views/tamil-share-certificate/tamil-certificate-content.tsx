@@ -17,6 +17,7 @@ interface Props {
 }
 
 const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, toggle }) => {
+  //constants
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },

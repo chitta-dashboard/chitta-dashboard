@@ -20,7 +20,6 @@ import { IMdDetails } from "../../../../utils/context/mdDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./body.styled";
 import { editCustomer } from "../../../../queries";
-import { IAddFarmersDetailsFormInput } from "../../../modals/type/formInputs";
 import FormSelectionModal from "../../../modals/form-selection-modal";
 import PasswordModal from "../../../modals/password-modal";
 import CredentialsCertificate from "../../../../views/credentials-certificate";
@@ -36,54 +35,37 @@ interface farmerData {
 }
 
 const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
+  //state values
+  const { addNotification, loader } = useAuthContext();
   const { checkboxSelect, selectedFarmers, setFarmerBankDetail } = useFarmerDetailsContext();
+  const [image, setImage] = useState("");
+  const [idCard, setIdCard] = useState(false);
+  const [editData, setEditData] = useState<IMdDetails>();
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [iconModal, setIconModal] = useState<boolean>(false);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [confirmModal, setConfirmModal] = useState<boolean>(false);
+  const [openPasswordModal, setOpenPasswordModal] = useState(false);
+  const [formSelectionModal, setFormSelectionModal] = useState<boolean>(false);
+  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
+  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string | null>(null);
+  const [farmerData, setFarmerData] = useState<farmerData>({ id: null, password: null });
 
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
-
+  const idCardRef = useRef<HTMLDivElement>();
+  const farmerDetailFormRef = useRef<HTMLDivElement>();
+  const credentialCertificate = useRef<HTMLDivElement>();
+  const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
   const { mutate: mdDelete } = useDelete(ENDPOINTS.mdDetails);
-  const { addNotification, loader } = useAuthContext();
-  const [iconModal, setIconModal] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [editData, setEditData] = useState<IMdDetails>();
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [confirmModal, setConfirmModal] = useState<boolean>(false);
-  const [formSelectionModal, setFormSelectionModal] = useState<boolean>(false);
-  const [openPasswordModal, setOpenPasswordModal] = useState(false);
-  const [farmerData, setFarmerData] = useState<farmerData>({ id: null, password: null });
-  const idCardRef = useRef<HTMLDivElement>();
-  const farmerDetailFormRef = useRef<HTMLDivElement>();
-  const [image, setImage] = useState("");
-  const [farmerIdtoPrint, setFarmerIdtoPrint] = useState<number | string | null>(null);
-  const [idCard, setIdCard] = useState(false);
-  const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const credentialCertificate = useRef<HTMLDivElement>();
 
-  // to print farmer detail form
-  useEffect(() => {
-    if (farmerIdtoPrint !== null || undefined) {
-      generateFarmerDetailForm();
-    }
-    setFarmerIdtoPrint(null);
-  }, [farmerIdtoPrint]);
-
-  // to print credential certificate
-  useEffect(() => {
-    if (farmerData.id !== null && farmerData.password !== null) {
-      credentialCertificateHandler();
-    }
-  }, [farmerData]);
-
-  useEffect(() => {
-    setFarmerBankDetail(false);
-  }, []);
-
+  //functions
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -92,6 +74,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     setEditMode(!editMode);
     setFarmerBankDetail(true);
   };
+
   //Update Farmers Details Handler
   const updateFarmerDetail = (data: farmerDetail) => {
     setEditData(data);
@@ -176,6 +159,25 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
         },
       });
   };
+
+  // to print farmer detail form
+  useEffect(() => {
+    if (farmerIdtoPrint !== null || undefined) {
+      generateFarmerDetailForm();
+    }
+    setFarmerIdtoPrint(null);
+  }, [farmerIdtoPrint]);
+
+  // to print credential certificate
+  useEffect(() => {
+    if (farmerData.id !== null && farmerData.password !== null) {
+      credentialCertificateHandler();
+    }
+  }, [farmerData]);
+
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
 
   return (
     <>

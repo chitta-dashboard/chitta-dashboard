@@ -8,8 +8,10 @@ import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewRight = () => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
+  //constants
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },

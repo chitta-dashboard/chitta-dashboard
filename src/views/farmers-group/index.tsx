@@ -11,19 +11,23 @@ import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
 
 const FarmersGroup = () => {
-  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
-  const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-  const { setSearchFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
+  //state values
   const { addNotification } = useAuthContext();
+  const { setSearchFilter, memberFilter, setMemberFilter } = useFarmersGroupContext();
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
+
+  // constants
+  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const groupMembersFilter = [
     { id: "1", value: 1, label: "All" },
     { id: "2", value: 2, label: "With Members" },
     { id: "3", value: 3, label: "Without Members" },
   ];
 
+  //functions
   const popOverHandler = (event: React.MouseEvent<HTMLButtonElement>) => {
     setMemberFilterPop(!membersFilterPop);
     setAnchor(event.currentTarget);

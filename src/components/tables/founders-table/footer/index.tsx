@@ -3,6 +3,7 @@ import { useFetch } from "../../../../utils/hooks/query";
 import FooterWrapper from "../../../custom-tables/footer";
 
 const Footer = () => {
+  //constants
   const {
     formatChangeSuccess,
     result: { data: foundersById },

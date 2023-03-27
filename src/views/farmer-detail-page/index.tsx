@@ -9,11 +9,13 @@ import { S } from "./farmerDetailPage.styled";
 
 // Design of this page is changed, so it is not currently used.
 const FarmerDetailPage = () => {
+  //constants
   const pdfForm = useRef<HTMLDivElement>();
   const pdfcertificate = useRef<HTMLDivElement>();
   const pdftamilcertificate = useRef<HTMLDivElement>();
   const navigate = useNavigate();
 
+  //functions
   // to generate farmer detail form
   const generateFarmerDetailsPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,

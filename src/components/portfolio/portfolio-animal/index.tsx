@@ -5,6 +5,7 @@ interface Props {
   clearSearchHandler: () => void;
 }
 const PortfolioAnimal: FC<Props> = ({ clearSearchHandler }) => {
+  //state values
   const { setSearchFilter } = usePortfolioContext();
 
   useEffect(() => {

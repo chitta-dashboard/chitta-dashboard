@@ -47,8 +47,12 @@ export interface IPortfolio {
 }
 
 const ItemCard: React.FC<IPortfolio> = ({ data }) => {
-  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  //state values
   const { addNotification } = useAuthContext();
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState<(IAddProductsFormInput & { id: string }) | null>(null);
   const [variantData, setVariantdata] = useState<IPortfolioVariant>(() => {
     let latestVariantId = "";
     let LatestVariantTime = 0;
@@ -60,12 +64,12 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
     }
     return data[latestVariantId] as IPortfolioVariant;
   });
-  const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
-  const [popoverOpen, setPopoverOpen] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  const [confirmationModal, setConfirmationModal] = useState<(IAddProductsFormInput & { id: string }) | null>(null);
 
+  //constants
+  const { mutate: editPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
+  const popoverAttachmentRef = useRef<HTMLParagraphElement>(null);
+
+  //functions
   const image = useMemo(() => {
     switch (data.productName) {
       case "Paddy Seeds":
@@ -89,6 +93,8 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
     }
   }, [data.productName]);
 
+  const editDataHandler = (data: IAddProductsFormInput & { id: string }) => setConfirmationModal(data);
+
   useEffect(() => {
     let latestVariantId = "";
     let LatestVariantTime = 0;
@@ -100,10 +106,6 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
     }
     return setVariantdata(data[latestVariantId] as IPortfolioVariant);
   }, [data]);
-
-  const editDataHandler = (data: IAddProductsFormInput & { id: string }) => {
-    setConfirmationModal(data);
-  };
 
   return (
     <S.ItemCard>

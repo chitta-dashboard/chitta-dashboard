@@ -7,6 +7,7 @@ import { ENDPOINTS } from "../../../utils/constants";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreview = () => {
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },

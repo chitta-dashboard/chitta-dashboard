@@ -13,6 +13,7 @@ interface Props {
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
+  //constants
   const {
     formatChangeSuccess,
     result: { data: resolutions },

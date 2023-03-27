@@ -9,7 +9,8 @@ interface Props {
 }
 
 const CredentialsCertificate = forwardRef<HTMLDivElement, Props>(({ farmerDatatoPrint }, ref) => {
-  let {
+  // constants
+  const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);

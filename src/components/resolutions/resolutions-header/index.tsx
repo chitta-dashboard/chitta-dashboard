@@ -9,8 +9,11 @@ import S from "./resolutionsHeader.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
 const ResolutionsHeader: FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  //state values
   const { tab, changeTab } = useResolutionContext();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  //constants
   const {
     formatChangeSuccess,
     result: { data: resolutions },

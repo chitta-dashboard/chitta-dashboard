@@ -17,8 +17,14 @@ import { addCustomer } from "../../queries";
 import { createWalletAndEncrypt } from "../../services/algorand";
 
 const FarmersDetails = () => {
+  //state values
+  const { addNotification, loader } = useAuthContext();
   const { setSearchFilter, setFarmerBankDetail } = useFarmerDetailsContext();
+  const [addModal, setAddModal] = useState(false);
+  const [passwordConfirmModal, setPasswordConfirmModal] = useState(false);
+  const [farmerData, setFarmerData] = useState<IMdDetails>();
 
+  //constants
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -28,11 +34,7 @@ const FarmersDetails = () => {
   const { result } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
 
-  const { addNotification, loader } = useAuthContext();
-  const [addModal, setAddModal] = useState(false);
-  const [passwordConfirmModal, setPasswordConfirmModal] = useState(false);
-  const [farmerData, setFarmerData] = useState<IMdDetails>();
-
+  //functions
   //Add Modal Handler
   const addModalHandler = () => {
     setAddModal(!addModal);
