@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import S from "./notFound.styled";
 
 const NotFound = () => {
-  //constants
+  //constructors
   const navigate = useNavigate();
 
   return (

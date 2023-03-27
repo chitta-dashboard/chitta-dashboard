@@ -16,6 +16,9 @@ interface Props {
 }
 
 const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
+  //constructors
+  const navigate = useNavigate();
+
   //constants
   const {
     formatChangeSuccess,
@@ -23,7 +26,6 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
   } = useFetch(ENDPOINTS.resolutions, { errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error" }) });
   const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
   const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;
-  const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
 
   //functions

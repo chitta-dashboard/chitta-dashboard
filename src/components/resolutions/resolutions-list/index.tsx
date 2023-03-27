@@ -17,6 +17,9 @@ interface Props {
 }
 
 const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
+  //constructors
+  const navigate = useNavigate();
+
   //constants
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const {
@@ -24,7 +27,6 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
     result: { data: resolutionsObj },
   } = useFetch(ENDPOINTS.resolutions);
 
-  const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const resolutions = formatChangeSuccess && sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leftData = resolutions ? resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2)) : [];

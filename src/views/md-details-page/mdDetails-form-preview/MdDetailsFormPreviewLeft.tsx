@@ -19,6 +19,10 @@ import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
 
 const MdFormPreviewLeft = () => {
+  //constructors
+  const navigate = useNavigate();
+
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -40,6 +44,8 @@ const MdFormPreviewLeft = () => {
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+
+  //state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -50,8 +56,8 @@ const MdFormPreviewLeft = () => {
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
-  const navigate = useNavigate();
 
+  //functions
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 

@@ -20,6 +20,9 @@ import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
 
 const FarmerFormPreviewLeft = () => {
+  //constructors
+  const navigate = useNavigate();
+
   //constants
   const {
     formatChangeSuccess: isMdSuccess,
@@ -56,7 +59,6 @@ const FarmerFormPreviewLeft = () => {
   const farmerFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { farmerId } = useParams();
-  const navigate = useNavigate();
 
   //functions
   // popover open

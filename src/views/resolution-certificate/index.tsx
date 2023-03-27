@@ -17,6 +17,9 @@ import Toast from "../../utils/toast";
 import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
+  //constructors
+  const navigate = useNavigate();
+
   //state values
   const { addNotification } = useAuthContext();
   const [deletion, setDeletion] = useState(false);
@@ -25,7 +28,6 @@ const ResolutionCertificatePage = () => {
   const [popoverOpen, setPopoverOpen] = useState(false);
 
   //constants
-  const navigate = useNavigate();
   const editedData = useRef<Partial<IResolution>>({});
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
