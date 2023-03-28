@@ -29,6 +29,7 @@ export const ExportCSV: FC<ExportCSVType> = ({ name, csvData, fileName }) => {
             ? JSON.stringify(value)
             : JSON.stringify(value).split('"').join("");
       });
+      newCSVData.profile = "";
       updatedCSVData.push(newCSVData);
     });
 

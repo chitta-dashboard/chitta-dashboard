@@ -33,6 +33,7 @@ export namespace S {
   export const NerkathirLogo = styled("img")({
     height: "4.375rem",
     borderRadius: "50%",
+    aspectRatio: "1",
   });
 
   export const HeaderText = styled(Typography)(({ theme }: { theme: Theme }) => ({

@@ -162,7 +162,7 @@ export namespace S {
       borderRadius: "50%",
       opacity: "0.3",
       filter: "grayscale(100%)",
-      aspectRatio: "1/1",
+      aspectRatio: "1",
     },
   });
 

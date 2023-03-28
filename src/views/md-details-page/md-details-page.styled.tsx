@@ -1,4 +1,4 @@
-import { Box, styled,Theme, Typography, Button as MuiButton } from "@mui/material";
+import { Box, styled, Theme, Typography, Button as MuiButton } from "@mui/material";
 
 namespace S {
   export const MdsDetailsMainContainer = styled(Box)({
@@ -50,6 +50,7 @@ namespace S {
     borderRadius: "50%",
     height: "7.1875rem",
     maxWidth: "7.1875rem",
+    aspectRatio: "1",
   });
 
   export const HeaderTextContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -153,13 +154,15 @@ namespace S {
     overflowY: "auto",
     marginTop: "0.3125rem",
     "&::-webkit-scrollbar": {
-      width: "0.4375rem",
-      background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
+      // background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
+      // width: "0.4375rem",
+      display: "none",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: theme.palette.primary.light,
-      borderRadius: "1.25rem",
-      height: "3.75rem",
+      // backgroundColor: theme.palette.primary.light,
+      // borderRadius: "1.25rem",
+      // height: "3.75rem",
+      display: "none",
     },
   }));
 
