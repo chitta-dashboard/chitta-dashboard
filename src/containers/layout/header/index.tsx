@@ -6,6 +6,7 @@ import { decryptText, ENDPOINTS, ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
 import NotificationModal from "../../../components/modals/notification-modal";
+import PasswordModal from "../../../components/modals/password-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
 import { AdminFormInputs } from "../../../views/admin-panel";
@@ -20,6 +21,8 @@ const Header = () => {
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [openLoader, setOpenLoader] = useState(false);
+  const [importPasswordModal, setImportPasswordModal] = useState(false);
+  const [exportPasswordModal, setExportPasswordModal] = useState(false);
 
   //constants
   const {
@@ -73,13 +76,6 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    if (NotificationData && Object.values(NotificationData).length === 0) {
-      setOpenLoader(false);
-      setnotification(null);
-    }
-  }, [NotificationData]);
-
   const initialSlideFunc = () => {
     switch (isLg || isXl || null) {
       case pathname.includes("portfolio") && !isXl && !isLg && !isLg:
@@ -100,6 +96,27 @@ const Header = () => {
         return 0;
     }
   };
+
+  const HandleImport = (password: string) => {
+    setAnchorEl(null);
+    setImportPasswordModal(false);
+
+    console.log("Correct Password to import");
+  };
+
+  const HandleExport = (password: string) => {
+    setAnchorEl(null);
+    setExportPasswordModal(false);
+
+    console.log("Correct Password to export");
+  };
+
+  useEffect(() => {
+    if (NotificationData && Object.values(NotificationData).length === 0) {
+      setOpenLoader(false);
+      setnotification(null);
+    }
+  }, [NotificationData]);
 
   let settings = {
     arrows: true,
@@ -182,6 +199,20 @@ const Header = () => {
             }}
           >
             <S.Items>Account</S.Items>
+            <S.Items
+              onClick={() => {
+                setImportPasswordModal(true);
+              }}
+            >
+              Import DB
+            </S.Items>
+            <S.Items
+              onClick={() => {
+                setExportPasswordModal(true);
+              }}
+            >
+              Export DB
+            </S.Items>
             <S.Items onClick={logout}>Logout</S.Items>
           </S.Pop>
           {open && (
@@ -191,6 +222,24 @@ const Header = () => {
               handleClose={notificationHandler}
               clearNotifyHandler={clearNotifyHandler}
               openLoader={openLoader}
+            />
+          )}
+          {importPasswordModal && (
+            <PasswordModal
+              openModal={true}
+              handleClose={() => {
+                setImportPasswordModal(false);
+              }}
+              cb={HandleImport}
+            />
+          )}
+          {exportPasswordModal && (
+            <PasswordModal
+              openModal={true}
+              handleClose={() => {
+                setExportPasswordModal(false);
+              }}
+              cb={HandleExport}
             />
           )}
         </>
