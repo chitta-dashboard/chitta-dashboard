@@ -194,7 +194,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   }
 
   useEffect(() => {
-    if (editMode) {
+    if (editMode && farmersDetailsById[id].representative.id) {
       setSelectedKey([farmersDetailsById[id].representative.id]);
     }
   }, [editMode, id]);

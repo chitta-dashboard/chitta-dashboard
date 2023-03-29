@@ -15,6 +15,13 @@ const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 const SET_FARMERS_ID_TO_EXPORT = "SET_FARMERS_ID_TO_EXPORT";
 const SET_FARMER_BANK_DETAIL = "SET_FARMER_BANK_DETAIL";
 
+export type representative = {
+  id: string;
+  name: string;
+  phoneNumber: string;
+  pk: string;
+};
+
 //Group filter value
 export const DEFAULT_GROUP_FILTER = "all";
 
@@ -56,11 +63,13 @@ export type farmerDetail = {
   ifscCode?: string;
   K_cipher?: string;
   SK_cipher?: string;
+  password?: string;
   pin?: string;
   PK?: string;
-  email?: string;
-  representative?: { id: string; name: string; phoneNumber: string; pk: string };
-  hasNoWhatsapp?: string;
+  email: string;
+  representative: representative;
+  hasNoWhatsapp: string;
+  representativeOf?: representative[];
 };
 
 export type selectedFarmer = number | string;

@@ -30,9 +30,18 @@ const FarmersDetails = () => {
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
 
-  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { result } = useFetch(ENDPOINTS.farmerDetails);
+  const {
+    formatChangeSuccess: isMdDetailsSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
+
+  const { formatChangeSuccess: isFarmerDetailsSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
+  const { data: farmersDetailsById } = result;
+
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
+  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
+  const { mutate: editFarmerDetail } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
 
   //functions
   //Add Modal Handler
@@ -73,6 +82,9 @@ const FarmersDetails = () => {
             successCb: () => {
               addNotification({ id: newFarmer.id as string, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
               Toast({ message: "Farmer Added Successfully", type: "success" });
+              if (newFarmer.representative.id !== "") {
+                HandleRepresentativeOf(newFarmer);
+              }
             },
             errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
           });
@@ -83,6 +95,34 @@ const FarmersDetails = () => {
         }
       });
     } else Toast({ message: "Wallet creation failed! Please try again", type: "error" });
+  };
+
+  const HandleRepresentativeOf = (farmerData: farmerDetail) => {
+    const isFarmerInMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find(
+      (md) => md.farmerId === farmerData.representative.id,
+    )?.id;
+    const representativeData = isFarmerDetailsSuccess && farmersDetailsById[farmerData.representative.id];
+    const addRepresentativeOf = {
+      id: farmerData.id,
+      name: farmerData.name,
+      phoneNumber: farmerData.phoneNumber ?? "",
+      pk: farmerData.PK ?? "",
+    };
+    editFarmerDetail({
+      editedData: { ...representativeData, representativeOf: [...representativeData.representativeOf, addRepresentativeOf] },
+      successCb: () => {
+        Toast({ message: "Farmer Edited Successfully", type: "success" });
+        if (isFarmerInMd) {
+          const mdData = isMdDetailsSuccess && mdDetailsById[isFarmerInMd];
+          editMdDetail({
+            editedData: { ...mdData, representativeOf: [...mdData.representativeOf, addRepresentativeOf] },
+            successCb: () => Toast({ message: "Md Edited Successfully", type: "success" }),
+            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+          });
+        }
+      },
+      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+    });
   };
 
   const handleSearchInput = (searchText: string) => {
