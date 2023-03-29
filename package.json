@@ -66,9 +66,10 @@
     "dev": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "server": "npm start --prefix server",
+    "local-server": "npm start --prefix servers/local-server",
+    "remote-server": "npm start --prefix servers/remote-server",
     "eject": "react-scripts eject",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "concurrently \"npm run dev\" \"npm run remote-server\" \"npm run local-server\""
   },
   "eslintConfig": {
     "extends": [
