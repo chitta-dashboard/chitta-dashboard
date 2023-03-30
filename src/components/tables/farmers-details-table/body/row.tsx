@@ -83,7 +83,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const updateFarmerDetail = (data: farmerDetail) => {
     setEditData(data);
     confirmModalHandler();
-    // console.log(farmersDetailsById[data.representative.id].representative.id);
   };
 
   // ID Card Modal Handler
@@ -170,8 +169,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     const oldFarmer = oldId && isFarmerDetailsSuccess && farmersDetailsById[oldId];
     const representativeOfOldFarmer =
       oldId && Boolean(oldFarmer.representativeOf.length) ? oldFarmer.representativeOf.filter((f: representative) => f?.id !== editedFarmer?.id) : [];
-    // console.log("editedFarmer", editedFarmer);
-    // console.log("representativeOf data", representativeOfOldFarmer);
     const representativeOfNewFarmer = {
       id: editedFarmer.id,
       name: editedFarmer.name,
@@ -189,11 +186,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     const newMd = newId && isSuccess && mdDetailsById[isNewFarmerInMd];
     const oldMd = oldId && isSuccess && mdDetailsById[isOldFarmerInMd];
 
-    // console.log("isNewFarmerInMd", isNewFarmerInMd, "isOldFarmerInMd", isOldFarmerInMd);
-    // console.log("newMd", newMd?.id, "oldMd", oldMd?.id);
-
     if (newId && oldId) {
-      // console.log("entered new and old ");
       const newFarmerData = {
         ...newFarmer,
         representativeOf: [...newFarmer.representativeOf, representativeOfNewFarmer],
@@ -284,7 +277,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       });
     }
     if (newId && !oldId) {
-      // console.log("entered new");
       editFarmer({
         editedData: {
           ...newFarmer,
@@ -312,7 +304,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       });
     }
     if (!newId && oldId) {
-      // console.log("entered old");
       editFarmer({
         editedData: {
           ...oldFarmer,
@@ -507,13 +498,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             yesAction={async () => {
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
-              //
-
               const newId = editData?.representative?.id ?? "";
               const oldId = editData?.farmerId ? isFarmerDetailsSuccess && farmersDetailsById[editData.farmerId]?.representative?.id : "";
-              // console.log(editData && editData.id);
-
-              //
               delete farmerEditData.farmerId;
               loader({ openLoader: true, loaderText: `Updating customer` });
               editCustomer(farmerEditData as farmerDetail).then((res) => {
@@ -524,14 +510,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                       successCb: async () => {
                         editData && removeGroupMember(user.id, editData.group, true);
                         Toast({ message: "Farmer Edited Successfully", type: "success" });
-                        //
-                        // console.log("newId", newId, "oldId", oldId);
                         if (farmerEditData && oldId !== newId) {
                           setTimeout(() => {
                             HandleRepresentativeOf(farmerEditData as farmerDetail, oldId, newId);
                           }, 0);
                         }
-                        //
                       },
                       errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                     });
@@ -544,14 +527,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                           successCb: () => {
                             editData && removeGroupMember(user.id, editData.group, true);
                             Toast({ message: "Farmer Edited Successfully", type: "success" });
-                            //
-                            // console.log("newId", newId, "oldId", oldId);
                             if (farmerEditData && oldId !== newId) {
                               setTimeout(() => {
                                 HandleRepresentativeOf(farmerEditData as farmerDetail, oldId, newId);
                               }, 0);
                             }
-                            //
                           },
                           errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                         });
