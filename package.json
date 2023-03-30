@@ -47,6 +47,7 @@
     "react-prosemirror": "^0.2.1",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.3.0",
+    "react-s3": "^1.3.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-to-print": "^2.14.7",
@@ -66,9 +67,10 @@
     "dev": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "server": "npm start --prefix server",
+    "local-server": "npm start --prefix servers/local-server",
+    "remote-server": "npm start --prefix servers/remote-server",
     "eject": "react-scripts eject",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "concurrently \"npm run dev\" \"npm run remote-server\" \"npm run local-server\""
   },
   "eslintConfig": {
     "extends": [
