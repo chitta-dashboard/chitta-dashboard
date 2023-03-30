@@ -1,7 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
 
 export namespace S {
-  // export const TamilShareCertificateContainer = styled(Box)(({ theme }) => ({
   export const TamilShareCertificateContainer = styled(Box, {
     shouldForwardProp: (prop) => prop !== "Toggle",
   })<{ Toggle: boolean | undefined }>(({ theme, Toggle }) => ({
@@ -108,7 +107,6 @@ export namespace S {
     marginRight: "4.375rem",
     borderRadius: "50%",
     aspectRatio: "1/1",
-    // filter: "grayscale(100%)",
   });
 
   export const HeadingContainerHeading = styled(Typography)(({ theme }) => ({
@@ -149,10 +147,6 @@ export namespace S {
   });
 
   export const CertificateContent = styled(Box)({
-    // display: "flex",
-    // flexDirection: "column",
-    // justifyContent: "center",
-    // alignItems: "center",
     width: "100%",
     height: "fit-content",
   });

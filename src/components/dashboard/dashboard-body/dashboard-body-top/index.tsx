@@ -103,13 +103,6 @@ const DashboardBodyTop = () => {
       icon: "farmland",
       isSuccess: farmerDetailsSuccess,
     },
-    // {
-    //   id: 6,
-    //   headCount: "-122",
-    //   bodyCount: 770,
-    //   footerName: "Cultivation (Kg)",
-    //   icon: "cultivation",
-    // },
   ];
 
   const slides = () => {
