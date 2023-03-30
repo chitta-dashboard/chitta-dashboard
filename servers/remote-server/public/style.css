@@ -1,0 +1,11 @@
+body {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  color: #ff2f90;
+  text-align: center;
+}
