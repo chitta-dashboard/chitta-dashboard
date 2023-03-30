@@ -8,6 +8,12 @@ const CHECKBOX_SELECT = "CHECKBOX_SELECT";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_PAGE_COUNT = "SET_PAGE_COUNT";
 
+export type representative = {
+  id: string;
+  name: string;
+  phoneNumber: string;
+  pk: string;
+};
 export interface IMdDetails {
   id: string;
   farmerId?: string;
@@ -37,11 +43,13 @@ export interface IMdDetails {
   qualification: string;
   K_cipher?: string;
   SK_cipher?: string;
+  password?: string;
   pin?: string;
   PK?: string;
-  email?: string;
-  representative?: { name: string; phoneNumber: string; pk: string };
-  hasNoWhatsapp?: string;
+  email: string;
+  representative: { id: string; name: string; phoneNumber: string; pk: string };
+  hasNoWhatsapp: string;
+  representativeOf?: representative[];
 }
 
 export type selectedMdListData = number | string;

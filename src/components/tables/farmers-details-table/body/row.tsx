@@ -12,7 +12,7 @@ import IdCardBody from "../../../id-card/id-card-body";
 import IdCardModal from "../../../modals/id-download-modal";
 import CS from "../../../common-styles/commonStyles.styled";
 import ImagePreview from "../../../../utils/imageCrop/imagePreview";
-import { farmerDetail, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
+import { farmerDetail, representative, useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import { useDelete, useEdit, useFetch } from "../../../../utils/hooks/query";
 import FarmerBankDetailModal from "../../../modals/farmer-bank-detail-confirmation-modal";
 import Toast from "../../../../utils/toast";
@@ -56,6 +56,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+  let {
+    formatChangeSuccess: isFarmerDetailsSuccess,
+    result: { data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const credentialCertificate = useRef<HTMLDivElement>();
@@ -158,6 +162,174 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
           });
         },
       });
+  };
+
+  const HandleRepresentativeOf = (editedFarmer: farmerDetail, oldId: string, newId: string) => {
+    const newFarmer = newId && isFarmerDetailsSuccess && farmersDetailsById[newId];
+    const oldFarmer = oldId && isFarmerDetailsSuccess && farmersDetailsById[oldId];
+    const representativeOfOldFarmer =
+      oldId && Boolean(oldFarmer.representativeOf.length) ? oldFarmer.representativeOf.filter((f: representative) => f?.id !== editedFarmer?.id) : [];
+    const representativeOfNewFarmer = {
+      id: editedFarmer.id,
+      name: editedFarmer.name,
+      phoneNumber: editedFarmer.phoneNumber ?? "",
+      pk: editedFarmer.PK ?? "",
+    };
+
+    const isNewFarmerInMd = newId
+      ? Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[newId].id)?.id
+      : null;
+    const isOldFarmerInMd = oldId
+      ? Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[oldId].id)?.id
+      : null;
+
+    const newMd = newId && isSuccess && mdDetailsById[isNewFarmerInMd];
+    const oldMd = oldId && isSuccess && mdDetailsById[isOldFarmerInMd];
+
+    if (newId && oldId) {
+      const newFarmerData = {
+        ...newFarmer,
+        representativeOf: [...newFarmer.representativeOf, representativeOfNewFarmer],
+      };
+      const oldFarmerData = {
+        ...oldFarmer,
+        representativeOf: [...representativeOfOldFarmer],
+      };
+      editFarmer({
+        editedData: newFarmerData,
+        successCb: () => {
+          Toast({ message: "Farmer Edited Successfully", type: "success" });
+          setTimeout(() => {
+            editFarmer({
+              editedData: oldFarmerData,
+              successCb: () => {
+                Toast({ message: "Farmer Edited Successfully", type: "success" });
+
+                if (isNewFarmerInMd && isOldFarmerInMd) {
+                  setTimeout(() => {
+                    editMdDetail({
+                      editedData: {
+                        ...newMd,
+                        representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
+                      },
+                      successCb: () => {
+                        Toast({ message: "Md Edited Successfully", type: "success" });
+
+                        setTimeout(() => {
+                          editMdDetail({
+                            editedData: {
+                              ...oldMd,
+                              representativeOf: [...representativeOfOldFarmer],
+                            },
+                            successCb: () => {
+                              Toast({ message: "Md Edited Successfully", type: "success" });
+                            },
+                            errorCb: () => {
+                              Toast({ message: "Request failed! Please try again", type: "error" });
+                            },
+                          });
+                        }, 0);
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  }, 0);
+                }
+                if (isNewFarmerInMd && !isOldFarmerInMd) {
+                  setTimeout(() => {
+                    editMdDetail({
+                      editedData: {
+                        ...newMd,
+                        representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
+                      },
+                      successCb: () => {
+                        Toast({ message: "Md Edited Successfully", type: "success" });
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  }, 0);
+                }
+                if (!isNewFarmerInMd && isOldFarmerInMd) {
+                  setTimeout(() => {
+                    editMdDetail({
+                      editedData: {
+                        ...oldMd,
+                        representativeOf: [...representativeOfOldFarmer],
+                      },
+                      successCb: () => {
+                        Toast({ message: "Md Edited Successfully", type: "success" });
+                      },
+                      errorCb: () => {
+                        Toast({ message: "Request failed! Please try again", type: "error" });
+                      },
+                    });
+                  }, 0);
+                }
+              },
+              errorCb: () => Toast({ message: "Request failed! Please try again oldid", type: "error" }),
+            });
+          }, 0);
+        },
+        errorCb: () => Toast({ message: "Request failed! Please try again newid", type: "error" }),
+      });
+    }
+    if (newId && !oldId) {
+      editFarmer({
+        editedData: {
+          ...newFarmer,
+          representativeOf: [...newFarmer.representativeOf, representativeOfNewFarmer],
+        },
+        successCb: () => {
+          Toast({ message: "Farmer Edited Successfully newid", type: "success" });
+          setTimeout(() => {
+            isNewFarmerInMd &&
+              editMdDetail({
+                editedData: {
+                  ...newMd,
+                  representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
+                },
+                successCb: () => {
+                  Toast({ message: "Farmer Edited Successfully", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
+                },
+              });
+          }, 0);
+        },
+        errorCb: () => Toast({ message: "Request failed! Please try again newid", type: "error" }),
+      });
+    }
+    if (!newId && oldId) {
+      editFarmer({
+        editedData: {
+          ...oldFarmer,
+          representativeOf: [...representativeOfOldFarmer],
+        },
+        successCb: () => {
+          Toast({ message: "Farmer Edited Successfully", type: "success" });
+          setTimeout(() => {
+            isOldFarmerInMd &&
+              editMdDetail({
+                editedData: {
+                  ...oldMd,
+                  representativeOf: [...representativeOfOldFarmer],
+                },
+                successCb: () => {
+                  Toast({ message: "Farmer Edited Successfully", type: "success" });
+                },
+                errorCb: () => {
+                  Toast({ message: "Request failed! Please try again", type: "error" });
+                },
+              });
+          }, 0);
+        },
+        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+      });
+    }
   };
 
   // to print farmer detail form
@@ -273,48 +445,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
           />
           <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
-          {/* <DeleteModal
-            openModal={deleteModal}
-            handleClose={() => setDeleteModal(false)}
-            handleDelete={async () => {
-              await removeGroupMember(user.id, user.group, false);
-              const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-              !isFarmerInMd &&
-                farmerDelete({
-                  id: user.id,
-                  successCb: () => {
-                    Toast({ message: "Farmer Deleted Successfully", type: "success" });
-                    addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                  },
-                  errorCb: () => {
-                    Toast({ message: "Request failed! Please try again", type: "error" });
-                  },
-                });
-              isFarmerInMd &&
-                farmerDelete({
-                  id: user.id,
-                  successCb: async () => {
-                    await mdDelete({
-                      id: isFarmerInMd,
-                      successCb: () => {
-                        Toast({ message: "Farmer Deleted Successfully", type: "success" });
-                        addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                      },
-                      errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
-                      },
-                    });
-                  },
-                });
-              setDeleteModal(false);
-              setIconModal(false);
-            }}
-            deleteMessage={
-              <>
-                Do you want to remove <CS.Bold>{user.name}</CS.Bold> from Farmers Details?
-              </>
-            }
-          /> */}
           <DeleteModal
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
@@ -362,48 +492,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               </>
             }
           />
-          {/* <ConfirmationModal
-            openModal={confirmModal}
-            handleClose={() => setConfirmModal(false)}
-            yesAction={async () => {
-              const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-              editData && (await removeGroupMember(user.id, editData.group, true));
-              const farmerEditData = { ...editData, id: editData?.farmerId };
-              delete farmerEditData.farmerId;
-              !isFarmerInMd &&
-                editFarmer({
-                  editedData: farmerEditData,
-                  successCb: () => {
-                    Toast({ message: "Farmer Edited Successfully", type: "success" });
-                  },
-                  errorCb: () => {
-                    Toast({ message: "Request failed! Please try again", type: "error" });
-                  },
-                });
-              isFarmerInMd &&
-                editFarmer({
-                  editedData: farmerEditData,
-                  successCb: () => {
-                    editMdDetail({ editedData: editData });
-                    Toast({ message: "Farmer Edited Successfully", type: "success" });
-                  },
-                  errorCb: () => {
-                    Toast({ message: "Request failed! Please try again", type: "error" });
-                  },
-                });
-              setEditMode(false);
-              setFarmerBankDetail(false);
-              setConfirmModal(false);
-              setIconModal(false);
-            }}
-          /> */}
-
           <ConfirmationModal
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={async () => {
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
+              const newId = editData?.representative?.id ?? "";
+              const oldId = editData?.farmerId ? isFarmerDetailsSuccess && farmersDetailsById[editData.farmerId]?.representative?.id : "";
               delete farmerEditData.farmerId;
               loader({ openLoader: true, loaderText: `Updating customer` });
               editCustomer(farmerEditData as farmerDetail).then((res) => {
@@ -414,6 +510,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                       successCb: async () => {
                         editData && removeGroupMember(user.id, editData.group, true);
                         Toast({ message: "Farmer Edited Successfully", type: "success" });
+                        if (farmerEditData && oldId !== newId) {
+                          setTimeout(() => {
+                            HandleRepresentativeOf(farmerEditData as farmerDetail, oldId, newId);
+                          }, 0);
+                        }
                       },
                       errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                     });
@@ -426,6 +527,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                           successCb: () => {
                             editData && removeGroupMember(user.id, editData.group, true);
                             Toast({ message: "Farmer Edited Successfully", type: "success" });
+                            if (farmerEditData && oldId !== newId) {
+                              setTimeout(() => {
+                                HandleRepresentativeOf(farmerEditData as farmerDetail, oldId, newId);
+                              }, 0);
+                            }
                           },
                           errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
                         });
@@ -436,6 +542,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   loader({ openLoader: false });
                 }
               });
+
               setEditMode(false);
               setConfirmModal(false);
               setIconModal(false);
