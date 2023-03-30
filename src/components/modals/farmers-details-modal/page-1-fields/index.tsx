@@ -24,6 +24,8 @@ interface CustomProps {
   watch: UseFormWatch<IAddFarmersDetailsPage1Input>;
   selectedKey: string[];
   setSelectedKey: Dispatch<SetStateAction<string[]>>;
+  isPhoneExist: boolean;
+  setIsPhoneExist: Dispatch<SetStateAction<boolean>>;
 }
 
 const FormField: FC<CustomProps> = ({
@@ -38,6 +40,8 @@ const FormField: FC<CustomProps> = ({
   watch,
   selectedKey,
   setSelectedKey,
+  isPhoneExist,
+  setIsPhoneExist,
 }) => {
   //state values
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
@@ -118,6 +122,14 @@ const FormField: FC<CustomProps> = ({
 
   const RepresentativeInputFocused = () => {
     setOpenMdModal(true);
+  };
+
+  //Verify phone number already exist or not
+  const verifyPhoneExist = (phoneNumber: string) => {
+    let isExist: farmerDetail[] = Object.values(farmerIsSuccess && (farmersData as farmerDetail[])).find(
+      (farmer) => farmer.phoneNumber === `+91${phoneNumber}`,
+    );
+    setIsPhoneExist(Boolean(isExist));
   };
 
   return (
@@ -205,6 +217,10 @@ const FormField: FC<CustomProps> = ({
           gridArea: "phn",
           placeholder: "கைபேசி எண்ணை உள்ளிடுக",
           unitstart: "+91",
+        }}
+        helperText={isPhoneExist ? "Phone number already exist!" : ""}
+        onChange={(e) => {
+          verifyPhoneExist(e.target.value);
         }}
       />
       <Input
