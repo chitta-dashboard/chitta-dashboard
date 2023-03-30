@@ -1,8 +1,8 @@
-import { S3Client } from "@aws-sdk/client-s3";
+const { S3Client } = require("@aws-sdk/client-s3");
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../../../../.env") });
 
 const config = {
-  bucketName: process.env.REACT_APP_AWS_BUCKET_NAME ?? null,
-
   region: process.env.REACT_APP_AWS_REGION ?? null,
   credentials: {
     accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY ?? null,
@@ -11,4 +11,4 @@ const config = {
 };
 
 // Set the region and credentials for AWS
-export const s3Client = new S3Client(config);
+module.exports.s3Client = new S3Client(config);
