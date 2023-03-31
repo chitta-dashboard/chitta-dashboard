@@ -108,14 +108,10 @@ const Header = () => {
       .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/import`)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          console.log(response);
           Toast({ message: "DB Imported successfully", type: "success" });
           loader({ openLoader: false });
           navigate(0);
-        } else {
-          console.log(response);
-          loader({ openLoader: false });
-        }
+        } else loader({ openLoader: false });
       })
       .catch((error: AxiosError) => {
         console.log(error.message);
@@ -131,13 +127,9 @@ const Header = () => {
       .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/export`)
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          console.log(response);
           Toast({ message: "DB Exported successfully", type: "success" });
           loader({ openLoader: false });
-        } else {
-          console.log(response);
-          loader({ openLoader: false });
-        }
+        } else loader({ openLoader: false });
       })
       .catch((error: AxiosError) => {
         console.log(error);
