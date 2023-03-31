@@ -25,7 +25,7 @@ const MdDetails = () => {
   //constants
   const {
     formatChangeSuccess: mdIsSuccess,
-    result: { data: mdData },
+    result: { data: mdData, isError },
   } = useFetch(ENDPOINTS.mdDetails);
   const {
     formatChangeSuccess: farmerIsSuccess,
@@ -128,7 +128,11 @@ const MdDetails = () => {
   return (
     <>
       {!farmerIsSuccess ? (
-        <Loader />
+        !isError ? (
+          <Loader />
+        ) : (
+          <S.NoDataFound>No MD Details Found!</S.NoDataFound>
+        )
       ) : (
         <S.MdDetailsContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />

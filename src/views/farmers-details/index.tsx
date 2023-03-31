@@ -37,7 +37,7 @@ const FarmersDetails = () => {
 
   const {
     formatChangeSuccess: isFarmerDetailsSuccess,
-    result: { isFetching, data: farmersDetailsById },
+    result: { isFetching, data: farmersDetailsById,isError },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
@@ -131,9 +131,7 @@ const FarmersDetails = () => {
   return (
     <>
       {isFetching ? (
-        <>
-          <Loader />
-        </>
+        <>{!isError ? <Loader /> : <S.NoDataFound>No Farmer Details Found!</S.NoDataFound>}</>
       ) : (
         <>
           <S.FarmersDetailsContainer>

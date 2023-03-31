@@ -17,7 +17,7 @@ const CeoDetails = () => {
   //constants
   const {
     formatChangeSuccess,
-    result: { data: ceoDetails },
+    result: { data: ceoDetails, isError },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
 
@@ -36,6 +36,8 @@ const CeoDetails = () => {
     });
     addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addCeoDetails });
   };
+
+
   return (
     <>
       {formatChangeSuccess ? (
@@ -58,8 +60,10 @@ const CeoDetails = () => {
           </S.CeoDetailAdd>
           <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </S.CeoDetailsContainer>
-      ) : (
+      ) : !isError ? (
         <Loader />
+      ) : (
+        <S.NoDataFound>No CEO Details Found!</S.NoDataFound>
       )}
     </>
   );

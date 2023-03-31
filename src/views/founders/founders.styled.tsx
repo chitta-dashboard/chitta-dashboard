@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, styled, Typography } from "@mui/material";
 
 namespace S {
   export const foundersContainer = styled(Box)(({ theme }) => ({
@@ -10,6 +10,15 @@ namespace S {
     [theme.breakpoints.down("md")]: {
       gap: "1rem",
     },
+  }));
+
+  export const NoDataFound = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 500,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 }
 
