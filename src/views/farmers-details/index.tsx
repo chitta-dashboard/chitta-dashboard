@@ -35,8 +35,10 @@ const FarmersDetails = () => {
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
-  const { formatChangeSuccess: isFarmerDetailsSuccess, result } = useFetch(ENDPOINTS.farmerDetails);
-  const { data: farmersDetailsById } = result;
+  const {
+    formatChangeSuccess: isFarmerDetailsSuccess,
+    result: { isFetching, data: farmersDetailsById },
+  } = useFetch(ENDPOINTS.farmerDetails);
 
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
@@ -68,7 +70,7 @@ const FarmersDetails = () => {
 
   // Add Farmerdetail Handler after entering correct password
   const addFarmerDetailHandler = (data: string) => {
-    const newFarmer = { ...farmerData, password: data } as farmerDetail;
+    const newFarmer = { ...farmerData, password: data, representativeOf: [] } as farmerDetail;
     setPasswordConfirmModal(false);
     const newFarmerWithWallet = createWalletAndEncrypt([newFarmer]);
     if (newFarmerWithWallet.length) {
@@ -82,46 +84,43 @@ const FarmersDetails = () => {
             successCb: () => {
               addNotification({ id: newFarmer.id as string, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
               Toast({ message: "Farmer Added Successfully", type: "success" });
-              if (newFarmer.representative.id !== "") {
-                HandleRepresentativeOf(newFarmer);
-              }
+              if (newFarmer.representative.id) HandleRepresentativeOf(newFarmer, newFarmer.representative.id);
             },
-            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+            errorCb: () => Toast({ message: "Farmer creation failed! Please try again", type: "error" }),
           });
           addGroupMember(id, group);
         } else {
-          Toast({ message: "Request failed! Please try again", type: "error" });
+          Toast({ message: "Customer creation failed! Please try again", type: "error" });
           loader({ openLoader: false });
         }
       });
     } else Toast({ message: "Wallet creation failed! Please try again", type: "error" });
   };
 
-  const HandleRepresentativeOf = (farmerData: farmerDetail) => {
-    const isFarmerInMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find(
-      (md) => md.farmerId === farmerData.representative.id,
-    )?.id;
-    const representativeData = isFarmerDetailsSuccess && farmersDetailsById[farmerData.representative.id];
-    const addRepresentativeOf = {
-      id: farmerData.id,
-      name: farmerData.name,
-      phoneNumber: farmerData.phoneNumber ?? "",
-      pk: farmerData.PK ?? "",
+  const HandleRepresentativeOf = (farmer: farmerDetail, repId: string) => {
+    const toRepOf = {
+      id: farmer.id,
+      pk: farmer.PK,
+      phoneNumber: farmer.phoneNumber,
+      name: farmer.name,
     };
+    const targetFarmer = farmersDetailsById[repId];
+    targetFarmer.representativeOf.push(toRepOf);
+    const targetMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === repId);
+    if (targetMd) targetMd.representativeOf.push(toRepOf);
     editFarmerDetail({
-      editedData: { ...representativeData, representativeOf: [...representativeData.representativeOf, addRepresentativeOf] },
+      editedData: targetFarmer,
       successCb: () => {
         Toast({ message: "Farmer Edited Successfully", type: "success" });
-        if (isFarmerInMd) {
-          const mdData = isMdDetailsSuccess && mdDetailsById[isFarmerInMd];
+        if (targetMd) {
           editMdDetail({
-            editedData: { ...mdData, representativeOf: [...mdData.representativeOf, addRepresentativeOf] },
+            editedData: targetMd,
             successCb: () => Toast({ message: "Md Edited Successfully", type: "success" }),
-            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+            errorCb: () => Toast({ message: "Md updation request failed! Please try again", type: "error" }),
           });
         }
       },
-      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+      errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
     });
   };
 
@@ -131,7 +130,7 @@ const FarmersDetails = () => {
 
   return (
     <>
-      {result.isFetching ? (
+      {isFetching ? (
         <>
           <Loader />
         </>
