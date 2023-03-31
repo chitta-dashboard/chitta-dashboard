@@ -32,7 +32,10 @@ const Header = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
+  const {
+    result: { data: NotificationData },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.notification);
 
   const { headerLogo: headerImage, name: titleName } =
     isSuccessAdmin && Boolean(Object.values(adminDetails).length) ? Object.values(adminDetails as AdminFormInputs)[0] : ({} as AdminFormInputs);
@@ -45,7 +48,6 @@ const Header = () => {
   const isLg = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
-  const { data: NotificationData } = result;
 
   //functions
   const clearNotifyHandler = () => {
