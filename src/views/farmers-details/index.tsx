@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FarmersGroup } from "../../utils/context/farmersGroup";
 import { IMdDetails } from "../../utils/context/mdDetails";
 import { useAuthContext } from "../../utils/context/auth";
@@ -15,6 +15,7 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 import { addCustomer } from "../../queries";
 import { createWalletAndEncrypt } from "../../services/algorand";
+import { handleLoader } from "../../utils/helpers";
 
 const FarmersDetails = () => {
   //state values
@@ -23,6 +24,7 @@ const FarmersDetails = () => {
   const [addModal, setAddModal] = useState(false);
   const [passwordConfirmModal, setPasswordConfirmModal] = useState(false);
   const [farmerData, setFarmerData] = useState<IMdDetails>();
+  const [isLoader, setIsLoader] = useState(true);
 
   //constants
   const {
@@ -37,7 +39,7 @@ const FarmersDetails = () => {
 
   const {
     formatChangeSuccess: isFarmerDetailsSuccess,
-    result: { isFetching, data: farmersDetailsById },
+    result: { isFetching, data: farmersDetailsById, isError },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
@@ -128,12 +130,16 @@ const FarmersDetails = () => {
     setSearchFilter(searchText);
   };
 
+  useEffect(() => {
+    isError && handleLoader(setIsLoader);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError]);
+
   return (
     <>
       {isFetching ? (
-        <>
-          <Loader />
-        </>
+        <>{isLoader ? <Loader /> : <S.NoDataFound>No Data Found!</S.NoDataFound>}</>
       ) : (
         <>
           <S.FarmersDetailsContainer>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Theme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -7,7 +7,7 @@ import { useFetch } from "../../../../utils/hooks/query";
 import { ACRETOCENT, ENDPOINTS } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import { BufferLoader } from "../../../../utils/loaders/api-loader";
-import { formatNumberToSmallScale } from "../../../../utils/helpers";
+import { formatNumberToSmallScale, handleLoader } from "../../../../utils/helpers";
 import PopOver from "../../../common-components/pop-over";
 import Icon from "../../../icons";
 import S from "../dashboardBodyTop.styled";
@@ -55,6 +55,7 @@ const DashboardBodyTop = () => {
   const [value, setValue] = useState<Ivalue>({
     "9eb5af43-f224-4434-9488-fddf4eb004dc": "Acres",
   });
+  const [isLoader, setIsLoader] = useState(true);
 
   const StatisticsItems = [
     {
@@ -151,6 +152,13 @@ const DashboardBodyTop = () => {
     setIsPopOver(null);
   };
 
+  useEffect(() => {
+    const isSuccess = farmerDetailsSuccess || farmerGroupSuccess;
+    !isSuccess && handleLoader(setIsLoader);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmerDetailsSuccess, farmerGroupSuccess]);
+
   return (
     <S.StasticsCardContainer>
       <Slider {...settings}>
@@ -167,7 +175,7 @@ const DashboardBodyTop = () => {
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
-                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : isLoader ? <BufferLoader /> : 0}</S.StatCardBody>
                 </S.StatCardHeaderLeft>
                 <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
