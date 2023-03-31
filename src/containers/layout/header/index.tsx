@@ -9,6 +9,8 @@ import NotificationModal from "../../../components/modals/notification-modal";
 import PasswordModal from "../../../components/modals/password-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import Toast from "../../../utils/toast";
 import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./header.styled";
 import "slick-carousel/slick/slick.css";
@@ -16,7 +18,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Header = () => {
   //state values
-  const { clearNotification, logout } = useAuthContext();
+  const { clearNotification, logout, loader } = useAuthContext();
   const [navOpen, setNavOpen] = useState(false);
   const [notification, setnotification] = useState<HTMLButtonElement | null>(null);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -30,6 +32,8 @@ const Header = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
+  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
+
   const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const navigate = useNavigate();
@@ -40,7 +44,6 @@ const Header = () => {
   const isLg = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
   const { data: NotificationData } = result;
 
   //functions
@@ -97,18 +100,49 @@ const Header = () => {
     }
   };
 
-  const HandleImport = (password: string) => {
+  const handleImport = async () => {
     setAnchorEl(null);
     setImportPasswordModal(false);
-
-    console.log("Correct Password to import");
+    loader({ openLoader: true, loaderText: `Importing DB` });
+    axios
+      .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/import`)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          console.log(response);
+          Toast({ message: "DB Imported successfully", type: "success" });
+          loader({ openLoader: false });
+          navigate(0);
+        } else {
+          console.log(response);
+          loader({ openLoader: false });
+        }
+      })
+      .catch((error: AxiosError) => {
+        console.log(error.message);
+        loader({ openLoader: false });
+      });
   };
 
-  const HandleExport = (password: string) => {
+  const handleExport = async () => {
     setAnchorEl(null);
     setExportPasswordModal(false);
-
-    console.log("Correct Password to export");
+    loader({ openLoader: true, loaderText: `Exporting DB` });
+    axios
+      .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/export`)
+      .then((response: AxiosResponse) => {
+        if (response.status === 200) {
+          console.log(response);
+          Toast({ message: "DB Exported successfully", type: "success" });
+          loader({ openLoader: false });
+        } else {
+          console.log(response);
+          loader({ openLoader: false });
+        }
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+        loader({ openLoader: false });
+      });
   };
 
   useEffect(() => {
@@ -230,7 +264,7 @@ const Header = () => {
               handleClose={() => {
                 setImportPasswordModal(false);
               }}
-              cb={HandleImport}
+              cb={handleImport}
             />
           )}
           {exportPasswordModal && (
@@ -239,7 +273,7 @@ const Header = () => {
               handleClose={() => {
                 setExportPasswordModal(false);
               }}
-              cb={HandleExport}
+              cb={handleExport}
             />
           )}
         </>
