@@ -66,7 +66,7 @@ const FormField: FC<CustomProps> = ({
   //to get farmer details
   useEffect(() => {
     let filteredFarmerData: farmerDetail[] = Object.values(farmerIsSuccess && (farmersData as farmerDetail[])).filter(
-      (item) => item.hasNoWhatsapp === "false",
+      (farmer) => farmer.hasNoWhatsapp === "false" && farmer.phoneNumber,
     );
     setFilteredFarmerDetails([...filteredFarmerData]);
   }, [farmersData, farmerIsSuccess]);
