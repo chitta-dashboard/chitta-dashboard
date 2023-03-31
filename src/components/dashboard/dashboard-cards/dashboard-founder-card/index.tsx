@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
@@ -12,14 +12,16 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./dashoardFounder.styled";
+import { handleLoader } from "../../../../utils/helpers";
 
 const DashboardFounder = () => {
   //state values
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+  const [isLoader, setIsLoader] = useState(true);
 
   //constants
-  const {
+  let {
     formatChangeSuccess,
     result: { data: foundersById },
   } = useFetch(ENDPOINTS.founders);
@@ -67,6 +69,12 @@ const DashboardFounder = () => {
     const encryptedBase64 = encryptText(compressedBase64);
     editFounder({ editedData: { ...result, profile: encryptedBase64 } });
   };
+
+  useEffect(() => {
+    !formatChangeSuccess && handleLoader(setIsLoader);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formatChangeSuccess]);
 
   return (
     <>
@@ -124,8 +132,10 @@ const DashboardFounder = () => {
               );
             })}
           </Slider>
-        ) : (
+        ) : isLoader ? (
           <Loader />
+        ) : (
+          <S.NoDataFound>No Data Found!</S.NoDataFound>
         )}
       </S.FounderWrapper>
 

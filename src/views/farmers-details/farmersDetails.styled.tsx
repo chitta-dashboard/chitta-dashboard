@@ -1,3 +1,4 @@
+import { Typography } from "@mui/material";
 import { Box, styled, Backdrop } from "@mui/material";
 
 namespace S {
@@ -28,6 +29,15 @@ namespace S {
       //backgroundColor: "white",
       borderRadius: "50%",
     },
+  }));
+
+  export const NoDataFound = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 500,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 }
 

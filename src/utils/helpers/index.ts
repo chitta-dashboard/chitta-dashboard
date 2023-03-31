@@ -1,6 +1,7 @@
 import moment from "moment/moment";
 import CryptoJS from "crypto-js";
 import { Buffer } from "buffer";
+import { Dispatch, SetStateAction } from "react";
 
 type datePropsType = string | number;
 
@@ -79,4 +80,10 @@ export const base64Encode = (data: string) => {
 
 export const randomIntBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const handleLoader = (setState: Dispatch<SetStateAction<boolean>>) => {
+  setTimeout(() => {
+    setState(false);
+  }, 3000);
 };
