@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import CeoDetailsCard from "./CeoDetailCard";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
@@ -8,13 +8,11 @@ import { useAuthContext } from "../../utils/context/auth";
 import { useFetch, useAdd } from "../../utils/hooks/query";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
-import { handleLoader } from "../../utils/helpers";
 
 const CeoDetails = () => {
   //state values
   const { addNotification } = useAuthContext();
   const [addModal, setAddModal] = useState(false);
-  const [isLoader, setIsLoader] = useState(true);
 
   //constants
   const {
@@ -38,13 +36,6 @@ const CeoDetails = () => {
     });
     addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addCeoDetails });
   };
-
-  useEffect(() => {
-    !formatChangeSuccess && handleLoader(setIsLoader);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formatChangeSuccess]);
-
   return (
     <>
       {formatChangeSuccess ? (
@@ -68,7 +59,7 @@ const CeoDetails = () => {
           <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </S.CeoDetailsContainer>
       ) : (
-        isLoader ? <Loader /> : <S.NoDataFound>No Data Found!</S.NoDataFound>
+        <Loader />
       )}
     </>
   );
