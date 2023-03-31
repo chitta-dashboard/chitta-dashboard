@@ -36,10 +36,10 @@ module.exports.importdb = async (req, res) => {
         status: true,
         message: "Db imported successfully.",
       });
-    } else return res.status(204).send({ status: false, message: "No content to import." });
+    } else return res.status(204).send({ status: false, error: "No content to import." });
   } catch (error) {
     console.log(error.toString());
-    res.status(400).send({ status: false, error });
+    res.status(400).send({ status: false, error: error.toString() });
   }
 };
 
@@ -47,9 +47,13 @@ module.exports.exportdb = async (req, res) => {
   try {
     if (fs.existsSync(localDbPath)) {
       const fileContent = fs.readFileSync(localDbPath);
+      const parsedFileContent = { ...JSON.parse(fileContent.toString()) };
+      parsedFileContent.notification = [];
+      const buffer = Buffer.from(JSON.stringify(parsedFileContent));
+
       const putObjectParams = {
         ...dbParams,
-        Body: fileContent,
+        Body: buffer,
         ContentType: "application/json",
       };
       // Use the S3 putObject command to upload the file to S3
@@ -62,15 +66,15 @@ module.exports.exportdb = async (req, res) => {
           });
         })
         .catch((error) => {
-          res.status(400).send({ status: false, error });
+          res.status(400).send({ status: false, error: error.toString() });
         });
     } else {
       return res.status(204).send({
         status: false,
-        message: "No content to export",
+        error: "No content to export",
       });
     }
   } catch (error) {
-    res.status(400).send({ status: false, error });
+    res.status(400).send({ status: false, error: error.toString() });
   }
 };
