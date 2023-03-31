@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
 import AddFarmersGroupModal from "../../components/modals/farmers-group-modal";
 import FarmersGroupTable from "../../components/tables/farmers-group-table";
@@ -9,7 +9,6 @@ import { FarmersGroup as FarmersGroupType, useFarmersGroupContext } from "../../
 import S from "./farmersGroup.styled";
 import Loader from "../../utils/loaders/tree-loader";
 import Toast from "../../utils/toast";
-import { handleLoader } from "../../utils/helpers";
 
 const FarmersGroup = () => {
   //state values
@@ -18,7 +17,6 @@ const FarmersGroup = () => {
   const [addModal, setAddModal] = useState(false);
   const [membersFilterPop, setMemberFilterPop] = useState<boolean>(false);
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
-  const [isLoader, setIsLoader] = useState(true);
 
   // constants
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
@@ -59,20 +57,10 @@ const FarmersGroup = () => {
     addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
   };
 
-  useEffect(() => {
-    !isSuccess && handleLoader(setIsLoader);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
-
   return (
     <>
       {!isSuccess ? (
-        isLoader ? (
-          <Loader />
-        ) : (
-          <S.NoDataFound>No Data Found!</S.NoDataFound>
-        )
+        <Loader />
       ) : (
         <S.FarmersGroupContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} popOverHandler={popOverHandler} />

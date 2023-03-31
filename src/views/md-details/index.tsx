@@ -12,7 +12,6 @@ import ConfirmationModal from "../../components/modals/confirmation-modal";
 import MdDetailsTable from "../../components/tables/md-details-table";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
-import { handleLoader } from "../../utils/helpers";
 
 const MdDetails = () => {
   //state values
@@ -22,7 +21,6 @@ const MdDetails = () => {
   const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
   const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
-  const [isLoader, setIsLoader] = useState(true);
 
   //constants
   const {
@@ -83,12 +81,6 @@ const MdDetails = () => {
     setFilteredFarmerDetails([...filteredFarmerData]);
   }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
 
-  useEffect(() => {
-    !farmerIsSuccess && handleLoader(setIsLoader);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [farmerIsSuccess]);
-
   const handleYesAction = () => {
     let farmerData: IMdDetails[] = [];
     const notifications: Notification[] = [];
@@ -136,11 +128,7 @@ const MdDetails = () => {
   return (
     <>
       {!farmerIsSuccess ? (
-        isLoader ? (
-          <Loader />
-        ) : (
-          <S.NoDataFound>No Data Found!</S.NoDataFound>
-        )
+        <Loader />
       ) : (
         <S.MdDetailsContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />

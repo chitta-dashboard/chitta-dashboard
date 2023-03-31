@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TablePageHeader from "../../components/common-table-page-header";
 import FoundersModal from "../../components/modals/founders-modal";
 import FoundersTable from "../../components/tables/founders-table";
@@ -10,19 +10,17 @@ import { useAdd, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import S from "./founders.styled";
 import Loader from "../../utils/loaders/tree-loader";
-import { handleLoader } from "../../utils/helpers";
 
 const Founders = () => {
   //state values
   const { addNotification } = useAuthContext();
   const { setSearchFilter } = useFounderContext();
   const [addModal, setAddModal] = useState(false);
-  const [isLoader, setIsLoader] = useState(true);
 
   //constants
   const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
-  
+
   //functions
   const addModalHandler = () => {
     setAddModal(!addModal);
@@ -45,20 +43,10 @@ const Founders = () => {
     });
   };
 
-  useEffect(() => {
-    !isSuccess && handleLoader(setIsLoader);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSuccess]);
-
   return (
     <>
       {!isSuccess ? (
-        isLoader ? (
-          <Loader />
-        ) : (
-          <S.NoDataFound>No Data Found!</S.NoDataFound>
-        )
+        <Loader />
       ) : (
         <S.foundersContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
