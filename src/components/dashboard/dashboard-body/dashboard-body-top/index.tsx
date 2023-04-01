@@ -25,12 +25,12 @@ const DashboardBodyTop = () => {
 
   const {
     formatChangeSuccess: farmerDetailsSuccess,
-    result: { data: farmerDetailsById },
+    result: { data: farmerDetailsById, isError: isFarmerDetailsError },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   const {
     formatChangeSuccess: farmerGroupSuccess,
-    result: { data: farmerGroupById },
+    result: { data: farmerGroupById, isError: isFarmerGroupError },
   } = useFetch(ENDPOINTS.farmerGroup);
 
   let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess ? Object.values(farmerDetailsById) : [];
@@ -65,6 +65,7 @@ const DashboardBodyTop = () => {
       icon: "farmer-count",
       navigate: "/farmers-details",
       isSuccess: farmerDetailsSuccess,
+      isError: isFarmerDetailsError,
     },
     {
       id: "babdd103-fd3c-4a90-87f7-21d1ef5a9106",
@@ -74,6 +75,7 @@ const DashboardBodyTop = () => {
       icon: "groups",
       navigate: "/farmers-group",
       isSuccess: farmerGroupSuccess,
+      isError: isFarmerGroupError,
     },
     {
       id: "ddc859fc-b75f-4b48-ba6d-e30aadc3e9ac",
@@ -82,6 +84,7 @@ const DashboardBodyTop = () => {
       footerName: "Farmer",
       icon: "male-farmer",
       isSuccess: farmerDetailsSuccess,
+      isError: isFarmerDetailsError,
     },
     {
       id: "0fbd3d99-be00-4415-8b90-0bd0f833ee77",
@@ -90,6 +93,7 @@ const DashboardBodyTop = () => {
       footerName: "Farmerette",
       icon: "female-farmer",
       isSuccess: farmerDetailsSuccess,
+      isError: isFarmerDetailsError,
     },
     {
       id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
@@ -102,6 +106,7 @@ const DashboardBodyTop = () => {
       footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
       isSuccess: farmerDetailsSuccess,
+      isError: isFarmerDetailsError,
     },
   ];
 
@@ -167,7 +172,7 @@ const DashboardBodyTop = () => {
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
-                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : !card.isError ? <BufferLoader /> : 0}</S.StatCardBody>
                 </S.StatCardHeaderLeft>
                 <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>

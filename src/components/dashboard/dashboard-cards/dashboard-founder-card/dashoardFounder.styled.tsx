@@ -54,7 +54,7 @@ export namespace S {
       color: theme.palette.text.primary,
     },
     ".slick-dots": {
-      position:"relative",
+      position: "relative",
       bottom: "0",
       button: {
         "&:before": {
@@ -223,6 +223,15 @@ export namespace S {
       WebkitBoxOrient: "vertical",
       WebkiLineClamp: "3",
     },
+  }));
+
+  export const NoDataFound = styled(Typography)(({ theme }) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 500,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
   }));
 }
 

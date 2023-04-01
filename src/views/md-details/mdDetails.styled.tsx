@@ -21,7 +21,7 @@ namespace S {
     fontWeight: 600,
   }));
 
-  export const NoDataFound = styled(Typography)(({ theme }: any) => ({
+  export const NoDataFound = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.primary,
     fontWeight: 500,
     display: "flex",

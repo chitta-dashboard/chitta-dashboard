@@ -21,7 +21,7 @@ const DashboardFounder = () => {
   //constants
   const {
     formatChangeSuccess,
-    result: { data: foundersById },
+    result: { data: foundersById, isError },
   } = useFetch(ENDPOINTS.founders);
   const { mutate: editFounder } = useEdit(ENDPOINTS.founders);
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
@@ -124,8 +124,10 @@ const DashboardFounder = () => {
               );
             })}
           </Slider>
-        ) : (
+        ) : !isError ? (
           <Loader />
+        ) : (
+          <S.NoDataFound>No Founders Found!</S.NoDataFound>
         )}
       </S.FounderWrapper>
 
