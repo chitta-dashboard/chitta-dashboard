@@ -20,7 +20,7 @@ const Founders = () => {
   //constants
   const {
     formatChangeSuccess: isSuccess,
-    result: { isError },
+    result: { data, isFetching },
   } = useFetch(ENDPOINTS.founders);
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
@@ -48,17 +48,15 @@ const Founders = () => {
 
   return (
     <>
-      {!isSuccess ? (
-        !isError ? (
-          <Loader />
-        ) : (
-          <S.NoDataFound>No Founders Found!</S.NoDataFound>
-        )
-      ) : (
+      {!isSuccess && isFetching ? (
+        <Loader />
+      ) : !isFetching && data && Boolean(Object.values(data).length) ? (
         <S.foundersContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <FoundersTable />
         </S.foundersContainer>
+      ) : (
+        <S.NoDataFound>No Founders Found!</S.NoDataFound>
       )}
       <FoundersModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>

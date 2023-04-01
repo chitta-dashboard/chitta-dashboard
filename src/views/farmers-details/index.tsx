@@ -37,7 +37,7 @@ const FarmersDetails = () => {
 
   const {
     formatChangeSuccess: isFarmerDetailsSuccess,
-    result: { isFetching, data: farmersDetailsById,isError },
+    result: { isFetching, data: farmersDetailsById, isError },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   const { mutate } = useAdd(ENDPOINTS.farmerDetails);
@@ -52,7 +52,7 @@ const FarmersDetails = () => {
     setFarmerBankDetail(true);
   };
 
-  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+  const farmersGroupData = farmersGroupById ? Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[])) : [];
   const addGroupMember = (id: string, group: string) => {
     const groupIndex = farmersGroupData.findIndex((list) => list.groupName === group);
     const newGroupMember = farmersGroupData[groupIndex];
@@ -130,9 +130,9 @@ const FarmersDetails = () => {
 
   return (
     <>
-      {isFetching ? (
-        <>{!isError ? <Loader /> : <S.NoDataFound>No Farmer Details Found!</S.NoDataFound>}</>
-      ) : (
+      {isFetching && !isFarmerDetailsSuccess ? (
+        <Loader />
+      ) : isFarmerDetailsSuccess && farmersDetailsById && Boolean(Object.values(farmersDetailsById).length) ? (
         <>
           <S.FarmersDetailsContainer>
             <FarmersDetailsTablePageHeader addModalHandler={addModalHandler} searchHandler={handleSearchInput} />
@@ -154,6 +154,8 @@ const FarmersDetails = () => {
             cb={addFarmerDetailHandler}
           />
         </>
+      ) : (
+        <S.NoDataFound>No Farmer Details Found!</S.NoDataFound>
       )}
     </>
   );
