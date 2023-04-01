@@ -149,7 +149,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
         successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
       });
     isFarmerInMd &&
       editFarmer({
@@ -158,7 +158,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
           editMdDetail({
             editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
             successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+            errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
           });
         },
       });
@@ -225,13 +225,13 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                               Toast({ message: "Md Edited Successfully", type: "success" });
                             },
                             errorCb: () => {
-                              Toast({ message: "Request failed! Please try again", type: "error" });
+                              Toast({ message: "Md updation request failed! Please try again", type: "error" });
                             },
                           });
                         }, 0);
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
@@ -247,7 +247,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         Toast({ message: "Md Edited Successfully", type: "success" });
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
@@ -263,17 +263,17 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         Toast({ message: "Md Edited Successfully", type: "success" });
                       },
                       errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
+                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
                 }
               },
-              errorCb: () => Toast({ message: "Request failed! Please try again oldid", type: "error" }),
+              errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
             });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Request failed! Please try again newid", type: "error" }),
+        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
       });
     }
     if (newId && !oldId) {
@@ -283,7 +283,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
           representativeOf: [...newFarmer.representativeOf, representativeOfNewFarmer],
         },
         successCb: () => {
-          Toast({ message: "Farmer Edited Successfully newid", type: "success" });
+          Toast({ message: "Farmer Edited Successfully", type: "success" });
           setTimeout(() => {
             isNewFarmerInMd &&
               editMdDetail({
@@ -292,15 +292,15 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
                 },
                 successCb: () => {
-                  Toast({ message: "Farmer Edited Successfully", type: "success" });
+                  Toast({ message: "Md Edited Successfully", type: "success" });
                 },
                 errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  Toast({ message: "Md updation request failed! Please try again", type: "error" });
                 },
               });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Request failed! Please try again newid", type: "error" }),
+        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
       });
     }
     if (!newId && oldId) {
@@ -319,15 +319,15 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   representativeOf: [...representativeOfOldFarmer],
                 },
                 successCb: () => {
-                  Toast({ message: "Farmer Edited Successfully", type: "success" });
+                  Toast({ message: "Md Edited Successfully", type: "success" });
                 },
                 errorCb: () => {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  Toast({ message: "Md updation request failed! Please try again", type: "error" });
                 },
               });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
       });
     }
   };
@@ -516,7 +516,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                           }, 0);
                         }
                       },
-                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                      errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
                     });
                   isFarmerInMd &&
                     editFarmer({
@@ -526,19 +526,20 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                           editedData: editData,
                           successCb: () => {
                             editData && removeGroupMember(user.id, editData.group, true);
-                            Toast({ message: "Farmer Edited Successfully", type: "success" });
+                            Toast({ message: "Md Edited Successfully", type: "success" });
                             if (farmerEditData && oldId !== newId) {
                               setTimeout(() => {
                                 HandleRepresentativeOf(farmerEditData as farmerDetail, oldId, newId);
                               }, 0);
                             }
                           },
-                          errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
+                          errorCb: () => Toast({ message: "Md updation request failed! Please try again", type: "error" }),
                         });
                       },
+                      errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
                     });
                 } else {
-                  Toast({ message: "Request failed! Please try again", type: "error" });
+                  Toast({ message: "Customer updation failed! Please try again", type: "error" });
                   loader({ openLoader: false });
                 }
               });
