@@ -12,7 +12,8 @@ const LoginBackground = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { name, regNo, cinNo } =
+    isSuccess && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : { name: null, regNo: null, cinNo: null };
 
   return (
     <>

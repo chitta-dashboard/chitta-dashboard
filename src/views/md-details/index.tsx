@@ -33,7 +33,7 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  let farmerKeys = farmersData ? Object.keys(farmerIsSuccess && farmersData) : [];
+  let farmerKeys = farmerIsSuccess && farmersData ? Object.keys(farmersData) : [];
 
   //functions
   const CustomMessage = () => {
@@ -67,13 +67,18 @@ const MdDetails = () => {
   };
 
   useEffect(() => {
-    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
-      if (farmerKeys.includes(item.farmerId as string)) {
-        let index = farmerKeys.indexOf(item.farmerId as string);
-        farmerKeys.splice(index, 1);
-      }
-      return null;
-    });
+    if (mdIsSuccess && farmerIsSuccess) {
+      mdData
+        ? Object.values(mdData as IMdDetails[])
+        : ([] as IMdDetails[]).forEach((item) => {
+            if (farmerKeys.includes(item.farmerId as string)) {
+              let index = farmerKeys.indexOf(item.farmerId as string);
+              farmerKeys.splice(index, 1);
+            }
+            return null;
+          });
+    }
+
     let filteredFarmerData: farmerDetail[] = [];
     farmerKeys.forEach((item) => {
       return filteredFarmerData.push(farmersData[item]);
@@ -118,7 +123,7 @@ const MdDetails = () => {
   };
   const handleNoAction = () => setIsConfirmModalOpen(false);
 
-  const addModalHandler = () => {
+  const addModalHandler: () => void = () => {
     setAddModal(!addModal);
     setSelectedKeys([]);
   };
@@ -129,13 +134,13 @@ const MdDetails = () => {
     <>
       {!mdIsSuccess && isFetchingMd ? (
         <Loader />
-      ) : mdIsSuccess && !Boolean(mdData.length) ? (
+      ) : mdIsSuccess && mdData ? (
         <S.MdDetailsContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <MdDetailsTable />
         </S.MdDetailsContainer>
       ) : (
-        <S.NoDataFound>No MD Found!</S.NoDataFound>
+        <S.NoDataFound>No MD Details Found!</S.NoDataFound>
       )}
       <AddMdDetailsModal
         openModal={addModal}

@@ -37,8 +37,8 @@ const Header = () => {
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
 
-  const { headerLogo: headerImage, name: titleName } =
-    isSuccessAdmin && Boolean(Object.values(adminDetails).length) ? Object.values(adminDetails as AdminFormInputs)[0] : ({} as AdminFormInputs);
+  const { headerLogo: headerImage = null, name: titleName = "" } =
+    isSuccessAdmin && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : {};
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
@@ -203,7 +203,7 @@ const Header = () => {
           )}
         </S.NavBar>
         <S.ActionsBox>
-          <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
+          <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && NotificationData ? Object.values(NotificationData).length : 0}>
             <Icon color={true} iconName={"notification1"} />
           </S.NotificationBadge>
           <S.webIcon onClick={popHandler}>three-dots</S.webIcon>

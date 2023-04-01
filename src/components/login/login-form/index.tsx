@@ -38,7 +38,7 @@ const LoginForm: FC = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { loginLogo: loginImage } = isSuccess && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : { loginLogo: null };
   const {
     register,
     handleSubmit,

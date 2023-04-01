@@ -20,6 +20,7 @@ export const useFetch = (endpoint: Endpoints, cb?: IOptionalCallback) => {
         if (res.status >= 200 && res.status < 400) {
           return res.json();
         }
+        return null;
       } catch (error) {
         // throw new Error(`${res.status}: ${res.statusText}`);
         console.log("Error : ", error);

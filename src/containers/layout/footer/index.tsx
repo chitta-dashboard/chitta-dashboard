@@ -12,8 +12,7 @@ const Footer: FC = () => {
   } = useFetch(ENDPOINTS.admin);
 
   //state values
-  const { regNo, cinNo } =
-    isSuccess && Boolean(Object.values(adminDetails).length) ? Object.values(adminDetails as AdminFormInputs)[0] : ({} as AdminFormInputs);
+  const { regNo, cinNo } = isSuccess && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : ({} as AdminFormInputs);
 
   return (
     <>

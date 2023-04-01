@@ -41,9 +41,7 @@ const CeoDetails = () => {
     <>
       {!formatChangeSuccess && isFetching ? (
         <Loader />
-      ) : formatChangeSuccess && !ceoDetails && !Boolean(ceoDetails && Object.values(ceoDetails).length) ? (
-        <S.NoDataFound>No CEO Details Found!</S.NoDataFound>
-      ) : (
+      ) : formatChangeSuccess && ceoDetails ? (
         <S.CeoDetailsContainer>
           {ceoDetails &&
             Object.values(ceoDetails).map((user: any) => {
@@ -64,6 +62,8 @@ const CeoDetails = () => {
           </S.CeoDetailAdd>
           <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </S.CeoDetailsContainer>
+      ) : (
+        <S.NoDataFound>No CEO Details Found!</S.NoDataFound>
       )}
     </>
   );
