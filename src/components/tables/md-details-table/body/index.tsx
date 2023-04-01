@@ -21,7 +21,7 @@ const Body = () => {
   const farmersGroupData = farmersGroupById ? Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[])) : [];
 
   //state values
-  const { searchFilter, sortFilter, currentPage, setPageCount } = useMdDetailsContext();
+  const { searchFilter, sortFilter, currentPage, setPageCount, setCurrentPage } = useMdDetailsContext();
   const [mdListSearch, setMdListSearch] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
   const [mdListSort, setMdListSort] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
   const [mdList, setMdList] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
@@ -76,6 +76,11 @@ const Body = () => {
   useEffect(() => {
     isMdSuccess && setMdList(mdListSort);
   }, [mdListSort, isMdSuccess]);
+
+  //to set current page of table while searching
+  useEffect(() => {
+    if (currentPage !== 1) setCurrentPage(1);
+  }, [searchFilter]);
 
   return (
     <>
