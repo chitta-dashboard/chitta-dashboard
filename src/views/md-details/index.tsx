@@ -25,7 +25,7 @@ const MdDetails = () => {
   //constants
   const {
     formatChangeSuccess: mdIsSuccess,
-    result: { data: mdData, isError },
+    result: { data: mdData, isFetching: isFetchingMd },
   } = useFetch(ENDPOINTS.mdDetails);
   const {
     formatChangeSuccess: farmerIsSuccess,
@@ -33,7 +33,7 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
+  let farmerKeys = farmersData ? Object.keys(farmerIsSuccess && farmersData) : [];
 
   //functions
   const CustomMessage = () => {
@@ -127,17 +127,15 @@ const MdDetails = () => {
 
   return (
     <>
-      {!farmerIsSuccess ? (
-        !isError ? (
-          <Loader />
-        ) : (
-          <S.NoDataFound>No MD Details Found!</S.NoDataFound>
-        )
-      ) : (
+      {!mdIsSuccess && isFetchingMd ? (
+        <Loader />
+      ) : mdIsSuccess && !Boolean(mdData && mdData.length) ? (
         <S.MdDetailsContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <MdDetailsTable />
         </S.MdDetailsContainer>
+      ) : (
+        <S.NoDataFound>No MD Found!</S.NoDataFound>
       )}
       <AddMdDetailsModal
         openModal={addModal}
