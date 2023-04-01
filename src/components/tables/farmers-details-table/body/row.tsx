@@ -198,12 +198,11 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       editFarmer({
         editedData: newFarmerData,
         successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
           setTimeout(() => {
             editFarmer({
               editedData: oldFarmerData,
               successCb: () => {
-                Toast({ message: "Farmer Edited Successfully", type: "success" });
+                !isNewFarmerInMd && !isOldFarmerInMd && Toast({ message: "Representative Updated Successfully", type: "success" });
 
                 if (isNewFarmerInMd && isOldFarmerInMd) {
                   setTimeout(() => {
@@ -213,8 +212,6 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
                       },
                       successCb: () => {
-                        Toast({ message: "Md Edited Successfully", type: "success" });
-
                         setTimeout(() => {
                           editMdDetail({
                             editedData: {
@@ -222,16 +219,16 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                               representativeOf: [...representativeOfOldFarmer],
                             },
                             successCb: () => {
-                              Toast({ message: "Md Edited Successfully", type: "success" });
+                              Toast({ message: "Representative Updated Successfully", type: "success" });
                             },
                             errorCb: () => {
-                              Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                              Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                             },
                           });
                         }, 0);
                       },
                       errorCb: () => {
-                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                        Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
@@ -244,10 +241,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
                       },
                       successCb: () => {
-                        Toast({ message: "Md Edited Successfully", type: "success" });
+                        Toast({ message: "Representative Updated Successfully", type: "success" });
                       },
                       errorCb: () => {
-                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                        Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
@@ -260,20 +257,20 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                         representativeOf: [...representativeOfOldFarmer],
                       },
                       successCb: () => {
-                        Toast({ message: "Md Edited Successfully", type: "success" });
+                        Toast({ message: "Representative Updated Successfully", type: "success" });
                       },
                       errorCb: () => {
-                        Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                        Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                       },
                     });
                   }, 0);
                 }
               },
-              errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
+              errorCb: () => Toast({ message: "Updating representative request failed! Please try again", type: "error" }),
             });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
+        errorCb: () => Toast({ message: "Updating representative request failed! Please try again", type: "error" }),
       });
     }
     if (newId && !oldId) {
@@ -283,7 +280,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
           representativeOf: [...newFarmer.representativeOf, representativeOfNewFarmer],
         },
         successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
+          !isNewFarmerInMd && Toast({ message: "Representative Updated Successfully", type: "success" });
           setTimeout(() => {
             isNewFarmerInMd &&
               editMdDetail({
@@ -292,15 +289,15 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   representativeOf: [...newMd.representativeOf, representativeOfNewFarmer],
                 },
                 successCb: () => {
-                  Toast({ message: "Md Edited Successfully", type: "success" });
+                  Toast({ message: "Representative Updated Successfully", type: "success" });
                 },
                 errorCb: () => {
-                  Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                  Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                 },
               });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
+        errorCb: () => Toast({ message: "Updating representative request failed! Please try again", type: "error" }),
       });
     }
     if (!newId && oldId) {
@@ -310,7 +307,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
           representativeOf: [...representativeOfOldFarmer],
         },
         successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
+          !isOldFarmerInMd && Toast({ message: "Representative Updated Successfully", type: "success" });
           setTimeout(() => {
             isOldFarmerInMd &&
               editMdDetail({
@@ -319,15 +316,15 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                   representativeOf: [...representativeOfOldFarmer],
                 },
                 successCb: () => {
-                  Toast({ message: "Md Edited Successfully", type: "success" });
+                  Toast({ message: "Representative Updated Successfully", type: "success" });
                 },
                 errorCb: () => {
-                  Toast({ message: "Md updation request failed! Please try again", type: "error" });
+                  Toast({ message: "Updating representative request failed! Please try again", type: "error" });
                 },
               });
           }, 0);
         },
-        errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
+        errorCb: () => Toast({ message: "Updating representative request failed! Please try again", type: "error" }),
       });
     }
   };
