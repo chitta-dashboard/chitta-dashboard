@@ -163,30 +163,30 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
                 farmerGroupEdit({
                   editedData: editData,
                   successCb: () => {
-                    Toast({ message: "Farmer group updated successfully.", type: "success" });
+                    !newFarmerDetails.length && Toast({ message: "Farmer group updated successfully.", type: "success" });
                     newFarmerDetails.length > 0 &&
                       editFarmer({
                         editedData: newFarmerDetails,
                         successCb: () => {
-                          Toast({ message: "Farmer Edited Successfully", type: "success" });
+                          !newResolutionDetails.length && Toast({ message: "Farmer group updated successfully.", type: "success" });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: " Updating farmer request failed! Please try again", type: "error" });
                         },
                       });
                     newResolutionDetails.length > 0 &&
                       resolutionEdit({
                         editedData: newResolutionDetails,
                         successCb: () => {
-                          Toast({ message: "Resolution Edited Successfully", type: "success" });
+                          Toast({ message: "Farmer group updated successfully.", type: "success" });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: "Updating resolution request failed! Please try again", type: "error" });
                         },
                       });
                   },
                   errorCb: () => {
-                    Toast({ message: "Request failed, please try again.", type: "error" });
+                    Toast({ message: "Updating farmer group request failed, please try again.", type: "error" });
                   },
                 });
                 setEditMode(false);

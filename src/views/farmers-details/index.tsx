@@ -83,7 +83,7 @@ const FarmersDetails = () => {
             data: newFarmerWithWallet[0] as IAddFarmersDetailsFormInput,
             successCb: () => {
               addNotification({ id: newFarmer.id as string, image: newFarmer.profile, message: Message(newFarmer.name).addFarmDetail });
-              Toast({ message: "Farmer Added Successfully", type: "success" });
+              !newFarmer.representative.id && Toast({ message: "Farmer Added Successfully", type: "success" });
               if (newFarmer.representative.id) HandleRepresentativeOf(newFarmer, newFarmer.representative.id);
             },
             errorCb: () => Toast({ message: "Farmer creation failed! Please try again", type: "error" }),
@@ -111,16 +111,16 @@ const FarmersDetails = () => {
     editFarmerDetail({
       editedData: targetFarmer,
       successCb: () => {
-        Toast({ message: "Farmer Edited Successfully", type: "success" });
+        !targetMd && Toast({ message: "Representative Updated Successfully.", type: "success" });
         if (targetMd) {
           editMdDetail({
             editedData: targetMd,
-            successCb: () => Toast({ message: "Md Edited Successfully", type: "success" }),
-            errorCb: () => Toast({ message: "Md updation request failed! Please try again", type: "error" }),
+            successCb: () => Toast({ message: "Representative Updated Successfully.", type: "success" }),
+            errorCb: () => Toast({ message: "Updating representative request failed! Please try again.", type: "error" }),
           });
         }
       },
-      errorCb: () => Toast({ message: "Farmer updation request failed! Please try again", type: "error" }),
+      errorCb: () => Toast({ message: "Updating representative request failed! Please try again.", type: "error" }),
     });
   };
 
