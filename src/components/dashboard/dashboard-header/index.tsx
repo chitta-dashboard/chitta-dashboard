@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import SearchBar from "../../common-components/search-bar";
 import SearchModal from "../../icon-modals/searchModal.tsx";
@@ -13,6 +13,8 @@ const DashboardHeader = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [image, setImage] = useState<string>("");
   const [imagePic, setImagePic] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));
+
+  useEffect(() => {}, [image, imagePic]);
 
   //constants
   const hiddenFileInput: any = useRef<HTMLInputElement>();

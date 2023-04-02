@@ -12,22 +12,24 @@ const Footer: FC = () => {
   } = useFetch(ENDPOINTS.admin);
 
   //state values
-  const { regNo, cinNo } = isSuccess && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : ({} as AdminFormInputs);
+  const { regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>
-      <S.Footer>
-        <S.InfoBar>
-          <S.InfoText>{isSuccess && regNo ? `REG No:${regNo}` : "REG No:139086"}</S.InfoText>
-          <S.InfoText>{isSuccess && cinNo ? `CIN:${cinNo}` : "CIN:UO1409TN2020PTC139086"}</S.InfoText>
-        </S.InfoBar>
-        <S.ArticleBar>
-          <S.ArticleText>About</S.ArticleText>
-          <S.ArticleText>Blog</S.ArticleText>
-          <S.ArticleText>Help</S.ArticleText>
-          <S.ArticleText>Terms & Conditions</S.ArticleText>
-        </S.ArticleBar>
-      </S.Footer>
+      {isSuccess && (
+        <S.Footer>
+          <S.InfoBar>
+            <S.InfoText>{regNo ? `REG No:${regNo}` : "REG No:139086"}</S.InfoText>
+            <S.InfoText>{cinNo ? `CIN:${cinNo}` : "CIN:UO1409TN2020PTC139086"}</S.InfoText>
+          </S.InfoBar>
+          <S.ArticleBar>
+            <S.ArticleText>About</S.ArticleText>
+            <S.ArticleText>Blog</S.ArticleText>
+            <S.ArticleText>Help</S.ArticleText>
+            <S.ArticleText>Terms & Conditions</S.ArticleText>
+          </S.ArticleBar>
+        </S.Footer>
+      )}
     </>
   );
 };

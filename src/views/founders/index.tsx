@@ -18,10 +18,7 @@ const Founders = () => {
   const [addModal, setAddModal] = useState(false);
 
   //constants
-  const {
-    formatChangeSuccess: isSuccess,
-    result: { data, isFetching },
-  } = useFetch(ENDPOINTS.founders);
+  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
   //functions
@@ -48,15 +45,13 @@ const Founders = () => {
 
   return (
     <>
-      {!isSuccess && isFetching ? (
+      {!isSuccess ? (
         <Loader />
-      ) : !isFetching && data && Boolean(Object.values(data).length) ? (
+      ) : (
         <S.foundersContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} />
           <FoundersTable />
         </S.foundersContainer>
-      ) : (
-        <S.NoDataFound>No Founders Found!</S.NoDataFound>
       )}
       <FoundersModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
     </>

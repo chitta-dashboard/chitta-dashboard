@@ -23,19 +23,12 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  let headerImage: string, titleName: string, regNo: number, cinNo: number;
-  if (isSuccess && adminDetails) {
-    let result = Object.values(adminDetails as AdminFormInputs)[0];
-    headerImage = result.headerLogo;
-    titleName = result.name;
-    regNo = result.regNO;
-    cinNo = result.cinNo;
-  }
+  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
-  return formatChangeSuccess && isSuccess && resolutions ? (
+  return formatChangeSuccess && isSuccess ? (
     <>
       {Object.values(resolutions as IResolutions)
         .filter((name) => name.id === resolutionId)

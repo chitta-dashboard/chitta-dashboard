@@ -22,10 +22,9 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
   //constants
   const {
     formatChangeSuccess,
-    result: { data: resolutionsObj, isFetching, isError },
+    result: { data: resolutionsObj, isError },
   } = useFetch(ENDPOINTS.resolutions, { errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error" }) });
-  const resolutions =
-    formatChangeSuccess && resolutionsObj ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
+  const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
   const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;
   const ResolutionFormPdf = useRef<HTMLDivElement>();
 
@@ -152,7 +151,7 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
       </S.ResolutionsTreeBox>
       {leafCount === 0 && <S.NodataMessage>No Data</S.NodataMessage>}
     </>
-  ) : !isError && isFetching ? (
+  ) : !isError ? (
     <Loader />
   ) : (
     <S.NodataMessage>Something wrong, cannot reach the server.</S.NodataMessage>

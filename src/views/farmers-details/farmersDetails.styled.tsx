@@ -1,4 +1,4 @@
-import { Box, styled, Backdrop, Typography } from "@mui/material";
+import { Box, styled, Backdrop } from "@mui/material";
 
 namespace S {
   export const FarmersDetailsContainer = styled(Box)(({ theme }) => ({
@@ -28,15 +28,6 @@ namespace S {
       //backgroundColor: "white",
       borderRadius: "50%",
     },
-  }));
-
-  export const NoDataFound = styled(Typography)(({ theme }) => ({
-    color: theme.palette.text.primary,
-    fontWeight: 500,
-    display: "flex",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "center",
   }));
 }
 

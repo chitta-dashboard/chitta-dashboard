@@ -15,16 +15,11 @@ export const useFetch = (endpoint: Endpoints, cb?: IOptionalCallback) => {
   const result = useQuery({
     queryKey: [`${endpoint}-fetch`],
     queryFn: async () => {
-      try {
-        const res = await fetch(`${process.env.REACT_APP_API_KEY}/${endpoint}`);
-        if (res.status >= 200 && res.status < 400) {
-          return res.json();
-        }
-        return null;
-      } catch (error) {
-        // throw new Error(`${res.status}: ${res.statusText}`);
-        console.log("Error : ", error);
+      const res = await fetch(`${process.env.REACT_APP_API_KEY}/${endpoint}`);
+      if (res.status >= 200 && res.status < 400) {
+        return res.json();
       }
+      throw new Error(`${res.status}: ${res.statusText}`);
     },
     cacheTime: Infinity, // do not change!
     staleTime: Infinity, // do not change!
