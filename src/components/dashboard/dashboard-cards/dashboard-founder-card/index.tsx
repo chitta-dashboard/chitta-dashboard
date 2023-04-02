@@ -21,7 +21,7 @@ const DashboardFounder = () => {
   //constants
   const {
     formatChangeSuccess,
-    result: { data: foundersById },
+    result: { data: foundersById, isFetching },
   } = useFetch(ENDPOINTS.founders);
   const { mutate: editFounder } = useEdit(ENDPOINTS.founders);
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
@@ -77,9 +77,13 @@ const DashboardFounder = () => {
             <i>expand-right</i>
           </Link>
         </CardHeader>
-        {formatChangeSuccess ? (
+        {!formatChangeSuccess && isFetching ? (
+          <Loader />
+        ) : !isFetching && !foundersById && !Boolean(foundersById && Object.values(foundersById).length) ? (
+          <S.NoDataFound>No Founders Found!</S.NoDataFound>
+        ) : (
           <Slider {...settings}>
-            {Object.values(foundersById as { [key: string]: Founders }).map((item) => {
+            {Object.values(foundersById ? (foundersById as { [key: string]: Founders }) : []).map((item) => {
               return (
                 <S.FounderCard key={item.id}>
                   <S.FounderImgContainer>
@@ -124,8 +128,6 @@ const DashboardFounder = () => {
               );
             })}
           </Slider>
-        ) : (
-          <Loader />
         )}
       </S.FounderWrapper>
 

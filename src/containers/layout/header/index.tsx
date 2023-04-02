@@ -9,7 +9,7 @@ import NotificationModal from "../../../components/modals/notification-modal";
 import PasswordModal from "../../../components/modals/password-modal";
 import Logo from "../../../assets/images/logo.svg";
 import Icon from "../../../components/icons";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios from "axios";
 import Toast from "../../../utils/toast";
 import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./header.styled";
@@ -32,9 +32,13 @@ const Header = () => {
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
+  const {
+    result: { data: NotificationData },
+    formatChangeSuccess: isSuccess,
+  } = useFetch(ENDPOINTS.notification);
 
-  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
+  const { headerLogo: headerImage = null, name: titleName = "" } =
+    isSuccessAdmin && adminDetails ? Object.values(adminDetails as AdminFormInputs)[0] : {};
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
@@ -44,7 +48,6 @@ const Header = () => {
   const isLg = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
-  const { data: NotificationData } = result;
 
   //functions
   const clearNotifyHandler = () => {
@@ -106,15 +109,15 @@ const Header = () => {
     loader({ openLoader: true, loaderText: `Importing DB` });
     axios
       .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/import`)
-      .then((response: AxiosResponse) => {
-        if (response.status === 200) {
+      .then((response) => {
+        if (response.status) {
           Toast({ message: "DB Imported successfully", type: "success" });
           loader({ openLoader: false });
           navigate(0);
         } else loader({ openLoader: false });
       })
-      .catch((error: AxiosError) => {
-        console.log(error.message);
+      .catch((error) => {
+        console.log(error.error);
         loader({ openLoader: false });
       });
   };
@@ -125,14 +128,14 @@ const Header = () => {
     loader({ openLoader: true, loaderText: `Exporting DB` });
     axios
       .get(`${process.env.REACT_APP_REMOTE_API_KEY}/dbjson/export`)
-      .then((response: AxiosResponse) => {
-        if (response.status === 200) {
+      .then((response) => {
+        if (response.status) {
           Toast({ message: "DB Exported successfully", type: "success" });
           loader({ openLoader: false });
         } else loader({ openLoader: false });
       })
-      .catch((error: AxiosError) => {
-        console.log(error);
+      .catch((error) => {
+        console.log(error.error);
         loader({ openLoader: false });
       });
   };
@@ -156,119 +159,115 @@ const Header = () => {
 
   return (
     <>
-      {isSuccessAdmin && (
-        <>
-          <S.Header>
-            <S.LogoBox>
-              <S.Logo src={headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
-              <S.LogoText>
-                {titleName ? (
-                  <>
-                    {titleName} உழவர் <br />
-                    உற்பத்தியாளர் நிறுவனம்
-                  </>
-                ) : (
-                  <>நெற்கதிர் உழவர் உற்பத்தியாளர் நிறுவனம்</>
-                )}
-              </S.LogoText>
-            </S.LogoBox>
-            <S.NavBar isOpen={navOpen}>
+      <S.Header>
+        <S.LogoBox>
+          <S.Logo src={isSuccessAdmin && headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+          <S.LogoText>
+            {isSuccessAdmin && titleName ? (
               <>
-                {isMd && (
-                  <>
-                    {isMd ? (
-                      <S.NavBarMenu>
-                        Menu <i onClick={() => setNavOpen(false)}>close</i>
-                      </S.NavBarMenu>
-                    ) : null}
-                    {ROUTES.map((route) => (
-                      <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
-                        <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
-                      </S.NavLink>
-                    ))}
-                  </>
-                )}
+                {titleName} உழவர் <br />
+                உற்பத்தியாளர் நிறுவனம்
               </>
-              {!isMd && (
-                <S.NavbarSlickContainer>
-                  <Slider {...settings}>
-                    {ROUTES.map((route) => (
-                      <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
-                        <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
-                      </S.NavLink>
-                    ))}
-                  </Slider>
-                </S.NavbarSlickContainer>
-              )}
-            </S.NavBar>
-            <S.ActionsBox>
-              <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
-                <Icon color={true} iconName={"notification1"} />
-              </S.NotificationBadge>
-              <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
-              <S.TabIcon>account</S.TabIcon>
-              <S.TabIcon onClick={logout}>logout</S.TabIcon>
-              {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
-            </S.ActionsBox>
-          </S.Header>
-          <S.Pop
-            open={!!anchorEl}
-            anchorEl={anchorEl}
-            onClose={popCloseHandler}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <S.Items>Account</S.Items>
-            <S.Items
-              onClick={() => {
-                setImportPasswordModal(true);
-              }}
-            >
-              Import DB
-            </S.Items>
-            <S.Items
-              onClick={() => {
-                setExportPasswordModal(true);
-              }}
-            >
-              Export DB
-            </S.Items>
-            <S.Items onClick={logout}>Logout</S.Items>
-          </S.Pop>
-          {open && (
-            <NotificationModal
-              open={open}
-              anchorEl={notification}
-              handleClose={notificationHandler}
-              clearNotifyHandler={clearNotifyHandler}
-              openLoader={openLoader}
-            />
+            ) : (
+              <>நெற்கதிர் உழவர் உற்பத்தியாளர் நிறுவனம் </>
+            )}
+          </S.LogoText>
+        </S.LogoBox>
+        <S.NavBar isOpen={navOpen}>
+          <>
+            {isMd && (
+              <>
+                {isMd ? (
+                  <S.NavBarMenu>
+                    Menu <i onClick={() => setNavOpen(false)}>close</i>
+                  </S.NavBarMenu>
+                ) : null}
+                {ROUTES.map((route) => (
+                  <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
+                    <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
+                  </S.NavLink>
+                ))}
+              </>
+            )}
+          </>
+          {!isMd && (
+            <S.NavbarSlickContainer>
+              <Slider {...settings}>
+                {ROUTES.map((route) => (
+                  <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
+                    <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
+                  </S.NavLink>
+                ))}
+              </Slider>
+            </S.NavbarSlickContainer>
           )}
-          {importPasswordModal && (
-            <PasswordModal
-              openModal={true}
-              handleClose={() => {
-                setImportPasswordModal(false);
-              }}
-              cb={handleImport}
-            />
-          )}
-          {exportPasswordModal && (
-            <PasswordModal
-              openModal={true}
-              handleClose={() => {
-                setExportPasswordModal(false);
-              }}
-              cb={handleExport}
-            />
-          )}
-        </>
+        </S.NavBar>
+        <S.ActionsBox>
+          <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && NotificationData ? Object.values(NotificationData).length : 0}>
+            <Icon color={true} iconName={"notification1"} />
+          </S.NotificationBadge>
+          <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
+          <S.TabIcon>account</S.TabIcon>
+          <S.TabIcon onClick={logout}>logout</S.TabIcon>
+          {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
+        </S.ActionsBox>
+      </S.Header>
+      <S.Pop
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={popCloseHandler}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <S.Items>Account</S.Items>
+        <S.Items
+          onClick={() => {
+            setImportPasswordModal(true);
+          }}
+        >
+          Import DB
+        </S.Items>
+        <S.Items
+          onClick={() => {
+            setExportPasswordModal(true);
+          }}
+        >
+          Export DB
+        </S.Items>
+        <S.Items onClick={logout}>Logout</S.Items>
+      </S.Pop>
+      {open && (
+        <NotificationModal
+          open={open}
+          anchorEl={notification}
+          handleClose={notificationHandler}
+          clearNotifyHandler={clearNotifyHandler}
+          openLoader={openLoader}
+        />
+      )}
+      {importPasswordModal && (
+        <PasswordModal
+          openModal={true}
+          handleClose={() => {
+            setImportPasswordModal(false);
+          }}
+          cb={handleImport}
+        />
+      )}
+      {exportPasswordModal && (
+        <PasswordModal
+          openModal={true}
+          handleClose={() => {
+            setExportPasswordModal(false);
+          }}
+          cb={handleExport}
+        />
       )}
     </>
   );

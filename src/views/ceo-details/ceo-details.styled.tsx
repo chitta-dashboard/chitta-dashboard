@@ -234,6 +234,15 @@ namespace S {
       color: theme.palette.text.white,
     },
   }));
+
+  export const NoDataFound = styled(Typography)(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 500,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
 }
 
 export default S;

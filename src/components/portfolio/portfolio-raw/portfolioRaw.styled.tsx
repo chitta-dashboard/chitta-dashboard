@@ -31,6 +31,15 @@ namespace S {
     color: theme.palette.text.secondaryLight,
     fontWeight: "500",
   }));
+
+  export const NoDataFound = styled(Typography)(({ theme }: any) => ({
+    color: theme.palette.text.primary,
+    fontWeight: 500,
+    display: "flex",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  }));
 }
 
 export default S;

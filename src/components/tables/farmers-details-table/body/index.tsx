@@ -18,7 +18,8 @@ const Body = () => {
   const [loader, setLoader] = useState<boolean>(false);
 
   //constants
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, setCurrentPage, currentPage, setPageCount, setFarmersIdToExport } =
+    useFarmerDetailsContext();
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -84,26 +85,31 @@ const Body = () => {
           : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
-  }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
+  }, [groupFilter, isSuccess, currentPage, farmersDetailsById, searchFilter, sortFilter]);
 
   useEffect(() => {
-    let result = isSuccess && Object.values(farmersListGroup).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let result = isSuccess && farmersListGroup.filter((farmer) => searchWord(farmer.name, searchFilter));
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
     let updatedData = isSuccess && [...result];
     isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
     setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length });
-  }, [searchFilter, farmersListGroup, isSuccess, sortFilter]);
+  }, [searchFilter, farmersListGroup, isSuccess, sortFilter, farmersDetailsById]);
+
+  //to set current page of table while searching
+  useEffect(() => {
+    if (currentPage !== 1) setCurrentPage(1);
+  }, [searchFilter]);
 
   useEffect(() => {
     isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
-  }, [farmersListSearch, sortFilter, isSuccess]);
+  }, [farmersListSearch, sortFilter, isSuccess, farmersDetailsById]);
 
   //farmer id to export farmers
   useEffect(() => {
     isSuccess && setFarmersList(farmersListSort);
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
     setFarmersIdToExport(farmersId);
-  }, [farmersListSort, isSuccess, exportFarmerId]);
+  }, [farmersListSort, isSuccess, exportFarmerId, farmersDetailsById]);
 
   //For tamil share holder certificate
   useEffect(() => {

@@ -25,16 +25,16 @@ const DashboardBodyTop = () => {
 
   const {
     formatChangeSuccess: farmerDetailsSuccess,
-    result: { data: farmerDetailsById },
+    result: { data: farmerDetailsById, isFetching: isFarmerDetailsFetching },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   const {
     formatChangeSuccess: farmerGroupSuccess,
-    result: { data: farmerGroupById },
+    result: { data: farmerGroupById, isFetching: isFarmerGroupFetching },
   } = useFetch(ENDPOINTS.farmerGroup);
 
-  let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess ? Object.values(farmerDetailsById) : [];
-  let farmerGroupByIdArray = farmerGroupSuccess ? Object.values(farmerGroupById) : [];
+  let farmerDetailsByIdArray: farmerDetail[] = farmerDetailsSuccess && farmerDetailsById ? Object.values(farmerDetailsById) : [];
+  let farmerGroupByIdArray = farmerGroupSuccess && farmerGroupById ? Object.values(farmerGroupById) : [];
 
   let totalFarmerCount = farmerDetailsByIdArray.length;
   let femaleFarmerCount = farmerDetailsByIdArray.filter((item) => item.sex === "FEMALE").length;
@@ -64,7 +64,9 @@ const DashboardBodyTop = () => {
       footerName: "Total Farmers",
       icon: "farmer-count",
       navigate: "/farmers-details",
+      isFetching: isFarmerDetailsFetching,
       isSuccess: farmerDetailsSuccess,
+      isError: farmerDetailsSuccess && !Boolean(farmerDetailsById && farmerDetailsById.length),
     },
     {
       id: "babdd103-fd3c-4a90-87f7-21d1ef5a9106",
@@ -73,7 +75,9 @@ const DashboardBodyTop = () => {
       footerName: "Group",
       icon: "groups",
       navigate: "/farmers-group",
+      isFetching: isFarmerGroupFetching,
       isSuccess: farmerGroupSuccess,
+      isError: farmerGroupSuccess && !Boolean(farmerGroupById && farmerGroupById.length),
     },
     {
       id: "ddc859fc-b75f-4b48-ba6d-e30aadc3e9ac",
@@ -81,7 +85,9 @@ const DashboardBodyTop = () => {
       bodyCount: `${totalFarmerCount - femaleFarmerCount}`,
       footerName: "Farmer",
       icon: "male-farmer",
+      isFetching: isFarmerDetailsFetching,
       isSuccess: farmerDetailsSuccess,
+      isError: farmerDetailsSuccess && !Boolean(farmerDetailsById && farmerDetailsById.length),
     },
     {
       id: "0fbd3d99-be00-4415-8b90-0bd0f833ee77",
@@ -89,7 +95,9 @@ const DashboardBodyTop = () => {
       bodyCount: `${femaleFarmerCount}`,
       footerName: "Farmerette",
       icon: "female-farmer",
+      isFetching: isFarmerDetailsFetching,
       isSuccess: farmerDetailsSuccess,
+      isError: farmerDetailsSuccess && !Boolean(farmerDetailsById && farmerDetailsById.length),
     },
     {
       id: "9eb5af43-f224-4434-9488-fddf4eb004dc",
@@ -101,7 +109,9 @@ const DashboardBodyTop = () => {
       }`,
       footerName: `Fields Size (${value["9eb5af43-f224-4434-9488-fddf4eb004dc"]})`,
       icon: "farmland",
+      isFetching: isFarmerDetailsFetching,
       isSuccess: farmerDetailsSuccess,
+      isError: !Boolean(farmerDetailsById && farmerDetailsById.length),
     },
   ];
 
@@ -167,7 +177,9 @@ const DashboardBodyTop = () => {
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
-                  <S.StatCardBody>{card.isSuccess ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
+                  <S.StatCardBody>
+                    {card.isSuccess && !card.isFetching ? card.bodyCount : card.isSuccess && !card.isError ? <BufferLoader /> : 0}
+                  </S.StatCardBody>
                 </S.StatCardHeaderLeft>
                 <S.StatCardHeaderRight>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>

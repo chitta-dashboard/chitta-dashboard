@@ -19,7 +19,10 @@ const FarmersGroup = () => {
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
 
   // constants
-  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data, isFetching },
+  } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const groupMembersFilter = [
     { id: "1", value: 1, label: "All" },
@@ -59,13 +62,15 @@ const FarmersGroup = () => {
 
   return (
     <>
-      {!isSuccess ? (
+      {!isSuccess && isFetching ? (
         <Loader />
-      ) : (
+      ) : isSuccess && data && Boolean(Object.values(data).length) ? (
         <S.FarmersGroupContainer>
           <TablePageHeader addModalHandler={addModalHandler} searchHandler={setSearchFilter} popOverHandler={popOverHandler} />
           <FarmersGroupTable />
         </S.FarmersGroupContainer>
+      ) : (
+        <S.NoDataFound>No Farmer Group Found!</S.NoDataFound>
       )}
       <AddFarmersGroupModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
 
