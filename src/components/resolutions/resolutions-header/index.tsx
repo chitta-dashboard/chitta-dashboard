@@ -29,7 +29,7 @@ const ResolutionsHeader: FC = () => {
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
-          {formatChangeSuccess && resolutions && Object.values(resolutions).length > 4 && tab === "tree" ? (
+          {formatChangeSuccess && Object.values(resolutions).length > 4 && tab === "tree" ? (
             <S.Button onClick={() => changeTab("list")}>View All</S.Button>
           ) : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>
