@@ -25202,16 +25202,7 @@
     }
   ],
   "notification": [
-    {
-      "id": "add_0159521f-de41-4691-963a-43e9567b29ae",
-      "image": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/undefined",
-      "message": "New ceo \"doss\" has been registered"
-    },
-    {
-      "id": "add_bf198e99-f08d-4914-a29d-b26808ce39c5",
-      "image": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/undefined",
-      "message": "New ceo \"doss\" has been registered"
-    }
+    
   ],
   "portfolio-raw": [
     {
