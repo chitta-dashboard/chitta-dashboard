@@ -2,7 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { farmerProfiles } from "../../../services/s3-client";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -38,6 +40,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   } = useFetch(ENDPOINTS.farmerDetails);
 
   //state values
+  const [imageUrl, setImageUrl] = useState("");
   const { farmerBankDetail } = useFarmerDetailsContext();
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
@@ -218,7 +221,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
-        profile: decryptText(farmerData?.profile) || placeHolderImg,
+        profile: farmerData?.profile || placeHolderImg,
         email: farmerData?.email,
         representative: {
           id: farmerData?.representative?.id,
@@ -303,8 +306,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    const encryptedBase64 = encryptText(compressedBase64);
+    const compressedFile = await imageCompressor(profileBlob);
+    // const encryptedBase64 = encryptText(compressedBase64);
+    const profileImg = await uploadProfile(compressedFile, "farmer");
+
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;
     const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
@@ -324,7 +329,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...form1Data,
       ...form2Data,
       ...editedData,
-      profile: encryptedBase64,
+      profile: profileImg,
       id: setId(newId),
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,

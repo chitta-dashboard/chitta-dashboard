@@ -2,7 +2,7 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
@@ -89,7 +89,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <S.NameStack>
           {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
+            <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />

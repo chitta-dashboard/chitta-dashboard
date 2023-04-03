@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { dateFormat, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { dateFormat, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";
 import ModalBody from "../../custom-modal/body";
@@ -53,7 +53,7 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         signature: "",
-        profile: decryptText(userData?.profile as string) || placeHolderImg,
+        profile: userData?.profile || placeHolderImg,
       });
     }
 

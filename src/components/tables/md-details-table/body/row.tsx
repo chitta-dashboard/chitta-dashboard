@@ -2,7 +2,7 @@ import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
@@ -118,7 +118,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         >
           {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={user.profile ? decryptText(user.profile) : placeHolderImg} />
+            <S.AvatarImg alt="User-img" src={user.profile ? user.profile : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
               <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />

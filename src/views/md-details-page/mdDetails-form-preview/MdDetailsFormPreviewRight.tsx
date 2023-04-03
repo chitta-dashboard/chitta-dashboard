@@ -33,7 +33,7 @@ const MdFormPreviewRight = () => {
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>
             <S.AbsoluteBackgroundImage>
-              <img src={pdfImage ? decryptText(pdfImage) : nerkathir_transparent_background} alt="backgroundimage" />
+              <img src={pdfImage ? pdfImage : nerkathir_transparent_background} alt="backgroundimage" />
             </S.AbsoluteBackgroundImage>
             <S.UserInfoRow>
               <S.UserInfoData1>பெயர்</S.UserInfoData1>

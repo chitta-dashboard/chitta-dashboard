@@ -3,7 +3,7 @@ import { S } from "./share-certificate.styled";
 import NerkathirLogo from "../../../assets/images/logo.svg";
 import { AdminFormInputs } from "../../admin-panel";
 import { useFetch } from "../../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS } from "../../../utils/constants";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 
 interface Props {
@@ -24,7 +24,7 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
       <S.CertificateMainContent>
         <S.CertificateHeader>
           <S.HeaderLogo>
-            <S.CustomLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogo} alt="nerkathir logo" />
+            <S.CustomLogo src={certificateImage ? certificateImage : NerkathirLogo} alt="nerkathir logo" />
           </S.HeaderLogo>
           <S.HeaderContent>
             <S.FormNo>Form No.SH1</S.FormNo>

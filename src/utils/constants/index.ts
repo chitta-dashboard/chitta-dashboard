@@ -10,6 +10,8 @@ import Ragi from "../../assets/images/ragi.png";
 import Blackgram from "../../assets/images/blackgram.png";
 import Sugarcane from "../../assets/images/sugarcane.png";
 import Cotton from "../../assets/images/cotton.png";
+window.Buffer = require("buffer").Buffer;
+
 
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));
@@ -37,14 +39,14 @@ export const fileValidation = (file: string) => {
 export const searchWord = (text: string, word: string) =>
   text
     ? text
-      .trim()
-      .toLowerCase()
-      .search(
-        word
-          .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
-          .trim()
-          .toLowerCase(),
-      ) >= 0
+        .trim()
+        .toLowerCase()
+        .search(
+          word
+            .replace(/[*+?^${}()|[\]\\]/g, "\\$&")
+            .trim()
+            .toLowerCase(),
+        ) >= 0
     : false;
 
 export const ASCENDING = "ascending";
@@ -59,8 +61,8 @@ export const sortObj = <ObjStructure>(
   options: {
     asDate?: boolean;
   } = {
-      asDate: false,
-    },
+    asDate: false,
+  },
 ) => {
   const arrClone = [...arr];
 
@@ -101,27 +103,26 @@ export const sortObj = <ObjStructure>(
   return arrClone;
 };
 
-export const sortFilterHandler = (sortFilter:string) => {
-    switch (sortFilter) {
-      case NORMAL:
-        return ASCENDING;
-      case ASCENDING:
-        return DESCENDING;
-      default:
-        return NORMAL;
-    }
-  };
-  export const sortIconHandler = (sortFilter:string) => {
-    switch (sortFilter) {
-      case NORMAL:
-        return "sort";
-      case ASCENDING:
-        return "ascending";
-      default:
-        return "descending";
-    }
-  };
-
+export const sortFilterHandler = (sortFilter: string) => {
+  switch (sortFilter) {
+    case NORMAL:
+      return ASCENDING;
+    case ASCENDING:
+      return DESCENDING;
+    default:
+      return NORMAL;
+  }
+};
+export const sortIconHandler = (sortFilter: string) => {
+  switch (sortFilter) {
+    case NORMAL:
+      return "sort";
+    case ASCENDING:
+      return "ascending";
+    default:
+      return "descending";
+  }
+};
 
 export const createTimeStamp = (dateTimeInString: string) => {
   const dateObj = new Date(dateTimeInString).toString().split(" ");
@@ -435,7 +436,7 @@ export const RouterDefaults = [
 ];
 
 export const imageCompressor = (file: any) =>
-  new Promise<string>((resolve) => {
+  new Promise<any>((resolve) => {
     Compress.imageFileResizer(
       file,
       300,
@@ -444,9 +445,9 @@ export const imageCompressor = (file: any) =>
       80,
       0,
       (uri) => {
-        resolve(uri as string);
+        resolve(uri as any);
       },
-      "base64",
+      "blob",
     );
   });
 

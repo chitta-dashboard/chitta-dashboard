@@ -9,7 +9,7 @@ import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
@@ -249,7 +249,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FormHeading>
             <S.FarmerImgContainer>
               <S.FarmerImg
-                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
+                src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : profilePlaceholder}
                 alt="profie-picture"
               />
               <S.EditBox

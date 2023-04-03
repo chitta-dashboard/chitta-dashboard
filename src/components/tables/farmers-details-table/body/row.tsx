@@ -2,7 +2,7 @@ import { useState, useRef, FC, useEffect, Ref } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -386,7 +386,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               }}
             >
               {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
-              <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
+              <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : placeHolderImg} />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
