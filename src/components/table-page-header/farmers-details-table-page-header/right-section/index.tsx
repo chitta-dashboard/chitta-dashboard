@@ -111,7 +111,7 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
         }, 0);
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Adding farmer group request failed, please try again.", type: "error" });
       },
     });
     addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
@@ -133,7 +133,7 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
       },
       errorCb: () => {
         Toast({
-          message: `Something went wrong, sorry for the inconvenience.`,
+          message: "Updating farmer request failed, please try again.",
           type: "error",
         });
       },
@@ -160,7 +160,7 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
         },
         errorCb: () => {
           Toast({
-            message: `Something went wrong, sorry for the inconvenience.`,
+            message: "Updating Md request failed, please try again.",
             type: "error",
           });
         },
@@ -202,7 +202,7 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
       },
       errorCb: () => {
         Toast({
-          message: `Something went wrong at farmerGroup, sorry for the inconvenience.`,
+          message: "Updating farmer group request failed, please try again.",
           type: "error",
         });
       },
