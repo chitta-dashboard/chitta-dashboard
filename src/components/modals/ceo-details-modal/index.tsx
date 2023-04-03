@@ -1,10 +1,10 @@
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { uploadProfile } from "../../../services/s3-client";
+import { FileNameFixer } from "../../../utils/helpers";
 import { dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-import { ceoProfiles } from "../../../services/s3-client";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -73,9 +73,8 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedFile = await imageCompressor(profileBlob);
-    // const encryptedBase64 = encryptText(compressedBase64);
-    const profileImg = await uploadProfile(compressedFile, "ceo");
-
+    const fixedFile = FileNameFixer(compressedFile, `NerkathirCeo_${data.name}_${data.phoneNumber}_${Date.now()}`);
+    const profileImg = await uploadProfile(fixedFile, "ceo");
     cb({
       description: data.description,
       dob: dateFormat(data.dob),

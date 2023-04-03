@@ -4,7 +4,7 @@ import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { farmerProfiles } from "../../../services/s3-client";
+import { FileNameFixer } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -307,8 +307,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedFile = await imageCompressor(profileBlob);
-    // const encryptedBase64 = encryptText(compressedBase64);
-    const profileImg = await uploadProfile(compressedFile, "farmer");
+    const fixedFile = FileNameFixer(compressedFile, `NerkathirFarmer_${form1Data?.name}_${form1Data?.phoneNumber}_${Date.now()}`);
+    const profileImg = await uploadProfile(fixedFile, "farmer");
 
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;

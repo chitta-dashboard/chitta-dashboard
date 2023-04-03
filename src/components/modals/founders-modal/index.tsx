@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { uploadProfile } from "../../../services/s3-client";
 import { createJoinDate, dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-import { founderProfiles } from "../../../services/s3-client";
+import { FileNameFixer } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -78,8 +78,8 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedFile = await imageCompressor(profileBlob);
-    // const encryptedImage = encryptText(compressedBase64);
-    const profileImg = await uploadProfile(compressedFile, "founder");
+    const fixedFile = FileNameFixer(compressedFile, `NerkathirFounder_${data.name}_${data.phoneNumber}_${Date.now()}`);
+    const profileImg = await uploadProfile(fixedFile, "founder");
 
     cb({
       description: data.description,
