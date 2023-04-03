@@ -8,7 +8,7 @@ import IconWrapper from "../../../utils/iconWrapper";
 import { useAuthContext } from "../../../utils/context/auth";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
@@ -229,7 +229,7 @@ const MdFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.MdImgContainer>
-              <S.MdImg src={user.profile ? decryptText(user.profile) : profilePlaceholder} alt="profie-picture" />
+              <S.MdImg src={user.profile ? user.profile : profilePlaceholder} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();

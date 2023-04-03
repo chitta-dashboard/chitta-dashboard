@@ -42,7 +42,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
           .map((user) => (
             <S.FarmersDetailsContent ref={ref} key={user.id}>
               <S.FarmersDetailsHeader>
-                <S.NerkathirLogo src={loginImage ? decryptText(loginImage) : nerkathirDefaultLogo} alt="nerkathir-logo" />
+                <S.NerkathirLogo src={loginImage ? loginImage : nerkathirDefaultLogo} alt="nerkathir-logo" />
                 <S.HeaderTextContainer>
                   <S.HeaderText1>
                     {titleName ? (
@@ -70,10 +70,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
                   </S.HeaderText2>
                 </S.HeaderTextContainer>
                 <S.UserImgContainer>
-                  <img
-                    src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
-                    alt="nerkathir-user"
-                  />
+                  <img src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : profilePlaceholder} alt="nerkathir-user" />
                 </S.UserImgContainer>
               </S.FarmersDetailsHeader>
               <S.HeaderTextBox>

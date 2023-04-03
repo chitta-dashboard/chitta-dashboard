@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Compress from "react-image-file-resizer";
+import { uploadProfile } from "../../services/s3-client";
 import { useEdit } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import AdminLogo from "../../components/admin-panel/admin-logo";
@@ -49,6 +50,7 @@ const AdminPanel = () => {
   //state values
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
+  // const [imageUrl, setImageUrl] = useState("");
 
   //constants
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
@@ -90,18 +92,14 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-
-    const headerLogo = await fileChangedHandler(imgObj, 94, 94);
-    const loginLogo = await fileChangedHandler(imgObj, 156, 156);
-    const certificateLogo = await fileChangedHandler(imgObj, 180, 180);
-    const pdfLogo = await fileChangedHandler(imgObj, 180, 180);
+    const profile = await uploadProfile(imgObj, "admin");
 
     const uploadData = {
       id: "admin_1",
-      headerLogo: headerLogo,
-      loginLogo: loginLogo,
-      certificateLogo: certificateLogo,
-      pdfLogo: pdfLogo,
+      headerLogo: profile,
+      loginLogo: profile,
+      certificateLogo: profile,
+      pdfLogo: profile,
       name: data.name,
       address: data.address,
       coordinatorAddress: data.coordinatorAddress,

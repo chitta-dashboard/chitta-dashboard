@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
@@ -93,7 +93,7 @@ const CeoDetailsCard = ({ user }: Props) => {
               <S.CeoDataLeft>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
-                    src={ceoDetailsById[user.id]?.profile ? decryptText(ceoDetailsById[user.id]?.profile) : placeHolderImg}
+                    src={ceoDetailsById[user.id]?.profile ? ceoDetailsById[user.id]?.profile : placeHolderImg}
                     alt="profile picture"
                   />
                   <S.EditBox

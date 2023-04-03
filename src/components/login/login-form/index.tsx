@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthContext } from "../../../utils/context/auth";
 import logo from "../../../assets/images/logo.png";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS } from "../../../utils/constants";
 import { useFetch } from "../../../utils/hooks/query";
 import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./loginForm.styled";
@@ -79,7 +79,7 @@ const LoginForm: FC = () => {
           <S.LoginContainer>
             <S.FormContainer>
               <S.ImageBox>
-                <S.LogoImage src={loginImage ? decryptText(loginImage) : logo} alt="Nerkathir" />{" "}
+                <S.LogoImage src={loginImage ? loginImage : logo} alt="Nerkathir" />{" "}
               </S.ImageBox>
 
               <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>

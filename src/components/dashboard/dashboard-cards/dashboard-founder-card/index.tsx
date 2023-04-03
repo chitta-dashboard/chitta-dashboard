@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
 import { Founders } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -83,7 +83,7 @@ const DashboardFounder = () => {
               return (
                 <S.FounderCard key={item.id}>
                   <S.FounderImgContainer>
-                    <S.FounderImg src={item.profile ? decryptText(item.profile) : placeHolderImg} alt="Founder-image" />
+                    <S.FounderImg src={item.profile ? item.profile : placeHolderImg} alt="Founder-image" />
                     <S.EditBox onClick={() => handleIconClick(item.id)}>
                       <S.EditIcon>edit</S.EditIcon>
                       <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />

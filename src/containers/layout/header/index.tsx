@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 import { Theme, useMediaQuery } from "@mui/material";
-import { decryptText, ENDPOINTS, ROUTES } from "../../../utils/constants";
+import { ENDPOINTS, ROUTES } from "../../../utils/constants";
 import { useAuthContext } from "../../../utils/context/auth";
 import { useFetch } from "../../../utils/hooks/query";
 import NotificationModal from "../../../components/modals/notification-modal";
@@ -160,7 +160,7 @@ const Header = () => {
         <>
           <S.Header>
             <S.LogoBox>
-              <S.Logo src={headerImage ? decryptText(headerImage) : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
+              <S.Logo src={headerImage ? headerImage : Logo} alt="Nerkathir Logo" onClick={() => navigate("/dashboard")} />
               <S.LogoText>
                 {titleName ? (
                   <>
