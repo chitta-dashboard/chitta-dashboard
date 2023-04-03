@@ -17,7 +17,7 @@ const CeoDetails = () => {
   //constants
   const {
     formatChangeSuccess,
-    result: { data: ceoDetails, isFetching },
+    result: { data: ceoDetails },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
 
@@ -36,21 +36,17 @@ const CeoDetails = () => {
     });
     addNotification({ id: `add_${data.id}`, image: data.profile, message: Message(data.name).addCeoDetails });
   };
-
   return (
     <>
-      {!formatChangeSuccess && isFetching ? (
-        <Loader />
-      ) : formatChangeSuccess && ceoDetails ? (
+      {formatChangeSuccess ? (
         <S.CeoDetailsContainer>
-          {ceoDetails &&
-            Object.values(ceoDetails).map((user: any) => {
-              return (
-                <Fragment key={user.id}>
-                  <CeoDetailsCard user={user} />
-                </Fragment>
-              );
-            })}
+          {Object.values(ceoDetails).map((user: any) => {
+            return (
+              <Fragment key={user.id}>
+                <CeoDetailsCard user={user} />
+              </Fragment>
+            );
+          })}
           <S.CeoDetailAdd>
             <S.CustomButton
               onClick={() => {
@@ -63,7 +59,7 @@ const CeoDetails = () => {
           <AddCeoDetailsModal openModal={addModal} handleClose={addModalHandler} cb={addDataHandler} />
         </S.CeoDetailsContainer>
       ) : (
-        <S.NoDataFound>No CEO Details Found!</S.NoDataFound>
+        <Loader />
       )}
     </>
   );

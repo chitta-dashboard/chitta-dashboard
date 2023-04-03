@@ -13,15 +13,15 @@ const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
   //constants
   const {
     formatChangeSuccess: isRawSuccess,
-    result: { data: rawProducts, isFetching },
+    result: { data: rawProducts },
   } = useFetch(ENDPOINTS.portfolioRaw);
 
   //state values
   const { searchFilter, setSearchFilter } = usePortfolioContext();
-  const [rawProductSearch, setRawProductSearchSearch] = useState<IPortfolioProduct[]>(isRawSuccess && rawProducts ? Object.values(rawProducts) : []);
+  const [rawProductSearch, setRawProductSearchSearch] = useState<IPortfolioProduct[]>(isRawSuccess ? Object.values(rawProducts) : []);
 
   useEffect(() => {
-    let result = Object.values(isRawSuccess && rawProducts ? (rawProducts as IPortfolioProduct[]) : []).filter((product) =>
+    let result = Object.values(isRawSuccess && (rawProducts as IPortfolioProduct[])).filter((product) =>
       searchWord(product.productName, searchFilter),
     );
     isRawSuccess && setRawProductSearchSearch(result);
@@ -36,19 +36,17 @@ const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
 
   return (
     <>
-      {!isRawSuccess && isFetching ? (
+      {!isRawSuccess ? (
         <S.LoaderWrapper>
           <Loader />
         </S.LoaderWrapper>
-      ) : isRawSuccess && rawProducts ? (
+      ) : (
         <S.PortfolioRaw>
           {rawProductSearch?.length === 0 && <S.NoDataMessage>No Raw Products.</S.NoDataMessage>}
           {rawProductSearch?.map((rawProduct) => (
             <ItemCard key={rawProduct.id} data={rawProduct}></ItemCard>
           ))}
         </S.PortfolioRaw>
-      ) : (
-        <S.NoDataMessage>No Raw Products.</S.NoDataMessage>
       )}
     </>
   );

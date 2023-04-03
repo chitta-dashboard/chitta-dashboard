@@ -13,14 +13,12 @@ const Footer = () => {
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
-  const mdKeys = mdDetailsById ? Object.keys(isSuccess && mdDetailsById) : [];
-
   //functions
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
   };
 
-  return mdKeys.length > 0 ? (
+  return Object.values(isSuccess && mdDetailsById).length > 0 ? (
     <FooterWrapper
       count={pageCount ? pageCount : 1}
       page={currentPage}

@@ -11,20 +11,20 @@ const Body = () => {
   // constants
   const {
     result: { data: mdDetailsById },
-    formatChangeSuccess: isMdSuccess,
+    formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.mdDetails);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
-  const farmersGroupData = farmersGroupById ? Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[])) : [];
+  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
 
   //state values
-  const { searchFilter, sortFilter, currentPage, setPageCount, setCurrentPage } = useMdDetailsContext();
-  const [mdListSearch, setMdListSearch] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
-  const [mdListSort, setMdListSort] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
-  const [mdList, setMdList] = useState<IMdDetails[]>(isMdSuccess && mdDetailsById ? Object.values(mdDetailsById) : []);
+  const { searchFilter, sortFilter, currentPage, setPageCount } = useMdDetailsContext();
+  const [mdListSearch, setMdListSearch] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
+  const [mdListSort, setMdListSort] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
+  const [mdList, setMdList] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
 
   //functions
   const removeGroupMember = (id: string, group: string) => {
@@ -63,24 +63,19 @@ const Body = () => {
   };
 
   useEffect(() => {
-    let result = isMdSuccess && mdDetailsById && Object.values(mdDetailsById as IMdDetails[]).filter((md) => searchWord(md.name, searchFilter));
-    let updatedData = isMdSuccess && result && [...result];
-    isMdSuccess && result && setMdListSearch(result.splice((currentPage - 1) * 6, 6));
+    let result = isSuccess && Object.values(mdDetailsById as IMdDetails[]).filter((md) => searchWord(md.name, searchFilter));
+    let updatedData = isSuccess && result && [...result];
+    isSuccess && result && setMdListSearch(result.splice((currentPage - 1) * 6, 6));
     result && updatedData && setPageCount({ pageCount: Math.ceil(result.length / 6) + 1, totalPageCount: updatedData.length });
-  }, [mdDetailsById, searchFilter, isMdSuccess, currentPage]);
+  }, [mdDetailsById, searchFilter, isSuccess, currentPage]);
 
   useEffect(() => {
-    isMdSuccess && setMdListSort(sortObj<IMdDetails>(mdListSearch, sortFilter, "name"));
-  }, [mdListSearch, sortFilter, isMdSuccess]);
+    isSuccess && setMdListSort(sortObj<IMdDetails>(mdListSearch, sortFilter, "name"));
+  }, [mdListSearch, sortFilter, isSuccess]);
 
   useEffect(() => {
-    isMdSuccess && setMdList(mdListSort);
-  }, [mdListSort, isMdSuccess]);
-
-  //to set current page of table while searching
-  useEffect(() => {
-    if (currentPage !== 1) setCurrentPage(1);
-  }, [searchFilter]);
+    isSuccess && setMdList(mdListSort);
+  }, [mdListSort, isSuccess]);
 
   return (
     <>
