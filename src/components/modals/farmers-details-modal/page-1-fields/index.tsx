@@ -229,6 +229,7 @@ const FormField: FC<CustomProps> = ({
           gridArea: "phn",
           placeholder: "கைபேசி எண்ணை உள்ளிடுக",
           unitstart: "+91",
+          disabled: editMode,
         }}
         helperText={isPhoneExist ? "Phone number already exist!" : ""}
         onChange={(e) => {
