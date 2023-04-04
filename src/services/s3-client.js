@@ -1,4 +1,4 @@
-import { uploadFile, putObject } from "react-s3";
+import { uploadFile, deleteFile, putObject } from "react-s3";
 window.Buffer = require("buffer").Buffer;
 
 const config = {
@@ -47,5 +47,14 @@ export const uploadProfile = async (image, key) => {
   } catch (e) {
     console.log(`Uploading ${key} profile failed.`, e);
     return "";
+  }
+};
+
+export const deleteProfile = async (imageName, key) => {
+  try {
+    const response = await deleteFile(imageName, s3Configs[key]);
+    console.log(response);
+  } catch (e) {
+    console.log(`Deleting ${key} profile failed.`, e);
   }
 };

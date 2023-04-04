@@ -19,6 +19,51 @@
       "qualification": "B.E.agri",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing consectetur adipisicing consectetur adipisicing elit consectetur adipisicing elit.  ",
       "joinedDate": "oct 20 1989"
+    },
+    {
+      "description": "1",
+      "dob": "01-04-2023",
+      "name": "1",
+      "phoneNumber": "1212121212",
+      "profile": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/NerkathirCeo_1_1212121212_1680544723171",
+      "qualification": "1",
+      "id": "b908438c-f9cb-4a3b-814f-5bd735532778"
+    },
+    {
+      "description": "descrition",
+      "dob": "01-04-2023",
+      "name": "vijay",
+      "phoneNumber": "1212121212",
+      "profile": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_undefined_1680589746494",
+      "qualification": "be",
+      "id": "0b93717d-5105-4385-9a31-6ac2ddbcacff"
+    },
+    {
+      "description": "dectcription",
+      "dob": "01-04-2023",
+      "name": "arun",
+      "phoneNumber": "1231231231",
+      "profile": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_7b6680a3-86c4-4795-a6bf-c0bcaad4b1ed_1680589926748",
+      "qualification": "agri",
+      "id": "Kkz1iwh"
+    },
+    {
+      "description": "1",
+      "dob": "01-04-2023",
+      "name": "female",
+      "phoneNumber": "2312312312",
+      "profile": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_d3355c4a-d8c8-4424-a0f1-ae6f3e883027_1680591833345",
+      "qualification": "1",
+      "id": "d3355c4a-d8c8-4424-a0f1-ae6f3e883027"
+    },
+    {
+      "description": "sa",
+      "dob": "30-04-2019",
+      "name": "Aditha Karikalan 2",
+      "phoneNumber": "1212121212",
+      "profile": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_a7399820-8455-4160-830e-72c3e07625a0_1680592282616",
+      "qualification": "be",
+      "id": "a7399820-8455-4160-830e-72c3e07625a0"
     }
   ],
   "farmerDetails": [
@@ -25202,7 +25247,21 @@
     }
   ],
   "notification": [
-    
+    {
+      "id": "add_0b93717d-5105-4385-9a31-6ac2ddbcacff",
+      "image": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_undefined_1680589746494",
+      "message": "New ceo \"vijay\" has been registered"
+    },
+    {
+      "id": "add_",
+      "image": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_7b6680a3-86c4-4795-a6bf-c0bcaad4b1ed_1680589926748",
+      "message": "New ceo \"arun\" has been registered"
+    },
+    {
+      "id": "add_d3355c4a-d8c8-4424-a0f1-ae6f3e883027",
+      "image": "https://nerkathir.s3.amazonaws.com/profiles/ceoProfiles/ceo_d3355c4a-d8c8-4424-a0f1-ae6f3e883027_1680591833345",
+      "message": "New ceo \"female\" has been registered"
+    }
   ],
   "portfolio-raw": [
     {
@@ -25440,10 +25499,10 @@
       "cinNo": "U01409TN2020PTC139086",
       "membershipPrefix": "12",
       "folioPrefix": "12",
-      "headerLogo":"",
-      "loginLogo":"",
-      "certificateLogo":"",
-      "pdfLogo":""
+      "headerLogo": "",
+      "loginLogo": "",
+      "certificateLogo": "",
+      "pdfLogo": ""
     }
   ]
 }

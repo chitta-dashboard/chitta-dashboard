@@ -12,6 +12,9 @@ import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
+import { deleteProfile } from "../../services/s3-client";
+import { extractProfileName } from "../../utils/helpers";
+import { s3ConfigTypes } from "../../types";
 
 type ceoDetail = {
   id: string;
@@ -175,16 +178,18 @@ const CeoDetailsCard = ({ user }: Props) => {
           openModal={true}
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={() => {
-            ceoDelete({
-              id: user.id,
-              successCb: () => {
-                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
-                Toast({ message: "CEO deleted successfully.", type: "success" });
-              },
-              errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
-              },
-            });
+            console.log("Deleting Id", extractProfileName(user.profile));
+            deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+            // ceoDelete({
+            //   id: user.id,
+            //   successCb: () => {
+            //     addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
+            //     Toast({ message: "CEO deleted successfully.", type: "success" });
+            //   },
+            //   errorCb: () => {
+            //     Toast({ message: "Request failed, please try again.", type: "error" });
+            //   },
+            // });
           }}
           deleteMessage={
             <span>

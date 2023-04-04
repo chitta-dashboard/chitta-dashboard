@@ -80,4 +80,11 @@ declare module "@mui/system" {
   }
 }
 
-export { };
+export {};
+
+export enum s3ConfigTypes {
+  farmer = "farmer",
+  ceo = "ceo",
+  admin = "admin",
+  founder = "founder",
+}
