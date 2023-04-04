@@ -81,7 +81,7 @@ export const randomIntBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const FileNameFixer = (blob: Blob, newName: string) => {
+export const generateProfileName = (blob: Blob, newName: string) => {
   const file = new File([blob], newName, { type: blob.type });
   return file;
 };
