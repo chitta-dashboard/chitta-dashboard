@@ -44,6 +44,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
   const [selectedKey, setSelectedKey] = useState<string[]>([]);
   const [isPhoneExist, setIsPhoneExist] = useState(false);
+  const [isAadharExist, setIsAadharExist] = useState(false);
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -257,6 +258,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
     if (isPhoneExist) return;
+    if (isAadharExist) return;
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
@@ -411,6 +413,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
               setSelectedKey={setSelectedKey}
               isPhoneExist={isPhoneExist}
               setIsPhoneExist={setIsPhoneExist}
+              isAadharExist={isAadharExist}
+              setIsAadharExist={setIsAadharExist}
             />
           </ModalBody>
           <ModalFooter>

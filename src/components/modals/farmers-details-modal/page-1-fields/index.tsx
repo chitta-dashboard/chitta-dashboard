@@ -26,6 +26,8 @@ interface CustomProps {
   setSelectedKey: Dispatch<SetStateAction<string[]>>;
   isPhoneExist: boolean;
   setIsPhoneExist: Dispatch<SetStateAction<boolean>>;
+  isAadharExist: boolean;
+  setIsAadharExist: Dispatch<SetStateAction<boolean>>;
 }
 
 const FormField: FC<CustomProps> = ({
@@ -42,6 +44,8 @@ const FormField: FC<CustomProps> = ({
   setSelectedKey,
   isPhoneExist,
   setIsPhoneExist,
+  isAadharExist,
+  setIsAadharExist,
 }) => {
   //state values
   const [surveyNo, setSurveyNo] = useState<{ [key: string]: string }>(getValues("surveyNo") as { [key: string]: string });
@@ -130,6 +134,14 @@ const FormField: FC<CustomProps> = ({
       (farmer) => farmer.phoneNumber === `+91${phoneNumber}`,
     );
     setIsPhoneExist(Boolean(isExist));
+  };
+
+  // Verify aadhar number already exist or not
+  const verifyAadharExist = (aadharNumber: string) => {
+    let isAadharNumberExist: farmerDetail[] = Object.values(farmerIsSuccess && (farmersData as farmerDetail[])).find(
+      (farmer) => farmer.addhaarNo === aadharNumber,
+    );
+    setIsAadharExist(Boolean(isAadharNumberExist));
   };
 
   return (
@@ -233,6 +245,10 @@ const FormField: FC<CustomProps> = ({
           maxLength: { value: 12, message: "12 digits expected" },
         }}
         options={{ label: "ஆதார் எண் *", gridArea: "adh", placeholder: "ஆதார் எண்ணை உள்ளிடுக" }}
+        helperText={isAadharExist ? "Aadhar number already exist!" : ""}
+        onChange={(e) => {
+          verifyAadharExist(e.target.value);
+        }}
       />
       <Input
         name="email"
