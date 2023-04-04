@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
 import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
@@ -33,6 +33,7 @@ interface Props {
 
 const CeoDetailsCard = ({ user }: Props) => {
   //state values
+  const [imageCache, setImageCache] = useState(0);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
@@ -87,6 +88,10 @@ const CeoDetailsCard = ({ user }: Props) => {
 
   const idCardModalHandler = () => setIdCard(!idCard);
 
+  useEffect(() => {
+    setImageCache(imageCache + 1);
+  }, [ceoDetailsById]);
+
   return (
     <>
       <S.CeoDetailCard>
@@ -96,6 +101,7 @@ const CeoDetailsCard = ({ user }: Props) => {
               <S.CeoDataLeft>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
+                    key={imageCache}
                     src={ceoDetailsById[user.id]?.profile ? ceoDetailsById[user.id]?.profile : placeHolderImg}
                     alt="profile picture"
                   />
