@@ -27,7 +27,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
     formatChangeSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
-  const { current: resolution } = useRef(formatChangeSuccess && resolutions[id]);
+  const { current: resolution } = useRef(formatChangeSuccess && resolutions ? resolutions[id] : {});
   const selectAllGroup = useWatch<IResolutionFormInput>({
     name: "selectAll",
     control,
@@ -90,10 +90,13 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
             name="groupName"
             defaultValue={editMode ? resolution.groupName : ""}
             control={control as unknown as Control}
+            helperText={farmersGroupById ? undefined : "No farmer group available!"}
             options={{
               label: "குழு *",
               gridArea: "grp",
-              selectOptions: Object.values(farmersGroupById as { [key: string]: FarmersGroup }).map((g) => [g.groupName, g.groupName]),
+              selectOptions: farmersGroupById
+                ? Object.values(farmersGroupById as { [key: string]: FarmersGroup }).map((g) => [g.groupName, g.groupName])
+                : [],
               specialOptions: ["~All Groups~"],
             }}
           />
