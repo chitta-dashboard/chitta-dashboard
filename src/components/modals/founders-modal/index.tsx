@@ -4,7 +4,8 @@ import { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { uploadProfile } from "../../../services/s3-client";
 import { createJoinDate, dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-import { FileNameFixer } from "../../../utils/helpers";
+import { generateProfileName } from "../../../utils/helpers";
+import { s3ConfigTypes } from "../../../types";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -76,10 +77,11 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   //functions
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
+    data = { ...data, id: editMode ? id : uuidv4() };
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedFile = await imageCompressor(profileBlob);
-    const fixedFile = FileNameFixer(compressedFile, `NerkathirFounder_${data.name}_${data.phoneNumber}_${Date.now()}`);
-    const profileImg = await uploadProfile(fixedFile, "founder");
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
+    const profileImg = await uploadProfile(namedProfile, "founder");
 
     cb({
       description: data.description,
@@ -88,7 +90,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
       phoneNumber: data.phoneNumber,
       profile: profileImg,
       qualification: data.qualification,
-      id: editMode ? id : uuidv4(),
+      id: data.id,
       joinDate: createJoinDate(),
     } as IAddFounderDetailsFormInput & { id: string });
     !editMode && reset();

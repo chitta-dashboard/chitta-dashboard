@@ -1,5 +1,4 @@
 import { uploadFile, deleteFile, putObject } from "react-s3";
-window.Buffer = require("buffer").Buffer;
 
 const config = {
   bucketName: process.env.REACT_APP_AWS_BUCKET_NAME ?? null,

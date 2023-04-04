@@ -2,8 +2,9 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { s3ConfigTypes } from "../../../types";
 import { uploadProfile } from "../../../services/s3-client";
-import { FileNameFixer } from "../../../utils/helpers";
+import { generateProfileName } from "../../../utils/helpers";
 import { dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -71,19 +72,20 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   //functions
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
+    data = { ...data, id: editMode ? id : uuidv4() };
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedFile = await imageCompressor(profileBlob);
-    const fixedFile = FileNameFixer(compressedFile, `NerkathirCeo_${data.name}_${data.phoneNumber}_${Date.now()}`);
-    const profileImg = await uploadProfile(fixedFile, "ceo");
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       joinedDate: data?.joinedDate,
       phoneNumber: data.phoneNumber,
-      profile: profileImg,
+      profile,
       qualification: data.qualification,
-      id: editMode ? id : uuidv4(),
+      id: data.id,
     } as IAddCEODetailsFormInput & { id: string });
     handleClose();
     reset();
