@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Compress from "react-image-file-resizer";
+import { FileNameFixer } from "../../utils/helpers";
 import { uploadProfile } from "../../services/s3-client";
 import { useEdit } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
@@ -92,7 +93,9 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-    const profile = await uploadProfile(imgObj, "admin");
+    const fixedFile = FileNameFixer(imgObj, `NerkathirAdmin_default_profile_${Date.now()}`);
+    const profile = await uploadProfile(fixedFile, "admin");
+    
 
     const uploadData = {
       id: "admin_1",
