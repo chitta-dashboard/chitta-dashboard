@@ -50,7 +50,7 @@ const ResolutionsHeader: FC = () => {
                 Toast({ message: "Resolution added successfully.", type: "success" });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Adding resolution request failed, please try again.", type: "error" });
               },
             })
           }

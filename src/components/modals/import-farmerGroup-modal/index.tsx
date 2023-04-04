@@ -90,21 +90,21 @@ const ImportFarmerGroupModal: FC<Props> = ({
       addFarmerGroup({
         data: newFarmerGroup,
         successCb: () => {
-          if (count && count > 1) {
-            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
-          } else {
-            Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
-          }
+          // if (count && count > 1) {
+          //   Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
+          // } else {
+          //   Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
+          // }
 
           addFarmerDetails({
             data: farmerDatas,
             successCb: () => {
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
-              if (count && count > 1) {
-                Toast({ type: "success", message: `All ${count} farmers created successfully` });
-              } else {
-                Toast({ type: "success", message: `${count} farmer created successfully` });
-              }
+              // if (count && count > 1) {
+              //   Toast({ type: "success", message: `All ${count} farmers created successfully` });
+              // } else {
+              //   Toast({ type: "success", message: `${count} farmer created successfully` });
+              // }
 
               updateFarmerGroup({
                 editedData: finalFarmerGroup,
@@ -121,17 +121,17 @@ const ImportFarmerGroupModal: FC<Props> = ({
                   handleCloseImport();
                 },
                 errorCb: () => {
-                  Toast({ type: "error", message: `error occured! please retry!` });
+                  Toast({ type: "error", message: `Updating Farmer group request failed! please try again!` });
                 },
               });
             },
             errorCb: () => {
-              Toast({ type: "error", message: `error occured! please retry!` });
+              Toast({ type: "error", message: `Adding Farmer request failed! please try again!` });
             },
           });
         },
         errorCb: () => {
-          Toast({ message: "Request failed, please try again.", type: "error" });
+          Toast({ message: "Adding Farmer group request failed! please try again!", type: "error" });
         },
       });
     }

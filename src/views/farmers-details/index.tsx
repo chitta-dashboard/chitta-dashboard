@@ -111,11 +111,11 @@ const FarmersDetails = () => {
     editFarmerDetail({
       editedData: targetFarmer,
       successCb: () => {
-        Toast({ message: "Farmer Edited Successfully", type: "success" });
+        !targetMd && Toast({ message: "Representative Updated Successfully.", type: "success" });
         if (targetMd) {
           editMdDetail({
             editedData: targetMd,
-            successCb: () => Toast({ message: "Md Edited Successfully", type: "success" }),
+            successCb: () => Toast({ message: "Representative Updated Successfully.", type: "success" }),
             errorCb: () => Toast({ message: "Md updation request failed! Please try again", type: "error" }),
           });
         }

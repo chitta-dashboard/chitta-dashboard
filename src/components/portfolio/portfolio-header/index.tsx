@@ -43,7 +43,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) =
         });
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Updating product request failed, please try again.", type: "error" });
       },
     });
   };

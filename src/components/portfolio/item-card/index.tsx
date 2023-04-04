@@ -216,7 +216,7 @@ const ItemCard: React.FC<IPortfolio> = ({ data }) => {
                 Toast({ message: "Product Edited successfully.", type: "success" });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Updating product request failed, please try again.", type: "error" });
               },
             });
             setEditModal(false);
