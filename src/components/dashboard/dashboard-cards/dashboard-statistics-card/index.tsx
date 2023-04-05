@@ -23,7 +23,7 @@ const DashboardStatCard = () => {
         <S.StatBody item sm={4} md={12} lg={12} xl={12}>
           <S.StatBodyFont>Cultivation</S.StatBodyFont>
           <S.StatBodyNumberFont>
-            77 <S.Span> Quintal </S.Span>{" "}
+            77 <S.StatSpecialText> Quintal </S.StatSpecialText>{" "}
           </S.StatBodyNumberFont>
         </S.StatBody>
       </S.StatBodyContainer>

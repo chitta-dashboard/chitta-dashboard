@@ -28,13 +28,16 @@ const Header = () => {
 
   //constants
   const {
-    formatChangeSuccess: isSuccessAdmin,
+    formatChangeSuccess: isAdminSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.notification);
+  const {
+    result: { data: NotificationData },
+    formatChangeSuccess: isNotificationSuccess,
+  } = useFetch(ENDPOINTS.notification);
 
-  const { headerLogo: headerImage, name: titleName } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
+  const { headerLogo: headerImage, name: titleName } = isAdminSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   const navigate = useNavigate();
   let { pathname } = useLocation();
@@ -44,7 +47,6 @@ const Header = () => {
   const isLg = useMediaQuery((theme: Theme) => theme.breakpoints.down("lg"));
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const open = Boolean(notification);
-  const { data: NotificationData } = result;
 
   //functions
   const clearNotifyHandler = () => {
@@ -138,13 +140,13 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (NotificationData && Object.values(NotificationData).length === 0) {
+    if (NotificationData && !Boolean(Object.values(NotificationData).length)) {
       setOpenLoader(false);
       setnotification(null);
     }
   }, [NotificationData]);
 
-  let settings = {
+  const sliderSettings = {
     arrows: true,
     infinite: false,
     speed: 500,
@@ -156,7 +158,7 @@ const Header = () => {
 
   return (
     <>
-      {isSuccessAdmin && (
+      {isAdminSuccess && (
         <>
           <S.Header>
             <S.LogoBox>
@@ -191,7 +193,7 @@ const Header = () => {
               </>
               {!isMd && (
                 <S.NavbarSlickContainer>
-                  <Slider {...settings}>
+                  <Slider {...sliderSettings}>
                     {ROUTES.map((route) => (
                       <S.NavLink to={`./${route.route}`} isActive={pathname === `${route.route}`} key={route.route}>
                         <S.NavLinkText isActive={pathname === `${route.route}`}>{route.name}</S.NavLinkText>
@@ -202,10 +204,10 @@ const Header = () => {
               )}
             </S.NavBar>
             <S.ActionsBox>
-              <S.NotificationBadge onClick={notificationClick} badgeContent={isSuccess && Object.values(NotificationData).length}>
+              <S.NotificationBadge onClick={notificationClick} badgeContent={isNotificationSuccess && Object.values(NotificationData).length}>
                 <Icon color={true} iconName={"notification1"} />
               </S.NotificationBadge>
-              <S.webIcon onClick={popHandler}>three-dots</S.webIcon>
+              <S.WebIcon onClick={popHandler}>three-dots</S.WebIcon>
               <S.TabIcon>account</S.TabIcon>
               <S.TabIcon onClick={logout}>logout</S.TabIcon>
               {isMd ? <S.MenuIcon onClick={() => setNavOpen(true)}>menu</S.MenuIcon> : null}
@@ -224,22 +226,22 @@ const Header = () => {
               horizontal: "right",
             }}
           >
-            <S.Items>Account</S.Items>
-            <S.Items
+            <S.PopItems>Account</S.PopItems>
+            <S.PopItems
               onClick={() => {
                 setImportPasswordModal(true);
               }}
             >
               Import DB
-            </S.Items>
-            <S.Items
+            </S.PopItems>
+            <S.PopItems
               onClick={() => {
                 setExportPasswordModal(true);
               }}
             >
               Export DB
-            </S.Items>
-            <S.Items onClick={logout}>Logout</S.Items>
+            </S.PopItems>
+            <S.PopItems onClick={logout}>Logout</S.PopItems>
           </S.Pop>
           {open && (
             <NotificationModal

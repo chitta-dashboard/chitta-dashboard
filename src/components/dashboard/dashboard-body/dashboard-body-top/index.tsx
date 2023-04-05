@@ -163,15 +163,15 @@ const DashboardBodyTop = () => {
               }}
             >
               <S.StatCardHeader>
-                <S.StatCardHeaderLeft>
+                <S.StatCardHeaderDetailsBox>
                   <S.StatCardIcon>
                     <Icon iconName={card.icon} />
                   </S.StatCardIcon>
                   <S.StatCardBody>{card.isSuccess ? card.bodyCount : <BufferLoader />}</S.StatCardBody>
-                </S.StatCardHeaderLeft>
-                <S.StatCardHeaderRight>
+                </S.StatCardHeaderDetailsBox>
+                <S.StatCardHeaderCountBox>
                   <S.StatCardHeaderCount neg={parseInt(card.headCount) < 0}>{card.headCount}</S.StatCardHeaderCount>
-                </S.StatCardHeaderRight>
+                </S.StatCardHeaderCountBox>
               </S.StatCardHeader>
               <S.StatCardFooter>
                 {card.footerName}

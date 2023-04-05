@@ -111,7 +111,7 @@ export namespace S {
     paddingBottom: "1rem",
   }));
 
-  export const FounderCardHeaderRight = styled(Box)(({ theme }) => ({
+  export const FounderCardHeaderContent = styled(Box)(({ theme }) => ({
     width: "100%",
     display: "flex",
     alignItems: "center",
@@ -210,7 +210,7 @@ export namespace S {
     },
   }));
 
-  export const FounderCardBodyLeft = styled(Typography)({
+  export const FounderCardBodyText = styled(Typography)({
     fontSize: "0.9rem",
     fontWeight: "500",
     margin: "0.3rem 0",

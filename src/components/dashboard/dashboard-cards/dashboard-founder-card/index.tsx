@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { ReactNode, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
@@ -20,13 +20,13 @@ const DashboardFounder = () => {
 
   //constants
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: founderSuccess,
     result: { data: foundersById },
   } = useFetch(ENDPOINTS.founders);
   const { mutate: editFounder } = useEdit(ENDPOINTS.founders);
   const hiddenFileInput: React.MutableRefObject<HTMLInputElement | any> = useRef<HTMLInputElement>();
 
-  let settings = {
+  let sliderSettings = {
     dots: true,
     arrows: true,
     infinite: true,
@@ -34,7 +34,7 @@ const DashboardFounder = () => {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    appendDots: (dots: any) => (
+    appendDots: (dots: ReactNode) => (
       <Box>
         <S.SliderDotUl> {dots} </S.SliderDotUl>
       </Box>
@@ -42,8 +42,8 @@ const DashboardFounder = () => {
   };
 
   //functions
-  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
+  const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
   };
@@ -77,8 +77,8 @@ const DashboardFounder = () => {
             <i>expand-right</i>
           </Link>
         </CardHeader>
-        {formatChangeSuccess ? (
-          <Slider {...settings}>
+        {founderSuccess ? (
+          <Slider {...sliderSettings}>
             {Object.values(foundersById as { [key: string]: Founders }).map((item) => {
               return (
                 <S.FounderCard key={item.id}>
@@ -91,7 +91,7 @@ const DashboardFounder = () => {
                   </S.FounderImgContainer>
                   <S.FounderCardContainer>
                     <S.FounderCardHeader>
-                      <S.FounderCardHeaderRight>
+                      <S.FounderCardHeaderContent>
                         <S.FounderCardHeaderDetails>
                           <Box>
                             <S.FounderName>{item.name}</S.FounderName>
@@ -101,17 +101,17 @@ const DashboardFounder = () => {
                         </S.FounderCardHeaderDetails>
                         <S.FounderCardBody>
                           <Box>
-                            <S.FounderCardBodyLeft>கைபேசி எண்: </S.FounderCardBodyLeft>
-                            <S.FounderCardBodyLeft>பிறந்த தேதி:</S.FounderCardBodyLeft>
-                            <S.FounderCardBodyLeft>தகுதி: </S.FounderCardBodyLeft>
+                            <S.FounderCardBodyText>கைபேசி எண்: </S.FounderCardBodyText>
+                            <S.FounderCardBodyText>பிறந்த தேதி:</S.FounderCardBodyText>
+                            <S.FounderCardBodyText>தகுதி: </S.FounderCardBodyText>
                           </Box>
                           <Box>
-                            <S.FounderCardBodyLeft>{item.phoneNumber}</S.FounderCardBodyLeft>
-                            <S.FounderCardBodyLeft>{item.dob}</S.FounderCardBodyLeft>
-                            <S.FounderCardBodyLeft>{item.qualification}</S.FounderCardBodyLeft>
+                            <S.FounderCardBodyText>{item.phoneNumber}</S.FounderCardBodyText>
+                            <S.FounderCardBodyText>{item.dob}</S.FounderCardBodyText>
+                            <S.FounderCardBodyText>{item.qualification}</S.FounderCardBodyText>
                           </Box>
                         </S.FounderCardBody>
-                      </S.FounderCardHeaderRight>
+                      </S.FounderCardHeaderContent>
                     </S.FounderCardHeader>
                   </S.FounderCardContainer>
                   <S.FounderCardDescContainer>

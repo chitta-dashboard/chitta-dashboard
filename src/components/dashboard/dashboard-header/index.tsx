@@ -11,13 +11,11 @@ import { S } from "./dashboardHeader.styled";
 const DashboardHeader = () => {
   //state values
   const [openSearch, setOpenSearch] = useState(false);
-  const [image, setImage] = useState<string>("");
-  const [imagePic, setImagePic] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));
-
-  useEffect(() => {}, [image, imagePic]);
+  const [uploadedImage, setUploadedImage] = useState<string>("");
+  const [dashboardImage, setDashboardImage] = useState<string>(JSON.parse(localStorage.getItem("local user") as string));
 
   //constants
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
   //functions
   const openSearchHandle = () => {
@@ -25,12 +23,12 @@ const DashboardHeader = () => {
   };
 
   const handleIconClick = () => {
-    hiddenFileInput && hiddenFileInput.current.click();
+    hiddenFileInput.current && hiddenFileInput.current.click();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
-    e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
+    e.target.files && isValid && setUploadedImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
   };
 
@@ -42,10 +40,10 @@ const DashboardHeader = () => {
 
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
-    setImagePic(image);
+    setDashboardImage(image);
     const LocalUserImage = await fileToBase64(image, true);
     localStorage.setItem("local user", JSON.stringify(LocalUserImage));
-    setImagePic(JSON.parse(localStorage.getItem("local user") as string));
+    setDashboardImage(JSON.parse(localStorage.getItem("local user") as string));
   };
 
   return (
@@ -54,7 +52,7 @@ const DashboardHeader = () => {
       <S.DashboardHeaderWrapper>
         <S.ProfileBox>
           <S.ImgContainer>
-            <S.DshboardImg src={imagePic ? imagePic : placeHolderImg} alt="user-profile" />
+            <S.DshboardImg src={dashboardImage ? dashboardImage : placeHolderImg} alt="user-profile" />
             <S.EditBox
               onClick={() => {
                 handleIconClick();
@@ -80,7 +78,7 @@ const DashboardHeader = () => {
           </S.SearchIconContainer>
         </S.HeaderIconsBox>
       </S.DashboardHeaderWrapper>
-      {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
+      {uploadedImage && <ImagePreview image={uploadedImage} setImage={setUploadedImage} handleCroppedImage={handleCroppedImage} />}
     </>
   );
 };

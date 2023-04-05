@@ -13,10 +13,8 @@ const Dashboard = () => {
           <DashboardBodyTop />
         </S.DashBoardStatisticsWrapper>
         <S.DashBoardBottom container>
-          {/* <DashboardStatCard /> */}
           <DashboardSummaryCard />
           <DashboardFounder />
-          {/* <DashboardNotificationCard /> */}
         </S.DashBoardBottom>
       </S.DashBoardBodyWrapper>
     </S.DashBoardContainer>

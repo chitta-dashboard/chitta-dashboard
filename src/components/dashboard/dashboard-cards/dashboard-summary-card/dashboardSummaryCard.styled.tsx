@@ -18,16 +18,6 @@ export namespace S {
       padding: "2.5rem",
     },
   }));
-
-  export const SummaryHeader = styled(Box)(({ theme }: any) => ({
-    display: "flex",
-    justifyContent: "space-between",
-    width: "100%",
-    color: theme.palette.primary.light,
-    fontWeight: "500",
-    fontSize: "1.1rem",
-    marginBottom: "0.3rem",
-  }));
 }
 
 export default S;

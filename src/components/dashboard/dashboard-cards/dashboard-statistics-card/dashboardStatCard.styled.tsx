@@ -41,7 +41,7 @@ export namespace S {
     marginTop: "0.3rem",
   }));
 
-  export const Span = styled("span")({
+  export const StatSpecialText = styled("span")({
     fontSize: "1.1rem",
   });
 }

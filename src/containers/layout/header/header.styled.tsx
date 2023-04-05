@@ -181,7 +181,7 @@ namespace S {
     },
   }));
 
-  export const webIcon = styled("i")(({ theme }) => ({
+  export const WebIcon = styled("i")(({ theme }) => ({
     fontSize: "1rem",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -235,7 +235,7 @@ namespace S {
     margin: "0.6rem -0.6rem",
   }));
 
-  export const Items = styled(Typography)(({ theme }) => ({
+  export const PopItems = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0.6rem 2rem",
     borderBottom: `0.1rem solid ${theme.palette.addAlpha(theme.palette.border.secondary, 0.1)}`,

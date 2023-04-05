@@ -87,12 +87,12 @@ export namespace S {
     alignItems: "center",
   });
 
-  export const StatCardHeaderLeft = styled(Box)({
+  export const StatCardHeaderDetailsBox = styled(Box)({
     display: "flex",
     alignItems: "center",
   });
 
-  export const StatCardHeaderRight = styled(Box)({
+  export const StatCardHeaderCountBox = styled(Box)({
     display: "flex",
     alignItems: "center",
   });

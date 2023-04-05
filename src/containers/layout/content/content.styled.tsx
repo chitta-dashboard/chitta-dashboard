@@ -1,4 +1,4 @@
-import { Box, Theme, styled } from "@mui/material";
+import { Box, styled } from "@mui/material";
 
 namespace S {
   export const ContentBox = styled(Box)(({ theme }) => ({

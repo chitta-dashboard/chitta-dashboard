@@ -7,16 +7,16 @@ import S from "./footer.styled";
 const Footer: FC = () => {
   //constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isAdminSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
   //state values
-  const { regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { regNo, cinNo } = isAdminSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>
-      {isSuccess && (
+      {isAdminSuccess && (
         <S.Footer>
           <S.InfoBar>
             <S.InfoText>{regNo ? `REG No:${regNo}` : "REG No:139086"}</S.InfoText>
