@@ -21,7 +21,14 @@ interface MdDetailsRowProps {
   removeGroupMember: (id: string, group: string) => void;
 }
 
-const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
+const MdDetailsRow: FC<MdDetailsRowProps> = (props) => {
+  //constants
+  const { user, removeGroupMember } = props;
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
+
   //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
   const { addNotification } = useAuthContext();
@@ -32,12 +39,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
-
-  //constants
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
-  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
 
   //functions
   // Tab IconModal Open & Close Handler
@@ -61,8 +62,8 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   // confirm Modal Handler
   const confirmModalHandler = () => setConfirmModal(!confirmModal);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
 
     return false;
@@ -74,7 +75,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     element.value = "";
   };
 
-  const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
+  const handleIconClick = () => hiddenFileInput.current && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -99,6 +100,8 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
 
   useEffect(() => {
     setFarmerBankDetail(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

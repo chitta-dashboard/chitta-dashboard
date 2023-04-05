@@ -48,7 +48,7 @@ namespace S {
     },
   }));
 
-  export const CeoDataLeft = styled(Box)({
+  export const CeoDataProfileContainer = styled(Box)({
     display: "flex",
     alignItems: "center",
     gap: "0.5rem",
@@ -154,11 +154,11 @@ namespace S {
     },
   }));
 
-  export const CeoInfo = styled(CeoInfoLeft)(({ theme }: any) => ({
+  export const CeoInfo = styled(CeoInfoLeft)(() => ({
     width: "auto",
   }));
 
-  export const CeoDataRight = styled(CeoDataLeft)(({ theme }: any) => ({
+  export const CeoDataDetailsContainer = styled(CeoDataProfileContainer)(({ theme }: any) => ({
     justifyContent: "space-between",
     gap: "2rem",
     height: "100%",

@@ -7,10 +7,13 @@ interface CustomProps {
   generateFunction: () => void;
 }
 
-const ShareDetailFooter: FC<CustomProps> = ({ handleClose, generateFunction }) => {
+const ShareDetailFooter: FC<CustomProps> = (props) => {
+  //constants
+  const { handleClose, generateFunction } = props;
+
   //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
-  
+
   return (
     <S.FarmerBankDetailFooterContainer>
       <S.CustomButton

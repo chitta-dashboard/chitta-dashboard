@@ -40,21 +40,20 @@ const CeoDetailsCard = ({ user }: Props) => {
 
   //constants
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: ceoDetailsSuccess,
     result: { data: ceoDetailsById },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoEdit } = useEdit(ENDPOINTS.ceo);
   const { mutate: ceoDelete } = useDelete(ENDPOINTS.ceo);
-  const { mutate: editCeoDetail } = useEdit(ENDPOINTS.ceo);
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
 
   // functions
   const handleIconClick = () => {
-    hiddenFileInput && hiddenFileInput.current.click();
+    hiddenFileInput.current && hiddenFileInput.current.click();
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
   };
@@ -66,12 +65,13 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
+    const profileResult = await fetch(image);
+    const profileBlob = await profileResult.blob();
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     let result = ceoDetailsById[user.id];
     const encryptedBase64 = encryptText(compressedBase64);
-    editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
+    ceoEdit({ editedData: { ...result, profile: encryptedBase64 } });
   };
 
   const addModalHandler = () => {
@@ -87,10 +87,10 @@ const CeoDetailsCard = ({ user }: Props) => {
   return (
     <>
       <S.CeoDetailCard>
-        {formatChangeSuccess ? (
+        {ceoDetailsSuccess ? (
           <>
             <S.CeoDetailData>
-              <S.CeoDataLeft>
+              <S.CeoDataProfileContainer>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
                     src={ceoDetailsById[user.id]?.profile ? decryptText(ceoDetailsById[user.id]?.profile) : placeHolderImg}
@@ -110,8 +110,8 @@ const CeoDetailsCard = ({ user }: Props) => {
                   <S.CeoAge>Age : {calculateAge(user.dob)}</S.CeoAge>
                   <S.CeoJoinedDate>{user.joinedDate}</S.CeoJoinedDate>
                 </S.CeoData>
-              </S.CeoDataLeft>
-              <S.CeoDataRight>
+              </S.CeoDataProfileContainer>
+              <S.CeoDataDetailsContainer>
                 <S.CeoData>
                   <S.CeoInfoLeft>கைபேசி எண்: </S.CeoInfoLeft>
                   <S.CeoInfoLeft>பிறந்த தேதி:</S.CeoInfoLeft>
@@ -125,7 +125,7 @@ const CeoDetailsCard = ({ user }: Props) => {
                     {user.qualification.length > 14 ? "..." : ""}
                   </S.CeoInfo>
                 </S.CeoData>
-              </S.CeoDataRight>
+              </S.CeoDataDetailsContainer>
             </S.CeoDetailData>
             <S.CeoDetailDescription cardexpand={cardExpand.toString()}>
               {cardExpand ? (

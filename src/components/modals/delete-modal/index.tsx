@@ -13,7 +13,10 @@ interface CustomProps {
   deleteMessage?: JSX.Element;
 }
 
-const DeleteModal: FC<CustomProps> = ({ openModal, handleClose, handleDelete, deleteMessage }) => {
+const DeleteModal: FC<CustomProps> = (props) => {
+  //constants
+  const { openModal, handleClose, handleDelete, deleteMessage } = props;
+
   return (
     <CustomModal openModal={openModal} handleClose={handleClose}>
       <ModalHeader

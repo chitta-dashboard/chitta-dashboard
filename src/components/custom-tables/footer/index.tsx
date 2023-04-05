@@ -10,7 +10,10 @@ interface PageHandlerProps {
   handlePageCount?: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const FooterWrapper: FC<PageHandlerProps> = ({ count, page, totalCount, rowsPerPage, handlePageCount }) => {
+const FooterWrapper: FC<PageHandlerProps> = (props) => {
+  //constants
+  const { count, page, totalCount, rowsPerPage, handlePageCount } = props;
+
   return (
     <S.Footer>
       <TableRow>

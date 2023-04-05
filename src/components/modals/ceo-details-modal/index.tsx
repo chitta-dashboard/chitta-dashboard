@@ -20,10 +20,13 @@ interface CustomProps {
   id?: string;
 }
 
-const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+const CeoDetailsModal: FC<CustomProps> = (props) => {
   //constants
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.ceo);
-  const { data: ceoDetailsById } = result;
+  const { openModal, handleClose, cb, editMode = false, id = "" } = props;
+  const {
+    formatChangeSuccess: isCeoDetailsSuccess,
+    result: { data: ceoDetailsById },
+  } = useFetch(ENDPOINTS.ceo);
   const { handleSubmit, reset, clearErrors, unregister, setValue, getValues, watch, control: formControl } = useForm<IAddCEODetailsFormInput>({});
 
   // enabling submit button
@@ -35,13 +38,12 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   const dobEvent = watch("dob");
   const descriptionEvent = watch("description");
   const profileEvent = watch("profile");
+  const isBtnDisable = nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && descriptionEvent && profileEvent;
 
-  if (nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && descriptionEvent && profileEvent) {
-    enableButton = false;
-  }
+  if (isBtnDisable) enableButton = false;
 
   useEffect(() => {
-    if (editMode && isSuccess) {
+    if (editMode && isCeoDetailsSuccess) {
       let userData = id && ceoDetailsById[id];
       reset({
         name: userData?.name as string,
@@ -68,7 +70,12 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
   // }, [editMode, id]);
 
   //functions
-  const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
+  interface ISubmitData extends IAddCEODetailsFormInput {
+    id?: string;
+  }
+  type submitType = (data: ISubmitData) => Promise<void>;
+  
+  const onSubmit: submitType = async (data) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);

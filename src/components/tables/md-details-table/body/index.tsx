@@ -11,8 +11,9 @@ const Body = () => {
   // constants
   const {
     result: { data: mdDetailsById },
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isMdDetailsSuccess,
   } = useFetch(ENDPOINTS.mdDetails);
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -22,9 +23,9 @@ const Body = () => {
 
   //state values
   const { searchFilter, sortFilter, currentPage, setPageCount } = useMdDetailsContext();
-  const [mdListSearch, setMdListSearch] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
-  const [mdListSort, setMdListSort] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
-  const [mdList, setMdList] = useState<IMdDetails[]>(isSuccess ? Object.values(mdDetailsById) : []);
+  const [mdListSearch, setMdListSearch] = useState<IMdDetails[]>(isMdDetailsSuccess ? Object.values(mdDetailsById) : []);
+  const [mdListSort, setMdListSort] = useState<IMdDetails[]>(isMdDetailsSuccess ? Object.values(mdDetailsById) : []);
+  const [mdList, setMdList] = useState<IMdDetails[]>(isMdDetailsSuccess ? Object.values(mdDetailsById) : []);
 
   //functions
   const removeGroupMember = (id: string, group: string) => {
@@ -63,19 +64,21 @@ const Body = () => {
   };
 
   useEffect(() => {
-    let result = isSuccess && Object.values(mdDetailsById as IMdDetails[]).filter((md) => searchWord(md.name, searchFilter));
-    let updatedData = isSuccess && result && [...result];
-    isSuccess && result && setMdListSearch(result.splice((currentPage - 1) * 6, 6));
+    let result = isMdDetailsSuccess && Object.values(mdDetailsById as IMdDetails[]).filter((md) => searchWord(md.name, searchFilter));
+    let updatedData = isMdDetailsSuccess && result && [...result];
+    isMdDetailsSuccess && result && setMdListSearch(result.splice((currentPage - 1) * 6, 6));
     result && updatedData && setPageCount({ pageCount: Math.ceil(result.length / 6) + 1, totalPageCount: updatedData.length });
-  }, [mdDetailsById, searchFilter, isSuccess, currentPage]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mdDetailsById, searchFilter, isMdDetailsSuccess, currentPage]);
 
   useEffect(() => {
-    isSuccess && setMdListSort(sortObj<IMdDetails>(mdListSearch, sortFilter, "name"));
-  }, [mdListSearch, sortFilter, isSuccess]);
+    isMdDetailsSuccess && setMdListSort(sortObj<IMdDetails>(mdListSearch, sortFilter, "name"));
+  }, [mdListSearch, sortFilter, isMdDetailsSuccess]);
 
   useEffect(() => {
-    isSuccess && setMdList(mdListSort);
-  }, [mdListSort, isSuccess]);
+    isMdDetailsSuccess && setMdList(mdListSort);
+  }, [mdListSort, isMdDetailsSuccess]);
 
   return (
     <>

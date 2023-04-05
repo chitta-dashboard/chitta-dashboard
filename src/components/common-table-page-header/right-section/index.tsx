@@ -8,7 +8,10 @@ interface RightSectionProps {
   popOverHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const RightSection: FC<RightSectionProps> = ({ addModalHandler, popOverHandler }) => {
+const RightSection: FC<RightSectionProps> = (props) => {
+  //constants
+  const { addModalHandler, popOverHandler } = props;
+
   return (
     <S.RightSectionContainer>
       <IconWrapper onClick={popOverHandler}>filter</IconWrapper>

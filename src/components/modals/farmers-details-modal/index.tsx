@@ -32,8 +32,9 @@ interface CustomProps {
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   //constants
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
-  let {
-    formatChangeSuccess: isSuccess,
+
+  const {
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
@@ -48,7 +49,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
-      let farmerData = Object.values(isSuccess && (farmersDetailsById as farmerDetail)).find((f) => String(f.id) === id) as farmerDetail;
+      let farmerData = Object.values(isFarmerDetailsSuccess && (farmersDetailsById as farmerDetail)).find((f) => String(f.id) === id) as farmerDetail;
       let masterKey = "";
       let surveyName = "";
       let acreName = "";
@@ -77,6 +78,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const masterKey = uuidv4();
 
     setDynamicInputs([{ [masterKey]: [surveyName, acreName, borderName] }, ...dynamicInputs]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dynamicInputs]);
 
@@ -84,6 +86,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     (key: string) => {
       setDynamicInputs(dynamicInputs.filter((inp) => Object.keys(inp)[0] !== key));
     },
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dynamicInputs],
   );
@@ -188,17 +191,16 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const accountNumber = form3Watch("accountNumber");
   const confirmAccountNumber = form3Watch("confirmAccountNumber");
   const ifscCode = form3Watch("ifscCode");
-  if (
-    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) ||
-    !farmerBankDetail
-  ) {
-    form3EnableButton = false;
-  }
+  const isFormBtnDisable =
+    (nameAsPerBank && bankName && accountNumber && confirmAccountNumber && ifscCode && accountNumber === confirmAccountNumber) || !farmerBankDetail;
+  if (isFormBtnDisable) form3EnableButton = false;
 
   useEffect(() => {
     if (editMode && farmersDetailsById[id].representative.id) {
       setSelectedKey([farmersDetailsById[id].representative.id]);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode, id]);
 
   useEffect(() => {
@@ -274,7 +276,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       spouseName: data.spouseName,
       email: data.email,
       representative:
-        isSuccess && Boolean(selectedKey.length)
+        isFarmerDetailsSuccess && Boolean(selectedKey.length)
           ? {
               id: farmersDetailsById[selectedKey[0]]?.id,
               name: farmersDetailsById[selectedKey[0]]?.name ?? "",
@@ -308,12 +310,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedBase64 = encryptText(compressedBase64);
     //Get Id
-    const dataLength = isSuccess && Object.values(farmersDetailsById).length;
-    const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
-    const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
+    const dataLength = isFarmerDetailsSuccess && Object.values(farmersDetailsById).length;
+    const lastPageData: farmerDetail[] | false = isFarmerDetailsSuccess && Object.values(farmersDetailsById);
+    const lastMembershipId = isFarmerDetailsSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
 
     let newId = uuidv4();
-    let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
+    let newMemberId = isFarmerDetailsSuccess && parseInt(lastMembershipId as string) + 1;
 
     let editedData = {
       accountNumber: data.accountNumber,

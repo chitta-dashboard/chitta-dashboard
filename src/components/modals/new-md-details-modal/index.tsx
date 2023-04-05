@@ -45,6 +45,8 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
       return searchWord(search, searchKeyWord);
     });
     setFarmerDetailsByIdData(filteredFarmerData);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKeyWord]);
 
   useEffect(() => {

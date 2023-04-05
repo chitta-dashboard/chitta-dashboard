@@ -16,7 +16,7 @@ const CeoDetails = () => {
 
   //constants
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: ceoDetailsSuccess,
     result: { data: ceoDetails },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
@@ -38,7 +38,7 @@ const CeoDetails = () => {
   };
   return (
     <>
-      {formatChangeSuccess ? (
+      {ceoDetailsSuccess ? (
         <S.CeoDetailsContainer>
           {Object.values(ceoDetails).map((user: any) => {
             return (

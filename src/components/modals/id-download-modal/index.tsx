@@ -16,8 +16,9 @@ interface CustomProps {
   cardData?: IMdDetails | Founders | farmerDetail;
 }
 
-const IdCardModal: FC<CustomProps> = ({ openModal, handleClose, cardData }) => {
+const IdCardModal: FC<CustomProps> = (props) => {
   //constants
+  const { openModal, handleClose, cardData } = props;
   const idCardRef = useRef<HTMLDivElement>();
 
   //functions

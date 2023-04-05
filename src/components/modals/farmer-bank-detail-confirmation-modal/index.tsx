@@ -14,9 +14,12 @@ interface CustomProps {
   mdPage?: boolean;
 }
 
-const FarmerBankDetailModal: FC<CustomProps> = ({ openModal, handleClose, navigateId, mdPage = false }) => {
+const FarmerBankDetailModal: FC<CustomProps> = (props) => {
   //constructors
   const navigate = useNavigate();
+
+  //constants
+  const { openModal, handleClose, navigateId, mdPage = false } = props;
 
   return (
     <>

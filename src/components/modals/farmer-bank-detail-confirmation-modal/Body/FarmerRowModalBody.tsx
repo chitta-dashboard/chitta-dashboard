@@ -1,12 +1,10 @@
-import { FC } from "react";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import ToggleSwitch from "../../../../utils/ToggleSwitch";
 import ConfirmationIcon from "../../confirmation-modal/body/confirmationIcon";
 import S from "./farmer-row-modalstyled";
 
-interface CustomProps {}
 
-const ShareDetailBody: FC<CustomProps> = () => {
+const ShareDetailBody = () => {
   //state values
   const { farmerBankDetail, setFarmerBankDetail } = useFarmerDetailsContext();
 

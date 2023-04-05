@@ -9,7 +9,7 @@ const Footer = () => {
 
   //constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isMdDetailsSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
 
@@ -18,7 +18,7 @@ const Footer = () => {
     setCurrentPage(value);
   };
 
-  return Object.values(isSuccess && mdDetailsById).length > 0 ? (
+  return Object.values(isMdDetailsSuccess && mdDetailsById).length > 0 ? (
     <FooterWrapper
       count={pageCount ? pageCount : 1}
       page={currentPage}

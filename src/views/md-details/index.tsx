@@ -79,6 +79,8 @@ const MdDetails = () => {
       return filteredFarmerData.push(farmersData[item]);
     });
     setFilteredFarmerDetails([...filteredFarmerData]);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
 
   const handleYesAction = () => {

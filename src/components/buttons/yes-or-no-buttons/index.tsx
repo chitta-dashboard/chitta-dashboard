@@ -6,7 +6,10 @@ type YesOrNoButtonsProps = {
   handleClose: () => void;
 };
 
-const YesOrNoButtons: FC<YesOrNoButtonsProps> = ({ handleClose, yesAction }) => {
+const YesOrNoButtons: FC<YesOrNoButtonsProps> = (props) => {
+  //constants
+  const { handleClose, yesAction } = props;
+
   return (
     <>
       <S.ButtonContainer>
