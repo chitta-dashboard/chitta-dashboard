@@ -1,7 +1,7 @@
 import { Box, Typography, styled } from "@mui/material";
 
 namespace S {
-  export const ImageContainer = styled(Box)(({ theme }) => ({
+  export const LoginDetailsWrapper = styled(Box)(({ theme }) => ({
     width: "55%",
     height: "100vh",
     position: "relative",
@@ -10,7 +10,7 @@ namespace S {
     },
   }));
 
-  export const TopImageBox = styled(Box)({
+  export const OverlayTopImageContainer = styled(Box)({
     width: "38rem",
     height: "38rem",
     position: "absolute",
@@ -18,7 +18,7 @@ namespace S {
     left: "0",
   });
 
-  export const TopImage = styled(Box)(({ theme }) => ({
+  export const OverlayTopImage = styled(Box)(({ theme }) => ({
     width: "100%",
     height: "100%",
     borderRadius: "50%",
@@ -28,7 +28,7 @@ namespace S {
     backgroundColor: theme.palette.addAlpha(theme.palette.primary.main, 0.08),
   }));
 
-  export const FarmerImageBox = styled(Box)({
+  export const FarmerImageContainer = styled(Box)({
     overflow: "hidden",
     position: "absolute",
     width: "70%",
@@ -38,7 +38,7 @@ namespace S {
     transform: "translate(-50%, -50%)",
   });
 
-  export const BottomImageBox = styled(Box)({
+  export const OverlayBottomImageContainer = styled(Box)({
     position: "absolute",
     width: "100%",
     height: "25%",
@@ -53,14 +53,14 @@ namespace S {
     objectFit: "contain",
   });
 
-  export const BottomImage = styled("img")({
+  export const OverlayBottomImage = styled("img")({
     position: "absolute",
     height: "100%",
     width: "100%",
     objectFit: "fill",
   });
 
-  export const HeadingText = styled(Typography)(({ theme }) => ({
+  export const FarmerHeadingText = styled(Typography)(({ theme }) => ({
     color: theme.palette.primary.light,
     fontWeight: "600",
     fontSize: "2.625rem",
@@ -69,13 +69,13 @@ namespace S {
     marginTop: "10vh",
   }));
 
-  export const RegTextBox = styled(Box)({
+  export const RegisterNoContainer= styled(Box)({
     position: "absolute",
     bottom: "4%",
     left: "6%",
   });
 
-  export const RegText = styled(Typography)(({ theme }) => ({
+  export const RegisterNoText = styled(Typography)(({ theme }) => ({
     color: theme.palette.text.secondaryLight,
     fontWeight: "400",
     fontSize: "1rem",

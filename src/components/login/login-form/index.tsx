@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import InputAdornment from "@mui/material/InputAdornment";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -27,18 +27,18 @@ const LoginSchema = yup.object().shape({
   loginPassword: yup.string().required("Password is required !"),
 });
 
-const LoginForm: FC = () => {
+const LoginForm = () => {
   //state values
   const { login } = useAuthContext();
   const [showPassword, setShowPassword] = useState(false);
 
   //constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isAdminSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { loginLogo: loginImage } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { loginLogo: loginImage } = isAdminSuccess && Object.values(adminDetails as AdminFormInputs)[0];
   const {
     register,
     handleSubmit,
@@ -51,14 +51,17 @@ const LoginForm: FC = () => {
   });
 
   const onLoginSubmit = (userData: LoginFormInputs) => {
-    if (userData.mobileNo !== userAuth.mobileNo || userData.loginPassword !== userAuth.loginPassword) {
-      if (userData.mobileNo !== userAuth.mobileNo) {
+    const isMobileAuth = userData.mobileNo === userAuth.mobileNo;
+    const isPassWordAuth = userData.loginPassword === userAuth.loginPassword;
+
+    if (!isMobileAuth || !isPassWordAuth) {
+      if (!isMobileAuth) {
         setError("mobileNo", {
           type: "custom",
           message: "Mobile number not registered !",
         });
       }
-      if (userData.loginPassword !== userAuth.loginPassword) {
+      if (!isPassWordAuth) {
         setError("loginPassword", {
           type: "custom",
           message: "Password mismatch !",
@@ -70,17 +73,15 @@ const LoginForm: FC = () => {
     login();
   };
 
-  const handleClickShowHidePassword = () => setShowPassword(!showPassword);
-
   return (
     <>
-      {isSuccess && (
-        <S.LoginMainContainer>
+      {isAdminSuccess && (
+        <S.LoginFormWrapper>
           <S.LoginContainer>
-            <S.FormContainer>
-              <S.ImageBox>
+            <S.LoginFormContainer>
+              <S.LogoContainer>
                 <S.LogoImage src={loginImage ? decryptText(loginImage) : logo} alt="Nerkathir" />{" "}
-              </S.ImageBox>
+              </S.LogoContainer>
 
               <S.LoginForm id="loginForm" onSubmit={handleSubmit(onLoginSubmit)}>
                 <S.InputBox>
@@ -113,7 +114,7 @@ const LoginForm: FC = () => {
                       ),
 
                       endAdornment: (
-                        <InputAdornment sx={{ cursor: "pointer" }} onClick={handleClickShowHidePassword} position="end">
+                        <InputAdornment sx={{ cursor: "pointer" }} onClick={() => setShowPassword(!showPassword)} position="end">
                           {showPassword === false ? <S.EyeIcon>show</S.EyeIcon> : <S.EyeIcon>hide</S.EyeIcon>}
                         </InputAdornment>
                       ),
@@ -125,19 +126,19 @@ const LoginForm: FC = () => {
                   <S.PasswordText variant="subtitle1">Forgot password?</S.PasswordText>
                 </S.InputBox>
               </S.LoginForm>
-              <S.ButtonContainer>
-                <S.ButtonBox>
+              <S.LoginFooterContainer>
+                <S.LoginButtonContainer>
                   <S.LoginButton form="loginForm" size="large" type="submit">
                     Login
                   </S.LoginButton>
-                </S.ButtonBox>
-                <S.LoginText variant="subtitle1">
+                </S.LoginButtonContainer>
+                <S.SignUpText variant="subtitle1">
                   Don't have an account?&nbsp;<span>Signup</span>
-                </S.LoginText>
-              </S.ButtonContainer>
-            </S.FormContainer>
+                </S.SignUpText>
+              </S.LoginFooterContainer>
+            </S.LoginFormContainer>
           </S.LoginContainer>
-        </S.LoginMainContainer>
+        </S.LoginFormWrapper>
       )}
     </>
   );

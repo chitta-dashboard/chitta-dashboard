@@ -1,5 +1,5 @@
 import EllipseBottom from "../../../assets/images/EllipseBottom.svg";
-import farmer from "../../../assets/images/farmer.svg";
+import farmerImage from "../../../assets/images/farmer.svg";
 import { useFetch } from "../../../utils/hooks/query";
 import { AdminFormInputs } from "../../../views/admin-panel";
 import { ENDPOINTS } from "../../../utils/constants";
@@ -8,21 +8,21 @@ import S from "./background.style";
 const LoginBackground = () => {
   //constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isAdminSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { name, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { name, regNo, cinNo } = isAdminSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (
     <>
-      {isSuccess && (
-        <S.ImageContainer>
-          <S.TopImageBox>
-            <S.TopImage></S.TopImage>
-          </S.TopImageBox>
+      {isAdminSuccess && (
+        <S.LoginDetailsWrapper>
+          <S.OverlayTopImageContainer>
+            <S.OverlayTopImage></S.OverlayTopImage>
+          </S.OverlayTopImageContainer>
 
-          <S.HeadingText variant="h2">
+          <S.FarmerHeadingText variant="h2">
             {name ? (
               <>
                 {name} உழவர் <br />
@@ -34,19 +34,27 @@ const LoginBackground = () => {
                 உற்பத்தியாளர் நிறுவனம்
               </>
             )}
-          </S.HeadingText>
+          </S.FarmerHeadingText>
 
-          <S.FarmerImageBox>
-            <S.FarmerImage alt="farmerImage" src={farmer} />
-          </S.FarmerImageBox>
-          <S.RegTextBox>
-            {regNo ? <S.RegText variant="h6">REG No: {regNo}</S.RegText> : <S.RegText variant="h6">REG No:139086</S.RegText>}
-            {cinNo ? <S.RegText variant="h6">CIN: {cinNo} </S.RegText> : <S.RegText variant="h6">CIN:UO1409TN2020PTC139086</S.RegText>}
-          </S.RegTextBox>
-          <S.BottomImageBox>
-            <S.BottomImage alt="BottomImage" src={EllipseBottom} />
-          </S.BottomImageBox>
-        </S.ImageContainer>
+          <S.FarmerImageContainer>
+            <S.FarmerImage alt="farmerImage" src={farmerImage} />
+          </S.FarmerImageContainer>
+          <S.RegisterNoContainer>
+            {regNo ? (
+              <S.RegisterNoText variant="h6">REG No: {regNo}</S.RegisterNoText>
+            ) : (
+              <S.RegisterNoText variant="h6">REG No:139086</S.RegisterNoText>
+            )}
+            {cinNo ? (
+              <S.RegisterNoText variant="h6">CIN: {cinNo} </S.RegisterNoText>
+            ) : (
+              <S.RegisterNoText variant="h6">CIN:UO1409TN2020PTC139086</S.RegisterNoText>
+            )}
+          </S.RegisterNoContainer>
+          <S.OverlayBottomImageContainer>
+            <S.OverlayBottomImage alt="OverlayBottomImage" src={EllipseBottom} />
+          </S.OverlayBottomImageContainer>
+        </S.LoginDetailsWrapper>
       )}
     </>
   );

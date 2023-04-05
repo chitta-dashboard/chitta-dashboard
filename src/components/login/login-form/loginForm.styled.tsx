@@ -20,7 +20,7 @@ namespace S {
     aspectRatio: "1/1",
   });
 
-  export const LoginMainContainer = styled(Box)(({ theme }) => ({
+  export const LoginFormWrapper = styled(Box)(({ theme }) => ({
     width: "45%",
     height: "100vh",
     backgroundColor: `${theme.palette.primary.main}`,
@@ -44,7 +44,7 @@ namespace S {
     alignItems: "center",
   }));
 
-  export const FormContainer = styled(Stack)({
+  export const LoginFormContainer = styled(Stack)({
     width: "85%",
     padding: "4rem 0rem",
     justifyContent: "center",
@@ -52,7 +52,7 @@ namespace S {
     gap: "2rem",
   });
 
-  export const ImageBox = styled(Box)({
+  export const LogoContainer = styled(Box)({
     width: "35%",
   });
 
@@ -120,7 +120,7 @@ namespace S {
     },
   }));
 
-  export const ButtonContainer = styled(Box)({
+  export const LoginFooterContainer = styled(Box)({
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
@@ -128,7 +128,7 @@ namespace S {
     flexDirection: "column",
   });
 
-  export const ButtonBox = styled(Stack)({
+  export const LoginButtonContainer = styled(Stack)({
     width: "52%",
     textAlign: "center",
   });
@@ -140,7 +140,7 @@ namespace S {
     },
   }));
 
-  export const LoginText = styled(Typography)(({ theme }) => ({
+  export const SignUpText = styled(Typography)(({ theme }) => ({
     textAlign: "center",
     padding: "0%",
     fontSize: "0.75rem",
