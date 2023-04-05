@@ -2,7 +2,10 @@ import { useState, useRef, FC, useEffect, Ref } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, Message, imageCompressor } from "../../../../utils/constants";
+import { s3ConfigTypes } from "../../../../types";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -140,28 +143,28 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   });
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = encryptText(compressedBase64);
+
+    const targetFarmerProfile = user.profile;
+    targetFarmerProfile && deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
     const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-    !isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-      });
-    isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => {
-          editMdDetail({
-            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
-            successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-          });
-        },
-      });
+    editFarmer({
+      editedData: { ...user, profile },
+      successCb: () => {
+        if (isFarmerInMd) {
+          setTimeout(() => {
+            editMdDetail({
+              editedData: { ...user, profile, farmerId: user.id, id: isFarmerInMd },
+            });
+          }, 0);
+        }
+      },
+    });
   };
 
   const HandleRepresentativeOf = (editedFarmer: farmerDetail, oldId: string, newId: string) => {

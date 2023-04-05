@@ -2,7 +2,10 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
@@ -73,11 +76,15 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = encryptText(compressedBase64);
-    founderMutateUpdate({ editedData: user });
+    const targetFounderProfile = user.profile;
+    targetFounderProfile && deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    founderMutateUpdate({ editedData: { ...user, profile } });
   };
 
   return (

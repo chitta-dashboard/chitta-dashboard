@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { calculateAge, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../utils/helpers";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
@@ -12,8 +14,6 @@ import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
-import { deleteProfile } from "../../services/s3-client";
-import { extractProfileName } from "../../utils/helpers";
 import { s3ConfigTypes } from "../../types";
 
 type ceoDetail = {
@@ -70,12 +70,16 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    let result = ceoDetailsById[user.id];
-    const encryptedBase64 = encryptText(compressedBase64);
-    editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
+    const targetCeo = ceoDetailsById[user.id];
+    const targetCeoProfile = targetCeo.profile;
+    targetCeoProfile && deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
+    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    editCeoDetail({ editedData: { ...targetCeo, profile } });
   };
 
   const addModalHandler = () => {

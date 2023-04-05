@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { calculateAge, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
 import { Founders } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -60,12 +63,16 @@ const DashboardFounder = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    let result = foundersById[userId];
-    const encryptedBase64 = encryptText(compressedBase64);
-    editFounder({ editedData: { ...result, profile: encryptedBase64 } });
+    const targetFounder = foundersById[userId];
+    const targetFounderProfile = targetFounder.profile;
+    targetFounderProfile && deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+    const profileName = `${s3ConfigTypes.founder}_${userId}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    editFounder({ editedData: { ...targetFounder, profile } });
   };
 
   return (

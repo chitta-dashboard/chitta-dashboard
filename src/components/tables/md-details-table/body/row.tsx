@@ -2,7 +2,10 @@ import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { s3ConfigTypes } from "../../../../types";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
@@ -77,10 +80,15 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = encryptText(compressedBase64);
+    const targetMdProfile = user.profile;
+    targetMdProfile && deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+    const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    user["profile"] = profile;
     const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
@@ -88,8 +96,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
       successCb: () => {
         editMdDetail({
           editedData: user,
-          successCb: () => Toast({ message: "MD Edited Successfully.", type: "success" }),
-          errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
         });
       },
     });
