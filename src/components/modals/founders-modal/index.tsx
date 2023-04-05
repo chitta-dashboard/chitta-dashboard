@@ -20,15 +20,22 @@ interface CustomProps {
   id?: string;
 }
 
-const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+interface ISubmitData extends IAddFounderDetailsFormInput {
+  id?: string;
+}
+type submitType = (data: ISubmitData) => Promise<void>;
+
+const FoundersModal: FC<CustomProps> = (props) => {
   //constants
-  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
-  const { data: foundersById } = result;
+  const { openModal, handleClose, cb, editMode = false, id = "" } = props;
+  const {
+    formatChangeSuccess: isFoundersSuccess,
+    result: { data: foundersById },
+  } = useFetch(ENDPOINTS.founders);
 
   const { handleSubmit, reset, clearErrors, setValue, getValues, control: formControl, unregister, watch } = useForm<IAddFounderDetailsFormInput>();
 
   // submit button enabling
-
   let enableButton = true;
   const nameEvent = watch("name");
   const phoneNumberEvent = watch("phoneNumber");
@@ -36,13 +43,11 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
   const dobEvent = watch("dob");
   const descriptionEvent = watch("description");
   const profileEvent = watch("profile");
-
-  if (nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && descriptionEvent && profileEvent) {
-    enableButton = false;
-  }
+  const isBtnDisable = nameEvent && phoneNumberEvent && qualificationEvent && dobEvent && descriptionEvent && profileEvent;
+  if (isBtnDisable) enableButton = false;
 
   useEffect(() => {
-    if (editMode && isSuccess) {
+    if (editMode && isFoundersSuccess) {
       let userData = id && foundersById[id];
       reset({
         name: userData?.name as string,
@@ -67,10 +72,9 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editMode]);
-  // }, [editMode, id]);
 
   //functions
-  const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
+  const onSubmit: submitType = async (data) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedImage = encryptText(compressedBase64);

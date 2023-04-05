@@ -13,7 +13,10 @@ interface CustomProps {
   unregister: UseFormUnregister<IAddFounderDetailsFormInput>;
 }
 
-const FormField: FC<CustomProps> = ({ control, setValue, getValues, unregister }) => {
+const FormField: FC<CustomProps> = (props) => {
+  //constants
+  const { control, setValue, getValues, unregister } = props;
+
   return (
     <S.StaticBox>
       <AddProfile<IAddFounderDetailsFormInput>

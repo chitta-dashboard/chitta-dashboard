@@ -20,6 +20,11 @@ interface CustomProps {
   id?: string;
 }
 
+interface ISubmitData extends IAddCEODetailsFormInput {
+  id?: string;
+}
+type submitType = (data: ISubmitData) => Promise<void>;
+
 const CeoDetailsModal: FC<CustomProps> = (props) => {
   //constants
   const { openModal, handleClose, cb, editMode = false, id = "" } = props;
@@ -70,11 +75,6 @@ const CeoDetailsModal: FC<CustomProps> = (props) => {
   // }, [editMode, id]);
 
   //functions
-  interface ISubmitData extends IAddCEODetailsFormInput {
-    id?: string;
-  }
-  type submitType = (data: ISubmitData) => Promise<void>;
-  
   const onSubmit: submitType = async (data) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);

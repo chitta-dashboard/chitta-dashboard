@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Ref, useState } from "react";
 import {
   FormHelperText,
   InputLabel,
@@ -33,11 +33,15 @@ interface InputProps extends UseControllerProps {
   options?: {
     [key: string]: any;
   };
-  ref?: any;
+  ref?: Ref<HTMLElement>;
   helperText?: string;
 }
 
-function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref, helperText }: InputProps) {
+function Input(props: InputProps) {
+  //constants
+  const { type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, helperText } = props;
+
+  //state values
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");

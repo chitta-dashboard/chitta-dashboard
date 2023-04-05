@@ -18,7 +18,7 @@ const Founders = () => {
   const [addModal, setAddModal] = useState(false);
 
   //constants
-  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.founders);
+  const { formatChangeSuccess: isFoundersSuccess } = useFetch(ENDPOINTS.founders);
   const { mutate: founderMutateAdd } = useAdd(ENDPOINTS.founders);
 
   //functions
@@ -45,7 +45,7 @@ const Founders = () => {
 
   return (
     <>
-      {!isSuccess ? (
+      {!isFoundersSuccess ? (
         <Loader />
       ) : (
         <S.foundersContainer>

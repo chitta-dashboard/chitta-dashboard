@@ -21,7 +21,7 @@ interface FoundersRowProp {
 
 const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const { addNotification } = useAuthContext();
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
   const [editMode, setEditMode] = useState<boolean>(false);
@@ -57,8 +57,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
 
   const getURL = (data: Founders) => data["profile"];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
 
     return false;
@@ -70,7 +70,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
     element.value = "";
   };
 
-  const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
+  const handleIconClick = () => hiddenFileInput.current && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
     const profileBlob = await fetch(image).then((res) => res.blob());

@@ -33,7 +33,11 @@ interface PixelDataType {
   y?: number;
 }
 
-export default function ImagePreview({ image, setImage, handleCroppedImage }: ImagePreviewType) {
+export default function ImagePreview(props: ImagePreviewType) {
+  //constants
+  const { image, setImage, handleCroppedImage } = props;
+
+  //state values
   const [crop, setCrop] = useState<Crop>({
     unit: "%",
     width: 30,
@@ -52,11 +56,13 @@ export default function ImagePreview({ image, setImage, handleCroppedImage }: Im
       y: 0,
     };
     imageRef && handleOnComplete(pixelData);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imageRef]);
 
   const handleOnComplete = async (pixelData: PixelDataType) => {
     if (imageRef && pixelData.width && pixelData.height) {
-      let result: FinalImageType | any = await createCanvas(imageRef, pixelData);
+      let result = (await createCanvas(imageRef, pixelData)) as () => FinalImageType;
       setFinalImage(result);
     }
   };

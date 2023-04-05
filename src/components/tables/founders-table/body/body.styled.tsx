@@ -124,7 +124,7 @@ namespace S {
     display: "none",
   });
 
-  export const DeleteName = styled("span")(({ theme }: any) => ({
+  export const DeleteName = styled("span")(({ theme }) => ({
     fontSize: "1.3125rem",
     fontWeight: "500",
     color: theme.palette.text.primary,
