@@ -74,11 +74,11 @@ const CeoDetailsCard = ({ user }: Props) => {
     const targetCeo = ceoDetailsById[user.id];
     const targetCeoProfile = targetCeo.profile;
     targetCeoProfile && deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
-    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileName = `${s3ConfigTypes.ceo}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
-    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
     editCeoDetail({ editedData: { ...targetCeo, profile } });
   };
 

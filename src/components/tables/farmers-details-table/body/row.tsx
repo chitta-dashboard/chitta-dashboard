@@ -144,14 +144,13 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
 
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
-
     const targetFarmerProfile = user.profile;
     targetFarmerProfile && deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
-    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
-    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
     const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     editFarmer({
       editedData: { ...user, profile },

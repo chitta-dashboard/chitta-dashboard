@@ -18,6 +18,9 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
+import { s3ConfigTypes } from "../../../types";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 
 const FarmerFormPreviewLeft = () => {
   //constructors
@@ -94,38 +97,66 @@ const FarmerFormPreviewLeft = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const user = farmersDetailsById[userId];
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-
-    const encryptedBase64 = encryptText(compressedBase64);
-    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-    !isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
-        },
-        errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
-        },
-      });
-    isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: async () => {
-          editMdDetail({
-            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
-            successCb: () => {
-              Toast({ message: "Farmer Edited Successfully", type: "success" });
-            },
-            errorCb: () => {
-              Toast({ message: "Request failed! Please try again", type: "error" });
-            },
-          });
-        },
-      });
+    const targetFarmer = farmersDetailsById[userId];
+    const targetFarmerProfile = targetFarmer.profile;
+    targetFarmerProfile && deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+    const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === targetFarmer.id)?.id;
+    editFarmer({
+      editedData: { ...targetFarmer, profile },
+      successCb: async () => {
+        !isFarmerInMd && Toast({ message: "Farmer Edited Successfully", type: "success" });
+        if (isFarmerInMd) {
+          setTimeout(() => {
+            editMdDetail({
+              editedData: { ...targetFarmer, profile, farmerId: targetFarmer.id, id: isFarmerInMd },
+              successCb: () => {
+                Toast({ message: "Farmer Edited Successfully", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed! Please try again", type: "error" });
+              },
+            });
+          }, 0);
+        }
+      },
+    });
+    // const user = farmersDetailsById[userId];
+    // const profileBlob = await fetch(image).then((res) => res.blob());
+    // const compressedBase64 = await imageCompressor(profileBlob);
+    // if (!image) return;
+    // const encryptedBase64 = encryptText(compressedBase64);
+    // const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+    // !isFarmerInMd &&
+    //   editFarmer({
+    //     editedData: { ...user, profile: encryptedBase64 },
+    //     successCb: () => {
+    //       Toast({ message: "Farmer Edited Successfully", type: "success" });
+    //     },
+    //     errorCb: () => {
+    //       Toast({ message: "Request failed! Please try again", type: "error" });
+    //     },
+    //   });
+    // isFarmerInMd &&
+    //   editFarmer({
+    //     editedData: { ...user, profile: encryptedBase64 },
+    //     successCb: async () => {
+    //       editMdDetail({
+    //         editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
+    //         successCb: () => {
+    //           Toast({ message: "Farmer Edited Successfully", type: "success" });
+    //         },
+    //         errorCb: () => {
+    //           Toast({ message: "Request failed! Please try again", type: "error" });
+    //         },
+    //       });
+    //     },
+    //   });
   };
 
   //Update FarmerDetail Handler

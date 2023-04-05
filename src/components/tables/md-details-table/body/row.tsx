@@ -87,7 +87,7 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
-    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
     user["profile"] = profile;
     const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
