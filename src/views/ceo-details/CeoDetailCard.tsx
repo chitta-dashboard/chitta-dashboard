@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
 import { calculateAge, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
@@ -33,7 +33,6 @@ interface Props {
 
 const CeoDetailsCard = ({ user }: Props) => {
   //state values
-  const [imageCache, setImageCache] = useState(0);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [addModal, setAddModal] = useState(false);
@@ -88,10 +87,6 @@ const CeoDetailsCard = ({ user }: Props) => {
 
   const idCardModalHandler = () => setIdCard(!idCard);
 
-  useEffect(() => {
-    setImageCache(imageCache + 1);
-  }, [ceoDetailsById]);
-
   return (
     <>
       <S.CeoDetailCard>
@@ -101,7 +96,6 @@ const CeoDetailsCard = ({ user }: Props) => {
               <S.CeoDataLeft>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
-                    key={imageCache}
                     src={ceoDetailsById[user.id]?.profile ? ceoDetailsById[user.id]?.profile : placeHolderImg}
                     alt="profile picture"
                   />
@@ -183,19 +177,18 @@ const CeoDetailsCard = ({ user }: Props) => {
         <DeleteModal
           openModal={true}
           handleClose={() => setOpenDeleteModal(false)}
-          handleDelete={() => {
-            console.log("Deleting Id", extractProfileName(user.profile));
-            deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
-            // ceoDelete({
-            //   id: user.id,
-            //   successCb: () => {
-            //     addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
-            //     Toast({ message: "CEO deleted successfully.", type: "success" });
-            //   },
-            //   errorCb: () => {
-            //     Toast({ message: "Request failed, please try again.", type: "error" });
-            //   },
-            // });
+          handleDelete={async () => {
+            user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo));
+            ceoDelete({
+              id: user.id,
+              successCb: () => {
+                addNotification({ id: `delete_${user.id}`, image: user.profile, message: Message(user.name).deleteCeoDetails });
+                Toast({ message: "CEO deleted successfully.", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+              },
+            });
           }}
           deleteMessage={
             <span>

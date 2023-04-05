@@ -2,6 +2,9 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
+import { deleteProfile } from "../../../../services/s3-client";
+import { extractProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
 import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
@@ -119,7 +122,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <DeleteModal
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
-          handleDelete={() => {
+          handleDelete={async () => {
+            user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder));
             founderMutateDelete({
               id: user.id,
               successCb: () => {
