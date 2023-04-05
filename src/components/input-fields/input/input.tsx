@@ -219,7 +219,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 iscolor={field.value ? 1 : 0}
                 select
                 disabled={options.disable ? true : false}
-                helperText={errors[name]?.message as string}
+                helperText={helperText ? helperText : (errors[name]?.message as string)}
                 {...options}
                 name={field.name}
                 value={field.value ? field.value : options.placeholder || ""}
