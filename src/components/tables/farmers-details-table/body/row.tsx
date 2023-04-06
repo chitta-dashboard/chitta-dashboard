@@ -145,7 +145,10 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const targetFarmerProfile = user.profile;
-    targetFarmerProfile && deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+    if (targetFarmerProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

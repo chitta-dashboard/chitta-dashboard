@@ -67,7 +67,10 @@ const DashboardFounder = () => {
     if (!image) return;
     const targetFounder = foundersById[userId];
     const targetFounderProfile = targetFounder.profile;
-    targetFounderProfile && deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+    if (targetFounderProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.founder}_${userId}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

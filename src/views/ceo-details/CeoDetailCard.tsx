@@ -72,7 +72,10 @@ const CeoDetailsCard = ({ user }: Props) => {
     if (!image) return;
     const targetCeo = ceoDetailsById[user.id];
     const targetCeoProfile = targetCeo.profile;
-    targetCeoProfile && deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
+    if (targetCeoProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.ceo}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

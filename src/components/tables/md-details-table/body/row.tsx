@@ -82,7 +82,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const targetMdProfile = user.profile;
-    targetMdProfile && deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+    if (targetMdProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

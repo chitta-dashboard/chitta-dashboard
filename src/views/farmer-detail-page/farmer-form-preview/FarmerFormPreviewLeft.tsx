@@ -100,7 +100,10 @@ const FarmerFormPreviewLeft = () => {
     if (!image) return;
     const targetFarmer = farmersDetailsById[userId];
     const targetFarmerProfile = targetFarmer.profile;
-    targetFarmerProfile && deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+    if (targetFarmerProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

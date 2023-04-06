@@ -56,5 +56,6 @@ export const deleteProfile = async (imageName, key) => {
     return response.ok;
   } catch (e) {
     console.log(`Deleting ${key} profile failed.`, e);
+    return false;
   }
 };

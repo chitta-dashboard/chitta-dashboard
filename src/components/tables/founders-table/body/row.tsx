@@ -78,7 +78,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const handleCroppedImage = async (image: string) => {
     if (!image) return;
     const targetFounderProfile = user.profile;
-    targetFounderProfile && deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+    if (targetFounderProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteRes) return;
+    }
     const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
