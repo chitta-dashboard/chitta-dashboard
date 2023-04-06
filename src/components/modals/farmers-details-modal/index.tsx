@@ -307,11 +307,16 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     let newId = uuidv4();
     let generateId = setId(newId);
-    editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
-    const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
-    const compressedProfile = await imageCompressor(profileBlob);
-    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
-    const profileImg = await uploadProfile(namedProfile, "farmer");
+    let profile = "";
+    if (editMode && form1Data?.profile === farmersDetailsById[id].profile) {
+      profile = form1Data?.profile as string;
+    } else {
+      editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
+      const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
+      profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+    }
 
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;
@@ -331,7 +336,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...form1Data,
       ...form2Data,
       ...editedData,
-      profile: profileImg,
+      profile,
       id: generateId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,

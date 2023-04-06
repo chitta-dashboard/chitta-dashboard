@@ -77,19 +77,24 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   //functions
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
-    editMode && foundersById[id].profile && (await deleteProfile(extractProfileName(foundersById[id].profile), s3ConfigTypes.founder));
     data = { ...data, id: editMode ? id : uuidv4() };
-    const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedProfile = await imageCompressor(profileBlob);
-    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
-    const profileImg = await uploadProfile(namedProfile, "founder");
+    let profile = "";
+    if (editMode && data.profile === foundersById[id].profile) {
+      profile = data.profile;
+    } else {
+      editMode && foundersById[id].profile && (await deleteProfile(extractProfileName(foundersById[id].profile), s3ConfigTypes.founder));
+      const profileBlob = await fetch(data.profile).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
+      profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    }
 
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       phoneNumber: data.phoneNumber,
-      profile: profileImg,
+      profile,
       qualification: data.qualification,
       id: data.id,
       joinDate: createJoinDate(),
