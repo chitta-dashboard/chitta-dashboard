@@ -2,10 +2,10 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
-import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
 import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
 import { s3ConfigTypes } from "../../../../types";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
@@ -126,7 +126,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <DeleteModal
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
-          handleDelete={() => {
+          handleDelete={async () => {
+            user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder));
             founderMutateDelete({
               id: user.id,
               successCb: () => {

@@ -2,9 +2,9 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { uploadProfile } from "../../../services/s3-client";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { createJoinDate, dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
-import { generateProfileName } from "../../../utils/helpers";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 import { s3ConfigTypes } from "../../../types";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
@@ -77,6 +77,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   //functions
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
+    editMode && foundersById[id].profile && (await deleteProfile(extractProfileName(foundersById[id].profile), s3ConfigTypes.founder));
     data = { ...data, id: editMode ? id : uuidv4() };
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);

@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Compress from "react-image-file-resizer";
-import { generateProfileName } from "../../utils/helpers";
+import { extractProfileName, generateProfileName } from "../../utils/helpers";
 import { s3ConfigTypes } from "../../types";
-import { uploadProfile } from "../../services/s3-client";
-import { useEdit } from "../../utils/hooks/query";
+import { deleteProfile, uploadProfile } from "../../services/s3-client";
+import { useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import AdminLogo from "../../components/admin-panel/admin-logo";
 import IdInformation from "../../components/admin-panel/id-information";
@@ -55,7 +55,10 @@ const AdminPanel = () => {
   // const [imageUrl, setImageUrl] = useState("");
 
   //constants
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.admin);
+  const { data: adminDetails } = result;
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
+  const adminprofile = isSuccess && Object.values(adminDetails as AdminFormInputs)[0].profile;
 
   const {
     register,
@@ -94,6 +97,7 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
+    adminprofile && (await deleteProfile(extractProfileName(adminprofile), s3ConfigTypes.admin));
     const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
     const profile = await uploadProfile(compressedProfile, "admin");
 

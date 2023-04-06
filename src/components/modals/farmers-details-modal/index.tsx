@@ -2,9 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { uploadProfile } from "../../../services/s3-client";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { generateProfileName } from "../../../utils/helpers";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -307,6 +307,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
     let newId = uuidv4();
     let generateId = setId(newId);
+    editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
     const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);

@@ -3,7 +3,7 @@ import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { s3ConfigTypes } from "../../../types";
-import { uploadProfile } from "../../../services/s3-client";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 import { dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
@@ -72,11 +72,11 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   //functions
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
+    editMode && ceoDetailsById[id].profile && (await deleteProfile(extractProfileName(ceoDetailsById[id].profile), s3ConfigTypes.ceo));
     data = { ...data, id: editMode ? id : uuidv4() };
-    const profileName = editMode ? extractProfileName(ceoDetailsById[id].profile) : `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`;
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedProfile = await imageCompressor(profileBlob);
-    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
     const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
     cb({
       description: data.description,

@@ -2,10 +2,10 @@ import { useState, useRef, FC, useEffect, Ref } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, fileValidation, Message, imageCompressor } from "../../../../utils/constants";
-import { s3ConfigTypes } from "../../../../types";
 import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
 import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
+import { ENDPOINTS, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -451,6 +451,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={async () => {
+              user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer));
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               !isFarmerInMd &&
                 farmerDelete({
