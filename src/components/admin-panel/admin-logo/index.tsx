@@ -31,8 +31,9 @@ interface LogoProps {
   setImage: Dispatch<SetStateAction<TSetImage>>;
 }
 
-export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
+export const ReactImageFileResizer: FC<CustomProps> = (props) => {
   //constants
+  const { file, width, height, placeholder, color } = props;
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -64,7 +65,10 @@ export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, pl
   return <S.logoImage iscolor={!!color} src={placeholder} alt="my-img" ref={imageRef} />;
 };
 
-const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setImage }) => {
+const AdminLogo: FC<LogoProps> = (props) => {
+  //constants
+  const { register, errors, logo, setLogo, image, setImage } = props;
+
   useEffect(() => {
     if (image) {
       if (image.type === "image/png" || image.type === "image/jpeg") {
@@ -74,8 +78,6 @@ const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setI
       }
     }
   }, [image, setLogo]);
-
-  useEffect(() => {}, [register]);
 
   return (
     <S.ContainerStack>

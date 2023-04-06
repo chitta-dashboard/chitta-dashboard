@@ -15,23 +15,24 @@ interface Props {
   setResolutionId: Dispatch<string | null>;
 }
 
-const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
+const ResolutionsTree: FC<Props> = (props) => {
   //constructors
   const navigate = useNavigate();
 
   //constants
+  const { resolutionId, setResolutionId } = props;
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: isResolutionSuccess,
     result: { data: resolutionsObj, isError },
   } = useFetch(ENDPOINTS.resolutions, { errorCb: () => Toast({ message: "Can't reach the server, please try again.", type: "error" }) });
-  const resolutions = formatChangeSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
+  const resolutions = isResolutionSuccess ? sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true }) : [];
   const leafCount = resolutions?.length <= 4 ? resolutions?.length : 4;
   const ResolutionFormPdf = useRef<HTMLDivElement>();
 
   //functions
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Board_Resolution_${resolutionId && formatChangeSuccess && resolutionsObj[resolutionId].groupName}`,
+    documentTitle: `Board_Resolution_${resolutionId && isResolutionSuccess && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
@@ -40,9 +41,11 @@ const ResolutionsTree: FC<Props> = ({ resolutionId, setResolutionId }) => {
       generateResolutionPDF();
     }
     setResolutionId(null);
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolutionId]);
 
-  return formatChangeSuccess ? (
+  return isResolutionSuccess ? (
     <>
       <S.InvisibleBox>
         <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} resolutionId={resolutionId} />

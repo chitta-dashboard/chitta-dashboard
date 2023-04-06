@@ -15,20 +15,20 @@ interface Props {
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
   //constants
   const {
-    formatChangeSuccess,
+    formatChangeSuccess:isResolutionSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isAdminSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
-  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
+  const { headerLogo: headerImage, name: titleName, regNo, cinNo } = isAdminSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { resolutionId: resolutionIdFromUrl } = useParams();
   const resolutionId = resolutionIdFromProp || resolutionIdFromUrl;
 
-  return formatChangeSuccess && isSuccess ? (
+  return isResolutionSuccess && isAdminSuccess ? (
     <>
       {Object.values(resolutions as IResolutions)
         .filter((name) => name.id === resolutionId)

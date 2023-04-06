@@ -16,26 +16,27 @@ interface Props {
   setResolutionId: Dispatch<string | null>;
 }
 
-const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
+const ResolutionsList: FC<Props> = (props) => {
   //constructors
   const navigate = useNavigate();
 
   //constants
+  const { resolutionId, setResolutionId } = props;
   const isMd = useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: isResolutionSuccess,
     result: { data: resolutionsObj },
   } = useFetch(ENDPOINTS.resolutions);
 
   const ResolutionFormPdf = useRef<HTMLDivElement>();
-  const resolutions = formatChangeSuccess && sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
+  const resolutions = isResolutionSuccess && sortObj<IResolution>(Object.values(resolutionsObj), DESCENDING, "creationTime", { asDate: true });
   const leftData = resolutions ? resolutions.filter((_: any, ind: number) => Number.isInteger(((ind + 1) / 2) % 2)) : [];
   const rightData = isMd ? resolutions : resolutions && resolutions.filter((_: any, ind: number) => !Number.isInteger(((ind + 1) / 2) % 2));
 
   //functions
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
-    documentTitle: `Board_Resolution_${resolutionId && formatChangeSuccess && resolutionsObj[resolutionId].groupName}`,
+    documentTitle: `Board_Resolution_${resolutionId && isResolutionSuccess && resolutionsObj[resolutionId].groupName}`,
     content: () => ResolutionFormPdf.current as HTMLDivElement,
   });
 
@@ -44,9 +45,11 @@ const ResolutionsList: FC<Props> = ({ resolutionId, setResolutionId }) => {
       generateResolutionPDF();
     }
     setResolutionId(null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolutionId]);
 
-  return formatChangeSuccess ? (
+  return isResolutionSuccess ? (
     <S.MasterContainer>
       <S.InvisibleBox>
         <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} resolutionId={resolutionId} />

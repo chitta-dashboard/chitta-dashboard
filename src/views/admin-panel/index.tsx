@@ -73,8 +73,7 @@ const AdminPanel = () => {
   const nameEvent = watch("name");
   const regNoEvent = watch("regNo");
   const profileEvent = watch("profile");
-
-  if (
+  const isBtnDisable =
     addressEvent &&
     cinNoEvent &&
     coordinatorAddressEvent &&
@@ -82,10 +81,9 @@ const AdminPanel = () => {
     membershipPrefixEvent &&
     nameEvent &&
     regNoEvent &&
-    profileEvent.length > 0
-  ) {
-    enableButton = false;
-  }
+    profileEvent.length > 0;
+
+  if (isBtnDisable) enableButton = false;
 
   //functions
   const onSubmit = async (data: AdminFormInputs) => {

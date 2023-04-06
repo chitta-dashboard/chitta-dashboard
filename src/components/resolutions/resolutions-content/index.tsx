@@ -1,10 +1,10 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import ResolutionsTree from "../resolutions-tree";
 import ResolutionsList from "../resolutions-list";
 import S from "./resolutionsContent.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
-const ResolutionsContent: FC = () => {
+const ResolutionsContent = () => {
   //state values
   const { tab } = useResolutionContext();
   const [resolutionId, setResolutionId] = useState<string | null>("");

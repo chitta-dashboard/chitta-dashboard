@@ -12,7 +12,10 @@ interface CustomProps {
   }>;
 }
 
-const ProfileInformation: FC<CustomProps> = ({ register, errors }) => {
+const ProfileInformation: FC<CustomProps> = (props) => {
+  //constants
+  const { register, errors } = props;
+  
   return (
     <S.ProfileStack>
       <S.ProfileText>Profile information</S.ProfileText>

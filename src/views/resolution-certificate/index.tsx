@@ -32,7 +32,7 @@ const ResolutionCertificatePage = () => {
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isResolutionSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const threeDotRef = useRef<HTMLSpanElement>();
@@ -66,7 +66,7 @@ const ResolutionCertificatePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolutionId, resolutions]);
 
-  return isSuccess ? (
+  return isResolutionSuccess ? (
     <>
       {Object.keys(resolutions).includes(resolutionId as string) ? (
         <S.ResolutionCertificateMainContainer>
@@ -122,7 +122,7 @@ const ResolutionCertificatePage = () => {
           <ResolutionPdf ref={ResolutionFormPdf as Ref<HTMLDivElement> | undefined} />
         </S.ResolutionCertificateMainContainer>
       ) : (
-        <>{isSuccess && <ErrorPage />}</>
+        <>{isResolutionSuccess && <ErrorPage />}</>
       )}
       {deletion && (
         <DeleteModal

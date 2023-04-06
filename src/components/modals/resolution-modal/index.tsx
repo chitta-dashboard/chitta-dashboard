@@ -19,24 +19,25 @@ interface CustomProps {
   id?: string;
 }
 
-const ResolutionModal: FC<CustomProps> = ({ cb, openModal, handleClose, editMode = false, id = "" }) => {
+type SubmitType = (data: IResolutionFormInput) => void;
+
+const ResolutionModal: FC<CustomProps> = (props) => {
   //constants
+  const { cb, openModal, handleClose, editMode = false, id = "" } = props;
   const { handleSubmit, setValue, trigger, control, watch } = useForm<IResolutionFormInput>({});
 
   // enabling submit button
-
   let enableButton = true;
   const groupNameEvent = watch("groupName");
   const groupTitleEvent = watch("resolutionHeading");
   const groupDescriptionEvent = watch("description");
   const groupDescriptionRichText = watch("descriptionRichText");
+  const isBtnDisable = groupNameEvent && groupTitleEvent && groupDescriptionEvent && groupDescriptionRichText;
 
-  if (groupNameEvent && groupTitleEvent && groupDescriptionEvent && groupDescriptionRichText) {
-    enableButton = false;
-  }
+  if (isBtnDisable) enableButton = false;
 
   //functions
-  const onSubmit: any = (data: IResolutionFormInput) => {
+  const onSubmit: SubmitType = (data: IResolutionFormInput) => {
     cb({
       id: editMode ? id : uuidv4(),
       groupName: data.groupName,

@@ -13,7 +13,10 @@ interface CustomProps {
   }>;
 }
 
-const IdInformation: FC<CustomProps> = ({ register, errors }) => {
+const IdInformation: FC<CustomProps> = (props) => {
+  //constants
+  const { register, errors } = props;
+  
   return (
     <S.ContainerStack>
       <S.IdText>Identification Information</S.IdText>

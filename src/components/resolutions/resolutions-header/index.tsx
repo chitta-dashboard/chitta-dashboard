@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import IconWrapper from "../../../utils/iconWrapper";
 import ResolutionModal from "../../modals/resolution-modal";
 import { ENDPOINTS, MessageStructured } from "../../../utils/constants";
@@ -8,14 +8,14 @@ import Toast from "../../../utils/toast";
 import S from "./resolutionsHeader.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
-const ResolutionsHeader: FC = () => {
+const ResolutionsHeader = () => {
   //state values
   const { tab, changeTab } = useResolutionContext();
   const [modalOpen, setModalOpen] = useState(false);
 
   //constants
   const {
-    formatChangeSuccess,
+    formatChangeSuccess: isResolutionSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const { mutate } = useAdd(ENDPOINTS.resolutions);
@@ -29,7 +29,7 @@ const ResolutionsHeader: FC = () => {
         </IconWrapper>
         <S.Title>Board Resolution</S.Title>
         <S.ButtonBox>
-          {formatChangeSuccess && Object.values(resolutions).length > 4 && tab === "tree" ? (
+          {isResolutionSuccess && Object.values(resolutions).length > 4 && tab === "tree" ? (
             <S.Button onClick={() => changeTab("list")}>View All</S.Button>
           ) : null}
           <S.Button onClick={() => setModalOpen(true)}>Add</S.Button>

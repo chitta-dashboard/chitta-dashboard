@@ -17,17 +17,18 @@ interface CustomProps {
   id?: string;
 }
 
-const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id = "" }) => {
+const FormField: FC<CustomProps> = (props) => {
   //constants
+  const { setValue, trigger, control, editMode, id = "" } = props;
   const {
     formatChangeSuccess: farmerGroupDataLoaded,
     result: { data: farmersGroupById },
   } = useFetch(ENDPOINTS.farmerGroup);
   const {
-    formatChangeSuccess,
+    formatChangeSuccess:isResolutionSuccess,
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
-  const { current: resolution } = useRef(formatChangeSuccess && resolutions ? resolutions[id] : {});
+  const { current: resolution } = useRef(isResolutionSuccess && resolutions ? resolutions[id] : {});
   const selectAllGroup = useWatch<IResolutionFormInput>({
     name: "selectAll",
     control,
@@ -40,7 +41,7 @@ const FormField: FC<CustomProps> = ({ setValue, trigger, control, editMode, id =
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectAllGroup]);
 
-  return editMode && !formatChangeSuccess && farmerGroupDataLoaded ? (
+  return editMode && !isResolutionSuccess && farmerGroupDataLoaded ? (
     <Loader />
   ) : (
     <>
