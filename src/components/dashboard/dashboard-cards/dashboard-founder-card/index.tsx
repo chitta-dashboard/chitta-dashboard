@@ -15,6 +15,7 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./dashoardFounder.styled";
+import Toast from "../../../../utils/toast";
 
 const DashboardFounder = () => {
   //state values
@@ -72,7 +73,11 @@ const DashboardFounder = () => {
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
     const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
-    editFounder({ editedData: { ...targetFounder, profile } });
+    editFounder({
+      editedData: { ...targetFounder, profile },
+      successCb: () => Toast({ message: "Founder Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   return (

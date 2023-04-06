@@ -155,10 +155,13 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     editFarmer({
       editedData: { ...user, profile },
       successCb: () => {
+        !isFarmerInMd && Toast({ message: "Farmer Edited Successfully.", type: "success" });
         if (isFarmerInMd) {
           setTimeout(() => {
             editMdDetail({
               editedData: { ...user, profile, farmerId: user.id, id: isFarmerInMd },
+              successCb: () => Toast({ message: "Farmer Edited Successfully.", type: "success" }),
+              errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
             });
           }, 0);
         }

@@ -96,6 +96,8 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
       successCb: () => {
         editMdDetail({
           editedData: user,
+          successCb: () => Toast({ message: "MD Edited Successfully.", type: "success" }),
+          errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
         });
       },
     });

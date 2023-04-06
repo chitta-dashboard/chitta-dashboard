@@ -5,7 +5,7 @@ import { useAuthContext } from "../../../../utils/context/auth";
 import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
 import { s3ConfigTypes } from "../../../../types";
 import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
-import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
@@ -84,7 +84,11 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
     const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
-    founderMutateUpdate({ editedData: { ...user, profile } });
+    founderMutateUpdate({
+      editedData: { ...user, profile },
+      successCb: () => Toast({ message: "Founder Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   return (

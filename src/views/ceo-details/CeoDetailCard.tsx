@@ -10,11 +10,11 @@ import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
+import { s3ConfigTypes } from "../../types";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
-import { s3ConfigTypes } from "../../types";
 
 type ceoDetail = {
   id: string;
@@ -78,7 +78,11 @@ const CeoDetailsCard = ({ user }: Props) => {
     const compressedProfile = await imageCompressor(profileBlob);
     const namedProfile = generateProfileName(compressedProfile, profileName);
     const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
-    editCeoDetail({ editedData: { ...targetCeo, profile } });
+    editCeoDetail({
+      editedData: { ...targetCeo, profile },
+      successCb: () => Toast({ message: "Ceo Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   const addModalHandler = () => {
