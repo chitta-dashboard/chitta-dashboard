@@ -25,7 +25,7 @@ import PasswordModal from "../../../modals/password-modal";
 import CredentialsCertificate from "../../../../views/credentials-certificate";
 
 interface FarmersDetailsRowProps {
-  user: farmerDetail | any;
+  user: farmerDetail;
   removeGroupMember: (id: string, group: string, isAdd: boolean) => void;
 }
 
@@ -34,7 +34,7 @@ interface farmerData {
   password: string | null;
 }
 
-const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember }) => {
+const FarmersDetailsRow: FC<FarmersDetailsRowProps> = (props) => {
   //state values
   const { addNotification, loader } = useAuthContext();
   const { checkboxSelect, selectedFarmers, setFarmerBankDetail } = useFarmerDetailsContext();
@@ -52,8 +52,9 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const [farmerData, setFarmerData] = useState<farmerData>({ id: null, password: null });
 
   //constants
+  const { user, removeGroupMember } = props;
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isMdDetailsSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
   let {
@@ -63,7 +64,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   const idCardRef = useRef<HTMLDivElement>();
   const farmerDetailFormRef = useRef<HTMLDivElement>();
   const credentialCertificate = useRef<HTMLDivElement>();
-  const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const hiddenFileInput = useRef<HTMLInputElement | null>(null);
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: farmerDelete } = useDelete(ENDPOINTS.farmerDetails);
@@ -96,8 +97,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
 
   const getURL = (data: farmerDetail) => data["profile"];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-    let isValid = e.target && fileValidation(e.target.files[0].name);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let isValid = e.target.files && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
     return false;
   };
@@ -108,7 +109,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     element.value = "";
   };
 
-  const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
+  const handleIconClick = () => hiddenFileInput.current && hiddenFileInput.current.click();
 
   const generateFarmerDetailForm = useReactToPrint({
     documentTitle: `${user.name}_FarmerDetail_form`,
@@ -144,7 +145,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
     const encryptedBase64 = encryptText(compressedBase64);
-    const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+    const isFarmerInMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
     !isFarmerInMd &&
       editFarmer({
         editedData: { ...user, profile: encryptedBase64 },
@@ -177,14 +178,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     };
 
     const isNewFarmerInMd = newId
-      ? Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[newId].id)?.id
+      ? Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[newId].id)?.id
       : null;
     const isOldFarmerInMd = oldId
-      ? Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[oldId].id)?.id
+      ? Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((md) => md.farmerId === farmersDetailsById[oldId].id)?.id
       : null;
 
-    const newMd = newId && isSuccess && mdDetailsById[isNewFarmerInMd];
-    const oldMd = oldId && isSuccess && mdDetailsById[isOldFarmerInMd];
+    const newMd = newId && isMdDetailsSuccess && mdDetailsById[isNewFarmerInMd];
+    const oldMd = oldId && isMdDetailsSuccess && mdDetailsById[isOldFarmerInMd];
 
     if (newId && oldId) {
       const newFarmerData = {
@@ -335,6 +336,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
       generateFarmerDetailForm();
     }
     setFarmerIdtoPrint(null);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [farmerIdtoPrint]);
 
   // to print credential certificate
@@ -342,10 +345,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     if (farmerData.id !== null && farmerData.password !== null) {
       credentialCertificateHandler();
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [farmerData]);
 
   useEffect(() => {
     setFarmerBankDetail(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -439,14 +446,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             cb={updateFarmerDetail}
             editMode={editMode}
             id={user.id}
-            mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
+            mdId={Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
           />
           <IdCardModal cardData={user} openModal={idCard} handleClose={idCardhandler} />
           <DeleteModal
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={async () => {
-              const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+              const isFarmerInMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               !isFarmerInMd &&
                 farmerDelete({
                   id: user.id,
@@ -493,7 +500,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={async () => {
-              const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+              const isFarmerInMd = Object.values(isMdDetailsSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               const farmerEditData = { ...editData, id: editData?.farmerId };
               const newId = editData?.representative?.id ?? "";
               const oldId = editData?.farmerId ? isFarmerDetailsSuccess && farmersDetailsById[editData.farmerId]?.representative?.id : "";

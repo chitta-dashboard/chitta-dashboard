@@ -9,7 +9,10 @@ interface TablePageHeaderProps {
   shareAmountModalHandler?: () => void;
 }
 
-const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = ({ addModalHandler, searchHandler }) => {
+const FarmersDetailsTablePageHeader: FC<TablePageHeaderProps> = (props) => {
+  //constants
+  const { addModalHandler, searchHandler } = props;
+
   return (
     <S.PageHeaderContainer>
       <LeftSection searchHandler={searchHandler} />

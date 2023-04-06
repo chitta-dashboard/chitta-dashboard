@@ -11,13 +11,13 @@ interface Props {
 const CredentialsCertificate = forwardRef<HTMLDivElement, Props>(({ farmerDatatoPrint }, ref) => {
   // constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   return (
     <div className="print-container" ref={ref}>
-      {isSuccess &&
+      {isFarmerDetailsSuccess &&
         farmerDatatoPrint &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => farmerDatatoPrint.id === name.id)

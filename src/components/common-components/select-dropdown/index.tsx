@@ -11,7 +11,7 @@ const SelectDropDown = () => {
   //constants
   const {
     result: { data: farmersGroupById },
-    formatChangeSuccess: isSucess,
+    formatChangeSuccess: isFarmerGroupSuccess,
   } = useFetch(ENDPOINTS.farmerGroup);
 
   //functions
@@ -23,7 +23,7 @@ const SelectDropDown = () => {
   return (
     <S.SelectInput select value={groupFilter} onChange={selectHandler}>
       <S.Option value={DEFAULT_GROUP_FILTER}>Farmer Groups</S.Option>
-      {Object.values(isSucess && (farmersGroupById as FarmersGroup)).map((list) => (
+      {Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup)).map((list) => (
         <S.Option key={list.id} value={list.groupName}>
           {list.groupName}
         </S.Option>

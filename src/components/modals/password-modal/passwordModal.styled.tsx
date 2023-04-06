@@ -1,7 +1,7 @@
 import { Box, TextField, styled, FormLabel, FormControl } from "@mui/material";
 
 namespace S {
-  export const PasswordModalBody = styled(Box)(({ theme }) => ({
+  export const PasswordModalBody = styled(Box)(() => ({
     maxWidth: "25rem",
   }));
 

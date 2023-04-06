@@ -20,13 +20,22 @@ interface CustomProps {
   members?: string[];
 }
 
+interface ISubmitData extends IAddFarmersGroupFormInput {
+  id?: string;
+  members?: string[];
+}
+type SubmitType = (data: ISubmitData) => void;
+
 const FarmersGroupModal: FC<CustomProps> = (props) => {
   //constants
   const { openModal, handleClose, cb, editMode = false, id = "", members = [] } = props;
 
   const { handleSubmit, clearErrors, reset, control: formControl, watch } = useForm<IAddFarmersGroupFormInput>();
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
-  const { data: farmerGroupData } = result;
+  const {
+    result: { data: farmerGroupData },
+    formatChangeSuccess: isFarmerGroupSuccess,
+  } = useFetch(ENDPOINTS.farmerGroup);
+
   // for enabling the submit button
   const groupNameEvent = watch("groupName");
   const explanationEvent = watch("explanation");
@@ -34,14 +43,12 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
   const treasurerEvent = watch("treasurer");
   const secretaryEvent = watch("secretary");
   let enableButton = true;
-
-  if (groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent) {
-    enableButton = false;
-  }
+  const isBtnDisable = groupNameEvent && explanationEvent && chairmanEvent && treasurerEvent && secretaryEvent;
+  if (isBtnDisable) enableButton = false;
 
   useEffect(() => {
     if (editMode) {
-      let groupData = Object.values(isSuccess && (farmerGroupData as CustomProps)).find((f) => String(f.id) === id);
+      let groupData = Object.values(isFarmerGroupSuccess && (farmerGroupData as CustomProps)).find((f) => String(f.id) === id);
       reset({
         groupName: groupData?.groupName as string,
         explanation: groupData?.explanation as string,
@@ -63,7 +70,7 @@ const FarmersGroupModal: FC<CustomProps> = (props) => {
   }, [editMode, id]);
 
   //functions
-  const onSubmit: any = (data: IAddFarmersGroupFormInput & { id: string; members: string[] }) => {
+  const onSubmit: SubmitType = (data) => {
     cb({ ...data, id: editMode ? id : uuidv4(), members: members });
     !editMode && reset();
     !editMode && handleClose();

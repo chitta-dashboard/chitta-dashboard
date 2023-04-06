@@ -16,13 +16,13 @@ const Body = () => {
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
 
   //constants
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
-  }: any = useFetch(ENDPOINTS.farmerDetails);
+  } = useFetch(ENDPOINTS.farmerDetails);
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -77,41 +77,47 @@ const Body = () => {
 
   // farmer group filter for farmer detail table
   useEffect(() => {
-    if (isSuccess) {
+    if (isFarmerDetailsSuccess) {
       setFarmersListGroup(
         groupFilter === "all"
           ? Object.values(farmersDetailsById as farmerDetail[])
           : Object.values(farmersDetailsById as farmerDetail[]).filter((list) => list.group === groupFilter),
       );
     }
-  }, [groupFilter, isSuccess, currentPage, farmersDetailsById]);
+  }, [groupFilter, isFarmerDetailsSuccess, currentPage, farmersDetailsById]);
 
   useEffect(() => {
-    let result = isSuccess && Object.values(farmersListGroup).filter((farmer) => searchWord(farmer.name, searchFilter));
+    let result = isFarmerDetailsSuccess ? Object.values(farmersListGroup).filter((farmer) => searchWord(farmer.name, searchFilter)) : [];
     setExportFarmerID(sortObj<farmerDetail>(Object.values(result), sortFilter, "name"));
-    let updatedData = isSuccess && [...result];
-    isSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
+    let updatedData = isFarmerDetailsSuccess ? [...result] : [];
+    isFarmerDetailsSuccess && setFarmersListSearch(result.splice((currentPage - 1) * 25, 25));
     setPageCount({ pageCount: Math.ceil(result.length / 25) + 1, totalPageCount: updatedData.length });
-  }, [searchFilter, farmersListGroup, isSuccess, sortFilter]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchFilter, farmersListGroup, isFarmerDetailsSuccess, sortFilter]);
 
   useEffect(() => {
-    isSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
-  }, [farmersListSearch, sortFilter, isSuccess]);
+    isFarmerDetailsSuccess && setFarmersListSort(sortObj<farmerDetail>(farmersListSearch, sortFilter, "name"));
+  }, [farmersListSearch, sortFilter, isFarmerDetailsSuccess]);
 
   //farmer id to export farmers
   useEffect(() => {
-    isSuccess && setFarmersList(farmersListSort);
+    isFarmerDetailsSuccess && setFarmersList(farmersListSort);
     let farmersId = exportFarmerId && exportFarmerId.map((item) => item.id);
     setFarmersIdToExport(farmersId);
-  }, [farmersListSort, isSuccess, exportFarmerId]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmersListSort, isFarmerDetailsSuccess, exportFarmerId]);
 
   //For tamil share holder certificate
   useEffect(() => {
-    if (isSuccess) {
+    if (isFarmerDetailsSuccess) {
       const farmerId = exportFarmerId && exportFarmerId.map((item: any) => item.id);
-      isSuccess && addFarmerId(farmerId);
+      isFarmerDetailsSuccess && addFarmerId(farmerId);
     }
-  }, [isSuccess, farmersList, exportFarmerId]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFarmerDetailsSuccess, farmersList, exportFarmerId]);
 
   return (
     <>
@@ -130,11 +136,11 @@ const Body = () => {
           ))}
         </BodyWrapper>
       ) : (
-        <S.EmptyMsg>
+        <S.NoFarmerContainer>
           <tr>
             <td>No Farmer Details.</td>
           </tr>
-        </S.EmptyMsg>
+        </S.NoFarmerContainer>
       )}
     </>
   );

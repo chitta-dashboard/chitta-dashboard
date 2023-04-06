@@ -31,17 +31,10 @@ const RemoveArray = (farmerId: string[], members: string[]) => {
   return finalArr;
 };
 
-const ImportFarmerGroupModal: FC<Props> = ({
-  openModal,
-  handleClose,
-  newGroupNames,
-  handleCloseImport,
-  farmerDatas,
-  count,
-  setNewGroupNames,
-  setInputData,
-}) => {
+const ImportFarmerGroupModal: FC<Props> = (props) => {
   //constants
+  const { openModal, handleClose, newGroupNames, handleCloseImport, farmerDatas, count, setNewGroupNames, setInputData } = props;
+
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,

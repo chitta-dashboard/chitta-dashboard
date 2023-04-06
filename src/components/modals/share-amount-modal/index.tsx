@@ -17,7 +17,7 @@ interface CustomProps {
   handleClose: () => void;
 }
 
-const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
+const ShareAmountModal: FC<CustomProps> = (props) => {
   //state values
   const [toggle, setToggle] = useState(false);
   const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
@@ -27,6 +27,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   const pdftamilcertificate = useRef<HTMLDivElement>();
 
   //constants
+  const { openModal, handleClose } = props;
   const {
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);

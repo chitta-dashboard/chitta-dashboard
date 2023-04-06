@@ -17,7 +17,7 @@ interface IImportFarmersModal {
   handleClose: () => void;
 }
 
-const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, handleClose }) {
+const ImportFarmersModal: React.FC<IImportFarmersModal> = function (props) {
   //state values
   const [importedFile, setImportedFile] = useState<File | null>(null);
   const [openImportGroup, setOpenImportGroup] = useState<boolean>(false);
@@ -30,15 +30,16 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const [count, setCount] = useState(existingFarmers?.length);
 
   //constants
+  const { isOpen, handleClose } = props;
   const {
     result: { data: farmersDetailsById },
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerDetailsSuccess,
   } = useFetch(ENDPOINTS.farmerDetails);
 
-  const dataLength = isSuccess && Object.values(farmersDetailsById).length;
-  const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
+  const dataLength = isFarmerDetailsSuccess && Object.values(farmersDetailsById).length;
+  const lastPageData: farmerDetail[] | false = isFarmerDetailsSuccess && Object.values(farmersDetailsById);
 
-  const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
+  const lastMembershipId = isFarmerDetailsSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
   let newMemberId = parseInt(lastMembershipId as string);
 
   //functions

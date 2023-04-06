@@ -23,7 +23,7 @@ interface CustomProps {
 interface ISubmitData extends IAddFounderDetailsFormInput {
   id?: string;
 }
-type submitType = (data: ISubmitData) => Promise<void>;
+type SubmitType = (data: ISubmitData) => Promise<void>;
 
 const FoundersModal: FC<CustomProps> = (props) => {
   //constants
@@ -74,7 +74,7 @@ const FoundersModal: FC<CustomProps> = (props) => {
   }, [editMode]);
 
   //functions
-  const onSubmit: submitType = async (data) => {
+  const onSubmit: SubmitType = async (data) => {
     const profileBlob = await fetch(data.profile).then((res) => res.blob());
     const compressedBase64 = await imageCompressor(profileBlob);
     const encryptedImage = encryptText(compressedBase64);

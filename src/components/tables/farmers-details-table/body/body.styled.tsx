@@ -131,7 +131,7 @@ namespace S {
     display: "none",
   });
 
-  export const EmptyMsg = styled("tbody")(({ theme }) => ({
+  export const NoFarmerContainer = styled("tbody")(({ theme }) => ({
     position: "relative",
     "> tr > td": {
       color: theme.palette.text.secondaryLight,

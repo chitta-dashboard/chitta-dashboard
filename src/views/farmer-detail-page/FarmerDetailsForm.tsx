@@ -18,7 +18,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   //constants
   let {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
@@ -35,7 +35,7 @@ const FarmerDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ farme
 
   return (
     <>
-      {isSuccess &&
+      {isFarmerDetailsSuccess &&
         isSuccessAdmin &&
         Object.values(farmersDetailsById as farmerDetail[])
           .filter((name) => [farmerId, farmerIdtoPrint].includes(name.id))

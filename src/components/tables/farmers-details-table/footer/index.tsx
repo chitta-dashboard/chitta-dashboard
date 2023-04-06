@@ -10,14 +10,14 @@ const Footer = () => {
 
   //constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
   //functions
   const handlePageCount = (event: React.ChangeEvent<unknown>, value: number) => setCurrentPage(value);
 
-  return Object.values(isSuccess && farmersDetailsById).length > 0 ? (
+  return Object.values(isFarmerDetailsSuccess && farmersDetailsById).length > 0 ? (
     <FooterWrapper
       count={pageCount ? pageCount : 1}
       page={currentPage}

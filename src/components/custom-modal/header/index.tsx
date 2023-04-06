@@ -8,7 +8,10 @@ interface CustomProps {
   alignment?: string;
 }
 
-const ModalHeader: FC<CustomProps> = ({ children, handleClose, alignment }) => {
+const ModalHeader: FC<CustomProps> = (props) => {
+  //constants
+  const { children, handleClose, alignment } = props;
+
   return (
     <S.Container>
       <S.Title alignment={alignment}>{children}</S.Title>

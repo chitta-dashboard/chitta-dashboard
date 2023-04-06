@@ -19,7 +19,7 @@ const FarmersGroup = () => {
   const [anchor, setAnchor] = useState<HTMLButtonElement | null>(null);
 
   // constants
-  const { formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
+  const { formatChangeSuccess: isFarmerGroupSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const groupMembersFilter = [
     { id: "1", value: 1, label: "All" },
@@ -59,7 +59,7 @@ const FarmersGroup = () => {
 
   return (
     <>
-      {!isSuccess ? (
+      {!isFarmerGroupSuccess ? (
         <Loader />
       ) : (
         <S.FarmersGroupContainer>
@@ -83,9 +83,9 @@ const FarmersGroup = () => {
         }}
       >
         {groupMembersFilter.map((data) => (
-          <S.Items onClick={() => setMemberHandler(data.value)} key={data.id} selectfilter={data.value === memberFilter ? 1 : 0}>
+          <S.PopItems onClick={() => setMemberHandler(data.value)} key={data.id} selectfilter={data.value === memberFilter ? 1 : 0}>
             {data.label}
-          </S.Items>
+          </S.PopItems>
         ))}
       </S.Pop>
     </>

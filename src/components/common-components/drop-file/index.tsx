@@ -34,17 +34,20 @@ function stopDefaultBehaviour(e: React.DragEvent<HTMLDivElement>) {
   e.stopPropagation();
 }
 
-const DropFile: React.FC<IDropFile> = function ({
-  fileFormat = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"],
-  fileExtension = [".xlsx", "xls"],
-  validate,
-  cb,
-  isGroupMoalOpened,
-  setNewGroupNames,
-  setExistingFarmers,
-  setVerifiedNewFarmers,
-  setInputData,
-}) {
+const DropFile: React.FC<IDropFile> = function (props) {
+  //constants
+  const {
+    fileFormat = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"],
+    fileExtension = [".xlsx", "xls"],
+    validate,
+    cb,
+    isGroupMoalOpened,
+    setNewGroupNames,
+    setExistingFarmers,
+    setVerifiedNewFarmers,
+    setInputData,
+  } = props;
+
   //state values
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
@@ -111,6 +114,8 @@ const DropFile: React.FC<IDropFile> = function ({
         }
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [targetState, validate, cb],
   );
 
@@ -143,6 +148,8 @@ const DropFile: React.FC<IDropFile> = function ({
         e.target?.value && (e.target.value = ""); // if not cleared, rechoosing the same file wouldn't trigger the 'change' event. That is not good ux.
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [validate, cb],
   );
 

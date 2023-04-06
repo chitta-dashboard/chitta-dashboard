@@ -9,7 +9,10 @@ interface Props {
   farmerDatatoPrint: { id: string | null; password: string | null };
 }
 
-const CredentialsContainerContent: FC<Props> = ({ user, farmerDatatoPrint }) => {
+const CredentialsContainerContent: FC<Props> = (props) => {
+  //constants
+  const { user, farmerDatatoPrint } = props;
+  
   return (
     <S.CredentialsContainerContent>
       <S.CertificateHeader>

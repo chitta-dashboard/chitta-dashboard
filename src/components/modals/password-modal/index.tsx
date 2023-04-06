@@ -20,8 +20,9 @@ interface PasswordInputs {
   loginPassword: string;
 }
 
-const PasswordModal: FC<CustomProps> = ({ openModal, handleClose, cb }) => {
+const PasswordModal: FC<CustomProps> = (props) => {
   //constants
+  const { openModal, handleClose, cb } = props;
   const userAuth: PasswordInputs = { loginPassword: "nerkathir" };
 
   const LoginSchema = yup.object().shape({

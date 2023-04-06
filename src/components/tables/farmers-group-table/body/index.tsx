@@ -8,46 +8,50 @@ import S from "./body.styled";
 
 const Body = () => {
   //constants
-  const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
-  const { data: farmerGroupData } = result;
+  const {
+    formatChangeSuccess: isFarmerGroupSuccess,
+    result: { data: farmerGroupData },
+  } = useFetch(ENDPOINTS.farmerGroup);
 
   //state values
   const { searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
-  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
-  const [farmersGroupListSearch, setFarmersGroupListSearch] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
-  const [farmersGroupListSort, setFarmersGroupListSort] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
-  const [farmersGroupList, setFarmersGroupList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
+  const [farmersGroupMemberList, setFarmersGroupMemberList] = useState<FarmersGroup[]>(Object.values(isFarmerGroupSuccess ? farmerGroupData : []));
+  const [farmersGroupListSearch, setFarmersGroupListSearch] = useState<FarmersGroup[]>(Object.values(isFarmerGroupSuccess ? farmerGroupData : []));
+  const [farmersGroupListSort, setFarmersGroupListSort] = useState<FarmersGroup[]>(Object.values(isFarmerGroupSuccess ? farmerGroupData : []));
+  const [farmersGroupList, setFarmersGroupList] = useState<FarmersGroup[]>(Object.values(isFarmerGroupSuccess ? farmerGroupData : []));
 
   //functions
   const memberFilterHandler = () => {
     switch (memberFilter) {
       case customMemberFilter.ALL:
-        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[]));
+        return Object.values(isFarmerGroupSuccess && (farmerGroupData as FarmersGroup[]));
       case customMemberFilter.WITH_MEMBERS:
-        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length !== 0);
+        return Object.values(isFarmerGroupSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length !== 0);
       default:
-        return Object.values(isSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length === 0);
+        return Object.values(isFarmerGroupSuccess && (farmerGroupData as FarmersGroup[])).filter((list) => list.members?.length === 0);
     }
   };
   useEffect(() => {
     setFarmersGroupMemberList(memberFilterHandler());
-  }, [memberFilter, farmerGroupData, isSuccess]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memberFilter, farmerGroupData, isFarmerGroupSuccess]);
 
   useEffect(() => {
     setFarmersGroupListSearch(farmersGroupMemberList.filter((farmer) => searchWord(farmer.groupName, searchFilter)));
-  }, [searchFilter, farmersGroupMemberList, isSuccess]);
+  }, [searchFilter, farmersGroupMemberList, isFarmerGroupSuccess]);
 
   useEffect(() => {
     setFarmersGroupListSort(sortObj<FarmersGroup>(farmersGroupListSearch, sortFilter, "groupName"));
-  }, [farmersGroupListSearch, sortFilter, isSuccess]);
+  }, [farmersGroupListSearch, sortFilter, isFarmerGroupSuccess]);
 
   useEffect(() => {
     setFarmersGroupList(farmersGroupListSort);
-  }, [farmersGroupListSort, isSuccess]);
+  }, [farmersGroupListSort, isFarmerGroupSuccess]);
 
   return (
     <>
-      {farmersGroupList.length > 0 ? (
+      {Boolean(farmersGroupList.length) ? (
         <BodyWrapper>
           {farmersGroupList.map((user) => (
             <FarmersGroupRow {...{ user }} key={user.id} />

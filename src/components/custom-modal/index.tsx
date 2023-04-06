@@ -8,7 +8,10 @@ interface CustomProps {
   openAddResolutionModal?: boolean;
 }
 
-const CustomModal: FC<CustomProps> = ({ children, openModal, openAddResolutionModal }) => {
+const CustomModal: FC<CustomProps> = (props) => {
+  //constants
+  const { children, openModal, openAddResolutionModal } = props;
+
   return (
     <S.ModalContainer open={openModal} openAddResolutionModal={openAddResolutionModal}>
       {children}

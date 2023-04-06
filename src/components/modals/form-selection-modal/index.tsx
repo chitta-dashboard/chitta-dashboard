@@ -17,23 +17,27 @@ interface CustomProps {
   cb: () => void;
 }
 
-const FormSelectionModal: FC<CustomProps> = ({ openModal, handleClose, farmerId, cb }) => {
+const FormSelectionModal: FC<CustomProps> = (props) => {
   //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
-
   const [selectFile, setSelectFile] = useState(true);
 
   //constants
+  const { openModal, handleClose, farmerId, cb } = props;
   const farmerDetailFormRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
     setFarmerBankDetail(false);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (selectFile) {
       setFarmerBankDetail(true);
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectFile]);
 
   //functions

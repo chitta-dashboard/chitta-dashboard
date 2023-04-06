@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { ENDPOINTS, Message } from "../../../../utils/constants";
 import { useAdd, useEdit, useFetch } from "../../../../utils/hooks/query";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
@@ -20,8 +20,6 @@ interface RightSectionProps {
 const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
   //state values
   const { addNotification } = useAuthContext();
-  const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
-  const { data: farmersGroupById } = result;
   const { selectedFarmers, farmerId, checkboxUnselectAll, groupFilter } = useFarmerDetailsContext();
   const [importedData, setImportedData] = useState<farmerDetail[] | null>(null);
   const [importModalOpen, setImportModalOpen] = useState(false);
@@ -32,7 +30,11 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
 
   // constants
   const {
-    formatChangeSuccess: isSuccess,
+    formatChangeSuccess: isFarmerGroupSuccess,
+    result: { data: farmersGroupById },
+  } = useFetch(ENDPOINTS.farmerGroup);
+  const {
+    formatChangeSuccess: isFarmerDetailsSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
   const {
@@ -48,14 +50,12 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
 
   //functions
   const handleExportData = () => {
-    if (isSuccess) {
+    if (isFarmerDetailsSuccess) {
       let resultData: farmerDetail[] = [];
       farmerId.forEach((item: any) => resultData.push(farmersDetailsById[item]));
       return resultData;
     }
   };
-
-  handleExportData();
 
   //Share Amount Modal Handler
   const shareAmountModalHandler = () => {
@@ -89,6 +89,8 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
         setImportModalOpen(false);
       },
     });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [importedData, mutate]);
 
   const handleClose = () => setAnchorEl(null);
@@ -119,7 +121,7 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
 
   const farmerGroupChange = (groupName: string, newFarmerGroup?: FarmersGroup) => {
     const data =
-      isSuccess &&
+      isFarmerDetailsSuccess &&
       Object.values(farmersDetailsById as farmerDetail[])
         .filter((item: farmerDetail) => selectedFarmers.includes(item.id))
         .map((element) => ({ ...element, group: groupName }));
@@ -276,7 +278,11 @@ const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
           Share Holder
         </S.CustomButton>
         <S.CustomButton onClick={() => setImportModalOpen(true)}>Import Farmers</S.CustomButton>
-        <ExportCSV name="Export Farmers" csvData={isSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])} fileName="Farmers" />
+        <ExportCSV
+          name="Export Farmers"
+          csvData={isFarmerDetailsSuccess ? (handleExportData() as farmerDetail[]) : ([] as farmerDetail[])}
+          fileName="Farmers"
+        />
         <S.CustomButton
           onClick={() => {
             if (addModalHandler) addModalHandler();

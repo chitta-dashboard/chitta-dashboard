@@ -9,7 +9,10 @@ interface Props {
   tooltip?: string;
 }
 
-const IconWrapper: React.FC<Props> = ({ children, isGreen, onClick, isDummy, tooltip }) => {
+const IconWrapper: React.FC<Props> = (props) => {
+  //constants
+  const { children, isGreen, onClick, isDummy, tooltip } = props;
+  
   return (
     <S.Wrapper isGreen={isGreen} onClick={onClick} isDummy={isDummy} title={tooltip}>
       {children}

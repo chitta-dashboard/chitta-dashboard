@@ -16,7 +16,7 @@ namespace S {
     margin: "0.5rem  -0.2rem",
   });
 
-  export const Items = styled(Typography)<{ selectfilter: number }>(({ theme, selectfilter }) => ({
+  export const PopItems = styled(Typography)<{ selectfilter: number }>(({ theme, selectfilter }) => ({
     cursor: "pointer",
     textAlign: "center",
     padding: "0.6rem 1rem",
