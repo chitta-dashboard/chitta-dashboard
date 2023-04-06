@@ -52,7 +52,7 @@ export const uploadProfile = async (image, key) => {
 export const deleteProfile = async (imageName, key) => {
   try {
     const response = await deleteFile(imageName, s3Configs[key]);
-    console.log(response);
+    console.log("ok :", response.ok, "status :", response.status);
   } catch (e) {
     console.log(`Deleting ${key} profile failed.`, e);
   }
