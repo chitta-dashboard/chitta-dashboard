@@ -214,9 +214,14 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleClose={() => {
             setOpenConfirmationModal(null);
           }}
-          yesAction={() => {
+          yesAction={async () => {
+            let profile = openConfirmationModal.profile;
+            if (typeof profile !== "string") {
+              await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              profile = await uploadProfile(openConfirmationModal.profile, s3ConfigTypes.ceo);
+            }
             ceoEdit({
-              editedData: openConfirmationModal,
+              editedData: { ...openConfirmationModal, profile },
               successCb: () => {
                 Toast({ message: "CEO updated successfully.", type: "success" });
               },

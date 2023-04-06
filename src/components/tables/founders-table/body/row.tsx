@@ -157,11 +157,15 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={() => {
-            editMode &&
-              editData &&
+          yesAction={async () => {
+            let profile = editData && editData.profile;
+            if (typeof profile !== "string") {
+              await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              profile = editData && (await uploadProfile(editData.profile, s3ConfigTypes.founder));
+            }
+            editData &&
               founderMutateUpdate({
-                editedData: editData,
+                editedData: { ...editData, profile },
                 successCb: () => {
                   Toast({ message: "Founder Edited Successfully", type: "success" });
                 },

@@ -77,12 +77,10 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
     if (editMode && data.profile === ceoDetailsById[id].profile) {
       profile = data.profile;
     } else {
-      const profileDelete =
-        editMode && ceoDetailsById[id].profile && (await deleteProfile(extractProfileName(ceoDetailsById[id].profile), s3ConfigTypes.ceo));
       const profileBlob = await fetch(data.profile).then((res) => res.blob());
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
-      profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+      profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.ceo);
     }
     cb({
       description: data.description,

@@ -82,11 +82,10 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
     if (editMode && data.profile === foundersById[id].profile) {
       profile = data.profile;
     } else {
-      editMode && foundersById[id].profile && (await deleteProfile(extractProfileName(foundersById[id].profile), s3ConfigTypes.founder));
       const profileBlob = await fetch(data.profile).then((res) => res.blob());
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
-      profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+      profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.founder);
     }
 
     cb({
