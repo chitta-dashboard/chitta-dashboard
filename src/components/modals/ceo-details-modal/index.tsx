@@ -72,12 +72,18 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   //functions
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
-    editMode && ceoDetailsById[id].profile && (await deleteProfile(extractProfileName(ceoDetailsById[id].profile), s3ConfigTypes.ceo));
     data = { ...data, id: editMode ? id : uuidv4() };
-    const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedProfile = await imageCompressor(profileBlob);
-    const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
-    const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+    let profile = "";
+    if (editMode && data.profile === ceoDetailsById[id].profile) {
+      profile = data.profile;
+    } else {
+      const profileDelete =
+        editMode && ceoDetailsById[id].profile && (await deleteProfile(extractProfileName(ceoDetailsById[id].profile), s3ConfigTypes.ceo));
+      const profileBlob = await fetch(data.profile).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
+      profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+    }
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
