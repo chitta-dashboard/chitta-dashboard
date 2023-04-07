@@ -116,7 +116,13 @@ const CeoDetailsCard = ({ user }: Props) => {
                     }}
                   >
                     <S.EditIcon>edit</S.EditIcon>
-                    <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                    <S.HiddenInput
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      ref={hiddenFileInput}
+                      onChange={handleInputChange}
+                      onClick={onInputClick}
+                    />
                   </S.EditBox>
                 </S.ProfilePictureBox>
                 <S.CeoData>

@@ -106,7 +106,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
-              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+              <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
             </S.EditBox>
           </S.AvatarBox>
           {user.name}

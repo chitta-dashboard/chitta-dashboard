@@ -402,7 +402,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                 }}
               >
                 <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
             </S.AvatarBox>
             {user.name}

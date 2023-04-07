@@ -305,13 +305,17 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   };
 
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
-    let newId = uuidv4();
-    let generateId = setId(newId);
+    const newId = uuidv4();
+    const generateId = setId(newId);
     let profile = "";
     if (editMode && form1Data?.profile === farmersDetailsById[id].profile) {
       profile = form1Data?.profile as string;
     } else {
-      editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
+      const deleteRes = editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
+      if (!deleteRes) {
+        handleClose();
+        return;
+      }
       const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
