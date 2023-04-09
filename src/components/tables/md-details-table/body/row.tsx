@@ -174,7 +174,15 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={() => {
+          yesAction={async () => {
+            if (!editMode && user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setConfirmModal(false);
+                return;
+              }
+            }
             !editMode &&
               deleteMdDetail({
                 id: user.id,
@@ -184,11 +192,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
                 },
                 errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
               });
-
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editMode &&
-              editData &&
+            editData &&
               editFarmer({
                 editedData: farmerEditData,
                 successCb: () => {

@@ -457,7 +457,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={async () => {
-              user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer));
+              if (user.profile) {
+                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                if (!deleteRes) {
+                  Toast({ message: "Request failed, please try again.", type: "error" });
+                  setDeleteModal(false);
+                  return;
+                }
+              }
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               !isFarmerInMd &&
                 farmerDelete({

@@ -195,7 +195,14 @@ const CeoDetailsCard = ({ user }: Props) => {
           openModal={true}
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={async () => {
-            user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo));
+            if (user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setOpenDeleteModal(false);
+                return;
+              }
+            }
             ceoDelete({
               id: user.id,
               successCb: () => {

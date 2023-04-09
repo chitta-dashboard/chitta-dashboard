@@ -134,7 +134,14 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
           handleDelete={async () => {
-            user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder));
+            if (user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setDeleteModal(false);
+                return;
+              }
+            }
             founderMutateDelete({
               id: user.id,
               successCb: () => {

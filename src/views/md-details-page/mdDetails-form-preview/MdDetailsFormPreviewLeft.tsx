@@ -275,60 +275,19 @@ const MdFormPreviewLeft = () => {
                 mdId={user.id}
               />
             )}
-            {/* {openDeleteModal && (
-              <DeleteModal
-                openModal={true}
-                handleClose={() => setOpenDeleteModal(false)}
-                handleDelete={() => {
-                  deleteMdDetail({
-                    id: user.id,
-                    successCb: () => {
-                      addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                      Toast({ message: "MD Deleted Successfully", type: "success" });
-                      navigate(-1);
-                    },
-                    errorCb: () => {
-                      Toast({ message: "Request failed! Please try again", type: "error" });
-                    },
-                  });
-                }}
-                deleteMessage={
-                  <span>
-                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from MD Details?
-                  </span>
-                }
-              />
-            )}
-            {openConfirmationModal && (
-              <ConfirmationModal
-                openModal={true}
-                handleClose={() => {
-                  setOpenConfirmationModal(null);
-                }}
-                yesAction={async () => {
-                  await removeGroupMember(user.farmerId, openConfirmationModal.group);
-                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as IMdDetails;
-                  delete farmerEditData.farmerId;
-                  editFarmer({
-                    editedData: farmerEditData,
-                    successCb: () => {
-                      editMdDetail({ editedData: openConfirmationModal });
-                      Toast({ message: "MD Edited Successfully.", type: "success" });
-                    },
-                    errorCb: () => {
-                      Toast({ message: "Request failed! Please try again.", type: "error" });
-                    },
-                  });
-                  setOpenConfirmationModal(null);
-                  setOpenEditModal(false);
-                }}
-              />
-            )} */}
             {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
-                handleDelete={() => {
+                handleDelete={async () => {
+                  if (user.profile) {
+                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteRes) {
+                      Toast({ message: "Request failed, please try again.", type: "error" });
+                      setOpenDeleteModal(false);
+                      return;
+                    }
+                  }
                   deleteMdDetail({
                     id: user.id,
                     successCb: () => {

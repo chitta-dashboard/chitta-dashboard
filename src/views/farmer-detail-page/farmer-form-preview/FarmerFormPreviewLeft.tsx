@@ -321,87 +321,19 @@ const FarmerFormPreviewLeft = () => {
                 mdId={Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id}
               />
             )}
-            {/* {openDeleteModal && (
-              <DeleteModal
-                openModal={true}
-                handleClose={() => setOpenDeleteModal(false)}
-                handleDelete={async () => {
-                  await removeGroupMember(user.id, user.group, false);
-                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-                  !isFarmerInMd &&
-                    farmerDelete({
-                      id: user.id,
-                      successCb: () => {
-                        addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                        Toast({ message: "Farmer Deleted Successfully", type: "success" });
-                      },
-                      errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-                    });
-                  isFarmerInMd &&
-                    farmerDelete({
-                      id: user.id,
-                      successCb: async () => {
-                        mdDelete({
-                          id: isFarmerInMd,
-                          successCb: () => {
-                            addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                            Toast({ message: "Farmer Deleted Successfully", type: "success" });
-                          },
-                          errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-                        });
-                      },
-                    });
-                  navigate(-1);
-                }}
-                deleteMessage={
-                  <span>
-                    Do you want to remove <S.DeleteName>{farmersDetailsById[user.id].name}</S.DeleteName> from Farmers Details?
-                  </span>
-                }
-              />
-            )}
-            {openConfirmationModal && (
-              <ConfirmationModal
-                openModal={true}
-                handleClose={() => {
-                  setOpenConfirmationModal(null);
-                }}
-                yesAction={async () => {
-                  const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-                  openConfirmationModal && (await removeGroupMember(user.id, openConfirmationModal.group, true));
-                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal?.farmerId };
-                  delete farmerEditData.farmerId;
-                  !isFarmerInMd &&
-                    editFarmer({
-                      editedData: farmerEditData,
-                      successCb: () => {
-                        Toast({ message: "MD Edited Successfully", type: "success" });
-                      },
-                      errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
-                      },
-                    });
-                  isFarmerInMd &&
-                    editFarmer({
-                      editedData: farmerEditData,
-                      successCb: () => {
-                        editMdDetail({ editedData: openConfirmationModal });
-                        Toast({ message: "MD Edited Successfully", type: "success" });
-                      },
-                      errorCb: () => {
-                        Toast({ message: "Request failed! Please try again", type: "error" });
-                      },
-                    });
-                  setOpenConfirmationModal(null);
-                  setOpenEditModal(false);
-                }}
-              />
-            )} */}
             {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
+                  if (user.profile) {
+                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteRes) {
+                      Toast({ message: "Request failed, please try again.", type: "error" });
+                      setOpenDeleteModal(false);
+                      return;
+                    }
+                  }
                   const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   !isFarmerInMd &&
                     farmerDelete({
