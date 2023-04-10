@@ -99,7 +99,7 @@ const AdminPanel = () => {
     const imgObj = data.profile[0];
     adminprofile && (await deleteProfile(extractProfileName(adminprofile), s3ConfigTypes.admin));
     const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
-    const profile = await uploadProfile(compressedProfile, "admin");
+    const profile = await uploadProfile(compressedProfile, s3ConfigTypes.admin);
 
     const uploadData = {
       id: "admin_1",
