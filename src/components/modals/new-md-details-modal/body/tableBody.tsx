@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { decryptText } from "../../../../utils/constants";
 import { farmerDetail } from "../../../../utils/context/farmersDetails";
 import placeHolderImg from "../../../../assets/images/profile-placeholder.jpg";
 import S from "./tableData.styled";
@@ -18,7 +17,7 @@ const TableBody: FC<Props> = (props) => {
     <S.MdDetailsTableBodyContainer key={farmerData.id}>
       <S.MdDetailsTableCheckBox onChange={() => handleCheckBox(farmerData.id)} checked={selectedFarmerKeys.includes(farmerData.id)} />
       <S.MdDetailsTableBodyNameContainer>
-        <S.MdDetailsTableProfileImg src={farmerData.profile ? decryptText(farmerData.profile) : placeHolderImg} alt="profile" />
+        <S.MdDetailsTableProfileImg src={farmerData.profile ? farmerData.profile : placeHolderImg} alt="profile" />
         <S.MdDetailsTableHeadTitle>{farmerData.name}</S.MdDetailsTableHeadTitle>
       </S.MdDetailsTableBodyNameContainer>
       <S.MdDetailsTableHeadTitle>{farmerData.phoneNumber}</S.MdDetailsTableHeadTitle>

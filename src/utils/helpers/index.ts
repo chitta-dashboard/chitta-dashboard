@@ -80,3 +80,14 @@ export const base64Encode = (data: string) => {
 export const randomIntBetween = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+export const generateProfileName = (blob: Blob, newName: string) => {
+  const file = new File([blob], newName, { type: blob.type });
+  return file;
+};
+
+export const extractProfileName = (fileName: string) => {
+  const fileArray = fileName.split("/");
+  const file = fileArray[fileArray.length - 1];
+  return file;
+};

@@ -2,7 +2,10 @@ import { useState, useRef, FC, useEffect, Ref } from "react";
 import { Checkbox, Stack, TableRow } from "@mui/material";
 import { useReactToPrint } from "react-to-print";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { ENDPOINTS, decryptText, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
+import { ENDPOINTS, fileValidation, Message, imageCompressor, encryptText } from "../../../../utils/constants";
 import FarmersDetailsIconModal from "../../../icon-modals/farmers-detail-icon-modal";
 import FarmersDetailsModal from "../../../modals/farmers-details-modal";
 import DeleteModal from "../../../modals/delete-modal";
@@ -140,28 +143,33 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
   });
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = encryptText(compressedBase64);
+    const targetFarmerProfile = user.profile;
+    if (targetFarmerProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
     const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-    !isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-        errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-      });
-    isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => {
-          editMdDetail({
-            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
-            successCb: () => Toast({ message: "Farmer Edited Successfully", type: "success" }),
-            errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
-          });
-        },
-      });
+    editFarmer({
+      editedData: { ...user, profile },
+      successCb: () => {
+        !isFarmerInMd && Toast({ message: "Farmer Edited Successfully.", type: "success" });
+        if (isFarmerInMd) {
+          setTimeout(() => {
+            editMdDetail({
+              editedData: { ...user, profile, farmerId: user.id, id: isFarmerInMd },
+              successCb: () => Toast({ message: "Farmer Edited Successfully.", type: "success" }),
+              errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+            });
+          }, 0);
+        }
+      },
+    });
   };
 
   const HandleRepresentativeOf = (editedFarmer: farmerDetail, oldId: string, newId: string) => {
@@ -383,7 +391,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               }}
             >
               {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
-              <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
+              <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : placeHolderImg} />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
@@ -391,7 +399,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                 }}
               >
                 <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
             </S.AvatarBox>
             {user.name}
@@ -446,6 +454,14 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={deleteModal}
             handleClose={() => setDeleteModal(false)}
             handleDelete={async () => {
+              if (user.profile) {
+                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                if (!deleteRes) {
+                  Toast({ message: "Request failed, please try again.", type: "error" });
+                  setDeleteModal(false);
+                  return;
+                }
+              }
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
               !isFarmerInMd &&
                 farmerDelete({
@@ -493,8 +509,19 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={async () => {
+              let profile = editData?.profile;
+              if (typeof profile !== "string") {
+                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                profile = await uploadProfile(editData?.profile, s3ConfigTypes.farmer);
+                if (!deleteRes && !profile) {
+                  Toast({ message: "Request failed, please try again.", type: "error" });
+                  setConfirmModal(false);
+                  return;
+                }
+              }
+
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-              const farmerEditData = { ...editData, id: editData?.farmerId };
+              const farmerEditData = { ...editData, id: editData?.farmerId, profile };
               const newId = editData?.representative?.id ?? "";
               const oldId = editData?.farmerId ? isFarmerDetailsSuccess && farmersDetailsById[editData.farmerId]?.representative?.id : "";
               delete farmerEditData.farmerId;

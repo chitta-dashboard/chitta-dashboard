@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Compress from "react-image-file-resizer";
-import { useEdit } from "../../utils/hooks/query";
+import { extractProfileName, generateProfileName } from "../../utils/helpers";
+import { s3ConfigTypes } from "../../types";
+import { deleteProfile, uploadProfile } from "../../services/s3-client";
+import { useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import AdminLogo from "../../components/admin-panel/admin-logo";
 import IdInformation from "../../components/admin-panel/id-information";
@@ -49,9 +52,13 @@ const AdminPanel = () => {
   //state values
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
+  // const [imageUrl, setImageUrl] = useState("");
 
   //constants
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.admin);
+  const { data: adminDetails } = result;
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
+  const adminprofile = isSuccess && Object.values(adminDetails as AdminFormInputs)[0].profile;
 
   const {
     register,
@@ -90,18 +97,16 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-
-    const headerLogo = await fileChangedHandler(imgObj, 94, 94);
-    const loginLogo = await fileChangedHandler(imgObj, 156, 156);
-    const certificateLogo = await fileChangedHandler(imgObj, 180, 180);
-    const pdfLogo = await fileChangedHandler(imgObj, 180, 180);
+    adminprofile && (await deleteProfile(extractProfileName(adminprofile), s3ConfigTypes.admin));
+    const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
+    const profile = await uploadProfile(compressedProfile, s3ConfigTypes.admin);
 
     const uploadData = {
       id: "admin_1",
-      headerLogo: headerLogo,
-      loginLogo: loginLogo,
-      certificateLogo: certificateLogo,
-      pdfLogo: pdfLogo,
+      headerLogo: profile,
+      loginLogo: profile,
+      certificateLogo: profile,
+      pdfLogo: profile,
       name: data.name,
       address: data.address,
       coordinatorAddress: data.coordinatorAddress,

@@ -2,7 +2,10 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { dateFormat, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { s3ConfigTypes } from "../../../types";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
+import { dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -11,6 +14,7 @@ import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
 import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import Toast from "../../../utils/toast";
 
 interface CustomProps {
   openModal: boolean;
@@ -50,7 +54,7 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: decryptText(userData?.profile) || placeHolderImg,
+        profile: userData?.profile || placeHolderImg,
       });
     }
 
@@ -69,18 +73,30 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
 
   //functions
   const onSubmit: any = async (data: IAddCEODetailsFormInput & { id: string }) => {
-    const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    const encryptedBase64 = encryptText(compressedBase64);
+    data = { ...data, id: editMode ? id : uuidv4() };
+    let profile = "";
+    if (editMode && data.profile === ceoDetailsById[id].profile) {
+      profile = data.profile;
+    } else {
+      const profileBlob = await fetch(data.profile).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
+      profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+      if (!profile) {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+        handleClose();
+        return;
+      }
+    }
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       joinedDate: data?.joinedDate,
       phoneNumber: data.phoneNumber,
-      profile: encryptedBase64,
+      profile,
       qualification: data.qualification,
-      id: editMode ? id : uuidv4(),
+      id: data.id,
     } as IAddCEODetailsFormInput & { id: string });
     handleClose();
     reset();

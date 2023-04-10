@@ -2,7 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -20,6 +22,7 @@ import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRET
 import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
+import { s3ConfigTypes } from "../../../types";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -219,7 +222,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
-        profile: decryptText(farmerData?.profile) || placeHolderImg,
+        profile: farmerData?.profile || placeHolderImg,
         email: farmerData?.email,
         representative: {
           id: farmerData?.representative?.id,
@@ -304,15 +307,23 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   };
 
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
-    const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    const encryptedBase64 = encryptText(compressedBase64);
+    const newId = uuidv4();
+    const generateId = setId(newId);
+    let profile = "";
+    if (editMode && form1Data?.profile === farmersDetailsById[id].profile) {
+      profile = form1Data?.profile as string;
+    } else {
+      const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
+      profile = namedProfile as unknown as string;
+    }
+
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;
     const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
     const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
 
-    let newId = uuidv4();
     let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
 
     let editedData = {
@@ -326,8 +337,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...form1Data,
       ...form2Data,
       ...editedData,
-      profile: encryptedBase64,
-      id: setId(newId),
+      profile,
+      id: generateId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
       phoneNumber: `+91${form1Data?.phoneNumber}`,

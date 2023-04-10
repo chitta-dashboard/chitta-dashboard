@@ -15,6 +15,8 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./farmersDetails.styled";
 import { addCustomer } from "../../queries";
 import { createWalletAndEncrypt } from "../../services/algorand";
+import { uploadProfile } from "../../services/s3-client";
+import { s3ConfigTypes } from "../../types";
 
 const FarmersDetails = () => {
   //state values
@@ -69,8 +71,14 @@ const FarmersDetails = () => {
   };
 
   // Add Farmerdetail Handler after entering correct password
-  const addFarmerDetailHandler = (data: string) => {
-    const newFarmer = { ...farmerData, password: data, representativeOf: [] } as farmerDetail;
+  const addFarmerDetailHandler = async (data: string) => {
+    let profile = await uploadProfile(farmerData?.profile, s3ConfigTypes.farmer);
+    if (!profile) {
+      setPasswordConfirmModal(false);
+      Toast({ message: "Request failed, please try again.", type: "error" });
+      return;
+    }
+    const newFarmer = { ...farmerData, password: data, representativeOf: [], profile } as farmerDetail;
     setPasswordConfirmModal(false);
     const newFarmerWithWallet = createWalletAndEncrypt([newFarmer]);
     if (newFarmerWithWallet.length) {

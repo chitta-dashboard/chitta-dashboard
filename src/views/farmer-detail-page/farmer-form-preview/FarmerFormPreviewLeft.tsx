@@ -9,7 +9,7 @@ import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
 import { useAuthContext } from "../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { IAddFarmersDetailsFormInput } from "../../../components/modals/type/formInputs";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
@@ -18,6 +18,9 @@ import ConfirmationModal from "../../../components/modals/confirmation-modal";
 import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { S } from "./farmer-form-preview.styled";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
+import { s3ConfigTypes } from "../../../types";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 
 const FarmerFormPreviewLeft = () => {
   //constructors
@@ -94,38 +97,69 @@ const FarmerFormPreviewLeft = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const user = farmersDetailsById[userId];
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-
-    const encryptedBase64 = encryptText(compressedBase64);
-    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-    !isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: () => {
-          Toast({ message: "Farmer Edited Successfully", type: "success" });
-        },
-        errorCb: () => {
-          Toast({ message: "Request failed! Please try again", type: "error" });
-        },
-      });
-    isFarmerInMd &&
-      editFarmer({
-        editedData: { ...user, profile: encryptedBase64 },
-        successCb: async () => {
-          editMdDetail({
-            editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
-            successCb: () => {
-              Toast({ message: "Farmer Edited Successfully", type: "success" });
-            },
-            errorCb: () => {
-              Toast({ message: "Request failed! Please try again", type: "error" });
-            },
-          });
-        },
-      });
+    const targetFarmer = farmersDetailsById[userId];
+    const targetFarmerProfile = targetFarmer.profile;
+    if (targetFarmerProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+    const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === targetFarmer.id)?.id;
+    editFarmer({
+      editedData: { ...targetFarmer, profile },
+      successCb: async () => {
+        !isFarmerInMd && Toast({ message: "Farmer Edited Successfully", type: "success" });
+        if (isFarmerInMd) {
+          setTimeout(() => {
+            editMdDetail({
+              editedData: { ...targetFarmer, profile, farmerId: targetFarmer.id, id: isFarmerInMd },
+              successCb: () => {
+                Toast({ message: "Farmer Edited Successfully", type: "success" });
+              },
+              errorCb: () => {
+                Toast({ message: "Request failed! Please try again", type: "error" });
+              },
+            });
+          }, 0);
+        }
+      },
+    });
+    // const user = farmersDetailsById[userId];
+    // const profileBlob = await fetch(image).then((res) => res.blob());
+    // const compressedBase64 = await imageCompressor(profileBlob);
+    // if (!image) return;
+    // const encryptedBase64 = encryptText(compressedBase64);
+    // const isFarmerInMd = Object.values(isMdSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
+    // !isFarmerInMd &&
+    //   editFarmer({
+    //     editedData: { ...user, profile: encryptedBase64 },
+    //     successCb: () => {
+    //       Toast({ message: "Farmer Edited Successfully", type: "success" });
+    //     },
+    //     errorCb: () => {
+    //       Toast({ message: "Request failed! Please try again", type: "error" });
+    //     },
+    //   });
+    // isFarmerInMd &&
+    //   editFarmer({
+    //     editedData: { ...user, profile: encryptedBase64 },
+    //     successCb: async () => {
+    //       editMdDetail({
+    //         editedData: { ...user, profile: encryptedBase64, farmerId: user.id, id: isFarmerInMd },
+    //         successCb: () => {
+    //           Toast({ message: "Farmer Edited Successfully", type: "success" });
+    //         },
+    //         errorCb: () => {
+    //           Toast({ message: "Request failed! Please try again", type: "error" });
+    //         },
+    //       });
+    //     },
+    //   });
   };
 
   //Update FarmerDetail Handler
@@ -249,7 +283,7 @@ const FarmerFormPreviewLeft = () => {
             </S.FormHeading>
             <S.FarmerImgContainer>
               <S.FarmerImg
-                src={farmersDetailsById[user.id].profile ? decryptText(farmersDetailsById[user.id].profile) : profilePlaceholder}
+                src={farmersDetailsById[user.id].profile ? farmersDetailsById[user.id].profile : profilePlaceholder}
                 alt="profie-picture"
               />
               <S.EditBox
@@ -259,7 +293,7 @@ const FarmerFormPreviewLeft = () => {
                 }}
               >
                 <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
             </S.FarmerImgContainer>
             <S.HeaderText>
@@ -292,6 +326,14 @@ const FarmerFormPreviewLeft = () => {
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
+                  if (user.profile) {
+                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteRes) {
+                      Toast({ message: "Request failed, please try again.", type: "error" });
+                      setOpenDeleteModal(false);
+                      return;
+                    }
+                  }
                   const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
                   !isFarmerInMd &&
                     farmerDelete({

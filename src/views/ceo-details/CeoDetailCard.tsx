@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import placeHolderImg from "./../../assets/images/profile-placeholder.jpg";
-import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { calculateAge, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../utils/helpers";
 import ImagePreview from "../../utils/imageCrop/imagePreview";
 import AddCeoDetailsModal from "../../components/modals/ceo-details-modal";
 import { IAddCEODetailsFormInput } from "../../components/modals/type/formInputs";
@@ -8,6 +10,7 @@ import DeleteModal from "../../components/modals/delete-modal";
 import ConfirmationModal from "../../components/modals/confirmation-modal";
 import { useAuthContext } from "../../utils/context/auth";
 import IdCardModal from "../../components/modals/id-download-modal";
+import { s3ConfigTypes } from "../../types";
 import { useDelete, useEdit, useFetch } from "../../utils/hooks/query";
 import Loader from "../../utils/loaders/tree-loader";
 import S from "./ceo-details.styled";
@@ -66,12 +69,23 @@ const CeoDetailsCard = ({ user }: Props) => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    let result = ceoDetailsById[user.id];
-    const encryptedBase64 = encryptText(compressedBase64);
-    editCeoDetail({ editedData: { ...result, profile: encryptedBase64 } });
+    const targetCeo = ceoDetailsById[user.id];
+    const targetCeoProfile = targetCeo.profile;
+    if (targetCeoProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.ceo}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+    editCeoDetail({
+      editedData: { ...targetCeo, profile },
+      successCb: () => Toast({ message: "Ceo Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   const addModalHandler = () => {
@@ -93,7 +107,7 @@ const CeoDetailsCard = ({ user }: Props) => {
               <S.CeoDataLeft>
                 <S.ProfilePictureBox>
                   <S.CeoProfilePicture
-                    src={ceoDetailsById[user.id]?.profile ? decryptText(ceoDetailsById[user.id]?.profile) : placeHolderImg}
+                    src={ceoDetailsById[user.id]?.profile ? ceoDetailsById[user.id]?.profile : placeHolderImg}
                     alt="profile picture"
                   />
                   <S.EditBox
@@ -102,7 +116,13 @@ const CeoDetailsCard = ({ user }: Props) => {
                     }}
                   >
                     <S.EditIcon>edit</S.EditIcon>
-                    <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                    <S.HiddenInput
+                      type="file"
+                      accept="image/png, image/jpeg"
+                      ref={hiddenFileInput}
+                      onChange={handleInputChange}
+                      onClick={onInputClick}
+                    />
                   </S.EditBox>
                 </S.ProfilePictureBox>
                 <S.CeoData>
@@ -174,7 +194,15 @@ const CeoDetailsCard = ({ user }: Props) => {
         <DeleteModal
           openModal={true}
           handleClose={() => setOpenDeleteModal(false)}
-          handleDelete={() => {
+          handleDelete={async () => {
+            if (user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setOpenDeleteModal(false);
+                return;
+              }
+            }
             ceoDelete({
               id: user.id,
               successCb: () => {
@@ -199,9 +227,19 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleClose={() => {
             setOpenConfirmationModal(null);
           }}
-          yesAction={() => {
+          yesAction={async () => {
+            let profile = openConfirmationModal.profile;
+            if (typeof profile !== "string") {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              profile = await uploadProfile(openConfirmationModal.profile, s3ConfigTypes.ceo);
+              if (!deleteRes && !profile) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setOpenConfirmationModal(null);
+                return;
+              }
+            }
             ceoEdit({
-              editedData: openConfirmationModal,
+              editedData: { ...openConfirmationModal, profile },
               successCb: () => {
                 Toast({ message: "CEO updated successfully.", type: "success" });
               },

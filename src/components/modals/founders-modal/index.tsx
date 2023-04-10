@@ -1,8 +1,11 @@
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { createJoinDate, dateFormat, decryptText, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
+import { createJoinDate, dateFormat, ENDPOINTS, imageCompressor } from "../../../utils/constants";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
+import { s3ConfigTypes } from "../../../types";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -11,6 +14,8 @@ import { IAddFounderDetailsFormInput } from "../type/formInputs";
 import { useFetch } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import Toast from "../../../utils/toast";
+window.Buffer = require("buffer").Buffer;
 
 interface CustomProps {
   openModal: boolean;
@@ -21,6 +26,8 @@ interface CustomProps {
 }
 
 const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
+  //state values
+  const [imageUrl, setImageUrl] = useState("");
   //constants
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.founders);
   const { data: foundersById } = result;
@@ -50,7 +57,7 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         description: userData?.description as string,
-        profile: decryptText(userData?.profile) || placeHolderImg,
+        profile: userData?.profile || placeHolderImg,
         joinDate: userData?.joinDate,
       });
     }
@@ -71,18 +78,30 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
 
   //functions
   const onSubmit: any = async (data: IAddFounderDetailsFormInput & { id: string }) => {
-    const profileBlob = await fetch(data.profile).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    const encryptedImage = encryptText(compressedBase64);
+    data = { ...data, id: editMode ? id : uuidv4() };
+    let profile = "";
+    if (editMode && data.profile === foundersById[id].profile) {
+      profile = data.profile;
+    } else {
+      const profileBlob = await fetch(data.profile).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
+      profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.founder);
+      if (!profile) {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+        handleClose();
+        return;
+      }
+    }
 
     cb({
       description: data.description,
       dob: dateFormat(data.dob),
       name: data.name,
       phoneNumber: data.phoneNumber,
-      profile: encryptedImage,
+      profile,
       qualification: data.qualification,
-      id: editMode ? id : uuidv4(),
+      id: data.id,
       joinDate: createJoinDate(),
     } as IAddFounderDetailsFormInput & { id: string });
     !editMode && reset();

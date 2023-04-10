@@ -92,6 +92,7 @@ const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setI
               })}
               hidden
               type="file"
+              accept="image/png, image/jpeg"
             />
           </Button>
         </Box>
