@@ -512,8 +512,19 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             openModal={confirmModal}
             handleClose={() => setConfirmModal(false)}
             yesAction={async () => {
+              let profile = editData?.profile;
+              if (typeof profile !== "string") {
+                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                profile = await uploadProfile(editData?.profile, s3ConfigTypes.farmer);
+                if (!deleteRes && !profile) {
+                  Toast({ message: "Request failed, please try again.", type: "error" });
+                  setConfirmModal(false);
+                  return;
+                }
+              }
+
               const isFarmerInMd = Object.values(isSuccess && (mdDetailsById as IMdDetails[])).find((data) => data.farmerId === user.id)?.id;
-              const farmerEditData = { ...editData, id: editData?.farmerId };
+              const farmerEditData = { ...editData, id: editData?.farmerId, profile };
               const newId = editData?.representative?.id ?? "";
               const oldId = editData?.farmerId ? isFarmerDetailsSuccess && farmersDetailsById[editData.farmerId]?.representative?.id : "";
               delete farmerEditData.farmerId;

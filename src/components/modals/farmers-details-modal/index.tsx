@@ -311,15 +311,10 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     if (editMode && form1Data?.profile === farmersDetailsById[id].profile) {
       profile = form1Data?.profile as string;
     } else {
-      const deleteRes = editMode && form1Data?.profile && (await deleteProfile(extractProfileName(form1Data?.profile), s3ConfigTypes.farmer));
-      if (!deleteRes) {
-        handleClose();
-        return;
-      }
       const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
-      profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+      profile = namedProfile as unknown as string;
     }
 
     //Get Id
