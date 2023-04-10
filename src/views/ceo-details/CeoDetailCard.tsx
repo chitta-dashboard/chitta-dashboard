@@ -230,8 +230,13 @@ const CeoDetailsCard = ({ user }: Props) => {
           yesAction={async () => {
             let profile = openConfirmationModal.profile;
             if (typeof profile !== "string") {
-              await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
               profile = await uploadProfile(openConfirmationModal.profile, s3ConfigTypes.ceo);
+              if (!deleteRes && !profile) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setOpenConfirmationModal(null);
+                return;
+              }
             }
             ceoEdit({
               editedData: { ...openConfirmationModal, profile },

@@ -14,6 +14,7 @@ import { IAddCEODetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
 import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import Toast from "../../../utils/toast";
 
 interface CustomProps {
   openModal: boolean;
@@ -81,6 +82,11 @@ const CeoDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.ceo}_${data.id}_${Date.now()}`);
       profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.ceo);
+      if (!profile) {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+        handleClose();
+        return;
+      }
     }
     cb({
       description: data.description,

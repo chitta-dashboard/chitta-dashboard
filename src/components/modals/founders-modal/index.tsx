@@ -14,6 +14,7 @@ import { IAddFounderDetailsFormInput } from "../type/formInputs";
 import { useFetch } from "../../../utils/hooks/query";
 import FormField from "./body/formField";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import Toast from "../../../utils/toast";
 window.Buffer = require("buffer").Buffer;
 
 interface CustomProps {
@@ -86,6 +87,11 @@ const FoundersModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode =
       const compressedProfile = await imageCompressor(profileBlob);
       const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.founder}_${data.id}_${Date.now()}`);
       profile = editMode ? (namedProfile as unknown as string) : await uploadProfile(namedProfile, s3ConfigTypes.founder);
+      if (!profile) {
+        Toast({ message: "Request failed, please try again.", type: "error" });
+        handleClose();
+        return;
+      }
     }
 
     cb({

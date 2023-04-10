@@ -167,8 +167,13 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           yesAction={async () => {
             let profile = editData && editData.profile;
             if (typeof profile !== "string") {
-              await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
               profile = editData && (await uploadProfile(editData.profile, s3ConfigTypes.founder));
+              if (!deleteRes && !profile) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setConfirmModal(false);
+                return;
+              }
             }
             editData &&
               founderMutateUpdate({
