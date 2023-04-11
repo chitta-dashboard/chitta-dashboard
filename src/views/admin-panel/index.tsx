@@ -58,7 +58,7 @@ const AdminPanel = () => {
   const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.admin);
   const { data: adminDetails } = result;
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
-  const adminprofile = isSuccess && Object.values(adminDetails as AdminFormInputs)[0].profile;
+  const adminProfile = isSuccess && Object.values(adminDetails as AdminFormInputs)[0].headerLogo;
 
   const {
     register,
@@ -97,9 +97,14 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-    adminprofile && (await deleteProfile(extractProfileName(adminprofile), s3ConfigTypes.admin));
+    const deleteRes = adminProfile && (await deleteProfile(extractProfileName(adminProfile), s3ConfigTypes.admin));
     const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
     const profile = await uploadProfile(compressedProfile, s3ConfigTypes.admin);
+    if ((adminProfile && !deleteRes) || !profile) {
+      Toast({ message: "Request failed, please try again.", type: "error" });
+      reset();
+      return;
+    }
 
     const uploadData = {
       id: "admin_1",
