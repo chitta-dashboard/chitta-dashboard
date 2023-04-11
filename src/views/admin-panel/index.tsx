@@ -103,6 +103,8 @@ const AdminPanel = () => {
     if ((adminProfile && !deleteRes) || !profile) {
       Toast({ message: "Request failed, please try again.", type: "error" });
       reset();
+      setLogo(null);
+      setImage(null);
       return;
     }
 
