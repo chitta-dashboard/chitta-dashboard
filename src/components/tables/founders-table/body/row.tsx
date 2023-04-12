@@ -169,7 +169,7 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
             if (typeof profile !== "string") {
               const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
               profile = editData && (await uploadProfile(editData.profile, s3ConfigTypes.founder));
-              if (!deleteRes && !profile) {
+              if ((user.profile && !deleteRes) || !profile) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setConfirmModal(false);
                 return;

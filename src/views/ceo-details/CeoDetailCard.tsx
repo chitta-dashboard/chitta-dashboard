@@ -232,7 +232,7 @@ const CeoDetailsCard = ({ user }: Props) => {
             if (typeof profile !== "string") {
               const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
               profile = await uploadProfile(openConfirmationModal.profile, s3ConfigTypes.ceo);
-              if (!deleteRes && !profile) {
+              if ((user.profile && !deleteRes) || !profile) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setOpenConfirmationModal(null);
                 return;

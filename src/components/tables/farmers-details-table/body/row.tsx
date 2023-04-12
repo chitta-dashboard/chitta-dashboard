@@ -513,7 +513,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
               if (typeof profile !== "string") {
                 const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
                 profile = await uploadProfile(editData?.profile, s3ConfigTypes.farmer);
-                if (!deleteRes && !profile) {
+                if ((user.profile && !deleteRes) || !profile) {
                   Toast({ message: "Request failed, please try again.", type: "error" });
                   setConfirmModal(false);
                   return;
