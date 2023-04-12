@@ -1,7 +1,8 @@
 import moment from "moment/moment";
+import CryptoJS from "crypto-js";
+import { Buffer } from "buffer";
 
 type datePropsType = string | number;
-
 
 export const handleDateDifference = (start: datePropsType, end: datePropsType) => {
   let updatedStart: number = new Date(start).getTime();
@@ -17,13 +18,13 @@ export const handleDateDifference = (start: datePropsType, end: datePropsType) =
     let month = Math.floor(week / 4.34524);
     let remainingWeeks = Math.floor(week % 4.34524);
 
-    let checkDay = remainingDays > 1 ? "days" : "day"
-    let checkWeek = week > 1 ? "weeks" : "week"
-    let checkMonth = month > 1 ? "months" : "month"
-    let  checkRemainingWeek = remainingWeeks > 1 ? "weeks" : "week"
+    let checkDay = remainingDays > 1 ? "days" : "day";
+    let checkWeek = week > 1 ? "weeks" : "week";
+    let checkMonth = month > 1 ? "months" : "month";
+    let checkRemainingWeek = remainingWeeks > 1 ? "weeks" : "week";
 
     const weekResult = `${week} ${checkWeek} ${remainingDays > 0 && `and ${remainingDays} ${checkDay}`}`;
-    const monthResult = `${month} ${checkMonth} ${remainingWeeks > 0 && `and ${remainingWeeks} ${checkRemainingWeek}` }`;
+    const monthResult = `${month} ${checkMonth} ${remainingWeeks > 0 && `and ${remainingWeeks} ${checkRemainingWeek}`}`;
     let result = month > 0 ? monthResult : weekResult;
     return result;
   }
@@ -49,7 +50,6 @@ export const handleDateDifference2 = (start: datePropsType, end: datePropsType) 
   return `${days} ${days > 1 ? "days" : "day"}`;
 };
 
-
 const formatNumber = (num: number) => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
 };
@@ -63,4 +63,31 @@ export const formatNumberToSmallScale = (number: number) => {
   else if (number / Math.pow(10, 6) >= 1) return `${formatNumber(toFixedOf(number / Math.pow(10, 6), 2))}M`;
   else if (number / Math.pow(10, 3) >= 1) return `${formatNumber(toFixedOf(number / Math.pow(10, 3), 2))}K`;
   return number;
+};
+
+//encryption and decryption
+export const decryptCrypto = (data: string) => {
+  let salt = process.env.REACT_APP_API_SECRET ?? "";
+  var bytes = CryptoJS.AES.decrypt(data, salt);
+  var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  return decryptedData;
+};
+
+export const base64Encode = (data: string) => {
+  return Buffer.from(data).toString("base64");
+};
+
+export const randomIntBetween = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const generateProfileName = (blob: Blob, newName: string) => {
+  const file = new File([blob], newName, { type: blob.type });
+  return file;
+};
+
+export const extractProfileName = (fileName: string) => {
+  const fileArray = fileName.split("/");
+  const file = fileArray[fileArray.length - 1];
+  return file;
 };

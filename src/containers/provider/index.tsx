@@ -7,7 +7,6 @@ import { LightTheme } from "../../utils/theme";
 import { MdDetailsContextProvider } from "../../utils/context/mdDetails";
 import { FoundersContextProvider } from "../../utils/context/founders";
 import { FarmersGroupContextProvider } from "../../utils/context/farmersGroup";
-import { CeoDetailsContextProvider } from "../../utils/context/ceoDetails";
 import { ResolutionContextProvider } from "../../utils/context/resolution";
 import { PortfolioContextProvider } from "../../utils/context/portfolio";
 import { FarmerDetailsContextProvider } from "../../utils/context/farmersDetails";
@@ -28,11 +27,9 @@ const Provider: FC<Props> = ({ children }) => {
               <MdDetailsContextProvider>
                 <FoundersContextProvider>
                   <FarmersGroupContextProvider>
-                    <CeoDetailsContextProvider>
                       <ResolutionContextProvider>
                         <PortfolioContextProvider>{children}</PortfolioContextProvider>
                       </ResolutionContextProvider>
-                    </CeoDetailsContextProvider>
                   </FarmersGroupContextProvider>
                 </FoundersContextProvider>
               </MdDetailsContextProvider>

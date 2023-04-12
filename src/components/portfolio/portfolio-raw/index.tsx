@@ -10,10 +10,13 @@ interface Props {
   clearSearchHandler: () => void;
 }
 const PortfolioRaw: FC<Props> = ({ tab, clearSearchHandler }) => {
+  //constants
   const {
     formatChangeSuccess: isRawSuccess,
     result: { data: rawProducts },
   } = useFetch(ENDPOINTS.portfolioRaw);
+
+  //state values
   const { searchFilter, setSearchFilter } = usePortfolioContext();
   const [rawProductSearch, setRawProductSearchSearch] = useState<IPortfolioProduct[]>(isRawSuccess ? Object.values(rawProducts) : []);
 

@@ -12,16 +12,25 @@ import AddFarmersGroupModal from "../../../modals/farmers-group-modal";
 import ImportFarmersModal from "../../../modals/import-farmers-modal";
 import S from "./rightSection.styled";
 import ShareAmountModal from "../../../modals/share-amount-modal";
+
 interface RightSectionProps {
   addModalHandler?: () => void;
 }
 
-const RightSection: FC<RightSectionProps> = (props) => {
-  const { addModalHandler } = props;
+const RightSection: FC<RightSectionProps> = ({ addModalHandler }) => {
+  //state values
+  const { addNotification } = useAuthContext();
   const { formatChangeSuccess: isFarmerGroupSuccess, result } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmersGroupById } = result;
-  const { addNotification } = useAuthContext();
   const { selectedFarmers, farmerId, checkboxUnselectAll, groupFilter } = useFarmerDetailsContext();
+  const [importedData, setImportedData] = useState<farmerDetail[] | null>(null);
+  const [importModalOpen, setImportModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [openFarmerGroupModal, setOpenFarmerGroupModal] = useState(false);
+  const [openConfirmationModal, setOpenConfirmationModal] = useState<null | string | FarmersGroup>(null);
+  const [shareModal, setShareModal] = useState(false);
+
+  // constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
@@ -30,6 +39,14 @@ const RightSection: FC<RightSectionProps> = (props) => {
     formatChangeSuccess: isMdDetailSuccess,
     result: { data: mdDetailsById },
   } = useFetch(ENDPOINTS.mdDetails);
+  const { mutate } = useAdd(ENDPOINTS.farmerDetails);
+  const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
+  const { mutate: updateFarmerDetails } = useEdit(ENDPOINTS.farmerDetails);
+  const { mutate: updateMdDetails } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: updateFarmergroup } = useEdit(ENDPOINTS.farmerGroup);
+  const { mutate: addNewNotification } = useAdd(ENDPOINTS.notification);
+
+  //functions
   const handleExportData = () => {
     if (isSuccess) {
       let resultData: farmerDetail[] = [];
@@ -37,18 +54,6 @@ const RightSection: FC<RightSectionProps> = (props) => {
       return resultData;
     }
   };
-  const { mutate } = useAdd(ENDPOINTS.farmerDetails);
-  const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
-  const { mutate: updateFarmerDetails } = useEdit(ENDPOINTS.farmerDetails);
-  const { mutate: updateMdDetails } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: updateFarmergroup } = useEdit(ENDPOINTS.farmerGroup);
-  const { mutate: addNewNotification } = useAdd(ENDPOINTS.notification);
-  const [importedData, setImportedData] = useState<farmerDetail[] | null>(null);
-  const [importModalOpen, setImportModalOpen] = useState(false);
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [openFarmerGroupModal, setOpenFarmerGroupModal] = useState(false);
-  const [openConfirmationModal, setOpenConfirmationModal] = useState<null | string | FarmersGroup>(null);
-  const [shareModal, setShareModal] = useState(false);
 
   handleExportData();
 
@@ -106,7 +111,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         }, 0);
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Adding farmer group request failed, please try again.", type: "error" });
       },
     });
     addNotification({ id: `add_${newFarmerGroup.id}`, message: Message(newFarmerGroup.groupName).addFarmGroup });
@@ -128,7 +133,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
       },
       errorCb: () => {
         Toast({
-          message: `Something went wrong, sorry for the inconvenience.`,
+          message: "Updating farmer request failed, please try again.",
           type: "error",
         });
       },
@@ -155,7 +160,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
         },
         errorCb: () => {
           Toast({
-            message: `Something went wrong, sorry for the inconvenience.`,
+            message: "Updating Md request failed, please try again.",
             type: "error",
           });
         },
@@ -197,7 +202,7 @@ const RightSection: FC<RightSectionProps> = (props) => {
       },
       errorCb: () => {
         Toast({
-          message: `Something went wrong at farmerGroup, sorry for the inconvenience.`,
+          message: "Updating farmer group request failed, please try again.",
           type: "error",
         });
       },

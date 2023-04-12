@@ -18,10 +18,23 @@ interface CustomProps {
   handleCheckBoxAll: () => void;
   selectedFarmerKeys: string[];
   farmerDetails: farmerDetail[];
+  representative?: boolean;
 }
 
 const MdDetailsModal: FC<CustomProps> = (props) => {
-  const { openModal, handleClose, handleConfirmModal, handleCheckBox, handleCheckBoxAll, selectedFarmerKeys, farmerDetails } = props;
+  //constants
+  const {
+    openModal,
+    handleClose,
+    handleConfirmModal,
+    handleCheckBox,
+    handleCheckBoxAll,
+    selectedFarmerKeys,
+    farmerDetails,
+    representative = false,
+  } = props;
+
+  //state values
   const [farmerDetailsByIdData, setFarmerDetailsByIdData] = useState(farmerDetails);
   const [searchKeyWord, setSearchKeyWord] = useState<string>("");
 
@@ -50,7 +63,7 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
           handleClose();
         }}
       >
-        Add MD Details
+        {representative ? "Add Representative " : "Add MD Details"}
       </ModalHeader>
       <ModalBody id="mdDetails" isPadding={false}>
         <Stack spacing={0}>
@@ -64,6 +77,7 @@ const MdDetailsModal: FC<CustomProps> = (props) => {
                 handleCheckBox={handleCheckBox}
                 handleCheckBoxAll={handleCheckBoxAll}
                 selectedFarmerKeys={selectedFarmerKeys}
+                representative={representative}
               />
             ) : (
               <S.NoDataAvailable>No Md Details Available</S.NoDataAvailable>

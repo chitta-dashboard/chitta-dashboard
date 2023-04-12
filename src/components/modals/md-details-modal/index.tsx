@@ -2,8 +2,8 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useMdDetailsContext } from "../../../utils/context/mdDetails";
-import { dateFormat, decryptText, encryptText, imageCompressor } from "../../../utils/constants";
+import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { dateFormat, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";
 import ModalBody from "../../custom-modal/body";
@@ -11,6 +11,7 @@ import CustomModal from "../../custom-modal";
 import { IAddMDDetailsFormInput } from "../type/formInputs";
 import FormField from "./body/formField";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
+import { useFetch } from "../../../utils/hooks/query";
 
 interface CustomProps {
   openModal: boolean;
@@ -21,7 +22,11 @@ interface CustomProps {
 }
 
 const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode = false, id = "" }) => {
-  let { mdDetailsById } = useMdDetailsContext();
+  //constants
+  const {
+    formatChangeSuccess: isMdDetailSuccess,
+    result: { data: mdDetailsById },
+  } = useFetch(ENDPOINTS.mdDetails);
 
   const { handleSubmit, reset, clearErrors, setValue, getValues, unregister, control, watch } = useForm<IAddMDDetailsFormInput>();
 
@@ -41,14 +46,14 @@ const MdDetailsModal: FC<CustomProps> = ({ openModal, handleClose, cb, editMode 
 
   useEffect(() => {
     if (editMode) {
-      let userData = Object.values(mdDetailsById).find((md) => String(md.id) === id);
+      let userData = Object.values(isMdDetailSuccess && (mdDetailsById as IMdDetails)).find((md) => String(md.id) === id);
       reset({
         name: userData?.name as string,
         phoneNumber: userData?.phoneNumber as unknown as string,
         qualification: userData?.qualification as string,
         dob: dateFormat(userData?.dob) as string,
         signature: "",
-        profile: decryptText(userData?.profile as string) || placeHolderImg,
+        profile: userData?.profile || placeHolderImg,
       });
     }
 

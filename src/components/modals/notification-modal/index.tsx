@@ -1,6 +1,6 @@
 import { FC, useState, useRef } from "react";
 import { useFetch } from "../../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS } from "../../../utils/constants";
 import { BufferLoader } from "../../../utils/loaders/api-loader";
 import Icon from "../../icons";
 import S from "./NotificationModal.styled";
@@ -14,12 +14,17 @@ interface NotificationProps {
 }
 
 const NotificationModal: FC<NotificationProps> = ({ open, handleClose, anchorEl, clearNotifyHandler, openLoader }) => {
+  //constants
   const {
     result: { data: NotificationData },
     formatChangeSuccess: isSuccess,
   } = useFetch(ENDPOINTS.notification);
-  const [seeMore, setSeeMore] = useState(false);
   const bodyref = useRef<any>();
+
+  //state values
+  const [seeMore, setSeeMore] = useState(false);
+
+  //functions
   const styleHandler = () => {
     bodyref.current.scrollHeight > bodyref.current.clientHeight ? setSeeMore(!seeMore) : setSeeMore(false);
   };
@@ -49,7 +54,7 @@ const NotificationModal: FC<NotificationProps> = ({ open, handleClose, anchorEl,
         <S.BodyContainer isheight={seeMore ? 1 : 0} ref={bodyref}>
           {Object.values(isSuccess && (NotificationData as NotificationProps)).map((user, i) => (
             <S.BodyBox key={user.id + i}>
-              <S.UserImage alt="userImage" src={user.image ? decryptText(user.image) : ""} />
+              <S.UserImage alt="userImage" src={user.image ? user.image : ""} />
               <S.UserText variant="subtitle1">{user.message}</S.UserText>
             </S.BodyBox>
           ))}

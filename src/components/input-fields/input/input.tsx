@@ -17,19 +17,32 @@ import { Controller, UseControllerProps } from "react-hook-form";
 import S from "./input.styled";
 
 interface InputProps extends UseControllerProps {
-  type: "text" | "number" | "date" | "datetime" | "select" | "multiselect" | "file" | "radio" | "autocomplete" | "autocomplete-with-imagelist";
+  type:
+    | "text"
+    | "email"
+    | "number"
+    | "date"
+    | "datetime"
+    | "select"
+    | "multiselect"
+    | "file"
+    | "radio"
+    | "autocomplete"
+    | "autocomplete-with-imagelist";
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   options?: {
     [key: string]: any;
   };
   ref?: any;
+  helperText?: string;
 }
 
-function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref }: InputProps) {
+function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister = false, onChange, options = {}, ref, helperText }: InputProps) {
   const [autocomplete, setAutocomplete] = useState<string | null>(null);
   const [multiSelect, setMultiselect] = useState<string[]>(type === "multiselect" ? defaultValue : []);
   const [image, setImage] = useState<string>("");
 
+  //functions
   const PopperWidth = function (props: any) {
     return (
       <Popper
@@ -73,6 +86,34 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
         />
       );
 
+    case "email":
+      return (
+        <Controller
+          name={name}
+          control={control}
+          defaultValue={defaultValue || ""}
+          rules={rules}
+          shouldUnregister={shouldUnregister}
+          render={({ field, formState: { errors } }) => (
+            <S.TextInput
+              helperText={errors[name]?.message as string}
+              type="email"
+              multiline={options?.multiline}
+              maxRows={options?.maxRows}
+              {...options}
+              name={field.name}
+              value={field.value}
+              ref={field.ref}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                field.onChange(e.target.value);
+                onChange && onChange(e);
+              }}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
+      );
+
     case "number":
       return (
         <Controller
@@ -83,7 +124,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
           shouldUnregister={shouldUnregister}
           render={({ field, formState: { errors } }) => (
             <S.NumberInput
-              helperText={errors[name]?.message as string}
+              helperText={helperText ? helperText : (errors[name]?.message as string)}
               type="number"
               {...options}
               name={field.name}
@@ -94,6 +135,11 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 endAdornment: (
                   <InputAdornment position="end">
                     <p>{options?.unit}</p>
+                  </InputAdornment>
+                ),
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <p>{options?.unitstart}</p>
                   </InputAdornment>
                 ),
               }}
@@ -173,7 +219,7 @@ function Input({ type, name, rules = {}, control, defaultValue, shouldUnregister
                 iscolor={field.value ? 1 : 0}
                 select
                 disabled={options.disable ? true : false}
-                helperText={errors[name]?.message as string}
+                helperText={helperText ? helperText : (errors[name]?.message as string)}
                 {...options}
                 name={field.name}
                 value={field.value ? field.value : options.placeholder || ""}

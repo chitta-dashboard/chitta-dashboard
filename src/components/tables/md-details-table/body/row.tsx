@@ -2,7 +2,10 @@ import React, { useState, useRef, FC, useEffect } from "react";
 import { TableRow } from "@mui/material";
 import { IMdDetails } from "../../../../utils/context/mdDetails";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { s3ConfigTypes } from "../../../../types";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetails";
 import Toast from "../../../../utils/toast";
@@ -22,10 +25,8 @@ interface MdDetailsRowProps {
 }
 
 const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
+  //state values
   const { setFarmerBankDetail } = useFarmerDetailsContext();
-  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
-  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
-  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState<string>("");
   const [iconModal, setIconModal] = useState<boolean>(false);
@@ -34,12 +35,14 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const [idCard, setIdCard] = useState(false);
   const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const [openFarmerRowModal, setOpenFarmerRowModal] = useState<string | null>(null);
+
+  //constants
   const hiddenFileInput: any = useRef<HTMLInputElement>();
+  const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+  const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
+  const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
 
-  useEffect(() => {
-    setFarmerBankDetail(false);
-  }, []);
-
+  //functions
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -77,10 +80,18 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = encryptText(compressedBase64);
+    const targetMdProfile = user.profile;
+    if (targetMdProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+    user["profile"] = profile;
     const farmerEditData = { ...user, id: user.farmerId } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
@@ -95,9 +106,11 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     });
   };
 
-  const NavigateToMdDetailForm = (mdId: string) => {
-    setOpenFarmerRowModal(mdId);
-  };
+  const NavigateToMdDetailForm = (mdId: string) => setOpenFarmerRowModal(mdId);
+
+  useEffect(() => {
+    setFarmerBankDetail(false);
+  }, []);
 
   return (
     <TableRow onClick={() => NavigateToMdDetailForm(user.id)}>
@@ -116,10 +129,10 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         >
           {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={user.profile ? decryptText(user.profile) : placeHolderImg} />
+            <S.AvatarImg alt="User-img" src={user.profile ? user.profile : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
-              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+              <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
             </S.EditBox>
           </S.AvatarBox>
           {user.name}
@@ -161,7 +174,15 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={() => {
+          yesAction={async () => {
+            if (!editMode && user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setConfirmModal(false);
+                return;
+              }
+            }
             !editMode &&
               deleteMdDetail({
                 id: user.id,
@@ -171,11 +192,9 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
                 },
                 errorCb: () => Toast({ message: "Request failed! Please try again", type: "error" }),
               });
-
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
-            editMode &&
-              editData &&
+            editData &&
               editFarmer({
                 editedData: farmerEditData,
                 successCb: () => {

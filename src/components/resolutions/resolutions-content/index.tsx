@@ -5,8 +5,9 @@ import S from "./resolutionsContent.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
 const ResolutionsContent: FC = () => {
-  const [resolutionId, setResolutionId] = useState<string | null>("");
+  //state values
   const { tab } = useResolutionContext();
+  const [resolutionId, setResolutionId] = useState<string | null>("");
 
   return (
     <S.ResolutionsContentContainer>

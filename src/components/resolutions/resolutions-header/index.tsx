@@ -9,8 +9,11 @@ import S from "./resolutionsHeader.styled";
 import { useResolutionContext } from "../../../utils/context/resolution";
 
 const ResolutionsHeader: FC = () => {
-  const [modalOpen, setModalOpen] = useState(false);
+  //state values
   const { tab, changeTab } = useResolutionContext();
+  const [modalOpen, setModalOpen] = useState(false);
+
+  //constants
   const {
     formatChangeSuccess,
     result: { data: resolutions },
@@ -47,7 +50,7 @@ const ResolutionsHeader: FC = () => {
                 Toast({ message: "Resolution added successfully.", type: "success" });
               },
               errorCb: () => {
-                Toast({ message: "Request failed, please try again.", type: "error" });
+                Toast({ message: "Adding resolution request failed, please try again.", type: "error" });
               },
             })
           }

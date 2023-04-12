@@ -14,8 +14,10 @@ interface Props {
 }
 
 const MdDetailsForm = forwardRef<HTMLDivElement | undefined, Props>(({ MdIdtoPrint }, ref) => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
+  //constants
   const {
     result: { data: mdDetailsById },
     formatChangeSuccess: isSuccess,

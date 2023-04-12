@@ -4,7 +4,9 @@ import CommonModalProps from "../../common-icon-modal/type/commonModalProps";
 import S from "../iconModals.styled";
 
 const FounderDetailsIconModal: FC<CommonModalProps> = (props) => {
+  //constants
   const { open, handleClose, handleDelete, handleEdit, handleIdCard } = props;
+  
   return (
     <CommonIconModal open={open} handleClose={handleClose}>
       <S.IconStack direction={"row"}>

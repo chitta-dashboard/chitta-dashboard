@@ -10,17 +10,19 @@ import S from "./ceo-details.styled";
 import Toast from "../../utils/toast";
 
 const CeoDetails = () => {
+  //state values
+  const { addNotification } = useAuthContext();
+  const [addModal, setAddModal] = useState(false);
+
+  //constants
   const {
     formatChangeSuccess,
     result: { data: ceoDetails },
   } = useFetch(ENDPOINTS.ceo);
   const { mutate: ceoAdd } = useAdd(ENDPOINTS.ceo);
-  const { addNotification } = useAuthContext();
-  const [addModal, setAddModal] = useState(false);
 
-  const addModalHandler = () => {
-    setAddModal(!addModal);
-  };
+  //functions
+  const addModalHandler = () => setAddModal(!addModal);
 
   const addDataHandler = (data: IAddCEODetailsFormInput & { id: string }) => {
     ceoAdd({

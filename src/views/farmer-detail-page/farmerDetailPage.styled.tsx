@@ -34,7 +34,7 @@ export namespace S {
     width: "100%",
     background: theme.palette.bg.main,
     borderRadius: "1.25rem",
-    height: "calc(100% - 5rem)",
+    // height: "calc(100% - 5rem)",
     padding: "0.625rem 5%",
   }));
 
@@ -50,6 +50,7 @@ export namespace S {
     borderRadius: "50%",
     height: "7.1875rem",
     maxWidth: "7.1875rem",
+    aspectRatio: "1",
   });
 
   export const HeaderTextContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -153,13 +154,15 @@ export namespace S {
     overflowY: "auto",
     marginTop: "0.3125rem",
     "&::-webkit-scrollbar": {
-      width: "0.4375rem",
-      background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
+      // width: "0.4375rem",
+      // background: theme.palette.addAlpha(theme.palette.text.secondary, 0.1),
+      display: "none",
     },
     "&::-webkit-scrollbar-thumb": {
-      backgroundColor: theme.palette.primary.light,
-      borderRadius: "1.25rem",
-      height: "3.75rem",
+      // backgroundColor: theme.palette.primary.light,
+      // borderRadius: "1.25rem",
+      // height: "3.75rem",
+      display: "none",
     },
   }));
 

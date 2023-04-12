@@ -9,11 +9,15 @@ import S from "./md-details-page.styled";
 
 // Design of this page is changed, so it is not currently used.
 const MdDetailPage = () => {
+  //constructors
+  const navigate = useNavigate();
+
+  //constants
   const pdfForm = useRef<HTMLDivElement>();
   const pdfcertificate = useRef<HTMLDivElement>();
   const pdftamilcertificate = useRef<HTMLDivElement>();
-  const navigate = useNavigate();
 
+  //functions
   // to generate Md detail form
   const generateMdDetailsPDF = useReactToPrint({
     documentTitle: `Nerkathir_${+new Date()}`,

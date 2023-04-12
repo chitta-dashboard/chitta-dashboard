@@ -32,6 +32,7 @@ interface LogoProps {
 }
 
 export const ReactImageFileResizer: FC<CustomProps> = ({ file, width, height, placeholder, color }) => {
+  //constants
   const imageRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ const AdminLogo: FC<LogoProps> = ({ register, errors, logo, setLogo, image, setI
               })}
               hidden
               type="file"
+              accept="image/png, image/jpeg"
             />
           </Button>
         </Box>

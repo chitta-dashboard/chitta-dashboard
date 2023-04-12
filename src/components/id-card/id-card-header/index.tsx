@@ -1,10 +1,11 @@
 import IdLogo from "../../../assets/images/logo.svg";
 import { useFetch } from "../../../utils/hooks/query";
-import { decryptText, ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS } from "../../../utils/constants";
 import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./idCardHeader.styled";
 
 const IDCardHeader = () => {
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },
@@ -17,7 +18,7 @@ const IDCardHeader = () => {
       {isSuccess && (
         <S.IdHeaderWrapper>
           <S.HeaderLeft>
-            <S.LogoImage src={headerLogo ? decryptText(headerLogo) : IdLogo} alt="Id-logo" />
+            <S.LogoImage src={headerLogo ? headerLogo : IdLogo} alt="Id-logo" />
           </S.HeaderLeft>
           <S.HeaderRight>
             <S.IdHeading>

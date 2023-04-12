@@ -18,11 +18,14 @@ interface Props {
 }
 
 const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) => {
+  //state values
+  const { addNotification } = useAuthContext();
   const [addModalOpen, setAddModalOpen] = useState(false);
+
+  //constants
   const { mutate: addPortfolio } = useEditPortfolio(ENDPOINTS.portfolioRaw);
 
-  const { addNotification } = useAuthContext();
-
+  //functions
   const addDataHandler = (data: IAddProductsFormInput & { id: string }) => {
     const { foodType, id, productName, products, ...addData } = data;
     const addVarient = {} as { [key: string]: IProductVarient };
@@ -40,7 +43,7 @@ const PortfolioHeader: FC<Props> = ({ tab, setTab, searchHandler, searchRef }) =
         });
       },
       errorCb: () => {
-        Toast({ message: "Request failed, please try again.", type: "error" });
+        Toast({ message: "Updating product request failed, please try again.", type: "error" });
       },
     });
   };

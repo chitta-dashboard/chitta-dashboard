@@ -3,7 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Compress from "react-image-file-resizer";
-import { useEdit } from "../../utils/hooks/query";
+import { extractProfileName, generateProfileName } from "../../utils/helpers";
+import { s3ConfigTypes } from "../../types";
+import { deleteProfile, uploadProfile } from "../../services/s3-client";
+import { useEdit, useFetch } from "../../utils/hooks/query";
 import Toast from "../../utils/toast";
 import AdminLogo from "../../components/admin-panel/admin-logo";
 import IdInformation from "../../components/admin-panel/id-information";
@@ -46,10 +49,16 @@ const adminSchema = yup.object().shape({
 });
 
 const AdminPanel = () => {
+  //state values
   const [logo, setLogo] = useState<File | null>();
   const [image, setImage] = useState<File | null>();
+  // const [imageUrl, setImageUrl] = useState("");
 
+  //constants
+  const { formatChangeSuccess: isSuccess, result } = useFetch(ENDPOINTS.admin);
+  const { data: adminDetails } = result;
   const { mutate: updateAdminDetail } = useEdit(ENDPOINTS.admin);
+  const adminProfile = isSuccess && Object.values(adminDetails as AdminFormInputs)[0].headerLogo;
 
   const {
     register,
@@ -60,22 +69,6 @@ const AdminPanel = () => {
   } = useForm<AdminFormInputs>({
     resolver: yupResolver(adminSchema),
   });
-
-  const fileChangedHandler = (file: File, width: number, height: number, name?: string) =>
-    new Promise((resolve) => {
-      Compress.imageFileResizer(
-        file,
-        width,
-        height,
-        "jpeg",
-        100,
-        0,
-        (uri) => {
-          resolve(encryptText(uri as string));
-        },
-        "base64",
-      );
-    });
 
   // enabling submit button
   let enableButton = true;
@@ -101,20 +94,26 @@ const AdminPanel = () => {
     enableButton = false;
   }
 
+  //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-
-    const headerLogo = await fileChangedHandler(imgObj, 94, 94);
-    const loginLogo = await fileChangedHandler(imgObj, 156, 156);
-    const certificateLogo = await fileChangedHandler(imgObj, 180, 180);
-    const pdfLogo = await fileChangedHandler(imgObj, 180, 180);
+    const deleteRes = adminProfile && (await deleteProfile(extractProfileName(adminProfile), s3ConfigTypes.admin));
+    const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
+    const profile = await uploadProfile(compressedProfile, s3ConfigTypes.admin);
+    if ((adminProfile && !deleteRes) || !profile) {
+      Toast({ message: "Request failed, please try again.", type: "error" });
+      reset();
+      setLogo(null);
+      setImage(null);
+      return;
+    }
 
     const uploadData = {
       id: "admin_1",
-      headerLogo: headerLogo,
-      loginLogo: loginLogo,
-      certificateLogo: certificateLogo,
-      pdfLogo: pdfLogo,
+      headerLogo: profile,
+      loginLogo: profile,
+      certificateLogo: profile,
+      pdfLogo: profile,
       name: data.name,
       address: data.address,
       coordinatorAddress: data.coordinatorAddress,
@@ -137,6 +136,22 @@ const AdminPanel = () => {
     setLogo(null);
     setImage(null);
   };
+
+  const fileChangedHandler = (file: File, width: number, height: number, name?: string) =>
+    new Promise((resolve) => {
+      Compress.imageFileResizer(
+        file,
+        width,
+        height,
+        "jpeg",
+        100,
+        0,
+        (uri) => {
+          resolve(encryptText(uri as string));
+        },
+        "base64",
+      );
+    });
 
   return (
     <S.MainContainer>

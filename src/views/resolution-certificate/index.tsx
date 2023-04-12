@@ -17,12 +17,18 @@ import Toast from "../../utils/toast";
 import { S } from "./resolutionCertificate.styled";
 
 const ResolutionCertificatePage = () => {
+  //constructors
+  const navigate = useNavigate();
+
+  //state values
+  const { addNotification } = useAuthContext();
   const [deletion, setDeletion] = useState(false);
   const [edition, setEdition] = useState(false);
   const [confirmation, setConfirmation] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
+
+  //constants
   const editedData = useRef<Partial<IResolution>>({});
-  const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
   const ResolutionFormPdf = useRef<HTMLDivElement>();
   const { resolutionId } = useParams();
   const {
@@ -30,10 +36,10 @@ const ResolutionCertificatePage = () => {
     result: { data: resolutions },
   } = useFetch(ENDPOINTS.resolutions);
   const threeDotRef = useRef<HTMLSpanElement>();
-  const [popoverOpen, setPopoverOpen] = useState(false);
   const { mutate: mutateEdition } = useEdit(ENDPOINTS.resolutions);
   const { mutate: mutateDeletion } = useDelete(ENDPOINTS.resolutions);
 
+  //functions
   // to generate pdf of resolution form
   const generateResolutionPDF = useReactToPrint({
     documentTitle: `Board_Resolution_${+new Date()}`,

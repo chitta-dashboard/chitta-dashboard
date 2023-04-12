@@ -5,7 +5,9 @@ import IconWrapper from "../../../../utils/iconWrapper";
 import S from "./header.styled";
 
 const Header = () => {
+  //state values
   const { sortFilter, setSortFilter } = useFounderContext();
+
   return (
     <TableHead>
       <TableRow>

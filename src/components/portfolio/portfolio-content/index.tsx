@@ -9,6 +9,7 @@ interface Props {
 }
 
 const PortfolioContent: FC<Props> = ({ tab, clearSearchHandler }) => {
+  //functions
   const tabHandler = () => {
     switch (tab) {
       case "Raw":

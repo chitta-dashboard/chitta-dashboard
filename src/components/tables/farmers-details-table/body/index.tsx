@@ -9,24 +9,63 @@ import FarmersDetailsRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
-  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
-
-  const {
-    formatChangeSuccess: isSuccess,
-    result: { data: farmersDetailsById },
-  }: any = useFetch(ENDPOINTS.farmerDetails);
-
-  const {
-    result: { data: farmersGroupById },
-    formatChangeSuccess: isFarmerGroupSuccess,
-  } = useFetch(ENDPOINTS.farmerGroup);
-  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
+  //state values
   const [farmersListGroup, setFarmersListGroup] = useState<farmerDetail[]>([]);
   const [farmersListSearch, setFarmersListSearch] = useState<farmerDetail[]>([]);
   const [farmersListSort, setFarmersListSort] = useState<farmerDetail[]>([]);
   const [farmersList, setFarmersList] = useState<farmerDetail[]>([]);
   const [exportFarmerId, setExportFarmerID] = useState<farmerDetail[]>([]);
   const [loader, setLoader] = useState<boolean>(false);
+
+  //constants
+  const { addFarmerId, searchFilter, sortFilter, groupFilter, currentPage, setPageCount, setFarmersIdToExport } = useFarmerDetailsContext();
+  const {
+    formatChangeSuccess: isSuccess,
+    result: { data: farmersDetailsById },
+  }: any = useFetch(ENDPOINTS.farmerDetails);
+  const {
+    result: { data: farmersGroupById },
+    formatChangeSuccess: isFarmerGroupSuccess,
+  } = useFetch(ENDPOINTS.farmerGroup);
+  const { mutate: editFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
+  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
+
+  //functions
+  const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
+    let removeMemberIndex = -1;
+    const isCountUpdate = farmersGroupData.find((list, index) => {
+      if (list?.members.includes(id)) {
+        removeMemberIndex = index;
+      }
+      if (list.groupName === group && list?.members.includes(id)) {
+        return list;
+      }
+    });
+    const onlyRemove = !toAdd ? !toAdd : !isCountUpdate;
+    if (onlyRemove) {
+      const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
+      const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
+      updatedFarmerGroup.members = updatedMember;
+      updatedFarmerGroup.members &&
+        editFarmerGroup({
+          editedData: updatedFarmerGroup,
+          successCb: (data) => {
+            setTimeout(() => toAdd && addGroupMember(id, group, Object.values(data)), 0);
+          },
+        });
+      !updatedFarmerGroup.members && toAdd && addGroupMember(id, group, farmersGroupData);
+    }
+  };
+
+  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
+    const groupIndex = data.findIndex((list) => list.groupName === group);
+    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
+    newGroupMember.members.push(id);
+    newGroupMember.members &&
+      editFarmerGroup({
+        editedData: newGroupMember,
+      });
+  };
 
   useEffect(() => {
     setLoader(false);
@@ -73,43 +112,6 @@ const Body = () => {
       isSuccess && addFarmerId(farmerId);
     }
   }, [isSuccess, farmersList, exportFarmerId]);
-
-  const farmersGroupData = Object.values(isFarmerGroupSuccess && (farmersGroupById as FarmersGroup[]));
-  const removeGroupMember = (id: string, group: string, toAdd: boolean) => {
-    let removeMemberIndex = -1;
-    const isCountUpdate = farmersGroupData.find((list, index) => {
-      if (list?.members.includes(id)) {
-        removeMemberIndex = index;
-      }
-      if (list.groupName === group && list?.members.includes(id)) {
-        return list;
-      }
-    });
-    const onlyRemove = !toAdd ? !toAdd : !isCountUpdate;
-    if (onlyRemove) {
-      const updatedMember = farmersGroupData[removeMemberIndex]?.members.filter((member: string) => member !== id);
-      const updatedFarmerGroup = { ...farmersGroupData[removeMemberIndex] };
-      updatedFarmerGroup.members = updatedMember;
-      updatedFarmerGroup.members &&
-        editFarmerGroup({
-          editedData: updatedFarmerGroup,
-          successCb: (data) => {
-            setTimeout(() => toAdd && addGroupMember(id, group, Object.values(data)), 0);
-          },
-        });
-      !updatedFarmerGroup.members && toAdd && addGroupMember(id, group, farmersGroupData);
-    }
-  };
-
-  const addGroupMember = (id: string, group: string, data: FarmersGroup[]) => {
-    const groupIndex = data.findIndex((list) => list.groupName === group);
-    const newGroupMember = JSON.parse(JSON.stringify(data[groupIndex]));
-    newGroupMember.members.push(id);
-    newGroupMember.members &&
-      editFarmerGroup({
-        editedData: newGroupMember,
-      });
-  };
 
   return (
     <>

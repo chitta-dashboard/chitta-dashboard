@@ -2,7 +2,9 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -20,6 +22,7 @@ import { dateFormat, ENDPOINTS, decryptText, imageCompressor, encryptText, ACRET
 import { useFetch } from "../../../utils/hooks/query";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./farmersDetailsModal.styled";
+import { s3ConfigTypes } from "../../../types";
 
 interface CustomProps {
   cb: (data: IAddFarmersDetailsFormInput & { id: string; membershipId: string; farmerId?: string }) => void;
@@ -30,16 +33,21 @@ interface CustomProps {
   mdId?: string;
 }
 const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
-  const { farmerBankDetail } = useFarmerDetailsContext();
+  //constants
   const { openModal, handleClose, cb, editMode = false, id = "", mdId = "" } = props;
   let {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
 
+  //state values
+  const { farmerBankDetail } = useFarmerDetailsContext();
   const [page, setPage] = useState(1);
   const [form1Data, setForm1Data] = useState<IAddFarmersDetailsPage1Input>();
   const [form2Data, setForm2Data] = useState<IAddFarmersDetailsPage2Input>();
+  const [selectedKey, setSelectedKey] = useState<string[]>([]);
+  const [isPhoneExist, setIsPhoneExist] = useState(false);
+  const [isAadharExist, setIsAadharExist] = useState(false);
 
   const [dynamicInputs, setDynamicInputs] = useState<Array<{ [key: string]: [string, string, string] }>>(() => {
     if (editMode) {
@@ -64,6 +72,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
     return [{ first: ["surveyNo-first", "acre-first", "border-first"] }];
   });
 
+  //functions
   const addInput = useCallback(() => {
     const surveyName = "surveyNo-" + uuidv4();
     const acreName = "acre-" + uuidv4();
@@ -190,6 +199,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   }
 
   useEffect(() => {
+    if (editMode && farmersDetailsById[id].representative.id) {
+      setSelectedKey([farmersDetailsById[id].representative.id]);
+    }
+  }, [editMode, id]);
+
+  useEffect(() => {
     if (editMode) {
       let farmerData = Object.values(farmersDetailsById as { [id: string]: farmerDetail }).find((f) => String(f.id) === id) as farmerDetail;
       form1Reset({
@@ -199,7 +214,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         spouseName: farmerData?.spouseName,
         dob: dateFormat(farmerData?.dob),
         group: farmerData?.group,
-        phoneNumber: farmerData?.phoneNumber,
+        phoneNumber: farmerData?.phoneNumber.replace("+91", ""),
         addhaarNo: farmerData?.addhaarNo,
         ...farmerData?.surveyNo,
         ...farmerData?.acre,
@@ -207,7 +222,15 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         surveyNo: farmerData?.surveyNo,
         acre: farmerData?.acre,
         border: farmerData?.border,
-        profile: decryptText(farmerData?.profile) || placeHolderImg,
+        profile: farmerData?.profile || placeHolderImg,
+        email: farmerData?.email,
+        representative: {
+          id: farmerData?.representative?.id,
+          name: farmerData?.representative?.name,
+          phoneNumber: farmerData?.representative?.phoneNumber,
+          pk: farmerData?.representative?.pk,
+        },
+        hasNoWhatsapp: farmerData.hasNoWhatsapp,
       });
 
       form2Reset({
@@ -228,7 +251,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
         nameAsPerBank: farmerData?.nameAsPerBank,
         bankName: farmerData?.bankName,
         accountNumber: decryptText(farmerData?.accountNumber as string),
-        // confirmAccountNumber: farmerData?.confirmAccountNumber,
+        confirmAccountNumber: decryptText(farmerData?.accountNumber as string),
         ifscCode: farmerData?.ifscCode,
       });
     }
@@ -237,6 +260,8 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   }, [editMode, id]);
 
   const form1Submit = (data: IAddFarmersDetailsPage1Input) => {
+    if (isPhoneExist) return;
+    if (isAadharExist) return;
     setForm1Data({
       acre: data.acre,
       addhaarNo: data.addhaarNo,
@@ -250,10 +275,20 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       profile: data.profile,
       sex: data.sex,
       spouseName: data.spouseName,
+      email: data.email,
+      representative:
+        isSuccess && Boolean(selectedKey.length)
+          ? {
+              id: farmersDetailsById[selectedKey[0]]?.id,
+              name: farmersDetailsById[selectedKey[0]]?.name ?? "",
+              phoneNumber: farmersDetailsById[selectedKey[0]]?.phoneNumber ?? "",
+              pk: farmersDetailsById[selectedKey[0]]?.pk ?? "",
+            }
+          : { id: "", name: "", phoneNumber: "", pk: "" },
+      hasNoWhatsapp: !selectedKey.length ? "false" : "true",
     });
     setPage(2);
   };
-
   const form2Submit = async (data: IAddFarmersDetailsPage2Input) => {
     setForm2Data(data);
     setPage(3);
@@ -272,15 +307,23 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
   };
 
   const form3Submit = async (data: IAddFarmersDetailsPage3Input) => {
-    const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
-    const encryptedBase64 = encryptText(compressedBase64);
+    const newId = uuidv4();
+    const generateId = setId(newId);
+    let profile = "";
+    if (editMode && form1Data?.profile === farmersDetailsById[id].profile) {
+      profile = form1Data?.profile as string;
+    } else {
+      const profileBlob = await fetch(form1Data?.profile as string).then((res) => res.blob());
+      const compressedProfile = await imageCompressor(profileBlob);
+      const namedProfile = generateProfileName(compressedProfile, `${s3ConfigTypes.farmer}_${generateId}_${Date.now()}`);
+      profile = namedProfile as unknown as string;
+    }
+
     //Get Id
     const dataLength = isSuccess && Object.values(farmersDetailsById).length;
     const lastPageData: farmerDetail[] | false = isSuccess && Object.values(farmersDetailsById);
     const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
 
-    let newId = uuidv4();
     let newMemberId = isSuccess && parseInt(lastMembershipId as string) + 1;
 
     let editedData = {
@@ -294,10 +337,11 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       ...form1Data,
       ...form2Data,
       ...editedData,
-      profile: encryptedBase64,
-      id: setId(newId),
+      profile,
+      id: generateId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
       farmerId: id,
+      phoneNumber: `+91${form1Data?.phoneNumber}`,
       landAreaInCent:
         Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {
           return a + parseInt(b as string);
@@ -376,6 +420,12 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
               unregister={form1Unregister}
               editMode={editMode}
               watch={form1Watch}
+              selectedKey={selectedKey}
+              setSelectedKey={setSelectedKey}
+              isPhoneExist={isPhoneExist}
+              setIsPhoneExist={setIsPhoneExist}
+              isAadharExist={isAadharExist}
+              setIsAadharExist={setIsAadharExist}
             />
           </ModalBody>
           <ModalFooter>

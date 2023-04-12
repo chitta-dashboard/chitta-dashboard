@@ -8,7 +8,7 @@ import IconWrapper from "../../../utils/iconWrapper";
 import { useAuthContext } from "../../../utils/context/auth";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { FarmersGroup } from "../../../utils/context/farmersGroup";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../utils/constants";
 import { useDelete, useEdit, useFetch } from "../../../utils/hooks/query";
 import Toast from "../../../utils/toast";
 import FarmersDetailsModal from "../../../components/modals/farmers-details-modal";
@@ -17,8 +17,15 @@ import DeleteModal from "../../../components/modals/delete-modal";
 import profilePlaceholder from "../../../assets/images/profile-placeholder.jpg";
 import { AdminFormInputs } from "../../admin-panel";
 import { S } from "./mdDetails-form-preview.styled";
+import { deleteProfile, uploadProfile } from "../../../services/s3-client";
+import { s3ConfigTypes } from "../../../types";
+import { extractProfileName, generateProfileName } from "../../../utils/helpers";
 
 const MdFormPreviewLeft = () => {
+  //constructors
+  const navigate = useNavigate();
+
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -40,6 +47,8 @@ const MdFormPreviewLeft = () => {
   const { mutate: editMdDetail } = useEdit(ENDPOINTS.mdDetails);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
   const { mutate: deleteMdDetail } = useDelete(ENDPOINTS.mdDetails);
+
+  //state values
   const { addNotification } = useAuthContext();
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
@@ -50,8 +59,8 @@ const MdFormPreviewLeft = () => {
   const mdFormPdf = useRef<HTMLDivElement>();
   const hiddenFileInput: any = useRef<HTMLInputElement>();
   const { mdId } = useParams();
-  const navigate = useNavigate();
 
+  //functions
   // popover open
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
 
@@ -86,19 +95,26 @@ const MdFormPreviewLeft = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    const encryptedBase64 = encryptText(compressedBase64);
-    let result = mdDetailsById[userId];
-    result.profile = encryptedBase64;
-    const farmerEditData = { ...result, id: result.farmerId } as IMdDetails;
+    const targetMd = mdDetailsById[userId];
+    const targetMdProfile = targetMd.profile;
+    if (targetMdProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.farmer);
+    const farmerEditData = { ...targetMd, id: targetMd.farmerId, profile } as IMdDetails;
+    const MdEditData = { ...targetMd, profile } as IMdDetails;
     delete farmerEditData.farmerId;
     editFarmer({
       editedData: farmerEditData,
       successCb: () => {
         editMdDetail({
-          editedData: result,
+          editedData: MdEditData,
           successCb: () => Toast({ message: "MD Edited Successfully.", type: "success" }),
           errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
         });
@@ -223,7 +239,7 @@ const MdFormPreviewLeft = () => {
               </S.Text2>
             </S.FormHeading>
             <S.MdImgContainer>
-              <S.MdImg src={user.profile ? decryptText(user.profile) : profilePlaceholder} alt="profie-picture" />
+              <S.MdImg src={user.profile ? user.profile : profilePlaceholder} alt="profie-picture" />
               <S.EditBox
                 onClick={(e) => {
                   e.stopPropagation();
@@ -231,7 +247,7 @@ const MdFormPreviewLeft = () => {
                 }}
               >
                 <S.EditIcon>edit</S.EditIcon>
-                <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
               </S.EditBox>
             </S.MdImgContainer>
             <S.HeaderText>
@@ -259,60 +275,19 @@ const MdFormPreviewLeft = () => {
                 mdId={user.id}
               />
             )}
-            {/* {openDeleteModal && (
-              <DeleteModal
-                openModal={true}
-                handleClose={() => setOpenDeleteModal(false)}
-                handleDelete={() => {
-                  deleteMdDetail({
-                    id: user.id,
-                    successCb: () => {
-                      addNotification({ id: `delete${user.id}`, image: user.profile, message: Message(user.name).deleteFarmDetail });
-                      Toast({ message: "MD Deleted Successfully", type: "success" });
-                      navigate(-1);
-                    },
-                    errorCb: () => {
-                      Toast({ message: "Request failed! Please try again", type: "error" });
-                    },
-                  });
-                }}
-                deleteMessage={
-                  <span>
-                    Do you want to remove <S.DeleteName>{mdDetailsById[user.id].name}</S.DeleteName> from MD Details?
-                  </span>
-                }
-              />
-            )}
-            {openConfirmationModal && (
-              <ConfirmationModal
-                openModal={true}
-                handleClose={() => {
-                  setOpenConfirmationModal(null);
-                }}
-                yesAction={async () => {
-                  await removeGroupMember(user.farmerId, openConfirmationModal.group);
-                  const farmerEditData = { ...openConfirmationModal, id: openConfirmationModal.farmerId } as IMdDetails;
-                  delete farmerEditData.farmerId;
-                  editFarmer({
-                    editedData: farmerEditData,
-                    successCb: () => {
-                      editMdDetail({ editedData: openConfirmationModal });
-                      Toast({ message: "MD Edited Successfully.", type: "success" });
-                    },
-                    errorCb: () => {
-                      Toast({ message: "Request failed! Please try again.", type: "error" });
-                    },
-                  });
-                  setOpenConfirmationModal(null);
-                  setOpenEditModal(false);
-                }}
-              />
-            )} */}
             {openDeleteModal && (
               <DeleteModal
                 openModal={true}
                 handleClose={() => setOpenDeleteModal(false)}
-                handleDelete={() => {
+                handleDelete={async () => {
+                  if (user.profile) {
+                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteRes) {
+                      Toast({ message: "Request failed, please try again.", type: "error" });
+                      setOpenDeleteModal(false);
+                      return;
+                    }
+                  }
                   deleteMdDetail({
                     id: user.id,
                     successCb: () => {

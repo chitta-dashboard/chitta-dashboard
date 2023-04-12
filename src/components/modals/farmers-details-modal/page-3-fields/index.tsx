@@ -10,6 +10,7 @@ interface CustomProps {
 }
 
 const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
   return (
@@ -19,7 +20,12 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
         type="text"
         control={control}
         rules={{ required: farmerBankDetail && "required" }}
-        options={{ label: "பெயர்(வங்கி கணக்கில் இருப்பது போல் ) *", gridArea: "napb", placeholder: "பெயரை உள்ளிடுக", disabled: !farmerBankDetail }}
+        options={{
+          label: "பெயர்(வங்கி கணக்கில் இருப்பது போல் ) *",
+          gridArea: "napb",
+          placeholder: "பெயரை உள்ளிடுக",
+          disabled: !farmerBankDetail,
+        }}
       />
       <Input
         name="bankName"
@@ -33,7 +39,12 @@ const FormFieldPage3: FC<CustomProps> = ({ control, accntNo }) => {
         type="number"
         control={control}
         rules={{ required: farmerBankDetail && "required" }}
-        options={{ label: "வங்கி கணக்கு எண் *", gridArea: "anum", placeholder: "வங்கி கணக்கு எண்ணை உள்ளிடுக", disabled: !farmerBankDetail }}
+        options={{
+          label: "வங்கி கணக்கு எண் *",
+          gridArea: "anum",
+          placeholder: "வங்கி கணக்கு எண்ணை உள்ளிடுக",
+          disabled: !farmerBankDetail,
+        }}
       />
       <Input
         name="confirmAccountNumber"

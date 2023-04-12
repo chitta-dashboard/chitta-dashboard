@@ -14,6 +14,15 @@ import Loader from "../../utils/loaders/tree-loader";
 import S from "./mdDetails.styled";
 
 const MdDetails = () => {
+  //state values
+  const { setSearchFilter } = useMdDetailsContext();
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [addModal, setAddModal] = useState(false);
+  const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
+  const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+
+  //constants
   const {
     formatChangeSuccess: mdIsSuccess,
     result: { data: mdData },
@@ -24,29 +33,9 @@ const MdDetails = () => {
   } = useFetch(ENDPOINTS.farmerDetails);
   const { mutate: addMdDetail } = useAdd(ENDPOINTS.mdDetails);
 
-  const { setSearchFilter } = useMdDetailsContext();
-  const { mutate: addMdNotification } = useAdd(ENDPOINTS.notification);
-  const [addModal, setAddModal] = useState(false);
-  const [filteredFarmerDetails, setFilteredFarmerDetails] = useState<farmerDetail[]>([]);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
-  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   let farmerKeys = Object.keys(farmerIsSuccess && farmersData);
 
-  useEffect(() => {
-    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
-      if (farmerKeys.includes(item.farmerId as string)) {
-        let index = farmerKeys.indexOf(item.farmerId as string);
-        farmerKeys.splice(index, 1);
-      }
-      return null;
-    });
-    let filteredFarmerData: farmerDetail[] = [];
-    farmerKeys.forEach((item) => {
-      return filteredFarmerData.push(farmersData[item]);
-    });
-    setFilteredFarmerDetails([...filteredFarmerData]);
-  }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
-
+  //functions
   const CustomMessage = () => {
     return (
       <S.CustomMessageDetails>
@@ -76,6 +65,21 @@ const MdDetails = () => {
       setSelectedKeys([...selectedKeys, value]);
     }
   };
+
+  useEffect(() => {
+    Object.values(mdIsSuccess && farmerIsSuccess && (mdData as IMdDetails[])).forEach((item) => {
+      if (farmerKeys.includes(item.farmerId as string)) {
+        let index = farmerKeys.indexOf(item.farmerId as string);
+        farmerKeys.splice(index, 1);
+      }
+      return null;
+    });
+    let filteredFarmerData: farmerDetail[] = [];
+    farmerKeys.forEach((item) => {
+      return filteredFarmerData.push(farmersData[item]);
+    });
+    setFilteredFarmerDetails([...filteredFarmerData]);
+  }, [mdData, farmersData, mdIsSuccess, farmerIsSuccess]);
 
   const handleYesAction = () => {
     let farmerData: IMdDetails[] = [];

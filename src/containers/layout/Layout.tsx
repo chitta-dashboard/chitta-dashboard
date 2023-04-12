@@ -11,6 +11,7 @@ import APIloader from "../../utils/loaders/api-loader";
 import S from "./Layout.styled";
 
 const Layout: FC = () => {
+  //state values
   const { openLoader, loaderText, isAuthenticated } = useAuthContext();
 
   return (

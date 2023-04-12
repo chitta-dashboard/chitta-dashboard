@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useFetch } from "../../utils/hooks/query";
-import { ENDPOINTS, decryptText } from "../../utils/constants";
+import { ENDPOINTS } from "../../utils/constants";
 import { AdminFormInputs } from "../admin-panel";
 import { farmerDetail } from "../../utils/context/farmersDetails";
 import { S } from "./tamil-certificate.styled";
@@ -17,6 +17,7 @@ interface Props {
 }
 
 const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, toggle }) => {
+  //constants
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
@@ -39,7 +40,7 @@ const TamilShareHolderCertificateContent: FC<Props> = ({ user, shareAmount, togg
       <S.CertificateHeadingMainContainer>
         <S.CertificateHeadingContainer>
           <S.HeadingContainerLogo>
-            <S.NerkathirLogo src={certificateImage ? decryptText(certificateImage) : NerkathirLogoGray} alt="NerkathirLogoGray" />
+            <S.NerkathirLogo src={certificateImage ? certificateImage : NerkathirLogoGray} alt="NerkathirLogoGray" />
           </S.HeadingContainerLogo>
           <S.HeadingContainerHeading>
             {titleName ? (

@@ -2,7 +2,10 @@ import { FC, useRef, useState } from "react";
 import { TableRow } from "@mui/material";
 import { Founders } from "../../../../utils/context/founders";
 import { useAuthContext } from "../../../../utils/context/auth";
-import { decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { ENDPOINTS, fileValidation, imageCompressor, Message } from "../../../../utils/constants";
 import { useDelete, useEdit } from "../../../../utils/hooks/query";
 import Toast from "../../../../utils/toast";
 import FounderDetailsIconModal from "../../../icon-modals/founder-details-icon-modal";
@@ -73,11 +76,22 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
   const handleIconClick = () => hiddenFileInput && hiddenFileInput.current.click();
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    user["profile"] = encryptText(compressedBase64);
-    founderMutateUpdate({ editedData: user });
+    const targetFounderProfile = user.profile;
+    if (targetFounderProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    founderMutateUpdate({
+      editedData: { ...user, profile },
+      successCb: () => Toast({ message: "Founder Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   return (
@@ -89,10 +103,10 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <S.NameStack>
           {image && <ImagePreview image={image} setImage={setImage} handleCroppedImage={handleCroppedImage} />}
           <S.AvatarBox>
-            <S.AvatarImg alt="User-img" src={getURL(user) ? decryptText(getURL(user)) : placeHolderImg} />
+            <S.AvatarImg alt="User-img" src={getURL(user) ? getURL(user) : placeHolderImg} />
             <S.EditBox onClick={handleIconClick}>
               <S.EditIcon>edit</S.EditIcon>
-              <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+              <S.HiddenInput type="file" accept="image/png, image/jpeg" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
             </S.EditBox>
           </S.AvatarBox>
           {user.name}
@@ -119,7 +133,15 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <DeleteModal
           openModal={deleteModal}
           handleClose={() => setDeleteModal(false)}
-          handleDelete={() => {
+          handleDelete={async () => {
+            if (user.profile) {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              if (!deleteRes) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setDeleteModal(false);
+                return;
+              }
+            }
             founderMutateDelete({
               id: user.id,
               successCb: () => {
@@ -142,11 +164,20 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
         <ConfirmationModal
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
-          yesAction={() => {
-            editMode &&
-              editData &&
+          yesAction={async () => {
+            let profile = editData && editData.profile;
+            if (typeof profile !== "string") {
+              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              profile = editData && (await uploadProfile(editData.profile, s3ConfigTypes.founder));
+              if ((user.profile && !deleteRes) || !profile) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setConfirmModal(false);
+                return;
+              }
+            }
+            editData &&
               founderMutateUpdate({
-                editedData: editData,
+                editedData: { ...editData, profile },
                 successCb: () => {
                   Toast({ message: "Founder Edited Successfully", type: "success" });
                 },

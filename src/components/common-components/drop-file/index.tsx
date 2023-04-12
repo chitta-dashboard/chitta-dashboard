@@ -45,6 +45,7 @@ const DropFile: React.FC<IDropFile> = function ({
   setVerifiedNewFarmers,
   setInputData,
 }) {
+  //state values
   const [targetState, setTargetState] = useState<DropTargetState>("noDrag");
   const [processingFile, setProcessingFile] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -61,6 +62,7 @@ const DropFile: React.FC<IDropFile> = function ({
     }
   }, [isGroupMoalOpened, cb]);
 
+  //functions
   const handleDragEnter = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
       stopDefaultBehaviour(e);

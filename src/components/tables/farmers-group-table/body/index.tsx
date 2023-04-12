@@ -7,15 +7,18 @@ import FarmersGroupRow from "./row";
 import S from "./body.styled";
 
 const Body = () => {
+  //constants
   const { result, formatChangeSuccess: isSuccess } = useFetch(ENDPOINTS.farmerGroup);
   const { data: farmerGroupData } = result;
 
+  //state values
   const { searchFilter, sortFilter, memberFilter } = useFarmersGroupContext();
   const [farmersGroupMemberList, setFarmersGroupMemberList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupListSearch, setFarmersGroupListSearch] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupListSort, setFarmersGroupListSort] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
   const [farmersGroupList, setFarmersGroupList] = useState<FarmersGroup[]>(Object.values(isSuccess ? farmerGroupData : []));
 
+  //functions
   const memberFilterHandler = () => {
     switch (memberFilter) {
       case customMemberFilter.ALL:

@@ -11,13 +11,15 @@ interface Props {
 }
 
 const ShareCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount, toggle }, ref) => {
+  //state values
+  const { selectedFarmers } = useFarmerDetailsContext();
+
   //constant
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },
   } = useFetch(ENDPOINTS.farmerDetails);
   const { formatChangeSuccess: isSuccessAdmin } = useFetch(ENDPOINTS.admin);
-  const { selectedFarmers } = useFarmerDetailsContext();
 
   return (
     <div className="print-container" ref={ref}>

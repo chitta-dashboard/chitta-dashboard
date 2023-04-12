@@ -8,6 +8,7 @@ interface DeleteProps {
 }
 
 const DeleteBody: FC<DeleteProps> = ({ deleteMessage }) => {
+  //constants
   const message = deleteMessage ? deleteMessage : "Do you want to delete the current entry?";
 
   return (

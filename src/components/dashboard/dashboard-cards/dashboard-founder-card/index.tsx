@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import Slider from "react-slick";
-import { calculateAge, decryptText, encryptText, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { calculateAge, ENDPOINTS, fileValidation, imageCompressor } from "../../../../utils/constants";
+import { deleteProfile, uploadProfile } from "../../../../services/s3-client";
+import { extractProfileName, generateProfileName } from "../../../../utils/helpers";
+import { s3ConfigTypes } from "../../../../types";
 import { Founders } from "../../../../utils/context/founders";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,10 +15,14 @@ import ImagePreview from "../../../../utils/imageCrop/imagePreview";
 import { useEdit, useFetch } from "../../../../utils/hooks/query";
 import Loader from "../../../../utils/loaders/tree-loader";
 import S from "./dashoardFounder.styled";
+import Toast from "../../../../utils/toast";
 
 const DashboardFounder = () => {
+  //state values
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState<string>("");
+
+  //constants
   const {
     formatChangeSuccess,
     result: { data: foundersById },
@@ -38,6 +45,7 @@ const DashboardFounder = () => {
     ),
   };
 
+  //functions
   const handleInputChange = async (e: React.ChangeEvent<HTMLInputElement> | any) => {
     let isValid = e.target && fileValidation(e.target.files[0].name);
     e.target.files && isValid && setImage(window.URL.createObjectURL(e.target.files[0]));
@@ -56,12 +64,23 @@ const DashboardFounder = () => {
   };
 
   const handleCroppedImage = async (image: string) => {
-    const profileBlob = await fetch(image).then((res) => res.blob());
-    const compressedBase64 = await imageCompressor(profileBlob);
     if (!image) return;
-    let result = foundersById[userId];
-    const encryptedBase64 = encryptText(compressedBase64);
-    editFounder({ editedData: { ...result, profile: encryptedBase64 } });
+    const targetFounder = foundersById[userId];
+    const targetFounderProfile = targetFounder.profile;
+    if (targetFounderProfile) {
+      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteRes) return;
+    }
+    const profileName = `${s3ConfigTypes.founder}_${userId}_${Date.now()}`;
+    const profileBlob = await fetch(image).then((res) => res.blob());
+    const compressedProfile = await imageCompressor(profileBlob);
+    const namedProfile = generateProfileName(compressedProfile, profileName);
+    const profile = await uploadProfile(namedProfile, s3ConfigTypes.founder);
+    editFounder({
+      editedData: { ...targetFounder, profile },
+      successCb: () => Toast({ message: "Founder Edited Successfully.", type: "success" }),
+      errorCb: () => Toast({ message: "Request failed! Please try again.", type: "error" }),
+    });
   };
 
   return (
@@ -79,10 +98,16 @@ const DashboardFounder = () => {
               return (
                 <S.FounderCard key={item.id}>
                   <S.FounderImgContainer>
-                    <S.FounderImg src={item.profile ? decryptText(item.profile) : placeHolderImg} alt="Founder-image" />
+                    <S.FounderImg src={item.profile ? item.profile : placeHolderImg} alt="Founder-image" />
                     <S.EditBox onClick={() => handleIconClick(item.id)}>
                       <S.EditIcon>edit</S.EditIcon>
-                      <S.HiddenInput type="file" ref={hiddenFileInput} onChange={handleInputChange} onClick={onInputClick} />
+                      <S.HiddenInput
+                        type="file"
+                        accept="image/png, image/jpeg"
+                        ref={hiddenFileInput}
+                        onChange={handleInputChange}
+                        onClick={onInputClick}
+                      />
                     </S.EditBox>
                   </S.FounderImgContainer>
                   <S.FounderCardContainer>

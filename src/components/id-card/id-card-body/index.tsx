@@ -5,7 +5,6 @@ import Signature from "../../../assets/images/Signature.png";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
 import { IMdDetails } from "../../../utils/context/mdDetails";
 import { Founders } from "../../../utils/context/founders";
-import { decryptText } from "../../../utils/constants";
 import placeHolderImg from "../../../assets/images/profile-placeholder.jpg";
 import S from "./idCardBody.styled";
 
@@ -16,12 +15,14 @@ interface Props {
 type Ref = HTMLDivElement | undefined;
 
 const IdCardBody = forwardRef<Ref, Props>((props, ref) => {
+  //constants
   const { data } = props;
+
   return (
     <S.IdCardWrapper ref={ref}>
       <IDCardHeader />
       <S.IdCardBodyWrapper>
-        <S.IdImage src={data?.profile ? decryptText(data?.profile) : placeHolderImg} alt="id-photo" />
+        <S.IdImage src={data?.profile ? data?.profile : placeHolderImg} alt="id-photo" />
         <S.MiddleBox>
           <S.IdDetailsWrapper>
             <S.DescriptionBox>

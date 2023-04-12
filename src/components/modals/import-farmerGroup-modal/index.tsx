@@ -41,6 +41,7 @@ const ImportFarmerGroupModal: FC<Props> = ({
   setNewGroupNames,
   setInputData,
 }) => {
+  //constants
   const {
     result: { data: farmersGroupById },
     formatChangeSuccess: isFarmerGroupSuccess,
@@ -49,12 +50,15 @@ const ImportFarmerGroupModal: FC<Props> = ({
   const { mutate: addFarmerGroup } = useAdd(ENDPOINTS.farmerGroup);
   const { mutate: updateFarmerGroup } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: addFarmerDetails } = useAdd(ENDPOINTS.farmerDetails);
-  const { addNotification } = useAuthContext();
   let existingGroup = Object.values(farmersGroupById as FarmersGroup[]).map((item) => item.groupName);
   let newdata = farmerDatas && farmerDatas.map((item) => item.group);
   let groupName = newdata && newdata.filter((item, i, ar) => ar.indexOf(item) === i);
   const groupNamesOnChip = groupName && RemoveArray(existingGroup, groupName);
 
+  //state values
+  const { addNotification } = useAuthContext();
+
+  //functions
   const yesButtonHandler = () => {
     if (farmerDatas && isFarmerGroupSuccess && groupName) {
       let newdata = farmerDatas.map((item) => item.group);
@@ -86,21 +90,21 @@ const ImportFarmerGroupModal: FC<Props> = ({
       addFarmerGroup({
         data: newFarmerGroup,
         successCb: () => {
-          if (count && count > 1) {
-            Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
-          } else {
-            Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
-          }
+          // if (count && count > 1) {
+          //   Toast({ message: `All ${newFarmerGroup.length} groups created Successfully`, type: "success" });
+          // } else {
+          //   Toast({ message: `${newFarmerGroup.length} group created Successfully`, type: "success" });
+          // }
 
           addFarmerDetails({
             data: farmerDatas,
             successCb: () => {
               addNotification({ id: uuid(), message: `New ${count} farmers created.` });
-              if (count && count > 1) {
-                Toast({ type: "success", message: `All ${count} farmers created successfully` });
-              } else {
-                Toast({ type: "success", message: `${count} farmer created successfully` });
-              }
+              // if (count && count > 1) {
+              //   Toast({ type: "success", message: `All ${count} farmers created successfully` });
+              // } else {
+              //   Toast({ type: "success", message: `${count} farmer created successfully` });
+              // }
 
               updateFarmerGroup({
                 editedData: finalFarmerGroup,
@@ -117,17 +121,17 @@ const ImportFarmerGroupModal: FC<Props> = ({
                   handleCloseImport();
                 },
                 errorCb: () => {
-                  Toast({ type: "error", message: `error occured! please retry!` });
+                  Toast({ type: "error", message: `Updating Farmer group request failed! please try again!` });
                 },
               });
             },
             errorCb: () => {
-              Toast({ type: "error", message: `error occured! please retry!` });
+              Toast({ type: "error", message: `Adding Farmer request failed! please try again!` });
             },
           });
         },
         errorCb: () => {
-          Toast({ message: "Request failed, please try again.", type: "error" });
+          Toast({ message: "Adding Farmer group request failed! please try again!", type: "error" });
         },
       });
     }

@@ -11,6 +11,7 @@ type EditorProps = {
 };
 
 const Editor: FC<EditorProps> = ({ cb, defaultValue = "" }) => {
+  //constants
   const editor = useEditor({
     extensions: [StarterKit, Underline],
     content: defaultValue,

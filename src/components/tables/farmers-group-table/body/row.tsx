@@ -20,8 +20,19 @@ interface FarmersGroupRowProp {
 }
 
 const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
-  const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  //constructors
+  const navigate = useNavigate();
 
+  //state values
+  const { addNotification } = useAuthContext();
+  const { setGroupFilter, groupFilter } = useFarmerDetailsContext();
+  const [iconModal, setIconModal] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editData, setEditData] = useState<FarmersGroup>();
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [confirmModal, setConfirmModal] = useState<boolean>(false);
+
+  // constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmerDetailsById },
@@ -35,17 +46,11 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
     result: { data: farmerResolutionById },
   } = useFetch(ENDPOINTS.resolutions);
   const { mutate: editFarmer } = useEdit(ENDPOINTS.farmerDetails);
-  const { addNotification } = useAuthContext();
-  const navigate = useNavigate();
-  const [iconModal, setIconModal] = useState<boolean>(false);
-  const [editMode, setEditMode] = useState<boolean>(false);
-  const [editData, setEditData] = useState<FarmersGroup>();
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [confirmModal, setConfirmModal] = useState<boolean>(false);
   const { mutate: farmerGroupDelete } = useDelete(ENDPOINTS.farmerGroup);
   const { mutate: farmerGroupEdit } = useEdit(ENDPOINTS.farmerGroup);
   const { mutate: resolutionEdit } = useEdit(ENDPOINTS.resolutions);
 
+  //functions
   // Tab IconModal Open & Close Handler
   const iconModalHandler = () => setIconModal(!iconModal);
 
@@ -158,30 +163,30 @@ const FarmersGroupRow: FC<FarmersGroupRowProp> = ({ user }) => {
                 farmerGroupEdit({
                   editedData: editData,
                   successCb: () => {
-                    Toast({ message: "Farmer group updated successfully.", type: "success" });
+                    !newFarmerDetails.length && Toast({ message: "Farmer group updated successfully.", type: "success" });
                     newFarmerDetails.length > 0 &&
                       editFarmer({
                         editedData: newFarmerDetails,
                         successCb: () => {
-                          Toast({ message: "Farmer Edited Successfully", type: "success" });
+                          !newResolutionDetails.length && Toast({ message: "Farmer group Edited Successfully", type: "success" });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: "Updating farmer request failed! Please try again", type: "error" });
                         },
                       });
                     newResolutionDetails.length > 0 &&
                       resolutionEdit({
                         editedData: newResolutionDetails,
                         successCb: () => {
-                          Toast({ message: "Resolution Edited Successfully", type: "success" });
+                          Toast({ message: "Farmer group Edited Successfully", type: "success" });
                         },
                         errorCb: () => {
-                          Toast({ message: "Request failed! Please try again", type: "error" });
+                          Toast({ message: "Updatiing resolution request failed! Please try again", type: "error" });
                         },
                       });
                   },
                   errorCb: () => {
-                    Toast({ message: "Request failed, please try again.", type: "error" });
+                    Toast({ message: "Updating farmer group request failed, please try again.", type: "error" });
                   },
                 });
                 setEditMode(false);

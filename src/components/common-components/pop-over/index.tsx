@@ -16,7 +16,9 @@ interface IPopoverProps {
 }
 
 const PopOver: FC<IPopoverProps> = (props) => {
+  //constants
   const { id, value, isOpen, onPopCloseHandler, popOverOptions, onSelectHandler } = props;
+
   return (
     <S.Pop
       id={id}

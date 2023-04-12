@@ -25,6 +25,8 @@
     "@types/react": "^18.0.19",
     "@types/react-dom": "^18.0.6",
     "axios": "^1.1.3",
+    "binascii": "^0.0.2",
+    "buffer": "^6.0.3",
     "crypto-js": "^4.1.1",
     "dayjs": "^1.11.5",
     "file-saver": "^2.0.5",
@@ -45,6 +47,7 @@
     "react-prosemirror": "^0.2.1",
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.3.0",
+    "react-s3": "^1.3.1",
     "react-scripts": "5.0.1",
     "react-slick": "^0.29.0",
     "react-to-print": "^2.14.7",
@@ -52,6 +55,8 @@
     "recharts": "^2.1.14",
     "server": "^1.0.37",
     "slick-carousel": "^1.8.1",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1",
     "typescript": "^4.8.3",
     "uuid": "^9.0.0",
     "web-vitals": "^2.1.4",
@@ -62,9 +67,10 @@
     "dev": "react-scripts start",
     "build": "CI=false react-scripts build",
     "test": "react-scripts test",
-    "server": "npm start --prefix server",
+    "local-server": "npm start --prefix servers/local-server",
+    "remote-server": "npm start --prefix servers/remote-server",
     "eject": "react-scripts eject",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "start": "concurrently \"npm run dev\" \"npm run remote-server\" \"npm run local-server\""
   },
   "eslintConfig": {
     "extends": [

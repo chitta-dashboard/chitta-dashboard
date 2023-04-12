@@ -6,6 +6,7 @@ import { ENDPOINTS } from "../../../utils/constants";
 import S from "./background.style";
 
 const LoginBackground = () => {
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },

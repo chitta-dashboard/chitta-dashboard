@@ -4,7 +4,7 @@ import NerkathirLogo from "../../assets/images/logo.svg";
 import { useFetch } from "../../utils/hooks/query";
 import { IResolutions } from "../../utils/context/resolution";
 import Loader from "../../utils/loaders/tree-loader";
-import { decryptText, ENDPOINTS } from "../../utils/constants";
+import { ENDPOINTS } from "../../utils/constants";
 import { AdminFormInputs } from "../admin-panel";
 import { S } from "./resolutionCertificate.styled";
 
@@ -13,6 +13,7 @@ interface Props {
 }
 
 const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolutionIdFromProp }, ref) => {
+  //constants
   const {
     formatChangeSuccess,
     result: { data: resolutions },
@@ -34,7 +35,7 @@ const ResolutionPdf = forwardRef<HTMLDivElement, Props>(({ resolutionId: resolut
         .map((user) => (
           <S.ResolutionCertificateContainer ref={ref} key={user.id}>
             <S.ResolutionCertificateHeader>
-              <S.NerkathirLogo src={headerImage ? decryptText(headerImage) : NerkathirLogo} alt="NerkathirLogoGray" />
+              <S.NerkathirLogo src={headerImage ? headerImage : NerkathirLogo} alt="NerkathirLogoGray" />
               <S.HeaderText>
                 {titleName ? (
                   <>

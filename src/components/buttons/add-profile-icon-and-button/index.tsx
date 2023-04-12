@@ -14,9 +14,11 @@ interface CustomProps<FormInputTypes extends FieldValues> {
 }
 
 function AddProfile<FormInputTypes>({ setValue, trigger, inputName, errors }: CustomProps<FormInputTypes & FieldValues>) {
+  //state values
   const [image, setImage] = useState("");
   const [croppedImage, setCroppedImage] = useState<string | undefined>("");
 
+  //functions
   const handleImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     let chosenImage = (event.target.files as FileList)[0];
 

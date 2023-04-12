@@ -5,6 +5,7 @@ import { useAuthContext } from "../../utils/context/auth";
 import S from "./login.styled";
 
 const Login = () => {
+  //state values
   const { isAuthenticated } = useAuthContext();
 
   return (

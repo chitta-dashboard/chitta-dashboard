@@ -17,11 +17,13 @@ interface AddProfileProps<FormInputTypes extends FieldValues> {
 }
 
 function AddProfile<FormInputTypes>({ inputName, rules, control, setValue, gridArea, getValues }: AddProfileProps<FormInputTypes & FieldValues>) {
+  //state values
   // latest chosen image
   const [imageToCrop, setImageToCrop] = useState<string>("");
   // latest cropped image
   const [croppedImage, setCroppedImage] = useState<string | undefined>(getValues(inputName as Path<FormInputTypes & FieldValues>));
 
+  //functions
   const handleImage = async (event: React.ChangeEvent<HTMLInputElement>) => {
     let chosenImage = (event.target.files as FileList)[0];
     if (fileValidation(chosenImage.name)) {

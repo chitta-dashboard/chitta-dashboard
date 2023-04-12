@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import S from "./notFound.styled";
 
 const NotFound = () => {
+  //constructors
   const navigate = useNavigate();
 
   return (

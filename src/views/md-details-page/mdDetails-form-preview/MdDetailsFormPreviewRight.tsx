@@ -9,8 +9,10 @@ import { S } from "./mdDetails-form-preview.styled";
 import nerkathir_transparent_background from "../../../assets/images/logo.svg";
 
 const MdFormPreviewRight = () => {
+  //state values
   const { farmerBankDetail } = useFarmerDetailsContext();
 
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: mdDetailsById },
@@ -23,6 +25,7 @@ const MdFormPreviewRight = () => {
   const { pdfLogo: pdfImage } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
 
   const { mdId } = useParams();
+
   return (
     <>
       {Object.values(isSuccess && isSuccessAdmin && (mdDetailsById as IMdDetails[]))
@@ -30,7 +33,7 @@ const MdFormPreviewRight = () => {
         .map((user) => (
           <S.MdFormPreviewRight key={user.id}>
             <S.AbsoluteBackgroundImage>
-              <img src={pdfImage ? decryptText(pdfImage) : nerkathir_transparent_background} alt="backgroundimage" />
+              <img src={pdfImage ? pdfImage : nerkathir_transparent_background} alt="backgroundimage" />
             </S.AbsoluteBackgroundImage>
             <S.UserInfoRow>
               <S.UserInfoData1>பெயர்</S.UserInfoData1>

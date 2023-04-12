@@ -5,11 +5,13 @@ import { AdminFormInputs } from "../../../views/admin-panel";
 import S from "./footer.styled";
 
 const Footer: FC = () => {
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
 
+  //state values
   const { regNo, cinNo } = isSuccess && Object.values(adminDetails as AdminFormInputs)[0];
 
   return (

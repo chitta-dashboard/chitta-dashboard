@@ -16,9 +16,11 @@ interface CustomProps {
 }
 
 const FormField: FC<CustomProps> = ({ control, variantList, availableList, setProductName, setProductId, productImage, disableOnEdit, tab }) => {
+  //constants
   let temp: any = [];
   Object.values(VARIANT_DATA).forEach((i) => (temp = [...temp, Object.entries(i)]));
   const tempVariantsList = temp.flat(1);
+
   return (
     <S.StaticBox>
       <Input

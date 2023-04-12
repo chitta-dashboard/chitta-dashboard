@@ -11,8 +11,10 @@ interface Props {
 }
 
 const TamilShareHolderCertificate = forwardRef<HTMLDivElement, Props>(({ shareAmount, toggle }, ref) => {
+  //state values
   const { selectedFarmers } = useFarmerDetailsContext();
 
+  //constants
   const {
     formatChangeSuccess: isSuccess,
     result: { data: farmersDetailsById },

@@ -18,6 +18,7 @@ interface IImportFarmersModal {
 }
 
 const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, handleClose }) {
+  //state values
   const [importedFile, setImportedFile] = useState<File | null>(null);
   const [openImportGroup, setOpenImportGroup] = useState<boolean>(false);
   const [existingFarmers, setExistingFarmers] = useState<Object[] | null | undefined>(null);
@@ -27,6 +28,8 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const [inputData, setInputData] = useState<farmerDetail[] | undefined>(undefined);
   const [newFarmersDatas, setNewFarmersDatas] = useState<farmerDetail[] | null>(null);
   const [count, setCount] = useState(existingFarmers?.length);
+
+  //constants
   const {
     result: { data: farmersDetailsById },
     formatChangeSuccess: isSuccess,
@@ -38,6 +41,7 @@ const ImportFarmersModal: React.FC<IImportFarmersModal> = function ({ isOpen, ha
   const lastMembershipId = isSuccess && (lastPageData as farmerDetail[])[(dataLength as number) - 1]["membershipId"].split("-")[2];
   let newMemberId = parseInt(lastMembershipId as string);
 
+  //functions
   const cancelHandler = () => {
     setShowDownloadButton(false);
     handleClose();
