@@ -97,10 +97,10 @@ const AdminPanel = () => {
   //functions
   const onSubmit = async (data: AdminFormInputs) => {
     const imgObj = data.profile[0];
-    const deleteRes = adminProfile && (await deleteProfile(extractProfileName(adminProfile), s3ConfigTypes.admin));
+    const deleteResponse = adminProfile && (await deleteProfile(extractProfileName(adminProfile), s3ConfigTypes.admin));
     const compressedProfile = generateProfileName(imgObj, `${s3ConfigTypes.admin}_${Date.now()}`);
     const profile = await uploadProfile(compressedProfile, s3ConfigTypes.admin);
-    if ((adminProfile && !deleteRes) || !profile) {
+    if ((adminProfile && !deleteResponse) || !profile) {
       Toast({ message: "Request failed, please try again.", type: "error" });
       reset();
       setLogo(null);

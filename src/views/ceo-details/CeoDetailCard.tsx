@@ -73,8 +73,8 @@ const CeoDetailsCard = ({ user }: Props) => {
     const targetCeo = ceoDetailsById[user.id];
     const targetCeoProfile = targetCeo.profile;
     if (targetCeoProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetCeoProfile), s3ConfigTypes.ceo);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.ceo}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -196,8 +196,8 @@ const CeoDetailsCard = ({ user }: Props) => {
           handleClose={() => setOpenDeleteModal(false)}
           handleDelete={async () => {
             if (user.profile) {
-              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
-              if (!deleteRes) {
+              const deleteResponse = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              if (!deleteResponse) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setOpenDeleteModal(false);
                 return;
@@ -230,9 +230,9 @@ const CeoDetailsCard = ({ user }: Props) => {
           yesAction={async () => {
             let profile = openConfirmationModal.profile;
             if (typeof profile !== "string") {
-              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo);
+              const deleteResponse = user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.ceo));
               profile = await uploadProfile(openConfirmationModal.profile, s3ConfigTypes.ceo);
-              if ((user.profile && !deleteRes) || !profile) {
+              if ((user.profile && !deleteResponse) || !profile) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setOpenConfirmationModal(null);
                 return;
