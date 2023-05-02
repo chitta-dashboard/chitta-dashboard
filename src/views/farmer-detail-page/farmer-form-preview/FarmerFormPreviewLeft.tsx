@@ -101,8 +101,8 @@ const FarmerFormPreviewLeft = () => {
     const targetFarmer = farmersDetailsById[userId];
     const targetFarmerProfile = targetFarmer.profile;
     if (targetFarmerProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -327,8 +327,8 @@ const FarmerFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
                   if (user.profile) {
-                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
-                    if (!deleteRes) {
+                    const deleteResponse = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteResponse) {
                       Toast({ message: "Request failed, please try again.", type: "error" });
                       setOpenDeleteModal(false);
                       return;

@@ -79,8 +79,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
     if (!image) return;
     const targetFounderProfile = user.profile;
     if (targetFounderProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.founder}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -135,8 +135,8 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           handleClose={() => setDeleteModal(false)}
           handleDelete={async () => {
             if (user.profile) {
-              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
-              if (!deleteRes) {
+              const deleteResponse = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              if (!deleteResponse) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setDeleteModal(false);
                 return;
@@ -167,9 +167,9 @@ const FoundersRow: FC<FoundersRowProp> = ({ user }) => {
           yesAction={async () => {
             let profile = editData && editData.profile;
             if (typeof profile !== "string") {
-              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
+              const deleteResponse = user.profile && await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.founder);
               profile = editData && (await uploadProfile(editData.profile, s3ConfigTypes.founder));
-              if ((user.profile && !deleteRes) || !profile) {
+              if ((user.profile && !deleteResponse) || !profile) {
                 Toast({ message: "Request failed, please try again.", type: "error" });
                 setConfirmModal(false);
                 return;
