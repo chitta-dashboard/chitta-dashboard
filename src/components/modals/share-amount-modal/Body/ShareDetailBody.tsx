@@ -3,6 +3,7 @@ import { useFarmerDetailsContext } from "../../../../utils/context/farmersDetail
 import ToggleSwitch from "../../../../utils/ToggleSwitch";
 import S from "./share-amount-modal.styled";
 import peopleIcon from "../../../../assets/images/People-icon.svg";
+import { SHARE_AMOUNT } from "../../../../utils/constants";
 
 interface CustomProps {
   setShareAmount: Dispatch<SetStateAction<number>>;
@@ -32,12 +33,12 @@ const ShareDetailBody: FC<CustomProps> = ({ setShareAmount, toggle, setToggle })
         <S.ShareDetailRight>
           <S.FloatingAmount>Amount</S.FloatingAmount>
           <S.CustomInput
-            defaultValue={1000}
+            defaultValue={SHARE_AMOUNT}
             onChange={(e) => {
               shareAmountHandler(e);
             }}
             type="number"
-            min="1000"
+            min={`${SHARE_AMOUNT}`}
           />
         </S.ShareDetailRight>
       </S.ShareModalSubContainer>

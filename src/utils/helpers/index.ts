@@ -1,6 +1,7 @@
 import moment from "moment/moment";
 import CryptoJS from "crypto-js";
 import { Buffer } from "buffer";
+import { TICKETS_HELD } from "../constants";
 
 type datePropsType = string | number;
 
@@ -90,4 +91,25 @@ export const extractProfileName = (fileName: string) => {
   const fileArray = fileName.split("/");
   const file = fileArray[fileArray.length - 1];
   return file;
+};
+
+export const getFourDigitNumber = (count: string) => {
+  let len = count?.length;
+  switch (len) {
+    case 1:
+      return "000" + count;
+    case 2:
+      return "00" + count;
+    case 3:
+      return "0" + count;
+    default:
+      return count;
+  }
+};
+
+export const getSlot = (count: number) => {
+  const from = count === 1 ? "1" : `${(count - 1) * TICKETS_HELD + 1}`;
+  const to = `${count * TICKETS_HELD}`;
+
+  return `${from} - ${to}`;
 };

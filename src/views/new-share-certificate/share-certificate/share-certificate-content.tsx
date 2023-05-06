@@ -3,8 +3,9 @@ import { S } from "./share-certificate.styled";
 import NerkathirLogo from "../../../assets/images/logo.svg";
 import { AdminFormInputs } from "../../admin-panel";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS, TICKETS_HELD } from "../../../utils/constants";
 import { farmerDetail } from "../../../utils/context/farmersDetails";
+import { getFourDigitNumber, getSlot } from "../../../utils/helpers";
 
 interface Props {
   user: farmerDetail;
@@ -12,12 +13,19 @@ interface Props {
 }
 
 const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
-  //constant
+  //state values
   const {
     formatChangeSuccess: isSuccessAdmin,
     result: { data: adminDetails },
   } = useFetch(ENDPOINTS.admin);
   const { certificateLogo: certificateImage, name: titleName, cinNo, address } = isSuccessAdmin && Object.values(adminDetails as AdminFormInputs)[0];
+  const fourDigitMemberId = getFourDigitNumber(getMemberIdAlone(user.membershipId));
+
+  //functions
+  function getMemberIdAlone(oldMemberId: string) {
+    const id = oldMemberId.split("-");
+    return id[2];
+  }
 
   return (
     <S.ShareCertificateContent key={user.id}>
@@ -31,12 +39,12 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
             <S.HeaderMainText>
               {titleName ? (
                 <>
-                  {titleName} உழவர் <br />
-                  உற்பத்தியாளர் நிறுவனம்
+                  {titleName} FARMER PRODUCER COMPANY <br />
+                  LIMITED
                 </>
               ) : (
                 <>
-                  நெற்கதிர் உழவர் <br /> உற்பத்தியாளர் நிறுவனம்
+                  NERKATHIR FARMER PRODUCER COMPANY <br /> LIMITED
                 </>
               )}
             </S.HeaderMainText>
@@ -63,46 +71,46 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         <S.ShareValue>
           <S.ShareRow>
             <S.ShareText>FACE</S.ShareText>
-            <S.ShareText>VALUE PER</S.ShareText>
+            <S.ShareText>VALUE &nbsp;PER</S.ShareText>
             <S.ShareText>EQUITY</S.ShareText>
-            <S.ShareText>SHARE :</S.ShareText>
+            <S.ShareText>SHARE &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</S.ShareText>
             <S.ShareText>Rs. {shareAmount} EACH</S.ShareText>
           </S.ShareRow>
           <S.ShareRow>
-            <S.ShareText>PAID -UP</S.ShareText>
-            <S.ShareText>VALUE PER</S.ShareText>
+            <S.ShareText>PAID - UP</S.ShareText>
+            <S.ShareText>VALUE &nbsp;PER</S.ShareText>
             <S.ShareText>EQUITY</S.ShareText>
-            <S.ShareText>SHARE :</S.ShareText>
+            <S.ShareText>SHARE &nbsp;:</S.ShareText>
             <S.ShareText>Rs. {shareAmount} EACH</S.ShareText>
           </S.ShareRow>
         </S.ShareValue>
         <S.ShareValue>
           <S.ShareHolderInfoRow>
             <S.CertificateDetailWrapper>
-              <S.ShareInfoText>Register Folio No</S.ShareInfoText>
-              <S.Detail>{user.membershipId}</S.Detail>
+              <S.ShareInfoText sx={{ paddingLeft: "0.3125rem" }}>Register Folio No</S.ShareInfoText>
+              <S.Detail>{fourDigitMemberId}</S.Detail>
             </S.CertificateDetailWrapper>
             <S.CertificateDetailWrapper>
               <S.ShareInfoTextRight>Certificate No</S.ShareInfoTextRight>
-              <S.Detail>{user.membershipId}</S.Detail>
+              <S.Detail sx={{ paddingRight: "0.3125rem" }}>{`NER-FPC-${fourDigitMemberId}`}</S.Detail>
             </S.CertificateDetailWrapper>
           </S.ShareHolderInfoRow>
           <S.ShareHolderInfoRow>
             <S.CertificateDetailWrapper>
-              <S.ShareInfoText>Name of the Holder</S.ShareInfoText>
+              <S.ShareInfoText sx={{ paddingLeft: "0.3125rem" }}>Name of the Holder</S.ShareInfoText>
               <S.Detail>{user.name}</S.Detail>
             </S.CertificateDetailWrapper>
           </S.ShareHolderInfoRow>
           <S.ShareHolderInfoRow>
             <S.CertificateDetailWrapper>
-              <S.ShareInfoText>No. of shares held</S.ShareInfoText>
-              <S.Detail></S.Detail>
+              <S.ShareInfoText sx={{ paddingLeft: "0.3125rem" }}>No. of shares held</S.ShareInfoText>
+              <S.Detail>{TICKETS_HELD}</S.Detail>
             </S.CertificateDetailWrapper>
           </S.ShareHolderInfoRow>
           <S.ShareHolderInfoRow>
             <S.CertificateDetailWrapper>
-              <S.ShareInfoText>Distinctive Number(s)</S.ShareInfoText>
-              <S.Detail></S.Detail>
+              <S.ShareInfoText sx={{ paddingLeft: "0.3125rem" }}>Distinctive Number(s)</S.ShareInfoText>
+              <S.Detail>{getSlot(+getMemberIdAlone(user.membershipId))}</S.Detail>
             </S.CertificateDetailWrapper>
           </S.ShareHolderInfoRow>
         </S.ShareValue>
@@ -119,17 +127,17 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         <S.DetachableHeaderContainer>
           <S.DetachableHeaderTitle>COUNTER FOIL</S.DetachableHeaderTitle>
           <S.DetachableHeaderText>
-            {titleName ? <>{titleName} உழவர் உற்பத்தியாளர் நிறுவனம்</> : <>நெற்கதிர் உழவர் உற்பத்தியாளர் நிறுவனம்</>}
+            {titleName ? <>{titleName} FARMER PRODUCER COMPANY LIMITED</> : <>NERKATHIR FARMER PRODUCER COMPANY LIMITED</>}
           </S.DetachableHeaderText>
         </S.DetachableHeaderContainer>
         <S.ShareHolderInfoRow>
           <S.CertificateDetailWrapper>
             <S.ShareInfoText>Register Folio No</S.ShareInfoText>
-            <S.Detail>{user.membershipId}</S.Detail>
+            <S.Detail>{fourDigitMemberId}</S.Detail>
           </S.CertificateDetailWrapper>
           <S.CertificateDetailWrapper>
             <S.ShareInfoTextRight>Certificate No</S.ShareInfoTextRight>
-            <S.Detail>{user.membershipId}</S.Detail>
+            <S.Detail>{`NER-FPC-${fourDigitMemberId}`}</S.Detail>
           </S.CertificateDetailWrapper>
         </S.ShareHolderInfoRow>
         <S.ShareHolderInfoRow>
@@ -141,13 +149,13 @@ const ShareCertificateContent: FC<Props> = ({ user, shareAmount }) => {
         <S.ShareHolderInfoRow>
           <S.CertificateDetailWrapper>
             <S.ShareInfoText>No. of shares held</S.ShareInfoText>
-            <S.Detail></S.Detail>
+            <S.Detail>{TICKETS_HELD}</S.Detail>
           </S.CertificateDetailWrapper>
         </S.ShareHolderInfoRow>
         <S.ShareHolderInfoRow>
           <S.CertificateDetailWrapper>
             <S.ShareInfoText>Distinctive Number(s)</S.ShareInfoText>
-            <S.Detail></S.Detail>
+            <S.Detail>{getSlot(+getMemberIdAlone(user.membershipId))}</S.Detail>
           </S.CertificateDetailWrapper>
           <S.SignatureText>Shareholder Signature</S.SignatureText>
         </S.ShareHolderInfoRow>
