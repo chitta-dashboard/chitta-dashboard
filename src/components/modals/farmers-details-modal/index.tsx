@@ -2,9 +2,8 @@ import { FC, useCallback, useEffect, useState } from "react";
 import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import { deleteProfile, uploadProfile } from "../../../services/s3-client";
 import { farmerDetail, useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
-import { extractProfileName, generateProfileName } from "../../../utils/helpers";
+import {  generateProfileName } from "../../../utils/helpers";
 import CustomModal from "../../custom-modal";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
@@ -340,7 +339,7 @@ const FarmersDetailsModalHandler: FC<CustomProps> = (props) => {
       profile,
       id: generateId,
       membershipId: id && editMode ? farmersDetailsById[id].membershipId : `NER-FPC-${newMemberId}`,
-      farmerId: id,
+      farmerId: id && editMode ? id : generateId,
       phoneNumber: `+91${form1Data?.phoneNumber}`,
       landAreaInCent:
         Object.values(form1Data?.acre as IAddFarmersDetailsPage1Input).reduce((a, b) => {

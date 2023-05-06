@@ -146,8 +146,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
     if (!image) return;
     const targetFarmerProfile = user.profile;
     if (targetFarmerProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetFarmerProfile), s3ConfigTypes.farmer);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -455,8 +455,8 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             handleClose={() => setDeleteModal(false)}
             handleDelete={async () => {
               if (user.profile) {
-                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
-                if (!deleteRes) {
+                const deleteResponse = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                if (!deleteResponse) {
                   Toast({ message: "Request failed, please try again.", type: "error" });
                   setDeleteModal(false);
                   return;
@@ -511,9 +511,9 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
             yesAction={async () => {
               let profile = editData?.profile;
               if (typeof profile !== "string") {
-                const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                const deleteResponse = user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer));
                 profile = await uploadProfile(editData?.profile, s3ConfigTypes.farmer);
-                if ((user.profile && !deleteRes) || !profile) {
+                if ((user.profile && !deleteResponse) || !profile) {
                   Toast({ message: "Request failed, please try again.", type: "error" });
                   setConfirmModal(false);
                   return;
@@ -547,7 +547,7 @@ const FarmersDetailsRow: FC<FarmersDetailsRowProps> = ({ user, removeGroupMember
                       editedData: farmerEditData,
                       successCb: () => {
                         editMdDetail({
-                          editedData: editData,
+                          editedData: { ...editData, profile },
                           successCb: () => {
                             editData && removeGroupMember(user.id, editData.group, true);
                             !newId && !oldId && Toast({ message: "Farmer Edited Successfully", type: "success" });

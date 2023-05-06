@@ -99,8 +99,8 @@ const MdFormPreviewLeft = () => {
     const targetMd = mdDetailsById[userId];
     const targetMdProfile = targetMd.profile;
     if (targetMdProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.farmer}_${userId}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -281,8 +281,8 @@ const MdFormPreviewLeft = () => {
                 handleClose={() => setOpenDeleteModal(false)}
                 handleDelete={async () => {
                   if (user.profile) {
-                    const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
-                    if (!deleteRes) {
+                    const deleteResponse = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
+                    if (!deleteResponse) {
                       Toast({ message: "Request failed, please try again.", type: "error" });
                       setOpenDeleteModal(false);
                       return;

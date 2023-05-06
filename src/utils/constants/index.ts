@@ -12,7 +12,6 @@ import Sugarcane from "../../assets/images/sugarcane.png";
 import Cotton from "../../assets/images/cotton.png";
 window.Buffer = require("buffer").Buffer;
 
-
 const Dashboard = lazy(() => import("../../views/dashboard"));
 const CEODetails = lazy(() => import("../../views/ceo-details"));
 const MDDetails = lazy(() => import("../../views/md-details"));
@@ -520,3 +519,6 @@ export const PRODUCT_DATA = {
 
 //AcreToCent
 export const ACRETOCENT = 100.021;
+
+export const TICKETS_HELD = 100;
+export const SHARE_AMOUNT = 10;

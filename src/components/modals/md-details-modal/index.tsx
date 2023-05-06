@@ -2,7 +2,7 @@ import { Control, useForm } from "react-hook-form";
 import { Button } from "@mui/material";
 import { FC, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { IMdDetails, useMdDetailsContext } from "../../../utils/context/mdDetails";
+import { IMdDetails } from "../../../utils/context/mdDetails";
 import { dateFormat, encryptText, ENDPOINTS, imageCompressor } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalFooter from "../../custom-modal/footer";

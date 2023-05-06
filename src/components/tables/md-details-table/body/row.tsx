@@ -83,8 +83,8 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
     if (!image) return;
     const targetMdProfile = user.profile;
     if (targetMdProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetMdProfile), s3ConfigTypes.farmer);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.farmer}_${user.id}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());
@@ -175,14 +175,6 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
           openModal={confirmModal}
           handleClose={() => setConfirmModal(false)}
           yesAction={async () => {
-            if (!editMode && user.profile) {
-              const deleteRes = await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer);
-              if (!deleteRes) {
-                Toast({ message: "Request failed, please try again.", type: "error" });
-                setConfirmModal(false);
-                return;
-              }
-            }
             !editMode &&
               deleteMdDetail({
                 id: user.id,
@@ -194,12 +186,23 @@ const MdDetailsRow: FC<MdDetailsRowProps> = ({ user, removeGroupMember }) => {
               });
             const farmerEditData = { ...editData, id: editData?.farmerId };
             delete farmerEditData.farmerId;
+
+            let profile = editData?.profile;
+            if (typeof profile !== "string") {
+              const deleteResponse = user.profile && (await deleteProfile(extractProfileName(user.profile), s3ConfigTypes.farmer));
+              profile = await uploadProfile(editData?.profile, s3ConfigTypes.farmer);
+              if ((user.profile && !deleteResponse) || !profile) {
+                Toast({ message: "Request failed, please try again.", type: "error" });
+                setConfirmModal(false);
+                return;
+              }
+            }
             editData &&
               editFarmer({
-                editedData: farmerEditData,
+                editedData: { ...farmerEditData, profile },
                 successCb: () => {
                   editMdDetail({
-                    editedData: editData,
+                    editedData: { ...editData, profile },
                     successCb: () => {
                       user.farmerId && removeGroupMember(user.farmerId, editData.group);
                       Toast({ message: "MD Edited Successfully", type: "success" });

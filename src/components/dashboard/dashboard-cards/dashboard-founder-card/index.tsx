@@ -68,8 +68,8 @@ const DashboardFounder = () => {
     const targetFounder = foundersById[userId];
     const targetFounderProfile = targetFounder.profile;
     if (targetFounderProfile) {
-      const deleteRes = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
-      if (!deleteRes) return;
+      const deleteResponse = await deleteProfile(extractProfileName(targetFounderProfile), s3ConfigTypes.founder);
+      if (!deleteResponse) return;
     }
     const profileName = `${s3ConfigTypes.founder}_${userId}_${Date.now()}`;
     const profileBlob = await fetch(image).then((res) => res.blob());

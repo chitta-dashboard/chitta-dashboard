@@ -3,7 +3,7 @@ import { useReactToPrint } from "react-to-print";
 import CustomModal from "../../custom-modal";
 import { useFarmerDetailsContext } from "../../../utils/context/farmersDetails";
 import { useFetch } from "../../../utils/hooks/query";
-import { ENDPOINTS } from "../../../utils/constants";
+import { ENDPOINTS, SHARE_AMOUNT } from "../../../utils/constants";
 import ModalHeader from "../../custom-modal/header";
 import ModalBody from "../../custom-modal/body";
 import ModalFooter from "../../custom-modal/footer";
@@ -21,7 +21,7 @@ const ShareAmountModal: FC<CustomProps> = ({ openModal, handleClose }) => {
   //state values
   const [toggle, setToggle] = useState(false);
   const { selectedFarmers, checkboxUnselectAll } = useFarmerDetailsContext();
-  const [shareAmount, setShareAmount] = useState(1000);
+  const [shareAmount, setShareAmount] = useState(SHARE_AMOUNT);
   const [loader, setLoader] = useState(true);
   const [certificateLoader, setCertificateLoader] = useState(false);
   const pdftamilcertificate = useRef<HTMLDivElement>();

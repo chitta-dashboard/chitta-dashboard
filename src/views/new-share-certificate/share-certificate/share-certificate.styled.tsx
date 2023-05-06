@@ -54,6 +54,7 @@ export namespace S {
     alignItem: "center",
     textAlign: "center",
     width: "75%",
+    paddingTop: "1rem",
   }));
 
   export const FormNo = styled(Typography)(() => ({
@@ -91,16 +92,18 @@ export namespace S {
 
   export const Description = styled(Typography)(() => ({
     color: "#112f5c",
-    fontSize: "1.25rem",
+    fontSize: "1.2rem",
     width: "100%",
-    textIndent: "0.625rem",
+    textIndent: "2rem",
+    wordSpacing: "0.1rem",
   }));
 
   export const DescriptionBold = styled("span")(() => ({
     color: "#112f5c",
-    fontSize: "1.25rem",
+    fontSize: "1.35rem",
     width: "100%",
     fontWeight: "600",
+    paddingRight: "0.5rem",
   }));
 
   export const ShareValue = styled(Box)(() => ({
@@ -142,13 +145,13 @@ export namespace S {
     display: "flex",
     width: "100%",
     padding: "0.4375rem 0.9375rem",
+    gap: "0.75rem",
   }));
 
   export const ShareText = styled(Typography)(() => ({
     fontSize: "1.25rem",
     color: "#112f5c",
     fontWeight: "600",
-    width: "11.5625rem",
   }));
 
   export const ShareHolderInfoRow = styled(ShareRow)(() => ({
